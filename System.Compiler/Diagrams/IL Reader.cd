@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Metadata.Reader" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>NBcNhOWtVKgazABykckIQALwgAgAkVCQwVQGrUfFQUg=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="debugReader" />
+    </ShowAsAssociation>
+    <NestedTypes>
+      <Class Name="System.Compiler.Metadata.Reader.ClassHasBeenUsedAsATypeParameterToOwnBaseClassException" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Reader.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="System.Compiler.Metadata.Reader.TypeExtensionProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Reader.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Compiler.Metadata.ILParser">
+    <Position X="11.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>QAAAAAAiAAEAACACAIAAAAIAAAABAAUQQIhAAACQAkA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="bodyReader" />
+      <Field Name="reader" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Metadata.BodyParser">
+    <Position X="13" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAwACJAAEARCABgQCgUiiAQAAoAoQABAAAhCIAEA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="operandStack" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Metadata.InstructionParser">
+    <Position X="10" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAEAEABAgAAAAAAAAAAgAAAQAAAAAAAAAAAAACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.ExpressionStack">
+    <Position X="17.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAABAAAAABAAAAAAAAgAAACAAAAgAAAAAAAACAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.MemoryCursor" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>MemoryMappedFile.cs</FileName>
+      <HashCode>4gYAgAQDIwAAABkjAAAAgADUJCACRGAEFUBVUgECAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.CorSymBinder" Collapsed="true">
+    <Position X="1" Y="2" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.CorMetaDataDispenser" Collapsed="true">
+    <Position X="1" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.CorSymBinder2" Collapsed="true">
+    <Position X="1" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedReader">
+    <Position X="3.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAQACAAABCAAQIAAARAgAQAAACAAAAAAAgAAAAAQQA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedBinder2">
+    <Position X="1" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAgAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedBinder">
+    <Position X="1" Y="3" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.IMetaDataDispenser">
+    <Position X="3.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedScope">
+    <Position X="1" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAQAAACAAAAAAAAAEAQAAAAAQAAAQAAAAAQAAQA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedDocument">
+    <Position X="3.5" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>IAACAAAAAEIEAAAAAgABAAAAAAQAAAAAAAAAAAgAACA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedVariable">
+    <Position X="3.5" Y="9" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAA4ABAAEAAAQAAAAABABAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.Metadata.ISymUnmanagedMethod">
+    <Position X="1" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>CAAAAQAACAAAAAQAAAAQAAAAAAAAAAACAAgAgAICAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="System.Compiler.Metadata.CorOpenFlags">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Reader.cs</FileName>
+      <HashCode>AAAACAAIEAAAAAAAAAAAAIAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

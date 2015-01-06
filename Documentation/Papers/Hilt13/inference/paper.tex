@@ -1,0 +1,139 @@
+\documentclass{sig-alternate-2013}
+
+\begin{document}
+\conferenceinfo{HILT}{'13 Pittsburgh, Pennsylvania USA}
+
+\newfont{\mycrnotice}{ptmr8t at 7pt}
+ \newfont{\myconfname}{ptmri8t at 7pt}
+ \let\crnotice\mycrnotice%
+ \let\confname\myconfname%
+
+ \permission{Permission to make digital or hard copies of part or all of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage, and that copies bear this notice and the full citation on the first page. Copyrights for third-party components of this work must be honored. For all other uses, contact the owner/author(s). Copyright is held by the author/owner(s).}
+ \conferenceinfo{HILT 2013}{Nov 10-14 2013, Pittsburgh, PA, USA} 
+ \copyrightetc{ACM \the\acmcopyr}
+ \crdata{ACM 978-1-4503-2466-3/13/11 \\
+http://dx.doi.org/10.1145/2527269.2527280
+}
+\clubpenalty=10000 
+\widowpenalty = 10000
+
+
+\title{Technology for Inferring Contracts from Code}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+
+\numberofauthors{1} 
+\author{
+\alignauthor
+Francesco Logozzo\\
+       \affaddr{Microsoft Research}\\
+       \affaddr{One Microsoft Way, Redmond, WA, USA} \\
+       \email{logozzo@microsoft.com}
+}
+\maketitle
+
+\begin{abstract}
+Contracts are a simple yet very powerful form of specification.
+They  consists of method preconditions and postconditions, of object invariants, and of assertions and loop invariants.
+Ideally, the programmer will annotate all of her code with contracts which are mechanically checked by some static analysis tool.
+In practice, programmers only write few contracts, mainly preconditions and some object invariants.
+The reason for that is that other contracts are ``clear from the code'':
+Programmers do not like to repeat themselves.
+As a consequence, any \emph{usable} static verification tool should provide some form of contract inference.
+\end{abstract}
+
+% A category with the (minimum) three required fields
+\category{D}{Software}{Miscellaneous}
+\category{D.2.1}{Software Engineering}{Requirements/Specifications}
+\category{D.2.4}{Software Engineering}{Software/Program Verification}[Assertion checkers,Programming by contract]
+
+\terms{Verification}
+
+\keywords{Abstract Interpretation,Contracts,Inference}
+
+
+\section{Contract inference}
+Abstract interpretation~\cite{CousotCousot77} provides the theoretical foundations for automatic contracts inference.
+The contract inference problem can be formulates an abstraction of the trace semantics.
+For instance, a loop invariant is an abstraction of the states reaching the loop head and
+an object invariant is an abstraction of all the states reachable in the steady points of an object~\cite{Logozzo09}.
+
+\vfill\eject 
+\subsection{Loop invariants}
+Abstract interpretation provides an elegant methodology to infer loop invariants.
+First, set up a sound abstract domain.
+The abstract domain captures the properties of interest, \emph{e.g.}, the  shape of the heap, linear inequalities among program variables~\cite{subpolyhedra}, or array contents~\cite{arrayal}.
+Soundness guarantees that no concrete behavior is ignored.
+In practice, the analysis abstract domain is built by composing atomic abstract domains. 
+Second, set up the abstract operations and transfer functions.
+The abstract operations combine two abstract elements, the transfer functions describe how abstract states are modified by atomic program statements.
+Third, design convergence operators (widening, narrowing).
+Convergence operators guarantee that the loop inference process actually terminates.  
+
+Finally, the inferred loop invariant is just the abstract element at the loop head computed by the abstract semantics above.
+In practice, as the loop invariant is mainly used by the tool, we are not interested in having a ``nice-looking'' invariant.
+
+\subsection{Postconditions}
+Theoretically, an inferred postcondition is similar to a loop invariant: it is just the abstract element at the method return point.
+However, in practice we'd like to have ``nice-looking'' and compact postconditions, \emph{e.g.}, without redundant information.
+At this aim, the postcondition inference proceeds as follows.
+First, project all the locals from the abstract state --- they are not visible to the external callers.
+Second, ask each atomic abstract domain to serialize its knowledge into a user-readable form --- the abstract domains may have a very compact and optimized representation of their elements, not suitable to appear in a contract.
+Third, remove the contracts that already appear in the source code as postconditions.
+Fourth, sort and simplify the redundant postconditions.
+
+\subsection{Preconditions}
+We differentiate among \emph{sufficient} and \emph{necessary} preconditions.
+If valid, a sufficient precondition guarantees the callee is correct, but nothing can be said if it not valid --- the callee may or may not be correct. 
+If not-valid, a necessary precondition guarantees the callee is incorrect, but nothing can be said if it is valid.
+When automatic inference of preconditions is considered, we advocate the inference of necessary precondition.
+In fact, a sufficient precondition can be too strong for a caller --- at worst \texttt{false}.
+On the other hand, a necessary precondition is something that should be satisfied by the caller, otherwise the program will definitely fail later.
+We designed several algorithms to infer necessary preconditions: atomic, with disjuctions, and for collections~\cite{CousotCousotLogozzo11}.
+Necessary preconditions can be easily checked to be also sufficient by injecting them and reanalysing the callee~\cite{CousotCousotFahndrichLogozzo13}.
+
+
+\subsection{Object Invariants}
+We differentiate among \emph{reachable} and \emph{necessary} object invariants.
+A reachable object invariant characterizes all the fields values that are reachable after the execution of the constructor or any public method in the class~\cite{Logozzo-PhD}.
+A necessary object invariant is a condition on the object fields that should hold, otherwise there exists a sequence of public method calls causing the object into an error state~\cite{BouazizLogozzoFahndrich12}.
+Reachable and necessary object invariants are complementary, and both can be used to improve the precision of contract-based static analyzers.
+
+\section{Conclusions}
+Inferred contracts are vital for the success of verification tools.
+In our static contract checker, cccheck/Clousot, we spent a large amount of time to implement, refine, and optimize the contract inference algorithms.
+
+\vfill\eject 
+
+\bibliographystyle{abbrv}
+\bibliography{bib}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+\end{document}

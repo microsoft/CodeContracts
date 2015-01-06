@@ -1,0 +1,1271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D45E4F81-3252-4000-9818-F8D018895B5B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System</RootNamespace>
+    <AssemblyName>mscorlib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NoWarn>0660 0661 0626 824 649 626</NoWarn>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoStdLib>true</NoStdLib>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly>
+    </CodeContractsCustomRewriterAssembly>
+    <CodeContractsCustomRewriterClass>
+    </CodeContractsCustomRewriterClass>
+    <CodeContractsLibPaths>
+    </CodeContractsLibPaths>
+    <CodeContractsPlatformPath>
+    </CodeContractsPlatformPath>
+    <CodeContractsExtraAnalysisOptions>
+    </CodeContractsExtraAnalysisOptions>
+    <CodeContractsBaseLineFile>
+    </CodeContractsBaseLineFile>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <DocumentationFile>bin\Debug\mscorlib.XML</DocumentationFile>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly>
+    </CodeContractsCustomRewriterAssembly>
+    <CodeContractsCustomRewriterClass>
+    </CodeContractsCustomRewriterClass>
+    <CodeContractsLibPaths>
+    </CodeContractsLibPaths>
+    <CodeContractsPlatformPath>
+    </CodeContractsPlatformPath>
+    <CodeContractsExtraAnalysisOptions>
+    </CodeContractsExtraAnalysisOptions>
+    <CodeContractsBaseLineFile>
+    </CodeContractsBaseLineFile>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Academic9|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly>
+    </CodeContractsCustomRewriterAssembly>
+    <CodeContractsCustomRewriterClass>
+    </CodeContractsCustomRewriterClass>
+    <CodeContractsLibPaths>
+    </CodeContractsLibPaths>
+    <CodeContractsPlatformPath>
+    </CodeContractsPlatformPath>
+    <CodeContractsExtraAnalysisOptions>
+    </CodeContractsExtraAnalysisOptions>
+    <CodeContractsBaseLineFile>
+    </CodeContractsBaseLineFile>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Internal9|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly>
+    </CodeContractsCustomRewriterAssembly>
+    <CodeContractsCustomRewriterClass>
+    </CodeContractsCustomRewriterClass>
+    <CodeContractsLibPaths>
+    </CodeContractsLibPaths>
+    <CodeContractsPlatformPath>
+    </CodeContractsPlatformPath>
+    <CodeContractsExtraAnalysisOptions>
+    </CodeContractsExtraAnalysisOptions>
+    <CodeContractsBaseLineFile>
+    </CodeContractsBaseLineFile>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9ro|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9ro\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly>
+    </CodeContractsCustomRewriterAssembly>
+    <CodeContractsCustomRewriterClass>
+    </CodeContractsCustomRewriterClass>
+    <CodeContractsLibPaths>
+    </CodeContractsLibPaths>
+    <CodeContractsPlatformPath>
+    </CodeContractsPlatformPath>
+    <CodeContractsExtraAnalysisOptions>
+    </CodeContractsExtraAnalysisOptions>
+    <CodeContractsBaseLineFile>
+    </CodeContractsBaseLineFile>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug64\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\mscorlib.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal64\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Internal9\mscorlib.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab64\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Devlab9\mscorlib.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.cs">
+      <Link>Sources\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="System.ArraySegment.cs" />
+    <Compile Include="System.Collections.Concurrent.ConcurrentDictionary.cs" />
+    <Compile Include="System.Collections.Generic.IReadOnlyCollection.cs" />
+    <Compile Include="System.Collections.Generic.IReadOnlyList.cs" />
+    <Compile Include="System.Diagnostic.Tracing.EventSource.cs" />
+    <Compile Include="System.Diagnostic.Tracing.EventWrittenEventArgs.cs" />
+    <Compile Include="System.IO.DirectoryNotFoundException.cs" />
+    <Compile Include="System.IO.FileNotFoundException.cs" />
+    <Compile Include="System.IO.PathTooLongException.cs" />
+    <Compile Include="System.Reflection.AssemblyCompanyAttribute.cs" />
+    <Compile Include="System.Reflection.ExceptionHandlingClause.cs" />
+    <Compile Include="System.Reflection.ExceptionHandlingClauseOptions.cs" />
+    <Compile Include="System.Reflection.LocalVariableInfo.cs" />
+    <Compile Include="System.Reflection.MethodBody.cs" />
+    <Compile Include="System.Console.cs" />
+    <Compile Include="System.Runtime.CompilerServices.AysncTaskMethodBuilder.cs" />
+    <Compile Include="Contracts.cs" />
+    <!--    <Compile Include="System.Activator.cs" /> -->
+    <!--    <Compile Include="System.AppDomain.cs" /> -->
+    <!--    <Compile Include="System.AppDomainSetup.cs" /> -->
+    <!--    <Compile Include="System.ArgumentException.cs" /> -->
+    <!--    <Compile Include="System.ArgumentOutOfRangeException.cs" /> -->
+    <Compile Include="Sources\System.OperatingSystem.cs" />
+    <Compile Include="Sources\System.Version.cs" />
+    <Compile Include="System.Action.cs" />
+    <Compile Include="System.ArgumentException.cs" />
+    <Compile Include="System.ArgumentNullException.cs" />
+    <Compile Include="System.Array.cs" />
+    <!--    <Compile Include="System.AssemblyLoadEventHandler.cs" /> -->
+    <!--    <Compile Include="System.AsyncCallback.cs" /> -->
+    <Compile Include="System.Attribute.cs" />
+    <Compile Include="System.BitConverter.cs" />
+    <Compile Include="System.Boolean.cs" />
+    <Compile Include="System.Buffer.cs" />
+    <Compile Include="System.Byte.cs" />
+    <Compile Include="System.Char.cs" />
+    <Compile Include="System.Collections.ArrayList.cs" />
+    <Compile Include="System.Collections.BitArray.cs" />
+    <!--    <Compile Include="System.Collections.CaseInsensitiveComparer.cs" /> -->
+    <!--    <Compile Include="System.Collections.CaseInsensitiveHashCodeProvider.cs" /> -->
+    <!--    <Compile Include="System.Collections.CollectionBase.cs" /> -->
+    <Compile Include="System.Collections.Comparer.cs" />
+    <!--    <Compile Include="System.Collections.DictionaryEntry.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.Dictionary.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.ICollection.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.IComparer.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.IDictionary.cs" /> -->
+    <Compile Include="System.Collections.Generic.IEnumerable.cs" />
+    <Compile Include="System.Collections.Generic.IEnumerator.cs" />
+    <!--    <Compile Include="System.Collections.Generic.IEqualityComparer.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.List.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.Stack.cs" /> -->
+    <!--    <Compile Include="System.Collections.Hashtable.cs" /> -->
+    <Compile Include="System.Collections.ICollection.cs" />
+    <Compile Include="System.Collections.IComparer.cs" />
+    <!--    <Compile Include="System.Collections.IDictionary.cs" /> -->
+    <!--    <Compile Include="System.Collections.IDictionaryEnumerator.cs" /> -->
+    <Compile Include="System.Collections.IEnumerable.cs" />
+    <Compile Include="System.Collections.IEnumerator.cs" />
+    <!--    <Compile Include="System.Collections.IEqualityComparer.cs" /> -->
+    <!--    <Compile Include="System.Collections.IHashCodeProvider.cs" /> -->
+    <Compile Include="System.Collections.IEqualityComparer.cs" />
+    <Compile Include="System.Collections.IList.cs" />
+    <!--    <Compile Include="System.Collections.ObjectModel.ReadOnlyCollection.cs" /> -->
+    <!--    <Compile Include="System.Collections.Queue.cs" /> -->
+    <!--    <Compile Include="System.Collections.SortedList.cs" /> -->
+    <!--    <Compile Include="System.Collections.Stack.cs" /> -->
+    <!--    <Compile
+Include="System.Configuration.Assemblies.AssemblyHashAlgorithm.cs" />  -->
+    <!--    <Compile Include="System.Console.cs" /> -->
+    <!--    <Compile Include="System.Convert.cs" /> -->
+    <!--    <Compile Include="System.DateTime.cs" /> -->
+    <!--    <Compile Include="System.DayOfWeek.cs" /> -->
+    <Compile Include="System.Decimal.cs" />
+    <Compile Include="System.Delegate.cs" />
+    <!--    <Compile Include="System.Diagnostics.StackTrace.cs" /> -->
+    <Compile Include="System.Double.cs" />
+    <Compile Include="System.Enum.cs" />
+    <!--    <Compile Include="System.Environment.cs" /> -->
+    <!--    <Compile Include="System.EventHandler.cs" /> -->
+    <Compile Include="System.Exception.cs" />
+    <!--    <Compile Include="System.GC.cs" /> -->
+    <!--    <Compile Include="System.Globalization.Calendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.CalendarWeekRule.cs" /> -->
+    <!--    <Compile Include="System.Globalization.Compare.Options.cs" /> -->
+    <!--    <Compile Include="System.Globalization.CompareInfo.cs" /> -->
+    <!--    <Compile Include="System.Globalization.CultureInfo.cs" /> -->
+    <!--    <Compile Include="System.Globalization.DateTimeFormatInfo.cs"
+/> -->
+    <!--    <Compile Include="System.Globalization.DateTimeStyles.cs" /> -->
+    <!--    <Compile Include="System.Globalization.GregorianCalendar.cs"
+/> -->
+    <!--    <Compile
+Include="System.Globalization.GregorianCalendarTypes.cs" /> -->
+    <!--    <Compile Include="System.Globalization.HebrewCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.HijriCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.JapaneseCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.JulianCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.KoreanCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.NumberFormatInfo.cs" /> -->
+    <Compile Include="System.Globalization.NumberStyles.cs" />
+    <!--    <Compile Include="System.Globalization.RegionInfo.cs" /> -->
+    <!--    <Compile Include="System.Globalization.SortKey.cs" /> -->
+    <!--    <Compile Include="System.Globalization.StringInfo.cs" /> -->
+    <!--    <Compile Include="System.Globalization.TaiwanCalendar.cs" /> -->
+    <!--    <Compile Include="System.Globalization.TextInfo.cs" /> -->
+    <!--    <Compile
+Include="System.Globalization.ThaiBuddhistCalendar.cs" /> -->
+    <!--    <Compile Include="System.Guid.cs" /> -->
+    <!--    <Compile Include="System.IAsyncResult.cs" /> -->
+    <Compile Include="System.ICloneable.cs" />
+    <!--    <Compile Include="System.IComparable.cs" /> -->
+    <!--    <Compile Include="System.IConvertible.cs" /> -->
+    <Compile Include="System.IDisposable.cs" />
+    <!--    <Compile Include="System.IEquatable.cs" /> -->
+    <Compile Include="System.IFormatProvider.cs" />
+    <!--    <Compile Include="System.IFormattable.cs" /> -->
+    <Compile Include="System.Int16.cs" />
+    <Compile Include="System.Int32.cs" />
+    <Compile Include="System.Int64.cs" />
+    <Compile Include="System.IntPtr.cs" />
+    <!--    <Compile Include="System.IO.BinaryReader.cs" /> -->
+    <!--    <Compile Include="System.IO.BinaryWriter.cs" /> -->
+    <!--    <Compile Include="System.IO.BufferedStream.cs" /> -->
+    <!--    <Compile Include="System.IO.Directory.cs" /> -->
+    <!--    <Compile Include="System.IO.DirectoryInfo.cs" /> -->
+    <!--    <Compile Include="System.IO.File.cs" /> -->
+    <!--    <Compile Include="System.IO.FileAccess.cs" /> -->
+    <!--    <Compile Include="System.IO.FileInfo.cs" /> -->
+    <!--    <Compile Include="System.IO.FileMode.cs" /> -->
+    <!--    <Compile Include="System.IO.FileShare.cs" /> -->
+    <!--    <Compile Include="System.IO.FileStream.cs" /> -->
+    <!--    <Compile Include="System.IO.FileSystemInfo.cs" /> -->
+    <!--    <Compile
+Include="System.IO.IsolatedStorage.IsolatedStorageFile.cs" /> -->
+    <!--    <Compile
+Include="System.IO.IsolatedStorage.IsolatedStorageFileStream.cs" /> -->
+    <!--    <Compile
+Include="System.IO.IsolatedStorage.IsolatedStorageScope.cs" /> -->
+    <!--    <Compile Include="System.IO.MemoryStream.cs" /> -->
+    <!--    <Compile Include="System.IO.Path.cs" /> -->
+    <!--    <Compile Include="System.IO.SeekOrigin.cs" /> -->
+    <!--    <Compile Include="System.IO.Stream.cs" /> -->
+    <!--    <Compile Include="System.IO.StreamReader.cs" /> -->
+    <!--    <Compile Include="System.IO.StreamWriter.cs" /> -->
+    <!--    <Compile Include="System.IO.StringReader.cs" /> -->
+    <!--    <Compile Include="System.IO.StringWriter.cs" /> -->
+    <!--    <Compile Include="System.IO.TextReader.cs" /> -->
+    <!--    <Compile Include="System.IO.TextWriter.cs" /> -->
+    <!--    <Compile Include="System.LocalDataStoreSlot.cs" /> -->
+    <!--    <Compile Include="System.MarshalByRefObject.cs" /> -->
+    <!--    <Compile Include="System.Math.cs" /> -->
+    <!--    <Compile Include="System.MissingMemberException.cs" /> -->
+    <Compile Include="System.IO.IsolatedStorage.IsolatedStorage.cs" />
+    <Compile Include="System.IO.IsolatedStorage.IsolatedStorageFile.cs" />
+    <Compile Include="System.IO.IsolatedStorage.IsolatedStorageScope.cs" />
+    <Compile Include="System.IO.MemoryStream.cs" />
+    <Compile Include="System.IObservable.cs" />
+    <Compile Include="System.Lazy.cs" />
+    <Compile Include="System.MulticastDelegate.cs" />
+    <!--    <Compile Include="System.NotFiniteNumberException.cs" /> -->
+    <Compile Include="System.Nullable.cs" />
+    <Compile Include="System.Object.cs" />
+    <!--    <Compile Include="System.OperatingSystem.cs" /> -->
+    <Compile Include="System.ParamArrayAttribute.cs" />
+    <!--    <Compile Include="System.PlatformID.cs" /> -->
+    <!--    <Compile Include="System.Random.cs" /> -->
+    <Compile Include="System.Reflection.Assembly.cs" />
+    <!--    <Compile
+Include="System.Reflection.AssemblyFileVersionAttribute.cs" /> -->
+    <Compile Include="System.Reflection.AssemblyName.cs" />
+    <!--    <Compile Include="System.Reflection.Binder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.BindingFlags.cs" /> -->
+    <!--    <Compile Include="System.Reflection.CallingConventions.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ConstructorInfo.cs" /> -->
+    <Compile Include="System.Reflection.DefaultMemberAttribute.cs" />
+    <!--    <Compile Include="System.Reflection.Emit.AssemblyBuilder.cs"
+/> -->
+    <!--    <Compile
+Include="System.Reflection.Emit.AssemblyBuilderAccess.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.Emit.ConstructorBuilder.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.Emit.CustomAttributeBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.EventBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.FieldBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.ILGenerator.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.Label.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.LocalBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.MethodBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.MethodRental.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.MethodToken.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.ModuleBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.OpCode.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.PackingSize.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.ParameterBuilder.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.Emit.PropertyBuilder.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.Emit.SignatureHelper.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.Emit.TypeBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.UnmanagedMarshal.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.EventAttributes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.EventInfo.cs" /> -->
+    <!--    <Compile Include="System.Reflection.FieldAttributes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.FieldInfo.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.ICustomAttributeProvider.cs" /> -->
+    <!--    <Compile Include="System.Reflection.InterfaceMapping.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MemberInfo.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MemberTypes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MethodAttributes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MethodBase.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MethodImplAttributes.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.MethodInfo.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Module.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ParameterAttributes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ParameterInfo.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ParameterModifier.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Pointer.cs" /> -->
+    <!--    <Compile Include="System.Reflection.PropertyAttributes .cs" /> -->
+    <!--    <Compile Include="System.Reflection.PropertyInfo.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.ReflectionTypeLoadException.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ResourceAttributes.cs" /> -->
+    <!--    <Compile Include="System.Reflection.StrongNameKeyPair.cs" /> -->
+    <!--    <Compile Include="System.Reflection.TypeAttributes .cs" /> -->
+    <!--    <Compile Include="System.Reflection.TypeDelegator.cs" /> -->
+    <!--    <Compile Include="System.ResolveEventHandler.cs" /> -->
+    <!--    <Compile Include="System.Resources.IResourceWriter.cs" /> -->
+    <!--    <Compile
+Include="System.Resources.NeutralResourcesLanguageAttribute.cs" /> -->
+    <!--    <Compile Include="System.Resources.ResourceManager.cs" /> -->
+    <!--    <Compile Include="System.Resources.ResourceReader.cs" /> -->
+    <!--    <Compile Include="System.Resources.ResourceSet.cs" /> -->
+    <!--    <Compile Include="System.Resources.ResourceWriter.cs" /> -->
+    <!--    <Compile
+Include="System.Resources.SatelliteContractVersionAttribute.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Hosting.ActivationArguments.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.CallingConvention.cs" /> -->
+    <!--    <Compile Include="System.Runtime.InteropServices.CharSet.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.ITypeInfo.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.ITypeLib.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.INVOKEKIND.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ITypeLibImporterNotifySink.cs"
+/> -->
+    <!--    <Compile Include="System.Runtime.InteropServices.Marshal.cs"
+/> -->
+    <Compile Include="System.Runtime.CompilerServices.CompilerGeneratedAttribute.cs" />
+    <Compile Include="System.Runtime.InteropServices.GCHandle.cs" />
+    <Compile Include="System.Runtime.InteropServices.Marshal.cs" />
+    <Compile Include="System.Runtime.InteropServices.OutAttribute.cs" />
+    <!--    <Compile
+Include="System.Runtime.InteropServices.RegistrationServices.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.TypeLibConverter.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.UnmanagedType.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.ActivatedClientTypeEntry.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.ActivatedServiceTypeEntry.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Activation.IConstructionCallMessage.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Activation.UrlAttribute.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.Contexts.Context.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Contexts.ContextAttribute.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Contexts.IContextAttribute.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Contexts.IContextProperty.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Contexts.SynchronizationAttribute.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMessage.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMessageSink.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMethodCallMessage.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMethodMessage.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.LogicalCallContext.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.MethodResponse.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.RemotingSurrogateSelector.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.ReturnMessage.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.ObjectHandle.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.ObjRef.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Proxies.ProxyAttribute.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.RemotingServices.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.WellKnownClientTypeEntry.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.WellKnownObjectMode.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.WellKnownServiceTypeEntry.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.FormatterConverter.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.Formatters.InternalST.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.FormatterServices.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.ISerializationSurrogate.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.ObjectIDGenerator.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.ObjectManager.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.SerializationInfo.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.StreamingContext.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.StreamingContextStates.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.SurrogateSelector.cs" /> -->
+    <Compile Include="System.RuntimeFieldHandle.cs" />
+    <!--    <Compile Include="System.RuntimeMethodHandle.cs" /> -->
+    <Compile Include="System.RuntimeTypeHandle.cs" />
+    <Compile Include="System.SByte.cs" />
+    <!--    <Compile
+Include="System.Security.AccessControl.CryptoKeySecurity.cs" /> -->
+    <!--    <Compile Include="System.Security.CodeAccessPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.AsymmetricAlgorithm.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.AsymmetricSignatureDeformatter.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.AsymmetricSignatureFormatter.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CryptoAPITransform.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CryptoConfig.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CryptoStream.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CryptoStreamMode.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CspParameters.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.DES.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.DSA.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.DSACryptoServiceProvider.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.DSAParameters.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.DSASignatureDeformatter.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.DSASignatureFormatter.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.FromBase64Transform.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.HashAlgorithm.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.ICryptoTransform.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.KeySizes.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.MACTripleDES.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.PasswordDeriveBytes.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.RC2.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.RNGCryptoServiceProvider.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.RSA.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.RSACryptoServiceProvider.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.RSAParameters.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.RSAPKCS1SignatureDeformatter.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.RSAPKCS1SignatureFormatter.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.SignatureDescription.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.SymmetricAlgorithm.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.ToBase64Transform.cs" /> -->
+    <!--    <Compile Include="System.Security.Cryptography.TripleDES.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.X509Certificates.X509Certificate.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.X509Certificates.X509ContentType.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.cs"
+/> -->
+    <!--    <Compile Include="System.Security.IPermission.cs" /> -->
+    <!--    <Compile Include="System.Security.ISecurityEncodable.cs" /> -->
+    <!--    <Compile Include="System.Security.NamedPermissionSet.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.EnvironmentPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.EnvironmentPermissionAccess.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Permissions.FileDialogPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.FileDialogPermissionAccess.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.FileIOPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.FileIOPermissionAccess.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.IsolatedStoragePermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.PermissionState.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.PrincipalPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.PublisherIdentityPermission.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Permissions.ReflectionPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.ReflectionPermissionFlag.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.RegistryPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.RegistryPermissionAccess.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.SecurityAction.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.SecurityPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.SecurityPermissionFlag.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.SiteIdentityPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.StrongNameIdentityPermission.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Permissions.StrongNamePublicKeyBlob.cs" /> -->
+    <!--    <Compile Include="System.Security.Permissions.UIPermission.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Permissions.UIPermissionClipboard.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.UIPermissionWindow.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.UrlIdentityPermission.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.ZoneIdentityPermission.cs" /> -->
+    <!--    <Compile Include="System.Security.PermissionSet.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.AllMembershipCondition.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.ApplicationDirectory.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.ApplicationDirectoryMembershipCondition.cs"
+/> -->
+    <!--    <Compile Include="System.Security.Policy.CodeGroup.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.Evidence.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.FileCodeGroup.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.FirstMatchCodeGroup.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.Hash.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.HashMembershipCondition.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.IMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.NetCodeGroup.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.PolicyLevel.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.PolicyStatement.cs"
+/> -->
+    <!--    <Compile Include="System.Security.Policy.Publisher.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.PublisherMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.Site.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.SiteMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.StrongName.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.StrongNameMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.UnionCodeGroup.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.Url.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.UrlMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.Zone.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Policy.ZoneMembershipCondition.cs" /> -->
+    <!--    <Compile Include="System.Security.PolicyLevelType.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.GenericIdentity.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.GenericPrincipal.cs" /> -->
+    <!--    <Compile Include="System.Security.Principal.IIdentity.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.WindowsPrincipal.cs" /> -->
+    <!--    <Compile Include="System.Security.SecureString.cs" /> -->
+    <!--    <Compile Include="System.Security.SecurityElement.cs" /> -->
+    <!--    <Compile Include="System.Security.SecurityException.cs" /> -->
+    <!--    <Compile Include="System.Security.SecurityManager.cs" /> -->
+    <!--    <Compile Include="System.Security.SecurityZone.cs" /> -->
+    <Compile Include="System.Security.Cryptography.HashAlgorithm.cs" />
+    <Compile Include="System.Security.Cryptography.ICryptoTransform.cs" />
+    <Compile Include="System.Security.Cryptography.MD5.cs" />
+    <Compile Include="System.Security.Principal.IIdentity.cs" />
+    <Compile Include="System.Security.Principal.IPrincipal.cs" />
+    <Compile Include="System.Security.Principal.SecurityIdentifier.cs" />
+    <Compile Include="System.Security.Principal.WellKnownSidType.cs" />
+    <Compile Include="System.Security.Principal.WindowsIdentity.cs" />
+    <Compile Include="System.Security.SecureString.cs" />
+    <Compile Include="System.Single.cs" />
+    <Compile Include="System.String.cs" />
+    <!--    <Compile Include="System.StringComparison.cs" /> -->
+    <!--    <Compile Include="System.StringSplitOptions.cs" /> -->
+    <!--    <Compile Include="System.Text.ASCIIEncoding.cs" /> -->
+    <!--    <Compile Include="System.Text.Decoder.cs" /> -->
+    <!--    <Compile Include="System.Text.Encoder.cs" /> -->
+    <!--    <Compile Include="System.Text.Encoding.cs" /> -->
+    <!--    <Compile Include="System.Text.StringBuilder.cs" /> -->
+    <!--    <Compile Include="System.Text.UnicodeEncoding.cs" /> -->
+    <!--    <Compile Include="System.Text.UTF7Encoding.cs" /> -->
+    <!--    <Compile Include="System.Text.UTF8Encoding.cs" /> -->
+    <!--    <Compile Include="System.Threading.CompressedStack.cs" /> -->
+    <!--    <Compile Include="System.Threading.Monitor.cs" /> -->
+    <!--    <Compile Include="System.Threading.Overlapped.cs" /> -->
+    <!--    <Compile Include="System.Threading.RegisteredWaitHandle.cs" /> -->
+    <!--    <Compile Include="System.Threading.Thread.cs" /> -->
+    <!--    <Compile Include="System.Threading.ThreadPool.cs" /> -->
+    <!--    <Compile Include="System.Threading.Timer.cs" /> -->
+    <!--    <Compile Include="System.Threading.TimerCallback.cs" /> -->
+    <!--    <Compile Include="System.Threading.WaitCallback.cs" /> -->
+    <!--    <Compile Include="System.Threading.WaitHandle.cs" /> -->
+    <!--    <Compile Include="System.Threading.WaitOrTimerCallback.cs" /> -->
+    <!--    <Compile Include="System.TimeSpan.cs" /> -->
+    <Compile Include="System.StringComparer.cs" />
+    <Compile Include="System.SystemException.cs" />
+    <Compile Include="System.Threading.CancellationToken.cs" />
+    <Compile Include="System.Threading.Monitor.cs" />
+    <Compile Include="System.Threading.Tasks.Task.cs" />
+    <Compile Include="System.Threading.Tasks.TaskContinuationOptions.cs" />
+    <Compile Include="System.Threading.Tasks.TaskCreationAction.cs" />
+    <Compile Include="System.Threading.Tasks.TaskFactory.cs" />
+    <Compile Include="System.Threading.Tasks.TaskScheduler.cs" />
+    <Compile Include="System.TimeZoneInfo.cs" />
+    <Compile Include="System.Tuple.cs" />
+    <Compile Include="System.Type.cs" />
+    <Compile Include="System.TypeCode.cs" />
+    <Compile Include="System.TypedReference.cs" />
+    <!--    <Compile Include="System.TypeLoadException.cs" /> -->
+    <Compile Include="System.UInt16.cs" />
+    <Compile Include="System.UInt32.cs" />
+    <Compile Include="System.UInt64.cs" />
+    <Compile Include="System.UIntPtr.cs" />
+    <!--    <Compile Include="System.UnhandledExceptionEventHandler.cs" /> -->
+    <Compile Include="System.ValueType.cs" />
+    <!--    <Compile Include="System.Version.cs" /> -->
+    <Compile Include="System.Void.cs" />
+    <!--    <Compile Include="System.WeakReference.cs" /> -->
+  </ItemGroup>
+  <ItemGroup>
+    <!--    <None Include="app.config" /> -->
+    <!--    <Compile Include="System.Action.cs" /> -->
+    <!--    <Compile Include="System.ActivationContext.cs" /> -->
+    <!--    <Compile Include="System.ApplicationIdentity.cs" /> -->
+    <!--    <Compile Include="System.AssemblyLoadEventArgs.cs" /> -->
+    <Compile Include="MutabilityAttributes.cs" />
+    <Compile Include="SpecSharpAttributes.cs" />
+    <Compile Include="System.ActivationContext.cs" />
+    <Compile Include="System.Activator.cs" />
+    <Compile Include="System.AppDomain.cs" />
+    <Compile Include="System.AppDomainSetup.cs" />
+    <Compile Include="System.ApplicationIdentity.cs" />
+    <Compile Include="System.AsyncCallback.cs" />
+    <Compile Include="System.AttributeTargets.cs" />
+    <Compile Include="System.AttributeUsage.cs" />
+    <Compile Include="System.CharEnumerator.cs" />
+    <!--    <Compile Include="System.Collections.Generic.IList.cs" /> -->
+    <!--    <Compile Include="System.Collections.Generic.KeyValuePair.cs"
+/> -->
+    <!--    <Compile Include="System.Comparison.cs" /> -->
+    <!--    <Compile
+Include="System.Configuration.Assemblies.AssemblyVersionCompatibility.cs"
+/> -->
+    <!--    <Compile Include="System.ContextBoundObject.cs" /> -->
+    <!--    <Compile Include="System.Converter.cs" /> -->
+    <!--    <Compile Include="System.Diagnostics.StackFrame.cs" /> -->
+    <!--    <Compile
+Include="System.Diagnostics.SymbolStore.ISymbolDocumentWriter.cs" /> -->
+    <!--    <Compile
+Include="System.Diagnostics.SymbolStore.ISymbolWriter.cs" /> -->
+    <!--    <Compile
+Include="System.Diagnostics.SymbolStore.SymAddressKind.cs" /> -->
+    <!--    <Compile
+Include="System.Diagnostics.SymbolStore.SymbolToken.cs" /> -->
+    <!--    <Compile Include="System.EventArgs.cs" /> -->
+    <!--    <Compile Include="System.Globalization.CultureTypes.cs" /> -->
+    <!--    <Compile
+Include="System.Globalization.TextElementEnumerator.cs" /> -->
+    <!--    <Compile Include="System.Globalization.UnicodeCategory.cs" /> -->
+    <!--    <Compile Include="System.IO.FileAttributes.cs" /> -->
+    <Compile Include="System.Collections.DictionaryEntry.cs" />
+    <Compile Include="System.Collections.Generic.Comparer.cs" />
+    <Compile Include="System.Collections.Generic.Dictionary.cs" />
+    <Compile Include="System.Collections.Generic.EqualityComparer.cs" />
+    <Compile Include="System.Collections.Generic.ICollection.cs" />
+    <Compile Include="System.Collections.Generic.IComparer.cs" />
+    <Compile Include="System.Collections.Generic.IDictionary.cs" />
+    <Compile Include="System.Collections.Generic.IEqualityComparer.cs" />
+    <Compile Include="System.Collections.Generic.IList.cs" />
+    <Compile Include="System.Collections.Generic.KeyValuePair.cs" />
+    <Compile Include="System.Collections.Generic.List.cs" />
+    <Compile Include="System.Collections.IDictionary.cs" />
+    <Compile Include="System.Collections.IDictionaryEnumerator.cs" />
+    <Compile Include="System.Collections.ObjectModel.ReadOnlyCollection.cs" />
+    <Compile Include="System.Collections.SortedList.cs" />
+    <Compile Include="System.Comparison.cs" />
+    <Compile Include="System.Configuration.Assemblies.cs" />
+    <Compile Include="System.Convert.cs" />
+    <Compile Include="System.Converter.cs" />
+    <Compile Include="System.DateTime.cs" />
+    <Compile Include="System.DayOfWeek.cs" />
+    <Compile Include="System.Environment.cs" />
+    <Compile Include="System.EventArgs.cs" />
+    <Compile Include="System.EventHandler.cs" />
+    <Compile Include="System.Globalization.Calendar.cs" />
+    <Compile Include="System.Globalization.CompareInfo.cs" />
+    <Compile Include="System.Globalization.CultureInfo.cs" />
+    <Compile Include="System.Globalization.DateTimeStyles.cs" />
+    <Compile Include="System.Globalization.NumberFormatInfo.cs" />
+    <Compile Include="System.Globalization.TextInfo.cs" />
+    <Compile Include="System.Guid.cs" />
+    <Compile Include="System.IAsyncResult.cs" />
+    <Compile Include="System.IComparable.cs" />
+    <Compile Include="System.IConvertible.cs" />
+    <Compile Include="System.IEquatable.cs" />
+    <Compile Include="System.IFormattable.cs" />
+    <Compile Include="System.IO.BinaryReader.cs" />
+    <Compile Include="System.IO.BinaryWriter.cs" />
+    <Compile Include="System.IO.BufferedStream.cs" />
+    <Compile Include="System.IO.Directory.cs" />
+    <Compile Include="System.IO.DirectoryInfo.cs" />
+    <Compile Include="System.IO.File.cs" />
+    <Compile Include="System.IO.FileAccess.cs" />
+    <Compile Include="System.IO.FileAttributes.cs" />
+    <Compile Include="System.IO.FileInfo.cs" />
+    <Compile Include="System.IO.FileMode.cs" />
+    <Compile Include="System.IO.FileShare.cs" />
+    <Compile Include="System.IO.FileStream.cs" />
+    <Compile Include="System.IO.FileSystemInfo.cs" />
+    <Compile Include="System.IO.IOException.cs" />
+    <Compile Include="System.IO.Path.cs" />
+    <Compile Include="System.IO.SeekOrigin.cs" />
+    <Compile Include="System.IO.Stream.cs" />
+    <Compile Include="System.IO.StreamReader.cs" />
+    <Compile Include="System.IO.StreamWriter.cs" />
+    <Compile Include="System.IO.StringReader.cs" />
+    <Compile Include="System.IO.StringWriter.cs" />
+    <Compile Include="System.IO.TextReader.cs" />
+    <Compile Include="System.IO.TextWriter.cs" />
+    <Compile Include="System.MarshalByRefObject.cs" />
+    <Compile Include="System.Math.cs" />
+    <Compile Include="System.NotImplementedException.cs" />
+    <Compile Include="System.Predicate.cs" />
+    <Compile Include="System.Random.cs" />
+    <Compile Include="System.Reflection.Binder.cs" />
+    <Compile Include="System.Reflection.BindingFlags.cs" />
+    <Compile Include="System.Reflection.ConstructorInfo.cs" />
+    <Compile Include="System.Reflection.EventInfo.cs" />
+    <Compile Include="System.Reflection.FieldInfo.cs" />
+    <Compile Include="System.Reflection.ICustomAttributeProvider.cs" />
+    <Compile Include="System.Reflection.MemberInfo.cs" />
+    <Compile Include="System.Reflection.MemberTypes.cs" />
+    <Compile Include="System.Reflection.MethodBase.cs" />
+    <Compile Include="System.Reflection.MethodImplAttributes.cs" />
+    <Compile Include="System.Reflection.MethodInfo.cs" />
+    <Compile Include="System.Reflection.Module.cs" />
+    <Compile Include="System.Reflection.ParameterInfo.cs" />
+    <Compile Include="System.Reflection.PropertyInfo.cs" />
+    <Compile Include="System.Reflection.TypeFilter.cs" />
+    <Compile Include="System.Runtime.CompilerServices.IndexerNameAttribute.cs" />
+    <Compile Include="System.Runtime.Remoting.IChannelInfo.cs" />
+    <Compile Include="System.Runtime.Remoting.IEnvoyInfo.cs" />
+    <Compile Include="System.Runtime.Remoting.IObjectHandle.cs" />
+    <Compile Include="System.Runtime.Remoting.IRemotingTypeInfo.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.Header.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.HeaderHandler.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.IMessage.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.IMessageCtrl.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.IMessageSink.cs" />
+    <Compile Include="System.Runtime.Remoting.Messaging.IMethodCallMessage.cs" />
+    <Compile Include="System.Runtime.Remoting.ObjectHandle.cs" />
+    <Compile Include="System.Runtime.Remoting.ObjRef.cs" />
+    <Compile Include="System.Runtime.Serialization.Formatters.Binary.cs" />
+    <Compile Include="System.Runtime.Serialization.IFormatterConverter.cs" />
+    <Compile Include="System.Runtime.Serialization.IObjectReference.cs" />
+    <Compile Include="System.Runtime.Serialization.ISerializable.cs" />
+    <Compile Include="System.Runtime.Serialization.SerializationEntry.cs" />
+    <Compile Include="System.Runtime.Serialization.SerializationInfo.cs" />
+    <Compile Include="System.Runtime.Serialization.SerializationInfoEnumerator.cs" />
+    <Compile Include="System.Runtime.Serialization.StreamingContext.cs" />
+    <Compile Include="System.Runtime.Serialization.StreamingContextStates.cs" />
+    <Compile Include="System.RuntimeMethodHandle.cs" />
+    <Compile Include="System.Security.Policy.Evidence.cs" />
+    <Compile Include="System.StringComparison.cs" />
+    <Compile Include="System.Text.Decoder.cs" />
+    <Compile Include="System.Text.Encoder.cs" />
+    <Compile Include="System.Text.Encoding.cs" />
+    <Compile Include="System.Text.StringBuilder.cs" />
+    <Compile Include="System.Threading.Thread.cs" />
+    <Compile Include="System.Threading.WaitHandle.cs" />
+    <Compile Include="System.TimeSpan.cs" />
+    <Compile Include="SystemEnums.cs" />
+    <!--    <Compile Include="System.Reflection.AssemblyNameFlags.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.EnumBuilder.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.FieldToken.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.FlowControl.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.OpCodeType.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.OperandType.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.ParameterToken.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.PEFileKinds.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.SignatureToken.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.StackBehaviour.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.StringToken.cs" /> -->
+    <!--    <Compile Include="System.Reflection.Emit.TypeToken.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.ExceptionHandlingClause.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.ExceptionHandlingClauseOptions.cs" /> -->
+    <!--    <Compile Include="System.Reflection.LocalVariableInfo.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ManifestResourceInfo.cs"
+/> -->
+    <!--    <Compile Include="System.Reflection.MemberFilter.cs" /> -->
+    <!--    <Compile Include="System.Reflection.MethodBody.cs" /> -->
+    <!--    <Compile
+Include="System.Reflection.ModuleResolveEventHandler.cs" /> -->
+    <!--    <Compile Include="System.Reflection.ResourceLocation.cs" /> -->
+    <!--    <Compile Include="System.Reflection.TypeFilter.cs" /> -->
+    <!--    <Compile Include="System.ResolveEventArgs.cs" /> -->
+    <!--    <Compile Include="System.Resources.IResourceReader.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.AssemblyRegistrationFlags.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComMemberType.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.BINDPTR.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.DESCKIND.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.DISPPARAMS.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.ITypeComp.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ComTypes.TYPEKIND.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.ImporterEventKind.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.TypeLibExporterFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.InteropServices.TypeLibImporterFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Activation.ActivatorLevel.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Activation.IActivator.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Activation.IConstructionReturnMessage.cs"
+/> -->
+    <!--    <Compile Include="System.Runtime.Remoting.IChannelInfo.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.IEnvoyInfo.cs" /> -->
+    <!--    <Compile Include="System.Runtime.Remoting.IRemoteTypeInfo.cs"
+/> -->
+    <!--    <Compile Include="System.Runtime.Remoting.Messaging.Header.cs"
+/> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMessageCtrl.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Messaging.IMethodReturnMessage.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Remoting.Proxies.RealProxy.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.IFormatterConverter.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.ISerializable.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.SerializationEntry.cs" /> -->
+    <!--    <Compile
+Include="System.Runtime.Serialization.SerializationInfoEnumerator.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.AccessControlSelections.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.AccessControlType.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.AccessRule.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.AceEnumerator.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.AceFlags.cs"
+/> -->
+    <!--    <Compile Include="System.Security.AccessControl.AceType.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.AuditFlags.cs"
+/> -->
+    <!--    <Compile Include="System.Security.AccessControl.AuditRule.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.AuthorizationRule.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.CommonAcl.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.CommonSecurityDescriptor.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.ControlFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.CryptoKeyAccessRule.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.CryptoKeyAuditRule.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.CryptoKeyRights.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.DiscretionaryAcl.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.GenericAce.cs"
+/> -->
+    <!--    <Compile Include="System.Security.AccessControl.GenericAcl.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.GenericSecurityDescriptor.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.InheritanceFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.ObjectAceFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.PropagationFlags.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.RawAcl.cs" /> -->
+    <!--    <Compile
+Include="System.Security.AccessControl.RawSecurityDescriptor.cs" /> -->
+    <!--    <Compile Include="System.Security.AccessControl.SystemAcl.cs"
+/> -->
+    <!--    <Compile Include="System.Security.Cryptography.CipherMode.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.CspProviderFlags.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Cryptography.FromBase64TransformMode.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Permissions.IsolatedStorageContainment.cs" /> -->
+    <!--    <Compile Include="System.Security.Policy.ApplicationTrust.cs"
+/> -->
+    <!--    <Compile
+Include="System.Security.Policy.PolicyStatementAttribute.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.IdentityReference.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.IdentityReferenceCollection.cs" /> -->
+    <!--    <Compile Include="System.Security.Principal.IPrincipal.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.SecurityIdentifier.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.TokenAccessLevels.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.TokenImpersonationLevel.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.WellKnownSidType.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.WindowsBuiltInRole.cs" /> -->
+    <!--    <Compile
+Include="System.Security.Principal.WindowsIdentity.cs" /> -->
+    <!--    <Compile Include="System.Text.EncoderFallback.cs" /> -->
+    <!--    <Compile Include="System.Text.EncoderFallbackBuffer.cs" /> -->
+    <!--    <Compile Include="System.Threading.ApartmentState.cs" /> -->
+    <!--    <Compile Include="System.Threading.IOCompletionCallback.cs" /> -->
+    <!--    <Compile Include="System.Threading.NativeOverlapped.cs" /> -->
+    <!--    <Compile Include="System.Threading.ThreadPriority.cs" /> -->
+    <!--    <Compile Include="System.Threading.ThreadStart.cs" /> -->
+    <!--    <Compile Include="System.Threading.ThreadState.cs" /> -->
+    <!--    <Compile Include="System.UnhandledExceptionEventArgs.cs" /> -->
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\common\Contracts.snk">
+      <Link>Contracts.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="System.Globalization\" />
+    <Folder Include="System\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

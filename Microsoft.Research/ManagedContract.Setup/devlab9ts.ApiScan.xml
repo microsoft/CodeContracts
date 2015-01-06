@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- 
+    
+Sample APIscan arguments file.
+
+The following attributes are required: 
+
+* softwareName    - name of the software
+    * softwareVersion - version of the software
+    * softwareBuild   - build of the software
+    * softwareFolder  - root folder of the software
+    * outputFolder    - output folder for APIscan
+
+For release runs the following attribute is required: 
+    * confirm - by setting this argument to "true" you are confirming that you have
+                verified that ALL the files, including SETUP files, for your 
+                software are included in the analysis.
+
+The following attributes are optional (defaults in parenthesis):     
+    * mode                 - "pre-release" or "release" ("pre-release")
+    * exclusionList        - exclusion list (no list). Valid only in pre-release mode.
+    * email				   - email alias of a contact for this run (current user)
+    * symbolsFolder        - symbols folder (srv*\\symbols\symbols). Valid only in pre-release mode.
+    * preBbtBinariesFolder - root folder of the unoptimized binaries (no unoptimized binaries)
+    * preBbtSymbolsFolder  - root folder of the unoptimized symbols (<preBbt>\symbols if the directory exists)
+    
+    * noCopySymbols        - "true" or "false" ("false"). If true, symbols will not be copied to a local temporary 
+                             directory.  Primary use: if you already have all your symbols locally you can just 
+                             point at that directory and avoid the time this copy takes. Valid only in pre-release mode.
+    * noCopyBinaries       - "true" or "false" ("false"). If true, software folder files will not be copied to a 
+                             local temporary directory.  Do this only if you already have a *destructable* local 
+                             copy of the app.  (the explosion will be in-place, so the files in this directory 
+                             will be modified by this operation). Valid only in pre-release mode.
+    * noDecompress         - "true" or "false" ("false"). If true, no decompression of files will occur. This is you 
+                             certifying to ApiScan that you already decompressed the app (or are giving us 
+                             pre-compressed files). Valid only in pre-release mode.
+    * isLargeApp           - "true" or "false" ("false"). If true, MaX API will compute a smaller call graph, which will
+                             consume less memory. However, source location information will not be available. This 
+                             should be set to "true", only when the analyzer runs out of memory while calling the 
+                             MaX API, with the "false" setting. This will be visible in the backtrace in the details log.
+                             The backtrace will have calls to methods starting with PPRC.Max...
+    * analyzerTimeout      - Timeout for analysis phase (e.g. "2:30:00" for 2 hours 30 minutes)
+
+-->  
+<arguments
+        mode="pre-release"
+        softwareName="Code Contracts"
+        softwareVersion="1.1.0.0"
+        softwareBuild="1.1.0.0"
+        softwareFolder=".\devlab9ts\ApiScanTmp"        
+        symbolsFolder=".\devlab9ts\ApiScanTmp"
+        exclusionList=""
+        email="maf@microsoft.com"
+        outputFolder=".\devlab9ts\cpx"
+        preBbtBinariesFolder=""
+        preBbtSymbolsFolder=""
+        noCopySymbols="false"
+        noCopyBinaries="false"
+        noDecompress="false"        
+        analyzerTimeout="0:30:00"
+/>
+
+
+

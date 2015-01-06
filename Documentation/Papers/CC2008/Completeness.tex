@@ -1,0 +1,1136 @@
+\documentclass{llncs}
+
+\sloppy
+
+% Packages LaTeX
+\input{Packages}
+
+% Definizioni di Macro ed ambienti
+\input{DefinizioniFrancesco.tex}
+\newcommand{\comment}[1]{}
+
+\title{On the Relative Completeness of Bytecode Analysis versus Source Code Analysis} 
+\author{Francesco Logozzo \& Manuel F\"ahndrich}
+
+\institute{Microsoft Research\\
+\email{\{logozzo,maf\}@microsoft.com} }
+
+
+\begin{document}
+
+\pagestyle{plain}
+
+\maketitle
+
+\begin{abstract}
+We discuss the challenges faced by bytecode analyzers designed for
+code verification compared to similar analyzers for source code.
+While a bytecode-level analysis brings many simplifications, \eg,
+fewer cases, independence from source syntax, name resolution, etc.,
+it also introduces precision loss that must be recovered either via
+preprocessing, more precise abstract domains, more precise
+transfer functions, or a combination thereof.
+
+The paper studies the \emph{relative} completeness of a static
+analysis for bytecode compared to the analysis of the program
+source.  We illustrate it through examples originating from the
+design and the implementation of \Clousot{}, a generic static analyzer
+based on Abstract Interpretation for the analysis of MSIL.
+\end{abstract}
+
+\section{Introduction}
+We are interested in static program analysis for program verification,
+where the goal is to infer \emph{invariants} that are
+sufficient to discharge assertions which appear in the program either explicitly
+(specified by the user through assertions) or implicitly
+(\eg, array bound checks, null dereferences, division by zero,
+etc.). Such analyses need to be precise enough to validate
+the assertions.  In this paper, we will focus our attention on static
+analyses for program verification and we call these PSA,
+\emph{Precise enough Static Analyses}.
+
+PSA are often designed to work at the program source level, \eg,
+\cite{BlanchetCousotEtAl03,TVLA,Logozzo07,Bourdoncle93,Airac5}).
+There are many reasons for that.  The program source provides a
+uniform view which abstracts machine details.
+Source code analysis is also able to directly exploit program
+structure, such as loops, to increase the precision via techniques such
+as reductive iterations~\cite{Granger92}, and the narrowing application by
+re-execution from a post-fixpoint~\cite{CousotCousot77}. 
+
+As we will see in this paper, the most immediate benefit of source
+analysis however is that it provides the analysis designer with a
+\emph{large code window}, allowing him/her to specialize transfer
+functions for extra precision.
+
+The analysis of low level code provides different
+advantages:  1) it is more faithful, as it analyzes the code that is
+actually executed (or closer to), 2) it enables the analysis
+of libraries when source code is not available, 3) the analyzer
+avoids redundant work that the compiler performed, such as name
+resolution, type checking, template/generics instantiation,  4)
+the semantics of high-level constructs that are expanded by the
+compiler, such as $\mathtt{try\dots catch\dots finally}$, delegates,
+partial classes in C\#, or generics in C\# and Java, need not be duplicated. As a consequence
+a low-level code analyzer needs to deal with many fewer constructs
+than a source analyzer, reducing its complexity.  Finally, 5) the analyzer can be
+language independent; e.g., analyzing the common target
+language MSIL of the .NET platform provides analysis of C\#, VB,
+Managed C++, F\#.
+
+Because of these advantages, plenty of static analyses have been
+developed for low-level code.  Most of them address non-relational
+properties like type checking \cite{MSIL,Leroy02,PalaczEtAl06}, non-cyclicity
+\cite{RossignoliSpoto06}, nullness \cite{FahndrichLeino03}, etc.
+Others target numerical properties, \eg, to check buffer overruns
+\cite{BalakrishnanReps04} or array accesses
+\cite{MendezNavasHermenegildo07}.
+
+Our observation is that while writing a static analyzer for a
+low-level language or bytecode is simpler than writing one for source
+code due to the above advantages, it is non-trivial to match the
+precision of a similar analysis performed at source level, due to the
+missing high-level structure and the reduced size of the \emph{code
+  window} used by transfer functions. The rest of
+this paper elucidates this observation with examples and general
+principles.
+
+\begin{example}[Motivating Example]
+\label{ex:intro}
+Suppose we analyze a program containing the high level statement
+$\mathcal{S} \equiv \Assume \code{x} - \code{y} \leq 7$, using the
+difference bounds abstract domain~\cite{Mine01-1}.  At source level,
+the constraint $\code{x} - \code{y} \leq 7$ is a difference
+constraint, and it can be represented faithfully by the abstract
+state.  Now consider the compilation of $\mathcal{S}$ into three
+address code:
+\[
+\begin{split}
+0: & \code{t_1} \takes \code{x} - \code{y} \\
+1: & \code{t_2} \takes \code{t_1} \leq 7 \\
+2: & \Assume \code{t_2}
+\end{split}
+\]   
+Analyzing this code sequence with the same domain used at the source
+level raises immediate problems:
+\begin{description}
+\item[Expression complexity]
+The assignment at line \linea{0} involves three variables, which
+cannot be captured precisely by the difference bounds domain. As a
+consequence, the abstract value for \code{t_1} is $\top$.
+
+\item[Type complexity] At line \linea{1}, \code{t_2} is assigned the
+result of a boolean expression\footnote{Please note that this case is
+orthogonal to the previous one, \ie, the problem shows up even if the
+assignment was $ \code{t_2} \takes (\code{x} - \code{y} \leq 7)$.}.
+At the source level there was no such boolean assignment, and in fact,
+the domain used at source level cannot encode the relation between
+\code{t_1} and \code{t_2}.
+\end{description}
+As a result, the analysis of the code sequence using the same domain
+as at the source level produces an abstract state that contains no
+information about the relation of \code{x} and \code{y}.
+Several solutions are possible to mitigate the above problems.
+\begin{itemize}
+\item Use a more precise numerical abstract domain for the low-level
+analysis that handles relations among more than two variables, such
+as Octahedra \cite{ClarisoCortadella04}, or Polyhedra
+\cite{CousotHalbwachs78,PPL}. This approach however leads to
+scaling problems, as these domains exhibit exponential complexity. No
+polynomial domains are known that can handle more than two variables \cite{Mine04}.
+
+\item Split the current abstract domain in two at the boolean
+assignment: one where $\code{t_2} == \code{true}$ and one where
+$\code{t_2} == \code{false}$.  This method has two main drawbacks: (i)
+it may lead to exponential explosion by doubling the abstract states
+at each conditional branch; and (ii) it still introduces loss of
+precision, because the relation to be assumed at line \linea{2} is
+lost.
+
+\item 
+A more general solution which addresses both of the problems and all
+others related to the limited code window, is to use a
+lightweight symbolic abstract domain to compute available
+expressions at each program point. 
+\end{itemize}
+\vspace{-3pt}
+Let us briefly sketch how the use of a symbolic domain to recover
+expressions works on the example.  At line \code{2}, the analysis
+\emph{first} asks the symbolic domain to refine variable \code{t_2}.
+This refinement, using line \linea{1}, produces $\code{t_2} \equiv
+\code{t_1} \leq 7$, which can be further refined, using line \linea{0},
+to produce $\code{t_2} \equiv \code{x} - \code{y} \leq 7$.  The
+analysis \emph{then} passes the refined expression $\code{x} -
+\code{y} \leq 7$ to the difference bounds domain, which handles it
+exactly as the source analysis does.  \qed
+\end{example}
+
+\vspace*{-5pt}
+As the example shows, PSA of low-level code requires more than just
+reusing the domains suitable for high-level code, otherwise, precision
+is lost. In this paper, we investigate the \emph{relative}
+completeness of low-level code analysis versus source code
+analysis, i.e., what is required for bytecode analysis to be as
+precise as source code analysis, without requiring the use of domains
+with worse complexity.
+
+We present representative issues that crop up when designing precise
+and scalable bytecode analyses. We faced those issues during the
+design and implementation of \Clousot{} \cite{LogozzoMaf08}, a PSA for .NET based on
+abstract interpretation.  The issues described are not specific to
+.NET, but arise for all low-level analyses. They manifest in (i) the
+precise handling of assignments, tests and branches, and (ii) the
+fixpoint iteration strategy, in particular for narrowing and reductive
+iterations.  We discuss how to overcome these issues, and the
+solutions we have adopted in \Clousot{}.
+%%%
+In general, quantifing the impact of such issues is hard.
+We tried a rough (under-)estimation by switching off some precision refinements discussed in this paper (not all of them could be switched off, as many are buried deep in the architecture of \Clousot{}).  
+We obtained a loss of precision of 10\% in the analysis of the array accesses of \code{mscorlib.dll}, the main library in the .NET framework.
+Such loss of precision is enough to generate more than 1400 false positives, \ie, to make the analysis \emph{de facto} unuseful.
+
+\vspace{-10pt}
+
+\section{Languages}
+We use a while-language as a representative for high-level languages,
+and a three address code instruction set as a
+representative of low-level code.
+
+\vspace{-13pt}
+\subsection{While-Language}
+
+\begin{figure}[t]
+\vspace*{-10pt}
+\[
+  \begin{array}{rcll}
+    \Stm &::=&  \Skip; \mid \Var := \Exp; \mid \Stm~ \Stm \mid \While(\Bexp)~\{\Stm\};  \mid \If(\Bexp)~ \{ \Stm~ \} \Else~\{ \Stm\ \}; \mid \\
+&& \Assume \BExp; \mid \Assert \BExp; \\
+    \Exp & ::= & \Lit \mid \Exp~ \Op~ \Exp   \\
+    \BExp & ::= & \Lit \mid \Exp~ \Relop~ \Exp \mid ~!(\BExp) \mid  \Bexp~ \&\&~ \Bexp \mid \Bexp \parallel \Bexp \\
+    \Lit & ::= & \Var \mid \Int   \quad \quad \quad  \quad \Var  :: = \dots \mid \code{x} \mid \code{y} \mid \dots \quad \quad \quad     \Int  :: =  \dots \mid -1 \mid 0 \mid 1 \mid \dots \\
+   \Op & ::= & + \mid - \mid * \mid /\quad \quad \quad     \Relop  ::=  < \mid \leq \mid ==   
+  \end{array}
+\]
+\vspace*{-10pt}
+  \caption{The while-language: a high-level language}
+  \label{fig:WhileLanguage}
+\end{figure}
+
+Our high level language is a simple while-language with no dynamic
+memory allocation, shown in Fig.~\ref{fig:WhileLanguage}.  The
+semantics is standard.  We use
+a single type, integers.  Following widespread convention, we
+assume that \code{0} stands for \code{false} and all the other
+integers for \code{true}.  
+\comment{
+So, for instance:
+\[
+\begin{array}{ll}
+& \sem{ \If(0)~ \Stm_1~ \Else~ \Stm_2;  } = \sem{\Stm_2} \\
+\text{ and } & \sem{ \If(2 \leq 12 )~ \Stm_1~ \Else~ \Stm_2;  } =  \sem{ \If(1)~ \Stm_1~ \Else~ \Stm_2; } = \sem{\Stm_1}.
+\end{array}
+\]
+}
+Boolean expressions \emph{shortcut} evaluation.
+\comment{
+\[
+\begin{array}{ll}
+  & \sem{0~ \&\& 1/0} = 0 \text{ and }  \sem{37 \parallel 1/0} = 1 \\
+\text{ but } & \sem{1/0~ \&\& 0} =  \sem{1/0 \parallel 37} = \textit{"error: division by zero"}. 
+\end{array} 
+\]
+}
+We also consider assert and assume statements, which enable assume/
+guarantee reasoning, \eg, to (abstract) method calls.  The
+statement $\Assert \code{e};$ checks if the expression \code{e}
+holds. If it does not, then the program fails.
+\comment{
+\[
+\sem{\code{x} := 0; \Assert 0 < \code{x}; \code{y} := 1/\code{x}} = \textit{"error: assertion violated"}.
+\]
+}
+The statement $\Assume \code{e};$ acts as an execution guard for the
+following statements. If the condition does not hold, execution gets stuck. 
+\comment{
+For instance in the code snippet below, the assumption acts as
+a guard to the division, so that if $0 \geq \code{x}$, then the
+program simply stops.
+\[
+\sem{\code{x} := 0; \Assume 0 < \code{x}; \code{y} := 1/\code{x}} = \textit{"stop: assumption not satisfied"}.  
+\]
+}
+
+\subsection{Three Address Code}
+Our low-level language is a three address code instruction set shown
+in Fig.~\ref{fig:ThreeAddressesInstructionSet}.  This
+language is higher level than MSIL, Java bytecode, or assembly, but it
+simplifies our presentation and is sufficient to exhibit the problems
+of interest.
+\begin{figure}[t]
+\vspace*{-10pt}
+  \[
+  \begin{array}{rcll}
+    \Code &::=&  \Label : ~\Istr \mid \Label :~ \Istr~ '\backslash n'~ \Code \mid \epsilon \\
+    \Label & ::= & 0 \mid ... \mid 2^{32} \\
+    \Istr & ::= &\Var \takes \ExpTwoOps \mid \\ 
+    && \Jump~ \Label \mid \JumpIfTrue~ \Var~ \Label \mid  \Assert \Lit \mid \Assume \Lit \mid \Nop \\
+    \ExpTwoOps & ::= &  \Lit \mid  \Lit~ \Op~ \Lit  \mid \Lit~ \Relop~ \Lit \mid  \Lit~ \&\&~ \Lit \mid \Lit \parallel \Lit  
+  \end{array}
+  \]
+\vspace*{-10pt}
+  \caption{Three address code: a low-level language.}
+  \label{fig:ThreeAddressesInstructionSet}
+\end{figure}
+
+An instruction stream is a sequence of labeled instructions.  An
+assignment instruction $\code{x} \takes \code{e_{2ops}}$ updates the
+value of the variable \code{x} with the result of the evaluation of
+the expression $\code{e_{2ops}}$ which contains \emph{at most} two
+operands.  As a consequence the expressions that can be atomically
+evaluated and assigned at low level are a subset of those at higher
+level, \ie, $\ExpTwoOps \subseteq \Exp \cup \BExp$.  In the next
+sections, we will see how this impacts the precision and performances
+of PSA.
+
+
+\subsection{Compilation}
+We assume two compilation functions: $\Comp \in
+\funzione{\Stm}{\Code}$ compiles a program expressed in the
+high-level language into a low-level instruction stream one, and $\Compexp \in
+\funzione{(\Exp \cup \Bexp)}{\Code}$ compiles expressions into a
+sequence of instructions for evaluating them.  The result of the
+evaluation is in a (reserved) variable \result.
+We expect the functions \Comp\ and \Compexp\ to perform
+naive compilation, \ie, a straightforward translation without any
+program optimization \cite{AhoSethiUllman}.
+\nopagebreak[4]
+\section{Abstract Interpretation}
+Abstract interpretation is a theory of approximations
+\cite{CousotCousot77}.  It formalizes the intuition that semantics are
+more or less precise depending on the observation level.  The more
+precise the abstract semantics, the more precise the properties about
+the execution of the program it captures.  A static analysis is an
+abstract semantics which is rough enough to be computable.  A precise
+static analysis is a static analysis which is precise \emph{enough} to
+capture the properties of interests, \eg, those needed to prove the
+absence of certain runtime errors.
+
+\subsection{Abstract Domains}
+%relational, non-relational, numerical (intervals, octagons, polyhedra)
+An abstract domain \adom{D} is the complete lattice
+\tupla{\el{E},\aless, \abot, \atp, \acup, \acap}, where \el{E} is the
+set of abstract elements, ordered according to the relation $\aless$. 
+The smallest abstract element is $\abot$, the largest is $\atp$. 
+The join \acup, and the meet \acap,  are also defined.
+With a slight abuse of notation, we will confuse an  abstract domain \adom{D} with the set of its elements \el{E}.
+
+The elements of an abstract domain are related to the concrete domain
+\dom{D} (also a complete lattice), by means of a monotonic
+concretization function $\gamma \in \funzione{\adom{D}}{\dom{D}}$.
+\comment{
+\footnote{We do not require a best abstraction function
+$\alpha$, thus putting ourselves in a more generic framework than the
+one based on Galois connections,~\cite{CousotCousot92-2}.}. 
+}
+In this
+paper we assume the concrete domain to be the complete boolean lattice
+$\parti{\Sigma}$, where $\Sigma = \funzione{\Var}{\mathbb{Z}}$.
+
+Given two abstract domains, $\adom{D}_1$ and $\adom{D}_2$, their reduced cartesian product  is $\adom{D}_1 \otimes \adom{D}_2$, whose elements are pairs which satisfy the reduction condition: 
+\[
+\forall \tupla{\ael{d}_1, \ael{d}_2} \in \adom{D}_1 \otimes \adom{D}_2.\ \gamma_{\adom{D}_1 \otimes \adom{D}_2}(\tupla{\ael{d}_1, \ael{d}_2}) \subseteq \gamma_{\adom{D}_1}(\ael{d}_1) \cap \gamma_{\adom{D}_2}(\ael{d}_2) \ .
+\]
+
+An abstract domain is said to be \emph{relational} if it keeps
+relations between program variables.  Otherwise it is said to be
+\emph{non-relational}.
+
+The elements of the abstract domain of intervals, \Intervals, are $\{
+[i, s] \mid i,s \in \mathbb{Z} \cup \{-\infty, + \infty\} \}$.  
+\comment{
+The
+order is the interval inclusion, the bottom element is the empty
+interval (\ie, an interval where $s < i$), the largest element is the
+line $[-\infty, +\infty]$, the join and the meet are respectively the
+union and the intersection of intervals.  
+}
+The concretization function,
+$\gamma_\Intervals \in \funzione{\Intervals}{\parti{\mathbb{Z}}}$ is
+defined as $\gamma_\Intervals([i, s]) = \{ z \in \mathbb{Z} \mid i
+\leq z \leq s\}$.  The abstract domain of boxes, \Boxes, is the
+functional lifting of \Intervals, \ie, $\Boxes =
+\funzione{\Vars}{\Intervals}$.  The concretization of a box,
+$\gamma_\Boxes \in \funzione{\Boxes}{\parti{\Sigma}}$ is defined
+as $\gamma_\Boxes(f) = \{ \sigma \in \Sigma \mid \forall
+\code{x}. \code{x} \in \mathrm{dom}(f) \Longrightarrow
+\sigma(\code{x}) \in \gamma_\Intervals(f(\code{x}))\}$.  From the
+definition of $\gamma_\Boxes$, it follows that the meaning of a
+variables in \Boxes\ is independent from all the others, which implies
+that \Boxes\ is a non-relational abstract domain.  The time and space
+complexity of the operations on \Boxes\ is \Order{n}, where $n$ is the number
+of variables.
+
+\comment{
+The abstract domain of difference bounds matrices, \DBM~\cite{Mine01-1}, captures properties in the form of $\code{x} - \code{y} \leq z$, with $ z \in  \mathbb{Z}$.
+The abstract domain of octagons, \Octagons~\cite{Mine01-2}, refines \DBM\ by capturing properties in the form of $\pm \code{x} \pm \code{y} \leq z$, with $z \in \mathbb{Z}$.
+Octagons elements are represented as a weighted direct graph, and the lattice operations are defined point-wisely.  
+The meaning of octagon elements is given by the concretization $\gamma_\Octagons \in \funzione{\Octagons}{\parti{\Sigma}}$ defined as $\gamma_\Octagons(o) = \bigcap_{\code{x} \stackrel{z}{\rightarrow} \code{y} \in o} \{ \sigma \in \Sigma \mid \sigma(\code{x}) - \sigma(\code{y}) \leq z\}$.
+From the definition of $\gamma_\Octagons$ it follows that \Octagons\ can capture relations between \emph{two} variables, thus it is a (weakly) relational domain.
+\Octagons\ is the most precise known numerical abstract domain which shows a polynomial complexity: it is \Order{n^3} in time  and \Order{n^2} in space.
+}
+
+The abstract domain of Polyhedra, \Polyhedra
+~\cite{CousotHalbwachs78}, captures linear constraints between program
+variables: $\sum_{i=0}^{i < n} a_i * \code{x}_i \leq z$, with $a_i, z
+\in \mathbb{Z}$.
+\comment{
+  Elements have an internal double representation (as
+system of inequalities and as a set of vertexes and generators).  It
+is possible to move from one representation to the other via an
+expensive conversion.  Lattice operations are defined on one or the
+other representation.  
+}
+The concretization function $\gamma_\Polyhedra
+\in \funzione{\Polyhedra}{\parti{\Sigma}}$ is defined as the intersection of all the constraints :
+$\gamma_\Polyhedra(P) = \bigcap_{\sum_{i=0}^{i < n} a_i * \code{x}_i
+\leq z \in P} \{ \sigma \in \Sigma \mid \sum_{i=0}^{i < n} a_i *
+\sigma(\code{x}_i) \leq z \}$.  From the concretization function, it
+follows that \Polyhedra\ can capture properties between an arbitrary
+number of variables, thus it is a relational domain.  The complexity
+of \Polyhedra\ is \Order{2^n} both in space and time.
+\comment{
+In practice, program analysis is about finding abstract domains which
+represent a good trade-off between precision and cost.
+}
+
+\subsection{Transfer Functions}
+\comment{
+Let \dom{D} be a concrete domain, \adom{D} an abstract domain related
+to the concrete by a Galois connection: $\dom{D}
+\galois{\alpha}{\gamma} \adom{D}$, and $\tau \in
+\funzione{\dom{D}}{\dom{D}}$ be a transfer function.  Then, by a basic
+result in abstract interpretation theory, $\ael{\tau}^* \in
+\funzione{\adom{D}}{\adom{D}}$ defined as $\ael{\tau}^* = \alpha \circ
+\tau \circ \gamma$ is the best \emph{abstract} transfer function.  The
+definition of $\ael{\tau}^*$ cannot be used in practice in the
+implementation of PSA.  In general $\ael{\tau}^*$ is not computable,
+and when it is, it may be too expensive to be adopted in
+practice,~\cite{Yorsh04}.  Furthermore, it may be the case that
+$\ael{\tau}^*$ simply does not exist.  For instance, for \Polyhedra,
+there exists no best abstraction function
+$\alpha$,~\cite{CousotCousot92-2}, and consequently no $\ael{\tau}^*$.
+}
+
+Abstract interpreters implement an upper approximation $\ael{\tau}$ of
+the best abstract transformer $\ael{\tau}^*$, \ie~ $\forall
+\ael{d}\in\adom{D}.~ \ael{\tau}^*(\ael{d}) \aless
+\ael{\tau}(\ael{d})$.  An abstract transfer function $\ael{\tau}$ is (i)
+usually hand-crafted, and (ii) tuned to maximize the precision/cost trade-off.
+
+It is common practice for the implementation of an
+abstract domain \adom{D} to provide two abstract transfer functions:
+one for the assignment and one for the handling of
+tests~~\cite{BlanchetCousotEtAl03,Logozzo07,Venet04}.  The
+assignment abstract transfer function, \adom{D}.\aassign, is an
+over-approximation of the states reached with the concrete assignment:
+\[
+\forall \code{x}, \code{e}. \forall \ael{d}.\ \{ \sigma[\code{x} \mapsto v] \mid \sigma \in \gamma(\ael{d}), \semantica{}{\code{e}}(\sigma) = v \} \subseteq \gamma(\adom{D}.\aassign(\ael{d}, \code{x}, \code{e})).
+\]
+The test abstract transfer function, \adom{D}.\atest, acts as a kind of filter to the input states:
+\[
+\forall \code{e}. \forall \ael{d}.\ \{ \sigma \in \gamma(\ael{d}) \mid \semantica{}{\code{e}}(\sigma) \neq 0 \} \subseteq \gamma(\adom{D}.\atest(\ael{d}, \code{e})).
+\]
+It is vital for a PSA to provide a precise approximation of \atest. 
+
+\comment{
+\subsection{Widening and Narrowing Operators}
+Most of the abstract domains used in practice do not satisfy the ascending chain condition (ACC), so that the least fixpoint computation on such domains may not terminate.
+A widening operator is then used to extrapolate the sequence limit.
+Stated otherwise, it enables for \emph{dynamic} approximation.
+Formally, a widening operator $\awidening \in \funzione{\adom{D} \times \adom{D}}{\adom{D}}$ is such that 
+$\forall \ael{d}_1, \ael{d}_2 \in \adom{D}.\ \ael{d}_1 \aless \ael{d}_1 \awidening \ael{d}_2 \text{ and } \ael{d}_2 \aless \ael{d}_1 \awidening \ael{d}_2$ and
+for all the increasing chains $\ael{d}_0 \aless \dots \ael{d}_n \aless \dots$ the increasing chain defined as $\ael{w}_0 = \ael{d}_0, \dots \ael{w}_{i+1} = \ael{w}_{i} \awidening \ael{d}_{i+1}$ is not strictly increasing.
+Then, the upward fixpoint iterations with widening will converge to a post-fixpoint, \cite{CousotCousot77}.
+
+Precision lost by the application of the widening can be recovered with a narrowing operator.
+A narrowing operator essentially refines the computed post-fixpoint, without going below the least fixpoint, \ie, by preserving soundness.
+Formally, a narrowing operator is $\narrowing \in \funzione{\adom{D} \times \adom{D}}{\adom{D}}$ such that $\forall \ael{d}_1, \ael{d}_2.\ \ael{d}_1 \aless \ael{d}_2 \Longrightarrow \ael{d}_1 \aless (\ael{d}_2 \narrowing \ael{d}_1)\aless \ael{d}_2$ and for all the decreasing chains $\ael{d}_0 \asup \dots \ael{d}_n \asup \dots$ the increasing chain defined as $\ael{n}_0 = \ael{d}_0, \dots \ael{n}_{i+1} = \ael{n}_{i} \narrowing \ael{d}_{i+1}$ is not strictly decreasing.
+Then, the downward fixpoint iterations with narrowing will provide a more precise yet sound approximation of the least fixpoint, \cite{CousotCousot77}.
+
+The design of good widening and narrowing operators is very important for a PSA.
+}
+
+\section{Relative Completeness of Precise Analysis of Bytecode}
+In this section, we define a generic abstract semantics for the high
+level language, $\HLsem{\cdot} \in \funzione{\Stm}{\adom{D}
+\rightarrow \adom{D}}$, by structural induction.  In parallel, we
+define the abstract semantics for the low level language,
+$\LLsem{\cdot} \in \funzione{\Code}{\adom{D} \rightarrow
+  \adom{D}}$. For each kind of statement and expression, we
+(i) express whether and under what conditions
+$\LLsem{\cdot}$  is complete w.r.t.\  $\HLsem{\cdot}$, \ie, when
+$\LLSem{\cdot}$ is as precise as $\HLSem{\cdot}$, and (ii) show
+how best to overcome precision problems, \eg, by refining the abstract domain or
+the transfer functions.
+
+\subsection{Notions of Relative Completeness}
+We distinguish two notions of relative completeness: strong and
+weak.   Strong relative completeness requires the low-level
+analysis not to lose information when using the \emph{same} abstract domain.
+Weak relative completeness allows the low-level analysis to use a
+\emph{refinement} of the abstract domain used at source level.
+
+\begin{definition}[Strong Relative Completeness]
+Given statement \Stm, abstract domain \adom{D}, and projection
+function $\pi \in \funzione{\adom{D}}{\adom{D}}$, which removes all
+the temporary variables introduced by compilation, if
+\begin{equation}
+\forall \ael{d} \in \adom{D}.\ \pi(\LLSem{\Comp(\Stm)}(\ael{d})) \aless \HLSem{\Stm}(\ael{d}),
+\label{eq:completeness}
+\end{equation}
+ then $\LLSem{\cdot}$ is strong-relatively complete w.r.t. to $\HLSem{\cdot}$ for statement $\Stm$.
+\end{definition}
+
+Note that the definition above does not require equality of precision,
+only subsumption. It may be the case that the analysis at the bytecode
+level is more precise in some cases.
+
+\begin{definition}[Weak Relative Completeness]
+Given statement \Stm, two abstract domains \adom{D} and $\adom{D}^+$
+such that $\adom{D}^+$ is more precise than $\adom{D}$ : $\adom{D}^+
+\galois{\alpha}{\gamma} \adom{D}$, and projection function $\pi \in
+\funzione{\adom{D}^+}{\adom{D}^+}$, which removes all the temporary
+variables introduced by compilation, if
+\begin{equation}
+\forall \ael{d} \in \adom{D}.\ \alpha (\pi (\LLSem{\Comp(\Stm)}(\gamma(\ael{d})))) \aless \HLSem{\Stm}(\ael{d}),
+\label{eq:weakcompleteness}
+\end{equation}
+ then  $\LLSem{\cdot}$ is weak-relatively complete
+ w.r.t. to $\HLSem{\cdot}$ for statement $\Stm$ up to the refined
+ domain $\adom{D}^+$.
+\end{definition}
+
+Weak relative completeness relaxes the previous definition by enabling
+the use of a more precise abstract domain for the analysis of the
+bytecode.  It is evident that strong relative completeness
+implies weak relative completeness.
+
+\subsection{Skip}
+Handling of \Skip\ is straightforward:
+$\HLsem{\Skip} = \lambda \ael{d}.\ael{d}$.
+The \Skip\ statement is compiled with a \Nop: $\Comp(\Skip) = \mathit{n}: \Nop$, and $\LLsem{\mathit{n}: \Nop} = \lambda \ael{d}.\ael{d}$.
+As a consequence, in this case the bytecode analysis is trivially strongly complete. 
+
+\subsection{Sequence}
+The analysis of a sequence of statements is usually just the composition of the analyses:
+\begin{equation}
+\HLSem{\Stm_1 \Stm_2} = \HLSem{\Stm_2} \circ \HLSem{\Stm_1}.
+\label{eq:seqHL}
+\end{equation}
+The compilation is the juxtaposition of two sequences of instructions: 
+\[
+\Comp(\Stm_1 \Stm_2) = \left [ \begin{array}{ll}\Comp(\Stm_1)\\ \Comp(\Stm_2) \end{array} \right. \ .
+\]
+The abstract semantics of a sequence of instructions is the compositions of the analyses: 
+\begin{equation}
+\LLSem{\mathit{k}: \Istr\ '\text{\textbackslash} \mathit{n}'\ \Code} = \LLSem{\Code} \circ \LLSem{\mathit{k}: \Istr}.
+\label{eq:seqLL}
+\end{equation}
+Assuming that low-level analysis is complete (resp. weakly complete)
+for the subsequences, from (i) the fact that projection is an abstraction; and (ii) the monotonicity of the abstract functions, it follows that
+the low-level analysis of the sequence is complete (resp. weakly complete) w.r.t. the high-level analysis.
+
+Note that in general, sequencing may cause loss of precision for both
+high- and low-level analysis w.r.t. the concrete semantics.
+
+\comment{
+\subsubsection{Discussion: Completeness w.r.t. the Concrete Semantics.}
+It is worth noting that in general the definition of abstract
+semantics for composition as in (\ref{eq:seqHL}) and (\ref{eq:seqLL})
+is an incomplete abstraction of the \emph{concrete} semantics of the
+sequential composition as shown by the next example.
+
+\begin{figure}[t]
+  \[
+  \begin{array}{ll}
+    \Stm_1 & 
+    \left[ 
+      \begin{array}{l}
+        \If~ ( 0 < \code{y})  \\
+        \quad  \{ \code{x} := -1; \} \\
+        \Else~ \\
+        \quad \{ \If~ ( \code{y} < 0 ) \\
+        \quad \quad \{ \code{x} := 1; \} \\
+        \quad \phantom{\{} \Else~ \{~ \Skip;~ \} \};   
+      \end{array}
+    \right.\\
+    \Stm_2 \ & 
+     \left[ 
+      \begin{array}{l}
+        \code{z} := \code{x} * \code{y}; 
+      \end{array}
+    \right.
+  \end{array}
+  \]
+\caption{An example showing the lose of precision in handling the sequential composition.}
+\label{fig:exSeq}
+\end{figure}
+
+\begin{example}[Incompleteness of Sequential Composition]
+Consider the code snippet in Fig.~\ref{fig:exSeq}, and  suppose we analyze it with the \Boxes\ domain.
+The separate analysis of $\Stm_1$ and $\Stm_2$ is complete, in that 
+$ \alpha_\Boxes(\semantica{}{\Stm_1}(\Sigma)) =  \HLSem{\Stm_1}(\atp_\Boxes) = [\code{y} \mapsto [-\infty, +\infty], \code{x} \mapsto [-1, 1]] = \ael{b}_1
+$ 
+and 
+\[
+\alpha_\Boxes(\semantica{}{\Stm_2}(\gamma_\Boxes(\ael{b}_1))) =  \HLSem{\Stm_2}(\ael{b}_1) =  \ael{b}_1[\code{z} \mapsto [-\infty, +\infty]] =  \HLSem{\Stm_1 \Stm_2}(\atp_\Boxes)
+\] 
+On the other hand, 
+$
+\semantica{}{\Stm_1 \Stm_2}(\Sigma) = \{ \sigma \in \Sigma \mid -1 \leq \sigma(\code{x}) \leq 1, \sigma(\code{z}) \leq 0 \},
+$
+ so that the abstraction of the sequence is incomplete:
+$
+\alpha_\Boxes(\semantica{}{\Stm_1 \Stm_2}) = [\code{x} \mapsto [-1, 1], \code{z} \mapsto [-\infty, 0]] \ael{\sqsubset}  \HLSem{\Stm_1 \Stm_2}(\atp_\Boxes).
+$ 
+\qed
+\end{example}
+
+The example highlights that splitting a code sequence and analyzing
+each part separately (even at source level) may lead to precision loss.  In
+general, this issue can be addressed by enlarging the granularity of
+the transfer function. Several techniques for coping with this problem
+have been proposed, \eg, trace partitioning \cite{Tzolovski98},
+disjunctive completion \cite{CousotCousot92-1}, local refinement
+\cite{ColbyLee96}, systematic domain refinement \cite{Giacobazzi00},
+problem-specific optima \cite{Monniaux07}. These work at the bytecode
+level as well.
+}
+
+\subsection{Assignments}
+\label{sec:assignment}
+A source language analysis just passes the assignment to the underlying abstract domain \adom{D}: 
+\begin{equation}
+\HLsem{\code{x}:= \code{e};} = \lambda \ael{d}. \adom{D}.\aassign(\ael{d}, \code{x}, \code{e}).
+\label{eq:assignHL}
+\end{equation}
+The compilation of the assignment generates a sequence of instructions
+to evaluate \code{e}, and an assignment of the result to \code{x}: 
+\begin{equation}
+\Comp(\code{x}:= \code{e};) = \left [ \begin{array}{ll}& \Compexp(\code{e}) \\ \mathit{k} :& \code{x} \takes \result\end{array} \right. \ .
+\label{eq:assignCompile}
+\end{equation}
+Without loss of generality, we will assume in the sequel that the last
+instruction of $\Compexp(\code{e})$ assigns directly to the target
+variable \code{x} instead of \code{res}.
+Thus, the final assignment is similarly passed to underlying abstract domain:
+\begin{equation}
+\LLsem{\mathit{k}: \code{x} \takes \code{e2op}} = \lambda \sigma. \adom{D}.\aassign(\sigma, \code{x}, \code{e2op}).
+\label{eq:assignLL}
+\end{equation}
+If the source expression \code{e} is such that $\code{e} \equiv \code{l}$ or $\code{e} \equiv \code{l}_1 \Op\ \code{l}_2$, where $\code{l}, \code{l}_1, \code{l}_2 \in \Lit$, and $\Op$ is as in Fig.~\ref{fig:WhileLanguage}, then (\ref{eq:assignHL}), (\ref{eq:assignCompile}) and (\ref{eq:assignLL}) imply the strong relative completeness of \LLsem{\mathit{k}: \code{x} \takes \code{e2op}}.
+However, this is not the case for more complex expressions, as the next ({counter-}) examples show.
+\comment{
+\begin{figure}[t]
+  \[
+  \begin{array}{r | r | l c r}
+    \code{x} & \code{y} &\phantom{0} (\code{x} + \code{y}) * \code{y}  \\   
+    2 &\phantom{0} -1 &\phantom{0} (2-1)* -1 & = & -1 \\
+    2 & 1 &\phantom{0} (2 +1 ) * 1 & = & 3 \\
+    3 & -1 &\phantom{0} (3 -1)*-1 & = & -2 \\
+    3 & 1 &\phantom{0} (3 + 1) * 1 & = & 4
+  \end{array}
+  \]
+  \caption{The tabular evaluation of $(\code{x} + \code{y}) * \code{y}$ in the abstract state  $\ael{b}_0 = [\code{x} \mapsto [2, 3], \code{y} \mapsto [-1, 1]]$. The table is for presentation purposes only, in practice an implementation will avoid explicitly computing the table, by using some smarter representation, ~\cite{Logozzo07}.}
+  \label{fig:ex1}
+\end{figure}
+}
+\begin{example}[Precision Loss using Interval Arithmetic]
+\label{ex:intervalarithmetics}
+Suppose we use the \Boxes\ domain to analyze the assignment $\mathcal{A} \equiv \code{z} := (\code{x} + \code{y}) * \code{y}$.
+Let $\ael{b}_0 = [\code{x} \mapsto [2, 3], \code{y} \mapsto [-1, 1]]$ be the abstract input state.
+Then
+\[
+\HLSem{\code{z} := (\code{x} + \code{y}) * \code{y};}(\ael{b}_0) = \ael{b}_0[\code{z} \mapsto [-2, 4]],
+\]
+using a specialized source transfer function.
+\comment{as the right-hand side expression evaluates according to the table in Fig.~\ref{fig:ex1}.}
+On the other hand, the compilation of $\mathcal{A}$ is 
+\begin{equation}
+  \Comp(\code{z} := (\code{x} + \code{y}) * \code{y};) = \left [
+    \begin{array}{r l}
+      0: & \campo{t} \takes \campo{x} + \campo{y} \\
+      1: & \campo{z} \takes \campo{t} * \campo{y}
+    \end{array} \right. ,
+  \label{ex:comp1}
+\end{equation}
+so that the abstract state after the program point $0$ is
+$\ael{b}_0[\campo{t} \mapsto [1,4]]$, and hence the abstract
+post-state is $\LLSem{\Comp(\code{z} := (\code{x} + \code{y}) *
+\code{y};)} (\ael{b}_0) = \ael{b}_0[\campo{t} \mapsto[1,4], \campo{z}
+\mapsto [\mathbf{-4}, 4]]$. \qed
+\end{example}
+The example shows that the analysis of the compiled code introduces a
+loss of precision w.r.t. to a specialized source level transfer
+function.  Intuitively, it is caused by the fact that the domain
+\Boxes\ is non-relational, and hence at program point $1$ it has lost
+the information that \code{t} depends on \code{y}, so that two
+spurious cases are introduced.
+
+As the incompleteness originates from the use of a non-relational
+numerical domain, one may advocate the usage of a relational domain.
+If we chose to analyze (\ref{ex:comp1}) with \Octagons, the problem,
+unfortunately, does not go away.
+At program point $0$, we have an assignment that involves \emph{three} variables.
+The domain cannot track the relation between \code{t}, \code{x} and \code{y}.
+As a consequence, no improvement is obtained at $1$ using Octagons.
+
+If we chose instead to analyze (\ref{ex:comp1}) with \Polyhedra, then
+the assignment at $0$ can be precisely captured by this domain.  So
+the abstract post-state is $\ael{p} = \{ 2 \leq \code{x} \leq 3, -1
+\leq \code{x} \leq 1, \code{t} - \code{x} -\code{y} = 0\}$.  
+The instruction at $1$ involves a quadratic expression (the
+multiplication of two variables), which a naive implementation of
+\Polyhedra.\aassign\ may simply decide to ignore.  However, it is easy
+to see how a more refined implementation can figure out that, because
+of $\ael{p}$, $\code{t} = \code{x} + \code{y}$ it can use this
+equality to simplify the multiplication and infer the tightest lower
+bound $-2 \leq \code{z}$, and hence satisfy
+(\ref{eq:weakcompleteness}).
+
+
+\begin{example}[Precision Loss using Octagons]
+Let us analyze the assignment $\mathcal{B} \equiv \code{z} := 2
+*\code{x} - \code{y};$ with the \Octagons\ domain.  Let the initial
+abstract state be $\ael{o}_0 = \{ \code{x} -\code{y} \leq 1, \code{y}
+- \code{x} \leq -1 \}$.  Even if the source expression is not in the
+octagonal form, the designer of the domain can refine
+\Octagons.\aassign\ (i) to replace \code{x} in the right hand side of
+the $\mathcal{B}$ by $\code{y} - 1$, and (ii) to perform the basic
+algebraic simplifications, so that
+\[
+\HLSem{\code{z} := 2 *\code{x} - \code{y};}(\ael{o}_0) = \ael{o}_0 \cup \{ \code{z} - \code{y} \leq 2, \code{y} - \code{z} \leq -2 \}.
+\]
+On the other hand, the compilation of $\mathcal{B}$ is 
+\begin{equation}
+  \Comp(\code{z} := 2*\code{x} - \code{y};) = \left [
+    \begin{array}{r l}
+      0: & \campo{t} \takes 2 * \campo{x} \\
+      1: & \campo{z} \takes \code{t} - \code{y}
+    \end{array} \right. .
+  \label{ex:comp2}
+\end{equation}
+\end{example}
+At program point $0$, there is no way one can refine
+\Octagons.\aassign\ to provide an octagonal constraint for \code{t}.
+For instance, the substitution of \code{x} by $\code{y} -1$ produces
+$\code{t} \takes 2 * \code{y} - 2$, which cannot be represented by an
+octagon constraint, too.  As a consequence, no constraint can be
+inferred on \code{t} and hence \code{z}: $\LLsem{\Comp(\code{z} := 2
+*\code{x} - \code{y};)}(\ael{o}_0) = \ael{o}_0$. \qed
+
+Intuitively, the precision loss in the previous example is caused by
+splitting ``large'' expressions into smaller chunks, thereby
+reducing the expression window seen by the atomic operations in the
+abstract domain, and hence limiting their ability to infer relations.
+
+If we chose instead to analyze (\ref{ex:comp2}) with \Polyhedra, then
+both assignments at program points $0$ and $1$ are linear
+constraints that are represented exactly by this abstract domain.
+As a consequence, the low-level analysis, when performed on a more
+precise abstract domain is (weak-relatively) complete.
+
+\subsubsection{Discussion: Choosing the Right Abstract Domain.}
+The previous examples suggest that we can obtain weak completeness by
+systematically using \Polyhedra. This is the direction taken by some
+analyzers for low-level code, \eg,
+\cite{GopanReps06,MendezNavasHermenegildo07,boogie}. We do not
+advocate this approach, as \Polyhedra{} exhibits an exponential
+complexity in practice (in the number of variables).  In order to
+overcome this issue in \Clousot{}, we have chosen to not refine
+directly the numerical domain \adom{D}, but to combine it with a
+symbolic domain \Symbolic\ to propagate expressions,
+\cite{AhoSethiUllman,Mine06}. 
+In other words the analysis is done on the refined abstract domain $\Symbolic \otimes \adom{D}$.  The
+analysis of $\mathit{k} : \code{z} \takes \code{e2op}$ with an
+abstract element $\tupla{\ael{s}, \ael{d}}$, first uses \ael{s} to
+refine \code{e2op} to an expression $\code{e2op}^+$, then it performs
+the assignment over the basic numerical domain: $\adom{D}.\aassign(\ael{d}, \code{z}, \code{e2op}^+)$.
+
+
+\subsection{Assumptions and Assertions}
+We consider just the \Assume\ statement, the case for \Assert\ being similar.
+At source level, the PSA just passes the expression to be assumed to the underlying domain:
+\begin{equation*}
+\HLSem{\Assume\ \code{e};} = \lambda \ael{d}. \adom{D}.\atest(\ael{d}, \code{e}).
+\end{equation*}
+The compilation generates code to evaluate the condition \code{e}, and it assumes the result:
+\begin{equation}
+  \Comp(\Assume \code{e};) = \left[ \begin{array}{ll}&\CompExp(\code{e})\\ \mathit{k} :&   \Assume\ \result  \end{array} \right. \ .
+\label{eq:compileassume}
+\end{equation}
+The bytecode semantics passes the literal to the underlying abstract domain:
+\begin{equation*}
+\LLSem{\mathit{k} : \Assume\ \code{l}} = \lambda \ael{d} \in \adom{D}.\atest(\ael{d}, \code{l}).
+\end{equation*}
+The compilation schema (\ref{eq:compileassume}), which is common to \eg, the C\# and Java compilers, introduces severe imprecision in analyses, as illustrated by Ex.~\ref{ex:intro} and by:
+
+\begin{example}[Precision Loss in Tests]
+Consider the statement $\mathcal{D} \equiv \Assume\ 0 \leq \code{x};$
+to be analyzed with \Octagons, in the initial state $\atp_\Octagons =
+\emptyset$.  Then, $\HLSem{ \Assume\ 0 \leq \code{x};}(\atp_\Octagons)
+= \{ -\code{x} \leq 0 \}$.  The compilation of $\mathcal{D}$ is
+\begin{equation}
+  \Comp( \Assume\ 0 \leq \code{x};) = \left [
+    \begin{array}{r l}
+      0: & \result \takes 0 \leq \code{x} \\
+      1: & \Assume \result
+    \end{array} \right. .
+  \label{ex:comp3}
+\end{equation}
+At program point $0$, \result\ is assigned the result of
+evaluating the boolean condition. Since nothing is known in the
+input state about \code{x}, nothing can be concluded about the
+truth of \code{0 \leq \code{x}}, and hence \result \ is unconstrained.
+As a consequence, $\LLSem{\Comp(\Assume\ 0 \leq
+\code{x};)}(\atp_\Octagons) = \atp_\Octagons$. \qed
+\end{example}
+The previous example shows that strong relative completeness does not
+hold.  If we analyze (\ref{ex:comp3}) with \Polyhedra, the situation
+does not change, because even \Polyhedra\ cannot capture the relation
+between a variable and the truth value of an expression.  Thus, if we
+seek weak relative completeness, we need to refine the abstract
+domain with either an abstract domain for tracking boolean
+expressions, or more generally use the symbolic abstract domain
+\Symbolic\ introduced in Sect~\ref{sec:assignment} to
+``reconstruct'' larger expressions, that can then be passed to
+the underlying numerical abstract domain.
+
+Whereas in Sect~\ref{sec:assignment} the use of \Symbolic\ was just an
+alternative w.r.t. the use of a more precise numerical domain, it
+becomes a \emph{necessity} for handling boolean expressions.  
+The use of the symbolic domain during low-level analysis requires a refinement of the
+transfer functions, as shown by the next example.
+
+\begin{example}[Precision Loss Induced by Compilation]
+Consider a slight modification of the previous example:  $\mathcal{F} \equiv \Assume\ !(0 \leq \code{x});$ to be analyzed with \Octagons, in the entry state $\atp_\Octagons$.
+$\HLSem{ \Assume\ !(0 \leq \code{x});}(\atp_\Octagons) = \{ \code{x} \leq -1 \}$.
+The compilation of $\mathcal{F}$ (\eg, by C\#) is 
+\begin{equation}
+  \Comp( \Assume\ !(0 \leq \code{x});) = \left [
+    \begin{array}{r l}
+      0: & \code{t} \takes 0 \leq \code{x} \\
+      1: & \result \takes \code{t} == 0 \\
+      2: & \Assume \result
+    \end{array} \right. .
+  \label{ex:comp4}
+\end{equation}
+At program point $2$, the analysis of the compiled code, using the refined domain $\Symbolic
+\otimes \Octagons$ infers the abstract
+state $\ael{r} = \tupla{[\code{t} \mapsto 0 \leq \code{x}, \result
+\mapsto \code{t} == 0], \atp_\Octagons} $.  Then, $\result$ is refined
+to the expression $\result^+ \equiv (0 \leq \code{x})== 0$, which
+cannot be generated by the syntax in Fig.~\ref{fig:WhileLanguage}.  As
+a consequence, $\Octagons.\aassign$, designed for the high level, does
+not understand $\result^+$, and hence ignores it:
+$\LLSem{\Comp(\Assume\ !(0 \leq \code{x});)}(\tupla{\atp_\Symbolic,
+\atp_\Octagons}) = \ael{r}$.  \qed
+\end{example}
+
+\subsubsection{Discussion: Refining the Transfer Functions, and Program Transformations.}
+The example above underlines the fact that, in order to obtain weak
+completeness, one must also refine the transfer functions.  For
+instance, in the example $\Octagons.\aassign$ must be refined to
+perform the semantic preserving rewritings $(0 \leq \code{x})== 0
+\rightsquigarrow !(0 \leq \code{x}) \rightsquigarrow \code{x} < 0$.
+
+In practice, a PSA designer has two choices: perform the rewriting
+phase online or offline.  In the first case, a transfer function first
+rewrites the boolean expressions, \eg, by applying the De Morgan laws,
+by rewriting $\code{e} == 0$ as $!(\code{e})$, etc., and then
+proceeds.  In the second case, in a pre-processing step, a program
+$\mathcal{S}$ is analyzed with just \Symbolic, all the expressions in
+$\mathcal{S}$ are first refined and then simplified as above, to
+obtain a refined program $\mathcal{S}^+$.  Then, $\mathcal{S}^+$
+is analyzed using \adom{D}.
+In \Clousot{}, we have adopted the first approach.
+
+\subsection{Conditionals}
+The analysis of conditional statements (i) refines the input abstract
+state with the guard, (ii) analyzes the two branches in the refined
+state, and (iii) joins the results at the exit point.  Precise
+handling of guards is essential for a PSA.
+\begin{equation}
+  \begin{array}{l}
+    \HLSem{ \If(\code{e})~ \{ \Stm_1 \} \Else~\{ \Stm_2 \};} =  \\
+    \quad \quad \quad \lambda \ael{d}. \HLSem{\Stm_1}(\adom{D}.\atest(\ael{d}, \code{e}))\ \acup\ \HLSem{\Stm_2}(\adom{D}.\atest(\ael{d}, \code{!(e)})).
+  \end{array}
+  \label{hl:if}
+\end{equation}
+One possible compilation is:
+\begin{equation}
+  \Comp( \If(\code{e})~ \{ \Stm_1 \} \Else~\{ \Stm_2 \}; ) = 
+  \left [ 
+    \begin{array}{r l}
+      & \Compexp(\code{e}) \\
+      k :& \code{b} \takes \result == 0 \\
+      k+1 :& \JumpIfTrue\ \code{b}\  t \\
+      & \Comp(\Stm_1) \\
+      & \Jump\ \mathit{out} \\
+      t: & \Comp(\Stm_2)\\
+      \mathit{out}: &\Nop
+    \end{array}
+  \right. \ .
+\label{comp:If}
+\end{equation}
+The low level analysis of (\ref{comp:If}) can be made very similar to
+(\ref{hl:if}), provided that some preprocessing of the bytecode is
+performed.  The first step is to construct the control flow graph from
+(\ref{comp:If}), as in Fig.~\ref{fig:cfgIf}.  However, that is not
+enough, because one wants to know that $!(\code{b})$
+(resp. $\code{b}$) holds at program point $k+2$ (resp. $t$).
+Propagating such an information during a dataflow analysis is
+non-trivial.
+
+\begin{figure}[t]
+  \[
+  \xymatrix @-1.2pc {
+    & \fbox{$\begin{array}{rl}&\Compexp(\code{e}) \\  k:& \code{b} \takes \result == 0 \\ k+1 :& \JumpIfTrue\ \code{b}\  t  \end{array}$} \ar[dr] \ar[dl] \\
+    \fbox{$\Comp(\Stm_1)$} \ar[dr]&  &\fbox{$\Comp(\Stm_2)$}\ar[dl]  \\
+    &\fbox{$\mathit{out}: \Nop$} &
+  }
+  \]
+  \caption{The control flow graph constructed from $\Comp( \If(\code{e})~ \{ \Stm_1 \} \Else~\{ \Stm_2 \}; )$.}
+  \label{fig:cfgIf}
+\end{figure}
+
+\comment{
+\begin{figure}[t]
+  \[
+  \xymatrix @-1.2pc  {
+    &\fbox{$\begin{array}{rl}&\Compexp(\code{e}) \\  k:& \code{b} \takes \result == 0 \end{array}$} \ar[dr] \ar[dl] \\
+    \fbox{$\begin{array}{rl} &\Assume \code{b} \\ &\Comp(\Stm_1) \end{array}$}\ar[dr]&  &\fbox{$\begin{array}{rl} &\Assume \code{!(b)} \\ &\Comp(\Stm_2) \end{array}$} \ar[dl]  \\
+    &\fbox{$\mathit{out}: \Nop$} &
+  }
+  \]
+  \caption{The enhanced control flow graph constructed from $\Comp( \If(\code{e})~\allowbreak \{ \Stm_1 \} \allowbreak \Else~\{ \allowbreak \Stm_2\allowbreak \}; )$, in which the assumptions at the head of the conditional branches are made explicits.}
+  \label{fig:cfgIf2}
+\end{figure}
+}
+
+A better approach is to provide another view of the code
+(\ref{comp:If}), in which the guard of the conditional is made
+explicit in the true-branch and the false-branch as \code{assume}
+statements.  This is the direction
+we have taken in \Clousot{}.  In general, let $\fbox{\code{B}}$
+the block which computes the truth value of the guard \code{e},
+$\fbox{\code{T(e)}}$ and $\fbox{\code{F(e)}}$ the (compilation of the)
+two branches of the conditional dominated by (resp.) $\Assume
+\code{b}$ and $\Assume \code{!(b)}$, and $\fbox{\code{O}}$ be the exit
+block.  Then the low level semantics can be defined as:
+\begin{equation}
+\def\objectstyle{\scriptstyle}
+\def\labelstyle{\scriptstyle}
+\begin{array}{l c l}
+  \BigLLSem{\raisebox{0.6cm}
+    {
+      \xymatrix @-1.8pc  {
+        &\fbox{\code{B}} \ar[dl] \ar[dr]& \\
+        \fbox{\code{T(e)}} \ar[dr]& & \fbox{\code{F(e)}}\ar[dl] \\
+        & \fbox{\code{O}} &
+      }
+    }
+  } & = & 
+  \begin{array}{l}
+    \lambda \ael{r} \in \adom{D} \otimes \Symbolic.\ \\
+    \quad \quad \quad \mathrm{let}\ \ael{r}_1 = \LLSem{\code{B}}(\ael{r})\ \mathrm{in} \\
+    \quad \quad \quad \mathrm{let}\ \ael{r}_t = \LLSem{\code{T(e)}}((\adom{D} \otimes \Symbolic).\atest(\ael{r}_1, \code{e}))\ \mathrm{in} \\
+    \quad \quad \quad \mathrm{let}\ \ael{r}_f =  \LLSem{\code{F(e)}}((\adom{D} \otimes \Symbolic).\atest(\ael{r}_1, \code{!(e)}))\ \mathrm{in}\\
+    \quad \quad \quad \mathrm{in}\ \ael{r}_t \acup \ael{r}_f \ . 
+  \end{array}
+\end{array}
+\end{equation}
+
+However, incompleteness can still show up if the compilation scheme is different from  (\ref{comp:If}), in particular for the handling of expressions.
+The next example is inspired by the way the C\# compiler \cite{VisualCSharp}, generates code for shortcutting boolean expressions.
+
+\begin{example}[Loss of Precision Induced by Compilation of Shortcut Expressions]
+Let $\mathcal{G}$ be the code snippet $\If (0 \leq \code{i}\ \&\&\ \code{i} < \code{len})\ \{ \Stm_1 \}\ \Else\ \{ \Stm_2 \}$.
+The $C\# 2.0$ compiler generates code that looks like the one in Fig.~\ref{comp:shortcut}.
+Briefly, if one of  the operands of $\&\&$ is false, then it jumps to line $8$, which sets  $\result$ to $0$ .
+Otherwise, it sets $\result$ to $1$.
+The two flows are then merged at program point $9$, which implies that $\result == 0$ and $\result == 1$ are joined, \ie, the information about the truth of the guard, $\result == 0 \Longleftrightarrow !(0 \leq \code{i}\ \&\&\ \code{i} < \code{len})$ and $\result == 1 \Longleftrightarrow (0 \leq \code{i}\ \&\&\ \code{i} < \code{len})$ is lost.
+So it cannot be further propagated in the two branches of the conditional. \qed
+\end{example}
+The incompleteness in the previous example can be resolved either by precisely modeling the relation between boolean variables and boolean expressions with BDDs as in \cite{Jeannet02}, or by approximating the double implication with a simple implication, \eg, using trace partitioning, \cite{Tzolovski98}.
+As a consequence, the underlying abstract domain must be refined to the reduced cardinal power $\parti{\Lit} \rightarrow (\adom{D} \otimes \Symbolic)$, so as to obtain the weak relative completeness for shortcut conditionals.
+
+\begin{figure}[t]
+\[
+\begin{array}{ccc}
+\multicolumn{3}{c}{
+ \Comp(\If (0 \leq \code{i}\ \&\&\ \code{i} < \code{len})\ \{ \Stm_1
+ \} \Else \{ \Stm_2 \}) = }
+\\[5mm]
+%\left [
+  \begin{array}[b]{r l}
+    0: & \code{t}_1 \takes 0 \leq \code{i} \\
+    1: & \code{b}_1 \takes \code{t}_1 == 0 \\
+    2: & \JumpIf\ \code{b}_1\ 8 \\
+    3: & \code{t}_2 \takes \code{i} < \code{len} \\
+    4: & \code{b}_2 \takes \code{t}_2 == 0 \\
+  \end{array}
+%\right.
+&
+  \hspace{5mm}
+  \begin{array}[b]{r l}
+    5: & \JumpIf\ \code{b}_2\ 8 \\
+    6: & \result\ \takes 1 \\
+    7: & \Jump\ 9 \\
+    8: & \result\ \takes\ 0 \\
+  \end{array} 
+&
+  \hspace{5mm}
+  \begin{array}[b]{r l}
+    9: & \JumpIf\ \result\ \mathit{k}+1 \\
+    10: & \Comp(\Stm_2) \\
+    \mathit{k} : & \Jump\ \mathit{out} \\
+    \mathit{k}+1 : & \Comp(\Stm_1) \\
+    \mathit{out} : &\Nop
+  \end{array}
+\end{array}
+\]
+\caption{The (simplified version of the) code generated by the $C\# 2.0$ compiler for the statement  $\If (0 \leq \code{i}\ \&\&\ \code{i} < \code{len})\ \{ \Stm_1 \} \Else \{ \Stm_2 \}$.}
+\label{comp:shortcut}
+\end{figure}
+
+\subsection{Loops}
+The semantics of a loop is given as a least fixpoint over a suitable partial order:
+\begin{equation*}
+  \begin{array}{r l}
+    \HLSem{\While(\code{e})\ \{\ \Stm\ \};} = \lambda \ael{d}.\ & \mathrm{let}\ \ael{inv} = \mathsf{lfp}_{\abot}^{\aless} \lambda X.\ \ael{d} \acup \HLSem{\Stm}(\adom{D}.\atest(X, \code{e})) \\
+& \mathrm{in}\ \adom{D}.\atest(\ael{inv}, \code{!(e)}).
+  \end{array}
+\end{equation*}
+The least fixpoint equals the limit of the increasing iterations starting from $\abot$.
+In general the iterations may not converge, so that a widening operator~\cite{CousotCousot77} is used to force convergence to a post-fixpoint.
+Then, a narrowing operator~\cite{CousotCousot77} is applied to recover some precision.
+An easy yet generic and useful form of narrowing is given by doing one more iteration starting from the post-fixpoint, as shown by the next example.
+
+\begin{example}[Narrowing by Re-Execution]
+\label{ex:narrowing}
+Let $\mathcal{W} \equiv \code{z} := 0;\ \While(\code{z} < 100 )\ \{\ \code{z} := \code{z} + 1; \}; \Assert \code{z} == 100;$ and let us analyze it with the \Intervals\ abstract domain.
+The fixpoint iterations produce the increasing chain of intervals $[0,0] \aless\allowbreak [0,1] \aless\allowbreak [0, 2]\allowbreak \dots \aless [0, n]$, which is extrapolated by the standard widening on intervals to $[0, +\infty]$, so that $\el{inv}^\widening = [\code{z} \mapsto [0,  +\infty]] $ is an invariant for the loop.
+On the other hand, it is not precise enough to prove the assertion after the loop.
+By \emph{first} re-executing the body starting from the fixpoint, one gets $[0,0] \acup [1, 100] = [0, 100]$, so that  $\el{inv}^\narrowing = [\code{z} \mapsto [0,  100]]$.
+\emph{Then},  $\el{inv}^\narrowing$ intersected with the negation of the loop guard is enough to prove the assertion. \qed
+\end{example}
+
+The compilation of a while statement looks like
+\begin{equation}
+  \Comp(\While(\code{e})\ \{\ \Stm\ \}; ) = 
+  \left [ 
+    \begin{array}{r l}
+      b: & \Compexp(\code{e}) \\
+      k :& \code{b} \takes \result == 0 \\
+      & \JumpIfTrue\ \code{b}\  \mathit{out} \\
+      & \Comp(\Stm) \\
+      & \Jump\ b \\
+      \mathit{out}: &\Nop
+    \end{array}
+  \right. \ .
+\label{comp:While}
+\end{equation}
+
+A typical analysis of the unstructured code above first detects the
+back edges, in order to find the program points where widening is needed.
+However, back edges detection is not enough to ensure relative completeness when extrapolating operators are used, as shown by the next example.
+
+\begin{example}[Narrowing by Re-Execution, continued]
+The CFG graph for $\mathcal{W}$ is in Fig.~\ref{fig:narrowing}.  A
+standard back-edges analysis detects that the block starting at $1$ is
+the target of a back edge, and hence the widening point.  Then, we
+analyze the program on the domain $\Intervals \otimes \Symbolic$, and
+we infer the invariant $\code{z} \mapsto [0, +\infty]$ at program
+point $1$.  Now we want to refine it using the re-execution based
+narrowing.  In the source level case, we just proceeded by induction
+on the structure.  At the low-level, we don't know which edge leads
+into the loop, and which edge leads out of the loop. If we push the
+invariant \emph{first} onto the left branch (\ie, on program point
+$4$), then we obtain the desired refined
+$\code{z} \mapsto [0, 100]$, which is then pushed onto the right
+branch, where it is enough to prove the assertion is not violated.
+On the other hand, if we push the invariant \emph{first} onto the right
+branch (\ie, on program point $6$), we obtain no invariant refinement.
+\qed
+\end{example}
+
+\comment{
+\subsubsection{Discussion: Choosing the right narrowing operator.}
+From the example above, it follows that in the low level world the use
+of the re-execution based narrowing must be done with some care.  The
+example implies that \emph{one} (decreasing) iteration is not enough
+to ensure weak relative completeness.  An immediate solution to this
+problem is to iterate the decreasing iterations until stabilization of
+the full CFG.  The problem with such an approach is that it may
+introduce unuseful computations.  For instance, in the example the
+``right'' branch may be arbitrarily complex, so that the analysis may
+go deep along that branch, and then because of the refinement induced
+by the ``left'' branch, the same branch must be re-analyzed.  In the
+worst case, this may introduce a quadratic (w.r.t. the number of
+branches in the graph) slowdown of the analysis.  An improvement is to
+pre-process the CFG, so to annotate each outgoing edge with
+information whether there is a loop starting from that edge, and use
+this information to schedule the blocks during the narrowing phase.
+
+The preprocessing can be combined with domain-specific narrowings, so
+to improve the overall precision of the analysis.  } The example shows
+that applying standard narrowing techniques from source level analysis
+is tricky on low-level code, as the necessary high-level loop
+structures are not apparent. Symbolic expression recovery is not
+sufficient, as control flow is involved. Thus, to obtain relative
+completeness for loops, some form of loop recovery must be performed.
+
+\begin{figure}[t]
+  \[
+  \xymatrix @-1.2pc {
+    & \fbox{$\begin{array}{rl} 0: \code{z} := 0\end{array}$} \ar[d] \\
+    & \fbox{$\begin{array}{rl} 
+        1: &  \Nop \\
+        2 :& \result \takes \code{z} < 100 \\
+        3: & \code{b} \takes \result == 0 \\
+      \end{array}$} \ar[dr] \ar@/^/@<1ex> [dl] \\     
+    \fbox{$\begin{array}{rl} 
+        4 : & \Assume\ \code{!(b)} \\  
+        5 : & \code{z} := \code{z} + 1 \end{array} $} \ar@/^/@<1ex> [ur]
+    &  &\fbox{$\begin{array}{rl} 6 : & \Assume\ \code{b}\\ 7 : & \Assert \code{z} == 100 \end{array}$}  \\   
+  }
+  \]
+\caption{The enhanced CFG graph for the three addresses compilation for the code in Ex.~\ref{ex:narrowing}.
+Exact narrowing requires the knowledge that the left branch leads to a cycle.}
+\label{fig:narrowing}
+\end{figure}
+
+\section{Conclusions}
+We have presented a series of issues faced by low-level code analyzers
+if their precision is to match the precision typically achieved by a
+source analysis.
+We have formalized the relation between the low-level and high-level
+analyses via the concepts of strong and weak relative completeness.  
+By analysis on the program constructs, we have shown: (i) how strong
+relative completeness can be obtained only for trivial cases, and (ii)
+how weak relative completeness can be obtained by refining
+the underlying domain for the analysis, the transfer functions, and
+by pre-processing of the program.  However, it turns out that
+the refinement step must be handled with care by the designer of the
+precise static analysis, in order to avoid transforming a polynomial
+problem (\eg, the analysis of the source program with Octagons) into
+an exponential one.
+
+\bibliographystyle{plain}
+\small
+\bibliography{bib}
+
+
+
+\end{document}

@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Visitor">
+    <Position X="7" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAEAAAAAAAAACAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.StandardVisitor">
+    <Position X="7" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>kE8Ds2MMs+l+ZP68lE+Q0A4o8zt1aOXC11tbI4sT75Q=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="callingVisitor" />
+    </ShowAsAssociation>
+    <Members>
+      <Method Name="VisitAcquire" Hidden="true" />
+      <Method Name="VisitAddressDereference" Hidden="true" />
+      <Method Name="VisitAliasDefinition" Hidden="true" />
+      <Method Name="VisitAliasDefinitionList" Hidden="true" />
+      <Method Name="VisitAnonymousNestedFunction" Hidden="true" />
+      <Method Name="VisitApplyToAll" Hidden="true" />
+      <Method Name="VisitArrayType" Hidden="true" />
+      <Method Name="VisitAssembly" Hidden="true" />
+      <Method Name="VisitAssemblyReference" Hidden="true" />
+      <Method Name="VisitAssertion" Hidden="true" />
+      <Method Name="VisitAssignmentExpression" Hidden="true" />
+      <Method Name="VisitAssignmentStatement" Hidden="true" />
+      <Method Name="VisitAssumption" Hidden="true" />
+      <Method Name="VisitAttributeConstructor" Hidden="true" />
+      <Method Name="VisitAttributeList" Hidden="true" />
+      <Method Name="VisitAttributeNode" Hidden="true" />
+      <Method Name="VisitBase" Hidden="true" />
+      <Method Name="VisitBinaryExpression" Hidden="true" />
+      <Method Name="VisitBlock" Hidden="true" />
+      <Method Name="VisitBlockExpression" Hidden="true" />
+      <Method Name="VisitBlockList" Hidden="true" />
+      <Method Name="VisitBranch" Hidden="true" />
+      <Method Name="VisitCatch" Hidden="true" />
+      <Method Name="VisitCatchList" Hidden="true" />
+      <Method Name="VisitClass" Hidden="true" />
+      <Method Name="VisitCoerceTuple" Hidden="true" />
+      <Method Name="VisitCollectionEnumerator" Hidden="true" />
+      <Method Name="VisitCompilation" Hidden="true" />
+      <Method Name="VisitCompilationUnit" Hidden="true" />
+      <Method Name="VisitCompilationUnitList" Hidden="true" />
+      <Method Name="VisitCompilationUnitSnippet" Hidden="true" />
+      <Method Name="VisitComposition" Hidden="true" />
+      <Method Name="VisitComprehension" Hidden="true" />
+      <Method Name="VisitComprehensionBinding" Hidden="true" />
+      <Method Name="VisitConstruct" Hidden="true" />
+      <Method Name="VisitConstructArray" Hidden="true" />
+      <Method Name="VisitConstructDelegate" Hidden="true" />
+      <Method Name="VisitConstructFlexArray" Hidden="true" />
+      <Method Name="VisitConstructIterator" Hidden="true" />
+      <Method Name="VisitConstructTuple" Hidden="true" />
+      <Method Name="VisitContinue" Hidden="true" />
+      <Method Name="VisitCurrentClosure" Hidden="true" />
+      <Method Name="VisitDelegateNode" Hidden="true" />
+      <Method Name="VisitDoWhile" Hidden="true" />
+      <Method Name="VisitEndFilter" Hidden="true" />
+      <Method Name="VisitEndFinally" Hidden="true" />
+      <Method Name="VisitEnumNode" Hidden="true" />
+      <Method Name="VisitEvent" Hidden="true" />
+      <Method Name="VisitExit" Hidden="true" />
+      <Method Name="VisitExpose" Hidden="true" />
+      <Method Name="VisitExpression" Hidden="true" />
+      <Method Name="VisitExpressionList" Hidden="true" />
+      <Method Name="VisitExpressionSnippet" Hidden="true" />
+      <Method Name="VisitExpressionStatement" Hidden="true" />
+      <Method Name="VisitFaultHandler" Hidden="true" />
+      <Method Name="VisitFaultHandlerList" Hidden="true" />
+      <Method Name="VisitField" Hidden="true" />
+      <Method Name="VisitFieldInitializerBlock" Hidden="true" />
+      <Method Name="VisitFieldList" Hidden="true" />
+      <Method Name="VisitFilter" Hidden="true" />
+      <Method Name="VisitFilterList" Hidden="true" />
+      <Method Name="VisitFinally" Hidden="true" />
+      <Method Name="VisitFixed" Hidden="true" />
+      <Method Name="VisitFor" Hidden="true" />
+      <Method Name="VisitForEach" Hidden="true" />
+      <Method Name="VisitFunctionDeclaration" Hidden="true" />
+      <Method Name="VisitGoto" Hidden="true" />
+      <Method Name="VisitGotoCase" Hidden="true" />
+      <Method Name="VisitIdentifier" Hidden="true" />
+      <Method Name="VisitIf" Hidden="true" />
+      <Method Name="VisitImplicitThis" Hidden="true" />
+      <Method Name="VisitIndexer" Hidden="true" />
+      <Method Name="VisitInstanceInitializer" Hidden="true" />
+      <Method Name="VisitInterface" Hidden="true" />
+      <Method Name="VisitInterfaceReference" Hidden="true" />
+      <Method Name="VisitInterfaceReferenceList" Hidden="true" />
+      <Method Name="VisitLabeledStatement" Hidden="true" />
+      <Method Name="VisitLiteral" Hidden="true" />
+      <Method Name="VisitLocal" Hidden="true" />
+      <Method Name="VisitLocalDeclaration" Hidden="true" />
+      <Method Name="VisitLocalDeclarationList" Hidden="true" />
+      <Method Name="VisitLocalDeclarationsStatement" Hidden="true" />
+      <Method Name="VisitLock" Hidden="true" />
+      <Method Name="VisitLRExpression" Hidden="true" />
+      <Method Name="VisitMemberBinding" Hidden="true" />
+      <Method Name="VisitMemberList" Hidden="true" />
+      <Method Name="VisitMethod" Hidden="true" />
+      <Method Name="VisitMethodCall" Hidden="true" />
+      <Method Name="VisitModule" Hidden="true" />
+      <Method Name="VisitModuleReference" Hidden="true" />
+      <Method Name="VisitNameBinding" Hidden="true" />
+      <Method Name="VisitNamedArgument" Hidden="true" />
+      <Method Name="VisitNamespace" Hidden="true" />
+      <Method Name="VisitNamespaceList" Hidden="true" />
+      <Method Name="VisitNodeList" Hidden="true" />
+      <Method Name="VisitParameter" Hidden="true" />
+      <Method Name="VisitParameterList" Hidden="true" />
+      <Method Name="VisitPostfixExpression" Hidden="true" />
+      <Method Name="VisitPrefixExpression" Hidden="true" />
+      <Method Name="VisitProperty" Hidden="true" />
+      <Method Name="VisitQualifiedIdentifier" Hidden="true" />
+      <Method Name="VisitRepeat" Hidden="true" />
+      <Method Name="VisitResourceUse" Hidden="true" />
+      <Method Name="VisitReturn" Hidden="true" />
+      <Method Name="VisitSecurityAttribute" Hidden="true" />
+      <Method Name="VisitSecurityAttributeList" Hidden="true" />
+      <Method Name="VisitSetterValue" Hidden="true" />
+      <Method Name="VisitStatementList" Hidden="true" />
+      <Method Name="VisitStatementSnippet" Hidden="true" />
+      <Method Name="VisitStaticInitializer" Hidden="true" />
+      <Method Name="VisitStruct" Hidden="true" />
+      <Method Name="VisitSwitch" Hidden="true" />
+      <Method Name="VisitSwitchCase" Hidden="true" />
+      <Method Name="VisitSwitchCaseList" Hidden="true" />
+      <Method Name="VisitSwitchInstruction" Hidden="true" />
+      <Method Name="VisitTargetExpression" Hidden="true" />
+      <Method Name="VisitTemplateInstance" Hidden="true" />
+      <Method Name="VisitTernaryExpression" Hidden="true" />
+      <Method Name="VisitThis" Hidden="true" />
+      <Method Name="VisitThrow" Hidden="true" />
+      <Method Name="VisitTry" Hidden="true" />
+      <Method Name="VisitTypeMemberSnippet" Hidden="true" />
+      <Method Name="VisitTypeModifier" Hidden="true" />
+      <Method Name="VisitTypeNode" Hidden="true" />
+      <Method Name="VisitTypeNodeList" Hidden="true" />
+      <Method Name="VisitTypeParameter" Hidden="true" />
+      <Method Name="VisitTypeParameterList" Hidden="true" />
+      <Method Name="VisitTypeReference" Hidden="true" />
+      <Method Name="VisitTypeReferenceList" Hidden="true" />
+      <Method Name="VisitTypeswitch" Hidden="true" />
+      <Method Name="VisitTypeswitchCase" Hidden="true" />
+      <Method Name="VisitTypeswitchCaseList" Hidden="true" />
+      <Method Name="VisitUnaryExpression" Hidden="true" />
+      <Method Name="VisitUnknownNodeType" Hidden="true" />
+      <Method Name="VisitUsedNamespace" Hidden="true" />
+      <Method Name="VisitUsedNamespaceList" Hidden="true" />
+      <Method Name="VisitVariableDeclaration" Hidden="true" />
+      <Method Name="VisitWhile" Hidden="true" />
+      <Method Name="VisitYield" Hidden="true" />
+    </Members>
+    <AssociationLine Name="callingVisitor" Type="System.Compiler.Visitor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.25" Y="2.938" />
+        <Point X="9.625" Y="2.938" />
+        <Point X="9.625" Y="0.938" />
+        <Point X="9.25" Y="0.938" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.SnippetParser">
+    <Position X="13" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAQAgAAEAACAAAJAAQBEAQA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="DefaultParserFactory" />
+      <Field Name="Options" />
+    </ShowAsAssociation>
+    <InheritanceLine Type="System.Compiler.StandardVisitor" FixedFromPoint="true">
+      <Path>
+        <Point X="9.25" Y="3.312" />
+        <Point X="14.25" Y="3.312" />
+        <Point X="14.25" Y="4" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="System.CodeDom.Compiler.CompilerParameters">
+    <Position X="16.5" Y="5.5" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Compiler.Unstacker">
+    <Position X="0.75" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Unstacker.cs</FileName>
+      <HashCode>AAAAAAEAAAAgAAAAAAgAAIAAAAAQAAwCAgFAIQACCQA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="System.Compiler.Unstacker.LocalsStack">
+        <TypeIdentifier>
+          <NewMemberFileName>Unstacker.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="System.Compiler.Unstacker.PredecessorFinder">
+        <TypeIdentifier>
+          <NewMemberFileName>Unstacker.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <InheritanceLine Type="System.Compiler.StandardVisitor" FixedFromPoint="true">
+      <Path>
+        <Point X="7" Y="3.312" />
+        <Point X="2" Y="3.312" />
+        <Point X="2" Y="4" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="System.Compiler.Duplicator">
+    <Position X="3.75" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Duplicator.cs</FileName>
+      <HashCode>kE8Ds2cMsvl+ZPyctE2Y0E4o8zt1auVC11t7owuX75U=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="VisitAcquire" Hidden="true" />
+      <Method Name="VisitAddressDereference" Hidden="true" />
+      <Method Name="VisitAliasDefinition" Hidden="true" />
+      <Method Name="VisitAliasDefinitionList" Hidden="true" />
+      <Method Name="VisitAnonymousNestedFunction" Hidden="true" />
+      <Method Name="VisitApplyToAll" Hidden="true" />
+      <Method Name="VisitAssembly" Hidden="true" />
+      <Method Name="VisitAssemblyReference" Hidden="true" />
+      <Method Name="VisitAssertion" Hidden="true" />
+      <Method Name="VisitAssignmentExpression" Hidden="true" />
+      <Method Name="VisitAssignmentStatement" Hidden="true" />
+      <Method Name="VisitAssumption" Hidden="true" />
+      <Method Name="VisitAttributeConstructor" Hidden="true" />
+      <Method Name="VisitAttributeList" Hidden="true" />
+      <Method Name="VisitAttributeNode" Hidden="true" />
+      <Method Name="VisitBase" Hidden="true" />
+      <Method Name="VisitBinaryExpression" Hidden="true" />
+      <Method Name="VisitBlock" Hidden="true" />
+      <Method Name="VisitBlockExpression" Hidden="true" />
+      <Method Name="VisitBlockList" Hidden="true" />
+      <Method Name="VisitBranch" Hidden="true" />
+      <Method Name="VisitCatch" Hidden="true" />
+      <Method Name="VisitCatchList" Hidden="true" />
+      <Method Name="VisitCoerceTuple" Hidden="true" />
+      <Method Name="VisitCollectionEnumerator" Hidden="true" />
+      <Method Name="VisitCompilation" Hidden="true" />
+      <Method Name="VisitCompilationUnit" Hidden="true" />
+      <Method Name="VisitCompilationUnitSnippet" Hidden="true" />
+      <Method Name="VisitComposition" Hidden="true" />
+      <Method Name="VisitComprehension" Hidden="true" />
+      <Method Name="VisitComprehensionBinding" Hidden="true" />
+      <Method Name="VisitConstruct" Hidden="true" />
+      <Method Name="VisitConstructArray" Hidden="true" />
+      <Method Name="VisitConstructDelegate" Hidden="true" />
+      <Method Name="VisitConstructFlexArray" Hidden="true" />
+      <Method Name="VisitConstructIterator" Hidden="true" />
+      <Method Name="VisitConstructTuple" Hidden="true" />
+      <Method Name="VisitContinue" Hidden="true" />
+      <Method Name="VisitCurrentClosure" Hidden="true" />
+      <Method Name="VisitDelegateNode" Hidden="true" />
+      <Method Name="VisitDoWhile" Hidden="true" />
+      <Method Name="VisitEndFilter" Hidden="true" />
+      <Method Name="VisitEndFinally" Hidden="true" />
+      <Method Name="VisitEvent" Hidden="true" />
+      <Method Name="VisitExceptionHandler" Hidden="true" />
+      <Method Name="VisitExceptionHandlerList" Hidden="true" />
+      <Method Name="VisitExit" Hidden="true" />
+      <Method Name="VisitExpose" Hidden="true" />
+      <Method Name="VisitExpression" Hidden="true" />
+      <Method Name="VisitExpressionList" Hidden="true" />
+      <Method Name="VisitExpressionSnippet" Hidden="true" />
+      <Method Name="VisitExpressionStatement" Hidden="true" />
+      <Method Name="VisitFaultHandler" Hidden="true" />
+      <Method Name="VisitFaultHandlerList" Hidden="true" />
+      <Method Name="VisitField" Hidden="true" />
+      <Method Name="VisitFieldInitializerBlock" Hidden="true" />
+      <Method Name="VisitFieldList" Hidden="true" />
+      <Method Name="VisitFilter" Hidden="true" />
+      <Method Name="VisitFilterList" Hidden="true" />
+      <Method Name="VisitFinally" Hidden="true" />
+      <Method Name="VisitFixed" Hidden="true" />
+      <Method Name="VisitFor" Hidden="true" />
+      <Method Name="VisitForEach" Hidden="true" />
+      <Method Name="VisitFunctionDeclaration" Hidden="true" />
+      <Method Name="VisitGoto" Hidden="true" />
+      <Method Name="VisitGotoCase" Hidden="true" />
+      <Method Name="VisitIdentifier" Hidden="true" />
+      <Method Name="VisitIf" Hidden="true" />
+      <Method Name="VisitImplicitThis" Hidden="true" />
+      <Method Name="VisitIndexer" Hidden="true" />
+      <Method Name="VisitInterfaceReferenceList" Hidden="true" />
+      <Method Name="VisitLabeledStatement" Hidden="true" />
+      <Method Name="VisitLiteral" Hidden="true" />
+      <Method Name="VisitLocal" Hidden="true" />
+      <Method Name="VisitLocalDeclaration" Hidden="true" />
+      <Method Name="VisitLocalDeclarationList" Hidden="true" />
+      <Method Name="VisitLocalDeclarationsStatement" Hidden="true" />
+      <Method Name="VisitLock" Hidden="true" />
+      <Method Name="VisitLRExpression" Hidden="true" />
+      <Method Name="VisitMemberBinding" Hidden="true" />
+      <Method Name="VisitMemberList" Hidden="true" />
+      <Method Name="VisitMemberReference" Hidden="true" />
+      <Method Name="VisitMemberReferenceList" Hidden="true" />
+      <Method Name="VisitMethod" Hidden="true" />
+      <Method Name="VisitMethodCall" Hidden="true" />
+      <Method Name="VisitMethodList" Hidden="true" />
+      <Method Name="VisitMethodReferenceList" Hidden="true" />
+      <Method Name="VisitModule" Hidden="true" />
+      <Method Name="VisitModuleReference" Hidden="true" />
+      <Method Name="VisitNameBinding" Hidden="true" />
+      <Method Name="VisitNamedArgument" Hidden="true" />
+      <Method Name="VisitNamespace" Hidden="true" />
+      <Method Name="VisitNamespaceList" Hidden="true" />
+      <Method Name="VisitNodeList" Hidden="true" />
+      <Method Name="VisitParameter" Hidden="true" />
+      <Method Name="VisitParameterList" Hidden="true" />
+      <Method Name="VisitPostfixExpression" Hidden="true" />
+      <Method Name="VisitPrefixExpression" Hidden="true" />
+      <Method Name="VisitProperty" Hidden="true" />
+      <Method Name="VisitQualifiedIdentifier" Hidden="true" />
+      <Method Name="VisitRepeat" Hidden="true" />
+      <Method Name="VisitResourceUse" Hidden="true" />
+      <Method Name="VisitReturn" Hidden="true" />
+      <Method Name="VisitSecurityAttribute" Hidden="true" />
+      <Method Name="VisitSecurityAttributeList" Hidden="true" />
+      <Method Name="VisitSetterValue" Hidden="true" />
+      <Method Name="VisitStatementList" Hidden="true" />
+      <Method Name="VisitStatementSnippet" Hidden="true" />
+      <Method Name="VisitSwitch" Hidden="true" />
+      <Method Name="VisitSwitchCase" Hidden="true" />
+      <Method Name="VisitSwitchCaseList" Hidden="true" />
+      <Method Name="VisitSwitchInstruction" Hidden="true" />
+      <Method Name="VisitTernaryExpression" Hidden="true" />
+      <Method Name="VisitThis" Hidden="true" />
+      <Method Name="VisitThrow" Hidden="true" />
+      <Method Name="VisitTry" Hidden="true" />
+      <Method Name="VisitTypeModifier" Hidden="true" />
+      <Method Name="VisitTypeNode" Hidden="true" />
+      <Method Name="VisitTypeNodeList" Hidden="true" />
+      <Method Name="VisitTypeParameter" Hidden="true" />
+      <Method Name="VisitTypeParameterList" Hidden="true" />
+      <Method Name="VisitTypeReference" Hidden="true" />
+      <Method Name="VisitTypeReferenceList" Hidden="true" />
+      <Method Name="VisitTypeswitch" Hidden="true" />
+      <Method Name="VisitTypeswitchCase" Hidden="true" />
+      <Method Name="VisitTypeswitchCaseList" Hidden="true" />
+      <Method Name="VisitUnaryExpression" Hidden="true" />
+      <Method Name="VisitUsedNamespace" Hidden="true" />
+      <Method Name="VisitUsedNamespaceList" Hidden="true" />
+      <Method Name="VisitVariableDeclaration" Hidden="true" />
+      <Method Name="VisitWhile" Hidden="true" />
+      <Method Name="VisitYield" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="System.Compiler.StandardVisitor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="3.312" />
+        <Point X="4.938" Y="3.312" />
+        <Point X="4.938" Y="4" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="System.Compiler.Specializer">
+    <Position X="10" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Specializer.cs</FileName>
+      <HashCode>AAQAAAAAAgBAAAAEAAAIAEAAIAABACAAAAAAEQEAIAE=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="System.Compiler.Specializer.SpecializerHandle">
+        <TypeIdentifier>
+          <NewMemberFileName>Specializer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <InheritanceLine Type="System.Compiler.StandardVisitor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.25" Y="3.312" />
+        <Point X="11.312" Y="3.312" />
+        <Point X="11.312" Y="4" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="System.Compiler.MethodBodySpecializer">
+    <Position X="10" Y="10.25" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Specializer.cs</FileName>
+      <HashCode>AAAAAAEAAAAkAAQAAACAAAgAAAIRAAQAAAAAAQgCKAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="System.Compiler.IParser">
+    <Position X="17" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAAAAAAAAAgAAAAAAAUAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.IParserFactory">
+    <Position X="17" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

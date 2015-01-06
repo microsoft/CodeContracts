@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Module">
+    <Position X="4.25" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QpcAABCUoCrAAiLHQIIgkCSQCwIUFVsAgChBABJQQaA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ContainingAssembly" />
+      <Field Name="Kind" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="AssemblyReferences" />
+      <Property Name="Attributes" />
+      <Property Name="SecurityAttributes" />
+      <Property Name="Documentation" />
+      <Property Name="ModuleReferences" />
+      <Property Name="Resources" />
+      <Property Name="Win32Resources" />
+      <Property Name="Types" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Method Name="~Module" Hidden="true" />
+      <Field Name="attributes" Hidden="true" />
+      <Field Name="documentation" Hidden="true" />
+      <Field Name="entryPoint" Hidden="true" />
+      <Field Name="FileAlignment" Hidden="true" />
+      <Method Name="GetNamespaceListFromReader" Hidden="true" />
+      <Method Name="GetTypesForNamespace" Hidden="true" />
+      <Field Name="GlobalLock" Hidden="true" />
+      <Method Name="InitializeAssemblyReferenceResolution" Hidden="true" />
+      <Field Name="memberDocumentationCache" Hidden="true" />
+      <Field Name="moduleReferences" Hidden="true" />
+      <Field Name="namespaceList" Hidden="true" />
+      <Field Name="namespaceTable" Hidden="true" />
+      <Field Name="NoSuchMethod" Hidden="true" />
+      <Field Name="provideCustomAttributes" Hidden="true" />
+      <Field Name="provideResources" Hidden="true" />
+      <Field Name="provideTypeNode" Hidden="true" />
+      <Field Name="provideTypeNodeList" Hidden="true" />
+      <Field Name="reader" Hidden="true" />
+      <Field Name="resources" Hidden="true" />
+      <Field Name="savedTypesLength" Hidden="true" />
+      <Field Name="securityAttributes" Hidden="true" />
+      <Field Name="structurallyEquivalentType" Hidden="true" />
+      <Field Name="types" Hidden="true" />
+      <Field Name="validNamespaces" Hidden="true" />
+      <Field Name="win32Resources" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Delegate Name="System.Compiler.Module.TypeNodeListProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.Module.TypeNodeProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.Module.CustomAttributeProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.Module.ResourceProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.Module.AssemblyReferenceResolver" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.Module.DocumentationResolver" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="AssemblyReferences" Type="System.Compiler.AssemblyReference">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.062" Y="0.092" Height="0.16" Width="1.462" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Attributes" Type="System.Compiler.AttributeNode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="0.985" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="SecurityAttributes" Type="System.Compiler.SecurityAttribute">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.287" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Documentation" Type="System.Xml.XmlElement">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.266" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ModuleReferences" Type="System.Compiler.ModuleReference">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.089" Y="0.06" Height="0.16" Width="1.329" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Resources" Type="System.Compiler.Resource">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.225" Y="0.081" Height="0.16" Width="1.006" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Win32Resources" Type="System.Compiler.Win32Resource">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.006" Y="0.073" Height="0.16" Width="1.248" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Types" Type="System.Compiler.TypeNode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.225" Y="0.112" Height="0.16" Width="0.787" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Compiler.ModuleReference">
+    <Position X="8.25" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Module" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.AssemblyReference">
+    <Position X="11.5" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>IBEABAAAAAEAAAAAAAIAAAQAgQAIAJIAABAAAZAYAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Field Name="assemblyName" />
+      <Property Name="Assembly" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="assembly" Hidden="true" />
+      <Method Name="ParseAssignment" Hidden="true" />
+      <Method Name="ParseToken" Hidden="true" />
+      <Field Name="Reader" Hidden="true" />
+      <Field Name="sha" Hidden="true" />
+      <Field Name="strongName" Hidden="true" />
+      <Field Name="token" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.AssemblyNode">
+    <Position X="8.5" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>IAFEBggBFAEAAAAAAAIAAALwARAIQAQAQAAAAQAYCAI=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ExportedTypes" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Method Name="~AssemblyNode" Hidden="true" />
+      <Method Name="AddCachedAssembly" Hidden="true" />
+      <Field Name="assemblyName" Hidden="true" />
+      <Field Name="CompiledAssemblies" Hidden="true" />
+      <Field Name="exportedTypes" Hidden="true" />
+      <Field Name="friends" Hidden="true" />
+      <Method Name="GetKeyString" Hidden="true" />
+      <Method Name="GetStrongName" Hidden="true" />
+      <Field Name="runtimeAssembly" Hidden="true" />
+      <Field Name="strongName" Hidden="true" />
+      <Field Name="token" Hidden="true" />
+    </Members>
+    <AssociationLine Name="ExportedTypes" Type="System.Compiler.TypeNode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.296" Y="0.07" Height="0.16" Width="1.149" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Reflection.AssemblyName" Collapsed="true">
+    <Position X="11.5" Y="5" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.AttributeNode" Collapsed="true">
+    <Position X="1.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAEAAgAAAAgAAAAIAACAAEBEBABAQAQAAAggAAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Xml.XmlElement" Collapsed="true">
+    <Position X="1.25" Y="7" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Compiler.SecurityAttribute" Collapsed="true">
+    <Position X="1.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>gACAIAAAAAgAAAAAAAAAAAAACAACQAAAEAAAABAAACQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.TypeNode" Collapsed="true">
+    <Position X="8.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>2oVlFMRJxVLQi8TAAl/BbbsYEeHxaUQOnW1caLEEORA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Compilation">
+    <Position X="4.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAABAAgCAAAAAAAE=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="TargetModule" />
+      <Field Name="GlobalScope" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="CompilationUnits" />
+      <Field Name="ReferencedCompilations" />
+    </ShowAsCollectionAssociation>
+    <AssociationLine Name="TargetModule" Type="System.Compiler.Module">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.103" Y="0.046" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="CompilationUnits" Type="System.Compiler.CompilationUnit">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.261" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ReferencedCompilations" Type="System.Compiler.Compilation" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="2.898" />
+        <Point X="7.125" Y="2.898" />
+        <Point X="7.125" Y="2.125" />
+        <Point X="6.25" Y="2.125" />
+        <Point X="6.25" Y="2.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.403" Y="0.496" Height="0.16" Width="1.606" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.CompilationUnit">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAggAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Compilation" />
+    </ShowAsAssociation>
+    <AssociationLine Name="Compilation" Type="System.Compiler.Compilation" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="1.438" />
+        <Point X="5.125" Y="1.438" />
+        <Point X="5.125" Y="2.5" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.CompilationUnitSnippet">
+    <Position X="0.75" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAIAAAEAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Scope" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAEEAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="System.Compiler.Resource">
+    <Position X="1.25" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAQAACAAABAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="DefiningModule" />
+    </ShowAsAssociation>
+  </Struct>
+  <Struct Name="System.Compiler.Win32Resource">
+    <Position X="1.25" Y="10" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAABIgAAAAgAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="System.Compiler.AssemblyFlags">
+    <Position X="11.5" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACAICAIQABAAMAAAACAEAAAMIAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.ModuleKindFlags">
+    <Position X="1.25" Y="12.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAAAAQAAAAAAAAAAAoBAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

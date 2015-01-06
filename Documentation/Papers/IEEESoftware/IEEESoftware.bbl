@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}\setlength{\itemsep}{-1ex}\small
+
+\bibitem{godefroid05:dart}
+P.~Godefroid, N.~Klarlund, and K.~Sen.
+\newblock {DART}: directed automated random testing.
+\newblock {\em SIGPLAN Notices}, 40(6):213--223, 2005.
+
+\bibitem{Liskov-Wing94}
+B.~H. Liskov and J.~M. Wing.
+\newblock A behavioral notion of subtyping.
+\newblock {\em ACM Trans. Prog. Lang. Syst.}, 16(6):1811--1841, Nov. 1994.
+
+\bibitem{nunit}
+{Michael C. Two, Charlie Poole, Jamie Cansdale, Gary Feldman, James W. Newkirk,
+  Alexei A. Vorontsov and Philip A. Craig.}
+\newblock {NUnit}.
+\newblock \url{http://www.nunit.org/}.
+
+\bibitem{mstest}
+{Microsoft}.
+\newblock {Visual} {Studio} {Team} {System}, {Team} {Edition} for {Testers}.
+\newblock
+  \url{http://msdn2.microsoft.com/en-us/vsts2008/products/bb933754.aspx}.
+
+\bibitem{pex}
+N.~Tillmann and J.~de~Halleux.
+\newblock Pex - white box test generation for {{.NET}}.
+\newblock In {\em Proc. of Tests and Proofs (TAP'08)}, volume 4966 of {\em
+  LNCS}, pages 134--153, Prato, Italy, April 2008. Springer.
+
+\end{thebibliography}

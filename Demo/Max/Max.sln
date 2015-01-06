@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticChecker", "Max\StaticChecker.csproj", "{D7F42DBC-B865-410B-88D2-D9980562A5F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeChecker", "RuntimeChecker\RuntimeChecker.csproj", "{4F089248-964B-4536-B421-CD8799774ACC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7F42DBC-B865-410B-88D2-D9980562A5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F42DBC-B865-410B-88D2-D9980562A5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F42DBC-B865-410B-88D2-D9980562A5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F42DBC-B865-410B-88D2-D9980562A5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F089248-964B-4536-B421-CD8799774ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F089248-964B-4536-B421-CD8799774ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F089248-964B-4536-B421-CD8799774ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F089248-964B-4536-B421-CD8799774ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

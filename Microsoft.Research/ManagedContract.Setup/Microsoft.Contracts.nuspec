@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Microsoft.Contracts</id>
+    <version>0.0.0.0</version>
+    <authors>logozzo,mbarnett,maf,dannyvv</authors>
+    <owners>logozzo,mbarnett,maf,dannyvv</owners>
+    <projectUrl>http://codebox/contracts</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This project brings the advantages of design-by-contract programming to all .NET programming languages. Programming with contracts means writing extra pre-conditions, post-conditions, and object invariants in your code.</description>
+  </metadata>
+  <files>
+     <file src="**\*" />
+  </files>
+</package>

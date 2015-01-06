@@ -1,0 +1,132 @@
+// CodeContracts
+// 
+// Copyright (c) Microsoft Corporation
+// 
+// All rights reserved. 
+// 
+// MIT License
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+using System;
+using System.Diagnostics.Contracts;
+
+namespace System.Reflection
+{
+
+  public class AssemblyName
+  {
+#if false
+    public AssemblyNameFlags Flags
+    {
+      get;
+      set;
+    }
+#endif
+
+#if !SILVERLIGHT
+    extern public string EscapedCodeBase
+    {
+      get;
+    }
+#endif
+
+#if false
+    public System.Configuration.Assemblies.AssemblyHashAlgorithm HashAlgorithm
+    {
+      get;
+      set;
+    }
+
+    public System.Configuration.Assemblies.AssemblyVersionCompatibility VersionCompatibility
+    {
+      get;
+      set;
+    }
+
+    public System.Globalization.CultureInfo CultureInfo
+    {
+      get;
+      set;
+    }
+
+    public StrongNameKeyPair KeyPair
+    {
+      get;
+      set;
+    }
+
+    public string CodeBase
+    {
+      get;
+      set;
+    }
+#endif 
+    extern public string Name
+    {
+      get;
+      set;
+    }
+#if false
+    public Version Version
+    {
+      get;
+      set;
+    }
+#endif
+    public string FullName
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<string>() != null);
+        return default(string);
+      }
+    }
+#if false
+    public void OnDeserialization(object sender)
+    {
+
+    }
+    public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+    {
+      Contract.Requires(info != null);
+
+    }
+#endif
+    public void SetPublicKeyToken(Byte[] publicKeyToken)
+    {
+
+    }
+    public Byte[] GetPublicKeyToken()
+    {
+
+      return default(Byte[]);
+    }
+    public void SetPublicKey(Byte[] publicKey)
+    {
+
+    }
+    public Byte[] GetPublicKey()
+    {
+
+      return default(Byte[]);
+    }
+
+#if !SILVERLIGHT
+    public static AssemblyName GetAssemblyName(string assemblyFile)
+    {
+      Contract.Requires(assemblyFile != null);
+
+      return default(AssemblyName);
+    }
+#endif
+
+    public AssemblyName()
+    {
+    }
+  }
+}

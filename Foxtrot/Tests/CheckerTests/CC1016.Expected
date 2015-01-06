@@ -1,0 +1,4 @@
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1016.cs(7,5) : error CC1016: Contract.Assert/Contract.Assume cannot be used in contract section. Use only Requires and Ensures.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1016.cs(11,5) : error CC1016: Contract.Assert/Contract.Assume cannot be used in contract section. Use only Requires and Ensures.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1016.cs(15,5) : error CC1016: Contract.Assert/Contract.Assume cannot be used in contract section. Use only Requires and Ensures.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1016.cs(19,5) : error CC1016: Contract.Assert/Contract.Assume cannot be used in contract section. Use only Requires and Ensures.

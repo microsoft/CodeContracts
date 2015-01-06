@@ -1,0 +1,9 @@
+; The DLLs of the framework to be analyzed
+mscorlib.dll
+;System.Data.dll
+;System.Design.dll
+;System.dll
+;System.Drawing.dll
+;System.Web.dll
+;System.Windows.Forms.dll
+;System.XML.dll

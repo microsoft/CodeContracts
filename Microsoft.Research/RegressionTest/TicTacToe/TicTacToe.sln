@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeEngine", "TicTacToeEngine.csproj", "{F8947296-091D-4CC4-8BAC-046834BC731D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeConsole", "..\TicTacToeClients\TicTacToeConsole\TicTacToeConsole.csproj", "{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeForm", "..\TicTacToeClients\TicTacToeForm\TicTacToeForm.csproj", "{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeScript", "..\TicTacToeClients\TicTacToeScript\TicTacToeScript.csproj", "{825D2199-BE03-4B2D-9432-FE93A853CA99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Contracts9", "..\..\..\Foxtrot\Contracts\Microsoft.Contracts9.csproj", "{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 6
+		SccProjectUniqueName0 = ..\\..\\..\\Foxtrot\\Contracts\\Microsoft.Contracts9.csproj
+		SccProjectName0 = //depot/xsharp/cci/Foxtrot/Contracts
+		SccLocalPath0 = ..\\..\\..\\Foxtrot\\Contracts
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = TicTacToeEngine.csproj
+		SccLocalPath2 = .
+		SccProjectUniqueName3 = ..\\TicTacToeClients\\TicTacToeConsole\\TicTacToeConsole.csproj
+		SccProjectName3 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/TicTacToeClients/TicTacToeConsole
+		SccLocalPath3 = ..\\TicTacToeClients\\TicTacToeConsole
+		SccProjectUniqueName4 = ..\\TicTacToeClients\\TicTacToeForm\\TicTacToeForm.csproj
+		SccProjectName4 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/TicTacToeClients/TicTacToeForm
+		SccLocalPath4 = ..\\TicTacToeClients\\TicTacToeForm
+		SccProjectUniqueName5 = ..\\TicTacToeClients\\TicTacToeScript\\TicTacToeScript.csproj
+		SccProjectName5 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/TicTacToeClients/TicTacToeScript
+		SccLocalPath5 = ..\\TicTacToeClients\\TicTacToeScript
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		FullDebug|Any CPU = FullDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8947296-091D-4CC4-8BAC-046834BC731D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB4C1D9-DC7D-42BB-8190-D3F0023E9DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFFC73B-8C5F-469A-99A8-E8E727CAEC5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{825D2199-BE03-4B2D-9432-FE93A853CA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

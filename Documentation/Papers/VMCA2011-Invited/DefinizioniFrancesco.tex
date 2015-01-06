@@ -1,0 +1,643 @@
+% Definizione dei simboli
+
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\ie}{\textit{i.e.}}
+
+% Definizione di riferimenti
+\newcommand{\refFig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\refSect}[1]{Sect.~\ref{sec:#1}}
+
+
+% Definizione dell' operatore di astrazione
+\newcommand{\abs}[1]{\ensuremath{\bar{\mathsf{#1}}}}
+
+\newcommand{\sx}{\llbracket}
+\newcommand{\dx}{\rrbracket}
+
+  % Semantica generica
+\newcommand{\sem}[1]{\ensuremath{\sx \mathtt{#1} \dx}}
+
+  % Semantica che prende un nome
+\newcommand{\semantica}[2]{\ensuremath{\mathbb{#1}\sem{#2}}}
+
+\newcommand{\BigSemantica}[2]{\ensuremath{\mathbb{#1}{\Bigg\llbracket #2 \Bigg\rrbracket}}}
+
+  % Semantiche generiche
+\newcommand{\csem}[1]{\ensuremath{\semantica{s}{#1}}}
+\newcommand{\asem}[1]{\ensuremath{\semantica{\abs{s}}{#1}}}
+\newcommand{\asemRefined}[1]{\ensuremath{\semantica{\abs{s}^*}{#1}}}
+
+  % Funzione di ``transfer''
+\newcommand{\trasf}[1]{\ensuremath{\semantica{t}{#1}}}
+\newcommand{\atrasf}[1]{\ensuremath{\semantica{\abs{t}}{#1}}}
+
+  % Semantica di: costruttore,  metodo
+\newcommand{\semcostr}[1]{\semantica{i}{#1}}
+\newcommand{\semmetodo}[1]{\semantica{m}{#1}}
+\newcommand{\semoggetto}[1]{\semantica{o}{#1}}
+\newcommand{\semclasse}[1]{\semantica{c}{#1}}
+
+  % Semantica Colleting Traces
+\newcommand{\Semmetodo}[1]{\semantica{M}{#1}}
+\newcommand{\Semoggetto}[1]{\semantica{O}{#1}}
+\newcommand{\Semclasse}[1]{\semantica{C}{#1}}
+
+  % Semantics Reachable States
+\newcommand{\rsemcostr}[1]{\semantica{I}{#1}}
+\newcommand{\rsemmetodo}[1]{\Semmetodo{#1}}
+\newcommand{\rsemoggetto}[1]{\semantica{O}{#1}}
+\newcommand{\rsemclasse}[1]{\semantica{C}{#1}}
+
+  % Seamntica Astratta
+\newcommand{\asemcostr}[1]{\semantica{\bar{I}}{#1}}
+\newcommand{\asemmetodo}[1]{\semantica{\bar{M}}{#1}}
+\newcommand{\asemoggetto}[1]{\semantica{\bar{O}}{#1}}
+\newcommand{\asemclasse}[1]{\semantica{\bar{C}}{#1}}
+
+  % Operazioni su stati
+\newcommand{\less}{\ensuremath{\sqsubseteq}}
+\newcommand{\join}{\ensuremath{\sqcup}}
+\newcommand{\meet}{\ensuremath{\sqcap}}
+\newcommand{\bottom}{\ensuremath{\bot}}
+\newcommand{\bigjoin}{\ensuremath{\bigsqcup}}
+
+  % Semantica astratta
+\newcommand{\asemantica}[2]{\semantica{\bar{#1}}{#2}}
+\newcommand{\asemanticaBig}[2]{\BigSemantica{\bar{#1}}{#2}}
+
+
+  % Semantica astratta BIS, per aggiungere pedici
+\newcommand{\asemanticaBis}[3]{\semantica{\bar{#1}_{\textit{#2}}}{#3}}
+
+  % Operazioni astratte
+\newcommand{\nabs}[1]{\bar{#1}}
+\newcommand{\abot}{\nabs{\bot}}
+\newcommand{\atp}{\nabs{\ensuremath{\top}}}
+\newcommand{\aless}{\nabs{\less}}
+\newcommand{\asup}{\ensuremath{\nabs{\sqsupseteq}}}
+\newcommand{\acup}{\ensuremath{\nabs{\sqcup}}}
+\newcommand{\ajoin}{\acup}
+\newcommand{\abigcup}[1]{\nabs{\bigsqcup_{#1}}}
+\newcommand{\abigjoin}[1]{\abigcup{#1}}
+\newcommand{\acap}{\ensuremath{\nabs{\sqcap}}}
+\newcommand{\ameet}{\acap}
+\newcommand{\abigcap}[1]{\nabs{\bigsqcap_{#1}}}
+\newcommand{\abigmeet}[1]{\abigcap{#1}}
+
+
+ % lfp : least fixpoint
+\newcommand{\lfp}[2]{\ensuremath{\mathrm{lfp}^{#1}_{#2}}}
+
+ % gfp: greatest fixpoint
+\newcommand{\gfp}[2]{\ensuremath{\mathrm{gfp}^{#1}_{#2}}}
+
+
+% Insiemi e Funzioni
+
+  % Insieme, elemento di insieme, nessun elemento
+\newcommand{\insieme}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\el}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\noel}{\el{\bot}}
+
+\newcommand{\sv}[1]{\el{sv(#1)}}
+\newcommand{\svn}[1]{\el{sv_{#1}}}
+
+  % Insieme delle parti
+\newcommand{\parti}[1]{\ensuremath{\mathcal{P}{(#1)}}}
+\newcommand{\partiFin}[1]{\ensuremath{\mathcal{P}_{\mathrm{fin}}{(#1)}}}
+
+
+  % Elementi di insiemi
+\newcommand{\noval}{\ensuremath{\baro}}
+
+  % Cardinalita di inisiemi
+\newcommand{\cardinalita}[1]{\ensuremath{\# #1}}
+
+  % Env, Store, Addr, Val, Label : Scorciatoie
+\newcommand{\env}{\insieme{Env}}
+\newcommand{\Env}{\env}
+
+\newcommand{\aenv}{\ensuremath{\bar{\env}}}
+
+\newcommand{\store}{\insieme{Store}}
+\newcommand{\Store}{\store}
+
+\newcommand{\astore}{\ensuremath{\overline{\store}}}
+
+\newcommand{\AState}{\abs{\Sigma}}
+\newcommand{\astate}{\AState}
+
+\newcommand{\addr}{\insieme{Addr}}
+\newcommand{\Addr}{\addr}
+
+\newcommand{\aaddr}{\ensuremath{\overline{\addr}}}
+
+\newcommand{\Reference}{\insieme{Ref}}
+\newcommand{\reference}{\reference}
+
+\newcommand{\AReference}{\ensuremath{\overline{\Reference}}}
+
+\newcommand{\val}{\insieme{Val}}
+
+\newcommand{\etichetta}{\insieme{Label}}
+\newcommand{\cont}{\ensuremath{\kappa}}
+
+  % Stati
+\newcommand{\stati}[1]{\ensuremath{\Sigma}}
+  % Tracce
+\newcommand{\tracce}[1]{\ensuremath{\mathcal{T}(#1)}}
+  % Transizione
+\newcommand{\tr}[1]{\ensuremath{\xrightarrow{#1}}}
+
+  % Insieme di funzioni
+\newcommand{\funzione}[2]{\ensuremath{[#1 \rightarrow#2]}}
+
+  % Funzione vuota
+\newcommand{\emptyfun}{\ensuremath{[\cdot]}}
+
+  % Insieme di funzioni monotone e joim-morphism
+\newcommand{\funmon}[2]{\ensuremath{[#1 \stackrel{m}{\longrightarrow} #2]}}
+\newcommand{\funjoin}[2]{\ensuremath{[#1 \stackrel{\sqcap}{\longrightarrow} #2]}}
+
+% Astratto
+  % Dominio concreto
+\newcommand{\dom}[1]{\insieme{#1}}
+
+  % Dominio astratto
+\newcommand{\adom}[1]{\ensuremath{{\mathsf{#1}}}}
+
+ % Vari domini
+\newcommand{\Intervals}{\dom{Intv}}
+\newcommand{\LT}{\dom{LT}}
+\newcommand{\Boxes}{\dom{Boxes}}
+\newcommand{\DBM}{\dom{DBM}}
+\newcommand{\Octagons}{\dom{Oct}}
+\newcommand{\Polyhedra}{\dom{Poly}}
+\newcommand{\Poly}{\Polyhedra}
+\newcommand{\Lineq}{\dom{LinEq}}
+\newcommand{\LinEq}{\Lineq}
+\newcommand{\Karr}{\Lineq}
+\newcommand{\Symbolic}{\dom{Symb}}
+\newcommand{\Pentagons}{\dom{Pnt}}
+\newcommand{\SubPolyhedra}{\dom{SubPoly}}
+\newcommand{\SubPoly}{\SubPolyhedra}
+\newcommand{\Subpoly}{\SubPolyhedra}
+
+  % Elemento di dominio astratto
+\newcommand{\ael}[1]{\ensuremath{\abs{\el{#1}}}}
+\newcommand{\aelBis}[2]{\ensuremath{\abs{\el{#1}}_\el{#2}}}
+
+  % Funzione di astrazione e concretizzazione
+\newcommand{\alfa}{\ensuremath{\alpha}}
+%\renewcommand{\gamma}{\ensuremath{\gamma}}
+\newcommand{\gm}{\ensuremath{\gamma}}
+
+
+% Funzioni usate nella tesi
+  % Transizione basica
+\newcommand{\prossimo}{\ensuremath{\mathrm{next}}}
+%\newcommand{\next}{\ensuremath{\mathrm{next}}}
+\newcommand{\nextDir}{\ensuremath{\mathrm{next_{dir}}}}
+\newcommand{\nextInd}{\ensuremath{\mathrm{next_{ind}}}}
+\newcommand{\prossimoDir}{\nextDir}
+\newcommand{\prossimoInd}{\nextInd}
+
+  % Transizione ``collecting''
+\newcommand{\Next}{\ensuremath{\mathrm{Next}}}
+\newcommand{\NextDir}{\ensuremath{\mathrm{Next_{dir}}}}
+\newcommand{\NextInd}{\ensuremath{\mathrm{Next_{ind}}}}
+
+  % Reachable addresses
+\newcommand{\reachable}{\ensuremath{\mathrm{reachable}}}
+  % Update function
+\newcommand{\update}{\ensuremath{\mathrm{update}}}
+  % Storia delle interazioni
+%\newcommand{\etichette}{\ensuremath{\mathrm{labels}}}
+\newcommand{\storia}{\ensuremath{\mathrm{history}}}
+
+  % Contesto
+\newcommand{\contesto}{\ensuremath{\mathrm{Context}}}
+
+  % Contesto Astratto
+\newcommand{\acontesto}{\ensuremath{\mathrm{\overline{Context}}}}
+
+% Tracce : definizioni
+\newcommand{\stringavuota}{\ensuremath{\epsilon}}
+
+
+% Funzioni di astrazione
+  % Prima Astrazione, quella dei metodi
+\newcommand{\alfaPrima}{\ensuremath{\alpha_{\Yright}}}
+\newcommand{\gammaPrima}{\ensuremath{\gamma_{\Yright}}}
+  % Versione higher-order
+\newcommand{\alfaPrimaDot}{\ensuremath{\dot{\alpha}_{\Yright}}}
+
+  % Seconda Astrazione, quella degli stati
+\newcommand{\alfaSeconda}{\ensuremath{\alpha_{\circ}}}
+\newcommand{\gammaSeconda}{\ensuremath{\gamma_{\circ}}}
+  % Versione higher-order
+\newcommand{\alfaSecondaDot}{\ensuremath{\dot{\alpha}_{\circ}}}
+
+
+\newcommand{\alfaAddr}{\ensuremath{\alpha_\el{a}}}
+\newcommand{\gammaAddr}{\ensuremath{\gamma_\el{a}}}
+
+\newcommand{\gammaBool}{\ensuremath{\gamma_\el{b}}}
+
+\newcommand{\gammaEnv}{\ensuremath{\gamma_\el{e}}}
+
+\newcommand{\gammaOct}{\ensuremath{\gamma_\el{o}}}
+\newcommand{\gammaDOct}{\ensuremath{\gamma_\el{do}}}
+
+\newcommand{\gammaRef}{\ensuremath{\gamma_\el{r}}}
+
+\newcommand{\gammaStore}{\ensuremath{\gamma_\el{s}}}
+
+\newcommand{\gammaState}{\ensuremath{\gamma_{\astate}}}
+
+% Estensioni per OO
+
+  % Classe
+\newcommand{\classe}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\classi}{\ensuremath{\mathcal{C}}}
+
+  % Gerarchia
+\newcommand{\gerarchia}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\gerarchie}{\ensuremath{\mathbb{H}}}
+
+  % Operatori su Gerarchie 
+\newcommand{\inserisciClasse}{\ensuremath{\uplus}}
+\newcommand{\costruisciClasse}{\ensuremath{\beta}}
+\newcommand{\unisciGerarchie}{\ensuremath{\Cup}}
+
+\newcommand{\aclasse}[1]{\ensuremath{\abs{\mathtt{#1}}}}
+\newcommand{\aclasseLong}[1]{\ensuremath{\overline{\mathtt{#1}}}}
+  % Oggetto, instanza di classe
+\newcommand{\oggetto}[1]{\ensuremath{\mathsf{#1}}}
+  % Metodo
+\newcommand{\metodo}[1]{\ensuremath{\mathtt{#1}}}
+  % Campo
+\newcommand{\campo}[1]{\ensuremath{\mathtt{#1}}}
+
+  % Astrazioni di campi
+\newcommand{\acampo}[1]{\ensuremath{\mathtt{\abs{#1}}}}
+
+  % Astrazione di metodi con constraints
+\newcommand{\ametodo}[1]{\ensuremath{\mathtt{\abs{#1}}}}
+
+% Dominio delle Tracce Collecting
+
+\newcommand{\adomTracce}{\ensuremath{\adom{D}_{\Yright}}}
+
+\newcommand{\atopTracce}{\ensuremath{\abs{\top}_{\Yright}}}
+\newcommand{\abottomTracce}{\ensuremath{\abs{\bot}_{\Yright}}}
+
+\newcommand{\alessTracce}{\ensuremath{\abs{\subseteq}_{\Yright}}}
+\newcommand{\alessTraccia}{\ensuremath{\abs{\subseteq}^{\tau}_{\Yright}}}
+
+\newcommand{\ajoinTracce}{\ensuremath{\abs{\cup}_{\Yright}}}
+\newcommand{\ajoinTraccia}{\ensuremath{\abs{\cup}^{\tau}_{\Yright}}}
+
+\newcommand{\ameetTracce}{\ensuremath{\abs{\cap}_{\Yright}}}
+\newcommand{\ameetTraccia}{\ensuremath{\abs{\cap}^{\tau}_{\Yright}}}
+
+% Scorciatoie
+
+  % ``Prende''
+\newcommand{\prende}{\ensuremath{\mapsto}}
+
+  % Simbolo di definizione
+\newcommand{\df}{\ensuremath{\triangleq}}
+
+  % Tupla
+\newcommand{\tupla}[1]{\ensuremath{\langle #1 \rangle}}
+
+  % Stati Iniziali
+\newcommand{\statiiniziali}[1]{\ensuremath{S_0\tupla{#1}}}
+
+  % Modularita
+\newcommand{\hasA}{has-A}
+\newcommand{\isA}{is-A}
+
+  % Riferimento ad una formula
+\newcommand{\formula}[1]{\ensuremath{\mathrm{(\ref{#1})}}}
+
+% Complessita
+
+  % O-notation
+\newcommand{\costo}[1]{\ensuremath{\kappa_{#1}}}
+
+
+% Definizioni per i domini di vincoli
+
+\newcommand{\Vars}{\ensuremath{\mathtt{Vars}}}
+\newcommand{\C}{\ensuremath{\dom{C}}}
+\newcommand{\initC}{\ensuremath{\mathrm{initial_{\C}}}}
+
+\newcommand{\dominio}{\ensuremath{\mathrm{dom}}}
+\newcommand{\range}{\ensuremath{\mathrm{range}}}
+
+  % Relazioni
+\newcommand{\rel}[1]{\ensuremath{\mathsf{\rho}[\mathtt{#1}]}}
+\newcommand{\conDuepar}[2]{\ensuremath{\con'[\mathtt{#1}, \mathtt{#2}]}}
+\newcommand{\conTrepar}[3]{\ensuremath{\con[\mathtt{#1}, \allowbreak \mathtt{#2}, \allowbreak \mathtt{#3}]}}
+\newcommand{\relass}[1]{\ensuremath{\rho(#1)}}
+
+\newcommand{\rgamma}{\ensuremath{\gamma_{\rho}}}
+\newcommand{\cgamma}{\ensuremath{\gamma_{\C}}}
+
+ % Lettera
+\newcommand{\con}{\ensuremath{\mathsf{c}}}
+
+ % Sequenza
+\newcommand{\seq}[1]{\ensuremath{\vartriangleright_\mathtt{#1}}}
+
+
+ % Semantiche per i vincoli
+\newcommand{\semc}[1]{\semantica{s}{#1}}
+
+\newcommand{\semtracce}[1]{\semantica{t}{#1}}
+\newcommand{\asemtracce}[1]{\semantica{\bar{t}}{#1}}
+\newcommand{\asemtracces}[1]{\semantica{\bar{s}}{#1}}
+
+
+\newcommand{\modsem}[1]{\ensuremath{\semantica{T}{#1}}}
+\newcommand{\amodsem}[1]{\semantica{\bar{T}}{#1}}
+
+\newcommand{\A}{\ensuremath{\adom{A}}\xspace}
+\newcommand{\modA}{\ensuremath{\adom{A}_\mathsf{M}}\xspace}
+\newcommand{\Absel}{\ensuremath{\ael{a}}\xspace}
+\newcommand{\modAbsel}{\ensuremath{\ael{a}_\mathsf{m}}\xspace}
+
+\newcommand{\relsem}[1]{\semantica{R}{#1}}
+
+ % Proiezione/dropping
+
+\newcommand{\lascia}{\ensuremath{\delta}}
+\newcommand{\tieni}{\ensuremath{\pi}}
+
+%\newcommand{\Absless}{\ensuremath{\sqsubseteq^\mathsf{a}}}
+\newcommand{\modAbsless}{\ensuremath{\abs{\sqsubseteq}_\mathsf{m}}}
+
+%\newcommand{\Absjoin}{\ensuremath{\sqcap^\mathsf{a}}}
+\newcommand{\modAbsjoin}{\ensuremath{\abs{\sqcap}_\mathsf{m}}}
+
+\newcommand{\aconc}{\ensuremath{\abs{\odot}}\xspace}
+
+
+ % Operazioni sul dominio di vincoli
+\newcommand{\cless}{\ensuremath{\preceq}}
+\newcommand{\cgreater}{\ensuremath{\succeq}}
+\newcommand{\ctop}{\ensuremath{\vernal}}
+\newcommand{\cbot}{\ensuremath{\bot^\con}}
+\newcommand{\cmeet}{\ensuremath{\curlywedge}}
+\newcommand{\cjoin}{\ensuremath{\curlyvee}}
+\newcommand{\cwiden}{\ensuremath{\hbox{\hbox to 0pt{\raisebox{4pt}{$\relbar$}}$\curlyvee$}}}
+\newcommand{\bigcjoin}{\ensuremath{\bigcurlyvee}}
+
+\newcommand{\alg}{\ensuremath{\mathcal{A}}}
+
+ % Definizione di BodyOf
+\newcommand{\bodyof}[1]{\ensuremath{\mathrm{bodyOf}(\mathbf{#1})}}
+
+ % Definitione di tiedVars
+\newcommand{\tiedvars}{\ensuremath{\mathrm{tiedVars}}}
+
+  % Operazioni su Tracce
+%\newcommand{\tracce}[1]{\ensuremath{\wp(#1^\infty)}\xspace}
+\newcommand{\iniziatracce}[2]{\ensuremath{\mathcal{T}(#1,#2)}}
+\newcommand{\giunzione}{\ensuremath{\frown}\xspace}
+\newcommand{\conc}{\ensuremath{\odot}\xspace}
+\newcommand{\last}{\ensuremath{\mathrm{last}}}
+
+  % Funzioni Semantiche ``Astratte''
+\newcommand{\flow}[1]{\ensuremath{\mathrm{flow}_\mathtt{#1}}}
+\newcommand{\aflow}[1]{\ensuremath{\overline{\mathrm{flow}}_\mathtt{#1}}}
+
+  % Definizione di ``approssima'', i.e. un vincolo approssima la semantica di un metodo
+\newcommand{\approssima}{\ensuremath{\Subset}}
+
+  % Approssimazione con vincoli della semantica di un metodo
+\newcommand{\conmetodo}[5]{\ensuremath{\con_{#1}[\mathtt{#2}, \allowbreak \mathtt{#3}, \allowbreak \mathtt{#4}, \allowbreak \mathtt{#5}]}}
+
+
+
+% Definizione del dominio degli osservabili
+\newcommand{\osservabile}[2]{\ensuremath{\mathcal{O}_{#2}(\classe{#1})}}
+\newcommand{\oless}{\ensuremath{{\sqsubseteq}_{o}}}
+\newcommand{\osup}{\ensuremath{{\sqsupseteq}_{o}}}
+\newcommand{\ojoin}{\ensuremath{{\sqcup}_{o}}}
+\newcommand{\omeet}{\ensuremath{{\sqcap}_{o}}}
+\newcommand{\otp}{\ensuremath{{\top}_{o}}}
+\newcommand{\obot}{\ensuremath{{\bot}_{o}}}
+\newcommand{\obigjoin}{{{\bigsqcup}{}}_{o}}
+
+\newcommand{\domPiuPreciso}{\ensuremath{O[\parti{\Sigma}]}}
+
+% Interfaccia di una classe
+\newcommand{\interfaccia}[1]{\ensuremath{\iota(\classe{#1})}}
+
+
+% Definizione dell' insieme delle astrazioni di un dominio +
+% operazioni
+
+\newcommand{\astrazioni}[1]{\ensuremath{\mathcal{A}(#1)}}
+\newcommand{\dless}{\ensuremath{\leq}}
+\newcommand{\djoin}{\ensuremath{\vee}}
+\newcommand{\dmeet}{\ensuremath{\wedge}}
+
+% Dominio dei valori
+\newcommand{\dominioVal}[1]{\ensuremath{\mathit{#1}}}
+
+% Stato interno ad un oggetto
+\newcommand{\stato}{\ensuremath{\sigma}}
+
+% Semantica backward concreta ed astratta
+\newcommand{\backSemmetodo}[1]{\semantica{{M}^{<}}{#1}}
+\newcommand{\abacksemmetodo}[1]{\semantica{\bar{M}^{<}}{#1}}
+
+
+% Complexity
+\newcommand{\Order}[1]{\ensuremath{\mathcal{O}(#1)}}
+
+% Keywords
+
+\newcommand{\Clousot}{\ensuremath{\mathtt{Clousot}}}
+
+\newcommand{\code}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\codet}[1]{\texttt{#1}}
+
+\newcommand{\takes}{\ensuremath{\leftarrow}}
+
+\newcommand{\linea}[1]{\ensuremath{#1}}
+
+
+
+% Syntax
+
+\newcommand{\Assert}{\ensuremath{\mathtt{assert}}~}
+\newcommand{\Assume}{\ensuremath{\mathtt{assume}}~}
+\newcommand{\While}{\code{while}}
+\newcommand{\If}{\code{if}}
+\newcommand{\Else}{\code{else}}
+\newcommand{\Skip}{\code{skip}}
+\newcommand{\Stm}{\code{C}}
+\newcommand{\HavocStm}{\code{Havoc_{C}}}
+\newcommand{\IgnoreStm}{\code{Ignored_{C}}}
+\newcommand{\IgnoreExp}{\code{Ignored_{e}}}
+\newcommand{\IgnoreConst}{\code{Ignored_{k}}}
+\newcommand{\Var}{\code{x}}
+\newcommand{\VarDec}{\code{var}}
+\newcommand{\VarDecGlobal}{\code{global}}
+\newcommand{\Exp}{\code{e}}
+\newcommand{\BExp}{\code{b}}
+\newcommand{\Bexp}{\BExp}
+\newcommand{\Function}{\code{function}}
+\newcommand{\ExpTwoOps}{\code{ExpTwoOps}}
+\newcommand{\Lit}{\code{Lit}}
+\newcommand{\NumOp}{\code{op}_{\mathit{num}}}
+\newcommand{\IntOp}{\code{op}_{\mathit{int}}}
+\newcommand{\Op}{\code{op}}
+\newcommand{\Program}{\code{Prog}}
+\newcommand{\Relop}{\code{relop}}
+\newcommand{\Int}{\code{int}}
+
+\newcommand{\Code}{\code{IstrStream}}
+\newcommand{\Label}{\code{Label}}
+\newcommand{\Istr}{\code{Istr}}
+\newcommand{\Jump}{\code{jmp}}
+\newcommand{\JumpIfTrue}{\code{jmpIf}}
+\newcommand{\JumpIf}{\JumpIfTrue}
+\newcommand{\Nop}{\code{nop}}
+
+\newcommand{\Comp}{\ensuremath{\mathcal{C}}}
+\newcommand{\Compexp}{\ensuremath{\mathcal{C}_{e}}}
+\newcommand{\CompExp}{\Compexp}
+
+\newcommand{\assign}{\el{assign}}
+\newcommand{\test}{\el{test}}
+\newcommand{\guard}{\test}
+\newcommand{\checkif}{\el{check}}
+\newcommand{\checkIf}{\checkif}
+
+\newcommand{\aassign}{\el{\assign}}
+\newcommand{\atest}{\el{\test}}
+
+\newcommand{\arange}{\el{\mathsf{range}}}
+
+\newcommand{\widening}{\ensuremath{\triangledown}}
+\newcommand{\awidening}{\widening}
+\newcommand{\narrowing}{\ensuremath{\vartriangle}}
+
+\newcommand{\HLsem}[1]{\asemantica{H}{#1}}
+\newcommand{\HLSem}[1]{\HLsem{#1}}
+\newcommand{\LLsem}[1]{\asemantica{L}{#1}}
+\newcommand{\LLSem}[1]{\LLsem{#1}}
+
+\newcommand{\BigLLSem}[1]{\asemanticaBig{L}{#1}}
+\newcommand{\bigLLSem}[1]{\BigLLSem{#1}}
+\newcommand{\bigLLsem}[1]{\BigLLSem{#1}}
+
+\newcommand{\result}{\code{res}}
+
+% Definizioni per Subpolyhedra
+
+
+\newcommand{\VarProg}{\ensuremath{\Var_\mathtt{P}}}
+\newcommand{\VarSlack}{\ensuremath{\Var_\mathtt{S}}}
+
+\newcommand{\variable}[1]{\ensuremath{\mathtt{#1}}}
+
+\newcommand{\var}{\variable{v}}
+
+\newcommand{\progvar}{\variable{x}}
+\newcommand{\progvariable}[1]{\ensuremath{\progvar_{#1}}}
+
+\newcommand{\slackvariable}[1]{\ensuremath{\beta_{#1}}}
+\newcommand{\slackvar}{\slackvariable{}}
+
+\newcommand{\slackvariableinfo}[1]{\ensuremath{\code{info}(#1)}}
+\newcommand{\slackvarinfo}{\slackvariableinfo{\slackvariable{}}}
+
+
+\newcommand{\reduction}[1]{\ensuremath{\rho(#1)}}
+\newcommand{\simplify}[1]{\ensuremath{\sigma(#1)}}
+
+\newcommand{\bottomS}{\ensuremath{\bottom_{S}}}
+\newcommand{\topS}{\ensuremath{\top_{S}}}
+\newcommand{\lessS}{\ensuremath{\aless_{S}}}
+\newcommand{\joinS}{\ensuremath{\join_{S}}}
+\newcommand{\wideningS}{\ensuremath{\widening_{S}}}
+
+\newcommand{\intv}{\ael{i}}
+\newcommand{\lineq}{\ael{l}}
+
+\newcommand{\subpoly}{\ael{s}}
+
+\newcommand{\subpolyPair}[2]{\ensuremath{\tupla{\lineq_{#1}^{#2};\ \intv_{#1}^{#2}}}}
+
+%% Subsection trick to save some vertical space
+\newcommand{\Fsubsubsection}[1]{\smallskip\noindent\textbf{#1}}
+
+
+\newcommand{\Foxtrot}{\code{Foxtrot}}
+\newcommand{\NET}{\code{.Net}}
+
+
+\newcommand{\hint}[1]{\ensuremath{\mathbbm{h}_{#1}}}
+\newcommand{\op}{\ensuremath{\diamond}}
+
+\newcommand{\hintcomp}{\ensuremath{\Xi}}
+
+
+%% JavaScript
+\newcommand{\javascript}{\texttt{JavaScript}}
+\newcommand{\javascriptMM}{\ensuremath{\mathtt{JavaScript}^{=}}}
+\newcommand{\double}{\texttt{Float64}}
+\newcommand{\integer}{\texttt{Int32}}
+\newcommand{\Values}{\ensuremath{\mathsf{Val}}}
+
+\newcommand{\RPlus}{\ensuremath{\mathbb{R}^{*}}}
+\newcommand{\Reals}{\ensuremath{\mathbb{R}}}
+\newcommand{\Integers}{\ensuremath{\mathbb{Z}}}
+
+%%Intervals
+\newcommand{\alphaIntv}{\ensuremath{\alpha_{i}}}
+\newcommand{\gammaIntv}{\ensuremath{\gamma_{i}}}
+\newcommand{\lessIntv}{\ensuremath{\less_{i}}}
+\newcommand{\Intv}{\Intervals}
+\newcommand{\BottomIntv}{\ensuremath{\bottom_{i}}}
+\newcommand{\TopIntv}{\ensuremath{\top_{i}}}
+\newcommand{\NaNIntv}{\ensuremath{\mathsf{NaN}}}
+\newcommand{\PlusInfty}{\ensuremath{\mathsf{PlusInf}}}
+\newcommand{\MinusInfty}{\ensuremath{\mathsf{MinInf}}}
+\newcommand{\NormalIntv}[2]{\ensuremath{\mathsf{Normal}({#1},{#2})}}
+\newcommand{\OpenLeftIntv}[1]{\ensuremath{\mathsf{OpenLeft}({#1})}}
+\newcommand{\OpenRightIntv}[1]{\ensuremath{\mathsf{OpenRight}({#1})}}
+
+%%Kinds
+\newcommand{\alphaKinds}{\ensuremath{\alpha_{k}}}
+\newcommand{\gammaKinds}{\ensuremath{\gamma_{k}}}
+\newcommand{\lessKinds}{\ensuremath{\less_{k}}}
+\newcommand{\Kinds}{\dom{Kind}}
+\newcommand{\BottomKinds}{\ensuremath{\bottom_{k}}}
+\newcommand{\TopKinds}{\ensuremath{\top_{k}}}
+\newcommand{\IntKinds}{\ensuremath{\mathtt{Int32}}}
+\newcommand{\DoubleKinds}{\ensuremath{\mathtt{Float64}}}
+
+%%KIntervals
+\newcommand{\alphaKIntv}{\ensuremath{\alpha_{ki}}}
+\newcommand{\gammaKIntv}{\ensuremath{\gamma_{ki}}}
+\newcommand{\lessKIntv}{\ensuremath{\less_{ki}}}
+\newcommand{\KIntv}{\ensuremath{\Intervals \times \Kinds} }
+\newcommand{\BottomKIntv}{\ensuremath{\tupla{\BottomIntv, \BottomKinds}}}
+\newcommand{\TopKIntv}{\ensuremath{\tupla{\TopIntv, \TopKinds}}}
+\newcommand{\MeetKIntv}{\ensuremath{\meet_{ki}}}
+
+\newcommand{\Eval}{\ensuremath{\mathsf{eval}}}
+
+%% Numerical analysis
+\newcommand{\NSem}[1]{\semantica{N}{#1}}
+
+%% Variation analysis
+\newcommand{\VSem}[1]{\semantica{V}{#1}}

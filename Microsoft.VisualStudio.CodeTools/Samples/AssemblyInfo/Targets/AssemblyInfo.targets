@@ -1,0 +1,37 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Multiple Import Guard -->
+  <PropertyGroup>
+    <AssemblyInfoImported>True</AssemblyInfoImported>
+  </PropertyGroup>
+
+  <!--=====================================================================
+    Copyright 2010 Microsoft Research
+    
+    Add post build step for our tool
+        AssemblyInfoEnabled and AssemblyFormatString are set by the property pane
+        AssemblyInstallDir is set in the CodeTools registry (see VsRegistryKeys.wxs)
+    ======================================================================-->
+  <PropertyGroup Condition="'$(AssemblyInfoEnabled)' == 'true'">
+    <PrepareForRunDependsOn>$(PrepareForRunDependsOn);AssemblyInfoRun</PrepareForRunDependsOn>
+    <AssemblyInfoCommand>$(AssemblyInfoInstallDir)AssemblyInfo.exe</AssemblyInfoCommand>
+  </PropertyGroup>
+
+  <Target
+    Name="AssemblyInfoRun"
+    Condition="'$(AssemblyInfoEnabled)' == 'true'"
+    DependsOnTargets=""
+  >
+    <!-- Just some debug messages: using importance High makes it show up in the output pane of VS --> 
+    <Message Text="CodeTools Sample: Run Assembly Info Tool:" Importance="High"/>
+    <Message Text="  InstallDir  :  $(AssemblyInfoInstallDir)" Importance="High"/>
+    <Message Text="  FormatString:  $(AssemblyInfoFormatString)" Importance="High"/>
+    <Message Text="  Command     :  $(AssemblyInfoCommand)" Importance="High"/>
+    <Message Text="  TargetPath  :  $(TargetPath)" Importance="High"/>
+    <Message Text="" Importance="High"/>
+
+    <!-- and execute our assembly info program (with quotes around all paths and arguments) -->
+    <Exec Command="&quot;$(AssemblyInfoCommand)&quot; &quot;$(AssemblyInfoFormatString)&quot; &quot;$(TargetPath)&quot;" />
+  </Target>
+
+</Project>

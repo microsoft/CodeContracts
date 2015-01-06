@@ -1,0 +1,577 @@
+\documentclass{llncs}
+\usepackage{listings}
+
+\newcommand{\codefamily}{\ttfamily}
+\newcommand{\csharp}{C\#}
+\newcommand{\code}[1]{\lstinline{#1}}
+\lstset{language={[Sharp]C},mathescape=false,flexiblecolumns=true,morekeywords={Contract,assert,assume},basicstyle=\codefamily\small,moredelim=[is][\itshape]{@}{@},captionpos=b,numberbychapter=false,numberstyle=\tiny,stepnumber=1,numbersep=2pt,keywordstyle=\bfseries}
+
+
+\title{Semantic Hashing and Caching}
+
+\author{Manuel F\"ahndrich and Francesco Logozzo}
+
+\institute{Microsoft Research, Redmond, WA (USA)}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Sophisticated program analysis isn't cheap. Analyzing large code bases
+from scratch may take hours, depending on the depth of the performed
+analysis. In order to provide programmers continuous feedback in terms
+of analysis results related to their latest source code changes,
+program analysis needs to be incrementalized. Incrementalization means
+1) determining which parts of a program have changed, and 2) analyzing
+only these parts of the program, while guaranteeing that the results
+are no different than if the entire codebase were analyzed from
+scratch. This condition is important for stability and reproduciblity
+and tricky to realize when an analysis performs inference, such as
+pre/post condition inference that is used in other parts of the
+analysis. This paper describes how we address these issues in Clousot,
+a static analyzer for .Net programs.
+\end{abstract}
+
+\section{Introduction}
+In order to be successful,  static analyses (and verification tools) should not only produce ``good'' results, but they should  produce them ``fast'' enough.
+Good results require precise static analyses.
+Precise static analyses involve expensive computations. 
+Depending on the precision of the analysis, the computation resources, the complexity of the analyzed program, and the properties to prove, analysis time can range from a few minutes, to hours, or even days.
+
+Great research efforts have been devoted to the optimization of the  ``good results/fast computation'' ratio.
+These research efforts proceed on several, orthogonal axes.  
+One axis is the design of constrained abstract domains, where generality is dropped to gain performance, e.g., Octagons~\cite{Mine-HOSC06} and Pentagons~\cite{LogozzoFahndrich08-2} simplify Polyhedra~\cite{CousotHalbwachs78} by focusing on linear inequalities of a particular shape.
+Other axes are the treatment of program flow (flow-sensitive or not), calling contexts, path sensitivity, and function calls.
+On the tool engineering side, researchers have been interested in exploiting some structure of a given analysis (such as sparsity or sharing) to improve the underlying data structures and to enable parallel and incremental analyses.
+Our incremental approach is analysis agnostic, in that we factor the analysis specific aspects into key computation and cached value adaption functions.
+
+Ideally, the cost of the program analysis should be proportional to
+the size of the program change instead of being proportional to the
+size of the whole program.  The initial step of an incremental
+analysis is the construction of a baseline.  A given version of the
+program is fully analyzed, and its results are stored in some reusable
+form.  The initial step can be very expensive, but the hope is that
+this cost is amortized by the performance gains in successive repeated
+analyses.  When a new version of the program is submitted for
+analysis, the incremental analyzer (i) detects which parts of the
+program have changed, (ii) only analyzes those parts, and (iii)
+adds the results of the changed parts to the baseline.
+
+\section{Requirements}
+We identify the basic requirements for an incremental analysis.
+
+\emph{Relative soundness} is the very basic requirement for an incremental analyzer:
+All the  alarms raised by a monolithic analysis should also be raised in the incremental analysis.
+\emph{Relative completeness} is a desidered requirement:
+All the alarms raised by the incremental analysis should also be raised by the monolithic analysis.
+
+In this paper, our interest  is in relative sound and complete incremental analyses: an external observer cannot differentiate the results of the monolithic analysis from those of the  incremental analysis.
+
+Incremental analysis should  \emph{persist}, update, and retrieve its state from a store.
+The store can be shared by many instances of the analysis, possibly invoked by different users concurrentely.
+
+
+The main reason to perform incremental analysis is \emph{performance}.
+By performing an incremental analysis, we expect to have a significant analysis speedup: 
+An incremental analysis is worthwhile when the cost of detecting the program differences and retrieving and reusing previously computed results are substantially lower than the cost of the analysis from scratch.
+At worst, the incremental analysis  boils down to a monolithic analysis in the (unlikely) case when all of the program has changed.
+
+An incremental analysis detects changes at a given \emph{granularity}. 
+The granularity can be modules, functions, or even basic blocks.
+There is an obvious trade-off between between the size of the granularity, the complexity of the information to store, and the cost of detecting changes.
+If the granularity is too fine, e.g., basic blocks, then too many details of the analysis need to be persisted (such as the abstract states at block entry and exit, the unmodified local variables, and many other details of an analysis).
+While feasible in theory, in practice the persistance of abstract states of real-world analyzers is very difficult, since they consist of a composition of many abstract domains with optimized memory representations, and rely on internal transient state details (e.g., unique keys, pointer equalities), etc.
+If on the other hand the granularity is too coarse, (in the worst case the entire program), then too much of the code must be re-analyzed.
+Ideally, we want the granularity of the incremental analysis  to be coarse-enough to allow easy persistence and retrieval of the necessary semantic information, and fine-enough to minimize the analysis of unmodified code.
+
+Given a fixed granularity, the incremental analysis must discover changes quickly and soundly.
+If the strategy/schema to detect  changes is too complex, then it risks to be too slow and  error-prone.
+Ideally, it should be easy to prove that the incremental analysis is relatively sound and complete w.r.t. the monolithic analysis.
+
+Finally, we prefer the incrementalization to be as \emph{agnostic} as possible with respect to the underlying semantic analysis.
+A fully agnostic incremental analysis is totally indipendent from the underlying (details of the) analyzer.
+A fully instantiated incremental analysis exploits a refined knowledge of the abstract domains and their implementation to maximize the  
+In practice, there is some information that the incrementalizer should know, for instances which part of the input environment are needed from the analyzer (e.g., the source code, which parts of the metadata).
+
+\subsection{Summary of our solution}
+We propose an analysis-agnostic incremental analysis based on the concepts of semantic hashing and caching.
+Our solution is (relatively) sound and complete, it is persistant, and it enables up to $10$x speedup\marginpar{F:Check this number!!!!}.
+Our implementation relies on a per-method analysis granularity, but it can be extended to finer-granularities.
+
+For each method under analysis, we construct a contol-flow graph (CFG), instrumented with all contracts (i.e., preconditions, postconditions, and object invariants) at method entry, exit, and call-sites.
+Contracts can be both user-provided as well as the inferred by the analysis itself.
+Then we compute a semantic hash of the instrumented CFG and of all the metadata that \emph{may} influence the analyses, e.g., readonly markers for fields, (part of) the type hierachy, etc.
+We use the hash as key into a SQL DB, acting as our  store.
+If the key is not in the database, we run the analysis as usual, recording the output (alarms, suggestions, and inferred contracts), and saving it in the  DB.
+If the key is already in the database, then we read the output from the store and ``replay'' it.
+
+Thanks to the semantic hash, our incremental analysis is relatively sound and complete.
+The granularity of our analysis is a single method, and the detection of changes is quite fast (building the instrumented CFG, and hashing it).
+The information we have to store is relatively simple, namely the set of warnings, and the inferred contracts. This information is substantially simpler than persisting abstract states.
+
+Our technique is static analysis-agnostic, in that it is independent of the static analysis internals, such as the representation of abstract states, etc. We achieve this by factoring
+out the key computation, namely the part of the environment (metadata, program) that may be read by the analysis and therefore needs to be used as the lookup key into the cache.
+We will see how this information can be extracted statically from the static analysis itself.
+
+
+\begin{figure*}[th]
+\lstset{numbers=left, numberstyle=\tiny}
+\centering
+\begin{tabular}{lll}
+\begin{lstlisting}
+void Foo(int[] x)
+{
+  var z = Bar(x);
+  assert z > 0;
+  assert z % 2 == 0;
+}
+int  Bar(int[] x)
+{
+  requires x != null;
+  ensures result > 0;
+
+  return abs(x[0]) + 2;
+}
+\end{lstlisting} & \hspace{.5cm}
+\begin{lstlisting}
+int  Bar(int[] x)
+{
+  requires x != null;
+  ensures result > 0;
+
+  return abs(x[0]) + 2;
+}
+void Foo(int[] x)
+{
+  var z = Bar(x);
+  assert z > 0;
+  assert z % 2 == 0;
+}
+\end{lstlisting} & \hspace{.5cm}
+\begin{lstlisting}
+int  Bar(int[] x)
+{
+  requires x != null;  
+  ensures result > 0;
+
+  return abs(x[0]) * 2;
+}
+void Foo(int[] x)
+{
+  var z = Bar(x);
+  assert z > 0;
+  assert z % 2 == 0;
+}
+\end{lstlisting}
+\end{tabular}
+\caption{Three versions of the program, to be incrementally analyzed with different abstract domains and inference options.}
+\label{fig:ex1}
+\end{figure*}
+
+\section{Motivating Examples}
+
+Let us consider the example in Fig.~\ref{fig:ex1}.
+On the left, the original program \code{P0}, on the center, the same program where the source locations of \code{Foo} and \code{Bar} are swapped \code{P1}, and on the right the new program \code{P2}.
+First, we assume to use a static analyzer \code{sa}: (i) instantiated with the interval~\cite{CousotCousot77} and non-nullness~\cite{FahndrichLeino-OOPSLA03} abstract domains;  (ii) performing no intermethod analysis nor inference, i.e., only contracts are used for the assume/guarantee reasoning; and (iii) caching the analysis results.
+To keep the example simple, we ignore integer overflows.
+The output of the tool will be:
+\begin{lstlisting}
+> sa -intervals -nonnull -noinference -cache P0 
+line 3: requires x!=null unproven
+line 5: assert unproven
+line 12: possible out of bounds
+0 Method(s) read from the cache
+\end{lstlisting}
+Which are all relevant warnings, given that nothing is known about the \code{Foo} input parameter.
+Our caching analyzer will create the baseline and store the input and the output of the analysis into the database.
+We assume the granularity to be at the method-level.
+As discussed earlier a key point is to determine which part (key) $K(E)$ of the input/analysis environment $E$ we should save to guarantee the soundness of the incremental analysis.
+A first idea would be to just save the method body.
+This would certainly work for \code{Bar}, but it would be incorrect for \code{Foo}.
+In fact, it may be the case that \code{Foo} is unmodified, but \code{Bar}'s contracts are.
+In this case as the analysis of  \code{Foo} relies on \code{Bar} contracts, we should add the contract of \code{Bar} to $K(E)$.
+
+
+Suppose the programmer swaps the source locations of \code{Foo} and \code{Bar}. 
+As \emph{semantically} nothing has changed between \code{P0} and \code{P1}, we expect the incremental analysis to report the same warnings as in the previous run.
+However, \emph{syntactically} something has changed: the source locations. 
+Therefore, a na\"if caching mechanism dumbly recording the original locations would be either: (i) incorrect (reporting errors at the wrong locations); or (ii) too limited.
+Mapping the warnings to the right source locations among different versions is a non-trivial problem.
+Simple solutions include: (i) performing a syntactic diff on the source code, which unfortunately is not reliable in general, and it requires the tool to have immediate access to (at worst) all the versions of the source code; 
+(ii) exploiting the IDE tracking of the syntactic changes, which has the drawback that the analysis results cannot be persisted on the store, on so they are instance-local.
+We have a different solution.
+Abstractly, when we store the result into the cache, we encode the source location; when we read the result back, we decode the source location.
+For instance in our example, for the first warning we will record that it appears in the method \code{Foo}, at the same source location where the call to \code{Bar} appears. 
+The encoding gets tricky when multiple and complex contracts are considered.
+We will describe our solution in Sec.~\ref{sec:readingback}.
+The output of the tool is then:
+\begin{lstlisting}
+> sa -intervals -nonnull -noinference -cache P1 
+line 6: possible out of bounds
+line 10: requires x!=null unproven
+line 12: assert unproven
+2 Method(s) read from the cache
+\end{lstlisting}
+
+The implementation of \code{Bar} in \code{P1} does not satisfy the assertion in \code{Foo}.
+The programmer then changes it as in \code{P2}, and she runs the static analysis again
+\begin{lstlisting}
+> sa -intervals -nonnull -noinference -cache P2 
+line 6: possible out of bounds
+line 10: requires x!=null unproven
+line 12: assert unproven
+1 Method(s) read from the cache
+\end{lstlisting}
+The analysis has determined that \code{Bar} has changed, and so it re-analyzed it.
+On the other hand, even if the \emph{concrete} semantics of \code{Foo} has changed, the \emph{abstract} semantics of \code{Foo} has not --- because the abstract semantics relies on \code{Bar}'s contract to reason on method calls, and \code{Bar} contract is the same as in \code{P0} and \code{P1}.
+As a consequence, the analysis replays the results in the cache.
+
+Next, the programmer adds the parity abstract domain and inter-method inference  to prove the assertion:
+\begin{lstlisting}
+> sa -intervals -nonnull -parity -inference -cache P2 
+line 6: possible out of bounds
+line 10: requires x!=null unproven
+0 Method(s) read from the cache
+\end{lstlisting}
+The incremental analysis determines that it cannot rely on the previous results as the analysis environment has changed.
+As a consequence, the abstract domains used for the analysis as well as the command line options that \emph{may} change the abstract semantics  should  be included in $K(E)$.
+The contract inferred for \code{Bar} (\code{result} $= \mathsf{even}$) will be part of \code{Bar}'s persisted output, and of \code{Foo}'s $K(E)$.
+
+The static analysis may also make use of  metadata, which should also be added to $K(E)$.
+Examples are the read-only\footnote{A read-only field can only be assigned in the object constructor.} marker for fields or the class hierarchy.
+Consider for instance the example on the left in Fig.~\ref{fig:ex2}.
+If the field \code{f} is marked as read-only, then the analysis can safely assume that \code{Ext}, even if unknown, cannot change the value of \code{a.f}, and as a consequence  the assertion is valid.
+If the marker is removed, then that assumption is no more correct and the analysis should report that the assertion may be violated.
+
+One may ask if then we should let $K(E) = E$, i.e., consider the full environment.
+Actually, what is in $K(E)$ depends on the precision and the needs of the particular static analysis.
+For instance consider the example in Fig.~\ref{fig:ex2} on the right~\footnote{The expression \code{obj as T} returns \code{null} if the object \code{obj} cannot be casted to \code{T}.}, and two non-null analyses: (i) $\mathcal{N_0}$ which only keeps track whether a reference is null or not; and (ii) $\mathcal{N}_1$ refining  $\mathcal{N}_0$ with type information.
+The analysis $\mathcal{N}_0$ does not capture the fact that \code{X} is the only implementation of \code{I}, so it considers both branches in \code{Use} as reachable.
+If we add a new implementation for \code{I}, we change the type hyerarchy, but we do not need to analyze \code{Use} again, as $\mathcal{N_0}$ results are indipendent of (that part of) the metadata.
+On the other hand,   $\mathcal{N}_1$ is precise enough to detect that the else branch is unreachable.
+As a consequence a change in the type hierarchy should also cause a re-analysis of \code{Use}. 
+
+The design of the $K$ function is the most important aspect of the semantic caching mechanism.
+A $K$ which ignores parts of the environment will cause a relatively unsound incremental analysis.
+A $K$ which is overly-conservative on the environment will cause too many cache hits.
+
+
+\begin{figure*}[t]
+\centering
+\begin{tabular}{ll}
+\begin{lstlisting}
+class A { [readonly] f; /* ...*/ }
+virtual Ext(A a);
+void Call(A a)
+{  
+  requires a != null && a.f > 0;
+  Ext(a);
+  assert a.f > 0;
+}
+\end{lstlisting} 
+& \hspace{.5cm}
+\begin{lstlisting}
+interface I { /* ... */}
+class X : I { /* ... */}
+
+void Use(I i)
+{
+  requires i != null;
+  var x = i as X; 
+  if(x != null)  { /* T ... */}
+  else           { /* F ... */}   
+}
+\end{lstlisting} 
+\end{tabular}
+\caption{Three versions of the program, to be incrementally analyzed with different abstract domains and inference options.}
+\label{fig:ex2}
+\end{figure*}
+
+
+
+\section{Formalization}
+Caching or memoization is a standard technique in computer science
+which trades space against computation time. If a result to be
+computed has previously been computed and stored, it can simply be
+retrieved and used instead of the re-computation. For memoization to
+be effective, computing the lookup key must be both sound and
+efficient w.r.t. the computation. To make these terms precise, let us
+assume that a computation $C$ takes place in an environment $E$ (of
+key-value pairs), and produces a value $V$. Memoization with respect
+to $C$ must compute a sub-environment $S= K(E)$, such that $C(S) =
+C(E)$, i.e., the computation produces the same value in both
+environments. Ideally, the key-function $K$ produces a minimal $S$,
+meaning that for any $S'$ that is strictly smaller than $S$, $C(S')$
+fails to compute the same value. Memoization then stores $(S,V)$.
+Prior to computing $C(E')$ in some new environment, one computes
+$K(E')$. If $K(E') = S$, the computation can be skipped and $V$
+returned.
+
+A key function $K$ is sound w.r.t. $C$, if for any $E_1$ and $E_2$,
+$C(E_1) \not= C(E_2)$ implies $K(E_1) \not= K(E_2)$. Computing the key
+function and comparing the resulting sub-environments must be cheap
+compared to the cost of computing $C(E)$.
+
+\subsection{Static Analysis}
+In our context, the computation $C$ we would like to memoize is a
+static analysis of a single method $M$ of a program $P$. The
+environment consists of the code of $M$, as well as boundary
+conditions, such as preconditions, postconditions, object invariants,
+and memory invariants that are part of $P$. The result computed by $C$
+are a set of warnings about possible errors in method $M$, along with
+inferred pre- and post-conditions of $M$.
+
+Clearly, a pre-requisite in order for memoization to be correct, is
+that $C$ is deterministic. For static analyses, this is a good thing,
+as it guarantees reproducibility. 
+It is however not trivial to achieve, especially, in the presence of timeouts or incomplete reduction or closure operations~\cite{subpolyhedra}.
+
+The naive memoization for static analysis is not quite what
+we would like. E.g., warnings typically contain source locations. When
+a program changes, e.g., by inserting new code in front of an
+unchanged method $M$, the previously computed analysis of $M$ is not
+what re-analysis of $M$ would produce, as the error locations would be
+incorrect. Of course, the source locations are part of $E$, and in
+this case the memo lookup would actually fail.
+
+In order for static analysis caching to be useful however, it is
+clearly necessary to introduce a refinement that allows re-using and
+adjusting a previously computed result. Besides source locations,
+adjustments to results may include renaming of various program
+entities (parameters, methods, locals, types), etc.
+
+Thus, we want to factor our computation $C$ of a method's results into
+$C(E) = A(E,B(E))$ where $B$ is the base analysis, and $A$ is the
+adjustment step, i.e., after the base analysis $B$, we compute the
+final value by adusting it via $A$ and $A$ is allowed to read the
+environment.  $A$ allows the key computation $K$ to abstract over
+things that are adjusted afterwards, thus enabling more hits in the
+cache.  Now only $B$ is cached, and the key correctness depends only on $B$, namely
+for any $E_1$ and $E_2$, $B(E_1) \not= B(E_2)$ implies $K(E_1)\not=
+K(E_2)$.
+
+The cache now stores $(K(E),B(E))$, and when a key lookup $K(E')$
+matches $K(E)$, the resulting computed value is $A(E',B(E))$. Key
+soundness guarantees that $B(E) = B(E')$, and thus, $A(E', B(E)) =
+A(E',B(E'))$, i.e., adjusting the results from environment $E_1$ to
+$E_2$ is the same as running entirely in environment $E_2$.
+
+
+
+
+
+
+For sophisticated static analyses, creating an efficient and sound key
+function $K$ and adapter $A$ is non-trivial.
+
+
+
+\section{Experience}
+
+We have implemented semantic hashing and caching for our .NET static
+analyzer Clousot~\cite{MafLogozzo10}. The analyzer takes as input an entire dll
+(managed assembly), as well as contract assemblies for external
+references. It proceeds by computing a call-graph approximiation to order the
+methods in bottom-up sequence. Each method $M$ is then analyzed as follows:
+\begin{itemize}
+\item We build the CFG of method $M$ from its intermediate instructions (IL) 
+\item We instrument contracts into the CFG from called methods and $M$'s
+  pre- and postconditions, and invariants. These contract
+  stem from previously analyzed methods, or from user written
+  contracts and are expressed as IL themselves, augmented with \code{assert} and \code{assume} instructions.
+
+\item Next, we compute a three-address representation of the code
+  (eliminating the evaluation stack). This step also performs
+  \emph{ensures specialization}. Ensures
+  specialization inserts a better post-condition at a method call to
+  $F$, when---given the type of the callee---we can determine that
+  $F'$ overrides $F$ and will be called. In that case, the
+  post-condition of $F'$ is inserted instead of $F$'s. (Note that the
+  postcondition of $F'$ internally refers to the post condition of
+  $F$, so it is strictly stronger).
+
+\item We then perform the semantic hash computation on the
+  three-address representation of the CFG of $M$. This layer is chosen
+  for the hash due to the need to see the ensures specialization.  Since
+  the stronger post-condition of a specialized called method $F'$ may influence the
+  analysis, we must compute the hash on it, rather than the
+  post-condition of the original call target $F$.
+
+\item If the hash is found in the cache, we read the analysis outcomes
+  for method $M$ from the cache as well as its inferred contracts for
+  subsequent method analyses.
+
+\item We then adjust (via the adjustment function $A$) the outcomes to
+  contain the proper source location information as follows: the
+  outcome source position in the cache is stored as the control flow
+  block index and instruction index within that block. This position
+  remains identical between code that produces identical CFGs. As a
+  result, we simply lookup this block and instruction in the currently
+  computed CFG and extract the source location information at that
+  point. This allows us to port warning messages from an earlier
+  version to a newer version while having the source location
+  correctly refer to the new source code.
+\item If we failed to find a cache hit, we analyze method $M$ and
+  serialize the outcomes and inferred contracts to the cache.
+\end{itemize}
+
+During the development of this caching scheme, numerous issues had to
+be overcome in order to obtain a sound but not overly restrictive key
+function $K$. We discuss these in the next section.
+
+
+\subsection{Semantic Hashing Considerations}
+
+\paragraph{Layered Caching:}
+Originally, we computed the semantic hash on a different
+representation of the code, namely, the value version of the
+code, where all values are numbered and aliasing has been expanded
+out. This representation is more semantic than the three-address code
+version, as certain code changes that do not affect the value flow are
+abstracted away. However, it was too expensive to compute this code
+version, and thus the cache performance even on cache hits was not
+good enough.
+
+Moving the hashing to the earlier three-address code version of the
+code solved the performance problem, but initially caused errors in
+the cache, because our caching function wasn't sound. It didn't take
+ensures specialization into account (see previous section).
+
+This ability to pick at what abstraction level to hash a method's code
+can be exploited to build a multi-layer caching strategy: if a hash at
+the three-address code level is not found, the value
+version of the code has to be computed anyway in the case we have to
+analyze the method anew. But once this version is computed, it may be
+beneficial to compute a second hash and lookup on the value
+version. Such a strategy is beneficial provided that the next
+abstraction layer unifies more syntactic differences than the previous
+layer.  For example, the following code versions differ at the
+three-address level, but not at the value level.
+\begin{figure*}[h!]
+\lstset{numbers=left, numberstyle=\tiny}
+\begin{minipage}{.5\textwidth}
+\begin{lstlisting}[caption={code a)},label=fig:semv1]
+void M(int p) {
+  int x = p;
+  int y = p;
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+\begin{lstlisting}[caption={code b)},label=fig:semv2]
+void M() {
+  int x = p;
+  int y = x;
+}
+\end{lstlisting}
+\end{minipage}
+\end{figure*}
+On line 3, code a) on the left uses the parameter to assign \code{y},
+whereas code b) on the right uses \code{x} to assign \code{y}. Since
+both \code{x} and \code{p} contain the same value on all paths, the
+value versions of both programs are identical.
+
+Thus, if we can
+identify several layers, separated by sufficient computational cost
+and sufficient semantic distance, one can hash and cache at more than
+one level to obtain a partial caching benefit.
+
+\paragraph{Semantic equivalences:} Logical equivalence between code
+segments as in the example above also arise in contracts. E.g., 
+\begin{lstlisting}
+x >= y && y >= z && z >= x
+\end{lstlisting}
+maybe replaced in the next version of the code by
+\begin{lstlisting}
+x == y && y == z
+\end{lstlisting}
+Such logical equivalences should be exploited to increase cache
+hits. However, there's a wrong way and a right way to do it. The
+wrong, but intuitively first idea is to add such equivalence
+exploitation to the key computation $K$. However, this would likely
+result in violating relative soundness or completeness because in
+practice, semantic analysis are themselves not complete. Provided with
+one form of the logical formulae, an analysis may prove an assert,
+whereas provided with another form, although semantically equivalent,
+the analysis may not prove the assertion.  Thus, the correct way to
+exploit such equivalences for caching is to again perform layered
+hashing by introducing a normalization phase into the code
+representation. By normalizing the code first (e.g., canonically
+ordering contracts and commutative operations), we increase
+cache hits while also guaranteeing that the same version of the code is
+analyzed.
+
+\paragraph{Closures:} .NET compilers emit extra methods and helper classes
+ for closure methods used within a method. If such closure methods are
+ interpreted or inlined by an analysis, then they must obviously be
+ included in the hash of the containing method. In our analysis, we
+ interpret closures that are used in universal and existential
+ quantifications and thus these need to be hashed as well.
+
+\paragraph{Compiler generated names:} Compilers produce helper member for
+ various language features. If these helpers are named differently
+ from one compile to the next (i.e., the compiler itself is not
+ deterministic), this will have an adverse effect on cache hits,
+ unless the key function is suitably crafted to correct for these
+ names. For example, in C\#, array initializers are serialized into
+ helper strings stored as global static fields and deserialized at
+ runtime. The compiler uses Guids (globally unique identifiers) to
+ name these fields, resulting in new field names on every compile.
+ Special handling of such cases can avoid cache misses. In this case,
+ one can hash the serialized string constant instead of the name, as
+ it is semantically relevant, provided one can recognize the use of
+ such tricks by the compiler.
+
+
+\subsection{Experiments}
+We analyzed a commercial codebase consisting of 62 dlls, comprising a
+total of 175K non-blank non-comment lines of code. Analysis of the
+codebase without the cache on an 8 processor Dell Z420 takes 30
+minutes (including the regular build). We analyzed a months worth of
+build logs to see how well the incremental analysis works. The number
+of methods not found in the cache varies from 0.08\% to 2.35\%.  The
+incremental analysis alone takes between 400--490 seconds. There
+appears to be no correlation between the running time and the fraction
+of methods re-analyzed, mainly due to noise and startup cost, which is
+substantial for the 62 projects.
+
+
+
+\section{Related Work}
+McPeak et. al.~\cite{McPeak:2013} report on their experience building
+an incremental and parallel analysis framework at Coverity. Their
+techniques are quite similar to ours in that they also use a method as
+the granularity of analysis and caching. Their work units consist of a
+method and models of methods called by that method, as well as calling
+context information. The scheduling of work units is more complicated,
+as they perform various bottom-up and top-down phases during their
+analysis. They report speedup factors of the incremental analysis betwen 6-7. 
+
+
+Burckhardt and Leijen present a general computational model for
+incremental and parallel computation~\cite{BurckhardtLeijen11}. Their
+model is very powerful in terms of available speedup.  Provided the
+programmer uses specialized isolation types to represent mutable data,
+their library automatically tracks reads and writes and thus
+dependencies in order to determine which parts of a computation need
+to be recomputed and which parts can be reused. Even though their
+approach is potentially more fine grained and more automatic, it does
+not lend itself directly to the context of persistent caching. Their
+algorithm requires determining at runtime whether a closure is
+equivalent to a previously computed closure. Such checks may be
+possible if all past computations take place in the same process, but
+storing persistent closure identifiers would require either programmer managed
+id's for each sub-computation, or compiler generated ones. Also, in
+order to exploit their model, all code that uses mutable storage needs
+to be rewritten to use isolation types, a non-trivial undertaking.
+
+
+
+
+\section{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

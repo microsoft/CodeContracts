@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<PropertyGroup>
+<OutputType>Library</OutputType>
+<AssemblyName>System.Core</AssemblyName>
+<Optimize>true</Optimize>
+<DefineConstants>CONTRACTS_FULL</DefineConstants>
+<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+<OutputPath>bin\Debug\</OutputPath>
+<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+<AppDesignerFolder>Properties</AppDesignerFolder>
+<SignAssembly>true</SignAssembly>
+<DelaySign>true</DelaySign>
+<AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+<CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+</PropertyGroup>
+<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+</PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.5\Profile\Client\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v4.5\Target;Microsoft\Framework\v3.5\Target"/>
+
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+<ItemGroup>
+	<Compile Include = "Sources\System.Diagnostics.Eventing.EventDescriptor.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.EventProvider.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.EventProviderTraceListener.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventBookmark.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventKeyword.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLevel.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogConfiguration.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogException.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogInformation.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogInvalidDataException.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogLink.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogNotFoundException.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogPropertySelector.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogProviderDisabledException.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogQuery.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogReader.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogReadingException.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogRecord.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogSession.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogStatus.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventLogWatcher.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventMetadata.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventOpcode.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventProperty.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventRecord.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventRecordWrittenEventArgs.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.EventTask.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.ProviderMetadata.cs" />
+	<Compile Include = "Sources\System.Diagnostics.Eventing.Reader.cs" />
+	<Compile Include = "Sources\System.Linq.Enumerable.cs" />
+	<Compile Include = "Sources\System.Linq.EnumerableExecutor.cs" />
+	<Compile Include = "Sources\System.Linq.EnumerableExecutor_1.cs" />
+	<Compile Include = "Sources\System.Linq.EnumerableQuery_1.cs" />
+	<Compile Include = "Sources\System.Linq.EnumerableQuery.cs" />
+	<Compile Include = "Sources\System.Linq.IGrouping_2.cs" />
+	<Compile Include = "Sources\System.Linq.ILookup_2.cs" />
+	<Compile Include = "Sources\System.Linq.IOrderedEnumerable_1.cs" />
+	<Compile Include = "Sources\System.Linq.IOrderedQueryable.cs" />
+	<Compile Include = "Sources\System.Linq.IOrderedQueryable_1.cs" />
+	<Compile Include = "Sources\System.Linq.IQueryable.cs" />
+	<Compile Include = "Sources\System.Linq.IQueryable_1.cs" />
+	<Compile Include = "Sources\System.Linq.IQueryProvider.cs" />
+	<Compile Include = "Sources\System.Linq.Lookup_2.cs" />
+	<Compile Include = "Sources\System.Linq.OrderedParallelQuery_1.cs" />
+	<Compile Include = "Sources\System.Linq.ParallelEnumerable.cs" />
+	<Compile Include = "Sources\System.Linq.ParallelQuery_1.cs" />
+	<Compile Include = "Sources\System.Linq.ParallelQuery.cs" />
+	<Compile Include = "Sources\System.Linq.Queryable.cs" />
+	<Compile Include = "Sources\System.Linq.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.CallSite.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.CallSite_1.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.CallSiteBinder.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.CallSiteHelpers.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.CallSiteOps.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.Closure.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.DebugInfoGenerator.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.DynamicAttribute.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.ExecutionScope.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.ExtensionAttribute.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.IRuntimeVariables.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.IStrongBox.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.ReadOnlyCollectionBuilder_1.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.RuleCache_1.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.RuntimeOps.cs" />
+	<Compile Include = "Sources\System.Runtime.CompilerServices.StrongBox_1.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.BinaryExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.BlockExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.CatchBlock.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ConditionalExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ConstantExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.DebugInfoExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.DefaultExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.DynamicExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ElementInit.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.Expression_1.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.Expression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ExpressionVisitor.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.GotoExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.IArgumentProvider.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.IndexExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.InvocationExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.LabelExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.LabelTarget.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.LambdaExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ListInitExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.LoopExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberAssignment.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberBinding.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberInitExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberListBinding.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MemberMemberBinding.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.MethodCallExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.NewArrayExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.NewExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.ParameterExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.RuntimeVariablesExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.SwitchCase.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.SwitchExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.SymbolDocumentInfo.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.TryExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.TypeBinaryExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.UnaryExpression.cs" />
+	<Compile Include = "Sources\System.Linq.Expressions.cs" />
+	<Compile Include = "Sources\System.Dynamic.BinaryOperationBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.BindingRestrictions.cs" />
+	<Compile Include = "Sources\System.Dynamic.CallInfo.cs" />
+	<Compile Include = "Sources\System.Dynamic.ConvertBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.CreateInstanceBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.DeleteIndexBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.DeleteMemberBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.DynamicMetaObject.cs" />
+	<Compile Include = "Sources\System.Dynamic.DynamicMetaObjectBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.DynamicObject.cs" />
+	<Compile Include = "Sources\System.Dynamic.ExpandoObject.cs" />
+	<Compile Include = "Sources\System.Dynamic.GetIndexBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.GetMemberBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.IDynamicMetaObjectProvider.cs" />
+	<Compile Include = "Sources\System.Dynamic.IInvokeOnGetBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.InvokeBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.InvokeMemberBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.SetIndexBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.SetMemberBinder.cs" />
+	<Compile Include = "Sources\System.Dynamic.UnaryOperationBinder.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.AesCryptoServiceProvider.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.AesManaged.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngAlgorithm.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngAlgorithmGroup.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngKey.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngKeyBlobFormat.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngKeyCreationParameters.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngProperty.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngPropertyCollection.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngProvider.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.CngUIPolicy.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDiffieHellman.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDiffieHellmanCng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDiffieHellmanCngPublicKey.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDiffieHellmanPublicKey.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDsa.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ECDsaCng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ManifestSignatureInformation.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.ManifestSignatureInformationCollection.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.MD5Cng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA1Cng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA256Cng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA256CryptoServiceProvider.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA384Cng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA384CryptoServiceProvider.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA512Cng.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.SHA512CryptoServiceProvider.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.StrongNameSignatureInformation.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.X509Certificates.AuthenticodeSignatureInformation.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.X509Certificates.TimestampInformation.cs" />
+	<Compile Include = "Sources\System.Security.Cryptography.X509Certificates.cs" />
+	<Compile Include = "Sources\System.Diagnostics.EventSchemaTraceListener.cs" />
+	<Compile Include = "Sources\System.Diagnostics.UnescapedXmlDiagnosticData.cs" />
+	<Compile Include = "Sources\System.Diagnostics.cs" />
+	<Compile Include = "Sources\System.Diagnostics.PerformanceData.CounterData.cs" />
+	<Compile Include = "Sources\System.Diagnostics.PerformanceData.CounterSet.cs" />
+	<Compile Include = "Sources\System.Diagnostics.PerformanceData.CounterSetInstance.cs" />
+	<Compile Include = "Sources\System.Diagnostics.PerformanceData.CounterSetInstanceCounterDataSet.cs" />
+	<Compile Include = "Sources\System.Diagnostics.PerformanceData.cs" />
+	<Compile Include = "Sources\System.Collections.Generic.HashSet.Enumerator_1.cs" />
+	<Compile Include = "Sources\System.Collections.Generic.HashSet_1.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.AnonymousPipeClientStream.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.AnonymousPipeServerStream.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.NamedPipeClientStream.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.NamedPipeServerStream.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.PipeAccessRule.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.PipeAuditRule.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.PipeSecurity.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.PipeStream.cs" />
+	<Compile Include = "Sources\System.IO.Pipes.cs" />
+	<Compile Include = "Sources\System.Threading.ReaderWriterLockSlim.cs" />
+	<Compile Include = "Sources\System.Threading.cs" />
+	<Compile Include = "Sources\System.IO.MemoryMappedFiles.MemoryMappedFile.cs" />
+	<Compile Include = "Sources\System.IO.MemoryMappedFiles.MemoryMappedFileSecurity.cs" />
+	<Compile Include = "Sources\System.IO.MemoryMappedFiles.MemoryMappedViewAccessor.cs" />
+	<Compile Include = "Sources\System.IO.MemoryMappedFiles.MemoryMappedViewStream.cs" />
+	<Compile Include = "Sources\System.IO.MemoryMappedFiles.cs" />
+	<Compile Include = "Sources\System.Runtime.InteropServices.ComAwareEventInfo.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.InstanceNotFoundException.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.InstrumentationBaseException.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.InstrumentationException.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementBindAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementCommitAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementConfigurationAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementCreateAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementEntityAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementEnumeratorAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementKeyAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementMemberAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementNameAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementNewInstanceAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementProbeAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementReferenceAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementRemoveAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.ManagementTaskAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.WmiConfigurationAttribute.cs" />
+	<Compile Include = "Sources\System.Management.Instrumentation.cs" />
+	<Compile Include = "Sources\System.Linq.Parallel.IMergeHelper_1.cs" />
+	<Compile Include = "Sources\System.Linq.Parallel.IParallelPartitionable_1.cs" />
+	<Compile Include = "Sources\System.Linq.Parallel.IPartitionedStreamRecipient_1.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeMemoryMappedFileHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeNCryptHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeNCryptKeyHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeNCryptProviderHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafeNCryptSecretHandle.cs" />
+	<Compile Include = "Sources\Microsoft.Win32.SafeHandles.SafePipeHandle.cs" />
+	<Compile Include = "Sources\System.Security.cs" />
+	<Compile Include = "Sources\System.cs" />
+	<Compile Include = "Sources\System.IO.cs" />
+	<Compile Include = "Sources\System.Threading.Tasks.TaskExtensions.cs" />
+	<Compile Include = "Properties\AssemblyInfo.cs" />
+</ItemGroup>
+<ItemGroup>
+	<Reference Include = "mscorlib" />
+	<Reference Include = "System" />
+	<Reference Include = "System.Configuration" />
+	<Reference Include = "System.Xml" />
+	<Reference Include = "System.Data.SqlXml" />
+	<Reference Include = "System.Security" />
+	<Reference Include = "System.Numerics" />
+</ItemGroup>
+<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

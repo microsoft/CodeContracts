@@ -1,0 +1,3 @@
+This directory contains the .DLLs with some basic checks on the abstract domains of Clousot
+
+To generate the .DLLs, you should open the Basic solution in the Regression\ dir, and compile it

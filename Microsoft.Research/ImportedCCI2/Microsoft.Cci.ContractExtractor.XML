@@ -1,0 +1,1444 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Cci.ContractExtractor</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.Cci.Contracts.Visibility.MostRestrictiveVisibility(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IExpression)">
+            <summary>
+            Returns the most restrictive visibility of any member mentioned within the expression.
+            I.e., if a private member is referenced within the expression, then TypeMemberVisibility.Private
+            is returned. If TypeMemberVisibility.Public is returned, then all referenced members are public.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.ContractChecker">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.ContractChecker.CheckMethodContract(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.MutableContracts.MethodContract)">
+            <summary>
+            Mutates the <paramref name="methodContract"/> by removing any contracts that violate any of the rules
+            about contracts, e.g., preconditions mentioning a member that is more restrictive than the method containing
+            the precondition.
+            TODO: Return a list of errors.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractExtractor">
+            <summary>
+            Extracts the contracts into a contract provider, but also mutates the method
+            bodies (if they are mutable) to delete the code that represented the contracts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.SplitMethodBodyIntoContractAndCode(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.ISourceMethodBody,Microsoft.Cci.PdbReader)">
+            <summary>
+            Extracts calls to precondition and postcondition methods from the type
+            System.Diagnostics.Contracts.Contract from the ISourceMethodBody and
+            returns a pair of the extracted method contract and the residual method
+            body. If the <paramref name="sourceMethodBody"/> is mutable, then it
+            has the side-effect of updating the body so that it contains only the
+            residual code in addition to returning it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.GetTypeContract(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.ITypeDefinition,Microsoft.Cci.PdbReader,Microsoft.Cci.ILocalScopeProvider)">
+            <summary>
+            Extracts calls to Contract.Invariant contained in invariant methods within
+            <paramref name="typeDefinition"/> and returns the resulting type contract.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.ContractExtractor.methodIsInReferenceAssembly">
+            <summary>
+            When not null, this is the abstract type for which the contract class
+            is holding the contracts for.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.ExtractContractsAndPossiblyMutateBody(Microsoft.Cci.IBlockStatement)">
+            <summary>
+            If the decompiler were perfect, the contracts would all be either method calls (to the contract
+            class) or conditional statements (for legacy requires). But it is not yet perfect... so partially
+            decompiled contracts can also contain push statements, gotos, labels, and conditional statements.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.IndexOfStatementAfterCallToCtorInStruct(System.Collections.Generic.List{Microsoft.Cci.IStatement})">
+            <summary>
+            Bizarre, but true code found in an assembly:
+            
+            public struct S {
+              private S(int x) : this() {
+                 ...
+              }
+            }
+            
+            Completely useless, but it messes up the contract extraction because any
+            contracts coming after the call to "this" (which shows up as an assignment
+            of the default value of S to "this") won't get found unless this "preamble"
+            is skipped over.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.IsAssignmentToLocal(Microsoft.Cci.IStatement)">
+            <summary>
+            Returns true iff statement is "loc := e" or "loc[i] := e"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.ReplacePrivateFieldsThatHavePublicProperties(Microsoft.Cci.IMetadataHost,Microsoft.Cci.ITypeDefinition,Microsoft.Cci.MutableContracts.MethodContract)">
+            <summary>
+            Replaces any BoundExpressions of the form (this,x) in the methodContract with a method call where the method
+            being called is P where x is a private field of the source type that has been marked as [ContractPublicPropertyName("P")].
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractExtractor.ReplaceParametersWithArguments">
+            <summary>
+            A mutator that replaces the parameters of a method with the arguments from a method call.
+            It does *not* make a copy of the contract, so any client using this needs to make a copy
+            of the entire contract if that is needed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.ReplaceParametersWithArguments.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodCall)">
+            <summary>
+            Creates a mutator that replaces all occurrences of parameters from the target method with those from the source method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.ReplaceParametersWithArguments.Rewrite(Microsoft.Cci.IBoundExpression)">
+            <summary>
+            Visits the specified bound expression.
+            </summary>
+            <param name="boundExpression">The bound expression.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractExtractor.AssertAssumeExtractor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.AssertAssumeExtractor.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.PdbReader)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="pdbReader"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractExtractor.AssertAssumeExtractor.Rewrite(Microsoft.Cci.IExpressionStatement)">
+            <summary>
+            Rewrites the given expression statement.
+            </summary>
+            <param name="expressionStatement"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractHelper">
+            <summary>
+            Helper class for performing common tasks on mutable contracts
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.AddMethodContract(Microsoft.Cci.MutableContracts.MethodContract,Microsoft.Cci.Contracts.IMethodContract)">
+            <summary>
+            Accumulates all elements from <paramref name="sourceContract"/> into <paramref name="targetContract"/>
+            </summary>
+            <param name="targetContract">Contract which is target of accumulator</param>
+            <param name="sourceContract">Contract which is source of accumulator</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.InjectContractCalls(Microsoft.Cci.IMetadataHost,Microsoft.Cci.MutableCodeModel.Module,Microsoft.Cci.MutableContracts.ContractProvider,Microsoft.Cci.ISourceLocationProvider)">
+            <summary>
+            Mutates the given <paramref name="module"/> by injecting calls to contract methods at the
+            beginnning of any method in the <paramref name="module"/> that has a corresponding contract
+            in the <paramref name="contractProvider"/>. It also creates a contract invariant method
+            for each type in <paramref name="module"/> that has a type contract in the
+            <paramref name="contractProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.AddTypeContract(Microsoft.Cci.MutableContracts.TypeContract,Microsoft.Cci.Contracts.ITypeContract)">
+            <summary>
+            Accumulates all elements from <paramref name="sourceContract"/> into <paramref name="targetContract"/>
+            </summary>
+            <param name="targetContract">Contract which is target of accumulator</param>
+            <param name="sourceContract">Contract which is source of accumulator</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.UninstantiateAndUnspecializeMethodDefinition(Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            
+            </summary>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.Unspecialized(Microsoft.Cci.ITypeReference)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetStringArgumentFromAttribute(System.Collections.Generic.IEnumerable{Microsoft.Cci.ICustomAttribute},System.String)">
+            <summary>
+            Returns the first string argument in the constructor in a custom attribute.
+            I.e., [A("x")]
+            </summary>
+            <param name="attributes">The list of attributes that will be searched</param>
+            <param name="attributeName">Name of the attribute.</param>
+            <returns>The string argument if it exists, otherwise null.</returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetTypeDefinitionFromAttribute(Microsoft.Cci.ITypeDefinition,System.String)">
+            <summary>
+            Returns a type definition for a type referenced in a custom attribute.
+            </summary>
+            <param name="typeDefinition">The type definition whose attributes will be searched</param>
+            <param name="attributeName">Name of the attribute.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetMethodFromContractClass(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Given an abstract method (i.e., either an interface method, J.M, or else
+            an abstract method M), see if its defining type is marked with the
+            [ContractClass(typeof(T))] attribute. If not, then return null.
+            If it is marked with the attribute, then:
+            1) If J is an interface: return the method from T that implements M
+            (i.e., either T.J.M if T explicitly implements J.M or else the method
+            T.M that is used as the implicit interface implementation of J.M).
+            2) Otherwise, the method from T that is an override of M.
+            </summary>
+            <param name="host"></param>
+            <param name="methodDefinition">
+            This must be an unspecialized method definition.
+            </param>
+            <returns>
+            If the method definition is from a generic type, e.g., J&lt;T&gt;, and its contract class is
+            JContract&lt;U&gt;, then the returned contract method will have the "correct" instantiation, i.e.,
+            JContract&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetAbstractMethodForContractMethod(Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Given an method, M, see if it is declared in a type that is holding a contract class, i.e.,
+            it will be marked with [ContractClassFor(typeof(T))]. If so, then return T.M, else null.
+            </summary>
+            <param name="methodDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetInvariantMethods(Microsoft.Cci.ITypeDefinition)">
+            <summary>
+            Returns the first method found in <paramref name="typeDefinition"/> containing an instance of 
+            an attribute with the name "ContractInvariantMethodAttribute", if it exists.
+            </summary>
+            <param name="typeDefinition">The type whose members will be searched</param>
+            <returns>May return null if not found</returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.CreateTypeReference(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IAssemblyReference,System.String)">
+            <summary>
+            Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
+            When the type name has periods in it, a structured reference with nested namespaces is created.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsAutoPropertyMember(Microsoft.Cci.IMetadataHost,Microsoft.Cci.ITypeDefinitionMember)">
+            <summary>
+            C# uses CompilerGenerated, VB uses DebuggerNonUserCode
+            </summary>
+            <returns>
+            True iff the member is a getter or a setter and in addition is marked by the compiler as being a compiler-generated method.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsContractClass(Microsoft.Cci.IMetadataHost,Microsoft.Cci.ITypeDefinition)">
+            <summary>
+            Returns true iff the type definition is a contract class for an interface or abstract class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsInvariantMethod(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Returns true iff the method definition is an invariant method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsValidatorOrAbbreviator(Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns true iff the method resolves to a definition which is decorated
+            with an attribute named either "ContractArgumentValidatorAttribute"
+            or "ContractAbbreviatorAttribute".
+            The namespace the attribute belongs to is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsAbbreviator(Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns true iff the method resolves to a definition which is decorated
+            with an attribute named "ContractAbbreviatorAttribute".
+            The namespace the attribute belongs to is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsValidator(Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns true iff the method resolves to a definition which is decorated
+            with an attribute named  "ContractArgumentValidatorAttribute".
+            The namespace the attribute belongs to is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsModel(Microsoft.Cci.IFieldDefinition)">
+            <summary>
+            Returns the attribute iff the field resolves to a definition which is decorated
+            with an attribute named "ContractModelAttribute".
+            The namespace the attribute belongs to is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsModel(Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns the attribute iff the method resolves to a definition which is decorated
+            with an attribute named "ContractModelAttribute".
+            The namespace the attribute belongs to is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsPure(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns true iff the method reference or its definition have the [System.Diagnostics.Contracts.Pure] attribute.
+            </summary>
+            <param name="host">Used to get a reference to the contract assembly in which the attribute is defined.</param>
+            <param name="methodReference">The method reference to be checked for the presence of the pure attribute.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsContractReferenceAssembly(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IUnit)">
+            <summary>
+            Indicates when the unit is marked with the assembly-level attribute
+            [System.Diagnostics.Contracts.ContractReferenceAssembly]
+            where that attribute type is defined in the unit itself.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetMethodContractFor(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.IMethodReference)">
+            <summary>
+            Returns a (possibly-null) method contract relative to a contract-aware host.
+            If the method is instantiated or specialized, then the contract is looked
+            for on the uninstantiated and unspecialized method.
+            Note that this behavior is *not* necessarily present in any individual
+            contract provider.
+            However, if you already know which unit the method is defined in and/or
+            already have the contract provider for the unit in which the method is
+            defined, and you know the method is uninstantiated and unspecialized,
+            then you would do just as well to directly query that contract provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetMethodContractForIncludingInheritedContracts(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.IMethodDefinition,System.Boolean)">
+            <summary>
+            Returns a method contract containing the 'effective' contract for the given
+            method definition. The effective contract contains all contracts for the method:
+            any that it has on its own, as well as all those inherited from any methods
+            that it overrides or interface methods that it implements (either implicitly
+            or explicitly).
+            All parameters in inherited contracts are substituted for by
+            the method's own parameters.
+            If there are no contracts, then it returns null.
+            Any preconditions that were written as legacy-preconditions or calls to Requires&lt;E&gt; are
+            included iff <paramref name="keepLegacyPreconditions"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.InstantiateAndSpecializeContract(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.IMethodContract,Microsoft.Cci.IMethodReference,Microsoft.Cci.IMethodReference)">
+            <summary>
+            Given a method contract (<paramref name="methodContract"/> for a unspecialized/uninstantiated method reference/definition
+            (<paramref name="unspec"/>), specialize and instantiate (i.e., the generics) in the contract so that it is a contract
+            relative to the specialized/instantiated method reference/definition (<paramref name="mr"/>).
+            </summary>
+            <param name="host"></param>
+            <param name="methodContract"></param>
+            <param name="mr"></param>
+            <param name="unspec"></param>
+            <returns>
+            A deep copy of <paramref name="methodContract"/>, properly specialized and instantiated.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.InstantiateAndSpecializeContract(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.ITypeContract,Microsoft.Cci.ITypeReference)">
+            <summary>
+            Given a type contract (<paramref name="typeContract"/> for a unspecialized/uninstantiated type reference/definition
+            specialize and instantiate (i.e., the generics) in the contract so that it is a contract
+            relative to the specialized/instantiated type reference/definition (<paramref name="context"/>).
+            </summary>
+            <param name="host"></param>
+            <param name="typeContract"></param>
+            <param name="context"></param>
+            <returns>
+            A deep copy of <paramref name="typeContract"/>, properly specialized and instantiated.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ExtractContracts(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.MutableCodeModel.Module,Microsoft.Cci.PdbReader,Microsoft.Cci.ILocalScopeProvider)">
+            <summary>
+            Given a mutable module that is a "declarative" module, i.e., it has contracts expressed as contract calls
+            at the beginning of method bodies, this method will extract them, leaving the method bodies without those
+            calls and return a contract provider for the module containing any extracted contracts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetAllImplicitlyImplementedInterfaceMethods(Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Returns zero or more interface methods that are implemented by the given method, even if the interface is not
+            directly implemented by the containing type of the given method. (It may be that the given method is an override
+            of a method in a base class that directly implements the interface. In fact, that base class might have an abstract
+            method implementing the interface method.)
+            </summary>
+            <remarks>
+            IMethodDefinitions are returned (as opposed to IMethodReferences) because it isn't possible to find the interface methods
+            without resolving the interface references to their definitions.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.CopyContractIntoNewContext(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.IMethodContract,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Returns a modified <paramref name="methodContract"/> so that instead of belonging to <paramref name="fromMethod"/> it
+            is a method contract for <paramref name="toMethod"/>.
+            All parameters from <paramref name="fromMethod"/> are replaced with the corresponding
+            parameters from <paramref name="toMethod"/>.
+            Any local definitions which are introduced in local declaration statements are modified so that the defining method
+            each local points to is <paramref name="toMethod"/> instead of <paramref name="fromMethod"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.GetAutoPropertyContract(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.ITypeContract,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Given a method definition for a getter or setter that the compiler produced for an auto-property,
+            mine the type contract and extract contracts from any invariants that mention the property.
+            If the <paramref name="methodDefinition"/> is a getter, then the returned method contract contains
+            only postconditions.
+            If the <paramref name="methodDefinition"/> is a setter, then the returned method contract contains
+            only preconditions.
+            If an invariant does not mention the property, then it is not represented in the returned contract.
+            </summary>
+            <param name="host"></param>
+            <param name="typeContract">
+            This must be the type contract corresponding to the containing type of <paramref name="methodDefinition"/>.
+            </param>
+            <param name="methodDefinition">
+            A method definition that should be a getter or setter for an auto-property. If it is not, then null is returned.
+            </param>
+            <returns>Either null or a method contract containing pre- or postconditions (mutually exclusive)
+            mined from the invariants contained in the <paramref name="typeContract"/>.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.AsLiteralString(Microsoft.Cci.IMetadataExpression,System.String@)">
+            <summary>
+            Converts a metadata expression representing a string to the string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.AsLiteralBool(Microsoft.Cci.IMetadataExpression,System.Boolean@)">
+            <summary>
+            Converts a metadata expression representing a boolean to the boolean.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.IsContractOptionAttribute(Microsoft.Cci.ICustomAttribute,System.String@,System.String@,System.Boolean@)">
+            <summary>
+            Returns true iff the attribute is [System.Diagnostics.Contracts.ContractOption].
+            When it returns true, then the three out parameters are set to the values
+            of the three arguments to the attribute.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractOption(Microsoft.Cci.IMethodDefinition,System.String,System.String)">
+            <summary>
+            Returns the value of the [ContractOption] attribute. Inherited from containing type
+            (or module if no containing type).
+            </summary>
+            <param name="method">
+            The method to start the search at.
+            </param>
+            <param name="category">
+            The first argument of the ContractOption attribute.
+            E.g., "contract" or "runtime". (Case-insensitive)
+            </param>
+            <param name="setting">
+            The second argument of the ContractOption attribute.
+            E.g., "inheritance" or "checking". (Case-insensitive)
+            </param>
+            <returns>
+            True if not found or found and third argument is "true". Otherwise "false".
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractOption(Microsoft.Cci.ITypeDefinition,System.String,System.String)">
+            <summary>
+            Returns the value of the [ContractOption] attribute. Inherited from containing type
+            (or module if no containing type).
+            </summary>
+            <param name="type">
+            The type to start the search at.
+            </param>
+            <param name="category">
+            The first argument of the ContractOption attribute.
+            E.g., "contract" or "runtime". (Case-insensitive)
+            </param>
+            <param name="setting">
+            The second argument of the ContractOption attribute.
+            E.g., "inheritance" or "checking". (Case-insensitive)
+            </param>
+            <returns>
+            True if not found or found and third argument is "true". Otherwise "false".
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractOption(Microsoft.Cci.IAssembly,System.String,System.String)">
+            <summary>
+            Returns the value of the [ContractOption] attribute. 
+            </summary>
+            <param name="assembly">
+            The assembly containing the attributes to search.
+            </param>
+            <param name="category">
+            The first argument of the ContractOption attribute.
+            E.g., "contract" or "runtime". (Case-insensitive)
+            </param>
+            <param name="setting">
+            The second argument of the ContractOption attribute.
+            E.g., "inheritance" or "checking". (Case-insensitive)
+            </param>
+            <returns>
+            True if not found or found and third argument is "true". Otherwise "false".
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractCallInjector.VisitTypeDefinition(Microsoft.Cci.ITypeDefinition)">
+            <summary>
+            If the <paramref name="typeDefinition"/> has a type contract, generate a
+            contract invariant method and add it to the Methods of the <paramref name="typeDefinition"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractCallInjector.Rewrite(Microsoft.Cci.IAssertStatement)">
+            <summary>
+            Converts the assert statement into a call to Contract.Assert
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractCallInjector.Rewrite(Microsoft.Cci.IAssumeStatement)">
+            <summary>
+            Converts the assume statement into a call to Contract.Assume
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractCallInjector.Rewrite(Microsoft.Cci.IOldValue)">
+            <summary>
+            Converts the old value into a call to Contract.OldValue
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.ContractCallInjector.Rewrite(Microsoft.Cci.IReturnValue)">
+            <summary>
+            Converts the return value into a call to Contract.Result
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractHelper.SeparateContractsFromCode">
+            <summary>
+            A traverser that extracts contracts from methods and updates a given contract provider with these contracts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.SeparateContractsFromCode.TraverseChildren(Microsoft.Cci.ISourceMethodBody)">
+            <summary>
+            For each method body, use the extractor to split it into the codeand contract.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ContractHelper.RewriteContractInNewContext">
+            <summary>
+            A rewriter that substitutes parameters from one method with the parameters
+            from another method as it is copying. It also re-parents any locals so that they point
+            to the method the contract is being copied "into".
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.RewriteContractInNewContext.RewriteReference(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            TODO: This is necessary only because the base rewriter for things like TargetExpression call
+            this method and its definition in the base rewriter is to not visit it, but to just return it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ContractHelper.RewriteContractInNewContext.RewriteChildren(Microsoft.Cci.MutableCodeModel.MethodCall)">
+            <summary>
+            The inherited contract might have a method call of the form "this.M(...)" where "this" had been
+            a reference type in the original contract (e.g., in an interface contract). But if it is
+            inherited into a method belonging to a struct (or other value type), then the "this" reference
+            needs to have its type changed to be a managed pointer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.ReparentLocals">
+            <summary>
+            A mutator that reparents locals defined in the target method so that they point to the source method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.ReparentLocals.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Creates a mutator that reparents locals defined in the target method so that they point to the source method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.SubstituteParameters">
+            <summary>
+            A mutator that substitutes parameters defined in the target method with those from the source method
+            (including the "this" parameter).
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.SubstituteParameters.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Creates a mutator that replaces all occurrences of parameters from the target method with those from the source method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.SubstituteParameters.RewriteChildren(Microsoft.Cci.MutableCodeModel.AddressableExpression)">
+            <summary>
+            If the <paramref name="addressableExpression"/> represents a parameter of the target method,
+            it is replaced with the equivalent parameter of the source method.
+            </summary>
+            <param name="addressableExpression">The addressable expression.</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.SubstituteParameters.RewriteChildren(Microsoft.Cci.MutableCodeModel.BoundExpression)">
+            <summary>
+            If the <paramref name="boundExpression"/> represents a parameter of the target method,
+            it is replaced with the equivalent parameter of the source method.
+            </summary>
+            <param name="boundExpression">The bound expression.</param>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.BetaReducer">
+            <summary>
+            A mutator that substitutes expressions for parameters in the expression/code/contract.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.BetaReducer.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodDefinition,System.Collections.Generic.List{Microsoft.Cci.IExpression})">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="fromMethod"></param>
+            <param name="toMethod"></param>
+            <param name="expressions"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.BetaReducer.RewriteChildren(Microsoft.Cci.MutableCodeModel.LocalDefinition)">
+            <summary>
+            Rewrites the children of the specified local definition.
+            </summary>
+            <param name="localDefinition"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.BetaReducer.Rewrite(Microsoft.Cci.IThisReference)">
+            <summary>
+            Rewrites the given this reference expression.
+            </summary>
+            <param name="thisReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.BetaReducer.RewriteChildren(Microsoft.Cci.MutableCodeModel.MethodCall)">
+            <summary>
+            Rewrites the children of the given method call.
+            </summary>
+            <param name="methodCall"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.BetaReducer.Rewrite(Microsoft.Cci.IBoundExpression)">
+            <summary>
+            Rewrites the given bound expression.
+            </summary>
+            <param name="boundExpression"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.CodeSpecializer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.#ctor(Microsoft.Cci.IMetadataHost,System.Collections.Generic.Dictionary{System.UInt32,Microsoft.Cci.ITypeReference})">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="typeRefMap"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.Rewrite(Microsoft.Cci.IGenericMethodParameterReference)">
+            <summary>
+            Rewrites the given generic method parameter reference.
+            </summary>
+            <param name="genericMethodParameterReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.Rewrite(Microsoft.Cci.IGenericTypeParameterReference)">
+            <summary>
+            Rewrites the given generic type parameter reference.
+            </summary>
+            <param name="genericTypeParameterReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.RewriteChildren(Microsoft.Cci.MutableCodeModel.SpecializedFieldReference)">
+            <summary>
+            Rewrites the given specialized field reference.
+            </summary>
+            <param name="fieldReference"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.RewriteChildren(Microsoft.Cci.MutableCodeModel.SpecializedMethodReference)">
+            <summary>
+            Rewrites the given specialized method reference.
+            </summary>
+            <param name="specializedMethodReference"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.RewriteChildren(Microsoft.Cci.MutableCodeModel.SpecializedNestedTypeReference)">
+            <summary>
+            Rewrites the given specialized nested type reference.
+            </summary>
+            <param name="specializedNestedTypeReference"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeSpecializer.RewriteReference(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            Base rewriter doesn't go into the type of the local.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.TypeContractSpecializer">
+            <summary>
+            A rewriter that instantiates any generic type references it encounters relative to a context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.TypeContractSpecializer.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.ITypeReference)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.TypeContractSpecializer.Rewrite(Microsoft.Cci.ITypeReference)">
+            <summary>
+            Rewrites unspecialized type references to become specialized ones, if they are the unspecialized
+            type this rewriter is created for.
+            </summary>
+            <param name="typeReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.TypeContractSpecializer.Rewrite(Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            If the method reference's containing type is the unspecialized type this
+            rewriter was created for, then it returns a specialized method reference
+            whose containing type is the specialized type this rewriter was created for.
+            </summary>
+            <param name="methodDefinition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.SimpleHostEnvironment.LoadUnitFrom(System.String)">
+            <summary>
+            Returns the unit that is stored at the given location, or a dummy unit if no unit exists at that location or if the unit at that location is not accessible.
+            Implementations should do enough caching to avoid repeating work: this method gets called very often for already loaded units as part of the probing logic.
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Cci.MutableContracts.SimpleHostEnvironment.PreserveILLocations">
+            <summary>
+            True if IL locations should be preserved up into the code model by decompilers using this host.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment">
+            <summary>
+            An IContractAwareHost which automatically loads reference assemblies and attaches
+            a (code-contract aware, aggregating) lazy contract provider to each unit it loads.
+            This host supports re-loading units that have been updated: it reloads any units
+            that had been dependent on the updated unit. Clients must re-resolve references
+            in order to see the updated contents of the units.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.unit2ContractExtractor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor">
+            <summary>
+            Allocates an object that can be used as an IMetadataHost which automatically loads reference assemblies and attaches
+            a (lazy) contract provider to each unit it loads.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(System.Boolean)">
+            <summary>
+            Allocates an object that can be used as an IMetadataHost which automatically loads reference assemblies and attaches
+            a (lazy) contract provider to each unit it loads.
+            </summary>
+            <param name="loadPDBs">Whether PDB files should be loaded by the extractors attached to each unit.</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Allocates an object that can be used as an IMetadataHost which automatically loads reference assemblies and attaches
+            a (lazy) contract provider to each unit it loads.
+            </summary>
+            <param name="searchPaths">
+            Initial value for the set of search paths to use.
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+            <summary>
+            Allocates an object that can be used as an IMetadataHost which automatically loads reference assemblies and attaches
+            a (lazy) contract provider to each unit it loads.
+            </summary>
+            <param name="searchPaths">
+            Initial value for the set of search paths to use.
+            </param>
+            <param name="searchInGAC">
+            Whether the GAC (Global Assembly Cache) should be searched when resolving references.
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.Boolean)">
+            <summary>
+            Allocates an object that can be used as an IMetadataHost which automatically loads reference assemblies and attaches
+            a (lazy) contract provider to each unit it loads.
+            </summary>
+            <param name="searchPaths">
+            Initial value for the set of search paths to use.
+            </param>
+            <param name="searchInGAC">
+            Whether the GAC (Global Assembly Cache) should be searched when resolving references.
+            </param>
+            <param name="loadPDBs">Whether PDB files should be loaded by the extractors attached to each unit.</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(Microsoft.Cci.INameTable)">
+            <summary>
+            Allocates an object that provides an abstraction over the application hosting compilers based on this framework.
+            </summary>
+            <param name="nameTable">
+            A collection of IName instances that represent names that are commonly used during compilation.
+            This is a provided as a parameter to the host environment in order to allow more than one host
+            environment to co-exist while agreeing on how to map strings to IName instances.
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.#ctor(Microsoft.Cci.INameTable,System.Byte,System.Boolean)">
+            <summary>
+            Allocates an object that provides an abstraction over the application hosting compilers based on this framework.
+            </summary>
+            <param name="nameTable">
+            A collection of IName instances that represent names that are commonly used during compilation.
+            This is a provided as a parameter to the host environment in order to allow more than one host
+            environment to co-exist while agreeing on how to map strings to IName instances.
+            </param>
+            <param name="pointerSize">The size of a pointer on the runtime that is the target of the metadata units to be loaded
+            into this metadta host. This parameter only matters if the host application wants to work out what the exact layout
+            of a struct will be on the target runtime. The framework uses this value in methods such as TypeHelper.SizeOfType and
+            TypeHelper.TypeAlignment. If the host application does not care about the pointer size it can provide 0 as the value
+            of this parameter. In that case, the first reference to IMetadataHost.PointerSize will probe the list of loaded assemblies
+            to find an assembly that either requires 32 bit pointers or 64 bit pointers. If no such assembly is found, the default is 32 bit pointers.
+            </param>
+            <param name="loadPDBs">Whether PDB files should be loaded by the extractors attached to each unit.</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.AddResolvedPath(System.String)">
+            <summary>
+            Adds a new pair of (assembly name, path) to the table of candidates to use
+            when searching for a unit to load. Overwrites previous entry if the assembly
+            name is already in the table. Note that "assembly name" does not have an
+            extension.
+            </summary>
+            <param name="path">
+            A valid path in the file system that ends with a file name. The
+            file name (without extension) is used as the key in the candidate
+            table.
+            </param>
+            <returns>
+            Returns true iff <paramref name="path"/> is a valid path pointing
+            to an existing file and the table was successfully updated.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.Probe(System.String,Microsoft.Cci.AssemblyIdentity)">
+            <summary>
+            Override so that contract assemblies get loaded regardless of whether their identity matches
+            that of the referencedAssembly. The base Probe method cares about the identities matching,
+            but for contract assemblies, the identity is constructed from the real assembly and its
+            identity might have nothing to do with the identity of the contract assembly since we match
+            them based only on name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.ProbeAssemblyReference(Microsoft.Cci.IUnit,Microsoft.Cci.AssemblyIdentity)">
+            <summary>
+            Given the identity of a referenced assembly (but not its location), apply host specific policies for finding the location
+            of the referenced assembly.
+            Returns an assembly identity that matches the given referenced assembly identity, but which includes a location.
+            If the probe failed to find the location of the referenced assembly, the location will be "unknown://location".
+            </summary>
+            <param name="referringUnit">The unit that is referencing the assembly. It will have been loaded from somewhere and thus
+            has a known location, which will typically be probed for the referenced assembly.</param>
+            <param name="referencedAssembly">The assembly being referenced. This will not have a location since there is no point in probing
+            for the location of an assembly when you already know its location.</param>
+            <returns>
+            An assembly identity that matches the given referenced assembly identity, but which includes a location.
+            If the probe failed to find the location of the referenced assembly, the location will be "unknown://location".
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.LoadUnitFrom(System.String)">
+            <summary>
+            Returns the unit that is stored at the given location, or a dummy unit if no unit exists at that location or if the unit at that location is not accessible.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.UnloadPreviouslyLoadedUnitIfLocationIsNewer(System.String)">
+            <summary>
+            Checks the location against all previously loaded locations. If a unit
+            had been loaded from it before and if the last write time is newer, then
+            the previously loaded unit, all units dependent on it, and all reference
+            assemblies for it are deleted from the cache and a new PeReader is created
+            for reading in all future units.
+            </summary>
+            <returns>
+            true iff (unit was unloaded or this is the first time this location has been seen)
+            the latter case should be for the first time the unit has been loaded.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.AttachContractExtractorAndLoadReferenceAssembliesFor(Microsoft.Cci.IUnit)">
+            <summary>
+            If the unit is a reference assembly, then just attach a contract extractor to it.
+            Otherwise, create an aggregating extractor that encapsulates the unit and any
+            reference assemblies that are found on the search path.
+            Each contract extractor is actually a composite comprising a code-contracts
+            extractor layered on top of a lazy extractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.GetContractExtractor(Microsoft.Cci.UnitIdentity)">
+            <summary>
+            If a unit has been loaded with this host, then it will have attached a (lazy) contract provider to that unit.
+            This method returns that contract provider. If the unit has not been loaded by this host, then null is returned.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.RegisterContractProviderCallback(Microsoft.Cci.Contracts.IContractProviderCallback)">
+            <summary>
+            The host will register this callback with each contract provider it creates.
+            </summary>
+            <param name="contractProviderCallback"></param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.LoadUnitFrom(System.String,System.Boolean)">
+            <summary>
+            Same as LoadUnitFrom(location), but if exactLocation is true, will make sure we didn't unify
+            to another assembly. Guarantees that the unit's location loaded is from the exact location given.
+            </summary>
+            <param name="location">Path to unit to load</param>
+            <param name="exactLocation">specifies if we must load from that path</param>
+            <returns>The loaded unit or dummy</returns>
+        </member>
+        <member name="P:Microsoft.Cci.MutableContracts.CodeContractAwareHostEnvironment.AllowExtractorsToUsePdbs">
+            <summary>
+            Set this before loading any units with this host. Default is true.
+            Note that extractors may use PDB file to open source files.
+            Both PDB and source files may be opened with exclusive access.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.FullyResolvedPathHost">
+            <summary>
+            A host that is a subtype of Microsoft.Cci.PeReader.DefaultHost that also maintains
+            a (mutable) table mapping assembly names to paths.
+            When an assembly is to be loaded, if its name is in the table, then the
+            associated path is used to load it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.FullyResolvedPathHost.AddResolvedPath(System.String)">
+            <summary>
+            Adds a new pair of (assembly name, path) to the table of candidates to use
+            when searching for a unit to load. Overwrites previous entry if the assembly
+            name is already in the table. Note that "assembly name" does not have an
+            extension.
+            </summary>
+            <param name="path">
+            A valid path in the file system that ends with a file name. The
+            file name (without extension) is used as the key in the candidate
+            table.
+            </param>
+            <returns>
+            Returns true iff <paramref name="path"/> is a valid path pointing
+            to an existing file and the table was successfully updated.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.FullyResolvedPathHost.LoadUnitFrom(System.String)">
+            <summary>
+            Returns the unit that is stored at the given location, or a dummy unit if no unit exists at that location or if the unit at that location is not accessible.
+            </summary>
+            <param name="location">A path to the file that contains the unit of metdata to load.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.FullyResolvedPathHost.ProbeAssemblyReference(Microsoft.Cci.IUnit,Microsoft.Cci.AssemblyIdentity)">
+            <summary>
+            Given the identity of a referenced assembly (but not its location), apply host specific policies for finding the location
+            of the referenced assembly.
+            Returns an assembly identity that matches the given referenced assembly identity, but which includes a location.
+            If the probe failed to find the location of the referenced assembly, the location will be "unknown://location".
+            </summary>
+            <param name="referringUnit">The unit that is referencing the assembly. It will have been loaded from somewhere and thus
+            has a known location, which will typically be probed for the referenced assembly.</param>
+            <param name="referencedAssembly">The assembly being referenced. This will not have a location since there is no point in probing
+            for the location of an assembly when you already know its location.</param>
+            <returns>
+            An assembly identity that matches the given referenced assembly identity, but which includes a location.
+            If the probe failed to find the location of the referenced assembly, the location will be "unknown://location".
+            </returns>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.LocalBinder">
+            <summary>
+            Rewrites code so that the first occurrence of "loc := e" gets replaced with "loc' := e" and then
+            all further occurrences of loc are replaced by loc'.
+            After it is finished rewriting, its list of local declarations for each loc' that was generated
+            should be retrieved and added to the block of code to "close" it, i.e., make it self-contained
+            with respect to locals used in the block.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.LocalBinder.CloseClump(Microsoft.Cci.IMetadataHost,System.Collections.Generic.List{Microsoft.Cci.IStatement})">
+            <summary>
+            If the local binder is used to just close a bunch of statements, then this method can
+            be used. It will rewrite the list of statements <paramref name="clump"/> and return a
+            new list of statements with the additional local declaration statements at the front
+            of the list.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.LocalBinder.Rewrite(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            Need to have this override because the base class doesn't visit down into local definitions
+            (and besides, this is where this visitor is doing its work anyway).
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.LocalBinder.RewriteReference(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            TODO: This is necessary only because the base rewriter for things like TargetExpression call
+            this method and its definition in the base rewriter is to not visit it, but to just return it.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.CodeContractsContractExtractor">
+            <summary>
+            A contract provider that layers on top of an existing contract provider and which
+            takes into account the way contracts for abstract methods are represented
+            when IL uses the Code Contracts library. Namely, the containing type of an abstract method has an
+            attribute that points to a class of proxy methods which hold the contracts for the corresponding
+            abstract method.
+            This provider wraps an existing non-code-contracts-aware provider and caches to avoid recomputing
+            whether a contract exists or not.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.CodeContractsContractExtractor.host">
+            <summary>
+            needed to be able to map the contracts from a contract class proxy method to an abstract method
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.CodeContractsContractExtractor.underlyingContractProvider">
+            <summary>
+            The (non-aware) provider that was used to extract the contracts from the IL.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.CodeContractsContractExtractor.contractProviderCache">
+            <summary>
+            Used just to cache results to that the underlyingContractProvider doesn't have to get asked
+            more than once.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.IContractExtractor)">
+            <summary>
+            Creates a contract provider which is aware of how abstract methods have their contracts encoded.
+            </summary>
+            <param name="host">
+            The host that was used to load the unit for which the <paramref name="underlyingContractProvider"/>
+            is a provider for.
+            </param>
+            <param name="underlyingContractProvider">
+            The (non-aware) provider that was used to extract the contracts from the IL.
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.GetLoopContractFor(System.Object)">
+            <summary>
+            Returns the loop contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="loop">An object that might have been associated with a loop contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.GetMethodContractFor(System.Object)">
+            <summary>
+            Returns the method contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="method">An object that might have been associated with a method contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.GetTriggersFor(System.Object)">
+            <summary>
+            Returns the triggers, if any, that have been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="quantifier">An object that might have been associated with triggers. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.GetTypeContractFor(System.Object)">
+            <summary>
+            Returns the type contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="type">An object that might have been associated with a type contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.RegisterContractProviderCallback(Microsoft.Cci.Contracts.IContractProviderCallback)">
+            <summary>
+            Delegate callback to underlying contract extractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.SplitMethodBodyIntoContractAndCode(Microsoft.Cci.ISourceMethodBody)">
+            <summary>
+            For a client (e.g., the decompiler) that has a source method body and wants to have its
+            contract extracted and added to the contract provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.CodeContractsContractExtractor.ContractMethods">
+            <summary>
+            A collection of methods that can be called in a way that provides tools with information about contracts.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.CodeContractsContractExtractor.Unit">
+            <summary>
+            The unit that this is a contract provider for. Intentional design:
+            no provider works on more than one unit.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.CodeContractsContractExtractor.ConvertContractClassContract">
+            <summary>
+            When a class is used to express the contracts for an interface (or a third-party class)
+            certain modifications must be made to the code in the contained contracts. For instance,
+            if the contract class uses implicit interface implementations, then it might have a call
+            to one of those implementations in a contract, Requires(this.P), for some boolean property
+            P. That call has to be changed to be a call to the interface method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.ConvertContractClassContract.Rewrite(Microsoft.Cci.INamespaceTypeReference)">
+            <summary>
+            Need this override because when a GenericTypeInstanceReference is rewritten, its GenericType is visited
+            as an INamespaceTypeReference and so the above override is never executed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.CodeContractsContractExtractor.ConvertContractClassContract.RewriteChildren(Microsoft.Cci.MutableCodeModel.MethodCall)">
+            <summary>
+            A call in another method in a contract class will be a non-virtual call.
+            If the contract class is holding the contract for an interface, then this must
+            be turned into a virtual call.
+            </summary>
+            <param name="methodCall"></param>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.LazyContractExtractor">
+            <summary>
+            A contract provider that can be used to get contracts from a unit by querying in
+            a random-access manner. That is, the unit is *not* traversed eagerly.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.LazyContractExtractor.contractCache">
+            <summary>
+            Needed because the decompiler requires the concrete class ContractProvider
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.LazyContractExtractor.host">
+            <summary>
+            needed to pass to decompiler
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.LazyContractExtractor.pdbReader">
+            <summary>
+            needed to pass to decompiler
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.Contracts.LazyContractExtractor.callbacks">
+            <summary>
+            Objects interested in getting the method body after extraction.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.#ctor(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.IUnit,Microsoft.Cci.Contracts.IContractMethods,System.Boolean)">
+            <summary>
+            Allocates an object that can be used to query for contracts by asking questions about specific methods/types, etc.
+            </summary>
+            <param name="host">The host that loaded the unit for which this is to be a contract provider.</param>
+            <param name="unit">The unit to retrieve the contracts from.</param>
+            <param name="contractMethods">A collection of methods that can be called in a way that provides tools with information about contracts.</param>
+            <param name="usePdb">Whether to use the PDB file (and possibly the source files if available) during extraction.</param>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.Dispose">
+            <summary>
+            Disposes the PdbReader object, if any, that is used to obtain the source text locations corresponding to contracts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.Finalize">
+            <summary>
+            Disposes the PdbReader object, if any, that is used to obtain the source text locations corresponding to contracts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.GetLoopContractFor(System.Object)">
+            <summary>
+            Returns the loop contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="loop">An object that might have been associated with a loop contract. This can be any kind of object.</param>
+            <returns></returns>
+            <remarks>
+            Currently this contract provider does not provide loop contracts: it always returns null.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.GetMethodContractFor(System.Object)">
+            <summary>
+            Returns the method contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="method">An object that might have been associated with a method contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.GetTriggersFor(System.Object)">
+            <summary>
+            Returns the triggers, if any, that have been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="quantifier">An object that might have been associated with triggers. This can be any kind of object.</param>
+            <returns></returns>
+            <remarks>
+            Currently this contract provider does not provide triggers: it always returns null.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.GetTypeContractFor(System.Object)">
+            <summary>
+            Returns the type contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="type">An object that might have been associated with a type contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.RegisterContractProviderCallback(Microsoft.Cci.Contracts.IContractProviderCallback)">
+            <summary>
+            After the callback has been registered, when a contract is extracted
+            from a method, the callback will be notified.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.LazyContractExtractor.SplitMethodBodyIntoContractAndCode(Microsoft.Cci.ISourceMethodBody)">
+            <summary>
+            For a client (e.g., the decompiler) that has a source method body and wants to have its
+            contract extracted and added to the contract provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.LazyContractExtractor.Unit">
+            <summary>
+            The unit that this is a contract provider for. Intentional design:
+            no provider works on more than one unit.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.LazyContractExtractor.Host">
+            <summary>
+            Gets the host.
+            </summary>
+            <value>The host.</value>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.LazyContractExtractor.ContractMethods">
+            <summary>
+            A collection of methods that can be called in a way that provides tools with information about contracts.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.MappingMutator">
+            <summary>
+            A mutator that changes all references defined in one unit into being
+            references defined in another unit.
+            It does so by substituting the target unit's identity for the source
+            unit's identity whenever it rewrites a unit reference.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.MappingMutator.Reparenter.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IUnit,Microsoft.Cci.UnitIdentity)">
+            <summary>
+            A mutator that, when it visits anything, converts any references defined in the <paramref name="sourceUnitIdentity"/>
+            into references defined in the <paramref name="targetUnit"/>
+            </summary>
+            <param name="host">
+            The host that loaded the <paramref name="targetUnit"/>
+            </param>
+            <param name="targetUnit">
+            The unit to which all references in the <paramref name="sourceUnitIdentity"/>
+            will mapped.
+            </param>
+            <param name="sourceUnitIdentity">
+            The unit from which references will be mapped into references from the <paramref name="targetUnit"/>
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.MappingMutator.Reparenter.Rewrite(Microsoft.Cci.IModuleReference)">
+            <summary>
+            Rewrites the given module reference.
+            </summary>
+            <param name="moduleReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.MappingMutator.Reparenter.Rewrite(Microsoft.Cci.IAssemblyReference)">
+            <summary>
+            Rewrites the given assembly reference.
+            </summary>
+            <param name="assemblyReference"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Cci.Contracts.AggregatingContractExtractor">
+            <summary>
+            A contract extractor that serves up the union of the contracts found from a set of contract extractors.
+            One extractor is the primary extractor: all contracts retrieved from this contract extractor are expressed
+            in terms of the types/members as defined by that extractor's unit. Optionally, a set of secondary extractors
+            are used to query for contracts on equivalent methods/types: any contracts found are transformed into
+            being contracts expressed over the types/members as defined by the primary provider and additively
+            merged into the contracts from the primary extractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.Contracts.IContractExtractor,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Microsoft.Cci.Contracts.IContractProvider,Microsoft.Cci.IMetadataHost}})">
+            <summary>
+            The constructor for creating an aggregating extractor.
+            </summary>
+            <param name="host">This is the host that loaded the unit for which the <paramref name="primaryExtractor"/> is
+            the extractor for.
+            </param>
+            <param name="primaryExtractor">
+            The extractor that will be used to define the types/members of things referred to in contracts.
+            </param>
+            <param name="oobExtractorsAndHosts">
+            These are optional. If non-null, then it must be a finite sequence of pairs: each pair is a contract extractor
+            and the host that loaded the unit for which it is a extractor.
+            </param>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.Dispose">
+            <summary>
+            Disposes any constituent contract providers that implement the IDisposable interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.Finalize">
+            <summary>
+            Disposes any constituent contract providers that implement the IDisposable interface. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.GetLoopContractFor(System.Object)">
+            <summary>
+            Returns the loop contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="loop">An object that might have been associated with a loop contract. This can be any kind of object.</param>
+            <returns></returns>
+            <remarks>
+            Currently this contract provider does not provide loop contracts: it always returns null.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.GetMethodContractFor(System.Object)">
+            <summary>
+            Returns the method contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="method">An object that might have been associated with a method contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.GetTriggersFor(System.Object)">
+            <summary>
+            Returns the triggers, if any, that have been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="quantifier">An object that might have been associated with triggers. This can be any kind of object.</param>
+            <returns></returns>
+            <remarks>
+            Currently this contract provider does not provide triggers: it always returns null.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.GetTypeContractFor(System.Object)">
+            <summary>
+            Returns the type contract, if any, that has been associated with the given object. Returns null if no association exits.
+            </summary>
+            <param name="type">An object that might have been associated with a type contract. This can be any kind of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.RegisterContractProviderCallback(Microsoft.Cci.Contracts.IContractProviderCallback)">
+            <summary>
+            Delegate to the primary provider
+            </summary>
+            <param name="contractProviderCallback"></param>
+        </member>
+        <member name="M:Microsoft.Cci.Contracts.AggregatingContractExtractor.SplitMethodBodyIntoContractAndCode(Microsoft.Cci.ISourceMethodBody)">
+            <summary>
+            For a client (e.g., the decompiler) that has a source method body and wants to have its
+            contract extracted and added to the contract provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.AggregatingContractExtractor.ContractMethods">
+            <summary>
+            A collection of methods that can be called in a way that provides tools with information about contracts.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Microsoft.Cci.Contracts.AggregatingContractExtractor.Unit">
+            <summary>
+            The unit that this is a contract provider for. Intentional design:
+            no provider works on more than one unit.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.IteratorContracts">
+            <summary>
+            This entire class (file) should go away when iterators are always decompiled. But if they aren't
+            then this class finds the MoveNext method and gets any contracts that the original iterator method
+            had, but which the compiler put into the first state of the MoveNext state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.FindClosureMoveNext(Microsoft.Cci.IMetadataHost,Microsoft.Cci.ISourceMethodBody)">
+            <summary>
+            For an iterator method, find the closure class' MoveNext method and return its body.
+            </summary>
+            <param name="host"></param>
+            <param name="possibleIterator">The (potential) iterator method.</param>
+            <returns>Dummy.MethodBody if <paramref name="possibleIterator"/> does not fit into the code pattern of an iterator method, 
+            or the body of the MoveNext method of the corresponding closure class if it does.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.FindClosureGetEnumerator(Microsoft.Cci.IMetadataHost,Microsoft.Cci.INestedTypeDefinition)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="closureClass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.GetMethodContractFromMoveNext(Microsoft.Cci.Contracts.IContractAwareHost,Microsoft.Cci.MutableContracts.ContractExtractor,Microsoft.Cci.ISourceMethodBody,Microsoft.Cci.ISourceMethodBody,Microsoft.Cci.PdbReader)">
+            <summary>
+            
+            </summary>
+            <param name="host"></param>
+            <param name="extractor"></param>
+            <param name="iteratorMethodBody"></param>
+            <param name="moveNextBody"></param>
+            <param name="pdbReader"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.IteratorContracts.Replacer">
+            <summary>
+            Substitutes all field references with the expressions that are in the captured things table
+            passed to the constructor.
+            Also replaces locals from the MoveNext method with new locals that belong to the interator method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.Replacer.Rewrite(Microsoft.Cci.IBoundExpression)">
+            <summary>
+            If the <paramref name="boundExpression"/> represents a parameter of the target method,
+            it is replaced with the equivalent parameter of the source method.
+            </summary>
+            <param name="boundExpression">The bound expression.</param>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.Replacer.RewriteReference(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            TODO: This is necessary only because the base rewriter for things like TargetExpression call
+            this method and its definition in the base rewriter is to not visit it, but to just return it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.IteratorContracts.HermansAlwaysRight.Rewrite(System.Collections.Generic.List{Microsoft.Cci.IStatement})">
+            <summary>
+            There might be more than one block in the iterator's MoveNext method.
+            So let the base rewriter navigate down into the list of statements unless
+            this is the one containing the contracts.
+            This method assumes that a single contract does *not* span multiple
+            blocks, but is fully contained within a single list of statements.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper">
+            <summary>
+            If the original method that contained the anonymous delegate is generic, then
+            the code generated by the compiler, the "closure method", is also generic.
+            If the anonymous delegate didn't capture any locals or parameters, then a
+            (generic) static method was generated to implement the lambda.
+            If it did capture things, then the closure method is a non-generic instance
+            method in a generic class.
+            In either case, any references to those generic parameters need to be mapped back
+            to become references to the original method's generic parameters.
+            Create an instance of this class for each anonymous delegate using the appropriate
+            constructor. This is known from whether the closure method is (static and generic)
+            or (instance and not-generic, but whose containing type is generic).
+            Those are the only two patterns created by the compiler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.targetMethod">
+            <summary>
+            The original generic method in which the anonymous delegate is being re-created.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.targetMethodGenericParameters">
+            <summary>
+            Just a short-cut to the generic parameters so the list can be created once
+            and then the individual parameters can be accessed with an indexer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.sourceMethod">
+            <summary>
+            Used only when mapping from a generic method (i.e., a static closure method) to
+            the original generic method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.sourceType">
+            <summary>
+            Used only when mapping from a method in a generic class (i.e., a closure class)
+            to the original generic method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.IMethodDefinition)">
+            <summary>
+            Use this constructor when the anonymous delegate did not capture any locals or parameters
+            and so was implemented as a static, generic closure method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.#ctor(Microsoft.Cci.IMetadataHost,Microsoft.Cci.IMethodDefinition,Microsoft.Cci.INestedTypeReference)">
+            <summary>
+            Use this constructor when the anonymous delegate did capture a local or parameter
+            and so was implemented as an instance, non-generic closure method within a generic
+            class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cci.MutableContracts.GenericMethodParameterMapper.RewriteReference(Microsoft.Cci.ILocalDefinition)">
+            <summary>
+            This is necessary only because the base rewriter for things like TargetExpression call
+            this method and its definition in the base rewriter is to not visit it, but to just return it.
+            </summary>
+        </member>
+    </members>
+</doc>

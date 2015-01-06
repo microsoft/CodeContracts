@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="TestFrameworkOOB" storage="c:\users\maf\cci1\microsoft.research\regressiontest\testframeworkoob\testframeworkoob.generictest" id="17b79409-c294-4034-a978-73ecbbb35502" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="e9b12765-6cc5-49fd-a790-7c6da1412325" />
+  <Command filename="%testlocation%\..\..\clousot\bin\debug\clousot.exe" arguments="-regression -show validations;unreached -NonNull -Bounds TestFrameworkOOB.dll -bounds:type=subpolyhedra,reduction=fast,noObl -maxPathSize 20 -precisionLevel 2 -show progress -arithmetic -define cci1only -libpaths ..\..\..\..\contracts\bin\Debug\v3.5 -show obligations -assemblyMode=standard" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\Users\maf\CCI1\TestResults\maf_MAF1 2010-01-20 15_23_26\In\MAF1\e9b12765-6cc5-49fd-a790-7c6da1412325" />
+      <EnvironmentVariable name="testlocation" value="c:\users\maf\cci1\microsoft.research\regressiontest\testframeworkoob" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

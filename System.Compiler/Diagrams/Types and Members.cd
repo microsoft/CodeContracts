@@ -1,0 +1,981 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Comment CommentText="All type nodes below implement the following interface.">
+    <Position X="19" Y="30.5" Height="0.598" Width="1.7" />
+  </Comment>
+  <Class Name="System.Compiler.Member">
+    <Position X="20.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAkAAIQpgAAICIBACAACQYEDoUEAIAAEhAICkAICA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="DeclaringType" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="References" />
+      <Property Name="Attributes" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Method Name="AppendValue" Hidden="true" />
+      <Field Name="attributes" Hidden="true" />
+      <Field Name="documentation" Hidden="true" />
+      <Field Name="documentationId" Hidden="true" />
+      <Method Name="GetDocumentationId" Hidden="true" />
+      <Method Name="GetHelpText" Hidden="true" />
+      <Field Name="helpText" Hidden="true" />
+      <Field Name="notObsolete" Hidden="true" />
+      <Field Name="obsoleteAttribute" Hidden="true" />
+      <Field Name="tags" Hidden="true" />
+    </Members>
+    <AssociationLine Name="DeclaringType" Type="System.Compiler.TypeNode">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.183" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="References" Type="System.Compiler.Node">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.075" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Attributes" Type="System.Compiler.AttributeNode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.045" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.TypeMemberSnippet">
+    <Position X="36.5" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAIQBAAAIAAAAEAAAAIECAAAAAAAEAAICEAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ParserFactory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.TypeNode">
+    <Position X="20.25" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>2oVlFMRJxVLQi8TAAl/BbbsYEeHxaUQOnW1caLEEORA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Property Name="BaseType" />
+      <Property Name="TypeCode" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="Interfaces" />
+      <Property Name="Members" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Method Name="AppendDocumentIdMangledName" Hidden="true" />
+      <Field Name="arrayTypes" Hidden="true" />
+      <Field Name="consolidatedTemplateArguments" Hidden="true" />
+      <Field Name="consolidatedTemplateParameters" Hidden="true" />
+      <Field Name="constructors" Hidden="true" />
+      <Field Name="defaultMembers" Hidden="true" />
+      <Field Name="explicitCoercionFromTable" Hidden="true" />
+      <Field Name="explicitCoercionMethods" Hidden="true" />
+      <Field Name="explicitCoercionToTable" Hidden="true" />
+      <Field Name="explicitInterfaceImplementations" Hidden="true" />
+      <Field Name="fullName" Hidden="true" />
+      <Method Name="GetConsolidatedTemplateArguments" Hidden="true" />
+      <Method Name="GetConsolidatedTemplateParameters" Hidden="true" />
+      <Method Name="GetDocumentationId" Hidden="true" />
+      <Method Name="GetModified" Hidden="true" />
+      <Method Name="GetOwnTemplateArguments" Hidden="true" />
+      <Method Name="ImplementsMethod" Hidden="true" />
+      <Field Name="implicitCoercionFromTable" Hidden="true" />
+      <Field Name="implicitCoercionMethods" Hidden="true" />
+      <Field Name="implicitCoercionToTable" Hidden="true" />
+      <Field Name="isGeneric" Hidden="true" />
+      <Field Name="isNormalized" Hidden="true" />
+      <Field Name="MangleChars" Hidden="true" />
+      <Field Name="memberCount" Hidden="true" />
+      <Field Name="members" Hidden="true" />
+      <Field Name="membersBeingPopulated" Hidden="true" />
+      <Field Name="memberTable" Hidden="true" />
+      <Field Name="MethodDoesNotExist" Hidden="true" />
+      <Field Name="modifierTable" Hidden="true" />
+      <Field Name="NotSpecified" Hidden="true" />
+      <Field Name="opFalse" Hidden="true" />
+      <Field Name="opTrue" Hidden="true" />
+      <Field Name="pointerType" Hidden="true" />
+      <Field Name="referenceType" Hidden="true" />
+      <Field Name="runtimeType" Hidden="true" />
+      <Field Name="securityAttributes" Hidden="true" />
+      <Field Name="structurallyEquivalentMethod" Hidden="true" />
+      <Field Name="szArrayTypes" Hidden="true" />
+      <Field Name="template" Hidden="true" />
+      <Field Name="templateArguments" Hidden="true" />
+      <Field Name="templateParameters" Hidden="true" />
+      <Method Name="TryToFindExistingInstance" Hidden="true" />
+      <Field Name="typeCode" Hidden="true" />
+      <Field Name="typeMap" Hidden="true" />
+      <Method Name="TypeNode" Hidden="true" />
+      <Method Name="UpdateMemberTable" Hidden="true" />
+      <Method Name="WeedOutNonSpecialMethods" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Delegate Name="System.Compiler.TypeNode.TypeMemberProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="System.Compiler.TypeNode.TypeAttributeProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="Interfaces" Type="System.Compiler.Interface" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23" Y="23.062" />
+        <Point X="23.938" Y="23.062" />
+        <Point X="23.938" Y="24.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.079" Y="0.073" Height="0.16" Width="0.955" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="BaseType" Type="System.Compiler.TypeNode" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.438" Y="7" />
+        <Point X="20.438" Y="6.675" />
+        <Point X="19.875" Y="6.675" />
+        <Point X="19.875" Y="7.186" />
+        <Point X="20.25" Y="7.186" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.042" Y="-0.197" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Members" Type="System.Compiler.Member">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.189" Y="0.096" Height="0.16" Width="0.9" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="TypeCode" Type="System.TypeCode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.077" Y="0.05" Height="0.16" Width="0.829" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Event">
+    <Position X="16.75" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAIQBEAAIAAEACAIYAIECAgAAAAAEJAKCGAKAE=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Field Name="HandlerAdder" />
+      <Field Name="HandlerCaller" />
+      <Field Name="HandlerFlags" />
+      <Field Name="HandlerRemover" />
+      <Field Name="HandlerType" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="ImplementedTypes" />
+      <Field Name="OtherMethods" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Field Name="eventInfo" Hidden="true" />
+      <Field Name="fullName" Hidden="true" />
+      <Method Name="GetDocumentationId" Hidden="true" />
+    </Members>
+    <AssociationLine Name="HandlerType" Type="System.Compiler.TypeNode">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.192" Y="0.072" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ImplementedTypes" Type="System.Compiler.TypeNode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.04" Y="0.048" Height="0.16" Width="1.363" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Method">
+    <Position X="12.75" Y="8" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>ABQELIAIZFKIiLLAAEDHIISIEWDJgUKAqMdK4CUEYBI=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Field Name="ImplFlags" />
+      <Field Name="CallingConvention" />
+      <Field Name="ReturnType" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="Parameters" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Field Name="body" Hidden="true" />
+      <Field Name="conditionalSymbol" Hidden="true" />
+      <Field Name="contextForOffset" Hidden="true" />
+      <Field Name="doesNotHaveAConditionalSymbol" Hidden="true" />
+      <Field Name="exceptionHandlers" Hidden="true" />
+      <Field Name="fullName" Hidden="true" />
+      <Method Name="GetDocumentationId" Hidden="true" />
+      <Field Name="instructions" Hidden="true" />
+      <Field Name="isNormalized" Hidden="true" />
+      <Field Name="Locals" Hidden="true" />
+      <Field Name="methodInfo" Hidden="true" />
+      <Field Name="NotSpecified" Hidden="true" />
+      <Field Name="parameterTypes" Hidden="true" />
+      <Method Name="RecordSequencePoints" Hidden="true" />
+      <Field Name="template" Hidden="true" />
+      <Field Name="templateParameters" Hidden="true" />
+      <Method Name="TypeListsAreEquivalent" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="System.Compiler.Method.MethodBodyProvider">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="Parameters" Type="System.Compiler.Parameter">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="1.052" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Field">
+    <Position X="24.25" Y="8" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>wAIABAgI4BBAAoIAAACCAAAIEDBIAQAAAUAAIKEApAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="DefaultValue" />
+      <Field Name="Flags" />
+      <Field Name="Type" />
+      <Field Name="TypeExpression" />
+      <Field Name="Section" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="fieldInfo" Hidden="true" />
+      <Field Name="fullName" Hidden="true" />
+      <Method Name="GetDocumentationId" Hidden="true" />
+    </Members>
+    <AssociationLine Name="DefaultValue" Type="System.Compiler.Literal">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.071" Y="-0.269" Height="0.16" Width="0.996" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Property">
+    <Position X="9" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>UAAEBAEIYBAAAoAAEYCAIAAIECABgAAAAcIAKCGAIAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Field Name="Getter" />
+      <Field Name="Setter" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="OtherMethods" />
+      <Property Name="Parameters" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Field Name="fullName" Hidden="true" />
+      <Field Name="parameters" Hidden="true" />
+      <Field Name="propertyInfo" Hidden="true" />
+      <Field Name="type" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Parameters" Type="System.Compiler.Parameter">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.185" Y="0.085" Height="0.16" Width="0.99" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Type" Type="System.Compiler.TypeNode" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.719" Y="8" />
+        <Point X="10.719" Y="7.743" />
+        <Point X="13.917" Y="7.743" Type="JumpStart" />
+        <Point X="14.083" Y="7.743" Type="JumpEnd" />
+        <Point X="17.792" Y="7.743" Type="JumpStart" />
+        <Point X="17.958" Y="7.743" Type="JumpEnd" />
+        <Point X="20.25" Y="7.743" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.071" Y="0.054" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Namespace">
+    <Position X="29.75" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AiAAAAAIQBAAAMAAAEDAAAAIEKAAAAAAAEAAICMCAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="AliasDefinitions" />
+      <Field Name="NestedNamespaces" />
+      <Field Name="UsedNamespaces" />
+      <Property Name="Types" />
+    </ShowAsCollectionAssociation>
+    <Members>
+      <Field Name="fullName" Hidden="true" />
+      <Field Name="types" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="System.Compiler.Namespace.TypeProvider">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="AliasDefinitions" Type="System.Compiler.AliasDefinition">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.099" Y="0.093" Height="0.16" Width="1.354" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="NestedNamespaces" Type="System.Compiler.Namespace" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="31.375" Y="13.317" />
+        <Point X="31.375" Y="13.692" />
+        <Point X="32.375" Y="13.692" />
+        <Point X="32.375" Y="12.608" />
+        <Point X="32" Y="12.608" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.06" Y="0.11" Height="0.16" Width="1.41" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="UsedNamespaces" Type="System.Compiler.UsedNamespace">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.056" Y="0.114" Height="0.16" Width="1.409" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Types" Type="System.Compiler.TypeNode" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="30.25" Y="8" />
+        <Point X="30.25" Y="7.619" />
+        <Point X="25.583" Y="7.619" Type="JumpStart" />
+        <Point X="25.417" Y="7.619" Type="JumpEnd" />
+        <Point X="23" Y="7.619" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Class">
+    <Position X="8.5" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAgQAgAIAAAAAAAIAAAABAAAAAAAAAAAAAAABAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="AlreadyInList" Hidden="true" />
+      <Field Name="baseClass" Hidden="true" />
+      <Field Name="DoesNotExist" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.DelegateNode">
+    <Position X="15.5" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAABAAACIAAAAAAAAAAAAAAAIAAAACEABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="membersAlreadyProvided" Hidden="true" />
+      <Field Name="parameters" Hidden="true" />
+      <Field Name="returnType" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.EnumNode">
+    <Position X="18.25" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UnderlyingType" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="underlyingType" Hidden="true" />
+    </Members>
+    <AssociationLine Name="UnderlyingType" Type="System.Compiler.TypeNode" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.688" Y="24.5" />
+        <Point X="18.688" Y="23.062" />
+        <Point X="20.25" Y="23.062" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Interface">
+    <Position X="23.5" Y="24.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAQAAAAAAAAAAAAgAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="jointMemberTable" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.Struct">
+    <Position X="27.5" Y="24.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ArrayType">
+    <Position X="30" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAFBEAEEAAAAsSAAIZAAAAAAAAAAUACBAAECAgABFA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="addressList" Hidden="true" />
+      <Method Name="AppendDocumentIdMangledName" Hidden="true" />
+      <Method Name="ArrayType" Hidden="true" />
+      <Field Name="ctorList" Hidden="true" />
+      <Field Name="getterList" Hidden="true" />
+      <Field Name="setterList" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.Pointer">
+    <Position X="32.75" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEBAAAAAAAAoAAAAJAAAAAAAAAAAAABAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="Pointer" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.Reference">
+    <Position X="35.5" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEBAAAAAAAAoAAAAIAAAAAAAAAAAAABAgAAAAAABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="Reference" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.TypeModifier">
+    <Position X="39.25" Y="24.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AABABAAACAAAAgAAAAIAAAAAAAAAIAAABAAAAAAIAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="structuralElementTypes" Hidden="true" />
+      <Method Name="TypeModifier" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.OptionalModifierTypeExpression">
+    <Position X="39.25" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.RequiredModifierTypeExpression">
+    <Position X="42" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.FunctionPointer">
+    <Position X="2" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>ABAAAAAAAAAAAgAAAAIAAAAIIAAAAAAABAAAgAAEAhA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="FunctionPointer" Hidden="true" />
+      <Method Name="ParameterTypesAreEquivalent" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.FlexArrayTypeExpression">
+    <Position X="4.75" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.FunctionTypeExpression">
+    <Position X="7.5" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAEAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.StreamTypeExpression">
+    <Position X="10.25" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.NonEmptyStreamTypeExpression">
+    <Position X="13" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.BoxedTypeExpression">
+    <Position X="15.75" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.InvariantTypeExpression">
+    <Position X="18.5" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.NonNullTypeExpression">
+    <Position X="22.75" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Compiler.NonNullableTypeExpression">
+    <Position X="25.5" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TupleTypeExpression">
+    <Position X="28.25" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TypeIntersectionExpression">
+    <Position X="31" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TypeUnionExpression">
+    <Position X="33.75" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TypeExpression">
+    <Position X="36.5" Y="33" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.OptionalModifier">
+    <Position X="38.25" Y="27.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="OptionalModifier" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.RequiredModifier">
+    <Position X="40.5" Y="27.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="RequiredModifier" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.ReferenceTypeExpression">
+    <Position X="35.5" Y="27.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.PointerTypeExpression">
+    <Position X="32.75" Y="27.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.ArrayTypeExpression">
+    <Position X="30" Y="29.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.188" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TypeParameter">
+    <Position X="22.25" Y="26.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAABAAIAAgAAAAYAAAMAAAAAAAAABAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="TypeParameterFlags" />
+    </ShowAsAssociation>
+    <Members>
+      <Method Name="AppendDocumentIdMangledName" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+    <AssociationLine Name="TypeParameterFlags" Type="System.Compiler.TypeParameterFlags" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="24.25" Y="28.648" />
+        <Point X="26.125" Y="28.648" />
+        <Point X="26.125" Y="29" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.InterfaceExpression">
+    <Position X="24.75" Y="26.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="1.173" />
+  </Class>
+  <Class Name="System.Compiler.MethodTypeParameter">
+    <Position X="22.25" Y="29.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.FunctionType">
+    <Position X="15.5" Y="27.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAIAAAAAIAAAAAAABAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="FunctionType" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.ClosureClass">
+    <Position X="7.25" Y="27.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Scope">
+    <Position X="4.75" Y="27.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAEEAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OuterScope" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="outerScope" Hidden="true" />
+    </Members>
+    <AssociationLine Name="OuterScope" Type="System.Compiler.Scope" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.938" Y="27.25" />
+        <Point X="4.938" Y="26.928" />
+        <Point X="4.486" Y="26.928" />
+        <Point X="4.486" Y="27.438" />
+        <Point X="4.75" Y="27.438" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.389" Y="0.635" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.ClassParameter">
+    <Position X="12.75" Y="27.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAABAAIAAgAAAAYAAAMAAAAAAAAABAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Method Name="AppendDocumentIdMangledName" Hidden="true" />
+      <Field Name="structuralElementTypes" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.ClassExpression">
+    <Position X="10" Y="27.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Compiler.TypeScope">
+    <Position X="0.5" Y="26.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAEAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.MethodScope">
+    <Position X="3.25" Y="29.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAEAAAAAAAAAACAAIAAQACAAAAAAAAAAAAAAGAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="closureClass" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.BlockScope">
+    <Position X="6" Y="29.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAACAAAACAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="AssociatedBlock" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.NamespaceScope">
+    <Position X="8.75" Y="29.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>BEEAAAAAAAAAABAAABAAAAABAAAAAQkAAAADABBAAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="aliasFor" Hidden="true" />
+      <Field Name="namespaceFor" Hidden="true" />
+      <Field Name="nestedNamespaceFullName" Hidden="true" />
+      <Field Name="noSuchAlias" Hidden="true" />
+      <Field Name="typeFor" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.MethodClassParameter">
+    <Position X="12.75" Y="30.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ParameterField">
+    <Position X="24.5" Y="14.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="parameter" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.InstanceInitializer">
+    <Position X="11.5" Y="21.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAMAAAAAAAAAABAAAAAAAAAAAAAAAAAIAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="constructorInfo" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.StaticInitializer">
+    <Position X="14.5" Y="21.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAAAAAAIAA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Field Name="constructorInfo" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.Node">
+    <Position X="16.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAiACAABAAAQAAAAABCQAAAAAAAAAAAAAAAAAIAABA=</HashCode>
+    </TypeIdentifier>
+    <Members>
+      <Property Name="IUniqueKey.UniqueId" Hidden="true" />
+      <Field Name="uniqueKey" Hidden="true" />
+      <Field Name="uniqueKeyCounter" Hidden="true" />
+      <Field Name="VisitorTypeFor" Hidden="true" />
+    </Members>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Compiler.AttributeNode" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAEAAgAAAAgAAAAIAACAAEBEBABAQAQAAAggAAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Literal" Collapsed="true">
+    <Position X="27.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AJAAAAAAAACAAQAEDwAAABAAAAAAAEAAAA4gAAAAAAI=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.UsedNamespace" HideInheritanceLine="true">
+    <Position X="33.5" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAIAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.AliasDefinition" HideInheritanceLine="true">
+    <Position X="33.5" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAQAAAAIAAAAAAAEAAAABACAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Parameter">
+    <Position X="9" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAABEACAAAAAAAAAAAAAAkQAQBAAQAgIIAAIAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Flags" />
+      <Field Name="DeclaringMethod" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="paramArrayAttribute" Hidden="true" />
+      <Field Name="paramArrayElementType" Hidden="true" />
+    </Members>
+  </Class>
+  <Class Name="System.Compiler.Block" Collapsed="true">
+    <Position X="6.25" Y="31.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAACCgQAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="System.Compiler.IParserFactory">
+    <Position X="36.75" Y="11.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.ISymbolicTypeReference">
+    <Position X="19" Y="31.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="System.Compiler.PropertyFlags">
+    <Position X="6.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAggACAAAAAAEAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.EventFlags">
+    <Position X="18" Y="13.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAggACAAAAAAEAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.MethodFlags">
+    <Position X="16" Y="13.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>ABAAAUABAEAAACBAAIQAAAAEEFAAg4AHAEgAAAAARAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.CallingConventionFlags">
+    <Position X="16.5" Y="19" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABQAAAAAAAAQAAQAAYEAAAAACAAAAAAAAgAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.MethodImplFlags">
+    <Position X="9.25" Y="17.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AQAAAJAAAAQAAIAACCIAAAACABAABAAAIAAAAEAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.FieldFlags">
+    <Position X="27.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AQQAAgAAAAAAACAAAAAAAAEEMQgAgoAGAAgQAAEARAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.PESection">
+    <Position X="27.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAQAAAAAAABAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.ParameterFlags">
+    <Position X="6.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAABAAAAAAAAAAAAAAAAAAEAAQAAgAAAAAAAAAEAACA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.TypeFlags">
+    <Position X="24.5" Y="16.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AgkABgABAAAAAEAAIYJFCAAkAMAAggACAAAAACMASIA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.TypeCode">
+    <Position X="18" Y="15" Width="1.75" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="System.Compiler.TypeParameterFlags">
+    <Position X="25.25" Y="29" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AQACAAAABAAAAgAAAAAQBAAAgBAAAAAAAAAAAAgAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

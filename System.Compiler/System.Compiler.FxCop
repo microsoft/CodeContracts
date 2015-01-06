@@ -1,0 +1,908 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.312" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>False</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.30\Xml\FxCopReport.Xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="False" />
+  <PermitAnalysis>True</PermitAnalysis>
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>100</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>10</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+  <VersionAware>False</VersionAware>
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+ </ProjectOptions>
+ <Targets>
+  <Target Name="C:\cci\System.Compiler\bin\Debug\System.Compiler.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AbstractTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="AssembliesShouldHaveValidStrongNames" Enabled="True" />
+    <Rule Name="AvoidNamespacesWithFewTypes" Enabled="True" />
+    <Rule Name="DeclareTypesInNamespaces" Enabled="True" />
+    <Rule Name="DefaultParametersShouldNotBeUsed" Enabled="True" />
+    <Rule Name="DefineAccessorsForAttributeArguments" Enabled="True" />
+    <Rule Name="DoNotDeclareProtectedMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVirtualMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotOverrideOperatorEqualsOnReferenceTypes" Enabled="True" />
+    <Rule Name="EnumeratorsShouldBeStronglyTyped" Enabled="True" />
+    <Rule Name="EnumStorageShouldBeInt32" Enabled="True" />
+    <Rule Name="ICollectionImplementationsHaveStronglyTypedMembers" Enabled="True" />
+    <Rule Name="IndexersShouldNotBeMultidimensional" Enabled="True" />
+    <Rule Name="ListsAreStronglyTyped" Enabled="True" />
+    <Rule Name="MarkAssembliesWithAssemblyVersion" Enabled="True" />
+    <Rule Name="MarkAttributesWithAttributeUsage" Enabled="True" />
+    <Rule Name="MarkEnumsWithFlags" Enabled="True" />
+    <Rule Name="NestedTypesShouldNotBeVisible" Enabled="True" />
+    <Rule Name="OverrideMethodsOnComparableTypes" Enabled="True" />
+    <Rule Name="OverrideOperatorEqualsOnOverridingAddAndSubtract" Enabled="True" />
+    <Rule Name="PropertiesShouldNotBeWriteOnly" Enabled="True" />
+    <Rule Name="ProvideObsoleteAttributeMessage" Enabled="True" />
+    <Rule Name="ReplaceRepetitiveArgumentsWithParamsArray" Enabled="True" />
+    <Rule Name="TypesThatOwnNativeResourcesShouldBeDisposable" Enabled="True" />
+    <Rule Name="UriParametersShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriPropertiesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriReturnValuesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UseEventsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseIntegralOrStringArgumentForIndexers" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="ResourceStringCompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="ResourceStringsShouldBeSpelledCorrectly" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AvoidExcessiveLocals" Enabled="True" />
+    <Rule Name="AvoidUnsealedAttributes" Enabled="True" />
+    <Rule Name="DisposeMethodsShouldCallSuppressFinalize" Enabled="True" />
+    <Rule Name="DoNotCallPropertiesThatCloneValuesInLoops" Enabled="True" />
+    <Rule Name="DoNotConcatenateStringsInsideLoops" Enabled="True" />
+    <Rule Name="PreferJaggedArraysOverMultidimensional" Enabled="True" />
+    <Rule Name="TestForEmptyStringsUsingStringLength" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AptcaMethodsShouldOnlyCallAptcaMethods" Enabled="True" />
+    <Rule Name="AptcaTypesShouldOnlyExtendAptcaBaseTypes" Enabled="True" />
+    <Rule Name="CallGCKeepAliveWhenUsingNativeResources" Enabled="True" />
+    <Rule Name="DoNotIndirectlyExposeMethodsWithLinkDemands" Enabled="True" />
+    <Rule Name="MethodSecurityShouldBeASupersetOfType" Enabled="True" />
+    <Rule Name="OverrideLinkDemandsShouldBeIdenticalToBase" Enabled="True" />
+    <Rule Name="PointersShouldNotBeVisible" Enabled="True" />
+    <Rule Name="ReviewDeclarativeSecurityOnValueTypes" Enabled="True" />
+    <Rule Name="ReviewImperativeSecurity" Enabled="True" />
+    <Rule Name="ReviewSuppressUnmanagedCodeSecurityUsage" Enabled="True" />
+    <Rule Name="ReviewVisibleEventHandlers" Enabled="True" />
+    <Rule Name="SealMethodsThatSatisfyPrivateInterfaces" Enabled="True" />
+    <Rule Name="SecureAsserts" Enabled="True" />
+    <Rule Name="SecuredTypesShouldNotExposeFields" Enabled="True" />
+    <Rule Name="SecureGetObjectDataOverrides" Enabled="True" />
+    <Rule Name="SecureLateBindingMethods" Enabled="True" />
+    <Rule Name="SecureSerializationConstructors" Enabled="True" />
+    <Rule Name="StaticConstructorsShouldBePrivate" Enabled="True" />
+    <Rule Name="TypeLinkDemandsRequireInheritanceDemands" Enabled="True" />
+    <Rule Name="WrapVulnerableFinallyClausesInOuterTry" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="DisposableFieldsShouldBeDisposed" Enabled="True" />
+    <Rule Name="DisposableTypesShouldDeclareFinalizer" Enabled="True" />
+    <Rule Name="DisposeMethodsShouldCallBaseClassDispose" Enabled="True" />
+    <Rule Name="DoNotCallOverridableMethodsInConstructors" Enabled="True" />
+    <Rule Name="DoNotDecreaseInheritedMemberVisibility" Enabled="True" />
+    <Rule Name="DoNotMarkServicedComponentsWithWebMethod" Enabled="True" />
+    <Rule Name="DoNotRaiseExceptionsInFilterBlocks" Enabled="True" />
+    <Rule Name="DoNotShipUnreleasedResourceFormats" Enabled="True" />
+    <Rule Name="FinalizersShouldBeProtected" Enabled="True" />
+    <Rule Name="FinalizersShouldCallBaseClassFinalizer" Enabled="True" />
+    <Rule Name="ImplementSerializationConstructors" Enabled="True" />
+    <Rule Name="InitializeValueTypeStaticFieldsInline" Enabled="True" />
+    <Rule Name="InstantiateArgumentExceptionsCorrectly" Enabled="True" />
+    <Rule Name="MarkISerializableTypesWithSerializable" Enabled="True" />
+    <Rule Name="MarkWindowsFormsEntryPointsWithStaThread" Enabled="True" />
+    <Rule Name="MembersShouldDifferByMoreThanReturnType" Enabled="True" />
+    <Rule Name="OperationsShouldNotOverflow" Enabled="True" />
+    <Rule Name="OperatorOverloadsHaveNamedAlternates" Enabled="True" />
+    <Rule Name="OperatorsShouldHaveSymmetricalOverloads" Enabled="True" />
+    <Rule Name="OverrideEqualsOnOverridingOperatorEquals" Enabled="True" />
+    <Rule Name="OverrideGetHashCodeOnOverridingEquals" Enabled="True" />
+    <Rule Name="OverrideOperatorEqualsOnOverridingValueTypeEquals" Enabled="True" />
+    <Rule Name="PassSystemUriObjectsInsteadOfStrings" Enabled="True" />
+    <Rule Name="UseParamsForVariableArguments" Enabled="True" />
+   </RuleFile>
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.312" LastAnalysis="2004-11-11 02:50:03Z">
+  <Targets>
+   <Target Name="C:\cci\System.Compiler\bin\Debug\System.Compiler.dll">
+    <Modules>
+     <Module Name="system.compiler.dll">
+      <Namespaces>
+       <Namespace Name="System.Compiler">
+        <Types>
+         <Type Name="AssemblyCouldNotBeSignedException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Excluded" Created="2004-11-11 02:24:52Z">
+            <Issue Level="Error">
+             <Item>AssemblyCouldNotBeSignedException</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AssemblyName">
+          <Members>
+           <Member Name="Version">
+            <Accessors>
+             <Accessor Name="set_Version(System.Version):System.Void">
+              <Messages>
+               <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Status="Excluded" Created="2004-11-11 02:24:52Z">
+                <Issue Name="NoArguments" Path="c:\cci\system.compiler" File="assemblycache.cs" Line="91">
+                 <Item>System.ArgumentNullException</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AssemblyNode">
+          <Members>
+           <Member Name="GetKeyString(System.String,System.Version,System.String,System.Byte[]):System.String">
+            <Messages>
+             <Message Id="System.Byte.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="4476">
+               <Item>AssemblyNode.GetKeyString(String, Version, String, Byte[]):String</Item>
+               <Item>System.Byte.ToString(System.String)</Item>
+               <Item>System.Byte.ToString(System.String,System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Comparer">
+          <Members>
+           <Member Name="GetClosestMatch(System.Compiler.AttributeNode,System.Compiler.AttributeList,System.Compiler.AttributeList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.AttributeNode">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="84">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.AttributeNode nd1, System.Compiler.AttributeList list1, System.Compiler.AttributeList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Block,System.Compiler.BlockList,System.Compiler.BlockList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Block">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="142">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Block nd1, System.Compiler.BlockList list1, System.Compiler.BlockList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Catch,System.Compiler.CatchList,System.Compiler.CatchList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Catch">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="200">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Catch nd1, System.Compiler.CatchList list1, System.Compiler.CatchList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Expression,System.Compiler.ExpressionList,System.Compiler.ExpressionList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Expression">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="258">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Expression nd1, System.Compiler.ExpressionList list1, System.Compiler.ExpressionList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.FaultHandler,System.Compiler.FaultHandlerList,System.Compiler.FaultHandlerList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.FaultHandler">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="316">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.FaultHandler nd1, System.Compiler.FaultHandlerList list1, System.Compiler.FaultHandlerList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Filter,System.Compiler.FilterList,System.Compiler.FilterList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Filter">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="374">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Filter nd1, System.Compiler.FilterList list1, System.Compiler.FilterList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.LocalDeclaration,System.Compiler.LocalDeclarationList,System.Compiler.LocalDeclarationList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.LocalDeclaration">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="432">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.LocalDeclaration nd1, System.Compiler.LocalDeclarationList list1, System.Compiler.LocalDeclarationList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Node,System.Compiler.NodeList,System.Compiler.NodeList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Node">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="490">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Node nd1, System.Compiler.NodeList list1, System.Compiler.NodeList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.SecurityAttribute,System.Compiler.SecurityAttributeList,System.Compiler.SecurityAttributeList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.SecurityAttribute">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="548">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.SecurityAttribute nd1, System.Compiler.SecurityAttributeList list1, System.Compiler.SecurityAttributeList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.Statement,System.Compiler.StatementList,System.Compiler.StatementList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.Statement">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="606">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.Statement nd1, System.Compiler.StatementList list1, System.Compiler.StatementList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.SwitchCase,System.Compiler.SwitchCaseList,System.Compiler.SwitchCaseList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.SwitchCase">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="664">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.SwitchCase nd1, System.Compiler.SwitchCaseList list1, System.Compiler.SwitchCaseList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.TypeswitchCase,System.Compiler.TypeswitchCaseList,System.Compiler.TypeswitchCaseList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.TypeswitchCase">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="722">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.TypeswitchCase nd1, System.Compiler.TypeswitchCaseList list1, System.Compiler.TypeswitchCaseList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetClosestMatch(System.Compiler.UsedNamespace,System.Compiler.UsedNamespaceList,System.Compiler.UsedNamespaceList,System.Int32,System.Int32&amp;,System.Compiler.TrivialHashtable,System.Compiler.Differences&amp;,System.Int32&amp;):System.Compiler.UsedNamespace">
+            <Messages>
+             <Message Id="list1pos+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="Comparer.cs" Line="780">
+               <Item>list1pos</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Comparer::GetClosestMatch(System.Compiler.UsedNamespace nd1, System.Compiler.UsedNamespaceList list1, System.Compiler.UsedNamespaceList list2, System.Int32 list1pos, System.Int32@ list2start, System.Compiler.TrivialHashtable matchedNodes, System.Compiler.Differences@ closestDifferences, System.Int32@ list2pos)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DocumentText">
+          <Messages>
+           <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+            <Issue>
+             <Item>DocumentText</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ErrorNode">
+          <Members>
+           <Member Name="GetMessage(System.String,System.Resources.ResourceManager,System.Globalization.CultureInfo):System.String">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object[])" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="1758">
+               <Item>ErrorNode.GetMessage(String, ResourceManager, CultureInfo):String</Item>
+               <Item>System.String.Format(System.String,System.Object[])</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FunctionType">
+          <Members>
+           <Member Name="For(System.Compiler.TypeNode,System.Compiler.ParameterList,System.Compiler.TypeNode):System.Compiler.FunctionType">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="7448">
+               <Item>FunctionType.For(TypeNode, ParameterList, TypeNode):FunctionType</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IAssemblyName">
+          <Members>
+           <Member Name="Finalize():System.Int32">
+            <Messages>
+             <Message TypeName="FinalizersShouldBeProtected" Category="Microsoft.Usage" CheckId="CA2221" Status="Excluded" Created="2004-11-11 02:24:52Z">
+              <Issue>
+               <Item>System.Compiler.IAssemblyName</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Ir2md">
+          <Members>
+           <Member Name="System.Compiler.IMetaDataImport.GetTypeDefProps(System.UInt32,System.IntPtr,System.UInt32,System.UInt32&amp;,System.IntPtr):System.UInt32">
+            <Messages>
+             <Message Id="cchTypeDef-1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="c:\cci\system.compiler" File="writer.cs" Line="4144">
+               <Item>cchTypeDef</Item>
+               <Item>-</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Ir2md::System.Compiler.IMetaDataImport.GetTypeDefProps(System.UInt32 td, System.IntPtr szTypeDef, System.UInt32 cchTypeDef, System.UInt32@ pchTypeDef, System.IntPtr pdwTypeDefFlags)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KeyFileNotFoundException">
+          <Messages>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Excluded" Created="2004-11-11 02:24:52Z">
+            <Issue Level="Error">
+             <Item>KeyFileNotFoundException</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MemoryStream">
+          <Members>
+           <Member Name="Grow(System.Byte[],System.Int32,System.Int32):System.Void">
+            <Messages>
+             <Message Id="n*2" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="C:\cci\System.Compiler" File="FastFileIO.cs" Line="320">
+               <Item>n</Item>
+               <Item>*</Item>
+               <Item>2</Item>
+               <Item>System.Compiler.MemoryStream::Grow(System.Byte[] myBuffer, System.Int32 n, System.Int32 m)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModuleKindFlags">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2004-11-11 00:06:02Z" LastSeen="2004-11-11 01:58:46Z">
+            <Issue>
+             <Item>ModuleKindFlags</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Specializer">
+          <Members>
+           <Member Name="VisitTypeReference(System.Compiler.TypeNode):System.Compiler.TypeNode">
+            <Messages>
+             <Message TypeName="AvoidExcessiveLocals" Category="Microsoft.Performance" CheckId="CA1809" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Name="Compiler" Path="c:\cci\system.compiler" File="specializer.cs" Line="172">
+               <Item>Specializer.VisitTypeReference(TypeNode):TypeNode</Item>
+               <Item>69</Item>
+               <Item>3</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TupleType">
+          <Members>
+           <Member Name="For(System.Compiler.FieldList,System.Compiler.TypeNode):System.Compiler.TupleType">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="8360">
+               <Item>TupleType.For(FieldList, TypeNode):TupleType</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TypeIntersection">
+          <Members>
+           <Member Name="For(System.Compiler.TypeNodeList,System.Compiler.Module):System.Compiler.TypeIntersection">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="8686">
+               <Item>TypeIntersection.For(TypeNodeList, Module):TypeIntersection</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="For(System.Compiler.TypeNodeList,System.Compiler.TypeNode):System.Compiler.TypeIntersection">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="8719">
+               <Item>TypeIntersection.For(TypeNodeList, TypeNode):TypeIntersection</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TypeNode">
+          <Members>
+           <Member Name="TryToFindExistingInstance(System.Compiler.Module,System.Compiler.TypeNode,System.Compiler.TypeNodeList,System.Compiler.TypeNode&amp;,System.Compiler.Identifier&amp;,System.Boolean&amp;):System.Void">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="5964">
+               <Item>TypeNode.TryToFindExistingInstance(Module, TypeNode, TypeNodeList, TypeNode&amp;, Identifier&amp;, Boolean&amp;):Void</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TypeUnion">
+          <Members>
+           <Member Name="For(System.Compiler.TypeNodeList,System.Compiler.Module):System.Compiler.TypeUnion">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="9000">
+               <Item>TypeUnion.For(TypeNodeList, Module):TypeUnion</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="For(System.Compiler.TypeNodeList,System.Compiler.TypeNode):System.Compiler.TypeUnion">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="nodes.cs" Line="9033">
+               <Item>TypeUnion.For(TypeNodeList, TypeNode):TypeUnion</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Writer">
+          <Members>
+           <Member Name="ConvertToString(System.Version):System.String">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="writer.cs" Line="4781">
+               <Item>Writer.ConvertToString(Version):String</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="writer.cs" Line="4785">
+               <Item>Writer.ConvertToString(Version):String</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="writer.cs" Line="4774">
+               <Item>Writer.ConvertToString(Version):String</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="writer.cs" Line="4777">
+               <Item>Writer.ConvertToString(Version):String</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="System.Compiler.Metadata">
+        <Types>
+         <Type Name="InstructionParser">
+          <Members>
+           <Member Name="AddInstruction(System.Compiler.OpCode,System.Int32,System.Object):System.Compiler.Instruction">
+            <Messages>
+             <Message Id="offset+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="3836">
+               <Item>offset</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.InstructionParser::AddInstruction(System.Compiler.OpCode opCode, System.Int32 offset, System.Object value)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MemoryCursor">
+          <Messages>
+           <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+            <Issue>
+             <Item>MemoryCursor</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="ReadUTF8(System.Int32):System.String">
+            <Messages>
+             <Message Id="bytesToRead-1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="143">
+               <Item>bytesToRead</Item>
+               <Item>-</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.MemoryCursor::ReadUTF8(System.Int32 bytesToRead)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="149">
+               <Item>bytesToRead</Item>
+               <Item>-</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.MemoryCursor::ReadUTF8(System.Int32 bytesToRead)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="157">
+               <Item>bytesToRead</Item>
+               <Item>-</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.MemoryCursor::ReadUTF8(System.Int32 bytesToRead)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="167">
+               <Item>bytesToRead</Item>
+               <Item>-</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.MemoryCursor::ReadUTF8(System.Int32 bytesToRead)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MemoryMappedFile">
+          <Members>
+           <Member Name="OpenMap(System.String):System.Void">
+            <Messages>
+             <Message TypeName="CallGetLastErrorImmediatelyAfterPInvoke" Category="Microsoft.Interoperability" CheckId="CA1404" Status="Excluded" Created="2004-11-11 02:24:52Z">
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="335">
+               <Item>MemoryMappedFile.OpenMap(String):Void</Item>
+               <Item>IntPtr.op_Equality(IntPtr, IntPtr):Boolean</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="344">
+               <Item>MemoryMappedFile.OpenMap(String):Void</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="memorymappedfile.cs" Line="336">
+               <Item>MemoryMappedFile.OpenMap(String):Void</Item>
+               <Item>System.Int32.ToString</Item>
+               <Item>System.Int32.ToString(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MetadataReader">
+          <Members>
+           <Member Name="GetGuid(System.Int32):System.Guid">
+            <Messages>
+             <Message Id="guidIndex*16" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="c:\cci\system.compiler" File="metadata.cs" Line="789">
+               <Item>guidIndex</Item>
+               <Item>*</Item>
+               <Item>16</Item>
+               <Item>System.Compiler.Metadata.MetadataReader::GetGuid(System.Int32 guidIndex)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ReadHeader():System.Void">
+            <Messages>
+             <Message TypeName="AvoidExcessiveLocals" Category="Microsoft.Performance" CheckId="CA1809" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Name="Compiler" Path="c:\cci\system.compiler" File="metadata.cs" Line="892">
+               <Item>MetadataReader.ReadHeader():Void</Item>
+               <Item>74</Item>
+               <Item>29</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Reader">
+          <Members>
+           <Member Name="Close(System.Boolean):System.Void">
+            <Messages>
+             <Message TypeName="CallGCKeepAliveWhenUsingNativeResources" Category="Microsoft.Security" CheckId="CA2115" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="203">
+               <Item>Reader.Close(Boolean):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Dispose():System.Void">
+            <Messages>
+             <Message TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Excluded" Created="2004-11-11 02:24:52Z">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="199">
+               <Item>System.Compiler.Metadata.Reader</Item>
+               <Item>module</Item>
+               <Item>System.Compiler.Module</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetOrCreateBlock(System.Compiler.TrivialHashtable,System.Int32):System.Compiler.Block">
+            <Messages>
+             <Message Id="address+1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="1411">
+               <Item>address</Item>
+               <Item>+</Item>
+               <Item>1</Item>
+               <Item>System.Compiler.Metadata.Reader::GetOrCreateBlock(System.Compiler.TrivialHashtable blockMap, System.Int32 address)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ReadFileIntoUnmanagedBuffer(System.IO.FileStream):System.Void">
+            <Messages>
+             <Message TypeName="CallGCKeepAliveWhenUsingNativeResources" Category="Microsoft.Security" CheckId="CA2115" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="262">
+               <Item>Reader.ReadFileIntoUnmanagedBuffer(FileStream):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SetupDebugReader(System.String,System.String):System.Void">
+            <Messages>
+             <Message Id="System.Int32.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="344">
+               <Item>Reader.SetupDebugReader(String, String):Void</Item>
+               <Item>System.Int32.ToString(System.String)</Item>
+               <Item>System.Int32.ToString(System.String,System.IFormatProvider)</Item>
+              </Issue>
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="303">
+               <Item>Reader.SetupDebugReader(String, String):Void</Item>
+               <Item>System.Int32.ToString(System.String)</Item>
+               <Item>System.Int32.ToString(System.String,System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SetupReader():System.Void">
+            <Messages>
+             <Message TypeName="CallGCKeepAliveWhenUsingNativeResources" Category="Microsoft.Security" CheckId="CA2115" Status="Excluded" Created="2004-11-11 00:06:02Z" FixCategory="Breaking">
+              <Issue Path="c:\cci\system.compiler" File="reader.cs" Line="234">
+               <Item>Reader.SetupReader():Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+      <Resources>
+       <Resource Name="System.Compiler.ExceptionStrings.resources">
+        <Messages>
+         <Message Id="calli" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2004-11-11 00:37:45Z" FixCategory="Breaking">
+          <Issue>
+           <Item>calli</Item>
+           <Item>BaddCalliSignature</Item>
+           <Item>Bad calli signature.</Item>
+           <Item>System.Compiler.ExceptionStrings.resources</Item>
+          </Issue>
+         </Message>
+         <Message Id="opcode" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2004-11-11 00:37:45Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+          <Issue Certainty="25">
+           <Item>System.Compiler.ExceptionStrings.resources</Item>
+           <Item>UnknownOpCode</Item>
+           <Item>Unknown opcode.</Item>
+           <Item>opcode</Item>
+          </Issue>
+         </Message>
+         <Message Id="pdb" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2004-11-11 00:37:45Z" FixCategory="Breaking" LastSeen="2004-11-11 01:58:46Z">
+          <Issue Certainty="25">
+           <Item>System.Compiler.ExceptionStrings.resources</Item>
+           <Item>PdbAssociatedWithFileIsOutOfDate</Item>
+           <Item>The pdb associated with {0} is out of date.</Item>
+           <Item>pdb</Item>
+          </Issue>
+         </Message>
+        </Messages>
+       </Resource>
+      </Resources>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidExcessiveLocals" Category="Microsoft.Performance" CheckId="CA1809">
+    <Name>Avoid excessive locals</Name>
+    <Description>Method implementations should not contain more than 64 local variables. In order for the run-time to enregister local variables most efficiently, there should be 64 or fewer of them. Enregistering based on flow analysis will not occur for locals in excess of 64, which may result in slower performance.</Description>
+    <Resolution Name="Compiler">{0} has {1} local variables, {2} of which were generated by the compiler. Refactor {0} so that it uses fewer than 64 local variables.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Performance/AvoidExcessiveLocals.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="95">Warning</MessageLevel>
+    <File Name="PerformanceRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="CallGCKeepAliveWhenUsingNativeResources" Category="Microsoft.Security" CheckId="CA2115">
+    <Name>Call GC.KeepAlive when using native resources</Name>
+    <Description>If a method uses an IntPtr or UIntPtr field in a class with a finalizer and does not call GC.KeepAlive, a race condition might be introduced.</Description>
+    <Resolution Name="Default">Add a call to GC.KeepAlive(this) to method '{0}'.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Security/CallGCKeepAliveWhenUsingNativeResources.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="50">Warning</MessageLevel>
+    <File Name="SecurityRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="CallGetLastErrorImmediatelyAfterPInvoke" Category="Microsoft.Interoperability" CheckId="CA1404">
+    <Name>Call GetLastError immediately after pinvoke</Name>
+    <Description>The last Win32 error can be reset as a result of making managed calls, due to platform invokes called by the runtime itself. In order to insure the correctness of the value returned by GetLastWin32Error, place the call immediately after the relevant platform invoke call in your code.</Description>
+    <Resolution Name="Default">Method '{0}' called GetLastWin32Error but the immediately preceding call to {1} is not a platform invoke statement. Move the call to GetLastWin32Error closer so that it immediately follows the relevant platform invoke call.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Interoperability/CallGetLastErrorImmediatelyAfterPInvoke.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="95">Error</MessageLevel>
+    <File Name="InteroperabilityRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+    <Name>Disposable fields should be disposed</Name>
+    <Description>If a type which implements IDisposable has fields of a type that also implements IDisposable, the type's Dispose method should call the field's Dispose method if the type owns or allocates the objects stored in the fields.</Description>
+    <Resolution Name="Default">'{0}' contains field '{1}' that is of IDisposable type: {2}. Change {0}'s Dispose method to call Dispose on this field.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Usage/DisposableFieldsShouldBeDisposed.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="75">Warning</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="FinalizersShouldBeProtected" Category="Microsoft.Usage" CheckId="CA2221">
+    <Name>Finalizers should be protected</Name>
+    <Description>Finalize methods should be declared as protected.</Description>
+    <Resolution Name="Default">Mark the finalizer for type '{0}' as protected.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Usage/FinalizersShouldBeProtected.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="99">CriticalError</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714">
+    <Name>Flags enums should have plural names</Name>
+    <Description>An enumeration marked with FlagsAttribute should have a plural name.</Description>
+    <Resolution Name="Default">Change the name '{0}' to its singular form.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Naming/FlagsEnumsShouldHavePluralNames.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="75">Error</MessageLevel>
+    <File Name="NamingRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Name>Instantiate argument exceptions correctly</Name>
+    <Description>String arguments passed to constructors of ArgumentException and its derived types should be correct. Types derived from ArgumentException have inconsistent constructor overloads with respect to the message and paramName parameters as compared to ArgumentException.</Description>
+    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Usage/InstantiateArgumentExceptionsCorrectly.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="99">CriticalError</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Name>Mark ISerializable types with serializable</Name>
+    <Description>The System.Runtime.Serialization.ISerializable interface allows the type to customize its serialization, while the Serializable attribute enables the common language runtime to recognize the type as being serializable.</Description>
+    <Resolution Name="Default">Add [Serializable] to type '{0}'.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Usage/MarkISerializableTypesWithSerializable.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="95">Error, Warning</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233">
+    <Name>Operations should not overflow</Name>
+    <Description>Arithmetic operations should not be done without first validating the operands to prevent overflow.</Description>
+    <Resolution Name="Default">Correct the potential overflow in the operation '{0}' in '{1}'.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Usage/OperationsShouldNotOverflow.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703">
+    <Name>Resource strings should be spelled correctly</Name>
+    <Description>The individual words that make up a resource string should not be abbreviated and should be spelled correctly. If this rule generates a false positive on a term that should be recognized, add the word to the FxCop custom dictionary.</Description>
+    <Resolution Name="Default">Correct the spelling of '{0}' in '{1}' == '{2}' contained in resource stream '{3}'.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Naming/ResourceStringsShouldBeSpelledCorrectly.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="50">CriticalWarning</MessageLevel>
+    <File Name="NamingRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Name>Specify IFormatProvider</Name>
+    <Description>If an overload exists that takes an IFormatProvider argument, it should always be called in favor of an overload that does not. Some methods in the common language runtime convert a value to or from a string representation and take a string parameter that contains one or more characters, called format specifiers, which indicate how the value is to be converted. If the meaning of the format specifier varies by culture, a formatting object supplies the actual characters used in the string representation. In scenarios where sorting and comparison behavior should never change between cultures, specify CultureInfo.InvariantCulture.</Description>
+    <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide an IFormatProvider. This should be replaced with a call to {2}.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Globalization/SpecifyIFormatProvider.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="95">Error</MessageLevel>
+    <File Name="GlobalizationRules.dll" Version="1.312.0.0" />
+   </Rule>
+   <Rule TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049">
+    <Name>Types that own native resources should be disposable</Name>
+    <Description>Types that allocate unmanaged resources should implement IDisposable to allow callers to release those resources on demand. Failure to implement IDisposable can result in unmanaged resources being unavailable or underutilized.</Description>
+    <Resolution Name="Default">Implement IDisposable on '{0}'.</Resolution>
+    <Owner />
+    <Url>http://fxcop/docs/rules.aspx?version=1.312&amp;&amp;url=/Design/TypesThatOwnNativeResourcesShouldBeDisposable.html</Url>
+    <Email>fxcopbug@microsoft.com</Email>
+    <MessageLevel Certainty="50">CriticalError</MessageLevel>
+    <File Name="DesignRules.dll" Version="1.312.0.0" />
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="testcontractswithclousot2" storage="d:\secondcci\microsoft.research\regressiontest\basic\testcontractswithclousot\testcontractswithclousot\testcontractswithclousot2.generictest" id="22edea81-a2c7-4323-a4e5-a06f0c50ef7c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="d9ce3cf0-2bc1-490a-9e08-71e0bf4daf7f" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds TestContractsWithClousot.dll" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

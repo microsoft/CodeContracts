@@ -1,0 +1,666 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
+
+<!--=====================================================================
+   Defines
+======================================================================-->
+
+<?define var.CciSrc = "..\..\Microsoft.SpecSharp\LastKnownGood8" ?>
+<?define var.BoogieSrc = "..\..\Microsoft.SpecSharp\LastKnownGood8" ?>
+
+  <!--=====================================================================
+   Installer component guid's
+======================================================================-->
+<?define var.UpgradeGuid                    = "933a7602-a5f8-4344-99d0-81f639ff4099" ?>
+<?define var.ProductGuid                    = "6a654480-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.PackageGuid                    = "6a654481-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ITaskManagerCompGuid           = "6a654482-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ContractsTaskCompGuid          = "6a654483-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.TaskManagerCompGuid            = "6a654484-d04e-40f8-8d0f-10d0631e5b89" ?> 
+<?define var.IPropertyPaneCompGuid          = "6a654485-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.PropertyPageCompGuid           = "6a654486-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ContractsPropertyPaneCompGuid  = "6a654487-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.TaskManagerUICompGuid          = "6a654488-d04e-40f8-8d0f-10d0631e5b89" ?>
+
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Product Name='Spec#' Id='$(var.ProductGuid)'
+    UpgradeCode='$(var.UpgradeGuid)'
+    Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Microsoft Corp.'>
+  
+    <Package Id='$(var.PackageGuid)' Keywords='Installer'
+      Description="Spec# Installer"
+      Manufacturer='Microsoft Corp.'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' 
+    />
+
+    <!--=====================================================================
+       Media information
+    ======================================================================-->
+    <Media Id='1' Cabinet='Contracts.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="Microsoft Contracts 1.0 Installation [1]" />
+
+    <!--=====================================================================
+       Useful shorthands
+    ======================================================================-->
+    <!-- Public objects -->
+    <?define var.TaskManagerGuid          ="{da85543e-97ec-4478-90ec-45cbcb4fa5c2}" ?>
+    <?define var.TaskManagerPublicKey     ="0644c261138ab94f" ?>
+    
+    <?define var.PropertyPageGuid         ="{072dd0c6-ae1e-4ed6-a0bf-b99d5b68d29f}" ?>
+    <?define var.PropertyPagePublicKey    ="b35249ee440c39a1" ?>
+
+    <?define var.ContractsPropertyPaneGuid="{a6911a01-8795-4fe7-8e51-2904e8b5f27b}" ?>
+    <?define var.ContractsPropertyPanePublicKey="da8be8918709caaf" ?>
+
+    <!-- Misc. -->
+    <?define var.ContractsPropertyPageID  ="{35a69422-a11a-4ce8-8962-061dfabb02eb}" ?>
+    <?define var.ITaskManagerFactoryGuid  ="{6ef71237-5832-4cd5-a75c-067911af5d14}" ?>
+    <?define var.CSharpProjectGuid        ="{fae04ec0-301f-11d3-bf4b-00c04f79efbc}" ?>
+    <?define var.VsRootKey                ="Software\Microsoft\VisualStudio\8.0" ?>
+    <?define var.SpecSharpRootKey         ="Software\Microsoft\SpecSharp" ?>
+    
+    <!-- Derived -->
+    <?define var.TaskManagerPackageKey    ="$(var.VsRootKey)\Packages\$(var.TaskManagerGuid)" ?>
+    <?define var.PropertyPagePackageKey   ="$(var.VsRootKey)\Packages\$(var.PropertyPageGuid)" ?>
+    <?define var.AutoLoadOnProjectKey     ="$(var.VsRootKey)\AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}" ?>
+    <?define var.CodeToolsKey             ="$(var.VsRootKey)\CodeTools" ?>
+    <?define var.ITaskManagerFactoryServiceKey="$(var.VsRootKey)\Services\$(var.ITaskManagerFactoryGuid)" ?>
+
+    <!-- C# property page guids -->
+    <?define var.CSharpCommonPropKey      ="$(var.VsRootKey)\Projects\$(var.CSharpProjectGuid)\CommonPropertyPages" ?>
+    <?define var.CReferencePathsGuid      ="{031911C8-6148-4e25-B1B1-44BCA9A0C45C}" ?>
+    <?define var.CBuildEventsPropPg2Guid  ="{1E78F8DB-6C07-4d61-A18F-7514010ABD56}" ?>
+    <?define var.CSharpApplicationPgGuid  ="{5E9A8AC2-4F34-4521-858F-4C248BA31532}" ?>
+    <?define var.CPublishPropPg2Guid      ="{CC4014F5-B18D-439C-9352-F99D984CCA85}" ?>
+    <?define var.CSecurityPropPg2Guid     ="{DF8F7042-0BB1-47D1-8E6D-DEB3D07698BD}" ?>
+    <?define var.CVbSigningPropPgGuid     ="{F8D6553F-F752-4DBF-ACB6-F291B744A792}" ?>
+
+
+    <!--=====================================================================
+       Checks       
+    ======================================================================-->
+    
+    <!-- find the visual studio 8.0 install directory -->
+    <Property Id='VSINSTALLDIR' >
+      <RegistrySearch Id='VisualStudioReg' Type='raw'
+        Root='HKLM' Key='$(var.VsRootKey)' Name='InstallDir' />
+    </Property>
+    
+    <Condition Message='Sorry, this package can only be installed with Visual Studio 8.0'>
+      VSINSTALLDIR
+    </Condition>
+
+
+    <!--=====================================================================
+       Install directory: Program Files\Microsoft\Contracts
+    ======================================================================-->
+    <Feature Id="DefaultFeature" Level="1" ConfigurableDirectory="TARGETDIR">
+      <Directory Id='TARGETDIR' Name='SourceDir'>
+        <Directory Id='ProgramFilesFolder' >
+          <Directory Id='Microsoft' Name='MSoft' LongName='Microsoft'>
+            <Directory Id="SPECSHARPINSTALLDIR" Name="Spec#" LongName="Spec#">
+              <Component Id="RegistryKeys" Guid="????????-????-????-????-????????????">
+
+                <Registry Root="HKLM" Key="Software\Microsoft\SpecSharp" Type="string" Name="InstallDir" Value="[SPECSHARPINSTALLDIR]" />
+
+                <Registry Root="HKCR" Key=".sscproj" Type="string" KeyPath="yes" Value="Microsoft Spec# project">
+                  <Registry Name="Content Type" Type="string" KeyPath="yes" Value="text/plain" />
+                </Registry>
+
+                <Registry Root="HKCR" Key="Microsoft Spec# project" Type="string" Value="Spec# Project File">
+                  <Registry Key="DefaultIcon" Type="string" Value="[SPECSHARPINSTALLDIR]bin\1033\Microsoft.SpecSharp.Resources.dll,0" />
+                  <Registry Key="shell\open\command" Type="string" Value="&quot;[VS8LOCATION]devenv.exe&quot; &quot;%1&quot;" />
+                </Registry>
+
+                <Registry Root="HKCR" Key=".ssc" Type="string" Value="Microsoft Spec# source">
+                  <Registry Name="Content Type" Type="string" Value="text/plain" />
+                </Registry>
+
+                <Registry Root="HKCR" Key="Microsoft Spec# source" Type="string" Value="Spec# Source File">
+                  <Registry Key="DefaultIcon" Type="string" Value="[SPECSHARPINSTALLDIR]\bin\1033\Microsoft.SpecSharp.Resources.dll,1" />
+                  <Registry Key="shell\Open">
+                    <Registry Key="command" Type="string" Value="&quot;[VS8LOCATION]Devenv.exe&quot; /dde" />
+                    <Registry Key="ddeexec" Type="string" Value="Open(&quot;%1&quot;)">
+                      <Registry Key="application" Type="string" Value="VisualStudio.8.0" />
+                      <Registry Key="topic" Type="string" Value="system" />
+                    </Registry>
+                  </Registry>
+                </Registry>
+
+                <Registry Root="HKCR" Key="CLSID\{9864D4AD-569A-4DAF-8CBC-548F6E24C111}" Type="string" Value="Microsoft.VisualStudio.Package.GeneralPropertyPage">
+                  <Registry Key="ProgId" Type="string" Value="Microsoft.VisualStudio.Package.GeneralPropertyPage" />
+                  <Registry Key="Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" />
+                  <Registry Key="InprocServer32" Type="string" Value="mscoree.dll">
+                    <Registry Name="ThreadingModel" Type="string" Value="Both" />
+                    <Registry Key="[ProductVersion].0">
+                      <Registry Name="Assembly" Type="string" Value="Microsoft.VisualStudio.Package, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=736440c9b414ea16" />
+                      <Registry Name="Class" Type="string" Value="Microsoft.VisualStudio.Package.GeneralPropertyPage" />
+                      <Registry Name="CodeBase" Type="string" Value="file:///[SPECSHARPINSTALLDIR]bin/Microsoft.VisualStudio.Package.DLL" />
+                      <Registry Name="RuntimeVersion" Type="string" Value="v2.0.50215" />
+                    </Registry>
+                  </Registry>
+                </Registry>
+
+                <Registry Root="HKCR" Key="CLSID\{3F5E7BAA-7F96-4E64-8DCE-9593AB90E996}" Type="string" Value="Microsoft.VisualStudio.Package.AdvancedPropertyPage">
+                  <Registry Key="ProgId" Type="string" Value="Microsoft.VisualStudio.Package.AdvancedPropertyPage" />
+                  <Registry Key="Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" />
+                  <Registry Key="InprocServer32" Type="string" Value="mscoree.dll">
+                    <Registry Name="ThreadingModel" Type="string" Value="Both" />
+                    <Registry Key="[ProductVersion].0">
+                      <Registry Name="Assembly" Type="string" Value="Microsoft.VisualStudio.Package, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=736440c9b414ea16" />
+                      <Registry Name="Class" Type="string" Value="Microsoft.VisualStudio.Package.AdvancedPropertyPage" />
+                      <Registry Name="CodeBase" Type="string" Value="file:///[SPECSHARPINSTALLDIR]bin/Microsoft.VisualStudio.Package.DLL" />
+                      <Registry Name="RuntimeVersion" Type="string" Value="v2.0.50215" />
+                    </Registry>
+                  </Registry>
+                </Registry>
+
+                <Registry Root="HKCR" Key="CLSID\{5F6609AD-2EC5-4f95-856B-1C7716687512}" Type="string" Value="Microsoft.SpecSharp.BuildPropertyPage">
+                  <Registry Key="ProgId" Type="string" Value="Microsoft.SpecSharp.BuildPropertyPage" />
+                  <Registry Key="Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" />
+                  <Registry Key="InprocServer32" Type="string" Value="mscoree.dll">
+                    <Registry Name="ThreadingModel" Type="string" Value="Both" />
+                    <Registry Key="[ProductVersion].0">
+                      <Registry Name="Assembly" Type="string" Value="Microsoft.SpecSharp, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=736440c9b414ea16" />
+                      <Registry Name="Class" Type="string" Value="Microsoft.SpecSharp.BuildPropertyPage" />
+                      <Registry Name="CodeBase" Type="string" Value="file:///[SPECSHARPINSTALLDIR]bin/Microsoft.SpecSharp.DLL" />
+                      <Registry Name="RuntimeVersion" Type="string" Value="v2.0.50215" />
+                    </Registry>
+                  </Registry>
+                </Registry>
+
+                <Registry Root="HKCR" Key="CLSID\{5BC9517D-EF54-4B12-A617-EB38B1F38250}" Type="string" Value="Microsoft.VisualStudio.Package.DebugPropertyPage">
+                  <Registry Key="ProgId" Type="string" Value="Microsoft.VisualStudio.Package.DebugPropertyPage" />
+                  <Registry Key="Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" />
+                  <Registry Key="InprocServer32" Type="string" Value="mscoree.dll">
+                    <Registry Name="ThreadingModel" Type="string" Value="Both" />
+                    <Registry Key="[ProductVersion].0">
+                      <Registry Name="Assembly" Type="string" Value="Microsoft.VisualStudio.Package, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=736440c9b414ea16" />
+                      <Registry Name="Class" Type="string" Value="Microsoft.VisualStudio.Package.DebugPropertyPage" />
+                      <Registry Name="CodeBase" Type="string" Value="file:///[SPECSHARPINSTALLDIR]bin/Microsoft.VisualStudio.Package.DLL" />
+                      <Registry Name="RuntimeVersion" Type="string" Value="v2.0.50215" />
+                    </Registry>
+                  </Registry>
+                </Registry>
+
+                <?define VSRoot="Software\Microsoft\VisualStudio\8.0"?>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Projects\{07C4E3D1-6B67-4060-8A92-940DB82041ED}" Type="string" Value="Microsoft Spec# Project">
+                  <Registry Key="Filters\1" Name="SortPriority" Type="integer" Value="1000" />
+                  <Registry Key="Filters\1" Name="CommonOpenFilesFilter" Type="integer" Value="0" />
+                  <Registry Key="Filters\1" Name="NotAddExistingItemFilter" Type="integer" Value="0" />
+                  <Registry Key="Filters\1" Name="CommonFindFilesFilter" Type="integer" Value="0" />
+                  <Registry Key="Filters\1" Type="integer" Value="3" />
+                  <Registry Key="AddItemTemplates\TemplateDirs\{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}\1" Type="string" Value="Spec# Project Items">
+                    <Registry Name="SortPriority" Type="integer" Value="100" />
+                    <Registry Name="TemplatesDir" Type="string" Value="[SPECSHARPINSTALLDIR]Templates\ProjectItems" />
+                  </Registry>
+                  <Registry Name="DisplayProjectFileExtensions" Type="string" Value="Spec# Projects (*.sscproj);*.sscproj" />
+                  <Registry Name="PossibleProjectExtensions" Type="string" Value="sscproj" />
+                  <Registry Name="Package" Type="string" Value="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" />
+                  <Registry Name="ProjectTemplatesDir" Type="string" Value="[SPECSHARPINSTALLDIR]Templates\Projects" />
+                  <Registry Name="DefaultProjectExtension" Type="string" Value="sscproj" />
+                  <Registry Name="DisplayName" Type="integer" Value="2" />
+                  <Registry Name="ItemTemplatesDir" Type="string" Value="[SPECSHARPINSTALLDIR]Templates\ProjectItems" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Menus" Name="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" Type="string" Value=",1000,1" />
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\NewProjectTemplates\TemplateDirs\{07C4E3D1-6B67-4060-8A92-940DB82041ED}\1" Type="string" Value="Spec#">
+                  <Registry Name="TemplatesDir" Type="string" Value="[SPECSHARPINSTALLDIR]Templates\Projects" />
+                  <Registry Name="SortPriority" Type="integer" Value="41" />
+                  <Registry Name="NewProjectDialogOnly" Type="integer" Value="0" />
+                </Registry>
+
+                <?if false != true ?>
+                <!-- BUGBUG: Disabled for now; this causes devenv /setup to crash. -->
+
+                <!-- Causes Spec# to show up in the spash screen and in the About box. -->
+                <Registry Root="HKLM" Key="$(var.VSRoot)\InstalledProducts\Spec#" Name="UseInterface" Type="integer" Value="1">
+                  <Registry Name="Package" Type="string" Value="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" />
+                  <Registry Name="DefaultProductAttribute" Type="string" Value="Spec#" />
+                </Registry>
+
+                <?endif?>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Languages\File Extensions\.ssc" Type="string" Value="{9674DDF0-A005-41f6-8E90-4388B15E9D3F}">
+                  <Registry Name="Name" Type="string" Value="Spec#" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Languages\Language Services\Spec#" Type="string" Value="{9674DDF0-A005-41f6-8E90-4388B15E9D3F}">
+                  <Registry Name="CodeSenseFastOnLineChange" Type="integer" Value="1" />
+                  <Registry Name="MaxErrorMessages" Type="integer" Value="30" />
+                  <Registry Name="LangResId" Type="integer" Value="0" />
+                  <Registry Name="CodeSenseDelay" Type="integer" Value="333" />
+                  <Registry Name="CodeSense" Type="integer" Value="1" />
+                  <Registry Name="ShowCompletion" Type="integer" Value="1" />
+                  <Registry Name="RequestStockColors" Type="integer" Value="0" />
+                  <Registry Name="MatchBracesAtCaret" Type="integer" Value="0" />
+                  <Registry Name="Package" Type="string" Value="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" />
+                  <Registry Name="MatchBraces" Type="integer" Value="1" />
+                  <Registry Name="SortMemberList" Type="integer" Value="1" />
+                  <Registry Name="ShowMatchingBrace" Type="integer" Value="1" />
+                  <Registry Name="QuickInfo" Type="integer" Value="1" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\AD7Metrics\ExpressionEvaluator\{A21423E1-6A90-4954-9FB4-9EA1657BA0DE}\{994b45c4-e6e9-11d2-903f-00c04fa302a1}">
+                  <Registry Name="Language" Type="string" Value="Microsoft Spec#" />
+                  <Registry Name="Name" Type="string" Value="Microsoft Spec#" />
+                  <Registry Name="CLSID" Type="string" Value="{39B2605F-B083-4c69-AE34-71C9A769724C}" />
+                  <Registry Key="Engine" Name="0" Type="string" Value="{449EC4CC-30D2-4032-9256-EE18EB41B62B}" />
+                  <Registry Key="Engine" Name="1" Type="string" Value="{92EF0900-2251-11D2-B72E-0000F87572EF}" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Services\{9674DDF0-A005-41f6-8E90-4388B15E9D3F}" Type="string" Value="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}">
+                  <Registry Name="Name" Type="string" Value="Spec# Language Service" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Editors\{A21423E1-6A90-4954-9FB4-9EA1657BA0DE}" Type="string" Value="Spec#">
+                  <Registry Name="Package" Type="string" Value="{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" />
+                  <Registry Key="Extensions" Name="ssc" Type="integer" Value="40" />
+                  <Registry Key="LogicalViews" Name="{7651a700-06e5-11d1-8ebd-00a0c90f26ea}" />
+                  <Registry Key="LogicalViews" Name="{7651a701-06e5-11d1-8ebd-00a0c90f26ea}" />
+                  <Registry Key="LogicalViews" Name="{7651a702-06e5-11d1-8ebd-00a0c90f26ea}" />
+                  <Registry Key="LogicalViews" Name="{7651a703-06e5-11d1-8ebd-00a0c90f26ea}" />
+                </Registry>
+
+                <Registry Root="HKLM" Key="$(var.VSRoot)\Packages\{83043D9C-4AAE-4c70-9C52-8AFD6B388CCA}" Type="string" Value="Microsoft Spec#">
+                  <Registry Name="ThreadingModel" Type="string" Value="Both" />
+                  <Registry Name="Class" Type="string" Value="Microsoft.SpecSharp.Package" />
+                  <Registry Name="Assembly" Type="string" Value="Microsoft.SpecSharp, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=736440c9b414ea16" />
+                  <Registry Name="CompanyName" Type="string" Value="Microsoft" />
+                  <Registry Name="ProductName" Type="string" Value="Microsoft Spec#" />
+                  <Registry Name="CodeBase" Type="string" Value="file:///[SPECSHARPINSTALLDIR]bin/Microsoft.SpecSharp.DLL" />
+                  <Registry Name="InprocServer32" Type="string" Value="[WindowsFolder]System32\mscoree.dll" />
+                  <Registry Name="ID" Type="integer" Value="1" />
+                  <Registry Name="MinEdition" Type="string" Value="Standard" />
+                  <Registry Name="ProductVersion" Type="string" Value="1.0" />
+                  <Registry Key="SatelliteDll" Name="DllName" Type="string" Value="Microsoft.SpecSharp.Resources.dll" />
+                  <Registry Key="SatelliteDll" Name="Path" Type="string" Value="[SPECSHARPINSTALLDIR]bin\" />
+                </Registry>
+
+              </Component>
+
+              <Directory Id="Binaries" Name="BIN" LongName="bin">
+
+                <Component Id="Core" Guid="????????-????-????-????-????????????">
+                  <File Id="Core" Name="CORE.DLL" LongName="Core.DLL" src="$(var.BoogieSrc)\Core.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="Core" AssemblyApplication="Core" Assembly=".net" DiskId="1" />
+                  <File Id="UnivBackPred" Name="UNIVBA~1.SX" LongName="UnivBackPred.sx" src="$(var.BoogieSrc)\UnivBackPred.sx" Vital="yes" DiskId="1" />
+                  <File Id="PRELUDE" Name="PRELUDE.BPL" LongName="PRELUDE.bpl" src="$(var.BoogieSrc)\PRELUDE.BPL" Vital="yes" DiskId="1" />
+                </Component>
+                <Component Id="Package" Guid="????????-????-????-????-????????????">
+                  <File Id="Package" Name="MICROS~1.DLL" LongName="Microsoft.VisualStudio.Package.DLL" src="$(var.CciSrc)\Microsoft.VisualStudio.Package.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="Package" AssemblyApplication="Package" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="AIFramework" Guid="????????-????-????-????-????????????">
+                  <File Id="AIFramework" Name="AIFRAM~1.DLL" LongName="AIFramework.DLL" src="$(var.BoogieSrc)\AIFramework.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="AIFramework" AssemblyApplication="AIFramework" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="Boogie" Guid="????????-????-????-????-????????????">
+                  <File Id="Boogie" Name="BOOGIE.EXE" LongName="Boogie.exe" src="$(var.BoogieSrc)\Boogie.exe" Vital="yes" KeyPath="yes" AssemblyManifest="Boogie" AssemblyApplication="Boogie" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="SpecSharp" Guid="????????-????-????-????-????????????">
+                  <File Id="SpecSharp" Name="MICROS~2.DLL" LongName="Microsoft.SpecSharp.DLL" src="$(var.CciSrc)\Microsoft.SpecSharp.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="SpecSharp" AssemblyApplication="SpecSharp" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="ssc" Guid="????????-????-????-????-????????????">
+                  <File Id="ssc" Name="SSC.EXE" LongName="ssc.exe" src="$(var.CciSrc)\ssc.exe" Vital="yes" KeyPath="yes" AssemblyManifest="ssc" AssemblyApplication="ssc" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="Framework" Guid="????????-????-????-????-????????????">
+                  <File Id="Framework" Name="SYSTEM~1.DLL" LongName="System.Compiler.Framework.DLL" src="$(var.CciSrc)\System.Compiler.Framework.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="Framework" AssemblyApplication="Framework" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="MscorlibContracts" Guid="????????-????-????-????-????????????">
+                  <File Id="MscorlibContracts" Name="MSCORL~1.DLL" LongName="Mscorlib.Contracts.dll" src="$(var.CciSrc)\Mscorlib.Contracts.dll" Vital="yes" KeyPath="yes" AssemblyManifest="MscorlibContracts" AssemblyApplication="MscorlibContracts" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="BoogiePlugin" Guid="????????-????-????-????-????????????">
+                  <File Id="BoogiePlugin" Name="BOOGIE~1.DLL" LongName="BoogiePlugin.dll" src="$(var.BoogieSrc)\BoogiePlugin.dll" Vital="yes" KeyPath="yes" AssemblyManifest="BoogiePlugin" AssemblyApplication="BoogiePlugin" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="CommandPrompt" Guid="????????-????-????-????-????????????">
+                  <File Id="SpecSharpVars" Name="SPECSH~1.BAT" LongName="SpecSharpVars.bat" src="SpecSharpVars8.bat" Vital="yes" KeyPath="yes" DiskId="1" />
+                  <Environment Id="SpecSharpInstallDirEnvVar" Action="create" Name="SPECSHARPINSTALLDIR" Part="all" System="yes" Value="[SPECSHARPINSTALLDIR]" />
+                  <Shortcut Id="CommandPrompt" Directory="Tools" Name="SPEC#C~1" LongName="Spec# Command Prompt" Target="[SystemFolder]\cmd.exe" Arguments="/k &quot;[SPECSHARPINSTALLDIR]bin\SpecSharpVars.bat&quot;" Show="normal" />
+                </Component>
+                <Component Id="BytecodeTranslation" Guid="????????-????-????-????-????????????">
+                  <File Id="BytecodeTranslation" Name="BYTECO~1.DLL" LongName="BytecodeTranslation.DLL" src="$(var.BoogieSrc)\BytecodeTranslation.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="BytecodeTranslation" AssemblyApplication="BytecodeTranslation" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="AbsInt" Guid="????????-????-????-????-????????????">
+                  <File Id="AbsInt" Name="ABSINT.DLL" LongName="AbsInt.DLL" src="$(var.BoogieSrc)\AbsInt.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="AbsInt" AssemblyApplication="AbsInt" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="AsmlRuntime" Guid="????????-????-????-????-????????????">
+                  <File Id="AsmlRuntime" Name="ASMLRU~1.DLL" LongName="AsmlRuntime.DLL" src="$(var.BoogieSrc)\AsmlRuntime.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="AsmlRuntime" AssemblyApplication="AsmlRuntime" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="Compiler" Guid="????????-????-????-????-????????????">
+                  <File Id="Compiler" Name="SYSTEM~3.DLL" LongName="System.Compiler.dll" src="$(var.CciSrc)\System.Compiler.dll" Vital="yes" KeyPath="yes" AssemblyManifest="Compiler" AssemblyApplication="Compiler" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="graph" Guid="????????-????-????-????-????????????">
+                  <File Id="graph" Name="GRAPH.DLL" LongName="graph.DLL" src="$(var.BoogieSrc)\graph.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="graph" AssemblyApplication="graph" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="SystemContracts" Guid="????????-????-????-????-????????????">
+                  <File Id="SystemContracts" Name="SYSTEM~4.DLL" LongName="System.Contracts.dll" src="$(var.CciSrc)\System.Contracts.dll" Vital="yes" KeyPath="yes" AssemblyManifest="SystemContracts" AssemblyApplication="SystemContracts" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="IntegrationHelper" Guid="????????-????-????-????-????????????">
+                  <File Id="IntegrationHelper" Name="MICROS~5.DLL" LongName="Microsoft.VisualStudio.IntegrationHelper.DLL" src="$(var.CciSrc)\Microsoft.VisualStudio.IntegrationHelper.DLL" Vital="yes" KeyPath="yes" AssemblyManifest="IntegrationHelper" AssemblyApplication="IntegrationHelper" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="SystemCompilerRuntime" Guid="????????-????-????-????-????????????">
+                  <File Id="SystemCompilerRuntime" Name="SYSTEM~2.DLL" LongName="System.Compiler.Runtime.DLL" src="$(var.CciSrc)\System.Compiler.Runtime.dll" Vital="yes" KeyPath="yes" AssemblyManifest="SystemCompilerRuntime" Assembly=".net" DiskId="1" />
+                </Component>
+                <Component Id="MicrosoftSpecSharpRuntime" Guid="????????-????-????-????-????????????">
+                  <File Id="MicrosoftSpecSharpRuntime" Name="MICROS~6.DLL" LongName="Microsoft.SpecSharp.Runtime.DLL" src="$(var.CciSrc)\Microsoft.SpecSharp.Runtime.dll" Vital="yes" KeyPath="yes" AssemblyManifest="MicrosoftSpecSharpRuntime" Assembly=".net" DiskId="1" />
+                </Component>
+                <Directory Id="Resources" Name="1033">
+                  <Component Id="Resources" Guid="????????-????-????-????-????????????">
+                    <File Id="Resources" Name="MICROS~4.DLL" LongName="Microsoft.SpecSharp.Resources.dll" src="$(var.CciSrc)\1033\Microsoft.SpecSharp.Resources.dll" Vital="yes" KeyPath="yes" AssemblyManifest="Resources" AssemblyApplication="Resources" Assembly=".net" DiskId="1" />
+                  </Component>
+                </Directory>
+              </Directory>
+
+              <Directory Id="Documents" Name="DOCUME~1" LongName="Documents">
+                <Component Id="Documents" Guid="????????-????-????-????-????????????">
+                  <File Id="Welcome" Name="WELCOME.HTM" LongName="Welcome.htm" src="..\Setup\Welcome.htm" Vital="yes" DiskId="1">
+                    <Shortcut Id="Welcome" Directory="SpecSharpMenu" Name="WELCOM~1" LongName="Welcome to Spec#" Target="DefaultFeature" Icon="doclink.ico" IconIndex="0" Show="normal" />
+                  </File>
+                  <File Id="Logo" Name="SPECSH~1.PNG" LongName="SpecSharpBanner.png" src="..\Setup\SpecSharpBanner.png" Vital="yes" DiskId="1" />
+                  <File Id="Eula" Name="EULA.RTF" LongName="eula.rtf" src="..\Documentation\EULA.RTF" Vital="yes" DiskId="1" />
+                </Component>
+              </Directory>
+              <Directory Id="Templates" Name="TEMPLA~1" LongName="Templates">
+                <Directory Id="ProjectTemplates" Name="PROJECTS" LongName="Projects">
+                  <Component Id="ProjectTemplates" Guid="????????-????-????-????-????????????">
+                    <File Id="ProgramSsc" Name="PROGRAM.SSC" LongName="Program.ssc" src="..\Templates\Projects\Program.ssc" Vital="yes" DiskId="1" />
+                    <File Id="Class1Ssc" Name="CLASS1.SSC" LongName="Class1.ssc" src="..\Templates\Projects\Class1.ssc" Vital="yes" DiskId="1" />
+                    <File Id="FormSsc" Name="FORM.SSC" LongName="Form.ssc" src="..\Templates\Projects\Form.ssc" Vital="yes" DiskId="1" />
+                    <File Id="AssemblyInfoSsc" Name="ASSEMB~1.SSC" LongName="AssemblyInfo.ssc" src="..\Templates\Projects\AssemblyInfo.ssc" Vital="yes" DiskId="1" />
+                    <File Id="WindowsApplicationSscproj" Name="WINDOW~1.SSC" LongName="Windows Application.sscproj" src="..\Templates\Projects\Windows Application8.sscproj" Vital="yes" DiskId="1" />
+                    <File Id="ConsoleApplicationSscproj" Name="CONSOL~1.SSC" LongName="Console Application.sscproj" src="..\Templates\Projects\Console Application8.sscproj" Vital="yes" DiskId="1" />
+                    <File Id="ClassLibrarySscproj" Name="CLASSL~1.SSC" LongName="Class Library.sscproj" src="..\Templates\Projects\Class Library8.sscproj" Vital="yes" DiskId="1" />
+                  </Component>
+                  <Directory Id="Samples" Name="SAMPLES" LongName="Samples">
+                    <Directory Id="ArrayList" Name="ARRAYL~1" LongName="ArrayList">
+                      <Component Id="ArrayList" Guid="????????-????-????-????-????????????">
+                        <File Id="ArrayListSscproj" Name="ARRAYL~1.SSC" LongName="ArrayList.sscproj" src="..\Samples\ArrayList\ArrayList.sscproj" Vital="yes" DiskId="1" />
+                        <File Id="ArrayListSsc" Name="ARRAYL~2.SSC" LongName="ArrayList.ssc" src="..\Samples\ArrayList\ArrayList.ssc" Vital="yes" DiskId="1" />
+                      </Component>
+                    </Directory>
+                    <Directory Id="SubclassWithInvariant" Name="SUBCLA~1" LongName="SubclassWithInvariant">
+                      <Component Id="SubclassWithInvariant" Guid="????????-????-????-????-????????????">
+                        <File Id="SubclassWithInvariantSscproj" Name="SUBCLA~1.SSC" LongName="SubclassWithInvariant.sscproj" src="..\Samples\SubclassWithInvariant\SubclassWithInvariant.sscproj" Vital="yes" DiskId="1" />
+                        <File Id="SubclassWithInvariantAssemblyInfoSsc" Name="ASSEMB~2.SSC" LongName="AssemblyInfo.ssc" src="..\Samples\SubclassWithInvariant\AssemblyInfo.ssc" Vital="yes" DiskId="1" />
+                        <File Id="SubclassWithInvariantMainSsc" Name="MAIN.SSC" LongName="main.ssc" src="..\Samples\SubclassWithInvariant\Main.ssc" Vital="yes" DiskId="1" />
+                      </Component>
+                    </Directory>
+                    <Directory Id="Bag" Name="BAG" LongName="Bag">
+                      <Component Id="Bag" Guid="????????-????-????-????-????????????">
+                        <File Id="BagSscproj" Name="BAG~1.SSC" LongName="Bag.sscproj" src="..\Samples\Bag\Bag.sscproj" Vital="yes" DiskId="1" />
+                        <File Id="BagFixedSsc" Name="BAGFIXED.SSC" LongName="BagFixed.ssc" src="..\Samples\Bag\BagFixed.ssc" Vital="yes" DiskId="1" />
+                        <File Id="BagBrokenSsc" Name="BAGBRO~1.SSC" LongName="BagBroken.ssc" src="..\Samples\Bag\BagBroken.ssc" Vital="yes" DiskId="1" />
+                      </Component>
+                    </Directory>
+                    <Directory Id="UseMscorlibContracts" Name="USEMSC~1" LongName="UseMscorlibContracts">
+                      <Component Id="UseMscorlibContracts" Guid="????????-????-????-????-????????????">
+                        <File Id="UseMscorlibContractsSscproj" Name="USEMSC~1.SSC" LongName="UseMscorlibContracts.sscproj" src="..\Samples\UseMscorlibContracts\UseMscorlibContracts.sscproj" Vital="yes" DiskId="1" />
+                        <File Id="UseMscorlibContractsProgramSsc" Name="PROGRAM.SSC" LongName="Program.ssc" src="..\Samples\UseMscorlibContracts\Program.ssc" Vital="yes" DiskId="1" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                </Directory>
+                <Directory Id="ProjectItems" Name="PROJEC~1" LongName="ProjectItems">
+                  <Component Id="ProjectItems" Guid="????????-????-????-????-????????????">
+                    <File Id="ProjectItems" Name="FILE.SSC" LongName="file.ssc" src="..\Templates\ProjectItems\file.ssc" Vital="yes" DiskId="1" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="ProgramMenuFolder" SourceName="USER'S~2" LongSource="User's Programs Menu">
+                <Directory Id="SpecSharpMenu" Name="MICROS~1" LongName="Microsoft Spec# Language">
+                  <Directory Id="Tools" Name="TOOLS" LongName="Tools" />
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!--=====================================================================
+            Program Files\Microsoft Visual Studio 8\Common7\PublicAssemblies
+            ======================================================================-->
+            <Directory Id='VSINSTALLDIR' Name='VS8' LongName='Microsoft Visual Studio 8'>
+              <Directory Id='VsPublicAssembliesDir' Name='PubAsm' LongName='PublicAssemblies' >
+                <!--=====================================================================
+                ITaskManager interface
+                ======================================================================-->
+                <Component Id='ITaskManager' Guid='$(var.ITaskManagerCompGuid)'>
+                  <File Id='ITaskManager.dll' Name='ITaskMgr.dll' LongName='ITaskManager.dll' DiskId='1'
+                        src='ITaskManager.dll' Vital='yes' />
+                </Component>
+                <!--=====================================================================
+                IPropertyPage component
+                ======================================================================-->
+                <Component Id='IPropertyPane' Guid='$(var.IPropertyPaneCompGuid)'>
+                  <File Id='IPropertyPane.dll' Name='IPrpPane.dll' LongName='IPropertyPane.dll' DiskId='1'
+                        src='IPropertyPane.dll' Vital='yes' />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <!--=====================================================================
+            Program Files\Microsoft\Contracts
+            ======================================================================-->
+            <Directory Id='INSTALLDIR' Name='Contrcts' LongName='Contracts'>
+
+              <!--=====================================================================
+                  TaskManager implementation
+                ======================================================================-->
+              <Component Id='TaskManager' Guid='$(var.TaskManagerCompGuid)'>
+                <File Id='TaskManager.dll' Name='TskMgr.dll' LongName='TaskManager.dll' DiskId='1'
+                      src='TaskManager.dll' Vital='yes' />
+                <Registry Id="TaskManagerReg0" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)"
+                      Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage, TaskManager, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.TaskManagerPublicKey)" 
+                      Type="string" />
+                <Registry Id="TaskManagerReg1" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="Class"
+                      Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage" Type="string" />
+                <Registry Id="TaskManagerReg2" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="CodeBase"
+                      Value="[INSTALLDIR]TaskManager.dll" Type="string" />
+                <Registry Id="TaskManagerReg3" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="InprocServer32"
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="TaskManagerReg4" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="ID"
+                      Value="1" Type="integer" />
+                <Registry Id="TaskManagerReg5" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="MinEdition"
+                      Value="standard" Type="string" />
+                <Registry Id="TaskManagerReg10" Root="HKLM" 
+                      Key="$(var.AutoLoadOnProjectKey)" Name="$(var.TaskManagerGuid)"
+                      Value="0" Type="integer" />
+                <Registry Id="TaskManagerReg20" Root="HKLM"
+                      Key="$(var.ITaskManagerFactoryServiceKey)" 
+                      Value="$(var.TaskManagerGuid)" Type="string" />
+                <Registry Id="TaskManagerReg21" Root="HKLM"
+                      Key="$(var.ITaskManagerFactoryServiceKey)" Name="Name" 
+                      Value="ITaskManagerFactory Service" Type="string" />
+              </Component>
+              <Directory Id='TaskManagerUI' Name='1033'>
+                <Component Id='TaskManagerUI' Guid='$(var.TaskManagerUICompGuid)'>
+                  <File Id='TaskManagerUI.dll' Name='TskMgrUI.dll' LongName='TaskManagerUI.dll' DiskId='1'
+                        src='1033\TaskManagerUI.dll' Vital='yes' />
+                  <Registry Id="TaskManagerUIReg0" Root="HKLM" 
+                        Key="$(var.TaskManagerPackageKey)\SatelliteDll" Name="DllName"
+                        Value="TaskManagerUI.dll" Type="string" />
+                  <Registry Id="TaskManagerUIReg1" Root="HKLM" 
+                        Key="$(var.TaskManagerPackageKey)\SatelliteDll" Name="Path"
+                        Value="[INSTALLDIR]" Type="string" />
+                </Component>
+              </Directory>
+              <!--=====================================================================
+                  PropertyPage implementation
+                ======================================================================-->
+              <Component Id='PropertyPage' Guid='$(var.PropertyPageCompGuid)'>
+                <File Id='PropertyPage.dll' Name='PropPage.dll' LongName='PropertyPage.dll' DiskId='1'
+                      src='PropertyPage.dll' Vital='yes' />
+                <Registry Id="PropertyPageReg0" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)"
+                      Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage, PropertyPage, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.PropertyPagePublicKey)" 
+                      Type="string" />
+                <Registry Id="PropertyPageReg1" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="Class"
+                      Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage" Type="string" />
+                <Registry Id="PropertyPageReg2" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="CodeBase"
+                      Value="[INSTALLDIR]PropertyPage.dll" Type="string" />
+                <Registry Id="PropertyPageReg3" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="InprocServer32"
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="PropertyPageReg4" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="ID"
+                      Value="1" Type="integer" />
+                <Registry Id="PropertyPageReg5" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="MinEdition"
+                      Value="standard" Type="string" />
+                <Registry Id="PropertyPageReg10" Root="HKLM" 
+                      Key="$(var.AutoLoadOnProjectKey)" Name="$(var.PropertyPageGuid)"
+                      Value="0" Type="integer" />
+              </Component>
+              <!--=====================================================================
+                  Contracts propertypane implementation
+                ======================================================================-->
+              <Component Id='ContractsPropertyPane' Guid='$(var.ContractsPropertyPaneCompGuid)'>
+                <File Id='ContractsPropertyPane.dll' Name='CPrpPane.dll' LongName='ContractsPropertyPane.dll' DiskId='1'
+                      src='ContractsPropertyPage.dll' Vital='yes' />
+                <!-- COM registration -->
+                <Registry Id="ContractsPropertyPaneReg0" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)" 
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg1" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\ProgId" 
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg1a" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\Implemented Categories\{62c8fe65-4ebb-45e7-b440-6e39b2cdbf29}" 
+                      Value="Categories" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg2" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" 
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg3" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="Assembly"
+                      Value="ContractsPropertyPage, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.ContractsPropertyPanePublicKey)" 
+                      Type="string" />
+                <Registry Id="ContractsPropertyPaneReg4" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="Class"
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg5" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="CodeBase"
+                      Value="[INSTALLDIR]ContractsPropertyPane.dll" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg6" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="ThreadingModel"
+                      Value="Both" Type="string" />
+                <!-- CodeTools propertypane registration -->
+                <Registry Id="ContractsPropertyPaneReg10" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts\PropertyPages\$(var.ContractsPropertyPageID)" Name="clsid"
+                      Value="$(var.ContractsPropertyPaneGuid)" Type="string" />
+                <!-- C# common property pages -->
+                <Registry Id="ContractsPropertyPaneReg20" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CReferencePathsGuid)" 
+                      Value="CReferencePathsGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg21" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CBuildEventsPropPg2Guid)" 
+                      Value="CBuildEventsPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg22" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CSharpApplicationPgGuid)" 
+                      Value="CSharpApplicationPgGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg23" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CPublishPropPg2Guid)" 
+                      Value="CPublishPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg24" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CSecurityPropPg2Guid)" 
+                      Value="CSecurityPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg25" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CVbSigningPropPgGuid)" 
+                      Value="CVbSigningPropPgGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg26" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.ContractsPropertyPageID)" 
+                      Value="ContractsPropertyPageID" Type="string" />
+
+              </Component>
+              <!--=====================================================================
+                  Contracts MSBuild task
+                ======================================================================-->
+              <Component Id='ContractsTask' Guid='$(var.ContractsTaskCompGuid)'>
+                <File Id='Contracts.Targets' Name='Contrcts.tar' LongName='Microsoft.Contracts.targets' DiskId='1'
+                      src='Microsoft.Contracts.targets' Vital='yes' />
+                <!-- This should really be custom action that includes our target in a possibly existing
+                      Custom.After targets file, but for now we just overwrite it 
+                  <File Id='After.targets' Name='After.tar' LongName='Custom.After.Microsoft.Common.targets' DiskId='1'
+                        src='Custom.After.Microsoft.Common.targets' Vital='yes' /> 
+                  -->
+                <Registry Id="ContractsTaskReg0" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts" Name="DisplayName"
+                      Value="Contracts" Type="string" />
+                <Registry Id="ContractsTaskReg1" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts\Tasks\$(var.CSharpProjectGuid)\RunSpecSharp" Name="SpecSharpCompile"
+                      Type="string" />
+              </Component>
+            </Directory>
+          </Directory>
+
+          <!--=====================================================================
+            ProgramFiles\MSBuild
+          ======================================================================-->
+          <Directory Id='MSBUILD' Name='MSBuild'>
+            <Directory Id='MSBUILDDIR' Name='v2.0'>
+            </Directory>
+          </Directory>
+
+        </Directory>
+      </Directory>
+    </Feature>
+
+    <!--=====================================================================
+       The user interface: link in "UI.wxs" (which is a generic reusable module)
+    ======================================================================-->
+    <FragmentRef Id='FragmentUI' />
+ 
+    <!--=====================================================================
+       Custom action1: add 
+    ======================================================================-->
+    <CustomAction Id='AssignMsBuildCustomAfter' Property='MsBuildCustomAfter'
+        Value='[MSBUILDDIR]Custom.After.Microsoft.Common.targets' />
+
+    <CustomAction Id='AssignContractsTargets' Property='ContractsTargets'
+      Value='[INSTALLDIR]Microsoft.Contracts.targets' />
+
+    <Binary Id='BinAddBuildTargets' src='AddBuildTargets.dll' />
+    <CustomAction Id='AddBuildTargets' BinaryKey='BinAddBuildTargets' DllEntry='AddBuildTargets' />
+
+    
+    <CustomAction Id='AssignVsPublicAssemblies' Property='VsPublicAssemblies'
+        Value='[VSINSTALLDIR]PublicAssemblies\' />
+
+    <CustomAction Id='AssignGacUtil' Property='GacUtil'
+        Value='[VSINSTALLDIR]..\..\SDK\v2.0\Bin\gacutil.exe' />
+
+    <CustomAction Id='GacRegister1' Property='GacUtil' ExeCommand='/i "[VsPublicAssemblies]ITaskManager.dll" /f' />
+    <CustomAction Id='GacUnRegister1' Property='GacUtil' ExeCommand='/u ITaskManager' />
+    <CustomAction Id='GacRegister2' Property='GacUtil' ExeCommand='/i "[VsPublicAssemblies]IPropertyPane.dll" /f' />
+    <CustomAction Id='GacUnRegister2' Property='GacUtil' ExeCommand='/u IPropertyPane' />
+  
+    <!--=====================================================================
+       Execute sequence: make sure we do the condition test not too soon..
+    ======================================================================-->
+    <AdminExecuteSequence />
+
+    <InstallExecuteSequence>
+      <LaunchConditions After='AppSearch' />
+      <RemoveExistingProducts After='InstallFinalize' />
+
+      <Custom Action='AssignMsBuildCustomAfter' After='InstallFiles'/>
+      <Custom Action='AssignContractsTargets' After='AssignMsBuildCustomAfter'/>
+      <Custom Action='AddBuildTargets' After='AssignContractsTargets' />
+      
+      <Custom Action='AssignVsPublicAssemblies' After='InstallFinalize'/>
+      <Custom Action='AssignGacUtil' After='AssignVsPublicAssemblies'/>
+      <Custom Action='GacRegister1' After='AssignGacUtil'>NOT Installed</Custom>
+      <Custom Action='GacUnRegister1' After='AssignGacUtil'>Installed</Custom>
+      <Custom Action='GacRegister2' After='GacRegister1'>NOT Installed</Custom>
+      <Custom Action='GacUnRegister2' After='GacUnRegister1'>Installed</Custom>
+    </InstallExecuteSequence>
+    
+    <Icon Id="doclink.ico" src="doclink.ico" />
+  </Product>
+</Wix>

@@ -1,0 +1,8 @@
+ce	Ensures
+cen	Ensures result is not null
+ci	Invariant
+cim	Invariant method with a single invariant already in it
+co	Old
+cr	Requires
+crn	Requires is not null
+crr	Result

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>System.DirectoryServices</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <ProjectGuid>{44D764EF-D471-4981-B774-B8B532EDB690}</ProjectGuid>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.DirectoryServices.XML</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.DirectoryServices.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.DirectoryServices.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.DirectoryServices.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.5\Profile\Client\Target;Microsoft\Framework\v3.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectoryAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectoryAuditRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectorySecurity.cs" />
+    <Compile Include="Sources\System.DirectoryServices.CreateChildAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DeleteChildAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DeleteTreeAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryEntries.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryEntry.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Sources\System.DirectoryServices.DirectoryEntryConfiguration.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectorySearcher.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Sources\System.DirectoryServices.DirectoryServicesCOMException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryServicesPermission.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryServicesPermissionAttribute.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryServicesPermissionEntry.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryServicesPermissionEntryCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectorySynchronization.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryVirtualListView.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DirectoryVirtualListViewContext.cs" />
+    <Compile Include="Sources\System.DirectoryServices.DSDescriptionAttribute.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ExtendedRightAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ListChildrenAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.PropertyAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.PropertyCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.PropertySetAccessRule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.PropertyValueCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ResultPropertyCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ResultPropertyValueCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.SchemaNameCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.SearchResult.cs" />
+    <Compile Include="Sources\System.DirectoryServices.SearchResultCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.SortOption.cs" />
+    <Compile Include="Sources\System.DirectoryServices.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryInterSiteTransport.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectExistsException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryOperationException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryPartition.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryReplicationMetadata.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryRoleCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchedule.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchema.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchemaClass.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchemaClassCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchemaProperty.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySchemaPropertyCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectoryServerDownException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySite.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySiteCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySiteLink.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySiteLinkBridge.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySiteLinkCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySubnet.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ActiveDirectorySubnetCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.AdamInstance.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.AdamInstanceCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.AdamRoleCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ApplicationPartition.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ApplicationPartitionCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.AttributeMetadata.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.AttributeMetadataCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ConfigurationSet.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DirectoryContext.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DirectoryServer.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DirectoryServerCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.Domain.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DomainCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DomainController.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.DomainControllerCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.Forest.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustCollisionException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustDomainInfoCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustDomainInformation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustRelationshipCollision.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustRelationshipCollisionCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ForestTrustRelationshipInformation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.GlobalCatalog.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.GlobalCatalogCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlyActiveDirectorySchemaClassCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlyActiveDirectorySchemaPropertyCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlyDirectoryServerCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlySiteCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlySiteLinkBridgeCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlySiteLinkCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReadOnlyStringCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationConnection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationConnectionCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationCursor.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationCursorCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationFailure.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationFailureCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationNeighbor.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationNeighborCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationOperation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationOperationCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.ReplicationOperationInformation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.SyncFromAllServersErrorInformation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.SyncFromAllServersOperationException.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.TopLevelName.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.TopLevelNameCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.TrustRelationshipInformation.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.TrustRelationshipInformationCollection.cs" />
+    <Compile Include="Sources\System.DirectoryServices.ActiveDirectory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

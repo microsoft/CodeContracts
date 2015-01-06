@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Node">
+    <Position X="5.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAiACAABAAAQAAAAABCQAAAAAAAAAAAAAAAAAIAABA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="NodeType" />
+      <Field Name="SourceContext" />
+    </ShowAsAssociation>
+    <Members>
+      <Field Name="uniqueKey" Hidden="true" />
+      <Field Name="uniqueKeyCounter" Hidden="true" />
+      <Field Name="VisitorTypeFor" Hidden="true" />
+    </Members>
+    <Lollipop Position="0.195" />
+  </Class>
+  <Class Name="System.Compiler.DocumentWithPrecomputedLineNumbers">
+    <Position X="4" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAEAQAABAAAAAAAAAAAAAAAgAAAQAgAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.UnmanagedDocument">
+    <Position X="6.75" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAEAQAAAgAAAgAgAAAAAEAAAAIAAAAAgAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.DocumentText">
+    <Position X="3.25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAkAAAAAAiAAAACBAAAAAAAAgAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="TextProvider" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Document">
+    <Position X="5.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAEqQAAgjGAAAAAAAAAKEAQABgIAAAAAAAAECAAkAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Text" />
+    </ShowAsAssociation>
+    <Members>
+      <Method Name="AddOffset" Hidden="true" />
+      <Method Name="ComputeLineOffsets" Hidden="true" />
+      <Method Name="DeleteLines" Hidden="true" />
+      <Method Name="GetLineCount" Hidden="true" />
+      <Method Name="GetPosition" Hidden="true" />
+      <Method Name="InsertLines" Hidden="true" />
+      <Field Name="lineOffsets" Hidden="true" />
+      <Field Name="lines" Hidden="true" />
+      <Method Name="Search" Hidden="true" />
+      <Field Name="uniqueKey" Hidden="true" />
+      <Field Name="uniqueKeyCounter" Hidden="true" />
+    </Members>
+  </Class>
+  <Struct Name="System.Compiler.SourceContext">
+    <Position X="8.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAgAAAAAAAIAAEAAAEAEAAAAAIAACEAAAIAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Document" />
+    </ShowAsAssociation>
+    <AssociationLine Name="Document" Type="System.Compiler.Document" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.938" Y="3.231" />
+        <Point X="8.938" Y="4.375" />
+        <Point X="7.5" Y="4.375" />
+      </Path>
+    </AssociationLine>
+  </Struct>
+  <Interface Name="System.Compiler.ISourceText">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAEAAAAAACgAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.IUniqueKey">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="System.Compiler.NodeType" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>et8e7afT7T76n7dl73r5vbmsarL99/w/++bX2UnfwP8=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

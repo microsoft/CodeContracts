@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file defines all the registry keys necessary for the 
+  CodeContracts addin.
+  It should be included (i.e. <?include xxx?>) inside a 
+  registry key component pointing at the correct VS location
+  (HKLM\Software\Microsoft\VisualStudio\<version number>).
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <!-- Registering the CodeContracts product -->
+
+
+  <!-- Snippets -->
+  <RegistryKey Key="Languages\CodeExpansions\CSharp\Paths" Action="none">
+    <RegistryValue
+            Name="Contracts"
+            Value="[INSTALLSNIPPETSCSHARPLOCATION]"
+            Type="string"
+            Action="write"/>
+    </RegistryKey>
+  <RegistryKey Key="Languages\CodeExpansions\Basic\Paths" Action="none">
+    <RegistryValue
+            Name="Contracts"
+            Value="[INSTALLSNIPPETSVBLOCATION]"
+            Type="string"
+            Action="write"/>
+  </RegistryKey>
+
+
+  <!--=====================================================================
+       CodeTools entry for Code Contracts
+      ======================================================================-->
+  <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts" Action="createAndRemoveOnUninstall">
+    <RegistryValue Name="DisplayName" Value="Microsoft Code Contracts" Type="string" />
+    <RegistryValue Name="InstallDir" Value="[INSTALLDIR]" Type="string" />
+
+    <!--=====================================================================
+         Contracts background taskmanager: the empty guid registers it for all projects
+         (For a Target 'CodeContactsRunCodeAnalysis' with Task 'CodeContractsAnalysis')
+        ======================================================================-->
+    <RegistryKey Key="Tasks\$(var.EmptyGuid)\CodeContractsRunCodeAnalysisInternal">
+       <RegistryValue Type="string" Name="CodeContractsAnalysis" Value="" />
+    </RegistryKey>
+
+    <!--=====================================================================
+         Contracts propertypane implementation
+        ======================================================================-->
+    <RegistryKey Key="PropertyPages\$(var.ContractsPropertyPageID)">
+      <RegistryValue Name="clsid" Value="$(var.ContractsPropertyPaneGuid)" Type="string" />
+      <RegistryValue Name="category" Value="ConfigPropertyPages" Type="string" />
+      <RegistryKey Key="Projects">
+        <RegistryValue Name="{FAE04EC0-301F-11d3-BF4B-00C04F79EFBC}" Value="CSharp" Type="string" />
+        <RegistryValue Name="VisualBasic" Value="" Type="string" />
+        <!-- <RegistryValue Name="FSharp" Value="" Type="string" /> -->
+      </RegistryKey>
+    </RegistryKey>
+
+    <!--=====================================================================
+         Contracts msbuild integration
+        ======================================================================-->
+    <RegistryKey Key="CommonTargets\After">
+      <!-- predefined names for the <Import> tag -->
+      <!-- <RegistryValue Name="TargetsFile" Value="[INSTALLDIR]MsBuild\Microsoft.CodeContracts.targets" Type="string" /> -->
+      <RegistryValue Name="TargetsKind" Value="ImportAfter" Type="string" />  <!-- or ImportBefore -->
+      <RegistryValue Name="TargetsCondition" Value="'$$(CodeContractsImported)' != 'true' AND '$$(DontImportCodeContracts)' != 'true'" Type="string" />
+      <!-- <RegistryValue Name="MSBuildVersions" Value="4.0" Type="string" />  --> <!-- semicolon seperated list of versions -->
+      <!-- followed by arbitrary values that are set as properties in the msbuild file -->
+      <RegistryValue Name="CodeContractsInstallDir" Value="[INSTALLDIR]" Type="string" />
+    </RegistryKey>
+  </RegistryKey>
+
+</Include>

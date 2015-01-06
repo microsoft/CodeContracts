@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>System.Data.Services</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <ProjectGuid>{34F25C64-A624-46E6-9832-4F59C5FDDB07}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.Data.Services.XML</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.Data.Services.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.Data.Services.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.Data.Services.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.Data.Services.Providers.DataServiceProviderMethods.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IDataServiceMetadataProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IDataServicePagingProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IDataServiceQueryProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IDataServiceStreamProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IDataServiceUpdateProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.IProjectionProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.OpenTypeMethods.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ResourceAssociationSet.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ResourceAssociationSetEnd.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ResourceProperty.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ResourceSet.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ResourceType.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ServiceOperation.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.ServiceOperationParameter.cs" />
+    <Compile Include="Sources\System.Data.Services.Providers.cs" />
+    <Compile Include="Sources\System.Data.Services.ChangeInterceptorAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.DataService_1.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceBehavior.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceConfiguration.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceException.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceHost.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceHostFactory.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceOperationContext.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceProcessingPipeline.cs" />
+    <Compile Include="Sources\System.Data.Services.DataServiceProcessingPipelineEventArgs.cs" />
+    <Compile Include="Sources\System.Data.Services.ETagAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.ExpandSegment.cs" />
+    <Compile Include="Sources\System.Data.Services.ExpandSegmentCollection.cs" />
+    <Compile Include="Sources\System.Data.Services.HandleExceptionArgs.cs" />
+    <Compile Include="Sources\System.Data.Services.IDataService.cs" />
+    <Compile Include="Sources\System.Data.Services.IDataServiceConfiguration.cs" />
+    <Compile Include="Sources\System.Data.Services.IDataServiceHost.cs" />
+    <Compile Include="Sources\System.Data.Services.IDataServiceHost2.cs" />
+    <Compile Include="Sources\System.Data.Services.IExpandedResult.cs" />
+    <Compile Include="Sources\System.Data.Services.IExpandProvider.cs" />
+    <Compile Include="Sources\System.Data.Services.IgnorePropertiesAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.IProjectedResult.cs" />
+    <Compile Include="Sources\System.Data.Services.IRequestHandler.cs" />
+    <Compile Include="Sources\System.Data.Services.IUpdatable.cs" />
+    <Compile Include="Sources\System.Data.Services.MimeTypeAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.ProcessRequestArgs.cs" />
+    <Compile Include="Sources\System.Data.Services.QueryInterceptorAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.SingleResultAttribute.cs" />
+    <Compile Include="Sources\System.Data.Services.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_4.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_5.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_6.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_13.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_2.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_3.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_10.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_11.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_12.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_7.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_8.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_9.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ExpandedWrapper_1.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper0.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper1.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper2.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper3.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper4.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper5.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper6.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper7.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapper8.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapperMany.cs" />
+    <Compile Include="Sources\System.Data.Services.Internal.ProjectedWrapperManyEnd.cs" />
+    <Compile Include="Sources\System.Data.Services.Serializers.IExceptionWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="SMDiagnostics" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Data" />
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Accessibility" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="Microsoft.Transactions.Bridge" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Activities" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Management" />
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="System.Activities.DurableInstancing" />
+    <Reference Include="System.Xaml.Hosting" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Data.Services.Design" />
+    <Reference Include="System.Data.Entity" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

@@ -1,0 +1,2307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Data.Services</name>
+  </assembly>
+  <members>
+    <member name="T:System.Data.Services.ChangeInterceptorAttribute">
+      <summary>The <see cref="T:System.Data.Services.ChangeInterceptorAttribute" /> on a method is used to process updates on the specified entity set name.</summary>
+    </member>
+    <member name="M:System.Data.Services.ChangeInterceptorAttribute.#ctor(System.String)">
+      <summary>Creates a new change interceptor for an entity set specified by the parameter <paramref name="entitySetName" />.</summary>
+      <param name="entitySetName">The name of the entity set that contains the entity to which the interceptor applies.</param>
+    </member>
+    <member name="P:System.Data.Services.ChangeInterceptorAttribute.EntitySetName">
+      <summary>Gets the name of the entity set to which the interceptor applies.</summary>
+      <returns>The string value that represents entity set name.</returns>
+    </member>
+    <member name="T:System.Data.Services.DataService`1">
+      <summary>The main entry point for developing an ADO.NET Data Service. </summary>
+      <typeparam name="T">Type that defines the data service.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.#ctor">
+      <summary>Creates a new data service that deploys data of the type indicated by the template class.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.AttachHost(System.Data.Services.IDataServiceHost)">
+      <summary>Attaches the data service host to the data service identified by the parameter <paramref name="host" />.</summary>
+      <param name="host">An instance of <see cref="T:System.Data.Services.IDataServiceHost" />.</param>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.CreateDataSource">
+      <summary>Creates a data source of the template class that will be used by the data service.</summary>
+      <returns>An instance of the data source.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataService`1.CurrentDataSource">
+      <summary>Gets the data source instance currently being used to process the request.</summary>
+      <returns>The data source instance for the service.</returns>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.HandleException(System.Data.Services.HandleExceptionArgs)">
+      <summary>Called when an exception is raised while processing a request.</summary>
+      <param name="args">Exception arguments.</param>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.OnStartProcessingRequest(System.Data.Services.ProcessRequestArgs)">
+      <summary>Called before processing each request. For batch requests, it is called one time for the top batch request and one time for each operation in the batch.</summary>
+      <param name="args">
+        <see cref="T:System.Data.Services.ProcessRequestArgs" /> that contains information about the request.</param>
+    </member>
+    <member name="P:System.Data.Services.DataService`1.ProcessingPipeline">
+      <summary>Gets an object that defines the events for the data service processing pipeline.</summary>
+      <returns>A <see cref="T:System.Data.Services.DataServiceProcessingPipeline" /> object that is used to define events for the data service processing pipeline.</returns>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.ProcessRequest">
+      <summary>Processes an HTTP request.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataService`1.ProcessRequestForMessage(System.IO.Stream)">
+      <summary>Processes an HTTP request.</summary>
+      <returns>Response message.</returns>
+      <param name="messageBody">The body of the HTTP request.</param>
+    </member>
+    <member name="T:System.Data.Services.DataServiceBehavior">
+      <summary>Adds settings that define behavior to a custom data service.</summary>
+    </member>
+    <member name="P:System.Data.Services.DataServiceBehavior.AcceptCountRequests">
+      <summary>Gets or sets whether requests with the $count path segment or the $inlinecount query options are accepted.</summary>
+      <returns>true if count requests are supported; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceBehavior.AcceptProjectionRequests">
+      <summary>Gets or sets whether projection requests should be accepted.</summary>
+      <returns>true if projection requests are supported; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceBehavior.InvokeInterceptorsOnLinkDelete">
+      <summary>Gets or sets whether to invoke change interceptors when a link is deleted.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value that is true when interceptors should be invoked; otherwise false. </returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceBehavior.MaxProtocolVersion">
+      <summary>Gets or sets the maximum protocol version that is supported by the response sent by the data service.</summary>
+      <returns>A <see cref="T:System.Data.Services.Common.DataServiceProtocolVersion" /> that is the maximum version allowed in the response.</returns>
+    </member>
+    <member name="T:System.Data.Services.DataServiceConfiguration">
+      <summary>Manages the configuration of WCF Data Services.</summary>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.DataServiceBehavior">
+      <summary>Gets a <see cref="T:System.Data.Services.DataServiceBehavior" /> object that defines additional behaviors of the data service.</summary>
+      <returns>A <see cref="T:System.Data.Services.DataServiceBehavior" /> object.</returns>
+    </member>
+    <member name="M:System.Data.Services.DataServiceConfiguration.EnableTypeAccess(System.String)">
+      <summary>Registers a data type with the data service runtime so that it can be used by a custom data service provider.</summary>
+      <param name="typeName">The namespace-qualified name of the type that is enabled for use with the custom data service provider.</param>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.EnableTypeConversion">
+      <summary>Gets or sets whether the data service runtime should convert the type that is contained in the payload to the actual property type that is specified in the request.</summary>
+      <returns>A Boolean value that indicates whether to perform the conversion.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxBatchCount">
+      <summary>Gets or sets the maximum number of change sets and query operations that are allowed in a single batch.</summary>
+      <returns>A value that is the maximum number of change sets.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxChangesetCount">
+      <summary>Gets or set the maximum number of changes that can be included in a single change set.</summary>
+      <returns>The maximum number of changes allowed.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxExpandCount">
+      <summary>Gets or sets the maximum number of related entities that can be included in a single request by using the $expand operator.</summary>
+      <returns>The maximum number of related entities.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxExpandDepth">
+      <summary>Get or sets the maximum number of related entities that can be included in an $expand path in a single request.</summary>
+      <returns>The maximum depth of an $expand path.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxObjectCountOnInsert">
+      <summary>Get or sets the maximum number of objects to insert that can be contained in a single POST request.</summary>
+      <returns>The maximum number of objects.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.MaxResultsPerCollection">
+      <summary>Get or sets the maximum number of items in each returned collection.</summary>
+      <returns>The maximum number of items.</returns>
+    </member>
+    <member name="M:System.Data.Services.DataServiceConfiguration.RegisterKnownType(System.Type)">
+      <summary>Adds a type to the list of types that are recognized by the data service. </summary>
+      <param name="type">Type to add to the collection of known types.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceConfiguration.SetEntitySetAccessRule(System.String,System.Data.Services.EntitySetRights)">
+      <summary>Sets the permissions for the specified entity set resource.</summary>
+      <param name="name">Name of the entity set for which to set permissions.</param>
+      <param name="rights">Access rights to be granted to this resource, passed as an <see cref="T:System.Data.Services.EntitySetRights" /> value.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceConfiguration.SetEntitySetPageSize(System.String,System.Int32)">
+      <summary>Sets the maximum page size for an entity set resource.</summary>
+      <param name="name">Name of entity set resource for which to set the page size.</param>
+      <param name="size">Page size for the entity set resource that is specified in <paramref name="name" />.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceConfiguration.SetServiceOperationAccessRule(System.String,System.Data.Services.ServiceOperationRights)">
+      <summary>Sets the permissions for the specified service operation.</summary>
+      <param name="name">Name of the service operation for which to set permissions.</param>
+      <param name="rights">Access rights to be granted to this resource, passed as a <see cref="T:System.Data.Services.ServiceOperationRights" /> value.</param>
+    </member>
+    <member name="P:System.Data.Services.DataServiceConfiguration.UseVerboseErrors">
+      <summary>Gets or sets whether verbose errors should be returned by the data service.</summary>
+      <returns>Whether verbose errors are returned.</returns>
+    </member>
+    <member name="T:System.Data.Services.DataServiceException">
+      <summary>Represents an instance of the <see cref="T:System.Data.Services.DataServiceException" /> class with a specified message that describes the error. </summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.DataServiceException" /> class with a system-supplied message that describes the error.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.#ctor(System.Int32,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.DataServiceException" /> class. </summary>
+      <param name="statusCode">The HTTP status code returned by the exception.</param>
+      <param name="message">The error message for the exception.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.#ctor(System.Int32,System.String,System.String,System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.DataServiceException" /> class. </summary>
+      <param name="statusCode">The HTTP status code of the exception.</param>
+      <param name="errorCode">The string value that contains the error code.</param>
+      <param name="message">The string value that contains the error message.</param>
+      <param name="messageXmlLang">The string value that indicates the language of the error message.</param>
+      <param name="innerException">The exception that is the cause of the current exception.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.DataServiceException" /> class with a specified message that describes the error.</summary>
+      <param name="message">The message that describes the exception. The caller of this constructor is required to ensure that this string has been localized for the current system culture.</param>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.DataServiceException" /> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
+      <param name="message">The message that describes the exception. The caller of this constructor is required to ensure that this string has been localized for the current system culture. </param>
+      <param name="innerException">The exception that is the cause of the current exception. </param>
+    </member>
+    <member name="P:System.Data.Services.DataServiceException.ErrorCode">
+      <summary>Gets the error code.</summary>
+      <returns>The integer value that represents the error code.</returns>
+    </member>
+    <member name="M:System.Data.Services.DataServiceException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Gets data on the object that caused the exception.</summary>
+      <param name="info">
+        <see cref="T:System.Runtime.Serialization.SerializationInfo" />.</param>
+      <param name="context">
+        <see cref="T:System.Runtime.Serialization.StreamingContext" />.</param>
+    </member>
+    <member name="P:System.Data.Services.DataServiceException.MessageLanguage">
+      <summary>Gets the error message language.</summary>
+      <returns>The string value that represents the message language.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceException.StatusCode">
+      <summary>Gets the HTTP status code returned by the exception.</summary>
+      <returns>HTTP status code for the exception.</returns>
+    </member>
+    <member name="T:System.Data.Services.DataServiceHost">
+      <summary>The WCF Data Services class derived from <see cref="T:System.ServiceModel.Web.WebServiceHost" /> used to instantiate data services.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceHost.#ctor(System.Type,System.Uri[])">
+      <summary>Instantiates <see cref="T:System.Data.Services.DataServiceHost" /> for WCF Data Services.</summary>
+      <param name="serviceType">Identifies the WCF Data Services to the host.</param>
+      <param name="baseAddresses">The URI of the host.</param>
+    </member>
+    <member name="T:System.Data.Services.DataServiceHostFactory">
+      <summary>The class used by the infrastructure of WCF Data Services to connect to Windows Communication Foundation (WCF). </summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceHostFactory.#ctor">
+      <summary>Creates a new instance of DataServiceHostFactory.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceHostFactory.CreateServiceHost(System.Type,System.Uri[])">
+      <summary>Creates a new <see cref="T:System.Data.Services.DataServiceHost" /> from the URI.</summary>
+      <returns>New <see cref="T:System.Data.Services.DataServiceHost" />.</returns>
+      <param name="serviceType">Specifies the type of WCF service to host.</param>
+      <param name="baseAddresses">An array of base addresses for the service. </param>
+    </member>
+    <member name="T:System.Data.Services.DataServiceOperationContext">
+      <summary>Represents the current operation being processed.</summary>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.AbsoluteRequestUri">
+      <summary>Get the request URI for the current operation.</summary>
+      <returns>The <see cref="T:System.Uri" /> of the operation.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.AbsoluteServiceUri">
+      <summary>Gets the base service URI for the request.</summary>
+      <returns>The base <see cref="T:System.Uri" /> of the operation.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.IsBatchRequest">
+      <summary>Gets a value that indicates whether the current operation is part of a batch request.</summary>
+      <returns>true when the operation is part of a batch request; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.RequestHeaders">
+      <summary>Gets the request headers for the current operation.</summary>
+      <returns>A <see cref="T:System.Net.WebHeaderCollection" /> object that contains the request headers.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.RequestMethod">
+      <summary>Gets the HTTP request method for the operation</summary>
+      <returns>The HTTP request method.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.ResponseHeaders">
+      <summary>Gets the response headers for the current operation.</summary>
+      <returns>A <see cref="T:System.Net.WebHeaderCollection" /> object that contains the response headers.</returns>
+    </member>
+    <member name="P:System.Data.Services.DataServiceOperationContext.ResponseStatusCode">
+      <summary>Gets or sets the status code of the response.</summary>
+      <returns>The status code of the operation response. </returns>
+    </member>
+    <member name="T:System.Data.Services.DataServiceProcessingPipeline">
+      <summary>Defines the events for the data service processing pipeline.</summary>
+    </member>
+    <member name="M:System.Data.Services.DataServiceProcessingPipeline.#ctor">
+      <summary>Creates a new <see cref="T:System.Data.Services.DataServiceProcessingPipeline" /> instance. </summary>
+    </member>
+    <member name="E:System.Data.Services.DataServiceProcessingPipeline.ProcessedChangeset">
+      <summary>Occurs after the change set has been processed.</summary>
+    </member>
+    <member name="E:System.Data.Services.DataServiceProcessingPipeline.ProcessedRequest">
+      <summary>Occurs after the request has been processed.</summary>
+    </member>
+    <member name="E:System.Data.Services.DataServiceProcessingPipeline.ProcessingChangeset">
+      <summary>Occurs before the change set is processed.</summary>
+    </member>
+    <member name="E:System.Data.Services.DataServiceProcessingPipeline.ProcessingRequest">
+      <summary>Occurs before the request is processed. </summary>
+    </member>
+    <member name="T:System.Data.Services.DataServiceProcessingPipelineEventArgs">
+      <summary>Event argument class for <see cref="T:System.Data.Services.DataServiceProcessingPipeline" /> events.</summary>
+    </member>
+    <member name="P:System.Data.Services.DataServiceProcessingPipelineEventArgs.OperationContext">
+      <summary>Gets the context of the operation that raised the event.</summary>
+      <returns>A <see cref="T:System.Data.Services.DataServiceOperationContext" /> that is the operation context. </returns>
+    </member>
+    <member name="T:System.Data.Services.EntitySetRights">
+      <summary>An enumeration used to define access rights to data that is deployed by WCF Data Services.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.None">
+      <summary>Denies all rights to access data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.ReadSingle">
+      <summary>Authorization to read single data items.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.ReadMultiple">
+      <summary>Authorization to read sets of data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.WriteAppend">
+      <summary>Authorization to create new data items in data sets.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.WriteReplace">
+      <summary>Authorization to replace data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.WriteDelete">
+      <summary>Authorization to delete data items from data sets.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.WriteMerge">
+      <summary>Authorization to merge data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.AllRead">
+      <summary>Authorization to read data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.AllWrite">
+      <summary>Authorization to write data.</summary>
+    </member>
+    <member name="F:System.Data.Services.EntitySetRights.All">
+      <summary>Authorization to create, read, update, and delete data.</summary>
+    </member>
+    <member name="T:System.Data.Services.ETagAttribute">
+      <summary>This attribute on an entity type is used to specify the properties that determine changes in content.</summary>
+    </member>
+    <member name="M:System.Data.Services.ETagAttribute.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.ETagAttribute" /> class. </summary>
+      <param name="propertyName">The string value containing properties used in eTag value.</param>
+    </member>
+    <member name="M:System.Data.Services.ETagAttribute.#ctor(System.String[])">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.ETagAttribute" /> class.</summary>
+      <param name="propertyNames">String value containing properties used in eTag value.</param>
+    </member>
+    <member name="P:System.Data.Services.ETagAttribute.PropertyNames">
+      <summary>Gets the names of properties used in the <see cref="T:System.Data.Services.ETagAttribute" />.</summary>
+      <returns>String value containing property names.</returns>
+    </member>
+    <member name="T:System.Data.Services.ExpandSegment">
+      <summary>The segment of a query that indicates whether data should be returned inline instead of as deferred content.</summary>
+    </member>
+    <member name="M:System.Data.Services.ExpandSegment.#ctor(System.String,System.Linq.Expressions.Expression)">
+      <summary>Initializes an <see cref="T:System.Data.Services.ExpandSegment" /> object with the specified property name and a filtering expression, possibly null.</summary>
+      <param name="name">The name of the property to be expanded.</param>
+      <param name="filter">The filter option in the query to which the expand segment applies.</param>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegment.ExpandedProperty">
+      <summary>Gets the property to be expanded.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegment.Filter">
+      <summary>The filter option in the query to which the expand segment applies.</summary>
+      <returns>An expression that specifies the filter on target data.</returns>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegment.HasFilter">
+      <summary>A Boolean value that indicates whether the expand statement is used with a filter expression.</summary>
+      <returns>True or false.</returns>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegment.MaxResultsExpected">
+      <summary>Gets the maximum number of results expected.</summary>
+      <returns>The integer value that indicates maximum number of results.</returns>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegment.Name">
+      <summary>The name of the property to be expanded.</summary>
+      <returns>A string value containing the name of the property.</returns>
+    </member>
+    <member name="M:System.Data.Services.ExpandSegment.PathHasFilter(System.Collections.Generic.IEnumerable{System.Data.Services.ExpandSegment})">
+      <summary>A Boolean value that indicates whether the path includes a filter option on target data.</summary>
+      <returns>True if any of the segments in the path has a filter; false otherwise.</returns>
+      <param name="path">The enumeration of segments to check for filters.</param>
+    </member>
+    <member name="T:System.Data.Services.ExpandSegmentCollection">
+      <summary>The segments of a query that can be expanded by the $expand clause that follows a query.</summary>
+    </member>
+    <member name="M:System.Data.Services.ExpandSegmentCollection.#ctor">
+      <summary>Creates a collection of expand segments for a query.</summary>
+    </member>
+    <member name="M:System.Data.Services.ExpandSegmentCollection.#ctor(System.Int32)">
+      <summary>Initializes a new collection of expand segments that is empty and has the specified initial capacity.</summary>
+      <param name="capacity">The number of expand segments that the new collection can initially store.</param>
+    </member>
+    <member name="P:System.Data.Services.ExpandSegmentCollection.HasFilter">
+      <summary>Boolean value that indicates whether segments to be expanded include a filter clause.</summary>
+      <returns>Boolean value that indicates whether segments to be expanded include a filter clause. </returns>
+    </member>
+    <member name="T:System.Data.Services.HandleExceptionArgs">
+      <summary>Specifies details of an exception that has occurred and the details of the associated HTTP response.</summary>
+    </member>
+    <member name="P:System.Data.Services.HandleExceptionArgs.Exception">
+      <summary>Gets or sets the exception that will be processed and returned in the response.</summary>
+      <returns>The exception that will be processed and returned in the response.</returns>
+    </member>
+    <member name="P:System.Data.Services.HandleExceptionArgs.ResponseContentType">
+      <summary>Gets the response content type.</summary>
+      <returns>The string value that indicates the response format.</returns>
+    </member>
+    <member name="P:System.Data.Services.HandleExceptionArgs.ResponseStatusCode">
+      <summary>Gets the status code that will be sent back in the HTTP header section of the response when an error occurs on the data service.</summary>
+      <returns>An integer value of the HTTP response status code. </returns>
+    </member>
+    <member name="P:System.Data.Services.HandleExceptionArgs.ResponseWritten">
+      <summary>Gets a value indicating whether the response has been written. </summary>
+      <returns>Boolean value that indicates whether response has been written.</returns>
+    </member>
+    <member name="P:System.Data.Services.HandleExceptionArgs.UseVerboseErrors">
+      <summary>Gets or sets a Boolean value that indicates whether verbose errors will be returned.</summary>
+      <returns>The Boolean value that indicates whether verbose errors will be returned.</returns>
+    </member>
+    <member name="T:System.Data.Services.IDataServiceConfiguration">
+      <summary>The <see cref="T:System.Data.Services.IDataServiceConfiguration" /> is used by WCF Data Services to set up the behavior of the service, including rights on entity sets and service operations, limits on the allowed requests, registering types not discoverable by default, and the default verbosity on error handling.</summary>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxBatchCount">
+      <summary>Gets the maximum number of requests that can be handled in a batch.</summary>
+      <returns>Integer value that indicates the maximum number of requests that can be handled in a batch.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxChangesetCount">
+      <summary>Gets the maximum number of change sets that can be handled in a batch.</summary>
+      <returns>Integer value that indicates the maximum number of change sets that can be handled in a batch.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxExpandCount">
+      <summary>Gets or sets the maximum number of segments that can be expanded by the $expand query option for all requests to the data service.  </summary>
+      <returns>The maximum number of segments to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxExpandDepth">
+      <summary>Gets or sets a maximum number of segments supported in a single $expand path for all requests to the data service.</summary>
+      <returns>Integer representing the maximum number of supported segments in $expand path.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxObjectCountOnInsert">
+      <summary>Gets or sets the maximum number of objects that can be inserted in a single request. </summary>
+      <returns>The integer value that contains the maximum number of objects that can be inserted in a single request.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.MaxResultsPerCollection">
+      <summary>Gets the maximum number of results per collection.</summary>
+      <returns>The integer value that indicates the maximum number of results per collection.</returns>
+    </member>
+    <member name="M:System.Data.Services.IDataServiceConfiguration.RegisterKnownType(System.Type)">
+      <summary>Registers a resource type for use by the data service.</summary>
+      <param name="type">The resource type to register.</param>
+    </member>
+    <member name="M:System.Data.Services.IDataServiceConfiguration.SetEntitySetAccessRule(System.String,System.Data.Services.EntitySetRights)">
+      <summary>Sets the access rules for the specified entity set.</summary>
+      <param name="name">The name of the entity set for configured access.</param>
+      <param name="rights">The rights allowed for the entity set.</param>
+    </member>
+    <member name="M:System.Data.Services.IDataServiceConfiguration.SetServiceOperationAccessRule(System.String,System.Data.Services.ServiceOperationRights)">
+      <summary>Sets the access rules for the specified service operation.</summary>
+      <param name="name">The name of the service operation on which to set access rights.</param>
+      <param name="rights">The rights allowed according to <see cref="T:System.Data.Services.ServiceOperationRights" /> enumeration. </param>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceConfiguration.UseVerboseErrors">
+      <summary>Gets or sets whether verbose errors are used by default for all responses from the data service.  </summary>
+      <returns>A Boolean value that indicates whether verbose errors are returned.</returns>
+    </member>
+    <member name="T:System.Data.Services.IDataServiceHost">
+      <summary>Interface that specifies interactions between WCF Data Services and its hosting environment.</summary>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.AbsoluteRequestUri">
+      <summary>Gets an absolute URI that is the URI as sent by the client.</summary>
+      <returns>A string that is the absolute URI of the request.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.AbsoluteServiceUri">
+      <summary>Gets an absolute URI that is the root URI of the data service.</summary>
+      <returns>A string that is the absolute root URI of the data service.</returns>
+    </member>
+    <member name="M:System.Data.Services.IDataServiceHost.GetQueryStringItem(System.String)">
+      <summary>Gets a data item identified by the identity key contained by the parameter of the method.</summary>
+      <returns>The data item requested by the query serialized as a string.</returns>
+      <param name="item">String value containing identity key of item requested.</param>
+    </member>
+    <member name="M:System.Data.Services.IDataServiceHost.ProcessException(System.Data.Services.HandleExceptionArgs)">
+      <summary>Handles a data service exception using information in  the <paramref name="args" /> parameter.</summary>
+      <param name="args">
+        <see cref="T:System.Data.Services.HandleExceptionArgs" />  that contains information on the exception object.</param>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestAccept">
+      <summary>The transport protocol specified by the request accept header.</summary>
+      <returns>String that indicates the transport protocol required by the request.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestAcceptCharSet">
+      <summary>Gets a string representing the value of the Accept-Charset HTTP header.</summary>
+      <returns>String representing the value of the Accept-Charset HTTP header.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestContentType">
+      <summary>Gets the transport protocol specified by the content type header.</summary>
+      <returns>String value that indicates content type.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestHttpMethod">
+      <summary>Gets the request method of GET, PUT, POST, or DELETE.</summary>
+      <returns>String value that indicates request method.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestIfMatch">
+      <summary>Gets the value for the If-Match header on the current request.</summary>
+      <returns>String value for the If-Match header on the current request.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestIfNoneMatch">
+      <summary>Gets the value for the If-None-Match header on the current request.</summary>
+      <returns>String value for the If-None-Match header on the current request.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestMaxVersion">
+      <summary>Gets the value that identifies the highest version that the request client is able to process.</summary>
+      <returns>A string that contains the highest version that the request client is able to process, possibly null.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestStream">
+      <summary>Gets the stream that contains the HTTP request body.</summary>
+      <returns>
+        <see cref="T:System.IO.Stream" /> object that contains the request body.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.RequestVersion">
+      <summary>Gets the value that identifies the version of the request that the client submitted, possibly null.</summary>
+      <returns>A string that identifies the version of the request that the client submitted, possibly null.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseCacheControl">
+      <summary>Gets a string value that represents cache control information.</summary>
+      <returns>A string value that represents cache control information.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseContentType">
+      <summary>Gets the transport protocol of the response.</summary>
+      <returns>String value containing the content type.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseETag">
+      <summary>Gets an eTag value that represents the state of data in response.</summary>
+      <returns>A string value that represents the eTag state value.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseLocation">
+      <summary>Gets or sets the service location.</summary>
+      <returns>String that contains the service location.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseStatusCode">
+      <summary>Gets or sets the response code that indicates results of query.</summary>
+      <returns>Integer value that contains the response code.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseStream">
+      <summary>Gets the response stream to which the HTTP response body will be written.</summary>
+      <returns>
+        <see cref="T:System.IO.Stream" /> object to which the response body will be written.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost.ResponseVersion">
+      <summary>Gets the version used by the host in the response.</summary>
+      <returns>A string value that contains the host version.</returns>
+    </member>
+    <member name="T:System.Data.Services.IDataServiceHost2">
+      <summary>Defines extensions to <see cref="T:System.Data.Services.IDataServiceHost" /> needed for request and response headers in HTTP.</summary>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost2.RequestHeaders">
+      <summary>Request header for an HTTP request.</summary>
+      <returns>String value of header.</returns>
+    </member>
+    <member name="P:System.Data.Services.IDataServiceHost2.ResponseHeaders">
+      <summary>Response header for an HTTP response. </summary>
+      <returns>String value of header.</returns>
+    </member>
+    <member name="T:System.Data.Services.IExpandedResult">
+      <summary>Declares the members required to support enumerators for results and associated segments on an WCF Data Services $expand query option.  </summary>
+    </member>
+    <member name="P:System.Data.Services.IExpandedResult.ExpandedElement">
+      <summary>Gets the element with expanded properties.</summary>
+      <returns>The object in a property expanded by <see cref="T:System.Data.Services.IExpandedResult" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.IExpandedResult.GetExpandedPropertyValue(System.String)">
+      <summary>Gets the value for a named property of the result.</summary>
+      <returns>The value of the property.</returns>
+      <param name="name">The name of the property for which to get enumerable results.</param>
+    </member>
+    <member name="T:System.Data.Services.IExpandProvider">
+      <summary>This interface declares the methods required to support the $expand query option for an WCF Data Services.</summary>
+    </member>
+    <member name="M:System.Data.Services.IExpandProvider.ApplyExpansions(System.Linq.IQueryable,System.Collections.Generic.ICollection{System.Data.Services.ExpandSegmentCollection})">
+      <summary>Applies expansions to the specified <paramref name="queryable" /> parameter.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerable" /> object of the same type as the supplied <paramref name="queryable" /> object that includes the specified <paramref name="expandPaths" />.</returns>
+      <param name="queryable">The <see cref="T:System.Linq.IQueryable`1" /> object to expand.</param>
+      <param name="expandPaths">A collection of <see cref="T:System.Data.Services.ExpandSegmentCollection" /> paths to expand. </param>
+    </member>
+    <member name="T:System.Data.Services.IgnorePropertiesAttribute">
+      <summary>Controls the visibility of a property or properties by WCF Data Services.</summary>
+    </member>
+    <member name="M:System.Data.Services.IgnorePropertiesAttribute.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.IgnorePropertiesAttribute" /> class. </summary>
+      <param name="propertyName">A string value that contains the property or properties to be attributed.</param>
+    </member>
+    <member name="M:System.Data.Services.IgnorePropertiesAttribute.#ctor(System.String[])">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.IgnorePropertiesAttribute" /> class. </summary>
+      <param name="propertyNames">A string value that contains the property or properties to be attributed.</param>
+    </member>
+    <member name="P:System.Data.Services.IgnorePropertiesAttribute.PropertyNames">
+      <summary>Gets or sets the property name or names to controlled by the <see cref="T:System.Data.Services.IgnorePropertiesAttribute" /> attribute.</summary>
+    </member>
+    <member name="T:System.Data.Services.IRequestHandler">
+      <summary>Provides access to members that control handing of request messages. </summary>
+    </member>
+    <member name="M:System.Data.Services.IRequestHandler.ProcessRequestForMessage(System.IO.Stream)">
+      <summary>Provides an entry point for the request. </summary>
+      <returns>The resulting message for the supplied request.</returns>
+      <param name="messageBody">The <see cref="T:System.IO.Stream" /> object that contains the request.</param>
+    </member>
+    <member name="T:System.Data.Services.IUpdatable">
+      <summary>An interface used to insert or update a resource by the HTTP POST method.</summary>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.AddReferenceToCollection(System.Object,System.String,System.Object)">
+      <summary>Adds the specified value to the collection.</summary>
+      <param name="targetResource">Target object that defines the property.</param>
+      <param name="propertyName">The name of the collection property to which the resource should be added..</param>
+      <param name="resourceToBeAdded">The opaque object representing the resource to be added.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.ClearChanges">
+      <summary>Cancels a change to the data.</summary>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.CreateResource(System.String,System.String)">
+      <summary>Creates the resource of the specified type and that belongs to the specified container.</summary>
+      <returns>The object representing a resource of specified type and belonging to the specified container.</returns>
+      <param name="containerName">The name of the entity set to which the resource belongs.</param>
+      <param name="fullTypeName">The full namespace-qualified type name of the resource.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.DeleteResource(System.Object)">
+      <summary>Deletes the specified resource.</summary>
+      <param name="targetResource">The resource to be deleted.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.GetResource(System.Linq.IQueryable,System.String)">
+      <summary>Gets the resource of the specified type identified by a query and type name. </summary>
+      <returns>An opaque object representing a resource of the specified type, referenced by the specified query.</returns>
+      <param name="query">Language integrated query (LINQ) pointing to a particular resource.</param>
+      <param name="fullTypeName">The fully qualified type name of resource.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.GetValue(System.Object,System.String)">
+      <summary>Gets the value of the specified property on the target object.</summary>
+      <returns>The value of the object.</returns>
+      <param name="targetResource">An opaque object that represents a resource.</param>
+      <param name="propertyName">The name of the property whose value needs to be retrieved.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.RemoveReferenceFromCollection(System.Object,System.String,System.Object)">
+      <summary>Removes the specified value from the collection.</summary>
+      <param name="targetResource">The target object that defines the property.</param>
+      <param name="propertyName">The name of the property whose value needs to be updated.</param>
+      <param name="resourceToBeRemoved">The property value that needs to be removed.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.ResetResource(System.Object)">
+      <summary>Resets the resource identified by the parameter <paramref name="resource " />to its default value.</summary>
+      <returns>The resource with its value reset to the default value.</returns>
+      <param name="resource">The resource to be updated.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.ResolveResource(System.Object)">
+      <summary>Returns the instance of the resource represented by the specified resource object.</summary>
+      <returns>Returns the instance of the resource represented by the specified resource object.</returns>
+      <param name="resource">The object representing the resource whose instance needs to be retrieved.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.SaveChanges">
+      <summary>Saves all the changes that have been made by using the <see cref="T:System.Data.Services.IUpdatable" /> APIs.</summary>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.SetReference(System.Object,System.String,System.Object)">
+      <summary>Sets the value of the specified reference property on the target object.</summary>
+      <param name="targetResource">The target object that defines the property.</param>
+      <param name="propertyName">The name of the property whose value needs to be updated.</param>
+      <param name="propertyValue">The property value to be updated.</param>
+    </member>
+    <member name="M:System.Data.Services.IUpdatable.SetValue(System.Object,System.String,System.Object)">
+      <summary>Sets the value of the property with the specified name on the target resource to the specified property value.</summary>
+      <param name="targetResource">The target object that defines the property.</param>
+      <param name="propertyName">The name of the property whose value needs to be updated.</param>
+      <param name="propertyValue">The property value for update.</param>
+    </member>
+    <member name="T:System.Data.Services.MimeTypeAttribute">
+      <summary>Indicates the MIME type of HTTP request.</summary>
+    </member>
+    <member name="M:System.Data.Services.MimeTypeAttribute.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.MimeTypeAttribute" /> class. </summary>
+      <param name="memberName">The name of the attribute.</param>
+      <param name="mimeType">The MIME type of the attribute.</param>
+    </member>
+    <member name="P:System.Data.Services.MimeTypeAttribute.MemberName">
+      <summary>Gets the name of the attribute.</summary>
+      <returns>A string value that contains the name of the attribute. </returns>
+    </member>
+    <member name="P:System.Data.Services.MimeTypeAttribute.MimeType">
+      <summary>Gets the MIME type of a request.</summary>
+      <returns>A string that contains the MIME type.</returns>
+    </member>
+    <member name="T:System.Data.Services.ProcessRequestArgs">
+      <summary>Represents arguments used by an HTTP request to the data service. </summary>
+    </member>
+    <member name="P:System.Data.Services.ProcessRequestArgs.IsBatchOperation">
+      <summary>Gets a Boolean value that indicates whether the HTTP request to the data service is a batch operation.</summary>
+      <returns>The Boolean value that indicates whether the HTTP request to the data service is a batch operation. </returns>
+    </member>
+    <member name="P:System.Data.Services.ProcessRequestArgs.OperationContext">
+      <summary>Gets the context that contains information about the current operation being processed.</summary>
+      <returns>An <see cref="T:System.Data.Services.DataServiceOperationContext" /> object that contains information about the current operation. </returns>
+    </member>
+    <member name="P:System.Data.Services.ProcessRequestArgs.RequestUri">
+      <summary>Gets the URI of an HTTP request to be process.</summary>
+      <returns>A <see cref="T:System.Uri" /> that contains the URI of the request to be processed.</returns>
+    </member>
+    <member name="T:System.Data.Services.QueryInterceptorAttribute">
+      <summary>The <see cref="T:System.Data.Services.QueryInterceptorAttribute" /> on a method annotates it as a query interceptor on the specified entity set.</summary>
+    </member>
+    <member name="M:System.Data.Services.QueryInterceptorAttribute.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.QueryInterceptorAttribute" /> class for the entity set specified by the <paramref name="entitySetName" /> parameter.</summary>
+      <param name="entitySetName">The name of the entity set that contains the entity to which the interceptor applies.</param>
+    </member>
+    <member name="P:System.Data.Services.QueryInterceptorAttribute.EntitySetName">
+      <summary>Gets the name of the entity set that contains the entity to which the interceptor applies.</summary>
+      <returns>A string that indicates the name of the entity set that contains the entity to which the interceptor applies.</returns>
+    </member>
+    <member name="T:System.Data.Services.ServiceOperationRights">
+      <summary>An enumeration used to define access rights to service operations deployed by WCF Data Services.</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.None">
+      <summary>No authorization to access the service operation.</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.ReadSingle">
+      <summary>Authorization to read a single data item by using the service operation.</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.ReadMultiple">
+      <summary>Authorization to read multiple data items by using the service operation.</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.AllRead">
+      <summary>Authorization to read single or multiple data items deployed by the service operation.</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.All">
+      <summary>All rights assigned to the service operation..</summary>
+    </member>
+    <member name="F:System.Data.Services.ServiceOperationRights.OverrideEntitySetRights">
+      <summary>Overrides entity set rights that are explicitly defined in the data service with the service operation rights.</summary>
+    </member>
+    <member name="T:System.Data.Services.SingleResultAttribute">
+      <summary>Attribute used on service operations to specify that they return a single instance of their return element. </summary>
+    </member>
+    <member name="M:System.Data.Services.SingleResultAttribute.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.SingleResultAttribute" /> class. </summary>
+    </member>
+    <member name="T:System.Data.Services.UpdateOperations">
+      <summary>An enumeration used to specify the update operations that were performed on an entity. </summary>
+    </member>
+    <member name="F:System.Data.Services.UpdateOperations.None">
+      <summary>No operations were performed on the resource.</summary>
+    </member>
+    <member name="F:System.Data.Services.UpdateOperations.Add">
+      <summary>The entity was added.</summary>
+    </member>
+    <member name="F:System.Data.Services.UpdateOperations.Change">
+      <summary>The entity was modified.</summary>
+    </member>
+    <member name="F:System.Data.Services.UpdateOperations.Delete">
+      <summary>The entity was deleted.</summary>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`1">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">Type of the expanded element.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`1.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`1" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`1.Description">
+      <summary>Gets or sets the description for the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`1" />.</summary>
+      <returns>The description of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`1" />.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`1.ExpandedElement">
+      <summary>Gets or sets the element with expanded properties.</summary>
+      <returns>The object in a property expanded by <see cref="T:System.Data.Services.IExpandedResult" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`1.GetExpandedPropertyValue(System.String)">
+      <summary>Returns the value of the expanded property.</summary>
+      <returns>The value of the property.</returns>
+      <param name="name">The name of the property. </param>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`1.InternalGetExpandedPropertyValue(System.Int32)">
+      <summary>Returns a property object of the expanded property.</summary>
+      <returns>The property value.</returns>
+      <param name="nameIndex">The index of the property. </param>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`1.System#Data#Services#IExpandedResult#ExpandedElement">
+      <summary>Gets or sets the element with expanded properties.</summary>
+      <returns>The object in a property expanded by <see cref="T:System.Data.Services.IExpandedResult" />.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`10">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty7">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty8">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`10.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`10" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty7">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`10.ProjectedProperty8">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`11">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty7">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty8">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty9">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`11.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`11" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty7">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty8">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`11.ProjectedProperty9">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`12">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty7">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty8">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty9">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty10">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`12.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`12" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty10">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty7">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty8">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`12.ProjectedProperty9">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`13">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty7">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty8">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty9">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty10">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty11">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`13.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`13" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty10">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty11">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty7">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty8">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`13.ProjectedProperty9">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`2">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`2.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`2" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`2.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`3">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`3.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`3" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`3.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`3.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`4">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`4.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`4" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`4.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`4.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`4.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`5">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`5.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`4" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`5.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`5.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`5.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`5.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`6">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`6.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`6" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`6.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`6.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`6.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`6.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`6.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`7">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`7.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`7" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`7.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`8">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`8.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`8" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`8.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ExpandedWrapper`9">
+      <summary>This class is used internally by the system to implement support for queries with eager loading of related entities.</summary>
+      <typeparam name="TExpandedElement">The type of the expanded element.</typeparam>
+      <typeparam name="TProperty0">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty1">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty2">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty3">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty4">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty5">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty6">The type of the property to expand.</typeparam>
+      <typeparam name="TProperty7">The type of the property to expand.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Internal.ExpandedWrapper`9.#ctor">
+      <summary>Creates an instance of the <see cref="T:System.Data.Services.Internal.ExpandedWrapper`9" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty0">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty1">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty2">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty3">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty4">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty5">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty6">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ExpandedWrapper`9.ProjectedProperty7">
+      <summary>Get or sets the property to expand.</summary>
+      <returns>The property to expand.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper">
+      <summary>Provides a wrapper over the result element with the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper.GetProjectedPropertyValue(System.String)">
+      <summary>Gets the value of the named property for the result.</summary>
+      <returns>The value for the named property of the result.</returns>
+      <param name="propertyName">Name of property for which to get the value.</param>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper.InternalGetProjectedPropertyValue(System.Int32)">
+      <summary>Gets the value for the specified property by its index.</summary>
+      <returns>The value for the property.</returns>
+      <param name="propertyIndex">Index of the property for which to get the value.</param>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper.PropertyNameList">
+      <summary>Gets a list of property names as text in a comma-separated format.</summary>
+      <returns>List of comma-separated names.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper.ResourceTypeName">
+      <summary>Gets the full name of the <see cref="T:System.Data.Services.Providers.ResourceType" /> that represents the type of this result.</summary>
+      <returns>The full name of the type.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper0">
+      <summary>Provides a wrapper over the result element with the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper0.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper0" /> class.</summary>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper1">
+      <summary>Provides a wrapper over the result element with the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper1.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper1" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper1.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper2">
+      <summary>Provides a wrapper over the result element with the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper2.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper2" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper2.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper2.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper3">
+      <summary>Provides a wrapper over the result element and provides the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper3.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper3" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper3.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper3.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper3.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper4">
+      <summary>Provides a wrapper over the result element with the ability to project a subset of properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper4.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper4" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper4.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper4.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper4.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper4.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper5">
+      <summary>Provides a wrapper over the result elements and provides the ability to project a subset of the properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper5.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper5" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper5.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper5.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper5.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper5.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper5.ProjectedProperty4">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper6">
+      <summary>Provides a wrapper over the result elements with the ability to project a subset of the properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper6.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper6" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty4">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper6.ProjectedProperty5">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper7">
+      <summary>Provides a wrapper over the result elements with the ability to project a subset of the properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper7.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper7" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty4">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty5">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper7.ProjectedProperty6">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapper8">
+      <summary>Provides a wrapper over the result elements with the ability to project a subset of the properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapper8.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapper8" /> class.</summary>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty4">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty5">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty6">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapper8.ProjectedProperty7">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapperMany">
+      <summary>Provides a wrapper over the result elements with the ability to project a subset of the properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapperMany.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapperMany" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapperMany.InternalGetProjectedPropertyValue(System.Int32)">
+      <summary>Gets the value for the specified property by its index.</summary>
+      <returns>The value for the property.</returns>
+      <param name="propertyIndex">Index of the property for which to get the value.</param>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.Next">
+      <summary>Gets or sets another instance of <see cref="T:System.Data.Services.Internal.ProjectedWrapperMany" /> which contains the set of the next eight projected properties, and possibly another link.</summary>
+      <returns>The next set of properties.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty0">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty1">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty2">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty3">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty4">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty5">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty6">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="P:System.Data.Services.Internal.ProjectedWrapperMany.ProjectedProperty7">
+      <summary>Gets or sets the property to project.</summary>
+      <returns>The property to project.</returns>
+    </member>
+    <member name="T:System.Data.Services.Internal.ProjectedWrapperManyEnd">
+      <summary>an instance of this class is assigned to the last <see cref="P:System.Data.Services.Internal.ProjectedWrapperMany.Next" /> in the list.</summary>
+    </member>
+    <member name="M:System.Data.Services.Internal.ProjectedWrapperManyEnd.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Internal.ProjectedWrapperManyEnd" /> class.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.DataServiceProviderMethods">
+      <summary>Performs late-bound operations on resource sets with a custom data service provider.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Compare(System.Boolean,System.Boolean)">
+      <summary>Returns comparison information for Boolean parameters in an operation expression.</summary>
+      <returns>Value Condition -1 <paramref name="left" /> is less than <paramref name="right" />. 0 x equals y. 1 <paramref name="left" /> is greater than <paramref name="right" />.</returns>
+      <param name="left">The first parameter value.</param>
+      <param name="right">The second parameter value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Compare(System.Guid,System.Guid)">
+      <summary>Returns comparison information for GUID parameters in an operation expression.</summary>
+      <returns>Value Condition -1 <paramref name="left" /> is less than <paramref name="right" />. 0 x equals y. 1 <paramref name="left" /> is greater than <paramref name="right" />.</returns>
+      <param name="left">The first parameter value.</param>
+      <param name="right">The second parameter value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Compare(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+      <summary>Returns comparison information for nullable Boolean parameters in an operation expression.</summary>
+      <returns>Value Condition -1 <paramref name="left" /> is less than <paramref name="right" />. 0 x equals y. 1 <paramref name="left" /> is greater than <paramref name="right" />.</returns>
+      <param name="left">The first parameter value.</param>
+      <param name="right">The second parameter value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Compare(System.Nullable{System.Guid},System.Nullable{System.Guid})">
+      <summary>Returns comparison information for nullable GUID parameters in an operation expression.</summary>
+      <returns>Value Condition -1 <paramref name="left" /> is less than <paramref name="right" />. 0 x equals y. 1 <paramref name="left" /> is greater than <paramref name="right" />.</returns>
+      <param name="left">The first parameter value.</param>
+      <param name="right">The second parameter value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Compare(System.String,System.String)">
+      <summary>Returns comparison information for string parameters in an operation expression.</summary>
+      <returns>Value Condition -1 <paramref name="left" /> is less than <paramref name="right" />. 0 x equals y. 1 <paramref name="left" /> is greater than <paramref name="right" />.</returns>
+      <param name="left">The first parameter value.</param>
+      <param name="right">The second parameter value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.Convert(System.Object,System.Data.Services.Providers.ResourceType)">
+      <summary>Casts a value to a specified type.</summary>
+      <returns>The <paramref name="value" /> cast to the requested <paramref name="type" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.GetSequenceValue``1(System.Object,System.Data.Services.Providers.ResourceProperty)">
+      <summary>Gets a named value from the specified object as a sequence.</summary>
+      <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> instance that contains the requested value as a sequence.</returns>
+      <param name="value">Object that contains the value.</param>
+      <param name="property">
+        <see cref="T:System.Data.Services.Providers.ResourceProperty" /> that is the property the value of which must be returned.</param>
+      <typeparam name="T">Type of the resulting sequence.</typeparam>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.GetValue(System.Object,System.Data.Services.Providers.ResourceProperty)">
+      <summary>Gets a named value from the specified object.</summary>
+      <returns>An object that is the requested value.</returns>
+      <param name="value">Object that contains the value.</param>
+      <param name="property">
+        <see cref="T:System.Data.Services.Providers.ResourceProperty" /> that is the property the value of which must be returned.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.DataServiceProviderMethods.TypeIs(System.Object,System.Data.Services.Providers.ResourceType)">
+      <summary>Determines if the value is of a specified type.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value that is true if the value is of the specified type; otherwise false.</returns>
+      <param name="value">The value to check.</param>
+      <param name="type">
+        <see cref="T:System.Data.Services.Providers.ResourceType" /> to compare with.</param>
+    </member>
+    <member name="T:System.Data.Services.Providers.IDataServiceMetadataProvider">
+      <summary>Maintains metadata about a custom data service provider. </summary>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceMetadataProvider.ContainerName">
+      <summary>Container name for the data source.</summary>
+      <returns>String that contains the name of the container.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceMetadataProvider.ContainerNamespace">
+      <summary>Namespace name for the data source.</summary>
+      <returns>String that contains the namespace name.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.GetDerivedTypes(System.Data.Services.Providers.ResourceType)">
+      <summary>Attempts to return all types that derive from the specified resource type.</summary>
+      <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> collection of derived <see cref="T:System.Data.Services.Providers.ResourceType" /> objects.</returns>
+      <param name="resourceType">The base <see cref="T:System.Data.Services.Providers.ResourceType" />.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.GetResourceAssociationSet(System.Data.Services.Providers.ResourceSet,System.Data.Services.Providers.ResourceType,System.Data.Services.Providers.ResourceProperty)">
+      <summary>Gets the <see cref="T:System.Data.Services.Providers.ResourceAssociationSet" /> instance when given the source association end.</summary>
+      <returns>A <see cref="T:System.Data.Services.Providers.ResourceAssociationSet" /> instance.</returns>
+      <param name="resourceSet">Resource set of the source association end.</param>
+      <param name="resourceType">Resource type of the source association end.</param>
+      <param name="resourceProperty">Resource property of the source association end.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.HasDerivedTypes(System.Data.Services.Providers.ResourceType)">
+      <summary>Determines whether a resource type has derived types.</summary>
+      <returns>true when <paramref name="resourceType" /> represents an entity that has derived types; otherwise false.</returns>
+      <param name="resourceType">A <see cref="T:System.Data.Services.Providers.ResourceType" /> object to evaluate.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceMetadataProvider.ResourceSets">
+      <summary>Gets all available containers.</summary>
+      <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> collection of <see cref="T:System.Data.Services.Providers.ResourceSet" /> objects.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceMetadataProvider.ServiceOperations">
+      <summary>Returns all the service operations in this data source.</summary>
+      <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> collection of <see cref="T:System.Data.Services.Providers.ServiceOperation" /> objects.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.TryResolveResourceSet(System.String,System.Data.Services.Providers.ResourceSet@)">
+      <summary>Tries to get a resource set based on the specified name.</summary>
+      <returns>true when resource set with the given <paramref name="name" /> is found; otherwise false.</returns>
+      <param name="name">Name of the <see cref="T:System.Data.Services.Providers.ResourceSet" /> to resolve.</param>
+      <param name="resourceSet">Returns the resource set or a null value if a resource set with the given <paramref name="name" /> is not found.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.TryResolveResourceType(System.String,System.Data.Services.Providers.ResourceType@)">
+      <summary>Tries to get a resource type based on the specified name.</summary>
+      <returns>true when resource type with the given <paramref name="name" /> is found; otherwise false.</returns>
+      <param name="name">Name of the type to resolve.</param>
+      <param name="resourceType">Returns the resource type or a null value if a resource type with the given <paramref name="name" /> is not found.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceMetadataProvider.TryResolveServiceOperation(System.String,System.Data.Services.Providers.ServiceOperation@)">
+      <summary>Tries to get a service operation based on the specified name.</summary>
+      <returns>true when service operation with the given <paramref name="name" /> is found; otherwise false.</returns>
+      <param name="name">Name of the service operation to resolve.</param>
+      <param name="serviceOperation">Returns the service operation or a null value if a service operation with the given <paramref name="name" /> is not found.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceMetadataProvider.Types">
+      <summary>Returns all the types in this data source.</summary>
+      <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> collection of <see cref="T:System.Data.Services.Providers.ResourceType" /> objects.</returns>
+    </member>
+    <member name="T:System.Data.Services.Providers.IDataServicePagingProvider">
+      <summary>Provides paging support for the clients of a custom data service provider.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServicePagingProvider.GetContinuationToken(System.Collections.IEnumerator)">
+      <summary>Returns the next-page token to put in the $skiptoken query option.</summary>
+      <returns>The next-page token as a collection of primitive types.</returns>
+      <param name="enumerator">Enumerator for which the continuation token is being requested.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServicePagingProvider.SetContinuationToken(System.Linq.IQueryable,System.Data.Services.Providers.ResourceType,System.Object[])">
+      <summary>Gets the next-page token from the $skiptoken query option in the request URI.</summary>
+      <param name="query">Query for which the continuation token is being provided.</param>
+      <param name="resourceType">Resource type of the result on which the $skip token is to be applied.</param>
+      <param name="continuationToken">Continuation token parsed into primitive type values.</param>
+    </member>
+    <member name="T:System.Data.Services.Providers.IDataServiceQueryProvider">
+      <summary>Defines a metadata and query source implementation for a custom data service provider.</summary>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceQueryProvider.CurrentDataSource">
+      <summary>The data source object from which data is provided.</summary>
+      <returns>The data source.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.GetOpenPropertyValue(System.Object,System.String)">
+      <summary>Gets the value of the open property.</summary>
+      <returns>The value of the open property.</returns>
+      <param name="target">Instance of the type that declares the open property.</param>
+      <param name="propertyName">Name of the open property.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.GetOpenPropertyValues(System.Object)">
+      <summary>Gets the name and values of all the properties that are defined in the given instance of an open type.</summary>
+      <returns>A collection of name and values of all the open properties.</returns>
+      <param name="target">Instance of the type that declares the open property.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.GetPropertyValue(System.Object,System.Data.Services.Providers.ResourceProperty)">
+      <summary>Gets the value of the open property.</summary>
+      <returns>Value for the property.</returns>
+      <param name="target">Instance of the type that declares the open property.</param>
+      <param name="resourceProperty">Value for the open property.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.GetQueryRootForResourceSet(System.Data.Services.Providers.ResourceSet)">
+      <summary>Gets the <see cref="T:System.Linq.IQueryable`1" /> that represents the container. </summary>
+      <returns>An <see cref="T:System.Linq.IQueryable`1" /> that represents the resource set, or a null value if there is no resource set for the specified <paramref name="resourceSet" />.</returns>
+      <param name="resourceSet">The resource set.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.GetResourceType(System.Object)">
+      <summary>Gets the resource type for the instance that is specified by the parameter.</summary>
+      <returns>The <see cref="T:System.Data.Services.Providers.ResourceType" /> of the supplied object. </returns>
+      <param name="target">Instance to extract a resource type from.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceQueryProvider.InvokeServiceOperation(System.Data.Services.Providers.ServiceOperation,System.Object[])">
+      <summary>Invokes the given service operation and returns the results.</summary>
+      <returns>The result of the service operation, or a null value for a service operation that returns void.</returns>
+      <param name="serviceOperation">Service operation to invoke.</param>
+      <param name="parameters">Values of parameters to pass to the service operation.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceQueryProvider.IsNullPropagationRequired">
+      <summary>Gets a value that indicates whether null propagation is required in expression trees.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value that indicates whether null propagation is required.</returns>
+    </member>
+    <member name="T:System.Data.Services.Providers.IDataServiceStreamProvider">
+      <summary>Enables binary data to be accessed and changed as a media resource that belongs to an entity that is a media link entry.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.DeleteStream(System.Object,System.Data.Services.DataServiceOperationContext)">
+      <summary>Deletes the associated media resource when a media link entry is deleted. </summary>
+      <param name="entity">The media link entry that is deleted.</param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance that processes the request.</param>
+      <exception cref="T:System.ArgumentNullException">When <paramref name="entity" /> or <paramref name="operationContext" /> are null.</exception>
+      <exception cref="T:System.ArgumentException">When <paramref name="entity" /> is not an entity that has a binary property to stream.</exception>
+      <exception cref="T:System.Data.Services.DataServiceException">When the stream associated with the <paramref name="entity" /> cannot be deleted.</exception>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.GetReadStream(System.Object,System.String,System.Nullable{System.Boolean},System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns a stream that contains the media resource data for the specified entity, which is a media link entry.</summary>
+      <returns>The data <see cref="T:System.IO.Stream" /> that contains the binary property data of the <paramref name="entity" />.</returns>
+      <param name="entity">The entity that is a media link entry with a related media resource.</param>
+      <param name="etag">The eTag value sent as part of the HTTP request that is sent to the data service.</param>
+      <param name="checkETagForEquality">A nullable <see cref="T:System.Boolean" /> value that determines whether the data service must the type of eTag that is used. </param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance used by the data service to process the request.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.GetReadStreamUri(System.Object,System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns the URI that is used to request the media resource that belongs to the specified entity.</summary>
+      <returns>A <see cref="T:System.Uri" /> value that is used to request the binary data stream.</returns>
+      <param name="entity">The entity that is a media link entry with a related media resource.</param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance used by the data service to process the request.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.GetStreamContentType(System.Object,System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns the content type of the media resource that belongs to the specified entity.</summary>
+      <returns>A valid Content-Type of the binary data.</returns>
+      <param name="entity">The entity that is a media link entry with a related media resource.</param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance used by the data service to process the request.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.GetStreamETag(System.Object,System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns the eTag of the media resource that belongs to the specified media link entry.</summary>
+      <returns>eTag of the media resource associated with the <paramref name="entity" />.</returns>
+      <param name="entity">The entity that is a media link entry with a related media resource.</param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance used by the data service to process the request.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.GetWriteStream(System.Object,System.String,System.Nullable{System.Boolean},System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns the stream that the data service uses to write the binary data for the media resource received from the client that belongs to the specified entity.</summary>
+      <returns>A valid <see cref="T:System.Stream" /> the data service uses to write the contents of a binary data received from the client.</returns>
+      <param name="entity">The entity that is a media link entry with a related media resource.</param>
+      <param name="etag">The eTag value that is sent as part of the HTTP request that is sent to the data service.</param>
+      <param name="checkETagForEquality">A nullable <see cref="T:System.Boolean" /> value that indicates the type of concurrency check requested by the client. </param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance that is used by the data service to process the request.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceStreamProvider.ResolveType(System.String,System.Data.Services.DataServiceOperationContext)">
+      <summary>Returns a namespace-qualified type name that represents the type that the data service runtime must create for the media link entry that is associated with the data stream for the media resource that is being inserted.</summary>
+      <returns>A namespace-qualified type name.</returns>
+      <param name="entitySetName">Fully-qualified entity set name.</param>
+      <param name="operationContext">The <see cref="T:System.Data.Services.DataServiceOperationContext" /> instance that is used by the data service to process the request.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.IDataServiceStreamProvider.StreamBufferSize">
+      <summary>Gets the size of the stream buffer.</summary>
+      <returns>Integer that represents the size of buffer.</returns>
+    </member>
+    <member name="T:System.Data.Services.Providers.IDataServiceUpdateProvider">
+      <summary>Defines the methods that must be implemented to supply eTag values to a custom data service provider.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.IDataServiceUpdateProvider.SetConcurrencyValues(System.Object,System.Nullable{System.Boolean},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Supplies the eTag value for the given entity resource.</summary>
+      <param name="resourceCookie">Cookie that represents the resource.</param>
+      <param name="checkForEquality">A <see cref="T:System.Boolean" /> that is true when property values must be compared for equality; false when property values must be compared for inequality.</param>
+      <param name="concurrencyValues">An <see cref="T:System.Collections.Generic.IEnumerable`1" /> list of the eTag property names and corresponding values.</param>
+    </member>
+    <member name="T:System.Data.Services.Providers.OpenTypeMethods">
+      <summary>Used to perform late-bound operations on open properties.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Add(System.Object,System.Object)">
+      <summary>Adds two values.</summary>
+      <returns>The result of the arithmetic operation.</returns>
+      <param name="left">First value to add.</param>
+      <param name="right">Second value to add.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.AndAlso(System.Object,System.Object)">
+      <summary>Performs a logical and operation between two expressions.</summary>
+      <returns>The result of the logical and operation.</returns>
+      <param name="left">Left value.</param>
+      <param name="right">Right value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Ceiling(System.Object)">
+      <summary>Returns the ceiling of the given value.</summary>
+      <returns>The ceiling value for the given value.</returns>
+      <param name="value">A <see cref="T:System.Decimal" /> or <see cref="T:System.Double" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Concat(System.Object,System.Object)">
+      <summary>Concatenates two string values.</summary>
+      <returns>A new instance that is the concatenated string.</returns>
+      <param name="first">The first string.</param>
+      <param name="second">The second string.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Convert(System.Object,System.Data.Services.Providers.ResourceType)">
+      <summary>Converts a value to the specified type.</summary>
+      <returns>The converted value.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Day(System.Object)">
+      <summary>Returns the day value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The day value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Divide(System.Object,System.Object)">
+      <summary>Divides two values.</summary>
+      <returns>The divided value.</returns>
+      <param name="left">The first value (dividend).</param>
+      <param name="right">The second value (divisor).</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.EndsWith(System.Object,System.Object)">
+      <summary>Determines whether the end of one string matches another string.</summary>
+      <returns>Returns true when <paramref name="targetString" /> ends with <paramref name="substring" />; otherwise returns false.</returns>
+      <param name="targetString">The string being compared.</param>
+      <param name="substring">The string to compare to.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Equal(System.Object,System.Object)">
+      <summary>Determines whether the specified objects are considered equal.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value of true when both objects are equal; otherwise false.</returns>
+      <param name="left">The first object to compare.</param>
+      <param name="right">The second object to compare.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Floor(System.Object)">
+      <summary>Returns the floor of the given value.</summary>
+      <returns>Returns the floor value for the given object.</returns>
+      <param name="value">The <see cref="T:System.Decimal" /> or <see cref="T:System.Double" /> object to evaluate.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.GetValue(System.Object,System.String)">
+      <summary>Gets a value from the specified property of a specified object.</summary>
+      <returns>The requested value; null if the value cannot be determined.</returns>
+      <param name="value">Object from which to get the property value.</param>
+      <param name="propertyName">Name of property from which to get the value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.GreaterThan(System.Object,System.Object)">
+      <summary>Determines whether the value of one object is greater than another object.</summary>
+      <returns>Returns true when the value of the first object is greater than that of the second object; otherwise returns false.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.GreaterThanOrEqual(System.Object,System.Object)">
+      <summary>Determines whether the value of one object is greater than or equal to another object.</summary>
+      <returns>Returns true when the value of the first object is greater than or equal to that of the second object; otherwise returns false.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Hour(System.Object)">
+      <summary>Returns the hour value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The hour value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.IndexOf(System.Object,System.Object)">
+      <summary>Returns the index of a substring in the target string.</summary>
+      <returns>Returns the index of the location of <paramref name="substring" /> in the <paramref name="targetString" />.</returns>
+      <param name="targetString">The target string.</param>
+      <param name="substring">The substring to find.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Length(System.Object)">
+      <summary>Gets the number of characters in the supplied string object. </summary>
+      <returns>The length of the string value.</returns>
+      <param name="value">The string to be checked.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.LessThan(System.Object,System.Object)">
+      <summary>Determines whether the value of one object is less than another object.</summary>
+      <returns>Returns true when the value of the first object is less than that of the second object; otherwise returns false.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.LessThanOrEqual(System.Object,System.Object)">
+      <summary>Determines whether the value of one object is less than or equal to another object.</summary>
+      <returns>Returns true when the value of the first object is less than or equal to that of the second object; otherwise returns false.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Minute(System.Object)">
+      <summary>Returns the minute value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The minute value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Modulo(System.Object,System.Object)">
+      <summary>Calculates the arithmetic remainder of dividing one value by a second value. </summary>
+      <returns>The remainder value.</returns>
+      <param name="left">The first value (dividend).</param>
+      <param name="right">The second value (divisor).</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Month(System.Object)">
+      <summary>Returns the month value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The month value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Multiply(System.Object,System.Object)">
+      <summary>Multiplies two values.</summary>
+      <returns>The product of the two values.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Negate(System.Object)">
+      <summary>Returns the result of multiplying the specified value by negative one.</summary>
+      <returns>The product of <paramref name="value" /> multiplied by negative one.</returns>
+      <param name="value">The value to negate.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Not(System.Object)">
+      <summary>Performs a bitwise (logical) complement operation on the supplied value.</summary>
+      <returns>A bitwise complement of the supplied value.</returns>
+      <param name="value">Value to logically complement.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.NotEqual(System.Object,System.Object)">
+      <summary>Performs a logical comparison of the two values to determine if they are not equal.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value of true when both objects are not equal; otherwise returns false.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.OrElse(System.Object,System.Object)">
+      <summary>Performs a logical OR operation on two values.</summary>
+      <returns>The result of the logical OR operation.</returns>
+      <param name="left">The first value.</param>
+      <param name="right">The second value.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Replace(System.Object,System.Object,System.Object)">
+      <summary>Replaces one substring with a second substring in a target string.</summary>
+      <returns>A new string with the substring replaced with the new substring.</returns>
+      <param name="targetString">The string with the substring to replace.</param>
+      <param name="substring">The substring to be replaced.</param>
+      <param name="newString">The new substring.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Round(System.Object)">
+      <summary>Rounds the supplied value.</summary>
+      <returns>The rounded value.</returns>
+      <param name="value">A <see cref="T:System.Decimal" /> or <see cref="T:System.Double" /> to round.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Second(System.Object)">
+      <summary>Returns the second value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The second value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.StartsWith(System.Object,System.Object)">
+      <summary>Checks whether the target string starts with the substring.</summary>
+      <returns>Returns true if the target string starts with the given substring, otherwise returns false.</returns>
+      <param name="targetString">The string being compared.</param>
+      <param name="substring">The substring that the <paramref name="targetString" /> might start with.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Substring(System.Object,System.Object)">
+      <summary>Returns the substring after the specified starting index location.</summary>
+      <returns>The substring.</returns>
+      <param name="targetString">The string from which to return the substring.</param>
+      <param name="startIndex">The starting index for the substring.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Substring(System.Object,System.Object,System.Object)">
+      <summary>Returns the substring of a specific length after the specified starting index location.</summary>
+      <returns>The substring.</returns>
+      <param name="targetString">The string from which to return the substring.</param>
+      <param name="startIndex">The starting index for the substring.</param>
+      <param name="length">The length of the substring.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.SubstringOf(System.Object,System.Object)">
+      <summary>Determines whether a substring occurs in another string.</summary>
+      <returns>true when <paramref name="substring" /> occurs in <paramref name="targetString" />, otherwise false.</returns>
+      <param name="substring">The substring to locate.</param>
+      <param name="targetString">The string to search.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Subtract(System.Object,System.Object)">
+      <summary>Subtracts two values.</summary>
+      <returns>The result of the arithmetic operation.</returns>
+      <param name="left">First value in the subtraction.</param>
+      <param name="right">Second value in the subtraction.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.ToLower(System.Object)">
+      <summary>Returns a copy of a string converted to lowercase.</summary>
+      <returns>A new string value with only lowercase.</returns>
+      <param name="targetString">The string to convert.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.ToUpper(System.Object)">
+      <summary>Returns a copy of a string converted to uppercase.</summary>
+      <returns>A new string value with only uppercase characters.</returns>
+      <param name="targetString">The string to convert.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Trim(System.Object)">
+      <summary>Removes all leading and trailing white-space characters from a string.</summary>
+      <returns>The trimmed string.</returns>
+      <param name="targetString">The string to trim.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.TypeIs(System.Object,System.Data.Services.Providers.ResourceType)">
+      <summary>Checks the type of a specified value.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value that is true when the value is of the specified resource type; otherwise false.</returns>
+      <param name="value">The value to check.</param>
+      <param name="type">Resource type for which to check.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.OpenTypeMethods.Year(System.Object)">
+      <summary>Returns the year value of the given <see cref="T:System.DateTime" /> instance.</summary>
+      <returns>The year value of the given <see cref="T:System.DateTime" /> instance.</returns>
+      <param name="dateTime">A <see cref="T:System.DateTime" /> object.</param>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceAssociationSet">
+      <summary>Describes an association between two resource sets.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceAssociationSet.#ctor(System.String,System.Data.Services.Providers.ResourceAssociationSetEnd,System.Data.Services.Providers.ResourceAssociationSetEnd)">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Providers.ResourceAssociationSet" /> class.</summary>
+      <param name="name">Name of the association set.</param>
+      <param name="end1">
+        <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> that is at the source end of the association set.</param>
+      <param name="end2">
+        <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> that is at the target end of the association set.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSet.End1">
+      <summary>Gets the source end of the association set.</summary>
+      <returns>
+        <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> that is at the source end of the association set.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSet.End2">
+      <summary>Gets the target end of the association set.</summary>
+      <returns>
+        <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> that is at the target end of the association set.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSet.Name">
+      <summary>Gets the name of the association set.</summary>
+      <returns>The name of the association set.</returns>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceAssociationSetEnd">
+      <summary>Describes an end point of a resource association set.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceAssociationSetEnd.#ctor(System.Data.Services.Providers.ResourceSet,System.Data.Services.Providers.ResourceType,System.Data.Services.Providers.ResourceProperty)">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> class.</summary>
+      <param name="resourceSet">Resource set to which the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> end belongs.</param>
+      <param name="resourceType">Resource type to which the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> end belongs.</param>
+      <param name="resourceProperty">Resource property that returns the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" /> end.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSetEnd.ResourceProperty">
+      <summary>Gets the resource property that returns the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" />.</summary>
+      <returns>The resource property.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSetEnd.ResourceSet">
+      <summary>Gets the resource set for the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" />.</summary>
+      <returns>The resource set.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceAssociationSetEnd.ResourceType">
+      <summary>Gets the resource type for the <see cref="T:System.Data.Services.Providers.ResourceAssociationSetEnd" />.</summary>
+      <returns>The resource type.</returns>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceProperty">
+      <summary>Provides a type to describe a property on a resource.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceProperty.#ctor(System.String,System.Data.Services.Providers.ResourcePropertyKind,System.Data.Services.Providers.ResourceType)">
+      <summary>Initializes a new <see cref="T:System.Data.Services.Providers.ResourceProperty" /> for an open property.</summary>
+      <param name="name">Property name for the property as string.</param>
+      <param name="kind">
+        <see cref="T:System.Data.Services.Providers.ResourcePropertyKind" />.</param>
+      <param name="propertyResourceType">The <see cref="T:System.Data.Services.Providers.ResourceType" /> of the resource to which the property refers.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.CanReflectOnInstanceTypeProperty">
+      <summary>Gets a value that indicates whether this property can be accessed through reflection on the declaring resource instance type.</summary>
+      <returns>true when the property can be accessed through reflection; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.CustomState">
+      <summary>Gets or sets custom state information about a resource property that is defined by the developer.</summary>
+      <returns>State information.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.IsReadOnly">
+      <summary>Gets a Boolean value that indicates whether the property is read-only.</summary>
+      <returns>True if the property is read-only.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.Kind">
+      <summary>Gets the kind of the resource property with regard to the resource.</summary>
+      <returns>A <see cref="T:System.Data.Services.Providers.ResourcePropertyKind" /> value.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.MimeType">
+      <summary>Gets or sets MIME type for the property.</summary>
+      <returns>String value that indicates MIME type.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.Name">
+      <summary>Gets the name of the resource property.</summary>
+      <returns>The name of the resource property as string.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceProperty.ResourceType">
+      <summary>Gets the type of the resource property.</summary>
+      <returns>The <see cref="T:System.Data.Services.Providers.ResourceType" /> of the resource property.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceProperty.SetReadOnly">
+      <summary>Sets the resource property to read-only.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourcePropertyKind">
+      <summary>Enumeration for the kinds of properties that a resource can have.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.Primitive">
+      <summary>A primitive type property.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.Key">
+      <summary>A property that is part of the key.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.ComplexType">
+      <summary>Complex or compound property.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.ResourceReference">
+      <summary>A reference to another resource.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.ResourceSetReference">
+      <summary>A reference to a resource set.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourcePropertyKind.ETag">
+      <summary>An ETag property.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceSet">
+      <summary>Represents a collection of data service primitive, complex, or entity types.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceSet.#ctor(System.String,System.Data.Services.Providers.ResourceType)">
+      <summary>Creates a new collection of data service primitive, complex, or entity types.</summary>
+      <param name="name">The name of the set of items as string.</param>
+      <param name="elementType">The <see cref="T:System.Data.Services.Providers.ResourceType" /> of the items in the set.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceSet.CustomState">
+      <summary>Custom state information that is defined by the developer.</summary>
+      <returns>State information defined by the developer.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceSet.IsReadOnly">
+      <summary>Gets a Boolean value that indicates whether the set is read-only.</summary>
+      <returns>Boolean value that indicates whether resource set is read-only.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceSet.Name">
+      <summary>Gets the name of the collection.</summary>
+      <returns>String value that contains the name of the resource set.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceSet.ResourceType">
+      <summary>Gets the type of the collection.</summary>
+      <returns>The <see cref="T:System.Data.Services.Providers.ResourceType" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceSet.SetReadOnly">
+      <summary>Gets or sets the read-only status of the collection.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceType">
+      <summary>Represents a data service primitive, complex, or entity type.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.#ctor(System.Type,System.Data.Services.Providers.ResourceTypeKind,System.Data.Services.Providers.ResourceType,System.String,System.String,System.Boolean)">
+      <summary>Creates an instance of a data service <see cref="T:System.Data.Services.Providers.ResourceType" />.</summary>
+      <param name="instanceType">CLR type that represents the format inside the WCF Data Services runtime.</param>
+      <param name="resourceTypeKind">
+        <see cref="T:System.Data.Services.Providers.ResourceTypeKind" /> of the resource type.</param>
+      <param name="baseType">Base type of the resource type as string.</param>
+      <param name="namespaceName">Namespace name of the resource type as string.</param>
+      <param name="name">Name of the given resource type as string.</param>
+      <param name="isAbstract">Boolean value that indicates whether the resource type is an abstract type.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.AddEntityPropertyMappingAttribute(System.Data.Services.Common.EntityPropertyMappingAttribute)">
+      <summary>Adds an <see cref="T:System.Data.Services.Common.EntityPropertyMappingAttribute" /> for the resource type.</summary>
+      <param name="attribute">The <see cref="T:System.Data.Services.Common.EntityPropertyMappingAttribute" /> to add.</param>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.AddProperty(System.Data.Services.Providers.ResourceProperty)">
+      <summary>Adds the property supplied by the <paramref name="resourceProperty" /> parameter to the type.</summary>
+      <param name="property">
+        <see cref="T:System.Data.Services.Providers.ResourceProperty" /> property to be added.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.BaseType">
+      <summary>Gets a reference to base resource type, if any.</summary>
+      <returns>
+        <see cref="T:System.Data.Services.Providers.ResourceType" /> of the base type.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.CanReflectOnInstanceType">
+      <summary>Get whether the corresponding instance type represents the CLR type of this entity.</summary>
+      <returns>true if the instance type represents a CLR type; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.CustomState">
+      <summary>Gets or sets a placeholder to hold custom state information about a resource type that is defined by the developer.</summary>
+      <returns>Custom state information defined by the developer.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.ETagProperties">
+      <summary>Gets the list of properties for this type.</summary>
+      <returns>
+        <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of <see cref="T:System.Data.Services.Providers.ResourceType" />.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.FullName">
+      <summary>Gets the full name of the resource.</summary>
+      <returns>The full name of the resource type as string.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.GetPrimitiveResourceType(System.Type)">
+      <summary>Gets a resource type that represent a primitive type when given a <see cref="T:System.Type" /> object.</summary>
+      <returns>The resource type.</returns>
+      <param name="type">
+        <see cref="T:System.Type" /> type from which to get the primitive type.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.InstanceType">
+      <summary>Reference to the CLR type that this resource represents.</summary>
+      <returns>The instance type as a <see cref="T:System.Data.Services.Providers.ResourceType" />.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.IsAbstract">
+      <summary>Gets a Boolean value that indicates whether this is an abstract type.</summary>
+      <returns>True if <see cref="T:System.Data.Services.Providers.ResourceType" /> is abstract.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.IsMediaLinkEntry">
+      <summary>Gets or sets a Boolean value that is true if the resource type includes a default stream.</summary>
+      <returns>A Boolean value that is true if the resource type includes a default stream.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.IsOpenType">
+      <summary>Gets whether the resource type has open properties.</summary>
+      <returns>true if the resource type has open properties defined; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.IsReadOnly">
+      <summary>Gets a Boolean value that is true if this resource type has been set to read-only.</summary>
+      <returns>True if this resource type has been set to read-only; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.KeyProperties">
+      <summary>Gets a list of key properties for this type</summary>
+      <returns>
+        <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of <see cref="T:System.Data.Services.Providers.ResourceProperty" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.LoadPropertiesDeclaredOnThisType">
+      <summary>Returns a list of properties declared by this resource type. </summary>
+      <returns>The list of properties declared on this type.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.Name">
+      <summary>Gets the name of the resource type.</summary>
+      <returns>Name of the resource type as string.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.Namespace">
+      <summary>Gets the namespace of the resource type.</summary>
+      <returns>Namespace of the resource type as string.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.Properties">
+      <summary>Gets a list of properties declared of this type that includes only properties defined on the type, not in the base type.</summary>
+      <returns>
+        <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of <see cref="T:System.Data.Services.Providers.ResourceProperty" />.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.PropertiesDeclaredOnThisType">
+      <summary>List of properties declared on this type.</summary>
+      <returns>
+        <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of <see cref="T:System.Data.Services.Providers.ResourceProperty" />.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ResourceType.ResourceTypeKind">
+      <summary>Gets the <see cref="T:System.Data.Services.Providers.ResourceTypeKind" /> for the type.</summary>
+      <returns>
+        <see cref="T:System.Data.Services.Providers.ResourceTypeKind" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ResourceType.SetReadOnly">
+      <summary>Sets the resource type to read-only.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ResourceTypeKind">
+      <summary>Enumeration for the kind of resource key.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourceTypeKind.EntityType">
+      <summary>Entity type resource.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourceTypeKind.ComplexType">
+      <summary>Complex type resource.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ResourceTypeKind.Primitive">
+      <summary>Primitive type resource.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ServiceOperation">
+      <summary>Represents a custom service operation.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ServiceOperation.#ctor(System.String,System.Data.Services.Providers.ServiceOperationResultKind,System.Data.Services.Providers.ResourceType,System.Data.Services.Providers.ResourceSet,System.String,System.Collections.Generic.IEnumerable{System.Data.Services.Providers.ServiceOperationParameter})">
+      <summary>Creates a new instance of the service operation.</summary>
+      <param name="name">Name of the service operation.</param>
+      <param name="resultKind">
+        <see cref="T:System.Data.Services.Providers.ServiceOperationResultKind" /> that is the kind of result expected from this operation.</param>
+      <param name="resultType">
+        <see cref="T:System.Data.Services.Providers.ResourceType" /> that is the result of the operation.</param>
+      <param name="resultSet">
+        <see cref="T:System.Data.Services.Providers.ResourceSet" /> that is the result of the operation.</param>
+      <param name="method">Protocol method to which the service operation responds.</param>
+      <param name="parameters">Ordered collection of <see cref="T:System.Data.Services.Providers.ServiceOperationParameter" /> objects that are parameters for the operation.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.CustomState">
+      <summary>Gets or sets custom state information about service operation.</summary>
+      <returns>State information.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.IsReadOnly">
+      <summary>Indicates whether the service operation is read-only.</summary>
+      <returns>Boolean value that indicates whether the service operation is read-only.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.Method">
+      <summary>Gets the method of the HTTP protocol to which the service operation responds.</summary>
+      <returns>The HTTP method name.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.MimeType">
+      <summary>MIME-type specified on primitive results, possibly null.</summary>
+      <returns>MIME-type value.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.Name">
+      <summary>Name of service operation.</summary>
+      <returns>String name.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.Parameters">
+      <summary>Collection of in-order parameters for the service operation.</summary>
+      <returns>A <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of <see cref="T:System.Data.Services.Providers.ServiceOperationParameter" /> objects.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.ResourceSet">
+      <summary>Gets the entity set from which entities are read.</summary>
+      <returns>The entity set as a <see cref="T:System.Data.Services.Providers.ResourceSet" /> object.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.ResultKind">
+      <summary>The kind of result that is expected by this service operation.</summary>
+      <returns>
+        <see cref="T:System.Data.Services.Providers.ServiceOperationResultKind" /> that is the kind of result expected from this operation.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperation.ResultType">
+      <summary>Type of results returned by this service operation.</summary>
+      <returns>Type of the results as a <see cref="T:System.Data.Services.Providers.ResourceType" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ServiceOperation.SetReadOnly">
+      <summary>Sets whether the service operation is read-only.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ServiceOperationParameter">
+      <summary>Represents parameter information for service operations.</summary>
+    </member>
+    <member name="M:System.Data.Services.Providers.ServiceOperationParameter.#ctor(System.String,System.Data.Services.Providers.ResourceType)">
+      <summary>Creates a new instance of <see cref="T:System.Data.Services.Providers.ServiceOperationParameter" />.</summary>
+      <param name="name">Name of parameter.</param>
+      <param name="parameterType">Data type of parameter.</param>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperationParameter.CustomState">
+      <summary>Custom state information  defined by the developer about a service operation parameter.</summary>
+      <returns>Custom state information defined by the developer.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperationParameter.IsReadOnly">
+      <summary>Gets a Boolean value that defines whether the parameter is read-only.</summary>
+      <returns>Boolean value that defines whether the parameter is read-only.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperationParameter.Name">
+      <summary>Gets the name of the service operation parameter.</summary>
+      <returns>A string that specifies the name of the service operation parameter.</returns>
+    </member>
+    <member name="P:System.Data.Services.Providers.ServiceOperationParameter.ParameterType">
+      <summary>Gets the data type of the service operation parameter.</summary>
+      <returns>The data type of the service operation parameter as <see cref="T:System.Data.Services.Providers.ResourceType" />.</returns>
+    </member>
+    <member name="M:System.Data.Services.Providers.ServiceOperationParameter.SetReadOnly">
+      <summary>Sets the service operation parameter to read-only.</summary>
+    </member>
+    <member name="T:System.Data.Services.Providers.ServiceOperationResultKind">
+      <summary>An enumeration that describes the kind of results that a service operation provides.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ServiceOperationResultKind.DirectValue">
+      <summary>A single value that cannot be further composed.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ServiceOperationResultKind.Enumeration">
+      <summary>An enumeration of values that cannot be further composed.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ServiceOperationResultKind.QueryWithMultipleResults">
+      <summary>A queryable object that returns multiple elements.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ServiceOperationResultKind.QueryWithSingleResult">
+      <summary>A query that returns a single item.</summary>
+    </member>
+    <member name="F:System.Data.Services.Providers.ServiceOperationResultKind.Void">
+      <summary>No results.</summary>
+    </member>
+  </members>
+</doc>

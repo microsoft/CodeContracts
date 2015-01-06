@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+
+<!--=====================================================================
+   Version
+======================================================================-->
+
+<?ifndef var.Version ?>
+ <?define var.Version="1.0.7.7" ?>
+<?endif?>
+<?ifndef var.Flavor ?>
+ <?define var.Flavor="Debug" ?>
+<?endif?>
+<?ifndef var.ProductGuid ?>
+ <?define var.ProductGuid                    = "{DAA2DAEF-1AAE-4fa6-A178-9BF282060120}" ?>
+<?endif?>
+
+<!--=====================================================================
+   Installer Configurations
+
+   Inputs:
+
+     var.Version
+     var.Flavor
+     var.License
+     var.IncludePDBs
+
+======================================================================-->
+
+
+<!--=====================================================================
+   Assembly Versions
+
+   IMPORTANT: if these implementations rev their version, these 
+   need to be updated below.
+======================================================================-->
+    
+<?define var.Redist                         ="Redist.txt" ?>
+
+
+<!--=====================================================================
+   Installer component guid's
+======================================================================-->
+<?define var.UpgradeGuid                      = "{DAA20423-76CC-4a4f-9EDC-038CC04B6C60}" ?>
+<?define var.ICodeToolsCompGuid               = "{DAA20AE1-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.LicenseCompGuid                  = "{DAA20AF4-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.BinariesCompGuid                 = "{DAA20AF5-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.SamplesCompGuid                  = "{DAA20AF6-1AAE-4fa6-A178-9BF28206012F}" ?>
+
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Product Name='Microsoft Code Tools SDK $(var.Flavor) $(var.Version) for Visual Studio' Id='$(var.ProductGuid)'
+    UpgradeCode='$(var.UpgradeGuid)'
+    Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Microsoft Research'>
+  
+    <Package Keywords='Installer'
+      Description="Microsoft Code Tools SDK $(var.Flavor) $(var.Version) for Visual Studio"
+      Manufacturer='Microsoft Research'
+      InstallerVersion='200' Languages='1033' Compressed='yes' SummaryCodepage='1252' 
+      InstallPrivileges='elevated'
+    />
+
+    <Media Id='1' DiskPrompt="CD-ROM #1" Cabinet="CodeToolsSDK.cab" EmbedCab="yes" />
+    <Property Id='DiskPrompt' Value="Microsoft CodeTools SDK $(var.Flavor) $(var.Version) Installation [1]" />
+
+    
+    <!--=====================================================================
+       Install directory: Program Files\Microsoft\CodeToolsSDK
+    ======================================================================-->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <!--====================================================================
+          CodeTools MSM
+      ======================================================================-->
+      <Merge Id="CodeToolsModule" Language="0" SourceFile="CodeTools$(var.ReleaseConfigExt).msm" DiskId="1" />
+
+      <Directory Id='ProgramFilesFolder' >
+        <!--=====================================================================
+           Program Files\Microsoft\CodeTools
+        ======================================================================-->
+        <Directory Id='Microsoft' Name='Microsoft'>
+          <Directory Id='INSTALLDIR' Name='CodeToolsSDK'>
+            <!--=====================================================================
+               License
+            ======================================================================-->
+            <Component Id='LicenseCompId' Guid='$(var.LicenseCompGuid)'>
+              <File Id='LicenseFile' Name="License.rtf" Source="$(var.License)" Vital='yes' />
+            </Component>            
+
+            <!--=====================================================================
+               Binaries: CodeTools.msm CodeToolsUpdate.exe
+            ======================================================================-->
+            <Directory Id='INSTALLDIRBIN' Name='Bin'>
+              <Component Id='BinariesCompId' Guid='$(var.BinariesCompGuid)'>
+                <File Id='CodeToolsMSM' Name="CodeTools.msm" Source="CodeTools$(var.ReleaseConfigExt).msm" Vital='yes' />
+                <File Id='CodeToolsUpdate' Name="CodeToolsUpdate.exe" Source="CodeToolsUpdate.exe" Vital='yes' />
+              </Component>            
+            </Directory>
+
+
+            <!--=====================================================================
+               Samples
+            ======================================================================-->
+            <Directory Id='SamplesId' Name='Samples'>
+              <Component Id='SamplesCompId' Guid='$(var.SamplesCompGuid)'>
+                <File Id='SamplesZip' Name="Samples.zip" Source="Samples.zip" Vital='yes' />
+              </Component>            
+            </Directory>
+
+            <!--=====================================================================
+               VS Public Assemblies
+               Extra version of ITaskManager and IPropertyPane for VS developers            
+            ======================================================================-->
+            <Directory Id='VSPublicAssembliesDirId' Name='PublicAssemblies'>
+              <Directory Id='VSPublicAssembliesForCodeTools' Name='v3.5'>
+                <Component Id='ICodeToolsCompId' Guid='$(var.ICodeToolsCompGuid)'>
+                  <File Id='VSIPropertyPane.dll' Name='IPropertyPane.dll' Source='IPropertyPane.dll' Vital='yes' />
+                  <File Id='VSITaskManager.dll' Name='ITaskManager.dll' Source='ITaskManager.dll' Vital='yes' />
+                  <File Id='$(var.Redist)1' Name='$(var.Redist)' Source='$(var.Redist)' Vital='yes' />
+
+                  <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\AssemblyFolders">
+                     <RegistryKey Id="AssemblyFolderRegistryKey" Key="Microsoft.VisualStudio.CodeTools" Action="createAndRemoveOnUninstall">
+                        <RegistryValue Action="write" Type="string" Value="[INSTALLDIR]PublicAssemblies\v3.5" />
+                     </RegistryKey>
+                   </RegistryKey>
+                  
+                  <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx">
+                     <RegistryKey Id="AssemblyFolderRegistryKey2" Key="Microsoft.VisualStudio.CodeTools" Action="createAndRemoveOnUninstall">
+                        <RegistryValue Action="write" Type="string" Value="[INSTALLDIR]PublicAssemblies\v3.5" />
+                     </RegistryKey>
+                   </RegistryKey>
+                </Component>
+              </Directory>
+            </Directory>              
+            <!-- public assemblies -->          
+          </Directory> <!-- codetoolsSDK -->
+        </Directory> <!-- microsoft -->
+      </Directory> <!-- program files -->
+    </Directory> <!-- TARGETDIR  -->
+
+    <!--=====================================================================
+       Features
+    ======================================================================-->
+    
+    <Feature Id='CodeToolsSDK' Title='Microsoft CodeTools SDK $(var.Flavor) $(var.Version) for Visual Studio' 
+              Description='The complete package.'
+              TypicalDefault='install' Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+        <MergeRef Id="CodeToolsModule"/>        
+        <ComponentRef Id='BinariesCompId' />
+        <ComponentRef Id='ICodeToolsCompId' />
+        <ComponentRef Id='LicenseCompId' />
+        <ComponentRef Id='SamplesCompId' />
+    </Feature>
+
+    
+
+    <!--=====================================================================
+       The user interface: link in "UI.wxs" (which is a generic reusable module)
+    ======================================================================-->
+    <UIRef Id='FragmentUI' />
+
+        
+    <!--=====================================================================
+       Execute sequence: make sure we do the condition test not too soon..
+    ======================================================================-->
+
+    <!-- Removing any previous install -->
+    <Upgrade Id="$(var.UpgradeGuid)">
+      <UpgradeVersion 
+        Minimum="0.0.0.0"
+        Property="OLDVERSIONFOUND" 		
+        IncludeMinimum="yes"
+        MigrateFeatures="yes" />
+    </Upgrade>
+    
+    <InstallExecuteSequence>      
+      <LaunchConditions After='AppSearch' />
+      
+      <!-- automatically uninstall previous installation -->
+      <RemoveExistingProducts Before="InstallInitialize">
+        <![CDATA[OLDVERSIONFOUND]]>
+      </RemoveExistingProducts>      
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

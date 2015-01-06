@@ -1,0 +1,186 @@
+// CodeContracts
+// 
+// Copyright (c) Microsoft Corporation
+// 
+// All rights reserved. 
+// 
+// MIT License
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// File System.IO.BinaryReader.cs
+// Automatically generated contract file.
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Diagnostics.Contracts;
+using System;
+
+// Disable the "this variable is not used" warning as every field would imply it.
+#pragma warning disable 0414
+// Disable the "this variable is never assigned to".
+#pragma warning disable 0067
+// Disable the "this event is never assigned to".
+#pragma warning disable 0649
+// Disable the "this variable is never used".
+#pragma warning disable 0169
+// Disable the "new keyword not required" warning.
+#pragma warning disable 0109
+// Disable the "extern without DllImport" warning.
+#pragma warning disable 0626
+// Disable the "could hide other member" warning, can happen on certain properties.
+#pragma warning disable 0108
+
+
+namespace System.IO
+{
+  public partial class BinaryReader : IDisposable
+  {
+    #region Methods and constructors
+    public BinaryReader(Stream input)
+    {
+      Contract.Ensures(input.CanRead == true);
+    }
+
+    public BinaryReader(Stream input, Encoding encoding)
+    {
+      Contract.Ensures(input.CanRead == true);
+    }
+
+    public virtual new void Close()
+    {
+    }
+
+    public void Dispose()
+    {
+    }
+
+    protected virtual new void Dispose(bool disposing)
+    {
+    }
+
+    protected virtual new void FillBuffer(int numBytes)
+    {
+    }
+
+    public virtual new int PeekChar()
+    {
+      return default(int);
+    }
+
+    public virtual new int Read(char[] buffer, int index, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int Read(byte[] buffer, int index, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int Read()
+    {
+      return default(int);
+    }
+
+    protected internal int Read7BitEncodedInt()
+    {
+      return default(int);
+    }
+
+    public virtual new bool ReadBoolean()
+    {
+      return default(bool);
+    }
+
+    public virtual new byte ReadByte()
+    {
+      return default(byte);
+    }
+
+    public virtual new byte[] ReadBytes(int count)
+    {
+      return default(byte[]);
+    }
+
+    public virtual new char ReadChar()
+    {
+      return default(char);
+    }
+
+    public virtual new char[] ReadChars(int count)
+    {
+      return default(char[]);
+    }
+
+    public virtual new Decimal ReadDecimal()
+    {
+      return default(Decimal);
+    }
+
+    public virtual new double ReadDouble()
+    {
+      return default(double);
+    }
+
+    public virtual new short ReadInt16()
+    {
+      return default(short);
+    }
+
+    public virtual new int ReadInt32()
+    {
+      return default(int);
+    }
+
+    public virtual new long ReadInt64()
+    {
+      return default(long);
+    }
+
+    public virtual new sbyte ReadSByte()
+    {
+      return default(sbyte);
+    }
+
+    public virtual new float ReadSingle()
+    {
+      return default(float);
+    }
+
+    public virtual new string ReadString()
+    {
+      return default(string);
+    }
+
+    public virtual new ushort ReadUInt16()
+    {
+      return default(ushort);
+    }
+
+    public virtual new uint ReadUInt32()
+    {
+      return default(uint);
+    }
+
+    public virtual new ulong ReadUInt64()
+    {
+      return default(ulong);
+    }
+    #endregion
+
+    #region Properties and indexers
+    public virtual new Stream BaseStream
+    {
+      get
+      {
+        return default(Stream);
+      }
+    }
+    #endregion
+  }
+}

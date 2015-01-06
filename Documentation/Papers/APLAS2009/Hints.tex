@@ -1,0 +1,934 @@
+\documentclass{llncs}
+
+% Packages LaTeX
+\input{Packages}
+
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{listings}
+\usepackage{upgreek}
+
+\usepackage{fancyvrb}
+\usepackage{wrapfig}
+
+\newcommand{\sopra}{\vspace{-.3cm}}
+
+% Definizioni di Macro ed ambienti
+\input{DefinizioniFrancesco.tex}
+
+%\setlength{\textheight}{8.6in}
+
+\title{Refining Abstract Interpretation-based Static Analyses with Hints}
+\author{Vincent Laviron \inst{1}  Francesco Logozzo \inst{2}}
+
+\institute{
+ \'Ecole Normale Sup\'erieure, 45, rue d'Ulm, Paris (France) \\
+ \email{Vincent.Laviron@ens.fr}
+\and
+Microsoft Research,  Redmond, WA (USA) \\
+\email{logozzo@microsoft.com}
+}
+
+
+\begin{document}
+
+\pagestyle{plain}
+
+\maketitle
+
+\begin{abstract}
+We focus our attention on the loss of precision induced by abstract domain \emph{operations}. 
+We introduce a new technique, \emph{hints}, which allows us to
+systematically refine the operations defined over elements of an abstract domain. 
+We formally define hints in the abstract interpretation theory, we prove their soundness, and we characterize two families of hints: syntactic and semantic.
+We give some examples of hints, and we provide our experience with hints in \Clousot, our abstract interpretation-based static analyzer for \NET.
+\end{abstract}
+
+\newcommand\codefamily\sffamily
+\lstset{language={[Sharp]C},mathescape=false,flexiblecolumns=true,morekeywords={assume},basicstyle=\codefamily\small,frame=lines,moredelim=[is][\itshape]{@}{@},captionpos=b,numberstyle=\tiny,stepnumber=1,numbersep=2pt}
+
+\algsetup{indent=2em}
+
+\section{Introduction}
+The three main elements of an abstract interpretation are: (i) the
+abstract elements (\emph{``which properties am I interested in?''}); 
+(ii) the abstract transfer functions (\emph{``which is the abstract semantics
+of basic statements?''});
+and  (iii) the abstract operations (\emph{``how do I combine the abstract elements?''}).
+%The cases (i) and (ii) have been extensively studied in the literature. 
+
+\begin{figure}[t]
+%  \centering
+  \begin{subfloat}
+    \begin{minipage}{3cm}
+\begin{verbatim}
+void AbsEl(int x) 
+{ if(...)  x  =-1; 
+  else     x  = 1; 
+
+  assert   x != 0; 
+}
+\end{verbatim}
+    \end{minipage}
+    \caption{}
+    \label{fig:gathering1}
+  \end{subfloat}    
+  % \qquad 
+  \begin{subfloat}
+    \begin{minipage}{3.1cm}
+\begin{verbatim}
+void Transfer(int x, y) 
+{ assume 2 <= x <= 3;
+  assume -1 <= y <= 1;  
+  
+  int z = (x + y) * y;
+
+  assert -2 <= z; 
+}
+\end{verbatim}
+    \end{minipage}
+\caption{}
+\label{fig:transfer}
+  \end{subfloat}
+\qquad
+  \begin{subfloat}
+    \begin{minipage}{4cm}
+\begin{verbatim}
+void DomOp() 
+{ int x = 0, y = 0;
+  while (...) 
+  { if (...) { x++; y += 100; }
+    else if (...)  
+     if (x >= 4) { x++; y++; } 
+   }
+(*) assert x <= y;
+    assert y <= 100 * x; 
+}
+\end{verbatim}
+    \end{minipage}
+    \caption{}
+\label{fig:gathering2}
+  \end{subfloat}
+
+\caption{Examples of orthogonal losses of precision in abstract interpretations:
+(a) a convex domain cannot represent $\code{x} \neq 0$; 
+(b) a compositional transfer function does not infer the tightest
+lower bound for $\code{z}$; and  
+(c) the standard domain operations on Polyhedra are not precise enough to infer the loop invariant $\code{x} \leq \code{y}$.}
+\label{fig:gathering}
+\sopra\sopra
+\end{figure}
+
+The loss of precision induced by the abstract elements is exemplified by  Fig.~\ref{fig:gathering1}(a). 
+The assertion cannot be proved using only convex numerical abstract domains such as Intervals~\cite{CousotCousot77}, Pentagons~\cite{LogozzoMaf08}, Octagons~\cite{Mine01-2} or even Polyhedra~\cite{CousotHalbwachs78}.
+The reason for that is that the most precise property at the join point  $\code{x} == -1 \vee \code{x} == 1$ cannot be exactly represented in any of those domains.
+For instance Intervals (\Intervals) approximate it with $-1 \leq \code{x} \leq 1$, so that the fact that $\code{x} \neq 0$ is lost.
+Many techniques have been proposed to overcome this problem. 
+They essentially rely on the refinement of the \emph{elements} of the abstract domain.
+Solutions include trace partitioning~\cite{Tzolovski98,MauborgneRival05,DasEtAl02}, domain completion~\cite{CousotCousot92-1}, powerset construction~\cite{BagnaraEtAl04,ManevichEtAl06}, and abstract domain extension~\cite{PeronHalbwachs07}.
+Abstract transfer functions may introduce an orthogonal loss of precision.
+For instance, in Fig.~\ref{fig:transfer}(b) the expression initializer for \code{z} is in a quadratic form.
+Thus no linear numerical abstract domain can precisely capture the relation
+between \code{x}, \code{y} and \code{z}.
+Standard domain refinements are of no help.
+A rough transfer function can simply abstract away \code{z}.
+A more precise one can  approximate  \code{z} with an interval.
+However, a compositional evaluation of the expressions which mimics the concrete
+one is not precise enough to discharge the assertion \code{-2 \leq z}.
+Several authors suggested methods to infer
+optimal transfer functions in particular settings as, \eg, constraint
+matrices~\cite{Monniaux09}, shape analysis~\cite{Yorsh04} or constant propagation~\cite{ColbyLee96}.
+
+Surprisingly enough, the refinement of the \emph{operations} over abstract
+elements has been widely ignored in the literature (with the
+ exceptions of~\cite{GulavaniEtAl08,BagnaraEtAl04,GonnordHalbwachs06,GopanReps06} which however focused
+ their attention just on   the widening operator).
+
+\Fsubsubsection{Example} Let us consider the code snippet in Fig.~\ref{fig:gathering2}(c).
+In order to prove the assertions valid, the static analysis should infer the loop invariant $\code{x} \leq \code{y} \leq 100 \cdot \code{x}$.
+Different abstract domains infer different invariants.
+The Octagon abstract domain (\Octagons) is a \emph{weakly relational} domain which captures properties in the form of $\pm \code{x} \pm \code{y} \leq k$.
+It infers the loop invariant: $0 \leq \code{x} \wedge 0 \leq \code{y} \wedge \code{x} \leq \code{y}$.
+The Polyhedra abstract domain (\Polyhedra) is a \emph{fully relational} domain. 
+It can infer and represent arbitrary linear inequalities: Abstract elements are in the form $\sum_i{a_i \cdot \code{x}_i} \leq k$. 
+As a consequence one expects \Polyhedra\ to always be more precise than \Octagons.
+However, when applied to the example, \Polyhedra\ infers the loop
+invariant:  $0 \leq \code{x} \wedge 0 \leq \code{y} \wedge \code{y}
+\leq 100 \cdot \code{x}$: Even if \Polyhedra\  can \emph{exactly} represent the constraint $\code{x} \leq \code{y}$, it fails inferring it!
+This is quite surprising. 
+The reason for that should be found in the widening operators over the two domains.
+The (standard) widening over Octagons explicitly seeks an upper bound for the difference $\code{x} - \code{y}$ (in the example $0$).
+The (standard) widening over Polyhedra preserves the inequalities that are stable over two loop iterations.
+In the example, the constraint $\code{x} \leq \code{y}$, even if implied by the abstract states to be widened, is never materialized. 
+Therefore, the state after widening does not contain it either.
+Intuitively, in order to obtain the most precise loop invariant for \code{DomOp}, one needs to refine the widening operator for \Polyhedra\ to be at least as precise as the one for \Octagons.
+One way to refine the widening is by remarking that the predicate $\code{x} \leq \code{y}$ appears as a condition of some assertion, and then trying to explicitly materialize it.
+Another possible refinement is by seeking upper bounds for the expression  $\code{x} - \code{y}$.
+The first is an example of \emph{syntactic hint}.
+The latter is an example of \emph{semantic hint}.
+Those observations can be extended and generalized to other abstract
+domain operators.
+
+\Fsubsubsection{The case for hints} 
+The main goal for  a static analysis designer is the precision/speed
+trade-off.
+To achieve it, the common practice  is to drop some of the expressive power of the
+analysis while maximizing the inference power.
+In  \Clousot, our static analyzer for \NET, we needed additional flexibility. 
+\Clousot\ is mainly used to validate code contracts expressed by users
+in form of pre-conditions, post-conditions and object invariant.
+First, we observed that usual weakly-relational abstract domains are
+not precise enough to be used in a modular checker: for instance, it is often the
+case that the argument to establish an ``easy'' precondition (\eg,
+$\code{x} \leq \code{y})$ at the call site involves a complex reasoning between several
+linear inequalities which require expensive abstract domains as \Poly.
+Second, we needed \Clousot\ to be adaptable, in that it can either run
+in an interactive environment (faster, but with more noise) or on a
+build machine overnight (slower, but much more precise).
+As a consequence, we took a different direction in the design of the
+abstract domains in \Clousot: we retained the \emph{expressive} power
+while we gave up some of the \emph{inference} (\eg, Pentagons~\cite{LogozzoMaf08}
+and Subpolyhedra~\cite{LavironLogozzo09}).
+Hints, introduced in this paper, are an orthogonal to the abstract
+domain, and they allow us to incrementaly increase the precision of the
+analysis by refining the transfer functions.
+
+
+\Fsubsubsection{Contribution} 
+We introduce hints, a new technique which allows us to systematically refine static analyses.
+The main ideas of hints are: (i) to have a separate module to figure out which constraints or families of constraints are of interest for the analysis; and (ii) to use such a module to refine the \emph{operations} of the abstract domain.
+The main difference with related works on automatic refinement of static analyses is that hints refine the \emph{operations} over abstract elements and \emph{not} the elements themselves nor the transition relations.
+The main advantages of hints are that: 
+(i) they enable an easy refinement of static analyses; 
+(ii) they enable a fine-tuning of the cost/performance ratio;  
+(iii) they make the analysis more robust with respect to implementation-related precision bugs.  
+Hints are useful when the abstract operations are not complete w.r.t. the concrete ones, which is often the case in practice.
+
+We formalize hints using the abstract interpretation theory, and we
+prove them correct w.r.t. a generic abstract interpreter. 
+We characterize syntactic (user-defined, thresholds)  and
+semantic hints (saturation, die-hard, computed, reductive).
+We show how they generalize existing techniques as, \eg, widening with
+thresholds~\cite{BlanchetCousotEtAl03}.
+We applied hints to SubPolyhedra (\Subpoly), a new, very efficient
+numerical abstract domain to propagate  arbitrary linear inequalities.
+\Subpoly\ has the same expressive power as \Poly, but drops some of the inference to achieve scalability.
+Hints allow \Subpoly\ to recover precision without giving up performances.
+Hints are implemented in \Clousot, our static analyzer for .NET
+available at \cite{CodeContracts}.
+
+
+\section{Abstract Interpretation Frameworks}
+\label{sec:AI}
+Abstract interpretation is a general theory of approximations which formalizes the intuition that the semantics of a program is more or less precise depending on the observation level.
+In particular, the static analysis of a program is a semantics precise enough to capture the properties of interest and coarse enough to be computable.
+The \emph{concrete} and \emph{abstract} semantics of a program are defined as fixpoints respectively over a concrete  and an abstract domain.
+The concrete and the abstract domains are related by a soundness relation, which induces the soundness of the abstract semantics~\cite{CousotCousot92-2}.
+
+\Fsubsubsection{Static approximation: Abstract Domain} 
+In the Galois connections approach to abstract interpretation~\cite{CousotCousot77}, the concrete domain and the abstract domain are assumed to be two \emph{complete} lattices, respectively \tupla{\dom{C}, \less, \join} and \tupla{\dom{A}, \aless, \ajoin}.
+The soundness relation is expressed by a pair of monotonic functions
+\tupla{\alpha, \gamma}, such that $\forall \el{e}\in \dom{C}. \forall \ael{e} \in \dom{A}.\ \alpha(\el{e}) \aless \ael{e} \Longleftrightarrow \el{e} \less \gamma(\ael{e})$.
+In such a setting, the abstract join operator $\ajoin$ is optimal in
+that:  \(\forall \el{e}_1, \el{e}_2 \in \dom{C}.\ \alpha(\join(\el{e}_1 ,
+\el{e}_2)) = \ajoin(\alpha(\el{e}_1), \alpha(\el{e}_2)) \)~\cite{CousotCousot92-1}.
+In practice, most analyses do not require the existence of the \emph{best} approximation for concrete elements, a sound approximation suffices.
+For instance, there is no best polyhedron approximating the set of concrete points $B = \{ (\code{x}, \code{y}) \in \mathbb{R}^2 \mid  \code{x}^2 + \code{y}^2 \leq 1\}$.
+However, any polyhedron including $B$ is a sound abstraction.
+In the relaxed form of abstract interpretation~\cite{CousotCousot92-2}, the abstract domain is not required to be complete under \ajoin.
+It is simply a \emph{pre-order} \tupla{\dom{A}, \cless, \cjoin, \cmeet}.
+The soundness relation is expressed by a monotonic concretization function $\gamma \in \funzione{\dom{A}}{\dom{C}}$, \ie, no abstraction function is required.
+The abstract union \cjoin\ gathers together the information flowing from incoming edges.
+It is not required to be the \emph{least} upper bound (which may not exist at all): $\forall \ael{e}_0, \ael{e}_1 \in \adom{A}.\ \ael{e}_0 \cless \ael{e}_0 \cjoin \ael{e}_1 \wedge  \ael{e}_1 \cless \ael{e}_0 \cjoin \ael{e}_1$.
+It is a sound, but not \emph{optimal}, approximation of the concrete join: $\forall \ael{e}_0, \ael{e}_1 \in \adom{A}.\ \join(\gamma(\ael{e}_0),  \gamma(\ael{e}_1)) \less \gamma(\cjoin(\ael{e}_0,  \ael{e}_1))$.
+The abstract intersection returns a common lower bound for the operands, which approximates the concrete meet:  $\forall \ael{e}_0, \ael{e}_1 \in \adom{A}.\ \gamma(\ael{e}_0) \meet \gamma(\ael{e}_1) \less \gamma(\ael{e}_0 \cmeet \ael{e}_1)$.
+
+Hereafter we assume: (i) the concrete domain to be the complete lattice \tupla{\parti{\Sigma}, \subseteq, \cup, \cap} where $\Sigma$ is a set of concrete program states mapping variables to values;
+(ii) the abstract domain to be a pre-order \tupla{\dom{A}, \cless, \cjoin, \cmeet}, therefore putting ourselves in the setting of the relaxed form of abstract interpretation.
+
+\Fsubsubsection {Dynamic approximation: Widening/Narrowing}
+In general \dom{A} is of infinite height, so that the fixpoint computation may not terminate.
+A widening operator \awidening\ should then be defined to ensure the convergence of the iteration to a \emph{post-}fixpoint.
+Formally \awidening\ satisfies: (i) $ \forall \ael{e}_0, \ael{e}_1 \in \dom{A}.\ \ael{e}_0, \ael{e}_1 \cless \awidening (\ael{e}_0, \ael{e}_1)$; and (ii) for each (possibily infinite) sequence of abstract elements $\ael{e}_0, \ael{e}_1 \dots \ael{e}_k $ the sequence defined by $\ael{e}_0^\awidening = \ael{e}_0, \ael{e}_1^\awidening = \awidening (\ael{e}^\awidening_0, \ael{e}_1)  \dots \ael{e}^\awidening_k = \awidening (\ael{e}^\awidening_{k-1}, \ael{e}_{k})$  is ultimately stationary.
+It is worth noting that a widening operator is not commutative.
+The loss of precision introduced by the widening can be partially recovered using a narrowing operator.
+A narrowing \narrowing\ operator satisfies: (i) $\forall \ael{e}_0, \ael{e}_1 \in \dom{A}.\ \cmeet(\ael{e}_0,\ael{e}_1) \cless \narrowing(\ael{e}_0, \ael{e}_1) \cless \ael{e}_0, \ael{e}_1$; and (ii) for each (possibly infinite) sequence of abstract elements $\ael{e}_0, \ael{e}_1 \dots \ael{e}_k $ the sequence defined by $\ael{e}_0^\narrowing = \ael{e}_0, \ael{e}_1^\narrowing = \narrowing (\ael{e}^\narrowing_0, \ael{e}_1)  \dots \ael{e}^\narrowing_k = \narrowing (\ael{e}^\narrowing_{k-1}, \ael{e}_{k})$  is ultimately stationary.
+
+
+
+\Fsubsubsection{Transfer functions}
+It is common practice for the implementation of an
+abstract domain \dom{A} to provide some primitive transfer functions.
+The assignment abstract transfer function, \dom{A}.\aassign, is an
+over-approximation of the states reached after the concrete assignment ($\semantica{E}{\code{E}}(\sigma)$ denotes the evaluation of the expression \code{E} in the state $\sigma$) :
+%\begin{small}
+  \(
+  \forall \code{x}, \code{E}. \forall \ael{e} \in \dom{A}.\ \{ \sigma[\code{x} \mapsto v] \mid \sigma \in \gamma(\ael{e}), \semantica{E}{\code{E}}(\sigma) = v \} \subseteq \gamma(\dom{A}.\aassign(\ael{e}, \code{x}, \code{E})).
+  \)
+%\end{small}
+%\sopra
+%\noindent 
+The test abstract transfer function, \adom{A}.\atest, filters the input states ($\semantica{B}{\code{B}}(\sigma)$ denotes the evaluation of the Boolean  expression \code{B} in the state $\sigma$):
+%\begin{small}
+%\begin{equation}
+\(
+\forall \code{B}. \forall \ael{e} \in  \dom{A}.\ \{ \sigma \in \gamma(\ael{e}) \mid \semantica{B}{\code{B}}(\sigma) = \mathit{true} \} \subseteq \gamma(\dom{A}.\atest(\ael{e}, \code{B})).
+\)
+%\label{for:soundnesstest}
+%\end{equation}
+%\end{small}
+%\sopra
+%\noindent 
+The abstract checking $\dom{A}.\checkif$ verifies if an assertion \code{A} holds in an abstract state \ael{e}.
+It has four possible outcomes: $\mathit{true}$ (\code{A} holds in all the concrete states $\gamma(\ael{e})$); $\mathit{false}$ (\code{!A} holds in all the concrete states $\gamma(\ael{e})$); $\mathit{bottom}$ (the assertion is unreached); $\mathit{top}$ (the validity of \code{A} cannot be decided in $\gamma(\ael{e})$).
+
+
+\begin{figure}[t]
+\[
+\begin{array}{rcl}
+\asem{\code{skip};}(\ael{e}) & = & \ael{e} \qquad \qquad \qquad
+\asem{\code{x = E};}(\ael{e})  =  \adom{A}.\assign(\ael{e}, \code{x}, \code{E}) \\
+\asem{\code{assume}\ \code{B};}(\ael{e}) &=& \asem{\code{assert}\ \code{B};}(\ael{e}) = \dom{A}.\guard(\code{B}, \ael{e}) \\
+\asem{\code{C_1\ C_2}}(\ael{e}) & = & \asem{\code{C_2}}(\asem{\code{C_1}}(\ael{e})) \\
+\asem{ \If(\code{B})~ \{ \code{C}_1 \} \Else~\{ \code{C}_2 \};}(\ael{e}) & = & \asem{\code{C_1}}(\adom{A}.\guard(\code{B}, \ael{e})) \cjoin \asem{\code{C_2}}(\adom{A}.\guard(\code{!B}, \ael{e})) \\
+\asem{\While(\code{B})~\{\code{C}\};}(\ael{e}) & = & \mathrm{let}\ \ael{I} = \mathsf{fix} \lambda X.\ \ael{e} \cjoin \asem{C}(\adom{A}.\guard(\code{B}, X)) \\
+& & \mathrm{in}\ \dom{A}.\guard(\code{!B}, \ael{I}) 
+\end{array}
+\]
+\caption{The abstract semantics for the while-language}
+\label{fig:WhileLanguageSemantics}
+\end{figure}
+
+
+\sopra
+\section{Concrete and Abstract semantics for a While language}
+
+\begin{figure}[t]
+\[
+\begin{array}{rcl}
+\sem{\code{skip};}(\el{e}) & = & \el{e} \qquad \qquad \qquad
+\sem{\code{x = E};}(\el{e})  = \{ \sigma[\code{x} \mapsto v] \mid \sigma \in \el{e}, \semantica{E}{\code{E}}(\sigma) = v \}    \\
+\sem{\code{assume}\ \code{B};}(\el{e}) &=& \sem{\code{assert}\ \code{B};}(\el{e}) = \{ \sigma \in \el{e} \mid \semantica{B}{\code{B}}(\sigma) = \mathit{true} \} \\
+\sem{\code{C_1\ C_2}}(\el{e}) & = & \sem{\code{C_2}}(\sem{\code{C_1}}(\el{e})) \\
+\sem{ \If(\code{B})~ \{ \code{C}_1 \} \Else~\{ \code{C}_2 \};}(\el{e}) & = & \sem{\code{C_1}}( \{ \sigma \in \el{e} \mid \semantica{B}{\code{B}}(\sigma) = \mathit{true} \}) \cup \sem{\code{C_2}}( \{ \sigma \in \el{e} \mid \semantica{!B}{\code{B}}(\sigma) = \mathit{true} \}) \\
+\sem{\While(\code{B})~\{\code{C}\};}(\ael{e}) & = & \mathrm{let}\ \el{I} =  \bigcup_{i} \sem{C}^{i}(\{ \sigma \in \el{I} \mid \semantica{B}{B}(\sigma) = \mathit{true}\})\\ 
+& & \mathrm{in}\ \{ \sigma \in \el{I} \mid \semantica{!B}{B}(\sigma) = \mathit{true}\}.
+\end{array}
+\]
+\caption{The  reachable states semantics for the while-language.}
+\label{fig:WhileLanguageCSemantics}
+\sopra
+\end{figure}
+
+We illustrate hints on a simple abstract interpreter for a while language.
+The concrete, reachable states semantics $\sem{\cdot} \in \funzione{\Stm \times \parti{\Sigma}}{\parti{\Sigma}}$ is in Fig.~\ref{fig:WhileLanguageCSemantics}.
+The abstract semantics $\asem{\cdot} \in \funzione{\Stm \times \dom{A}}{\dom{A}}$  is  in Fig.~\ref{fig:WhileLanguageSemantics}.
+It is  parametrized by the abstract domain \tupla{\adom{A}, \cless, \cjoin, \cmeet} and a set of primitives \assign, \guard, and \checkif.
+The \Skip\ statement has no effect on the abstract state.
+The effects of the assignment, the assumption and the assertion  are handled by the corresponding primitives of the abstract domain.
+Please note that for the purposes of the analysis the effects of \Assume and \Assert coincide: 
+The assertions will be checked in a second phase, after the analysis has inferred  the program invariants for all the program points.
+The abstract semantics of sequence is function composition.
+The abstract semantics of conditional: (i) pushes the guard and its negation onto the two branches; and (ii) gathers the effects using the abstract union.
+The abstract semantics of \While\ is given in terms of $\mathsf{fix}$, which computes the loop invariant as the limit of the fixpoint iterations with widening.
+Given a function $F \in \funzione{\dom{A}}{\dom{A}}$, $\mathsf{fix}(F)$ is the limit of the iteration sequence:
+$ I^0 = \bottom; 
+I^{n+1} =  \text{ if } F(I^{n}) \cless I^{n} \text{ then } I^{n} \text{ else }  I^{n} \widening F(I^{n})$.
+The post-state for  \While\ is then obtained by intersecting the loop invariant with the negation of the guard.
+It is easy to show that for any program \code{P}, $\forall \el{e} \in \parti{\Sigma}. \forall \ael{e} \in \dom{A}.\ \el{e} \subseteq \gamma(\ael{e}) \Longrightarrow \sem{P}(\el{e}) \subseteq \gamma(\asem{P}(\ael{e}))$.
+
+
+
+
+\section{Hints}
+Hints are precision improving operators which can be used
+to systematically refine and improve the precision of domain
+operations in abstract interpretation.
+Domain operations are either  \emph{basic} domain operations (\eg, \cjoin\
+or \cmeet)
+or their compositions (\eg, $\lambda (\ael{e}_0, \ael{e}_1,
+\ael{e}_2).\ (\ael{e}_0 \cmeet \ael{e}_1) \cjoin  (\ael{e}_0 \cmeet \ael{e}_2)$).
+
+\begin{definition}[Hint, \hint{}]
+\label{def:hints}
+Let $\op \in \funzione{\dom{C}^n}{\dom{C}}$ be a concrete domain operation defined over a concrete domain \tupla{\dom{C}, \less, \join, \meet}.
+Let $\ael{\op} \in \funzione{\adom{A}^n}{\adom{A}}$ be the abstract counterpart for \op\ defined over the abstract domain  \tupla{\adom{A}, \cless, \cjoin, \cmeet}.
+A hint $\hint{\ael{\op}}\in \funzione{\adom{A}^n}{\adom{A}}$ is  such that:
+\[
+\begin{aligned}
+\hint{\ael{\op}}(\ael{e}_0 \dots \ael{e}_{n-1}) \cless \ael{\op}(\ael{e}_0 \dots \ael{e}_{n-1}) & \qquad \text{\textrm{(Refinement)}}  \\
+\op(\gamma( \ael{e}_0) \dots \gamma(\ael{e}_{n-1})) \less \gamma(\hint{\ael{\op}}(\ael{e}_0 \dots \ael{e}_{n-1})) & \qquad \text(\textrm{Soundness}).
+\end{aligned}
+\]
+\end{definition}
+The first condition states that $\hint{\ael{\op}}$ is a more precise operations than $\ael{\op}$.
+The second condition requires $\hint{\ael{\op}}$ to be a sound approximation of \op.
+An important property of hints is that they can be designed separately and the combined to obtain a more precise hint.
+Therefore, if $\hint{\ael{\op}}^1$ and $\hint{\ael{\op}}^2$ are hints, then $\hint{\ael{\op}}^\cmeet(\ael{e}_0 \dots \ael{e}_{n-1})$ $=$ $\hint{\ael{\op}}^1(\ael{e}_0 \dots \ael{e}_{n-1}) \cmeet $ $\hint{\ael{\op}}^2(\ael{e}_0 \dots \ael{e}_{n-1})$ is a hint, too.
+Hints improve the precision of static analyses without introducing unsoundness and preserving termination:
+
+\begin{theorem}[Refinement of the abstract semantics]
+Let $\hint{\widening}$ and $\hint{\cjoin}$ be two hints refining respectively the widening and the abstract union, and let $\hint{\widening}$ be a widening operator.
+Let \asemRefined{\cdot} be the abstract semantics obtained from \asem{\cdot} by replacing \widening with $\hint{\widening}$ and \cjoin\ with $\hint{\cjoin}$.
+Let \code{P} be a program.
+Then, $\forall \el{e}\in \parti{\Sigma}. \forall \ael{e} \in \dom{A}.$ 
+\[
+\begin{aligned}
+\asemRefined{P}(\ael{e}) \cless \asem{P}(\ael{e}) & \qquad \text{\textrm{(Refinement)}}  \\
+\el{e} \subseteq \gamma(\ael{e}) \Longrightarrow \sem{P}(\el{e}) \subseteq \gamma(\asemRefined{P}(\ael{e})) & \qquad \text{\textrm{(Soundness)}}.
+\end{aligned}
+\]
+\end{theorem}
+
+\section{Syntactic hints}
+Syntactic hints use some part of the program text to refine the operations of the abstract domain.
+They exploit user annotations to preserve as much information as possible in gathering operations (user-provided hints), and systematically improve the widening heuristics to find tighter loop invariants (thresholds hints).
+
+
+They are the easiest, and probably cheapest form of hints.
+First, we collect all the predicates appearing as assertions or as guards.
+Then, the gathering operations are refined by explicitly checking for each collected predicate $\code{B}$, if it holds for \emph{all} the operands.
+If this is the case, $\code{B}$ is  added to the result.
+The predicate seeker $\mathsf{pred} \in \funzione{\Stm}{\parti{\BExp}}$ extracts from the program text the predicates appearing in conditional and loop guards.
+User provided hints do not affect the termination of the widening as  we can only add finitely many new predicates:
+
+\begin{lemma}[User-provided hints]
+\label{sect:syntactic}
+Let $\diamond \in \{ \cjoin, \widening\}$, and let \code{P} be a program. 
+Then: (i) $\hint{\diamond}^{\mathsf{pred}}$ defined below is a hint;
+and (ii) $\hint{\widening}^{\mathsf{pred}}$ is a widening operator.
+
+
+\begin{small}
+\[
+\begin{array}{rcl}
+\hint{\diamond}^{\mathsf{pred}}(\ael{e}_0, \ael{e}_1) &=&
+\mathrm{let}\ S = \{ \code{B} \in \mathsf{pred}(\code{P}) \mid
+\dom{A}.\checkif(\code{B}, \ael{e}_0) = \mathit{true} \wedge \dom{A}.\checkif(\code{B}, \ael{e}_1) = \mathit{true}   \} \\
+& & \mathrm{in}\ \dom{A}.\guard(\bigwedge_{\code{B} \in S} \code{B}, \diamond(\ael{e}_0, \ael{e}_1)).
+\end{array}
+\]
+\end{small}
+\end{lemma}
+
+
+%\begin{example}[Refined \Polyhedra\ operations] 
+In example of Fig.~\ref{fig:gathering}(b), $\mathsf{pred}(\code{DomOp}) = \{ \code{x} \leq \code{y}, 4 \leq \code{x}, \code{y} \leq 100 \cdot \code{x} \}$.
+The refined domain operations keep the predicate $\code{x} \leq \code{y}$, which is stable among loop iterations, and hence is  a loop invariant.% \qed
+%\end{example}
+
+We found user-provided hints very useful in \Clousot, our abstract interpretation based static analyzer for \NET.
+\Clousot\ analyzes methods in isolation, and supports assume/guarantee
+reasoning (``contracts'') via executable annotations.
+Precision in propagating and checking program annotations is crucial to provide a satisfactory user experience.
+User-provided hints help to reach this goal as the analyzer makes sure that at each joint point no user annotation is lost, if it is implied by the incoming abstract states.
+They make the analyzer more robust w.r.t. incompleteness of $\cjoin$ or a buggy implementation which may cause $\cjoin$ to return a more abstract element than the one predicted by the theory.
+The downside is that user-provided hints are syntactically based:
+For instance, if in Fig.~\ref{fig:gathering}(c) we replace the assertion at $\mathtt{(*)}$ with \code{if\ 10 <= x \ then\ assert\  5 <= y }, then $\mathsf{pred}(\code{DomOp}) =  \{ 10 \leq \code{x} , 5 \leq \code{y} \}$, so that  $\hint{\widening_{\Poly}}^{\mathsf{pred}}$ cannot figure out that $\code{x} \leq \code{y}$, and hence the analyzer cannot prove that the assertion is valid.
+Semantic hints (Sect.~\ref{sec:Templatehints}) will fix it. 
+
+%\begin{wrapfigure}{L}{0pt}
+
+
+
+\subsection{Thresholds hints}
+\begin{figure}[t]
+\centering
+\begin{subfloat}
+  \begin{minipage}{3cm}
+\begin{verbatim}
+void LessThan() {
+  int x = 0;
+  while (x < 1000) 
+    x++;
+}
+\end{verbatim}
+  \end{minipage}
+  \caption{Narrowing}
+  \label{fig:tresholds1}
+\end{subfloat}    
+\qquad \qquad
+\begin{subfloat}
+  \begin{minipage}{3cm}
+\begin{verbatim}
+void NotEq() {
+  int x = 0;
+  while (x != 1000) 
+    x++;
+}
+\end{verbatim}
+  \end{minipage}
+  \caption{Thresholds}
+  \label{fig:tresholds2}
+\end{subfloat}
+
+\caption{Two programs to be analyzed with Intervals.
+  The iterations with widening infer the loop invariant $\code{x} \in [0,+\infty]$.
+  In the first case, the narrowing step refines the loop invariant to $\code{x} \in [0, 1000]$.
+  In the second case, the narrowing fails to refine it.}
+\label{fig:tresholds}
+\sopra
+\end{figure}
+
+Widening with threshold has been introduced in~\cite{BlanchetCousotEtAl03} to improve the precision of standard widenings over non-relational or weakly relational domains.
+Roughly, the idea of a widening with thresholds is to stage the extrapolation process, so that before projecting a bound to the infinity, values from a set $T$ are considered as candidate bounds.
+The set $T$ can be either provided by the user or it can be extracted from the program text.
+The widening with thresholds is just another form of hint.
+Let $\ael{e}_0$ and $\ael{e}_1$ be abstract states belonging to some numerical abstract domain.
+Without loss of generality we can assume that the basic facts in $\ael{e}_0, \ael{e}_1$ are in the form $\code{p} \leq k$, where \code{p} is some polynomial.
+For instance $\code{x} \in [-2, 4]$ is equivalent to $\{ -\code{x} \leq 2, \code{x} \leq 4 \}$.
+The standard widening preserves the linear forms with stable upper bounds:
+%\begin{small}
+\(
+\widening (\ael{e}_0,\ael{e}_1) = \{ \code{p} \leq k \mid \code{p} \leq k_0\in \ael{e}_0, \code{p} \leq k_1\in \ael{e}_1, k = \text{if } k_1 > k_0 \text{ then} +\infty \text{ else }  k_0\}.
+\)
+%\end{small}
+%\sopra
+%\noindent 
+Given a finite set of values \code{T}, threshold hints refine the standard widening by:
+
+\sopra
+\begin{small}
+  \begin{align*}
+    \hint{\widening}^T(\ael{e}_0,\ael{e}_1) =  \{ \code{p} \leq k \mid \code{p} & \leq k_0\in \ael{e}_0, \code{p} \leq k_1\in \ael{e}_1, \\
+    & k = \text{if } k_1 > k_0 \text{ then } \mathrm{min}\{ t \in T \cup \{ +\infty \} \mid k_1 \leq t \} \text{ else }  k_0\}.
+  \end{align*}
+\end{small}
+%The next lemma states that $\hint{\widening}^T$ refines the standard widening, and it does  not compromise the termination nor the soundness of the analysis:
+\begin{lemma}
+$\hint{\widening}^T$ is: (i) a hint; and (ii) a widening.
+\end{lemma}
+%\textit{Proof sketch.}
+%\textit{Refinement}  and \textit{Soundness} are a direct consequence of definition of $\hint{\widening}^T$.
+%Termination follows from the fact that $T$ is finite.
+%\qed
+
+
+
+
+\begin{example}[Widening with thresholds]
+Let us consider the code snippets in Fig.~\ref{fig:tresholds} to be analyzed with Intervals.
+In the both cases, the (post-)fixpoint is reached after the first iteration $\widening([0,0],  [1,1]) = [0, +\infty]$.
+In the first case, the invariant can be improved by a narrowing step to $ \narrowing([0, +\infty], [-\infty, 1000])= [0, 1000]$ (see \cite{CousotCousot77} for a definition of narrowing of \Intervals).
+In the second case, the narrowing is of no help as  $\narrowing([0, +\infty], \cjoin([-\infty, 1000],  [1002, +\infty])) = [0, +\infty]$.
+A widening with Thresholds $T = \{ 1000 \}$ helps discovering the tightest loop invariant for both examples in one step as $\hint{\widening}^T([0,0],[1,1]) = [0, 1000]$.
+\qed
+\end{example}
+Please note that user-provided hints are of no help in the previous example, as $\mathsf{pred}(\code{NotEq}) = \{ \code{x} \neq 1000\}$ does not hold for  all the operands of the widening. 
+
+The set $T$ of thresholds is a parameter of the analyzer, which can either be provided by the user,  preset to some common values (\eg, $T = \{ -1, 0, 1\}$), or extracted from the program  text.
+In \Clousot, we use a function $\mathsf{const} \in
+\funzione{\Stm}{\parti{\code{int}}}$ which extracts the constants appearing in the guards.
+We found the hint $\hint{\widening}^{\mathsf{const}}$ very satisfactory: (i) it helps inferring precise \emph{numerical} loop invariants  without requiring the extra iteration steps required for applying the narrowing; and (ii) it improves the precision of the analysis of code involving disequalities, \eg, Fig.~\ref{fig:tresholds}(b).
+A drawback  is that the set $T$ may grow too large, slowing down the convergence of the fixpoint iterations.
+In \Clousot, we infer thresholds on a per-method basis, which helps maintaining the cardinality of $T$ quite small.
+
+\sopra
+\section{Semantic hints}
+Semantic hints provide a more refined yet more expensive form of operator refinement.
+For instance, they exploit information in the abstract states to materialize constraints that were implied by the operands (saturation hints, die-hard hints and template hints) or they iterate the application of operators to get a more precise abstract state (reductive hints).
+
+\subsection{Saturation hints}
+A common way to design abstract interpreters is to build the abstract domain as a composition of basic abstract domains, which interact through a well-defined interface~\cite{CousotEtAl06,GulwaniEtAl08}.
+Formally, given two abstract domains $\adom{A}_0,\adom{A}_{1}$, the Cartesian product $\adom{A}^\times = \adom{A}_0 \times \adom{A}_{1}$ is still an abstract domain, whose operations are defined as the point-wise extension of those over $\adom{A}_0$ and $\adom{A}_{1}$.
+Let $\ael{\op}_i \in \funzione{\adom{A}_i^n}{\adom{A}_i}$, $i \in \{ 0, 1\}$, then $\ael{\op}^\times((\ael{e}^0_0, \ael{e}^0_1) \dots (\ael{e}^{n-1}_0, \ael{e}^{n-1}_1)) = (\ael{\op}_0(\ael{e}^0_0 \dots\ael{e}^{n-1}_0), \ael{\op}_1(\ael{e}^{0}_1 \dots \ael{e}^{n-1}_1))$.
+The Cartesian product enables the modular design (and refinement) of static analyses.
+However, a naive design which does not consider the flow of information between the abstract elements may lead to imprecise analyses, as illustrated by the following example.
+
+\begin{example}[Cartesian join]
+\label{ex:cartesian}
+Let us consider the abstract domain $\adom{Z} = \Intervals \times \LT$, where $\LT = \funzione{\Var}{\parti{\Var}}$ is an abstract domain capturing the \emph{``less than''} relation between \emph{variables}.
+For instance, $\code{x} < \code{y} \wedge \code{x} < \code{z}$ is represented in \LT\ by $[ \code{x} \mapsto \{ \code{y}, \code{z}\}]$.
+The domain operations are defined as one may expect~\cite{LogozzoMaf08}.
+Let $\ael{z}_0 = ([\code{x} \mapsto [-\infty, 0], \code{y} \mapsto [1, +\infty]], \emptyfun )$ and $\ael{z}_1 = (\emptyfun, [\code{x} \mapsto \{ \code{y}\}]  )$ be two elements of \adom{Z} (\emptyfun\ denotes the empty map).
+Then the Cartesian join loses all the information: $\cjoin^\times(\ael{z}_0, \ael{z}_1) = (\emptyfun, \emptyfun )$. \qed
+\end{example}
+
+A common solution is: (i) saturate the operands; and (ii)  apply the operation pairwise.
+The saturation materializes all the constraints implicitly expressed
+by the product abstract state.
+Let $\rho \in \funzione{\adom{A}^\times}{\adom{A}^\times}$ be a saturation (\emph{a.k.a.} closure) procedure.
+Then the next lemma provides a systematic way to refine an operator $\ael{\op}^\times$.
+
+\begin{lemma}
+The operator $\hint{\op^\times}^{\rho}$ below is a hint.
+\begin{small}
+  \[
+%  \begin{split}
+    \hint{\ael{\op}^\times}^{\rho}((\ael{e}^0_0, \ael{e}^0_1) \dots
+    (\ael{e}^{n-1}_0, \ael{e}^{n-1}_1)) = \   \mathrm{let}\ \ael{r}^i
+    = \rho(\ael{e}_0^i, \ael{e}_1^i)\ \mathrm{for}\ i \in 0 \dots n-1\ 
+ \mathrm{in}\ \ael{\op}^\times(\ael{r}^0 \dots \ael{r}^{n-1}).
+%  \end{split}
+ \]
+\end{small}
+\end{lemma}
+
+
+\begin{example}[Cartesian join, continued]
+The saturation of $\ael{z}_0$ materializes the constraint $\code{x} < \code{y}$ : $\ael{r}_0 = ([\code{x} \mapsto [-\infty, 0], \code{y} \mapsto [1, +\infty],  [\code{x} \mapsto \{ \code{y}\}] )$, and it leaves $\ael{z}_1$ unchanged.
+The constraint $\code{x} < \code{y}$ is now  present in both the operands, and it is retained by the pairwise join. \qed
+\end{example}
+
+It is worth noting that in general $\hint{\widening}^{\rho}$ does not
+guarantee the convergence of the iterations, as the saturation
+procedure may re-introduce constraints which were abstracted away from
+the widening (\eg, Fig.~10 of~\cite{Mine01-2}).
+
+Saturation hints can provide very precise operations for Cartesian abstract interpretations:
+They allow the analysis to get additional precision by combining the information present in different abstract domains.
+The main drawbacks of saturation hints are that: (i) the iteration convergence is not ensured, so that extra care should be put in the design of the widening; (ii) the systematic application of saturation may cause a dramatic slow-down of the  analysis.
+In our experience with the combination of domains implemented in \Clousot, we found that the slow-down introduced by saturation hints was too high to be practical.
+Die-hard hints, introduced in the next section, are a better solution to achieve precision without giving up scalability.
+
+\subsection{Die-hard hints}
+These hints are based on the observation that often the constraints that one wants to keep at a  gathering point  often appears explicitly in one of the operands.
+For instance in Ex.~\ref{ex:cartesian} the constraint $\code{x} < \code{y}$ is explicit in $\ael{z}_1$, and implicit in $\ael{z}_0$ (as $\code{x} \leq 0 \wedge 1 \leq \code{y} \Longrightarrow \code{x} < \code{y}$).
+Therefore $\code{x} < \code{y}$ holds for all the operands of the join so it is sound to add it to its result.
+Die-hard hints generalize and formalize it.
+They work in three steps: (i) apply the gathering operation, call the result \ael{r}; (ii) collect the constraints $C$ that are explicit in one of the operands, but are neither present nor implied by \ael{r}; and (iii) add to \ael{r} all the constraints in $C$ which are implied by \emph{all} the operands.
+Formally:
+
+\sopra
+\begin{small}
+  \[
+  \begin{split}
+    \hint{(\ael{\op}, I)}^{d}(\ael{e}_0, \ael{e}_1) = \ &  \mathrm{let}\ \ael{r} = \ael{\op}(\ael{e}_0, \ael{e}_1), C = \cup_{i \in I }\{ \kappa \in \ael{e}_i \mid \adom{A}.\checkif(\kappa, \ael{r}) = \mathit{top} \} \\
+    & \mathrm{let}\ S = \{ \kappa \in C \mid \adom{A}.\checkif(\kappa, \ael{e}_0) = \adom{A}.\checkif(\kappa, \ael{e}_1) = \mathit{true} \} \\
+& \mathrm{in}\ \adom{A}.\atest\left(\wedge_{\kappa \in S} \kappa, \ael{r}\right).
+\end{split}
+\]
+\end{small}
+\sopra
+
+In defining the die-hard hint for \widening, one should pay attention
+to avoid loops which re-introduce a constraint that as been dropped by
+the widening. 
+One way to do it is to have an asymmetric hint, which restricts $C$
+only to the first operand (\eg, the candidate invariant):
+\begin{lemma}
+$\hint{(\cjoin, \{ 0, 1 \})}^{d}$  and $\hint{(\widening, \{ 0 \})
+}^{d}$ are hints and  $\hint{(\widening, \{0\})}^{d}$ is a widening.
+\end{lemma}
+
+
+\subsection{Computed hints}
+\label{sec:Templatehints}
+Hints can be inferred from the abstract states themselves. 
+By looking at some properties of the elements involved in the
+operation, one can try to guess useful hints. 
+
+\begin{lemma}[Computed hints]
+Let $\ael{e}_0, \ael{e}_1 \in \adom{A}$,  $\hintcomp \in \funzione{\dom{A} \times \dom{A}}{\adom{A}}$
+a function which returns a set of likely bounds of $\ael{e}_0 \cjoin \ael{e}_1$. 
+Then $\hint{\cjoin}^{\hintcomp}$ below is a hint.
+
+\sopra
+\begin{small}
+  \[
+  \begin{array}{rcl}
+    \hint{\cjoin}^{\hintcomp}(\ael{e}_0, \ael{e}_1) &=& \mathrm{let}\ S =
+    \{ \code{B} \in \hintcomp(\ael{e}_0, \ael{e}_1) \mid
+    \dom{A}.\checkif(\code{B}, \ael{e}_0) =\mathit{true} \wedge \dom{A}.\checkif(\code{B},
+    \ael{e}_1) = \mathit{true}   \} \\ 
+    & & \mathrm{in}\ \dom{A}.\guard(\bigwedge_{\code{B} \in S} \code{B}, \ael{e}_0 \cjoin \ael{e}_1).
+  \end{array}
+  \]
+\end{small}
+\end{lemma}
+
+Computed hints are useful when the abstract join \cjoin\ is not optimal.
+Otherwise, $\hint{\cjoin}^{\hintcomp}$ is no more precise than \ajoin.
+For instance, in a Galois connections-based abstract interpretation,
+\ajoin\ is optimal, in that it returns the most precise
+abstract element approximating the concrete union.
+As a consequence, no further information can be extracted from the operands.
+It is worth noting that in general
+$\hint{\widening}^{\hintcomp}$ is not a widening.
+However, one can extend the arguments of the previous section to define
+an asymmetric hint $\hint{\widening}^{\hintcomp}$.
+
+\Fsubsubsection{Template hints}
+Let  $\adom{A}.\arange \in
+\funzione{\Exp \times \adom{A}}{\Intervals}$ be a  function that returns
+the range  for an expression in some abstract state, \eg,
+it satisfies:
+  \(
+  \forall \code{E}.\ \forall \ael{e} \in \adom{A}.\
+  \adom{A}.\arange(\code{E}, \ael{e}) = [l, u] \Longrightarrow \forall \sigma \in
+  \gamma(\ael{e}).\   l \leq \semantica{E}{\code{E}}(\sigma) \leq u.
+  \)
+If $\adom{A}.\arange(\code{E}, \ael{e}_i) = [l_i, u_i]$ for $i \in \{
+0, 1 \}$, then  $\gamma(\join_{\Intervals}([l_0, u_0],  [l_1, u_1]))$ is an upper
+bound for \code{E} in $\cup(\gamma(\ael{e}_0),  \gamma(\ael{e}_1))$.
+As a consequence given a set $P$ of polynomial forms, one can design
+the guessing function $\hintcomp^{P}$:
+
+\sopra
+\begin{small}
+\[
+\hintcomp^{P}(\ael{e}_0, \ael{e}_1) = \{ l \leq \code{p} \leq u \mid
+\code{p} \in P \wedge [l, u] = \join_{\Intervals}(\adom{A}.\arange(\code{p}, \ael{e}_0),
+\adom{A}.\arange(\code{p}, \ael{e}_1) \}.
+\] 
+\end{small}
+
+\sopra
+The main difference between $\hint{\cjoin}^{\hintcomp^{P}}$ and
+syntactic hints is that the bounds for the polynomials in $P$ are \emph{semantic},
+as they are inferred from the abstract states and not from the
+program text.
+For instance, computed hints infer the right invariant in
+the counter-example of Sect.~\ref{sect:syntactic}  with the set of templates $\mathit{Oct} \equiv \{ \code{x}_0 - \code{x}_1
+\mid \code{x}_0, \code{x}_1\ \text{are}$ $\text{program}\
+\text{variables} \}$.
+In general, template hints with $\mathit{Oct}$ refine \Polyhedra\
+so to make it as precise as \Octagons.
+
+\begin{wrapfigure}{L}{0pt}
+\small
+\begin{minipage}{5.5cm}
+\begin{Verbatim}
+void Foo() {
+  int i = 2, j = 0;
+  while (...) 
+    if (...) { i = i + 4; }
+    else     { i = i + 2; j++; } 
+  assert  2 <= i - 2 * j; }
+\end{Verbatim}
+\end{minipage}
+\caption{Example requiring the use of 2D-convex hull hints}
+\label{fig:2dhints}
+\end{wrapfigure}
+
+
+\Fsubsubsection{2D-Convex Hull hints}
+New linear inequalities can be discovered at join points using the convex hull
+algorithm.
+For instance, the standard join on \Polyhedra\ is defined in that way~\cite{CousotHalbwachs78}.
+However the convex hull algorithm requires an expensive conversion
+from a tableau of linear constraints to a set of vertexes and
+generators, which causes the analysis time to blow up.
+A possible solution is to consider a planar convex hull, which 
+computes possible linear relations between \emph{pairs} of variables by: (i) projecting
+the abstract states on all the two-dimensional planes; and (ii) computing the
+planar convex hull on those planes. 
+Planar convex hull, combined with a smart representation of the
+abstract elements allows us to automatically discover complex invariants
+without giving up performances.
+Let us consider the code in Fig.~\ref{fig:2dhints} from~\cite{CousotHalbwachs78}.
+At a price of exponential complexity, \Poly\ can infer the correct loop invariant, and prove the assertion
+correct.
+\Subpoly\ refined with 2D-Convex hull hints can prove the assertion,
+yet keeping a worst-case polynomial complexity~\cite{LavironLogozzo09}. 
+
+\sopra
+\subsection{Reductive hints}
+Intuitively, one way to improve the precision of a unary operator is to iterate its application~\cite{Granger92}.
+However, an unconditional iteration may be source of unsoundness.
+For instance, let $- \in \funzione{\Intervals}{\Intervals}$ be the operator which
+applies the unary minus to an interval.
+In general, $\forall n \in \mathbb{N}.\ \ael{e} = -^{2n}(\ael{e}) \neq
+-^{2n+1}(\ael{e})$.
+We say that a function $f$ is \emph{reductive} if $\forall x. f(x) \less x$; and  \emph{closing} if it is reductive and $\forall x. f(f(x)) = f(x)$.
+
+
+\begin{lemma}[Reductive hints]
+\label{lem:reductive}
+Let $\op \in \funzione{\dom{C}}{\dom{C}}$ be a unary operator and $\ael{\op} \in \funzione{\adom{A}}{\adom{A}}$ its abstract counterpart.
+Let $\op$ be closing,  $\ael{\op}$ be reductive, and $n \geq 0$.
+Then $\hint{\ael{\op}}(\ael{e}) =\ael{\op}^{n}(\ael{e})$ is a hint.
+\end{lemma}
+%\textit{Proof. (Sketch)}
+%\textit{(Refinement)} follows from the definition.
+%To prove \textit{(Soundness)}, it is enough to  prove that  $\op(\gamma(\ael{e})) \subseteq \gamma(\ael{\op}^2(\ael{e}))$.
+%It holds as $\op(\gamma(\ael{e})) = \op^2(\gamma(\ael{e})) \subseteq  \op(\gamma(\ael{\op}(\ael{e}))) \subseteq \gamma(\ael{\op}^2(\ael{e}))$.
+%\qed
+
+The main application of reductive hints is to improve the precision in handling the guards in non-relational abstract domains.
+Given a Boolean guard \code{B} and an abstract domain \adom{A}, $\psi \equiv \lambda{\ael{e}}.\ \adom{A}.\atest(\code{B}, \ael{e})$ is an abstract operator which satisfies the hypotheses of Lemma~\ref{lem:reductive}.
+Abstract compilation can be used to express $\psi$ in terms of domain operations, their compositions and state update.
+Lemma~\ref{lem:reductive} justifies the use of local fixpoint iterations to refine the result of the analysis.
+For instance, in the abstract domain  \funzione{\code{Var}}{\{ \mathsf{true}, \mathsf{false}, \top, \bottom \}}
+the abstract compilation of the predicate  $ \code{b1} == \code{b2} \wedge \code{b2} == \code{b3}$ is
+$\psi \equiv \lambda \el{b}. (\el{b}[\code{b1},\code{b2} \mapsto \el{b}(\code{b1}) \wedge \el{b}(\code{b2})]) \dot\wedge (\el{b}[\code{b2},\code{b3} \mapsto \el{b}(\code{b2}) \wedge \el{b}(\code{b3})] $, where $\dot\wedge$ denotes the pointwise extension of $\wedge$. 
+In an initial abstract state  $\el{b_0} = [\code{b1}, \code{b2} \mapsto \top; \code{b3} \mapsto \mathsf{true}]$,  
+$\psi(\el{b}_0) = [ \code{b1} \mapsto \top; \code{b2}, \code{b3} \mapsto \mathsf{true}  ]$ is refined by  $\psi^2(\el{b}_0) = [ \code{b1}, \code{b2}, \code{b3} \mapsto \mathsf{true}] = \psi^n(\el{b}_0)$, $n \geq 2$.
+
+\begin{figure}[t]
+\centering
+{\small
+\begin{verbatim}
+public BitArray(byte[] bytes) {
+  Contract.Requires(bytes != null); 
+
+  this.m_array = new int[(bytes.Length + 3) / 4];
+  this.m_length = bytes.Length * 8;
+  int index = 0, j = 0;
+  for (; (bytes.Length - j) >= 4; j+=4) 
+    this.m_array[index++] = (((bytes[j] & 0xff) | ((bytes[j + 1] & 0xff) << 8)) 
+      | ((bytes[j + 2] & 0xff) << 0x10)) | ((bytes[j + 3] & 0xff) << 0x18);
+    
+  switch ((bytes.Length - j)) {
+    case 1 : goto Label_00DB;
+    case 2 : break;
+    case 3 : this.m_array[index] = (bytes[j + 2] & 0xff) << 0x10; break;
+    default: goto Label_00FC;
+  }
+  this.m_array[index] |= (bytes[j + 1] & 0xff) << 8;
+Label_00DB:
+    this.m_array[index] |= bytes[j] & 0xff;
+Label_00FC:
+    this.version = 0;
+}
+\end{verbatim}
+}
+\caption{Example of code from \code{mscorlib.dll}. Out of the 23 total array bound checks, \Clousot\ with $\tupla{\Pentagons{}, \hint{\cjoin,\widening}^{d}}$ validates 13, \Clousot\ with  $\tupla{\Subpoly{}, \emptyset}$ validates 6 more, and \Clousot\ with  $\tupla{\Subpoly{}, \hint{\cjoin}^{d}}$ validates the remaining 4. }.
+\label{fig:BitArray}
+\sopra\sopra
+\end{figure}
+
+\sopra
+\section{Experience}
+\label{sec:experience}
+
+\begin{figure}[t]
+\centering
+\small
+\begin{tabular}{@{}r r r | r r | r r r| r  r r@{}}
+                      &  & P.O. &
+\multicolumn{2}{c|}{\Pentagons{}} & 
+\multicolumn{2}{c}{\Pentagons{} +
+                         $\hint{\cjoin,\widening}^{d}$} &Slow- &
+                       \multicolumn{2}{c}{\Pentagons{}  +
+                         $\hint{\{\join, \widening\} ^\times}^{\rho}$}  & Slow- \\
+Assembly & Methods & Checked & Valid & Time & Valid & Time & down & Valid & Time & down  \vspace{3pt}  \\
+
+\hline
+\code{mscorlib}   &  & 17 286 & 14 059 &  3:03(0) & 14 293 & 3:10(0)     & 1.0x & 14 220 & 10:33(4) & 3.3x\\
+\code{System}     & 15 497 & 12 037 & 9 979  &   2:28(0)  & 10 321 & 2:36(0)   & 1.0x & 10 143 &  9:43(2) & 3.7x \\
+\code{System.Web} & 23 655& 14 304 & 12 952  &  2:49(0)   & 13 034 & 2:55(0)  & 1.0x & 13 048 &  8:30(0) & 2.9x\\
+\code{System.Design}& 12 922& 10 577 & 9 562  &  2:18(0)   & 10 135&  2:21(0) & 1.0x & 9 947 &  7:39(5)  & 3.2x 
+\end{tabular}
+\caption{The experimental results of refining \Pentagons\ with die-hard hints and saturation hints.
+\Pentagons{} with die-hard hints validates 1 231 more proof obligations.
+\Pentagons{} with saturation hints are 3x slower, hit 11 timeouts (2 min), and validate 425 less accesses than $\hint{}^{d}$.}
+\label{tab:pentagons}
+
+\end{figure}
+
+
+We implemented hints in \Clousot, our abstract interpretation-based
+static analyzer for \NET.
+\Clousot\ has been designed and it is used as the static checker for the CodeContracts project~\cite{CodeContracts}.
+CodeContracts provide a language-agnostic approach to the definition of object invariants, method preconditions and postconditions.
+Contracts are specified by static methods of the \code{Contracts} class,
+\eg, \code{Contracts.Requires(x != null);} specifies that the parameter \code{x} should be not null.
+More details on the specification language can be found in the documentation on the CodeContracts website\cite{CodeContracts}.
+The \code{Contracts} class will be shipped in the version 4.0 of the \NET\ framework~\cite{msdnCodeContracts} (at the moment of writing, in the public beta 1 phase).
+\Clousot\ is shipped on the DevLabs~\cite{CodeContracts} website, and it is available for free downloading for Academic use at 
+\texttt{http://research.microsoft.com/\ en-us/projects/contracts/}.
+
+\Clousot\ analyzes each method \code{m} in isolation.
+It assumes the precondition of \code{m}, it progates it through the body, it computes loop invariants, and  it uses the inferred invariants to validate: (i) the method postcondition; (ii) the preconditions of the methods invoked by \code{m}; (iii) the user provided assertions; and (iv) the absence of runtime errors (\eg, null pointers, array out-of-bounds, divisions by zero, negation of MinInt \dots) and of buffer overruns~\cite{FerraraLogozzoMaf08}.
+When a method has no annotations, \Clousot\ simply assumes the worst case scenario (\eg, the parameters can assume any value compatible with their type).
+Orthogonally, \Clousot\ can infer pre-conditions and post-conditions to help reduce the annotation burden.
+\Clousot\ analyzes \code{m}  incrementally.
+ The user specifies a sequence of pairs of domains and set of hints $\tupla{\adom{A}_0, H_0} \dots \tupla{\adom{A}_n, H_n}$.
+\Clousot\ instantiates the abstract semantics of \code{m} with the abstract domain $\adom{A}_i$ refined with the hints in $H_i$.
+If it cannot discharge all the proof obligations, \Clousot\ tries to discharge the remaining proof obligations using the abstract domain $\adom{A}_{i+1}$ refined with the hints $H_{i+1}$.
+We designed new numerical abstract domains, ranging from
+imprecise yet very fast (\Pentagons,~\cite{LogozzoMaf08}) to very precise but more expensive (\SubPoly,~\cite{LavironLogozzo09}).
+In the incremental setting of \Clousot, hints allow a very fine tuning of the precision/cost ratio.
+For instance, the same abstract domain can be refined with several hints:
+the more the hints, the more precise the analysis, but also the more expensive it is.
+
+We report the experimental results of refining the abstract
+operations of the two extremes of the precision spectrum of \Clousot's numerical abstract domains: \Pentagons\ and \SubPolyhedra.
+\Pentagons\ is a weakly relational domain which captures properties in the form of $\code{x} \in [a, b] \wedge \code{x} < \code{y}$.
+\SubPolyhedra\ is a strongly relational domain which is as expressive as \Polyhedra, but drops some of the inference power to achieve scalability: Hints are cardinal to recover precision yet mantaining performace.
+We run the experiments on a  Core2 Duo  E6850@3.00 Ghz PC, with 4 GB of RAM, running Windows 7.
+We analyzed four of the main libraries of the current release of the \NET\ framework (v.3.5), available in every Windows distribution.
+The  \code{mscorlib.dll} library is the core of the \NET\ framework: it contains the definitions for the \code{Object}, \code{Int32} \dots types, but also common data structures such as \code{List}, \code{Dictionary}, and many other usefull classes (for reflection, security \dots).
+The \code{System.dll} library is a higher layer on \code{mscorlib.dll}. 
+\code{System.Web.dll} and \code{System.Design.dll} contain classes that simplify the access to the Web and the creation of user interfaces.
+In order to provide an uniform and repeatable test bench: (i) we considered shipped assemblies (hence with no annotations: The annotation processing is undergoing internally at Microsoft); (ii) we turned off the inference capabilities of \Clousot; and (iii) we used \Clousot\ \emph{only} to check array creations and accesses (lower and upper bounds): the shipped assemblies do not contain annotations, so there are no contracts to check.
+The framework libraries contains tenths of thousands of array accesses, some of them are quite easy (\eg, the sequential access of an array in a \code{for} loop) but others require inferring more complex relations between the array lengths and the indexes.
+For instance,  Fig.~\ref{fig:BitArray}  shows the constructor of the \code{BitArray} type (we picked it randomly from \Clousot's log).
+The \Pentagons\ and \SubPolyhedra\ abstract domains alone can be used to prove most of the array accesses correct, however, all the proof obligations can be discharged only using die-hard hints.
+One may object that the same result can be obtained using existing domains such as \Octagons\ or \Polyhedra.
+However, \Octagons\ is unable to capture the constraint $\code{4\cdot m\_array.Length - \code{bytes.Length} == 3}$, which is necessary to prove that $\code{index} < \code{m\_array.Length}$, and \Polyhedra\ suffers of a huge scalability problem, which shows up even in small code snippets like the one in   Fig.~\ref{fig:BitArray}.
+
+Figure~\ref{tab:pentagons} compares die-hard hints and saturation
+hints when used to refine the join and  widening of \Pentagons.
+The figure reports the analyzed assemblies, the total number of analyzed methods, the total number of proof obligations checked (\ie, array creations, lower bounds, and upper bounds), the number of proof obligations validated and the analysis time for the pair-wise gathering operations and two refinements of the \Pentagons\ operations.
+The values in brackets denote the number of methods for which the analysis timed out. 
+Time out was set to 2 minutes.
+Die-hard hints allow \Clousot\ to validate 1 231 accesses more than the pair-wise joins at no extra cost.
+On the other hand, saturation hints induce an average 3x slow-down of the analysis, which causes the analysis to time out for 11 methods, and hence to validate 425 less accesses.
+We manually inspected the analysis logs. 
+We found that  $\tupla{\Pentagons, \hint{\cjoin,\widening}^{d}}$ missed only few validations w.r.t. $\tupla{\Pentagons{}, \hint{\{\cjoin, \widening\} ^\times}^{\rho}}$.
+As a consequence, the use of a saturation procedure with \Pentagons{} seems to be disadvantageous: the cost is too high, and the precision can be recovered by more precise abstract domains anyway.
+Furthermore, we checked some of the proof obligations reported as unproven or unreachable from \Clousot.
+Most of the unproven conditions are caused by the lack of contracts (mainly postconditions and object invariants).
+However, some of the unproven conditions turned out to be real bugs, and the unreachable ones, after fixing some bug of the analyzer, were effectively dead-code.
+
+
+Figure~\ref{tab:subpoly} focuses on the analysis of \code{mscorlib} using \Subpoly{} refined with hints.
+\Subpoly{} is a very expressive abstract domain (as expressive as \Polyhedra), whose inference precision can be fine tuned thanks to hints.
+The first column in the table shows the results of the analysis  with no hints.
+This is roughly equivalent to precisely propagating arbitrary linear equalities and intervals, with limited inference and no propagation of information between linear equalities and intervals. 
+User-provided hints and die-hard hints add more inference power, at the price of a still acceptable slow-down.
+Computed hints (with Octagons and 2D-Convex hull) further slow-down of the analysis, causing the analysis of various methods to time out.
+We manually inspected the analysis logs to investigate the differences.
+Ignoring the methods that timed-out, with respect to $\Subpoly^*$, $\tupla{\Subpoly^*, \hint{\cjoin}^{\hintcomp^\mathit{Oct}} }$ and  $\tupla{\Subpoly^*,  \hint{\cjoin}^{\hintcomp^\mathit{2DCH}}}$ report respectively 125 and  124 less false positives. 
+Out of those, only 13 overlap.
+
+One may wonder if computed hints are needed at all.
+We observed that, when considering annotated code (unfortunately, just a small fraction of the overall codebase at the moment of writing), one needs to refine the operations of the abstract domains with hints in order to get a very low (and hence acceptable) false alarms ratio (around 0.5\%) . 
+In fact, even if (relatively) rare, assertions as in Fig.~\ref{fig:gathering2}(b) and Fig.~\ref{fig:2dhints} are present in real code.
+Thanks to the incremental structure of \Clousot, we do not need to run \Subpoly{} with \emph{all} the hints on \emph{all} the analyzed methods, but we can focus the highest precision only on the few methods which require it.
+
+
+\begin{figure}[t]
+\centering
+\small
+\begin{tabular}{@{}r r | r r r| r r r | r r r@{}}
+                        \multicolumn{2}{c|}{\Subpoly{}} & 
+                        \multicolumn{2}{c}{$\Subpoly^*$}
+                          & Slow &
+                       \multicolumn{2}{c}{$\Subpoly{}^*$ + $ \hint{\cjoin}^{\hintcomp^\mathit{Oct}}$}
+                          & Slow 
+&  \multicolumn{2}{c}{$\Subpoly{}^*$ + $ \hint{\cjoin}^{\hintcomp^\mathit{2DCH}}$} & Slow
+                           \\
+Valid & Time & Valid & Time & down & Valid & Time & down  & Valid & Time & down  \\
+
+\hline
+ 14 230 &  4:29(0) & 14 432 & 20:22(0)     &  4.5x & 13 948 & 81:24(20) & 18.2x & 14 396 & 36:33(7) & 8.1x
+\end{tabular}
+\caption{The experimental results analyzing \code{mscorlib}  with \Subpoly{} and different semantic hints.
+$\Subpoly^*$ denotes $\Subpoly$  refined with $\hint{\diamond}^{\mathsf{pred}}$   and  $\hint{\cjoin,\widening}^{d}$.
+Computed hints significantly slow-down the analysis, but they are needed to reach a very low false alarm ratio.}
+\label{tab:subpoly}
+\sopra
+\end{figure}
+
+
+\sopra
+\section{Conclusions}
+\sopra
+We introduced hints, a technique to systematically refine abstract domain \emph{operations}.
+Hints allow us improving the precision of abstract operation whenever those are not complete, \eg, when  the underlying abstract domain is not a complete lattice (the common case in practice).
+We formalized hints in a relaxed abstract interpretation setting, we proved their soundness, and we distinguished between syntactic and semantics hints.
+We showed how some existing techniques to improve the precision of static analyses, such as widening with thresholds and reductive iterations are just instances of hints.  
+We applied hints to the numerical abstract domains defined in our abstract interpretation-based analyzer, showing how they enable a powerful tuning of the precision/cost ratio.
+However, hints are not restricted to numerical domains, and they can be easily generalized to other kind of domains (for instance, for heap analysis)
+Future work will consider combining hints with other forms of refinement, as domain refinement, counter example-based refinement, and inference of optimal transfer functions.
+
+\bibliographystyle{plain}
+{
+\tiny
+\bibliography{bib}
+}
+
+\end{document}

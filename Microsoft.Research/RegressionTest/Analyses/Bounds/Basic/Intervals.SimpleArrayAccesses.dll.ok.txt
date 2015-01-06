@@ -1,0 +1,121 @@
+Microsoft Clousot, 2007
+Method 1 : Bounds_Test.DirectArrayAccesses.ArrayTestForLengthOk(System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(9,7): The length of the array may be negative 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(10,7): Array access might be above the upper bound
+Checked 3 assertions: 1 correct 2 unknown 
+Validated: 33.3%
+Method 2 : Bounds_Test.DirectArrayAccesses.ArrayTestForLengthNotOk(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(16,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 3 : Bounds_Test.DirectArrayAccesses.ArrayTest0(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(22,7): Array access IS below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(22,7): Array access might be above the upper bound
+Checked 2 assertions: 1 unknown 1 false 
+Validated: 0%
+Method 4 : Bounds_Test.DirectArrayAccesses.ArrayTest1(System.Char[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(28,7): Array access might be below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(28,7): Array access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 5 : Bounds_Test.DirectArrayAccesses.ArrayTest2(System.Boolean[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(35,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 6 : Bounds_Test.DirectArrayAccesses.ArrayTest3(System.Int32,System.Boolean[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(45,9): Array access might be below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(45,9): Array access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 7 : Bounds_Test.DirectArrayAccesses.NewArray0
+Checked 3 assertions: 3 correct 
+Validated: 100%
+Method 8 : Bounds_Test.DirectArrayAccesses.NewArray1(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(63,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 9 : Bounds_Test.DirectArrayAccesses.NewArray2(System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(75,7): Array access might be above the upper bound
+Checked 3 assertions: 2 correct 1 unknown 
+Validated: 66.6%
+Method 10 : Bounds_Test.DirectArrayAccessesWithUInts.UIntTest0(System.Int32[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(84,7): Array access might be below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(84,7): Array access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 11 : Bounds_Test.DirectArrayAccessesWithUInts.UIntTest1(System.Int32[],System.UInt32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(90,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 12 : Bounds_Test.DirectArrayAccessesWithUInts.UIntTest2(System.Int32[],System.UInt32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(96,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 13 : Bounds_Test.DirectArrayAccessesWithUInts.UIntTest3(System.Int32[],System.UInt32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(103,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 14 : Bounds_Test.ArrayNotEqual.GetDefaultMemberName(System.String[])
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 15 : Bounds_Test.DirectArrayAccesses.#ctor
+Ok!
+Method 16 : Bounds_Test.DirectArrayAccessesWithUInts.#ctor
+Ok!
+Method 17 : Bounds_Test.ArrayTraversingWithFor.GoForward0(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(114,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 18 : Bounds_Test.ArrayTraversingWithFor.GoForward1(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(123,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 19 : Bounds_Test.ArrayTraversingWithFor.GoForward2(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(133,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 20 : Bounds_Test.ArrayTraversingWithFor.GoForward3(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(143,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 21 : Bounds_Test.ArrayTraversingWithFor.GoForward4
+Checked 3 assertions: 3 correct 
+Validated: 100%
+Method 22 : Bounds_Test.ArrayTraversingWithFor.GoBackwards0(System.Int32[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(163,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 23 : Bounds_Test.ArrayTraversingWithFor.GoBackwards1(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(172,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 24 : Bounds_Test.ArrayTraversingWithFor.#ctor
+Ok!
+Method 25 : Bounds_Test.ArrayNotEqual.#ctor
+Ok!
+Method 26 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.ArrayWithShift0(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(208,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 27 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.ArrayWithShift(System.Int32[])
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(217,9): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 28 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.ArrayWithModulus(System.Boolean[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(225,7): Array access might be below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(225,7): Array access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 29 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.ArrayWithModulusWithCheckNotOk(System.Boolean[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(236,7): Array access might be below the lower bound 
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(236,7): Array access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 30 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.ArrayWithModulusWithCheckOk(System.Boolean[],System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs(250,7): Array access might be above the upper bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 31 : Bounds_Test.ArrayAccessesWithShiftsAndModulos.#ctor
+Ok!
+Checked 56 assertions: 26 correct 29 unknown 1 false 
+Validated: 46.4%

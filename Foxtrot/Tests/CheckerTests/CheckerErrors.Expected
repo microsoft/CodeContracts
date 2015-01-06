@@ -1,0 +1,23 @@
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(247,7) : error CC1041: Invariant method must be private
+c:\secondCCI\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(8,5) : error CC1038: Member 'Foo.foo' has less visibility than the enclosing method 'Foo.Accessfoo'.
+ (0,0) : error CC1019: Type 'J' specifies the class 'CJ' as its contract class, but that class does not point back to this type.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(33,5) : error CC1037: Exception type CantThrowNonVisibleException+PrivateException in Requires<E> has less visibility than enclosing method CantThrowNonVisibleException.M(System.Int32)
+c:\secondCCI\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(40,5) : error CC1023: Result() can be used only in Ensures.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(42,5) : error CC1023: OldValue() can be used only in Ensures.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(62,5) : error CC1003: Malformed contract. Found Invariant after assignment in method 'InvalidMethodsInPostcondition.ObjectInvariant'.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(51,5) : error CC1002: In method InvalidMethodsInPostcondition.M(System.Int32,System.Int32@): Detected a call to Result with 'System.Boolean', should be 'System.Int32'.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(52,5) : error CC1000: Literal expression in Old expression.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(53,5) : error CC1001: In method InvalidMethodsInPostcondition.M(System.Int32,System.Int32@): Cannot refer to Result in an exceptional postcondition.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(77,5) : error CC1038: Member 'Internal.x' has less visibility than the enclosing method 'Internal.M(System.Int32)'.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(90,5) : warning CC1032: Method 'DerivedClassWithPrecondition.M(System.Int32)' overrides 'BaseClassWithPrecondition.M(System.Int32)', thus cannot add Requires.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(97,5) : error CC1022: Bad use of method 'Contract.Invariant' in method body 'NonSealedClassWithPrivateInvariant.ObjectInvariant'
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(115,5) : warning CC1036: Detected call to method 'PurityTests.NotMarkedPure(System.Int32)' without [Pure] in contracts of method 'PurityTests.M(System.Int32)'.
+Foxtrot\Tests\CheckerTests\CheckerErrors.cs(116,5) : warning CC1036: Detected call to method 'NotPureClass.MethodInNotPureClass(System.Int32)' without [Pure] in contracts of method 'PurityTests.M(System.Int32)'.
+c:\Users\maf\BuddyCCI1\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(125,5) : error CC1004: Malformed contract. Found Requires after assignment in method 'CA1004.M'.
+c:\Users\maf\BuddyCCI1\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(133,5) : error CC1005: Malformed contract. Found Ensures after assignment in method 'CA1005.M'.
+ (0,0) : error CC1006: Type 'CA1006+I' has the attribute [ContractClass], but its argument 'CA1006+CI' is not a class.
+ (0,0) : error CC1008: Class 'CA1008+CK' is annotated as being the contract for the interface 'CA1008+K' but doesn't implement the interface.
+ (0,0) : error CC1009: Class 'CA1009+Bad' is annotated as being the contract for the abstract class 'CA1009+Abstract' but doesn't extend the class.
+ (0,0) : error CC1010: Field 'CA1010.f' is marked [ContractPublicPropertyName("F")], but no public field/property named 'F' with type 'System.Int32' can be found
+ (0,0) : warning CC1020: Contract class 'CA1020+CK' should be an abstract class.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CheckerErrors.cs(261,68) : error CC1042: Explicit use of invariant method 'CA1042+Invariant_NoFlags.CallContractInvariantMethod' is not allowed.

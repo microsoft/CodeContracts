@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\title{Code Contract Samples}
+
+\begin{document}
+\maketitle
+\section{Building}
+The Samples folder is a zip file installed under \%ProgramFiles\%. In
+order to build and use the sample, please copy the folder(s) of
+interest to a writable directory and open the solution there.
+Each folder contains a Visual Studio 2010 solution targetting the .NET
+Framework v4.
+Inside each solution is an individual documentation file for that sample.
+
+\section{Overview}
+\begin{itemize}
+  \item Rational: Shows how to use different levels of runtime
+    checking.
+\item Invariants: Shows how to use runtime checking of object
+  invariants.
+
+\item GCD: Shows how to use the static checker to prove simple
+  arithmetic properties.
+
+\item BinarySearch: Shows how to use the static checker on a binary
+  search example, checking for implicit non-null and array bound
+  obligations.
+
+\item LeapYear: Shows how to use the static checker to prove
+  termination and proper functioning of a date computation.
+
+\item InterfaceContracts: Shows how to declare interface contracts and
+  how the static checker uses them.
+
+\item Chunker: Shows an example of using object invariants together
+  with static checking.
+
+\item ApiProtocols: Shows how to declare API protocols as contracts.
+
+\item NonNullStack: Shows object invariants using quantifiers (ForAll)
+and using caching to avoid reanalysis.
+
+ 
+\end{itemize}
+
+
+\end{document}

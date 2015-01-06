@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--=====================================================================
+  This file defines all the registry keys necessary for CodeTools
+  It should be included (i.e. <?include xxx?>) inside a 
+  registry key component pointing at the correct VS location
+  (HKLM\Software\Microsoft\VisualStudio\<version number>).
+======================================================================-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi" >
+  
+  <!--=====================================================================
+     CodeTools entry for AssemblyInfo
+  ======================================================================-->
+  <RegistryKey Key="CodeTools\AssemblyInfo" Action="createAndRemoveOnUninstall">
+    <RegistryValue Type="string" Name="DisplayName" Value="Assembly Info CodeTools Sample" />
+    <RegistryValue Type="string" Name="InstallDir" Value="[INSTALLDIR]" />
+    
+    <!--=====================================================================
+         propertypane implementation
+    ======================================================================-->
+    <RegistryKey Key="PropertyPages\$(var.PropertyPaneID)">
+      <RegistryValue Name="clsid" Value="$(var.PropertyPaneCLSID)" Type="string" />
+      <RegistryValue Name="category" Value="ConfigPropertyPages" Type="string" />   <!-- or CommonPropertyPages -->
+      <RegistryKey Key="Projects">
+        <RegistryValue Name="CSharp" Value="" Type="string" />
+        <RegistryValue Name="VisualBasic" Value="" Type="string" />
+        <!-- <RegistryValue Name="FSharp" Value="" Type="string" /> -->
+      </RegistryKey>
+    </RegistryKey>
+
+    <!--=====================================================================
+         msbuild integration         
+    ======================================================================-->
+    <RegistryKey Key="CommonTargets\After">
+      <!-- predefined names for the <Import> tag -->
+      <RegistryValue Name="TargetsFile" Value="[INSTALLDIR]AssemblyInfo.targets" Type="string" />
+      <RegistryValue Name="TargetsKind" Value="ImportAfter" Type="string" />    <!-- or ImportBefore -->
+      <RegistryValue Name="TargetsCondition" Value="'$$(AssemblyInfoImported)' != 'true'" Type="string" />
+      <!-- <RegistryValue Name="MSBuildVersion" Value="4.0" Type="string" />  --> <!-- semicolon seperated list of msbuild versions -->
+      <!-- followed by arbitrary values that are set as properties in the msbuild file -->
+      <RegistryValue Name="AssemblyInfoInstallDir" Value="[INSTALLDIR]" Type="string" />
+    </RegistryKey>
+  </RegistryKey>
+
+</Include>

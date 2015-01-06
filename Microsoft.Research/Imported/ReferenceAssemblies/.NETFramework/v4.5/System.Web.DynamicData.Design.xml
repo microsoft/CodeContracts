@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.DynamicData.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.DynamicData.Design.DataControlReferenceCollectionEditor">
+      <summary>Provides a component editor for the data controls collection of the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceCollectionEditor.#ctor(System.Type)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.Design.DataControlReferenceCollectionEditor" /> class by using the specified collection type. </summary>
+      <param name="type">The type of the collection to edit. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceCollectionEditor.CreateCollectionItemType">
+      <summary>Gets the type of the collection to edit.</summary>
+      <returns>The type of the collection to edit.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.Design.DataControlReferenceIDConverter">
+      <summary>Creates a user-selectable collection of data controls.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceIDConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.Design.DataControlReferenceIDConverter" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a collection of available control values.</summary>
+      <returns>A collection that contains the names of the available controls.</returns>
+      <param name="context">An object that provides context information for this type converter.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether the returned control names are an exclusive list of all possible values.</summary>
+      <returns>Always false.</returns>
+      <param name="context">An object that provides context information to this type converter.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether this converter supports a standard set of control names that can be selected from the collection.</summary>
+      <returns>Always true.</returns>
+      <param name="context">An object that provides context information to this type converter.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.Design.DynamicDataManagerDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicDataManagerDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.Design.DynamicDataManagerDesigner" /> class. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.Design.DynamicDataManagerDesigner.ActionLists">
+      <summary>Gets a collection of <see cref="T:System.ComponentModel.Design.DesignerActionList" /> objects.</summary>
+      <returns>A collection of <see cref="T:System.ComponentModel.Design.DesignerActionList" /> objects.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicDataManagerDesigner.GetDesignTimeHtml">
+      <summary>Generates the HTML markup that is used to render the associated <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control at design time.</summary>
+      <returns>The HTML markup that is used to render the associated  <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control at design time.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.Design.DynamicFieldDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.DynamicData.DynamicField" /> object.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.Design.DynamicFieldDesigner" /> class. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.CreateField">
+      <summary>Creates an empty <see cref="T:System.Web.DynamicData.DynamicField" /> object.</summary>
+      <returns>An empty field object.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.CreateField(System.Web.UI.Design.IDataSourceFieldSchema)">
+      <summary>Creates a new <see cref="T:System.Web.DynamicData.DynamicField" /> object by using the specified data field information.</summary>
+      <returns>A new field object.</returns>
+      <param name="fieldSchema">Schema information that contains the structure of the data field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.CreateTemplateField(System.Web.UI.WebControls.DataControlField,System.Web.UI.WebControls.DataBoundControl)">
+      <summary>Creates a <see cref="T:System.Web.UI.WebControls.TemplateField" /> field for the specified data field.</summary>
+      <returns>The new template field.</returns>
+      <param name="dataControlField">The data field object.</param>
+      <param name="dataBoundControl">The data-bound control that contains the data field object.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.Design.DynamicFieldDesigner.DefaultNodeText">
+      <summary>Gets the default text that is displayed for the data field in the fields editor.</summary>
+      <returns>The default text that is displayed for the data field in the fields editor.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.GetNodeText(System.Web.UI.WebControls.DataControlField)">
+      <summary>Gets the name that is displayed for the data field in the fields editor.</summary>
+      <returns>The name that is displayed for the data field in the fields editor.</returns>
+      <param name="dataControlField">The data field object.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.GetTemplateContent(System.Web.UI.WebControls.DataControlField,System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Gets the content of the template field.</summary>
+      <returns>The content of the template field.</returns>
+      <param name="dataControlField">The data field object.</param>
+      <param name="mode">The display mode for the specified data field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.Design.DynamicFieldDesigner.IsEnabled(System.Web.UI.WebControls.DataBoundControl)">
+      <summary>Gets a value that indicates whether the data field is enabled in the fields editor.</summary>
+      <returns>true if the data field is enabled in the fields editor; false if the data field will not be displayed in the fields editor.</returns>
+      <param name="parent">The data-bound control whose data control fields are being edited.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.Design.DynamicFieldDesigner.UsesSchema">
+      <summary>Gets a value that indicates whether schema information is used to load the data fields.</summary>
+      <returns>true in all cases.</returns>
+    </member>
+  </members>
+</doc>

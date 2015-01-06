@@ -1,0 +1,645 @@
+%%
+%% This is file `ucs.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ucs.dtx  (with options: `ucs.sty')
+%% 
+%% Copyright 2001 Dominique Unruh <dominique@unruh.de>
+%% 
+%% This program is provided under the terms of the LaTeX Project Public
+%% License with some modifications.
+%% See the file LICENSE (http://www.unruh.de/DniQ/latex/unicode/content/LICENSE)
+%% for information.
+%% 
+\makeatletter
+\def\unicode@knownoptions{}
+\providecommand\XDeclareUnicodeOption[5]{%
+  \expandafter\newif\csname ifUnicodeOption#2\endcsname
+  \expandafter\def\csname @unicode@option@#2\endcsname{%
+    #3\uni@activate@option{#2}{}{#4}{#5}}%
+  \expandafter\def\csname @unicode@option@no#2\endcsname{%
+    #3\uni@activate@option{#2}{no}{#4}{#5}}%
+  \ifx~#1~\else\LinkUnicodeOptionToPkg{#2}{#1}\fi
+  \let\uc@tempa\\\let\\\relax
+  \edef\unicode@knownoptions{\\{#2}\unicode@knownoptions}%
+  \let\\\uc@tempa
+  }%
+\providecommand\DeclareUnicodeOption[2][]{%
+  \XDeclareUnicodeOption{#1}{#2}{}{}{}}%
+\providecommand\uni@activate@option[5]{%
+  \ifx\uni@dataloaded\undefined
+  \global\expandafter\def\csname @unicode@option@#1\endcsname##1{%
+    \csname UnicodeOption#1true\endcsname
+    \expandafter\def\csname uo-prio-#1\endcsname{##1}#3}%
+  \global\expandafter\def\csname @unicode@option@no#1\endcsname##1%
+    {\csname UnicodeOption#1false\endcsname#4}%
+  \global\expandafter\let\csname uni@active@#1\endcsname1%
+  \csname @unicode@option@#2#1\endcsname{#5}\else
+  \PackageError{ucs}{Option #1 must be activated or deactivated %SPACE
+    at least once in the preamble before using it in the document}{%
+    For optimization causes I must know all %SPACE
+    options before loading any unicode data.\MessageBreak
+    Try e.g. #1 or no#1 as package option to ucs.}\fi}
+\providecommand\LinkUnicodeOptionToPkg[2]{%
+  \AtBeginDocument{\@ifpackageloaded{#2}{\SetUnicodeOption{#1}}{}}}%
+\providecommand\SetUnicodeOption[2][100]{%
+  \edef\uc@temp@a{@unicode@option@#2}%
+  \expandafter\ifx\csname\uc@temp@a\endcsname\relax
+    \PackageError{ucs}{Unknown unicode option #2}{}%
+  \else
+    \csname\uc@temp@a\endcsname{#1}%
+  \fi}
+\ProvidesPackage{ucs}[2002/01/29 UCS: Unicode input support]%
+\input{uni-global.def}%
+\DeclareUnicodeOption{fasterrors}
+\DeclareUnicodeOption{warnunknown}
+\DeclareUnicodeOption{graphics}
+\DeclareUnicodeOption{savemem}
+\DeclareUnicodeOption{document}
+\SetUnicodeOption[1000]{document}
+\DeclareUnicodeOption{default}
+\SetUnicodeOption[0]{default}
+\XDeclareUnicodeOption{}{combine}{}{%
+  \let\uc@cmb\empty}{%
+  \ifx\unicodecombine\undefined\else\unicodecombine\fi
+  \def\uc@cmb{\uc@warn@nocombine}}%
+\AtEndDocument{\unicodecombine}%
+\SetUnicodeOption{nocombine}%
+\providecommand\uc@cmb{\uc@warn@nocombine}%
+\DeclareOption{showmagickern}{\newcommand\uc@magic@glue{6805678}}%
+\DeclareOption{hyperref}{\AtEndOfPackage{\RequirePackage{ucshyper}}}%
+\DeclareOption*{\SetUnicodeOption{\CurrentOption}}\ProcessOptions*
+\AtBeginDocument{\input{ucsencs.def}}
+\ifUnicodeOptiongraphics\RequirePackage{graphicx}\fi
+\DeclareRobustCommand\unicode@numtohex[3]{%
+  {%\let\empty\relax\relax
+   %\ifx\empty\relax\def\empty{}%
+     \count255=#2\relax\gdef#1{}%
+     \count252=#3%
+     \loop
+     \count253=\count252\advance\count253by\count255\relax
+     \ifnum\count253>0%
+     \ifnum\count252>0\advance\count252by-1\relax\fi
+     \count254=\count255%
+     \divide\count255by16%
+     \multiply\count255by16%
+     \advance\count254by-\count255%
+     \xdef#1{\ifcase\count254 0\or1\or2\or3\or4\or5\or6\or7\or
+       8\or9\or A\or B\or C\or D\or E\or F\fi#1}%
+     \divide\count255by16\relax
+     \repeat
+   %\else
+   %  \def#1{dec:#2}%
+   %\fi
+   }}
+\let\uc@spc\space
+\newcount\uc@secondtry
+\newcommand\unicode@invalid[1]{%
+  \unicode@combine%
+  \ifUnicodeOptiongraphics{%
+  \let\cjk0%
+  \ifnum#1<"3400\else\ifnum#1>"4DB5\else
+    \let\cjk1\relax\fi\fi
+  \ifnum#1<"4E00\else\ifnum#1>"9FA5\else
+    \let\cjk1\relax\fi\fi
+  \unicode@numtohex\uc@temp@a{#1}4%
+  \count255=#1\relax
+  \divide\count255 by256\relax
+  \unicode@numtohex\uc@temp@b{\count255}2%
+  \ifx\unicode@graphicsdir\undefined
+    \def\uc@temp@d{}%
+  \else
+    \edef\uc@temp@d{\unicode@graphicsdir/}%
+  \fi
+  \ifx\cjk0%
+    \edef\uc@temp@c{charts.unicode.org/Glyphs/\uc@temp@b/U\uc@temp@a}%
+  \else
+    \edef\uc@temp@c{charts.unicode.org/unihan/UnihanCache/Unihan/%
+      \uc@temp@b/\uc@temp@a}%
+  \fi
+  \IfFileExists{\uc@temp@d\uc@temp@c.ps}{}{%
+    \edef\command@a{wget \ifx\uc@temp@d\empty\else
+      -P \uc@temp@d\uc@spc\fi
+      -x http://\uc@temp@c.gif}%
+    \edef\command@b{giftopnm <\uc@temp@d\uc@temp@c.gif |\MessageBreak
+      pnmtops >\uc@temp@d\uc@temp@c.ps}%
+    \def\MessageBreak{ }%
+    \immediate\write18{\command@a; \command@b}%
+    }%
+ \IfFileExists{\uc@temp@d\uc@temp@c.ps}{%
+    \setbox255=\hbox{X}%
+    \edef\uc@temp@b{\begingroup\noexpand\uni@resetcatcodes\ifx\cjk0%
+      \noexpand\includegraphics[height=\the\ht255, trim=0 22.5 0 17.5]%
+                      {\uc@temp@d\uc@temp@c.ps}%
+    \else
+      \noexpand\includegraphics[height=\the\ht255, trim=0 4 0 3]%
+                      {\uc@temp@d\uc@temp@c.ps}%
+    \fi
+    \noexpand\ProvidesFile{\ifx\cjk0U\fi\uc@temp@a.ps}%
+        [Downloaded glyph for U+\uc@temp@a]%
+    \endgroup}%
+  %\typeout{\meaning\uc@temp@b}%
+  \expandafter\unicodevirtual\expandafter{\uc@temp@b}%
+  }{%
+    \PackageWarning{ucs}{File \uc@temp@d\uc@temp@c.ps %SPACE
+      not found.\MessageBreak
+      Use\MessageBreak\MessageBreak
+      \command@a\MessageBreak
+      \command@b\MessageBreak\MessageBreak
+      or start latex with option -shell-escape\MessageBreak
+      if you have not already done so.}%
+    \unicodevirtual{\unicode@invalidglyph{#1}}}}\else
+    \unicodevirtual{\unicode@invalidglyph{#1}}\fi}
+\newcommand\unicode@invalidglyph[1]{%
+  {\unicode@numtohex\uc@temp@d{#1}4%
+    \fontencoding{OT1}\ttfamily[U+\uc@temp@d]}}
+\newcommand\uni@char[1]{%
+  \expandafter\ifx\csname u-\number#1-h/o\endcsname\relax
+    \begingroup
+      % In case \let is not executed, this (until ===) expands
+      % to \let\relax\relax,
+      % otherwise we have \let\uc@notloaderr\@gobble
+      % Number of \empty's must equal number of args of \uc@char@notloaded
+      \let\uc@notloaderr\@gobble\empty\@gobbletwo\relax\relax
+      % ===
+    \expandafter\endgroup
+    % If \let not executed: \utf@viii@undeferr is called
+    % otherwise: \utf@viii@undef.
+    \uc@notloaderr{\number#1}\uc@char@notloaded{#1}%
+  \else
+   \expandafter\expandafter\expandafter\uc@checkopts
+     \expandafter\expandafter\expandafter
+     {\csname u-\number#1-h/o\endcsname}{#1}%
+  \fi
+}
+\begingroup
+  \lccode`\A=`\{\lccode`\B=`\}\lccode`\C=`\\%
+  \lccode`\P=`\P\lccode`\U=`\U%
+  \lowercase{%
+\endgroup
+  \newcommand\uc@notloaderr[3]{%
+    \ifx\@gobble#1\else[Please insert %SPACE
+      CPrerenderUnicodeACunicharA#1BB into preamble]\fi}}
+\newcommand\uc@checkopts[2]{%
+  \expandafter\uc@checkopt@error\expandafter{\number#2}%
+    {error}{error}{infinity}#1\@nil
+}
+\expandafter\newcommand\csname uo-prio-infinity\endcsname{-2100000000}
+%% === BEGIN AUTOGENERATED CODE
+\newcommand\uc@checkopt@stick[5]{%
+  \ifx\@nil#5%
+\expandafter\ifx\csname u-#2-#1\endcsname\relax
+  \uc@localdeferr{#1}{#2}%
+\else
+  \uc@output{\csname u-#2-#1\endcsname}{#1}%
+\fi
+    \expandafter\@gobblefour
+  \else
+    \iftrue\csname fi\endcsname
+    \csname ifUnicodeOption#5\endcsname
+      \ifnum\csname uo-prio-#2\endcsname>\csname uo-prio-#5\endcsname\uc@spc
+        \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+        \uc@checkopt@stick
+      \else
+        \ifnum\csname uo-prio-#2\endcsname<\csname uo-prio-#5\endcsname\uc@spc
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@change
+        \else
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@error
+        \fi
+      \fi
+    \else
+      \expandafter\expandafter\expandafter\uc@checkopt@stick
+    \fi
+  \fi
+  {#1}{#2}{#5}{#2}%
+}
+\newcommand\uc@checkopt@change[5]{%
+  \ifx\@nil#5%
+\expandafter\ifx\csname u-#3-#1\endcsname\relax
+  \uc@localdeferr{#1}{#3}%
+\else
+  \uc@output{\csname u-#3-#1\endcsname}{#1}%
+\fi
+    \expandafter\@gobblefour
+  \else
+    \iftrue\csname fi\endcsname
+    \csname ifUnicodeOption#5\endcsname
+      \ifnum\csname uo-prio-#3\endcsname>\csname uo-prio-#5\endcsname\uc@spc
+        \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+        \uc@checkopt@stick
+      \else
+        \ifnum\csname uo-prio-#3\endcsname<\csname uo-prio-#5\endcsname\uc@spc
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@change
+        \else
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@error
+        \fi
+      \fi
+    \else
+      \expandafter\expandafter\expandafter\uc@checkopt@stick
+    \fi
+  \fi
+  {#1}{#3}{#5}{#3}%
+}
+\newcommand\uc@checkopt@error[5]{%
+  \ifx\@nil#5%
+\uc@errordrawopt{#1}{#2, #3}{#4}%
+    \expandafter\@gobblefour
+  \else
+    \iftrue\csname fi\endcsname
+    \csname ifUnicodeOption#5\endcsname
+      \ifnum\csname uo-prio-#4\endcsname>\csname uo-prio-#5\endcsname\uc@spc
+        \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+        \uc@checkopt@errorstick
+      \else
+        \ifnum\csname uo-prio-#4\endcsname<\csname uo-prio-#5\endcsname\uc@spc
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@change
+        \else
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@error
+        \fi
+      \fi
+    \else
+      \expandafter\expandafter\expandafter\uc@checkopt@errorstick
+    \fi
+  \fi
+  {#1}{#2, #3}{#5}{#4}%
+}
+\newcommand\uc@checkopt@errorstick[5]{%
+  \ifx\@nil#5%
+\uc@errordrawopt{#1}{#2}{#4}%
+    \expandafter\@gobblefour
+  \else
+    \iftrue\csname fi\endcsname
+    \csname ifUnicodeOption#5\endcsname
+      \ifnum\csname uo-prio-#4\endcsname>\csname uo-prio-#5\endcsname\uc@spc
+        \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+        \uc@checkopt@errorstick
+      \else
+        \ifnum\csname uo-prio-#4\endcsname<\csname uo-prio-#5\endcsname\uc@spc
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@change
+        \else
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter
+          \uc@checkopt@error
+        \fi
+      \fi
+    \else
+      \expandafter\expandafter\expandafter\uc@checkopt@errorstick
+    \fi
+  \fi
+  {#1}{#2}{#5}{#4}%
+}
+\let\unicode@empty\empty
+\newcommand\uc@errordrawopt[3]{%
+  \let\unicode@empty\relax\relax
+  \ifx\unicode@empty\relax\let\unicode@empty\empty
+    \unicode@numtohex\uc@temp@b{#1}4%
+    \ifnum\csname uo-prio-#3\endcsname=-2100000000\relax
+      \expandafter\ifx\csname
+        missing-unicode-warned-\number#1\endcsname\relax
+        \global\expandafter\let\csname
+          missing-unicode-warned-\number#1\endcsname\@ne
+        \unicode@error@unknown\@ne{Character \number#1\uc@spc
+          \uc@spc= U+\uc@temp@b\uc@spc
+          matches no activated options.\MessageBreak
+          Type H to see available options}{#1}%
+      \else
+        \PackageWarning{ucs}{Character % SPACE
+          \number#1 \uc@spc= 0x\uc@temp@b\uc@spc
+          appeared again.}%
+      \fi
+    \else
+      \@getcharinfo\uc@temp@c{#1}%
+      \PackageWarning{ucs}{Character %SPACE
+        \number#1 \uc@spc= 0x\uc@temp@b\uc@spc
+        matches options\MessageBreak
+        \uc@spc\uc@spc\uc@spc#2\MessageBreak
+        with same priority \csname uo-prio-#3\endcsname. %SPACE
+        Selecting option #3.\MessageBreak
+        \uc@temp@c}%
+      \uc@output{\csname u-#3-#1\endcsname}{#1}%
+    \fi
+  \else
+    \noexpand\unichar{#1}%
+  \fi
+}
+\newcommand\uc@output[2]{%
+  \ifx\unicode@delay1\let\unicode@delay\relax\else
+    \ifUnicodeOptioncombine
+      \expandafter\uc@combine\expandafter{#1}{#2}%
+    \else
+      \uc@prechar@exec{#2}%
+      \ifx\unicode@charfilter\undefined
+        #1{}%
+      \else
+        \unicode@charfilter{#1{}}%
+      \fi
+    \fi
+    \ifx\uc@throw\undefined\else
+      \def\uc@got{#2}\uc@throw\global\let\uc@throw\undefined\fi
+  \fi
+}%
+\newcommand\uc@prechar@exec[1]{%
+  \ifx\uc@prechar\undefined\else\uc@prechar{#1}\fi}
+\newcommand\uc@localdeferr[2]{%
+  \@getcharinfo\uc@temp@a{#1}%
+  \PackageError{ucs}{Internal error in character \number#1, %SPACE
+    option #2}{I probably got confused by intermixed local %SPACE
+    and global definitions.\MessageBreak Try to load the needed %SPACE
+    code page via \noexpand\PreloadUnicodePage
+    before declaring anything by yourself.}{\uc@temp@a}%
+  \unicode@invalid{#1}%
+}%
+\newcommand\uc@warn@nocombine{%
+  \PackageError{ucs}{Please activate option 'combine'}{Composed %SPACE
+    characters can only be rendered correctly, when the option %SPACE
+    'combine' is activated}}
+\newtoks\uc@combtoks
+\newtoks\uc@combtoksb
+\newtoks\uc@temptokena
+\newcommand\unicode@combine{%
+  \uc@check@magicglue%
+  \ifx\uc@combining@prechar\undefined\let\uc@comb@code\undefined\fi
+  \ifx\uc@comb@code\undefined\uc@temptokena{}\else
+    \uc@temptokena\expandafter{\expandafter\uc@prechar@exec
+      \expandafter{\uc@comb@code}}\fi%
+  \global\let\uc@comb@code\undefined
+  \global\expandafter\expandafter\expandafter\expandafter\expandafter
+  \expandafter\expandafter\uc@combtoksb
+  \expandafter\expandafter\expandafter
+  \expandafter\expandafter\expandafter\expandafter{%
+    \expandafter\expandafter\expandafter\the
+    \expandafter\expandafter\expandafter\uc@combtoksb
+    \expandafter\the\expandafter\uc@temptokena\the\uc@combtoks}%
+  \global\uc@combtoks{}}
+\providecommand\uc@magic@glue{5381}
+\newcommand\uc@check@magicglue{%
+  \ifnum\lastskip=\uc@magic@glue\unskip\else
+    \begingroup
+      \edef\uc@temp@a{\the\uc@combtoks}%
+      \ifx\uc@temp@a\empty\else
+      \PackageWarning{ucs}{Magic kern expected. Probably some %SPACE
+        non-unicode characters mixed in while option combine was %SPACE
+        in effect.}\fi\endgroup
+  \fi}
+\newcommand\unicodevirtual[1]{%
+  \def\uc@temp@a##1{#1}\uc@output{\csname uc@temp@a\endcsname}{"FFFF}}
+\newcommand\unicodecombine{%
+  \unicode@combine%
+  \the\uc@combtoksb
+  \uc@prechar@exec{-1}%
+  \global\uc@combtoksb{}%
+    \ifx\uc@throw\undefined\else
+      \def\uc@got{-1}\uc@throw\global\let\uc@throw\undefined\fi
+}
+\newcommand\uc@combine[2]{%
+  \@temptokena\expandafter{#1{}}%
+  \expandafter\expandafter\expandafter\ifx
+  \expandafter\uc@firstofmany\the\@temptokena\uc@firstofmany\uc@cmb
+    \uc@check@magicglue%
+    \uc@combtoks\expandafter\expandafter\expandafter\expandafter
+    \expandafter\expandafter\expandafter{%
+      \expandafter\expandafter\expandafter\@gobble
+      \expandafter#1\expandafter{\the\uc@combtoks}}%
+  \else
+    \unicode@combine%
+    \xdef\uc@comb@code{\number#2}%
+    \global\uc@combtoks\expandafter{#1{}}%
+  \fi
+  %\typeout{->COMBTOKS: \the\uc@combtoks}%
+  \hskip\uc@magic@glue spplus0ptminus0pt %SPACE ; Insert magic glue
+}
+\newcommand\uc@char@notloaded[1]{%
+  \count255=#1\divide\count255 by 256%
+  \edef\uc@temp@a{uni-\number\count255.def}%
+  \expandafter\ifx\csname\uc@temp@a\endcsname\relax\else
+    \uc@secondtry#1\relax\fi
+  \ifnum\uc@secondtry=#1\relax
+    % If the file has already been loaded, but the character is unknown,
+    % output an error and show the replacement glyph
+    \unicode@numtohex\uc@temp@b{#1}4%
+    \expandafter\ifx\csname
+      missing-unicode-warned-\number#1\endcsname\relax
+    \global\expandafter\let\csname
+      missing-unicode-warned-\number#1\endcsname\@ne
+      \unicode@error@unknown\@ne{Unknown unicode character % SPACE
+        \number#1 \uc@spc= U+\uc@temp@b,\MessageBreak
+        possibly declared in \uc@temp@a.\MessageBreak
+        Type H to see if it is available with options}{#1}%
+    \else
+      \PackageWarning{ucs}{Unknown character % SPACE
+        \number#1 \uc@spc = 0x\uc@temp@b\uc@spc
+        appeared again.}%
+      \unicode@invalid{#1}%
+    \fi
+  \else
+    \begingroup
+    \ifUnicodeOptionsavemem
+    \else
+      \global\expandafter\let\csname\uc@temp@a\endcsname\@ne
+    \fi
+    \def\uc@got{#1}%
+    \uni@resetcatcodes
+    \expandafter\InputIfFileExists\expandafter{\uc@temp@a}{%
+      \global\let\uni@dataloaded1%
+      }{%
+      }%
+      % End of local group for inputted file
+    \endgroup
+      % Retry displaying character. This won't cause infinite recursion,
+      % because we have marked this file as loaded (globally or, if
+      % |savemem| is set, at least here).
+    \uc@secondtry#1\relax%
+    \uni@char{#1}%
+  \fi
+  }
+\newcommand\PreloadUnicodePage[1]{%
+  \begingroup
+  \global\expandafter\let\csname uni-#1.def\endcsname\@ne
+  \uni@resetcatcodes
+  \InputIfFileExists{uni-#1.def}{\let\uni@dataloaded1}{%
+    \PackageError{ucs}{Could not find uni-#1.def}{}}%
+  \endgroup}
+\newcommand\PrerenderUnicode{%
+  \@ifstar{\@prerenderunicode\unichar}{\@prerenderunicode\@gobble}}%
+\newcommand\@prerenderunicode[2]{%
+  \begingroup\let#1\@gobble\setbox0\hbox{#2}\endgroup}
+\newcommand\DeclareUnicodeCharacter[2]{%
+  \DeclareUnicodeCharacterAsOptional{#1}{document}{#2}}
+\def\@gobblethree#1#2#3{}%
+\newcommand\DeclareUnicodeCharacterAsOptional{%
+  \let\uc@temp@a\relax\uni@declcharopt}
+\newcommand\uc@dclc[2]{%
+  \let\next=\uni@declcharopt
+  \ifUnicodeOptionsavemem
+    \ifnum\uc@got=#1\else
+      \let\next=\@gobblethree\fi
+  \fi
+  \ifx\next\uni@declcharopt
+    \expandafter\ifx\csname uni@active@#2\endcsname\relax
+      \let\next\@gobblethree\else
+    \expandafter\ifx\csname u-#2-\number#1\endcsname\relax\else
+      \let\next\@gobblethree\fi\fi
+    \let\uc@temp@a\global
+  \fi
+  \next{#1}{#2}}
+\newcommand\uni@declcharopt[3]{%
+  %\typeout{Defining: u-#2-\number#1 (\meaning\uc@temp@a)}%
+  \ifx\utf@viii@map\undefined\else
+    \expandafter\utf@viii@map\expandafter{\number#1}\fi
+  \expandafter\uc@temp@a\expandafter\def
+    \csname u-#2-\number#1\endcsname##1{#3}%\fi
+  \expandafter\ifx\csname u-\number#1-h/o\endcsname\relax
+    \expandafter\def\csname u-\number#1-h/o\endcsname{}\fi
+  \expandafter\uc@temp@a\expandafter\edef
+    \csname u-\number#1-h/o\endcsname{%
+    {#2}\csname u-\number#1-h/o\endcsname}%
+  }%
+\let\unichar\uni@char
+\newcommand\unicodesuper[1]{\textsuperscript{#1}}%
+\newcommand\unicodesub[1]{%
+  \@latex@error{\protect\unicodesub\uc@spc not supported}\@eha}
+\newcommand\unicodecircle[1]{%
+  \@latex@error{\protect\unicodecircle\uc@spc not supported}\@eha}
+\newcommand\unicodesquare[1]{%
+  \@latex@error{\protect\unicodesquare\uc@spc not supported}\@eha}
+\newcommand\unicodevertical[1]{%
+  \@latex@error{\protect\unicodevertical\uc@spc not supported}\@eha}
+\newcommand\unicodewide[1]{%
+  \@latex@error{\protect\unicodewide\uc@spc not supported}\@eha}
+\newcommand\unicodesmall[1]{%
+  \@latex@error{\protect\unicodesmall\uc@spc not supported}\@eha}
+\newcommand\@getcharinfo[2]{%
+  \begingroup
+  \countdef\uc@got0\relax\uc@got#2\relax
+  \global\def#1{Character's name unknown}%
+  \def\info##1{\xdef#1{##1}}%
+  \uni@resetcatcodes
+  \ifUnicodeOptionfasterrors
+  \global\def#1{No further informations known % SPACE
+    because of option fasterrors.}\else
+  {\InputIfFileExists{uninames.dat}{}{%
+    \global\def#1{Character database uninames.dat not found. %SPACE
+      \MessageBreak Character \number#2 \uc@spc unknown}}}%
+  \fi
+  \toks255{}%
+  \def\uc@dclc##1##2##3{\ifnum##1=\uc@got
+    \toks255\expandafter{\the\toks255, ##2}\fi}%
+  \count255\uc@got\divide\count255by256\relax
+  %\edef\temp@a{uni-\number\count255.def}%
+  \InputIfFileExists{uni-\number\count255.def}{}{}%
+  \expandafter\ifx\expandafter\@nil\the\toks255 \@nil
+    \xdef#1{#1\noexpand\MessageBreak
+      Character is not defined in uni-*.def files}%
+  \else
+    \expandafter\expandafter\expandafter\@getcharinfo@
+    \expandafter\expandafter\expandafter#1%
+    \expandafter\expandafter\expandafter
+    {\expandafter#1\expandafter}\the\toks255 \@nil%
+  \fi
+  \endgroup}
+\def\@getcharinfo@#1#2, #3\@nil{\gdef#1{#2\MessageBreak
+    Character available with following options:\MessageBreak
+    \uc@spc\uc@spc\uc@spc #3}}
+\newcommand\PrintUnicodeName[1]{{%
+  \@getcharinfo{\ci}{#1}%
+  \def\MessageBreak{^^J}%
+  \typeout{^^J\ci^^J}}}
+\newcommand\UnicodeCharFilter[1]{\let\unicode@charfilter=#1}
+\newcommand\uni@resetcatcodes{%
+  \endlinechar=13\relax
+  \def\reserved@a##1##2{%
+    \@tempcnta##1\relax
+    \@tempcntb##2\relax
+    \reserved@b
+    }%
+  \def\reserved@b{%
+    \ifnum\@tempcnta>\@tempcntb\else
+    \reserved@c\@tempcnta
+    \advance\@tempcnta\@ne
+    \expandafter\reserved@b
+    \fi
+    }%
+  \catcode`\ =10\relax
+  \catcode`\#=6\relax
+  \catcode`\$=3\relax
+  \catcode`\%=14\relax
+  \catcode`\&=4\relax
+  \catcode`\\=0\relax
+  \catcode`\^=7\relax
+  \catcode`\_=8\relax
+  \catcode`\{=1\relax
+  \catcode`\}=2\relax
+  \catcode`\~=13\relax
+  \catcode`\@=11\relax
+  \catcode`\^^I=10\relax
+  \catcode`\^^J=12\relax
+  \catcode`\^^L=12\relax
+  \catcode`\^^M=5\relax
+  \def\reserved@c##1{\catcode##1=12\relax}%
+  \reserved@c{`\!}%
+  \reserved@c{`\"}%
+  \reserved@a{`\'}{`\?}%
+  \reserved@c{`\[}%
+  \reserved@c{`\]}%
+  \reserved@c{`\`}%
+  \reserved@c{`\|}%
+  \def\reserved@c##1{\catcode##1=11\relax}%
+  \reserved@a{`\A}{`\Z}%
+  \reserved@a{`\a}{`\z}%
+  \def\reserved@c##1{\catcode##1=15\relax}%
+  \reserved@a{0}{`\^^H}%
+  \reserved@c{`\^^K}%
+  \reserved@a{`\^^N}{31}%
+  \catcode"7F=15\relax
+  \relax}
+\catcode`\!13\relax
+\DeclareRobustCommand\unicode@error@unknown[3]{%
+  {\expandafter\countdef\expandafter\uc@got\expandafter0%
+     \expandafter\relax\expandafter\uc@got\number#3\relax
+  \ifx\measuring@false\undefined\else\measuring@false\fi
+  \@getcharinfo\uc@temp@c{#3}%
+  \ifUnicodeOptionwarnunknown
+    \PackageWarning{ucs}{#2\MessageBreak\uc@temp@c.\MessageBreak
+        Enter I\noexpand!<RET> to define the glyph.}%
+    \ifx#1\@ne\unicode@invalid{#3}\fi
+  \else
+    \let!\unicode@read@definition\catcode`\!13\relax
+    \let\uc@read@definition\undefined
+    \PackageError{ucs}{#2}{\uc@temp@c.\MessageBreak
+        Enter I\noexpand!<RET> to define the glyph.}%
+    \ifx#1\@ne
+    \ifx\uc@read@definition\undefined\unicode@invalid{#3}%
+    \else\uc@read@definition\fi\fi
+  \fi}}
+\catcode`\!12\relax
+\newcommand\unicode@read@definition{%
+  \uni@resetcatcodes
+  \typein[\definition]{Please enter definition for %SPACE
+    unicode character \number\uc@got}%
+  \global\let\uc@read@definition\definition
+  \toks255\expandafter{\definition}%
+  \edef\definition{\noexpand\DeclareUnicodeCharacter%
+    {\number\uc@got}{\the\toks255}}%
+  \toks255\expandafter{\definition}%
+  \typeout{Tip:\MessageBreak You may include\MessageBreak
+    \uc@spc\uc@spc\the\toks255\MessageBreak
+    into your document source.}%
+  \the\toks255\relax
+  }
+\def\uc@firstofmany#1#2\uc@firstofmany{#1}

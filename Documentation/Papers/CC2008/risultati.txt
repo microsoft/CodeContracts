@@ -1,0 +1,70 @@
+(f: time is meaningless, as I tried on different pcs, and running many programs, etc.)
+
+*** Clousot Normale: -bounds iw+
+c:\cci\System.Compiler.Analysis\bin\Debug>clousot.exe -bounds iw+ -clb -cub mscorlib.dll -silent
+Microsoft Clousot, 2007
+21073;
+Statistics
+Bounds Analysis Results
+        Checked 17057 : Validated 14147  Unknown 2910   that is 82.9 %
+time 8:50min
+pentagons statistics Max size : 368
+Average size: 6.29349738273494
+allocated memory 320
+Done!
+
+*** Clousot Con Eval depth negli intervalli == 2
+c:\cci\System.Compiler.Analysis\bin\Debug>clousot.exe -bounds iw -clb -cub mscorlib.dll -silent
+Microsoft Clousot, 2007
+21073;
+Statistics
+Bounds Analysis Results
+        Checked 17057 : Validated 13986  Unknown 3071   that is 81.9 %
+time 7:13min
+pentagons statistics Max size : 368
+Average size: 6.23609843038418
+allocated memory 337
+Done!
+
+** Clousot ignorando le condizioni booleane
+c:\cci\System.Compiler.Analysis\bin\Debug>clousot.exe -bounds iw+ -clb -cub mscorlib.dll -silent
+Microsoft Clousot, 2007
+21073;
+Statistics
+Bounds Analysis Results
+        Checked 17066 : Validated 12968  Unknown 4098   that is 75.9 %
+time 8:8min
+pentagons statistics Max size : 368
+Average size: 6.43233783056077
+allocated memory 309
+Done!
+
+** Clousot con ToPolynomial "tagliato" a due 
+E:\CCI\System.Compiler.Analysis\bin\Debug>clousot.exe -bounds iw mscorlib.dll -s
+ilent -clb -cub
+Microsoft Clousot, 2007
+21073;
+Statistics
+Bounds Analysis Results
+        Checked 17057 : Validated 14087  Unknown 2970   that is 82.5 %
+time 12:49min
+pentagons statistics Max size : 368
+Average size: 6.34320543215811
+allocated memory 307
+Done!
+
+
+*** Clousot con ToPolynomial "tagliato" a due e Con Eval depth negli intervalli == 2
+E:\CCI\System.Compiler.Analysis\bin\Debug>clousot.exe -bounds iw mscorlib.dll -s
+ilent -clb -cub
+Microsoft Clousot, 2007
+21073;
+Statistics
+Bounds Analysis Results
+        Checked 17057 : Validated 13934  Unknown 3123   that is 81.6 %
+time 12:25min
+pentagons statistics Max size : 368
+Average size: 6.22196818868007
+allocated memory 309
+
+*** Clousot senza HackForExpressions

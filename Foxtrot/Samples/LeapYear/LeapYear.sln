@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{DED02FD5-6039-4772-AA74-F8986D59977B}"
+	ProjectSection(SolutionItems) = preProject
+		LeapYear.pdf = LeapYear.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZuneDate", "ZuneDate.csproj", "{7A819358-AF58-430E-9DE1-EFD714A5AE5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{8D156DD0-12C9-4E35-9729-DD4BFB97DE16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A819358-AF58-430E-9DE1-EFD714A5AE5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A819358-AF58-430E-9DE1-EFD714A5AE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A819358-AF58-430E-9DE1-EFD714A5AE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A819358-AF58-430E-9DE1-EFD714A5AE5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D156DD0-12C9-4E35-9729-DD4BFB97DE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D156DD0-12C9-4E35-9729-DD4BFB97DE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D156DD0-12C9-4E35-9729-DD4BFB97DE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D156DD0-12C9-4E35-9729-DD4BFB97DE16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

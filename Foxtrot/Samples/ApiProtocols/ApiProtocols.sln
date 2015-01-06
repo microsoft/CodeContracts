@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{5E1FBB03-0129-4CC5-83B4-686E33DD5794}"
+	ProjectSection(SolutionItems) = preProject
+		ApiProtocols.pdf = ApiProtocols.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProtocols", "ApiProtocols.csproj", "{115E2108-36E4-4B98-9BA3-01D0E4691F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{F9625955-9E09-4444-9586-573FB788E3BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{115E2108-36E4-4B98-9BA3-01D0E4691F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115E2108-36E4-4B98-9BA3-01D0E4691F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115E2108-36E4-4B98-9BA3-01D0E4691F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115E2108-36E4-4B98-9BA3-01D0E4691F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9625955-9E09-4444-9586-573FB788E3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9625955-9E09-4444-9586-573FB788E3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9625955-9E09-4444-9586-573FB788E3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9625955-9E09-4444-9586-573FB788E3BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

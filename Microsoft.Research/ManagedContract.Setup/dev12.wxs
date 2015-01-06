@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Property Id="VS12DEVENV" Secure="yes">
+      <RegistrySearch
+        Id="VS12DevEnvSearch"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS"
+        Name="EnvironmentPath"
+        Type="raw" />
+    </Property>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="VS12EXPRESSDEVENV" Secure="yes">
+      <RegistrySearch
+        Id="VS10ExpressDevEnvSearch"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VCSExpress\12.0\Setup\VS"
+        Name="ProductDir"
+        Type="raw" />
+    </Property>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="VS2013DEVENV" Secure="yes">
+      <RegistrySearch Id="VS2013DevEnvSearch" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS" Name="EnvironmentPath" Type="raw" />
+    </Property>
+  </Fragment>
+  
+  <Fragment>
+    <CustomAction Id="VS2013Setup" Property="VS2013DEVENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <PropertyRef Id="VS2013DEVENV" />
+    
+    <InstallExecuteSequence>
+      <Custom Action="VS2013Setup" Before="InstallFinalize" Overridable="yes">VS2013DEVENV</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+<!--
+  <Fragment>
+    <CustomAction Id="VS10Setup" Property="VS10DEVENV" ExeCommand="/setup" Execute="deferred" Return="ignore" Impersonate="no" />
+    <PropertyRef Id="VS10DEVENV" />
+    <InstallExecuteSequence>
+      <Custom Action="VS10Setup" Before="InstallFinalize" Overridable="yes">VS10DEVENV</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+-->
+  <Fragment>
+    <Property Id="VS12_ITEMTEMPLATES_DIR" Secure="yes">
+      <RegistrySearch Id="VS12DevEnvForItemTemplatesSearch" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS" Name="EnvironmentPath" Type="raw">
+        <DirectorySearch Id="VS12ItemTemplatesPathSearch" Path="ItemTemplates" Depth="1" />
+      </RegistrySearch>
+    </Property>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="VS12_PROJECTTEMPLATES_DIR" Secure="yes">
+      <RegistrySearch Id="VS12DevEnvForProjectTemplatesSearch" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS" Name="EnvironmentPath" Type="raw">
+        <DirectorySearch Id="VS12ProjectTemplatesPathSearch" Path="ProjectTemplates" Depth="1" />
+      </RegistrySearch>
+    </Property>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="VS12_SCHEMAS_DIR" Secure="yes">
+      <RegistrySearch Id="VS12ProductPathSearch" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="12.0" Type="raw">
+        <DirectorySearch Id="VS12XmlPathSearch" Path="Xml" Depth="1">
+          <DirectorySearch Id="VS12XmlSchemasPathSearch" Path="Schemas" Depth="1" />
+        </DirectorySearch>
+      </RegistrySearch>
+    </Property>
+  </Fragment>
+
+  <!-- Indicates whether the Visual C# project system is installed as a part of  -->
+  <!-- Visual Studio 2008 standard or higher. If this property is set, that      -->
+  <!-- means Visual Studio 2008 standard or higher is installed and the Visual   -->
+  <!-- C# language tools were installed as a part of VS 2008 setup.              -->
+  <Fragment>
+    <Property Id="VS12_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED" Secure="yes">
+      <RegistrySearch Id="SearchForVCS11ProjectSystemUnderVSSetup" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}" Name="DefaultProjectExtension" Type="raw" />
+    </Property>
+  </Fragment>
+  
+  <!-- Indicates whether the Visual Studio Team Test project system is installed -->
+  <Fragment>
+    <Property Id="VS12_IDE_VSTS_TESTSYSTEM_INSTALLED" Secure="yes">
+      <RegistrySearch Id="SearchForVSTS11TestSystemUnderVSSetup" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\12.0\Projects\{3AC096D0-A1C2-E12C-1390-A8335801FDAB}" Name="Package" Type="raw" />
+    </Property>
+  </Fragment>
+
+  <!-- Indicates whether the Visual Studio Team Dev Tools is installed -->
+  <!--  -->
+  <!-- twepoiuadidasjgfksjdfnmncxzbxiuwpaituaqskg -->
+  <!-- old: doesn't work for contracts
+  <Fragment>    
+    <Property Id="VS12_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS11DevToolsUnderVSSetup"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\12.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
+        Type="raw"
+        />
+    </Property>
+  </Fragment>
+
+  <Fragment>
+    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS90DevToolsUnderVSSetup"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
+        Type="raw"
+        />
+    </Property>
+  </Fragment>
+  -->
+  <Fragment>
+    <CustomAction Id="VS12InstallVSTemplates" Property="VS12DEVENV" ExeCommand="/InstallVSTemplates" Execute="deferred" Return="ignore" Impersonate="no" />
+    <PropertyRef Id="VS12DEVENV" />
+    <InstallExecuteSequence>
+      <Custom Action="VS12InstallVSTemplates" Before="InstallFinalize" Overridable="yes">VS12DEVENV</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+  <!-- Location of the Visual Studio 2013 root installation directory. -->
+  <Fragment>
+    <Property Id="VS12_ROOT_FOLDER_EXISTS" Secure="yes">
+      <RegistrySearch Id="SearchForVS12RootPath" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="12.0" Type="raw" />
+    </Property>
+    <CustomAction Id="SetVS12_ROOT_FOLDER" Directory="VS12_ROOT_FOLDER" Value="[VS12_ROOT_FOLDER_EXISTS]" />
+    <InstallExecuteSequence>
+      <Custom Action="SetVS12_ROOT_FOLDER" Before="InstallFiles" Overridable="yes">VS12_ROOT_FOLDER_EXISTS</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+</Wix>

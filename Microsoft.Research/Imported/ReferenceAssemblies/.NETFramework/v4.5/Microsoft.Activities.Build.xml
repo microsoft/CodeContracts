@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Activities.Build</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Activities.Build.IWorkflowBuildErrorLogger">
+      <summary>Provides a method to log an error using the specified filename line and column, message, and property.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.IWorkflowBuildErrorLogger.LogError(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.String,System.Boolean)">
+      <summary>Logs an error using the specified filename line and column, message, and property.</summary>
+      <param name="fileName">The filename that contains the error.</param>
+      <param name="lineNumber">The line where the error starts.</param>
+      <param name="columnNumber">The column where the error starts.</param>
+      <param name="endLineNumber">The line where the error ends.</param>
+      <param name="endColumnNumber">The column where the error ends.</param>
+      <param name="message">The message regarding the error.</param>
+      <param name="propertyName">The name of the property of the error.</param>
+      <param name="isWarning">True if the error is a warning; otherwise, false.</param>
+    </member>
+    <member name="T:Microsoft.Activities.Build.WorkflowBuildMessageTask">
+      <summary>Specifies information about the workflow build message task.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.WorkflowBuildMessageTask.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Activities.Build.WorkflowBuildMessageTask" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.WorkflowBuildMessageTask.Execute">
+      <summary>Indicates whether the workflow build message task executes.</summary>
+      <returns>True if the workflow build message task executes; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Activities.Build.WorkflowBuildMessageTask.MessageType">
+      <summary>Gets or sets the message type.</summary>
+      <returns>The message type.</returns>
+    </member>
+    <member name="P:Microsoft.Activities.Build.WorkflowBuildMessageTask.ResourceName">
+      <summary>Gets or sets the resource name.</summary>
+      <returns>The resource name.</returns>
+    </member>
+    <member name="T:Microsoft.Activities.Build.Debugger.DebugBuildExtension">
+      <summary> Build Extension for Workflow debugger support. </summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.Debugger.DebugBuildExtension.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Activities.Build.Debugger.DebugBuildExtension" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.Debugger.DebugBuildExtension.Execute(Microsoft.Build.Tasks.Xaml.ClassData,Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext)">
+      <summary>Indicates whether the debug symbol with specified checksum updates.</summary>
+      <returns>True if the debug symbol with specified checksum updates; otherwise, false.</returns>
+      <param name="classData">Class data to add the checksum.</param>
+      <param name="buildContext">The build context</param>
+    </member>
+    <member name="T:Microsoft.Activities.Build.Expressions.ExpressionsBuildExtension">
+      <summary>Specifies information about the expressions build extension.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.Expressions.ExpressionsBuildExtension.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Activities.Build.Expressions.ExpressionsBuildExtension" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Activities.Build.Expressions.ExpressionsBuildExtension.Execute(Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext)">
+      <summary>Indicates whether the expressions build extension with specified context executes.</summary>
+      <returns>True if the expressions build extension with specified context executes; otherwise, false.</returns>
+      <param name="buildContext">The context for the build extensions.</param>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,119 @@
+\documentclass{llncs}
+
+\usepackage{fancyvrb}
+\usepackage{listings}
+\include{DefinizioniFrancesco}
+\usepackage{graphicx}
+
+\newcommand\codefamily\ttfamily
+\lstset{language={[Sharp]C},mathescape=false,flexiblecolumns=true,morekeywords={Contract},basicstyle=\codefamily\small,moredelim=[is][\itshape]{@}{@},captionpos=b,numberstyle=\tiny,stepnumber=1,numbersep=2pt,keywordstyle=\bfseries}
+
+\title{Practical verification for the working programmer with\\ CodeContracts and Abstract Interpretation\\ (Invited Talk)
+}
+
+\author{Francesco Logozzo}
+\institute{Microsoft Research, Redmond, WA (USA) \\
+\email{logozzo@microsoft.com}
+}
+
+
+\begin{document}
+\maketitle
+
+CodeContracts provide a language agnostic way to specify and check preconditions, postconditions and object invariants (collectively called contracts~\cite{eiffel}). 
+Specifications take the form of calls to static  methods of a \code{Contract} library ~\cite{embedded-cc-sac-oops-2010}. 
+The authoring library is available out-of-the-box to all .NET programmers from $v4$.
+
+\begin{figure}
+\begin{lstlisting}
+public char[] Sanitize(char[] str, ref int lower, ref int upper)
+{
+ Contract.Requires(str != null);
+
+ Contract.Ensures(upper >= 0);
+ Contract.Ensures(lower >= 0);
+ Contract.Ensures(lower + upper <= str.Length);
+ Contract.Ensures(lower + upper == Contract.Result<char[]>().Length);
+
+ Contract.Ensures(
+  Contract.ForAll(0, lower + upper, index => 'a' <= Contract.Result<char[]>()[index]));
+ Contract.Ensures(
+  Contract.ForAll(0, lower + upper, index => Contract.Result<char[]>()[index] <= 'z'));
+
+ upper = lower = 0;
+
+ var tmp = new char[str.Length];
+
+ int j = 0;
+ for (int i = 0; i < str.Length; i++)
+ {
+   var ch = str[i];
+
+   if ('a' <= ch && ch <= 'z')    { lower++; tmp[j++] = ch;}
+   else if ('A' <= ch && ch<= 'Z'){ upper++; tmp[j++] = (char)(ch | ' ');}
+ }
+
+ var result = new char[j];
+ for (int i = 0; i < j; i++) {  result[i] = tmp[i]; }
+
+ return result;
+}
+\end{lstlisting}
+\caption{A string sanitizer and its specification with CodeContracts. Clousot, the CodeContracts static checker, proves that the postcondition holds at the end of the method and that no runtime exception is ever thrown. The verification is completely automatic, with Clousot inferring the right loop invariants with no user assistance.}
+\label{fig:example}
+\end{figure}
+
+
+An example of CodeContracts usage is reported in Fig.~\ref{fig:example}.
+The code illustrates the specification and the implementation of a simple string sanitizer, which filters only ASCII letters and converts all the upper cases into lower cases. The sanitizer also returns the number of lower case and upper case letters in the original string.
+Strings are represented as \code{char} arrays.
+The precondition requires the input string to be not null.
+The postcondition specifies that the counters are non-negative, that the total number of letters is no larger than the length of the original string and the length of returned string is exactly that size.
+Furthermore the postcondition also promises the caller that all the elements in the result string are lower case ASCII characters.
+
+
+The implementation of the sanitizer is pretty straightforward. 
+The original string is systematically traversed, and when an ASCII letter is encountered  it is copied into a buffer as it is  or if it is upper case, converted to a lower case and then stored into the buffer. 
+A priori we do not know the number of non-ASCII characters, thus the temporary buffer is made as large as the original string.
+However, on loop exit, we exactly know the length of the sanitized string (it is \code{lower + upper}), so a buffer of the right size is allocated, all the sanitized elements are copied into it, and then it is returned.
+
+\begin{figure}[t]
+  \includegraphics[width=\textwidth]{screenshot.png}
+\caption{A screenshot illustrating the user experience with Clousot in Visual Studio.
+The user can run the analyzer on the whole project, or she can  opt for a selective method/class verification with a simple right click.
+The output is reported in the usual \code{Error List} window, the same where \emph{e.g.} the compiler provides its output.
+}
+\label{fig:screenshot}
+\end{figure}
+
+The CodeContracts static checker (codename Clousot~\cite{MafLogozzo10}), performs an abstract interpretation of \code{Sanitize} to verify that the implementation meets its contract (specification).
+Clousot analyzes methods in isolation using a classical assume/guarantee reasoning.
+Clousot directly analyzes bytecode, so it is independent of the particular source language~\cite{LogozzoMaf08}. 
+As a matter of fact Clousot users include C\# as well as VB programmers.
+All the internals of the analyzer are hidden to the user, to whom the Clousot is exposed as an extension of the usual development environment (Fig.~\ref{fig:screenshot}).
+
+From a high point of view, Clousot has three main phases: inference, checking and inter-module propagation. 
+In the inference phase the program is analyzed to infer facts. 
+In the checking phase the facts are used to discharge the proof obligations. 
+There are two kinds of proof obligations: explicit (assertions from contracts) and implicit (assertions from the semantics of the language). 
+If the checking phase is inconclusive, the analysis is refined by using a more precise abstract domain and/or a backward goal-directed reasoning.
+In the inter-module propagation, inferred contracts are propagated to the callers~\cite{CousotCousotLogozzo-Pre}.
+
+Unlike previous approaches based on weakest precondition calculus (\emph{e.g.}~\cite{ESCJava,ChalinEtAl-FMCO05,LeinoBoogie,Jack,Why}), Clousot is based on abstract interpretation~\cite{CousotCousot77}. 
+This provides us several advantages. 
+First, the analyzer is automatic:  Loop invariants are automatically inferred, without requiring the programmer to provide (for instance) trivial loop invariants. 
+In the example above \emph{all} the invariants are inferred without user interaction. 
+Similarly, the underlying abstract domains are of infinite height and width, providing a stronger expressivity than the domains used for instance in predicate abstraction. 
+For instance in the example the non-trivial loop invariant \code{lower + upper == j} is automatically discovered by the analysis. 
+Second, the analyzer is performing: The trade-off cost/precision can be finely tuned by adjusting the precision of the underlying abstract domains.  
+Third, the analysis is predictable: by performing chaotic iterations following the program structure, the analysis mimics the intentions of the programmer, so that causes of false positive can be (more) easily found. 
+Furthermore, termination is guaranteed so that annoying causes of analysis non-determinism such as unlucky infinite quantifier instantiation are ruled out. 
+There are some drawbacks though. 
+The main one is that Clousot verification focuses only on a certain class of properties, forgetting for instance general universal quantified or existential quantifiers. 
+Clousot instead contains abstract domains to check common contracts involving: non-nullness~\cite{MafLeino03}, linear arithmetic~\cite{LogozzoFahndrich08-2,LavironLogozzo09-1,LavironLogozzo9} and numerical properties in general~\cite{FerraraLogozzoFahndrich-OOPSLA08}, simple facts over arrays and containers~\cite{arrayal} and un-interpreted facts.
+
+
+\bibliographystyle{plain}
+\bibliography{main}
+
+\end{document}

@@ -1,0 +1,198 @@
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--==================================================================================
+   Inputs:
+     $(CCNetLabel)     : the version e.g. 1.1.20210.5
+     $(ReleaseConfig)  : one of debug or release
+
+   Outputs:
+     $(ReleaseConfig)\msi\CodeToolsSDK.$(ReleaseConfig).msi
+     $(ReleaseConfig)\cpx\<output from cpx tools>
+
+   ==================================================================================-->
+
+  <!-- cbtools tasks -->
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateGuid" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateRelease" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.DeleteReleases" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateWixComponent" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Email" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.MsiExec" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepot" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotEdit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSubmit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSync" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WikiDump" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Wix" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteProgressToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateAssemblyInfo" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Policheck" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.PatchProjectReferences" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+
+  <!--==============================================
+    Figure out features based on configurations
+
+    Properties set
+      $(BuildConfig)
+      $(Feature_VSTSCheck)
+      $(Feature_Unsafe)
+      $(Feature_Pex)
+      $(Feature_Z3)
+      $(ClousotVersion)
+      $(CheckCpx)
+      $(Flavor)            : displayed in installer
+      $(IncludePDBs)
+      $(Feature_CCCheck)
+    ================================================-->
+  <Choose>
+    <When Condition="'$(ReleaseConfig)'=='debug'">
+      <PropertyGroup>
+        <BuildConfig>Debug</BuildConfig>
+        <Flavor>(debug)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt>.debug</ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ReleaseConfig)'=='release'">
+      <PropertyGroup>
+        <BuildConfig>Release</BuildConfig>
+        <Flavor>(debug)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt></ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <InvalidRelease>true</InvalidRelease>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!--==========================================================
+
+     Common properties used by many targets
+
+   ===========================================================-->
+  <PropertyGroup>
+    <MsiDir>$(ReleaseConfig)\msi</MsiDir>       <!-- Used for final product -->
+    <TmpDir>$(ReleaseConfig)\tmp</TmpDir>       <!-- Used for intermediate product -->
+    <BinDir>bin\$(BuildConfig)</BinDir>         <!-- Relative. used in source dirs -->
+    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
+  </PropertyGroup>
+
+  <Target Name="All"
+   DependsOnTargets="Validate;MakeMSI"
+  />
+
+  <Target Name="Validate">
+    <Error
+      Condition="'$(CCNetLabel)'==''"
+      Text="Please set CCNetLabel to a proper version using /p:CCNetLabel=x.x.x.x"
+    />
+    <Error
+      Condition="'$(ReleaseConfig)'==''"
+      Text="Please set ReleaseConfig to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Error
+      Condition="'$(InvalidRelease)'=='true'"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Message
+        Importance="high"
+        Text="Building MSI for configuration $(ReleaseConfig)"
+    />
+  </Target>
+
+  <Target Name="MakeDirs"
+          DependsOnTargets="Validate">
+    <MakeDir
+       Condition="!Exists('$(MsiDir)')"
+       Directories="$(MsiDir)"/>
+    <MakeDir
+       Condition="!Exists('$(TmpDir)')"
+       Directories="$(TmpDir)"/>
+  </Target>
+
+ 
+  <!--==========================================================
+
+     Common properties for version file creation
+
+   ===========================================================-->
+
+  <ItemGroup>
+    <VersionFile Include="..\common\include\Version.cs"/>
+  </ItemGroup>
+
+  <Target Name="CreateVersionFile">
+    <CreateAssemblyInfo
+       Condition = "$(CCNetLabel) != ''"
+       CreateVersionFile="true"
+       VersionFileNames="@(VersionFile)"
+       Version="$(CCNetLabel)"
+       Company="Microsoft Corporation"
+       Copyright="(c) Microsoft Corporation.  All rights reserved."
+       ForceReadOnly="true"
+       >
+       <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
+    </CreateAssemblyInfo>
+  </Target>
+
+  <!--==========================================================
+
+       Build the installer
+
+    ==========================================================-->
+
+  <PropertyGroup>
+    <CODETOOLS>..\..\Microsoft.VisualStudio.CodeTools</CODETOOLS>
+  </PropertyGroup>
+  <ItemGroup>
+    <WixSources Include="
+      CodeToolsSDK.wxs;
+      UI.wxs;
+    "/>
+    <WixBaseDirs Include="
+      $(CODETOOLS)\ITaskManager\$(BinDir);
+      $(CODETOOLS)\IPropertyPane\$(BinDir);
+      $(CODETOOLS)\CodeToolsUpdate\$(BinDir);
+      $(MsiDir);
+      .\Licenses;
+     "/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MsiOutputFile>$(MsiDir)\CodeToolsSDK$(ReleaseConfigExt).msi</MsiOutputFile>
+  </PropertyGroup>
+  
+  <Target Name="MakeMSI" DependsOnTargets="">
+    <CreateGuid>
+      <Output TaskParameter="Guid" PropertyName="ProductGuid" />
+    </CreateGuid>
+    <Message Text="CCNetLabel: $(CCNetLabel)"/>
+    <Message Text="Assembly File Version: $(AssemblyFileVersion)"/>
+    <Wix
+       Files="@(WixSources)"
+       UseBuiltinExtensions="false"
+       WixDirectory="..\ManagedContract.Setup\WixBinaries"
+       Extensions="WixNetFxExtension;WixVSExtension;WixUtilExtension"
+       OutputFile="$(MsiOutputFile)"
+       BaseDirectories="@(WixBaseDirs)"
+       Variables="
+                  License=$(License);
+                  ProductGuid=$(ProductGuid);
+                  Version=$(AssemblyFileVersion);
+                  Flavor=$(Flavor);
+                  IncludePDBs=$(IncludePDBs);
+                  ReleaseConfigExt=$(ReleaseConfigExt);
+                  ReleaseConfig=$(ReleaseConfig);
+                  Public=yes;
+                  NGen=no;
+                  "
+       />
+  </Target>
+
+
+</Project>

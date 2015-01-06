@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="fastnooptions2" storage="c:\cci\microsoft.research\regressiontest\basic\testsubpolyhedra\fastnooptions2.generictest" id="430ed917-551c-4a25-8bff-d2e36a61389d" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="ba72a28c-6ab9-4a0b-9d10-19bc365bf446" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds:type:SubPolyhedra,reduction=fast,diseq:false TestSubPolyhedra.dll -define fastnooptions -joinsbeforewiden=1  -wp=false -enforcefairjoin -timeout 100" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\cci\TestResults\logozzo_LOGOZZO2 2008-11-25 15_28_43\In\LOGOZZO2\e52e44c7-4320-4d5d-b4f3-9a83da8f994c" />
+      <EnvironmentVariable name="testlocation" value="c:\cci\microsoft.research\regressiontest\basic\testsubpolyhedra" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>PresentationBuildTasks</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.Tasks.Windows.FileClassifier">
+      <summary>Implements the FileClassifer task. Use the FileClassifer element in your project file to create and execute this task. For usage and parameter information, see FileClassifier Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.FileClassifier.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.FileClassifier" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.CLREmbeddedResource">
+      <summary>Gets or sets the output Item list for the CLR resources that will be saved in the main assembly.</summary>
+      <returns>The output Item list for the CLR resources that will be saved in the main assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.CLRResourceFiles">
+      <summary>Gets or sets the CLR resource file list.</summary>
+      <returns>The CLR resource file list.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.CLRSatelliteEmbeddedResource">
+      <summary>Gets or sets the output Item list for the CLR resources that will be saved in the satellite assembly.</summary>
+      <returns>The output Item list for the CLR resources that will be saved in the satellite assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.Culture">
+      <summary>Gets or sets the culture of the build.</summary>
+      <returns>The culture of the build or null if the build is non-localizable</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.FileClassifier.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.MainEmbeddedFiles">
+      <summary>Gets or sets non-localizable resources that will be embedded into the Main assembly.</summary>
+      <returns>Non-localizable resources that will be embedded into the Main assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.OutputType">
+      <summary>Gets or sets the output type of the assembly.</summary>
+      <returns>The output type of the assembly.  Can be “exe” or “dll”.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.SatelliteEmbeddedFiles">
+      <summary>Gets or sets the localizable files that are embedded in the satellite assembly for the culture that is specified by the <see cref="P:Microsoft.Build.Tasks.Windows.FileClassifier.Culture" /> property.</summary>
+      <returns>The localizable files that are embedded in the satellite assembly for the culture that is specified by the <see cref="P:Microsoft.Build.Tasks.Windows.FileClassifier.Culture" /> property.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.FileClassifier.SourceFiles">
+      <summary>Gets or sets the list of items that are to be classified.</summary>
+      <returns>The list of items that are to be classified.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly">
+      <summary>Implements the GenerateTemporaryTargetAssembly task. Use the GenerateTemporaryTargetAssembly element in your project file to create and execute this task. For usage and parameter information, see GenerateTemporaryTargetAssembly Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.AssemblyName"></member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.CompileTargetName">
+      <summary>Gets or sets the MS Build target name which is used to generate assembly from source code files.</summary>
+      <returns>The MS Build target name which is used to generate assembly from source code files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.CompileTypeName">
+      <summary>Gets or sets the appropriate item name which can be accepted by managed compiler task.</summary>
+      <returns>The appropriate item name which can be accepted by managed compiler task.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.CurrentProject">
+      <summary>Gets or sets the full path of current project file.</summary>
+      <returns>The full path of current project file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.GeneratedCodeFiles">
+      <summary>Gets or sets a list of generated code files.</summary>
+      <returns>A list of generated code files.  This can have 0 items.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.IntermediateOutputPath"></member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.MSBuildBinPath">
+      <summary>Gets or sets the MS Build binary path.</summary>
+      <returns>The MS Build binary path.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePath">
+      <summary>Gets or sets a list of resolved reference assemblies.</summary>
+      <returns>A list of resolved reference assemblies.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePathTypeName">
+      <summary>Gets or sets the item name which is used to keep the Reference list in managed compiler task.</summary>
+      <returns>The item name which is used to keep the Reference list in managed compiler task.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.GetWinFXPath">
+      <summary>Implements the GetWinFXPath task. Use the GetWinFXPath element in your project file to create and execute this task. For usage and parameter information, see GetWinFXPath Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.GetWinFXPath.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.GetWinFXPath" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.GetWinFXPath.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GetWinFXPath.WinFXNativePath">
+      <summary>Gets or sets the path for native WinFX runtime.</summary>
+      <returns>The path for native WinFX runtime.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GetWinFXPath.WinFXPath">
+      <summary>Gets or sets the path for the WinFX runtime.</summary>
+      <returns>The path for the WinFX runtime.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.GetWinFXPath.WinFXWowPath">
+      <summary>Gets or sets the path for WoW WinFX run time.</summary>
+      <returns>The path for WoW WinFX run time.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass1">
+      <summary>Implements the MarkupCompilePass1 task. Use the MarkupCompilePass1 element in your project file to create and execute this task. For usage and parameter information, see MarkupCompilePass1 Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass1" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AllGeneratedFiles">
+      <summary>Gets or sets a list of files that are generated by the markup compiler.</summary>
+      <returns>A list of files that are generated by the markup compiler.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AlwaysCompileMarkupFilesInSeparateDomain">
+      <summary>Gets or sets a value that indicates whether to run the compilation in second application domain.</summary>
+      <returns>true to run the compilation in second application domain; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.ApplicationMarkup">
+      <summary>Gets or sets the name of the application definition XAML file.</summary>
+      <returns>The name of the application definition XAML file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AssembliesGeneratedDuringBuild">
+      <summary>Gets or sets a list of reference assemblies that change during the build cycle.</summary>
+      <returns>The list of reference assemblies that change during the build cycle.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AssemblyName">
+      <summary>Gets or sets the short name of assembly that will be generated for this project.</summary>
+      <returns>The short name of assembly which will be generated for this project.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AssemblyPublicKeyToken">
+      <summary>Gets or sets the public key token of the assembly.</summary>
+      <returns>The public key token of the assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.AssemblyVersion">
+      <summary>Gets or sets the version of the assembly.</summary>
+      <returns>The version of the assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.ContentFiles">
+      <summary>Gets or sets a list of loose content files.</summary>
+      <returns>A list of loose content files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.DefineConstants">
+      <summary>Gets or sets a value that specifies whether the current value of DefineConstants is kept.</summary>
+      <returns>Specifies whether the current value of DefineConstants is kept, which affects target assembly generation; if this parameter is changed, the public API in the target assembly may be changed and the compilation of XAML files that reference local types may be affected.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.ExtraBuildControlFiles">
+      <summary>Gets or sets a list of files that control whether a rebuild is triggered when the <see cref="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass1" /> task reruns; a rebuild is triggered if one of these files changes.</summary>
+      <returns>A list of files that control whether a rebuild is triggered when the <see cref="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass1" /> task reruns; a rebuild is triggered if one of these files changes.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.GeneratedBamlFiles">
+      <summary>Gets or sets the generated binary XAML (BAML) files.</summary>
+      <returns>The generated binary XAML (BAML) files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.GeneratedCodeFiles">
+      <summary>Gets or sets the list of generated managed code files.</summary>
+      <returns>The list of generated managed code files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.GeneratedLocalizationFiles">
+      <summary>Gets or sets the generated localization file for each localizable XAML file.</summary>
+      <returns>The generated localization file for each localizable XAML file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.HostInBrowser">
+      <summary>Gets or sets a value that indicates whether the generated assembly is a XAML browser application (XBAP).</summary>
+      <returns>true if the generated assembly is a XAML browser application (XBAP); otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.KnownReferencePaths">
+      <summary>Gets or sets the paths of referenced assemblies that do not change during the build procedure.</summary>
+      <returns>The paths of referenced assemblies that do not change during the build procedure.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.Language">
+      <summary>Gets or sets the managed language that the compiler supports.</summary>
+      <returns>The managed language that the compiler supports. The valid values are C#, VB, and C++.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.LanguageSourceExtension">
+      <summary>Gets or sets the extension that is appended to the extension of the generated managed code file.</summary>
+      <returns>The extension that is appended to the extension of the generated managed code file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.LocalizationDirectivesToLocFile">
+      <summary>Gets or sets a value that specifies how to generate localization information for each Extensible Application Markup Language (XAML) file.</summary>
+      <returns>A value that specifies how to generate localization information for each Extensible Application Markup Language (XAML) file. The valid values are None, CommentsOnly, and All.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.OutputPath">
+      <summary>Gets or sets the location of generated code files.</summary>
+      <returns>The location of generated code files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.OutputType">
+      <summary>Gets or sets the output type of the assembly.</summary>
+      <returns>The type of assembly that is generated by a project. The valid values are winexe, exe, library, and netmodule.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.PageMarkup">
+      <summary>Gets or sets a list of XAML files to process.</summary>
+      <returns>A list of XAML files to process.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.References">
+      <summary>Gets or sets the assembly references.</summary>
+      <returns>The assembly references.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.RequirePass2ForMainAssembly">
+      <summary>Gets or sets a value that indicates whether the project contains non-localizable XAML files that reference local types that are embedded into the main assembly.</summary>
+      <returns>true if project contains non-localizable XAML files that reference local types that are embedded into the main assembly.; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.RequirePass2ForSatelliteAssembly">
+      <summary>Gets or sets a value that indicates whether the project contains localizable XAML files that reference local types that are embedded in the satellite assembly.</summary>
+      <returns>true if the p project contains localizable XAML files that reference local types that are embedded in the satellite assembly; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.RootNamespace">
+      <summary>Gets or sets the root namespace of the classes inside the project.</summary>
+      <returns>The root namespace of the classes inside the project.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.SourceCodeFiles">
+      <summary>Gets or sets the source code file list for the current project.</summary>
+      <returns>The source code file list for the current project.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.SplashScreen">
+      <summary>Gets or sets the splash screen image to be displayed before application initialization.</summary>
+      <returns>The splash screen image.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.UICulture">
+      <summary>Gets or sets a value that specifies which culture satellite assembly will hold the generated binary XAML (BAML) files.</summary>
+      <returns>A a value that specifies which culture satellite assembly will hold the generated binary XAML (BAML) files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass1.XamlDebuggingInformation">
+      <summary>Gets or sets a value that indicates whether diagnostic information is generated and included in the compiled XAML in order to aid debugging.</summary>
+      <returns>true if diagnostic information is generated and included in the compiled XAML in order to aid debugging; otherwise, false.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass2">
+      <summary>Implements the MarkupCompilePass2 task. Use the MarkupCompilePass2 element in your project file to create and execute this task. For usage and parameter information, see MarkupCompilePass2 Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.MarkupCompilePass2" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.AlwaysCompileMarkupFilesInSeparateDomain">
+      <summary>Gets or sets a value that indicates whether to run the compilation in second application domain.</summary>
+      <returns>true to run the compilation in second application domain; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.AssembliesGeneratedDuringBuild">
+      <summary>Gets or sets a list of reference assemblies that change during the build cycle.</summary>
+      <returns>The list of reference assemblies that change during the build cycle.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.AssemblyName">
+      <summary>Gets or sets the short name of assembly that will be generated for this project.</summary>
+      <returns>The short name of assembly which will be generated for this project.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.GeneratedBaml">
+      <summary>Gets or sets the generated binary XAML (BAML) files.</summary>
+      <returns>The generated binary XAML (BAML) files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.KnownReferencePaths">
+      <summary>Gets or sets the paths of referenced assemblies that do not change during the build procedure.</summary>
+      <returns>The paths of referenced assemblies that do not change during the build procedure.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.Language">
+      <summary>Gets or sets the managed language that the compiler supports.</summary>
+      <returns>The managed language that the compiler supports. The valid values are C#, VB, JScript, and C++.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.LocalizationDirectivesToLocFile">
+      <summary>Gets or sets a value that specifies how to generate localization information for each Extensible Application Markup Language (XAML) file.</summary>
+      <returns>A value that specifies how to generate localization information for each Extensible Application Markup Language (XAML) file. The valid values are None, CommentsOnly, and All.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.OutputPath">
+      <summary>Gets or sets the location of generated code files.</summary>
+      <returns>The location of generated code files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.OutputType">
+      <summary>Gets or sets the output type of the assembly.</summary>
+      <returns>The type of assembly that is generated by a project. The valid values are winexe, exe, library, and netmodule.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.References">
+      <summary>Gets or sets the assembly references.</summary>
+      <returns>The assembly references.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.RootNamespace">
+      <summary>Gets or sets the root namespace of the classes inside the project.</summary>
+      <returns>The root namespace of the classes inside the project.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MarkupCompilePass2.XamlDebuggingInformation">
+      <summary>Gets or sets a value that indicates whether diagnostic information is generated and included in the compiled XAML in order to aid debugging.</summary>
+      <returns>true if diagnostic information is generated and included in the compiled XAML in order to aid debugging; otherwise, false.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives">
+      <summary>Implements the MergeLocalizationDirectives task. Use the MergeLocalizationDirectives element in your project file to create and execute this task. For usage and parameter information, see MergeLocalizationDirectives Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives.GeneratedLocalizationFiles">
+      <summary>Gets or sets the list of localization directives files for individual files in XAML binary format.</summary>
+      <returns>The list of localization directives files for individual files in XAML binary format.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives.OutputFile">
+      <summary>Gets or sets the output path of the compiled localization-directives assembly.</summary>
+      <returns>The output path of the compiled localization-directives assembly.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.ResourcesGenerator">
+      <summary>Implements the ResourcesGenerator task. Use the ResourcesGenerator element in your project file to create and execute this task. For usage and parameter information, see ResourcesGenerator Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.ResourcesGenerator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.ResourcesGenerator" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.ResourcesGenerator.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.ResourcesGenerator.OutputPath">
+      <summary>Gets or sets the path of the output directory. </summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.ResourcesGenerator.OutputResourcesFile">
+      <summary>Gets or sets the path and name of the generated .resources file.</summary>
+      <returns>The path and name of the generated .resources file. If the path is not an absolute path, the .resources file is generated relative to the root project directory.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.ResourcesGenerator.ResourceFiles">
+      <summary>Gets or sets one or more resources to embed in the generated .resources file.</summary>
+      <returns>One or more resources to embed in the generated .resources file.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.UidManager">
+      <summary>Implements the UidManager task. Use the UidManager element in your project file to create and execute this task. For usage and parameter information, see UidManager Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.UidManager.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.UidManager" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.UidManager.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.UidManager.IntermediateDirectory">
+      <summary>Gets or sets the directory that is used to back up the source XAML files that are specified by the <see cref="P:Microsoft.Build.Tasks.Windows.UidManager.MarkupFiles" /> property.</summary>
+      <returns>The directory that is used to back up the source XAML files that are specified by the <see cref="P:Microsoft.Build.Tasks.Windows.UidManager.MarkupFiles" /> property.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.UidManager.MarkupFiles">
+      <summary>Gets or sets the source XAML files to include for UID checking, updating, or removing.</summary>
+      <returns>The source XAML files to include for UID checking, updating, or removing.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.UidManager.Task">
+      <summary>Gets or sets the UID management task that you want to perform. Valid options are Check, Update, or Remove.</summary>
+      <returns>The UID management task that you want to perform. Valid options are Check, Update, or Remove.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication">
+      <summary>Implements the UpdateManifestForBrowserApplication task. Use the UpdateManifestForBrowserApplication element in your project file to create and execute this task. For usage and parameter information, see UpdateManifestForBrowserApplication Task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication.ApplicationManifest">
+      <summary>Gets or sets the path and name of the application manifest file that you want to add the &lt;hostInBrowser /&gt; element to.</summary>
+      <returns>The path and name of the application manifest file that you want to add the &lt;hostInBrowser /&gt; element to.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication.Execute">
+      <summary>Executes a task.</summary>
+      <returns>true if the task executed successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Windows.UpdateManifestForBrowserApplication.HostInBrowser">
+      <summary>Gets a value that indicates whether to modify the application manifest to include the &lt;hostInBrowser /&gt; element.</summary>
+      <returns>true to modify the application manifest to include the &lt;hostInBrowser /&gt; element; otherwise, false.</returns>
+    </member>
+  </members>
+</doc>

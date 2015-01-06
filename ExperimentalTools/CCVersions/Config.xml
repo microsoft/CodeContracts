@@ -1,0 +1,36 @@
+﻿<Config>
+  <RootPath>d:\</RootPath>
+  <Sources>
+    <Source Name="CodeContracts" Type="SD">
+      <Config>
+        <sdport>BGIT-SDCCI:8100</sdport>
+        <sdclient>MAFCCVersions</sdclient>
+      </Config>
+      <Projects>
+        <Project Name="CodeContracts" Path="CodeContracts.sln" />
+      </Projects>
+    </Source>
+    <Source Name="vstfcodebox/Psi" Type="TFS">
+      <Config>
+        <protocol>http</protocol>
+        <server>vstfcodebox</server>
+        <port>8080</port>
+        <path>tfs/Psi</path>
+        <subpath>cci</subpath>
+      </Config>
+      <Projects>
+        <Project Name="cci" Path="cci.sln" />
+      </Projects>
+    </Source>
+    <Source Name="Facebook C# SDK" Type="HG">
+      <Config>
+        <protocol>https</protocol>
+        <server>hg01.codeplex.com</server>
+        <path>facebooksdk</path>
+      </Config>
+      <Projects>
+        <Project Name="Facebook-Net40" Path="Source\Facebook-Net40.sln" />
+      </Projects>
+    </Source>
+  </Sources>
+</Config>

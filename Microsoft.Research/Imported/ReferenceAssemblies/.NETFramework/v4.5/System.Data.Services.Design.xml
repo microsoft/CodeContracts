@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Data.Services.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Data.Services.BuildProvider.DataServiceBuildProvider">
+      <summary>Generates C# or Visual Basic code for a WCF Data Services client application based on the metadata returned by the data service.</summary>
+    </member>
+    <member name="M:System.Data.Services.BuildProvider.DataServiceBuildProvider.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Data.Services.BuildProvider.DataServiceBuildProvider" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Services.BuildProvider.DataServiceBuildProvider.GenerateCode(System.Web.Compilation.AssemblyBuilder)">
+      <summary>Generates C# or Visual Basic code for a WCF Data Services client application based on the metadata returned by the data service.</summary>
+      <param name="assemblyBuilder">A container for building an assembly.</param>
+    </member>
+    <member name="T:System.Data.Services.Design.DataServiceCodeVersion">
+      <summary>Specifies the version of the Open Data Protocol (OData) targeted by the generated code. </summary>
+    </member>
+    <member name="F:System.Data.Services.Design.DataServiceCodeVersion.V1">
+      <summary>Generate code that targets version 1.0.</summary>
+    </member>
+    <member name="F:System.Data.Services.Design.DataServiceCodeVersion.V2">
+      <summary>Generate code that targets version 2.0.</summary>
+    </member>
+    <member name="T:System.Data.Services.Design.EdmToObjectNamespaceMap">
+      <summary>Used by the code generation command line tools and tools in Visual Studio to generate strongly typed client-side objects for communicating with data services.</summary>
+    </member>
+    <member name="M:System.Data.Services.Design.EdmToObjectNamespaceMap.Add(System.String,System.String)">
+      <summary>Adds mapping between the Entity Data Model namespace and the object.</summary>
+      <param name="edmNamespace">String containing the namespace name.</param>
+      <param name="objectNamespace">String containing the object namespace.</param>
+    </member>
+    <member name="M:System.Data.Services.Design.EdmToObjectNamespaceMap.Clear">
+      <summary>Clears <see cref="T:System.Data.Services.Design.EdmToObjectNamespaceMap" />.</summary>
+    </member>
+    <member name="M:System.Data.Services.Design.EdmToObjectNamespaceMap.Contains(System.String)">
+      <summary>Queries whether mapping contains object in <paramref name="edmNamespace" /> parameter. </summary>
+      <returns>true if the object is found; otherwise false.</returns>
+      <param name="edmNamespace">String value that contains the mapping object to query.</param>
+    </member>
+    <member name="P:System.Data.Services.Design.EdmToObjectNamespaceMap.Count">
+      <summary>Gets a count of mappings contained by <see cref="T:System.Data.Services.Design.EdmToObjectNamespaceMap" />.</summary>
+      <returns>Integer value that contains the count of mappings.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.EdmToObjectNamespaceMap.EdmNamespaces">
+      <summary>Gets edmNamespace items in an <see cref="T:System.Data.Services.Design.EdmToObjectNamespaceMap" /> object.</summary>
+      <returns>String value that contains EdmNamespace items.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.EdmToObjectNamespaceMap.Item(System.String)">
+      <summary>Gets namespace identified by <paramref name="edmNamespace" /> parameter.</summary>
+      <returns>EdmNamespace object. </returns>
+      <param name="edmNamespace">String value that contains edmNamespace name.</param>
+    </member>
+    <member name="M:System.Data.Services.Design.EdmToObjectNamespaceMap.Remove(System.String)">
+      <summary>Removes object identified by <paramref name="edmNamespace" /> parameter.</summary>
+      <returns>true if operation succeeds; otherwise false.</returns>
+      <param name="edmNamespace">String value that contains the mapping object.</param>
+    </member>
+    <member name="M:System.Data.Services.Design.EdmToObjectNamespaceMap.TryGetObjectNamespace(System.String,System.String@)">
+      <summary>Tests whether an object identified by <paramref name="objectNamespace" /> and <paramref name="edmNamespace" /> is mapped by <see cref="T:System.Data.Services.Design.EdmToObjectNamespaceMap" />.</summary>
+      <returns>true if the mapping is returned; otherwise false.</returns>
+      <param name="edmNamespace">String value that contains the namespace name.</param>
+      <param name="objectNamespace">String value that identifies the object namespace</param>
+    </member>
+    <member name="T:System.Data.Services.Design.EntityClassGenerator">
+      <summary>Used by the code generation command line tools and tools in Visual Studio to generate strongly typed client-side objects for communicating with data services. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.EntityClassGenerator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.EntityClassGenerator" /> class. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.EntityClassGenerator.#ctor(System.Data.Services.Design.LanguageOption)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.EntityClassGenerator" /> class. </summary>
+      <param name="languageOption">Selects the programming language.</param>
+    </member>
+    <member name="P:System.Data.Services.Design.EntityClassGenerator.EdmToObjectNamespaceMap">
+      <summary>Gets the EdmToObjectNamespaceMap object used in entity class generation.</summary>
+      <returns>EdmToObjectNamespaceMap object.</returns>
+    </member>
+    <member name="M:System.Data.Services.Design.EntityClassGenerator.GenerateCode(System.Xml.XmlReader,System.IO.TextWriter,System.String)">
+      <summary>Generates code for the data model from switches identified by parameters.</summary>
+      <returns>The list of schema errors that occurred during generation.</returns>
+      <param name="sourceReader">The XML reader object.</param>
+      <param name="targetWriter">The text writer object.</param>
+      <param name="namespacePrefix">The string that contains the namespace prefix.</param>
+    </member>
+    <member name="M:System.Data.Services.Design.EntityClassGenerator.GenerateCode(System.Xml.XmlReader,System.String)">
+      <summary>Generates code for the object model.</summary>
+      <returns>The list of schema errors that occurred during generation.</returns>
+      <param name="sourceReader">The XML reader object.</param>
+      <param name="targetFilePath">The string that contains the path to the target file.</param>
+    </member>
+    <member name="P:System.Data.Services.Design.EntityClassGenerator.LanguageOption">
+      <summary>Gets the language option used in generation of the data model.</summary>
+      <returns>Language option.</returns>
+    </member>
+    <member name="E:System.Data.Services.Design.EntityClassGenerator.OnPropertyGenerated">
+      <summary>Occurs when a property is generated. </summary>
+    </member>
+    <member name="E:System.Data.Services.Design.EntityClassGenerator.OnTypeGenerated">
+      <summary>Occurs when a type is generated.</summary>
+    </member>
+    <member name="P:System.Data.Services.Design.EntityClassGenerator.UseDataServiceCollection">
+      <summary>Gets or sets whether code generation should include the code that is required to support data binding.</summary>
+      <returns>A <see cref="T:System.Boolean" /> value that is true when data binding code is required; otherwise false.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.EntityClassGenerator.Version">
+      <summary>Gets and sets the version of WCF Data Services that the generated code targets.</summary>
+      <returns>A <see cref="T:System.Data.Services.Design.DataServiceCodeVersion" /> value that indicates the version of the generated code.</returns>
+    </member>
+    <member name="T:System.Data.Services.Design.LanguageOption">
+      <summary>Used by the code generation command line tools and tools in Visual Studio to generate strongly typed client-side objects for communicating with data services.</summary>
+    </member>
+    <member name="F:System.Data.Services.Design.LanguageOption.GenerateCSharpCode">
+      <summary>Generates C# code.</summary>
+    </member>
+    <member name="F:System.Data.Services.Design.LanguageOption.GenerateVBCode">
+      <summary>Generates Visual Basic code. </summary>
+    </member>
+    <member name="T:System.Data.Services.Design.PropertyGeneratedEventArgs">
+      <summary>Used by the code generation command line tools and tools in Visual Studio to generate strongly typed client-side objects for communicating with data services. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.PropertyGeneratedEventArgs.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.PropertyGeneratedEventArgs" /> class. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.PropertyGeneratedEventArgs.#ctor(System.Data.Metadata.Edm.MetadataItem,System.String,System.CodeDom.CodeTypeReference)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.PropertyGeneratedEventArgs" /> class. </summary>
+      <param name="propertySource">Property source.</param>
+      <param name="backingFieldName">Backing field name.</param>
+      <param name="returnType">Return type.</param>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.AdditionalAttributes">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional attributes.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.AdditionalGetStatements">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional Get statements.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.AdditionalSetStatements">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional Set statements.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.BackingFieldName">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Backing field name.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.PropertySource">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Property source.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.PropertyGeneratedEventArgs.ReturnType">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Return type.</returns>
+    </member>
+    <member name="T:System.Data.Services.Design.TypeGeneratedEventArgs">
+      <summary>Used by the code generation command line tools and tools in Visual Studio to generate strongly typed client-side objects for communicating with data services. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.TypeGeneratedEventArgs.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.TypeGeneratedEventArgs" /> class. </summary>
+    </member>
+    <member name="M:System.Data.Services.Design.TypeGeneratedEventArgs.#ctor(System.Data.Metadata.Edm.GlobalItem,System.CodeDom.CodeTypeReference)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Services.Design.TypeGeneratedEventArgs" /> class. </summary>
+      <param name="typeSource">The type source.</param>
+      <param name="baseType">The base type.</param>
+    </member>
+    <member name="P:System.Data.Services.Design.TypeGeneratedEventArgs.AdditionalAttributes">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional attributes.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.TypeGeneratedEventArgs.AdditionalInterfaces">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional interfaces.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.TypeGeneratedEventArgs.AdditionalMembers">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Additional members.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.TypeGeneratedEventArgs.BaseType">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Base type.</returns>
+    </member>
+    <member name="P:System.Data.Services.Design.TypeGeneratedEventArgs.TypeSource">
+      <summary>This class is not intended for public use and is used to generate strongly typed client-side objects for communicating with data services.</summary>
+      <returns>Type source.</returns>
+    </member>
+  </members>
+</doc>

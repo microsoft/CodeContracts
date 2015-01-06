@@ -1,0 +1,69 @@
+!IF !DEFINED(VARIANT)
+VARIANT=Debug
+!ENDIF
+
+#--------------------------------------------------------------------------
+# sources
+#--------------------------------------------------------------------------
+SRCDIR=.
+BINDIR=bin
+OUTDIR=$(BINDIR)\$(VARIANT)
+CUSTOM=Custom
+
+MAIN= Contracts
+OBJS= $(OUTDIR)\Contracts.wixobj $(OUTDIR)\UI.wixobj 
+
+
+BDIR	= bin\$(VARIANT)
+BASEDIRS= -b ..\ITaskManager\$(BDIR) \
+	  -b ..\TaskManager\$(BDIR) \
+	  -b ..\IPropertyPane\$(BDIR) \
+	  -b ..\PropertyPage\$(BDIR) \
+	  -b ..\ContractsPropertyPane\$(BDIR)
+
+FILES	= Microsoft.Contracts.targets \
+	  $(OUTDIR)\AddBuildTargets.dll \
+	  ..\ITaskManager\$(BDIR)\ITaskManager.dll \
+	  ..\TaskManager\$(BDIR)\TaskManager.dll \
+	  ..\TaskManager\$(BDIR)\1033\TaskManagerUI.dll \
+	  ..\IPropertyPane\$(BDIR)\IPropertyPane.dll \
+	  ..\PropertyPage\$(BDIR)\PropertyPage.dll \
+	  ..\ContractsPropertyPane\$(BDIR)\ContractsPropertyPane.dll
+
+MAINMSI = $(OUTDIR)\$(MAIN).msi
+
+#--------------------------------------------------------------------------
+# Main target
+#--------------------------------------------------------------------------
+.SUFFIXES: .wxs .wixobj
+
+all: makedirs $(MAINMSI)
+	msiexec /i $(MAINMSI) /log $(OUTDIR)\install.log
+
+clean: 
+	del /Q /S $(BINDIR)\*
+
+uninstall:
+	msiexec /x $(MAINMSI) /log $(OUTDIR)\uninstall.log
+
+#--------------------------------------------------------------------------
+# Dependency rules
+#--------------------------------------------------------------------------
+$(MAINMSI): $(OBJS) $(FILES)
+	light -out $@ $(BASEDIRS) $(OBJS)
+
+{$(SRCDIR)}.wxs{$(OUTDIR)}.wixobj:
+	candle -out $@ $<
+
+$(OUTDIR)\Contracts.wixobj: $(SRCDIR)\Contracts.wxs $(SRCDIR)\UI.wxs
+$(OUTDIR)\UI.wixobj: $(SRCDIR)\UI.wxs
+
+
+$(OUTDIR)\AddBuildTargets.dll: $(CUSTOM)\AddBuildTargets.cpp $(CUSTOM)\AddBuildTargets.def
+	cl /Fe$(OUTDIR)\ /Fo$(OUTDIR)\ /LD $** msi.lib user32.lib
+
+.IGNORE:
+
+makedirs:
+	@mkdir  $(OUTDIR)
+

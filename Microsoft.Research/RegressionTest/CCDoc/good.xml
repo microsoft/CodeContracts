@@ -1,0 +1,445 @@
+﻿<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>CCDocTests</name>
+  </assembly>
+  <members>
+    <member name="T:CCDocTests.IInterfaceWithContracts">
+      <summary>
+            An interface.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.IInterfaceWithContracts.MethodFromInterface(System.Object)">
+      <summary>
+            An unimplemented method in an interface.
+            </summary>
+      <param name="input" />
+      <returns />
+      <requires description="Input should be non-null." exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+      <ensures description="Result will always be a positive integer." csharp="Contract.Result&lt;int&gt;() &gt; 0" vb="Contract.Result(Of Integer )() &gt; 0">result &gt; 0</ensures>
+      <ensuresOnThrow exception="T:System.InvalidCastException">input != null</ensuresOnThrow>
+      <exception cref="T:System.InvalidCastException">input != null will be true on throw.</exception>
+    </member>
+    <member name="M:CCDocTests.IInterfaceWithContracts.GenericMethodInNonGenericInterface``1(``0)">
+      <summary>
+            A generic method in a non-generic interface.
+            </summary>
+      <ensures csharp="Contract.Result&lt;decimal&gt;().Equals((decimal)t)" vb="Contract.Result(Of Microsoft.Cci.DummyTypeReference)().Equals(((Object)t))">result.Equals((decimal)t)</ensures>
+    </member>
+    <member name="T:CCDocTests.ContractsForInterface">
+      <summary>
+            Contracts for an interface.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.ContractsForInterface.CCDocTests#IInterfaceWithContracts#MethodFromInterface(System.Object)">
+      <summary>
+            Contracts for a method in an interface.
+            </summary>
+      <param name="input" />
+      <returns />
+    </member>
+    <member name="M:CCDocTests.ContractsForInterface.CCDocTests#IInterfaceWithContracts#GenericMethodInNonGenericInterface``1(``0)">
+      <summary>
+            A generic method in a non-generic interface.
+            </summary>
+    </member>
+    <member name="T:CCDocTests.BaseClassWithContracts">
+      <summary>
+            A base class.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)">
+      <summary>
+            An unimplemented method in a base class.
+            </summary>
+      <param name="input" />
+      <returns />
+      <requires description="Input should be non-null." exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+      <ensures description="Result will always be a positive integer." csharp="Contract.Result&lt;int&gt;() &gt; 0" vb="Contract.Result(Of Integer )() &gt; 0">result &gt; 0</ensures>
+      <ensuresOnThrow exception="T:System.InvalidCastException">input != null</ensuresOnThrow>
+      <exception cref="T:System.InvalidCastException">input != null will be true on throw.</exception>
+    </member>
+    <member name="T:CCDocTests.ContractsForBaseClass">
+      <summary>
+            Contracts for a base class.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.ContractsForBaseClass.MethodFromBaseClass(System.Object)">
+      <summary>
+            Contracts for a method in a base class.
+            </summary>
+      <param name="input" />
+      <returns />
+    </member>
+    <member name="T:CCDocTests.IntermediateBaseClassWithContracts">
+      <summary>
+            A intermediate base class.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.IntermediateBaseClassWithContracts.MethodFromBaseClass(System.Object)">
+      <summary>
+            An implimented method that adds postconditions.
+            </summary>
+      <param name="input" />
+      <returns />
+      <ensures description="A contract declared on an intermediate class." csharp="Contract.Result&lt;int&gt;() &gt; 1" vb="Contract.Result(Of Integer )() &gt; 1">result &gt; 1</ensures>
+      <requires description="Input should be non-null." inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+      <ensures description="Result will always be a positive integer." inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" csharp="Contract.Result&lt;int&gt;() &gt; 0" vb="Contract.Result(Of Integer )() &gt; 0">result &gt; 0</ensures>
+      <ensuresOnThrow inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" exception="T:System.InvalidCastException">input != null</ensuresOnThrow>
+      <exception cref="T:System.InvalidCastException">input != null will be true on throw.</exception>
+    </member>
+    <member name="T:CCDocTests.TestClass">
+      <summary>
+            A dummy class with various contracts.
+            </summary>
+      <invariant>intForInvariants &gt; 0</invariant>
+      <invariant description="Integer will always be even.">intForInvariants % 2 == 0</invariant>
+    </member>
+    <member name="M:CCDocTests.TestClass.MethodFromInterface(System.Object)">
+      <summary>
+            An implicitly implemented method that was inherited from an interface.
+            </summary>
+      <param name="input" />
+      <returns />
+      <ensures description="This precondition is declared on the implemented method, not the base method." csharp="true" vb="True">true</ensures>
+      <requires description="Input should be non-null." inheritedFrom="M:CCDocTests.IInterfaceWithContracts.MethodFromInterface(System.Object)" inheritedFromTypeName="IInterfaceWithContracts" exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+      <ensures description="Result will always be a positive integer." inheritedFrom="M:CCDocTests.IInterfaceWithContracts.MethodFromInterface(System.Object)" inheritedFromTypeName="IInterfaceWithContracts" csharp="Contract.Result&lt;int&gt;() &gt; 0" vb="Contract.Result(Of Integer )() &gt; 0">result &gt; 0</ensures>
+      <ensuresOnThrow inheritedFrom="M:CCDocTests.IInterfaceWithContracts.MethodFromInterface(System.Object)" inheritedFromTypeName="IInterfaceWithContracts" exception="T:System.InvalidCastException">input != null</ensuresOnThrow>
+      <exception cref="T:System.InvalidCastException">input != null will be true on throw.</exception>
+    </member>
+    <member name="M:CCDocTests.TestClass.GenericMethodInNonGenericInterface``1(``0)">
+      <summary>
+            A generic method implementing the interface method.
+            </summary>
+      <typeparam name="U" />
+      <param name="u" />
+      <returns />
+      <ensures description="An extra postcondition declared on the implemented method." csharp="true" vb="True">true</ensures>
+      <ensures inheritedFrom="M:CCDocTests.IInterfaceWithContracts.GenericMethodInNonGenericInterface``1(``0)" inheritedFromTypeName="IInterfaceWithContracts" csharp="Contract.Result&lt;decimal&gt;().Equals((decimal)t)" vb="Contract.Result(Of Microsoft.Cci.DummyTypeReference)().Equals(((Object)t))">result.Equals((decimal)t)</ensures>
+    </member>
+    <member name="M:CCDocTests.TestClass.MethodFromBaseClass(System.Object)">
+      <summary>
+            An explicitly implemented method that was inherited from an interface.
+            </summary>
+      <param name="input" />
+      <returns />
+      <ensures description="This precondition is declared on the implemented method, not the base method." csharp="(() =&gt; {
+    {
+        this.MethodFromBaseClass(input);
+    }
+    return true; })()" vb="(() =&gt; {
+    Me.MethodFromBaseClass(input)
+    return True; })()">(() =&gt; {
+    {
+        this.MethodFromBaseClass(input);
+    }
+    return true; })()</ensures>
+      <ensures description="A contract declared on an intermediate class." inheritedFrom="M:CCDocTests.IntermediateBaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="IntermediateBaseClassWithContracts" csharp="Contract.Result&lt;int&gt;() &gt; 1" vb="Contract.Result(Of Integer )() &gt; 1">result &gt; 1</ensures>
+      <requires description="Input should be non-null." inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+      <ensures description="Result will always be a positive integer." inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" csharp="Contract.Result&lt;int&gt;() &gt; 0" vb="Contract.Result(Of Integer )() &gt; 0">result &gt; 0</ensures>
+      <ensuresOnThrow inheritedFrom="M:CCDocTests.BaseClassWithContracts.MethodFromBaseClass(System.Object)" inheritedFromTypeName="BaseClassWithContracts" exception="T:System.InvalidCastException">input != null</ensuresOnThrow>
+      <exception cref="T:System.InvalidCastException">input != null will be true on throw.</exception>
+    </member>
+    <member name="M:CCDocTests.TestClass.MethodWithLegacyContracts(System.Object)">
+      <summary>
+            A method with an if-than-throw statement.
+            </summary>
+      <param name="input" />
+      <requires exception="T:System.ArgumentNullException" csharp="input != null" vb="input &lt;&gt; Nothing">input != null</requires>
+      <exception cref="T:System.ArgumentNullException">input == null</exception>
+    </member>
+    <member name="F:CCDocTests.TestClass.intForInvariants">
+      <summary>
+            A dummy field used by object invariants.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.TestClass.ObjectInvariant">
+      <summary>
+            Object invariants for TestClass.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.TestClass.PureMethod">
+      <summary>
+            A pure method.
+            </summary>
+      <pure />
+    </member>
+    <member name="M:CCDocTests.TestClass.MethodWithContracts(System.Int32,System.Boolean,System.Char[],System.Object,System.String@)">
+      <summary>
+            A method with contracts.
+            </summary>
+      <param name="x" />
+      <param name="b" />
+      <param name="charArray" />
+      <param name="foo" />
+      <param name="o" />
+      <returns />
+      <requires description="One char in the charArray parameter should be 'c'." csharp="System.Diagnostics.Contracts.Contract.Exists&lt;char&gt;(charArray, delegate (char index) {
+    bool local_0 = charArray[index] == 'c';
+    goto IL_000f;
+IL_000f:
+    return local_0;
+
+})" vb="System.Diagnostics.Contracts.Contract.Exists(charArray, delegate (index As Char ) {
+    bool local_0 = charArray(index) = 'c';
+    goto IL_000f;
+IL_000f:
+    Return local_0
+})">System.Diagnostics.Contracts.Contract.Exists&lt;char&gt;(charArray, delegate (char index) {
+    bool local_0 = charArray[index] == 'c';
+    goto IL_000f;
+IL_000f:
+    return local_0;
+
+})</requires>
+      <requires csharp="System.Diagnostics.Contracts.Contract.ForAll&lt;char&gt;(charArray, delegate (char index) {
+    bool local_0 = charArray[index] != 'f';
+    goto IL_0012;
+IL_0012:
+    return local_0;
+
+})" vb="System.Diagnostics.Contracts.Contract.ForAll(charArray, delegate (index As Char ) {
+    bool local_0 = charArray(index) &lt;&gt; 'f';
+    goto IL_0012;
+IL_0012:
+    Return local_0
+})">for all index in charArray 
+{
+    bool local_0 = charArray[index] != 'f';
+    goto IL_0012;
+IL_0012:
+    return local_0;
+
+}
+</requires>
+      <requires description="Input integer must be greater than zero." csharp="x &gt; 0" vb="x &gt; 0">x &gt; 0</requires>
+      <requires exception="T:System.ArgumentNullException" csharp="foo != null" vb="foo &lt;&gt; Nothing">foo != null</requires>
+      <exception cref="T:System.ArgumentNullException">foo == null</exception>
+      <ensures description="Output parameter &quot;o&quot; will be a non-null, non-empty string." csharp="!string.IsNullOrEmpty(o)" vb="Not System.String.IsNullOrEmpty(o)">!string.IsNullOrEmpty(o)</ensures>
+      <ensures csharp="Contract.Old(b) == b" vb="Contract.Old(b) = b">old(b) == b</ensures>
+      <ensures description="Return value will always be greater than parameter x." csharp="Contract.Result&lt;int&gt;() &gt; Contract.Old(x)" vb="Contract.Result(Of Integer )() &gt; Contract.Old(x)">result &gt; old(x)</ensures>
+      <ensuresOnThrow exception="T:System.ArgumentException">Contract.ValueAtReturn(out o) == "Hello World!"</ensuresOnThrow>
+      <exception cref="T:System.ArgumentException">Contract.ValueAtReturn(out o) == "Hello World!" will be true on throw.</exception>
+    </member>
+    <member name="M:CCDocTests.TestClass.MethodWithQuantifiers(System.Int32[])">
+      <summary>
+            A method with quantifiers.
+            </summary>
+      <param name="array" />
+      <returns />
+      <requires description="None of the numbers should be 666." csharp="System.Diagnostics.Contracts.Contract.ForAll&lt;int&gt;(array, delegate (int i) {
+    bool local_0 = array[i] != 666;
+    goto IL_0015;
+IL_0015:
+    return local_0;
+
+})" vb="System.Diagnostics.Contracts.Contract.ForAll(array, delegate (i As Integer ) {
+    bool local_0 = array(i) &lt;&gt; 666;
+    goto IL_0015;
+IL_0015:
+    Return local_0
+})">for all i in array 
+{
+    bool local_0 = array[i] != 666;
+    goto IL_0015;
+IL_0015:
+    return local_0;
+
+}
+</requires>
+      <requires csharp="System.Diagnostics.Contracts.Contract.Exists&lt;int&gt;(array, delegate (int i) {
+    bool local_0 = array[i] == 5;
+    goto IL_000e;
+IL_000e:
+    return local_0;
+
+})" vb="System.Diagnostics.Contracts.Contract.Exists(array, delegate (i As Integer ) {
+    bool local_0 = array(i) = 5;
+    goto IL_000e;
+IL_000e:
+    Return local_0
+})">System.Diagnostics.Contracts.Contract.Exists&lt;int&gt;(array, delegate (int i) {
+    bool local_0 = array[i] == 5;
+    goto IL_000e;
+IL_000e:
+    return local_0;
+
+})</requires>
+      <requires csharp="true" vb="True">true</requires>
+    </member>
+    <member name="P:CCDocTests.TestClass.PropertyWithContracts">
+      <summary>
+            A property with a getter and setter and contracts on each.
+            </summary>
+      <getter>
+        <ensures description="Result will never be even." csharp="Contract.Result&lt;int&gt;() % 2 != 0" vb="Contract.Result(Of Integer )() Mod 2 &lt;&gt; 0">result % 2 != 0</ensures>
+        <ensuresOnThrow exception="T:System.NotSupportedException">2 == 3</ensuresOnThrow>
+      </getter>
+      <exception cref="T:System.NotSupportedException">2 == 3 will be true on throw.</exception>
+      <setter>
+        <requires description="Value should not be even." csharp="value % 2 != 0" vb="value Mod 2 &lt;&gt; 0">value % 2 != 0</requires>
+        <requires exception="T:System.ArgumentOutOfRangeException" csharp="value &lt; 0" vb="value &lt; 0">value &lt; 0</requires>
+        <ensuresOnThrow description="The NotSupportedException will only be thrown if the value equals 13." exception="T:System.NotSupportedException">value == 13</ensuresOnThrow>
+      </setter>
+      <exception cref="T:System.ArgumentOutOfRangeException">value &gt;= 0</exception>
+      <exception cref="T:System.NotSupportedException">value == 13 will be true on throw.</exception>
+    </member>
+    <member name="T:CCDocTests.GJ`1">
+      <summary>
+            A generic interface with contracts
+            </summary>
+      <typeparam name="T">must be a reference type and have a null constructor</typeparam>
+    </member>
+    <member name="M:CCDocTests.GJ`1.M(`0)">
+      <summary>
+            A very simple method.
+            The contract for GJ.M that says that the parameter must
+            not be null, the return value must be non-null and not
+            equal to the parameter.
+            </summary>
+      <requires csharp="(decimal)t != null" vb="((Object)t) &lt;&gt; Nothing">(decimal)t != null</requires>
+      <ensures csharp="(decimal)Contract.Result&lt;decimal&gt;() != null" vb="((Object)Contract.Result(Of T)()) &lt;&gt; Nothing">(decimal)result != null</ensures>
+      <ensures csharp="(decimal)Contract.Result&lt;decimal&gt;() != (decimal)t" vb="((Object)Contract.Result(Of T)()) &lt;&gt; ((Object)t)">(decimal)result != (decimal)t</ensures>
+    </member>
+    <member name="T:CCDocTests.GJImpl`1">
+      <summary>
+            A generic implementation of GJ.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.GJImpl`1.M(`0)">
+      <summary>
+            The implementation for GJ.M.
+            </summary>
+      <requires inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)t != null" vb="((Object)t) &lt;&gt; Nothing">(decimal)t != null</requires>
+      <ensures inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)Contract.Result&lt;decimal&gt;() != null" vb="((Object)Contract.Result(Of V)()) &lt;&gt; Nothing">(decimal)result != null</ensures>
+      <ensures inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)Contract.Result&lt;decimal&gt;() != (decimal)t" vb="((Object)Contract.Result(Of V)()) &lt;&gt; ((Object)t)">(decimal)result != (decimal)t</ensures>
+    </member>
+    <member name="T:CCDocTests.GJNonGenericImpl">
+      <summary>
+            A non-generic implementation of GJ.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.GJNonGenericImpl.M(System.Collections.Generic.List{System.Int32})">
+      <summary>
+            The implementation for GJ.M.
+            </summary>
+      <requires inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)t != null" vb="((Object)t) &lt;&gt; Nothing">(decimal)t != null</requires>
+      <ensures inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)Contract.Result&lt;decimal&gt;() != null" vb="((Object)Contract.Result(Of System.Collections.Generic.List(Of Integer))()) &lt;&gt; Nothing">(decimal)result != null</ensures>
+      <ensures inheritedFrom="M:CCDocTests.GJ`1.M(`0)" inheritedFromTypeName="GJ" csharp="(decimal)Contract.Result&lt;decimal&gt;() != (decimal)t" vb="((Object)Contract.Result(Of System.Collections.Generic.List(Of Integer))()) &lt;&gt; ((Object)t)">(decimal)result != (decimal)t</ensures>
+    </member>
+    <member name="T:CCDocTests.IMatchingSignatures">
+      <summary>
+            Bug reported: http://social.msdn.microsoft.com/Forums/en-US/codecontracts/thread/f606114d-7f6b-4ff1-8c66-e32cc050965b
+            by Hank Beasley. When a contract class implicitly implements the interface methods, then the code
+            in the contract provider that looked up the method in the contract class wasn't checking the names, just the
+            signatures.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.IMatchingSignatures.M1(System.String)">
+      <summary>
+            M1s.
+            </summary>
+      <requires csharp="a == &quot;h&quot;" vb="a = &quot;h&quot; ">a == "h"</requires>
+    </member>
+    <member name="M:CCDocTests.IMatchingSignatures.M2(System.String)">
+      <summary>
+            M2s.
+            </summary>
+      <requires csharp="b == &quot;z&quot;" vb="b = &quot;z&quot; ">b == "z"</requires>
+    </member>
+    <member name="T:CCDocTests.IIMatchingSignaturesContract">
+      <summary>
+            Bug reported where CCI2 found wrong method for implicitly implemented methods.
+            </summary>
+    </member>
+    <member name="M:CCDocTests.IIMatchingSignaturesContract.M1(System.String)">
+      <summary>
+            Method with same signature as M2
+            </summary>
+      <param name="a" />
+    </member>
+    <member name="M:CCDocTests.IIMatchingSignaturesContract.M2(System.String)">
+      <summary>
+            Method with same signature as M1
+            </summary>
+      <param name="b" />
+    </member>
+    <member name="T:DaveSexton1.CollectionModification`1">
+      <summary>
+            A repro from the forum
+            </summary>
+    </member>
+    <member name="M:DaveSexton1.CollectionModification`1.Accept(System.Collections.Generic.ICollection{`0})">
+      <summary>
+            1
+            </summary>
+      <param name="collection">Collection.</param>
+      <requires csharp="collection != null" vb="collection &lt;&gt; Nothing">collection != null</requires>
+    </member>
+    <member name="M:DaveSexton1.CollectionModification`1.Accept(System.Action{`0},System.Action{`0},System.Action)">
+      <summary>
+            2
+            </summary>
+      <param name="add">Delegate.</param>
+      <param name="remove">Delegate.</param>
+      <param name="clear">Delegate.</param>
+      <requires csharp="add != null" vb="add &lt;&gt; Nothing">add != null</requires>
+      <requires csharp="remove != null" vb="remove &lt;&gt; Nothing">remove != null</requires>
+      <requires csharp="clear != null" vb="clear &lt;&gt; Nothing">clear != null</requires>
+    </member>
+    <member name="M:DaveSexton1.CollectionModification`1.Accept``1(System.Func{`0,``0},System.Func{`0,``0},System.Func{``0})">
+      <summary>
+            3
+            </summary>
+      <typeparam name="TResult">Type.</typeparam>
+      <param name="add">Delegate.</param>
+      <param name="remove">Delegate.</param>
+      <param name="clear">Delegate.</param>
+      <returns>Result.</returns>
+      <requires csharp="remove != null" vb="remove &lt;&gt; Nothing">remove != null</requires>
+      <requires csharp="add != null" vb="add &lt;&gt; Nothing">add != null</requires>
+      <requires csharp="clear != null" vb="clear &lt;&gt; Nothing">clear != null</requires>
+    </member>
+    <member name="T:DaveSexton1.Foo">
+      <summary>
+            An implementation for a repro from the forum.
+            </summary>
+    </member>
+    <member name="M:DaveSexton1.Foo.Accept(System.Collections.Generic.ICollection{System.Int32})">
+      <summary>
+            1
+            </summary>
+      <param name="collection">Collection.</param>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept(System.Collections.Generic.ICollection{`0})" inheritedFromTypeName="CollectionModification" csharp="collection != null" vb="collection &lt;&gt; Nothing">collection != null</requires>
+    </member>
+    <member name="M:DaveSexton1.Foo.Accept(System.Action{System.Int32},System.Action{System.Int32},System.Action)">
+      <summary>
+            2
+            </summary>
+      <param name="add">Delegate.</param>
+      <param name="remove">Delegate.</param>
+      <param name="clear">Delegate.</param>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept(System.Action{`0},System.Action{`0},System.Action)" inheritedFromTypeName="CollectionModification" csharp="add != null" vb="add &lt;&gt; Nothing">add != null</requires>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept(System.Action{`0},System.Action{`0},System.Action)" inheritedFromTypeName="CollectionModification" csharp="remove != null" vb="remove &lt;&gt; Nothing">remove != null</requires>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept(System.Action{`0},System.Action{`0},System.Action)" inheritedFromTypeName="CollectionModification" csharp="clear != null" vb="clear &lt;&gt; Nothing">clear != null</requires>
+    </member>
+    <member name="M:DaveSexton1.Foo.Accept``1(System.Func{System.Int32,``0},System.Func{System.Int32,``0},System.Func{``0})">
+      <summary>
+            3
+            </summary>
+      <typeparam name="TResult">Type.</typeparam>
+      <param name="add">Delegate.</param>
+      <param name="remove">Delegate.</param>
+      <param name="clear">Delegate.</param>
+      <returns>Result.</returns>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept``1(System.Func{`0,``0},System.Func{`0,``0},System.Func{``0})" inheritedFromTypeName="CollectionModification" csharp="remove != null" vb="remove &lt;&gt; Nothing">remove != null</requires>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept``1(System.Func{`0,``0},System.Func{`0,``0},System.Func{``0})" inheritedFromTypeName="CollectionModification" csharp="add != null" vb="add &lt;&gt; Nothing">add != null</requires>
+      <requires inheritedFrom="M:DaveSexton1.CollectionModification`1.Accept``1(System.Func{`0,``0},System.Func{`0,``0},System.Func{``0})" inheritedFromTypeName="CollectionModification" csharp="clear != null" vb="clear &lt;&gt; Nothing">clear != null</requires>
+    </member>
+  </members>
+</doc>

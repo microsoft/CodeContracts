@@ -1,0 +1,1433 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+
+<!--=====================================================================
+   Version
+======================================================================-->
+
+<?ifndef var.Version ?>
+ <?define var.Version="1.0.0825.2" ?>
+<?endif?>
+<?ifndef var.Flavor ?>
+ <?define var.Flavor="Debug" ?>
+<?endif?>
+<?ifndef var.ProductGuid ?>
+ <?define var.ProductGuid                    = "{990ACAE0-1AAE-4fa6-A178-9BF282060120}" ?>
+<?endif?>
+
+<!--=====================================================================
+   Installer Configurations
+
+     var.Feature_VSTSCheck     for VSTS check
+     var.Feature_Pex           for Pex integration
+     var.Feature_CCCheck       include CCCheck
+     var.Feature_Leaderboard   include Leaderboard access
+
+   Inputs:
+
+     var.Version
+     var.Flavor
+     var.License
+     var.ContractReferenceAssemblyRoot
+     var.IncludePDBs
+======================================================================-->
+
+
+<!--=====================================================================
+   Assembly Versions
+
+   IMPORTANT: if these implementations rev their version, these 
+   need to be updated below.
+======================================================================-->
+
+<?define var.ContractsPropertyPaneVersion   = "$(var.Version)" ?>
+<?define var.ContractsPropertyPaneGuid      = "{6962FC39-92C8-4e9b-9E3E-4A52D08D1D83}" ?>
+
+<!--=====================================================================
+   Installer component guid's
+======================================================================-->
+<?define var.UpgradeGuid                      = "{24B1F423-76CC-4a4f-9EDC-038CC04B6C60}" ?>
+<?define var.ContractsTargets35CompGuid       = "{990ACAE3-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.MicrosoftContractsCompGuid       = "{990ACAE6-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.MicrosoftContractsSL3CompGuid    = "{990ACAE6-1AAE-4fa6-A178-9BF282060121}" ?>
+<?define var.ContractsPropertyPaneCompGuid    = "{990ACAE8-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.CodeContractsToolsCompGuid       = "{990ACAEB-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.CSharpSnippetsGuid               = "{990ACAED-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VBSnippetsGuid                   = "{990ACAED-1AAE-4fa6-A178-9BF282060120}" ?>
+<?define var.OutOfBandCompGuid35              = "{990ACAEF-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.SamplesCompGuid                  = "{990ACAF0-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.DocumentationCompGuid            = "{990ACAF1-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.CSharpSourceCompGuid             = "{990ACAF2-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VBSourceCompGuid                 = "{990ACAF3-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.LicenseCompGuid                  = "{990ACAF4-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS90RegistryCompGuid             = "{990ACAF5-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS10RegistryCompGuid             = "{990ACAF6-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS11RegistryCompGuid             = "{990ACAF7-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS12RegistryCompGuid             = "{990ACAF8-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ContractsTargets40CompGuid       = "{990ACAF9-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.SandcastleCompGuid               = "{990ACAFA-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.EnvironmentVariablesCompGuid     = "{990ACAFB-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuid40              = "{990ACAFC-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuid45              = "{990ACAFD-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuidSL30            = "{990ACAFE-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuidSL40            = "{990ACAFF-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuidSL50            = "{990ACB03-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuidSL40WP          = "{990ACB02-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS10ExpressRegistryCompGuid      = "{990ACB01-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.MicrosoftContractsWP71CompGuid   = "{990ACB04-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS10VsixManifestCompGuid         = "{990ACB05-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS11VsixManifestCompGuid         = "{990ACB06-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS12VsixManifestCompGuid         = "{990ACB07-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VSCloseCheckCompGuid             = "{990ACB08-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
+
+
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Product Name='Microsoft Code Contracts $(var.Flavor) $(var.Version) for .NET' Id='$(var.ProductGuid)'
+    UpgradeCode='$(var.UpgradeGuid)'
+    Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Microsoft Corporation'>
+
+    <Package Keywords='Installer'
+      Description="Microsoft Code Contracts $(var.Flavor) $(var.Version) for .NET Installer"
+      Manufacturer='Microsoft Corporation'
+      InstallerVersion='200' Languages='1033' Compressed='yes' SummaryCodepage='1252' 
+      InstallPrivileges='elevated'
+	  />
+
+    <!-- icons -->
+    <Icon Id="pdf.ico" SourceFile="Binary\pdf.ico"/>
+    <Icon Id="zip.ico" SourceFile="Binary\folderopen.ico"/>
+
+    <!--=====================================================================
+       Media information
+    ======================================================================-->
+    <Media Id='1' DiskPrompt="CD-ROM #1" Cabinet="MicrosoftContracts.cab" EmbedCab="yes" />
+    <Property Id='DiskPrompt' Value="Microsoft Code Contracts $(var.Flavor) $(var.Version) Installation [1]" />
+
+    <!--=====================================================================
+       Useful shorthands
+    ======================================================================-->
+    <!-- Public objects -->
+    <!-- Misc. -->
+    <?define var.EmptyGuid                ="{00000000-0000-0000-0000-000000000000}" ?>
+    <?define var.ContractsPropertyPageID  ="{1F89CA21-E885-439d-92F5-C36ABE518593}" ?>
+    <?define var.Vs90RootKey              ="Software\Microsoft\VisualStudio\9.0" ?>
+    <?define var.Vs10RootKey              ="Software\Microsoft\VisualStudio\10.0" ?>
+    <?define var.Vs11RootKey              ="Software\Microsoft\VisualStudio\11.0" ?>
+    <?define var.WinSDKRootKey            ="Software\Microsoft\Microsoft SDKs\Windows" ?>
+    
+    <?define var.CodeToolsKey             ="CodeTools" ?>
+
+    <!-- File names -->
+    <?define var.CodeContractsTargets     ="Microsoft.CodeContracts.targets" ?>
+    <?define var.CodeContractsTargets2    ="Microsoft.CodeContractAnalysis.targets" ?>
+    <?define var.CodeContractsPane        ="CodeContractsVSPropertyPane" ?>
+<?ifndef var.BrianBuild ?>
+    <?define var.Foxtrot                  ="ccrewrite.exe" ?>
+    <?define var.AsmMeta                  ="ccrefgen.exe" ?>
+    <?define var.CCDoc                    ="ccdocgen.exe" ?>
+    <?define var.Clousot                  ="cccheck.exe" ?>
+<?else?>
+    <?define var.Foxtrot                  ="foxtrot.exe" ?>
+    <?define var.CCDoc                    ="ccdoc.exe" ?>
+    <?define var.AsmMeta                  ="asmmeta.exe" ?>
+    <?define var.Clousot                  ="clousot.exe" ?>
+<?endif?>
+    <?define var.AbstractDomains          ="AbstractDomains.dll" ?>
+    <?define var.Analyzers                ="Analyzers.dll" ?>
+    <?define var.CCI1CodeProvider         ="CCI1CodeProvider.dll" ?>
+    <?define var.ClousotMain              ="ClousotMain.dll" ?>
+    <?define var.CodeAnalysis             ="CodeAnalysis.dll" ?>
+    <?define var.ControlFlow              ="ControlFlow.dll" ?>
+    <?define var.CodeFixes                ="CodeFixes.dll" ?>
+    <?define var.DataStructures           ="DataStructures.dll" ?>
+    <?define var.Decompiler               ="Decompiler.dll" ?>
+    <?define var.FoxtrotExtractor         ="Foxtrot.Extractor.dll" ?>
+    <?define var.Graphs                   ="Graphs.dll" ?>
+    <?define var.RevisedSimplex           ="RevisedSimplexMethod.dll" ?>
+    <?define var.MicrosoftContracts       ="Microsoft.Contracts.dll" ?>
+    <?define var.MsBuildCodeContracts     ="MsBuildCodeContracts.dll" ?>
+    <?define var.ITaskManager             ="ITaskManager.dll" ?>
+    <?define var.ExtendedReflectionMsm    ="extendedreflection_x86_ret_public.msm" ?>
+    <?define var.SystemCompiler           ="System.Compiler.dll" ?>
+    <?define var.RegressionTestUtils      ="RegressionTestUtils.dll" ?>
+
+    <?define var.MSFTVBContracts               ="Microsoft.VisualBasic.Contracts.dll" ?>
+    <?define var.MicrosoftVBCompatContracts    ="Microsoft.VisualBasic.Compatibility.Contracts.dll" ?>
+    <?define var.mscorlibContracts             ="mscorlib.Contracts.dll" ?>
+    <?define var.PresentationCoreContracts     ="PresentationCore.Contracts.dll" ?>
+    <?define var.PresentationFrameworkContracts ="PresentationFramework.Contracts.dll" ?>
+    <?define var.SystemContracts               ="System.Contracts.dll" ?>
+    <?define var.SystemComponentModelCompositionContracts ="System.ComponentModel.Composition.Contracts.dll" ?>
+    <?define var.SystemConfigurationContracts  ="System.Configuration.Contracts.dll" ?>
+    <?define var.SystemConfigurationInstallContracts  ="System.Configuration.Install.Contracts.dll" ?>
+    <?define var.SystemCoreContracts           ="System.Core.Contracts.dll" ?>
+    <?define var.SystemDataContracts           ="System.Data.Contracts.dll" ?>
+    <?define var.SystemDataServicesContracts   ="System.Data.Services.Contracts.dll" ?>
+    <?define var.SystemDirectoryServicesContracts ="System.DirectoryServices.Contracts.dll" ?>
+    <?define var.SystemDrawingContracts        ="System.Drawing.Contracts.dll" ?>
+    <?define var.SystemNumericsContracts       ="System.Numerics.Contracts.dll" ?>
+    <?define var.SystemRuntimeCachingContracts ="System.Runtime.Caching.Contracts.dll" ?>
+    <?define var.SystemSecurityContracts       ="System.Security.Contracts.dll" ?>
+    <?define var.SystemServiceModelContracts   ="System.ServiceModel.Contracts.dll" ?>
+    <?define var.SystemServiceProcessContracts ="System.ServiceProcess.Contracts.dll" ?>
+    <?define var.SystemWebContracts            ="System.Web.Contracts.dll" ?>
+    <?define var.SystemWebApplicationServicesContracts ="System.Web.ApplicationServices.Contracts.dll" ?>
+    <?define var.SystemWindowsContracts        ="System.Windows.Contracts.dll" ?>
+    <?define var.SystemWindowsFormsContracts   ="System.Windows.Forms.Contracts.dll" ?>
+    <?define var.SystemWindowsBrowserContracts ="System.Windows.Browser.Contracts.dll" ?>
+    <?define var.SystemXmlContracts            ="System.Xml.Contracts.dll" ?>
+    <?define var.SystemXmlLinqContracts        ="System.Xml.Linq.Contracts.dll" ?>
+    <?define var.WindowsBaseContracts          ="WindowsBase.Contracts.dll" ?>
+
+    <?define var.SamplesZip               ="Samples.zip" ?>
+    <?define var.SandcastleZip            ="Sandcastle.zip" ?>
+    <?define var.Redist                   ="Redist.txt" ?>
+
+    <?define var.DeclarativeAssemblyAttributeCS = "ContractDeclarativeAssemblyAttribute.cs" ?>
+    <?define var.DeclarativeAssemblyAttributeVB = "ContractDeclarativeAssemblyAttribute.vb" ?>
+    <?define var.ContractExtensionsCS           = "ContractExtensions.cs" ?>
+    <?define var.ContractExtensionsVB           = "ContractExtensions.vb" ?>
+
+    <!--=====================================================================
+       Checks       
+    ======================================================================-->
+    
+    <!-- find .net 4.0 -->
+    <PropertyRef Id="NETFRAMEWORK40FULL" />
+    <Condition Message="Please install .NET 4.0 downloadable from Microsoft prior to this installation.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+    </Condition>
+
+    <!-- find the visual studio 9.0 install directory -->
+    <PropertyRef Id="VS90_ROOT_FOLDER" />
+
+    <PropertyRef Id="VS90DEVENV"/>
+    <PropertyRef Id="VS10DEVENV"/>
+    <PropertyRef Id="VS10EXPRESSDEVENV"/>
+    <PropertyRef Id="VS10_ROOT_FOLDER"/>
+    <PropertyRef Id="VS11_ROOT_FOLDER"/>
+    <PropertyRef Id="VS12_ROOT_FOLDER_EXISTS"/>
+
+<!--
+    <Condition Message="This installer requires Visual Studio 2008 or 2010.">
+      <![CDATA[Installed OR VS90DEVENV OR VS10DEVENV]]>
+    </Condition>
+-->
+    <DirectoryRef Id="INSTALLBINDIR">
+      <Component Id="VisualStudioCloseCheck" Guid="$(var.VSCloseCheckCompGuid)" Win64="no">
+        <File Source="votive2010.dll" KeyPath="yes" Checksum="yes" Vital="yes" />
+        <util:RestartResource Path="[VS10DEVENV]" />
+        <util:RestartResource Path="[VS11DEVENV]" />
+        <util:RestartResource Path="[VS12DEVENV]" />
+      </Component>
+    </DirectoryRef>
+
+    <?if $(var.Feature_VSTSCheck) = true ?>
+    <!-- with static checker requires VSTS Dev 10 -->
+    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED"/>
+    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
+    <PropertyRef Id="VS90_IDE_VSTA_INSTALLED"/>
+    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED"/>
+    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
+    <PropertyRef Id="VS10_IDE_VSTA_INSTALLED"/>
+    <Condition Message="This installer requires VS2010 Premium or up, or VS2008 Team System.">
+      <![CDATA[Installed OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS90_IDE_VSTA_INSTALLED OR VS10_IDE_VSTA_INSTALLED]]>
+    </Condition>
+    <?endif?>
+    
+    <DirectoryRef Id="TARGETDIR">
+      <Directory Id="VS10_ROOT_FOLDER" Name="VS10Root">
+        <Directory Id="VS10_Common7" Name="Common7">
+          <Directory Id="VS10_IDE" Name="IDE">
+            <Directory Id="VS10_Extensions" Name="Extensions">
+              <Directory Id="VS10_ExtensionsMicrosoft" Name="Microsoft">
+                <Directory Id="VS10_ExtensionsMicrosoftContracts" Name="CodeContracts">
+                  <Directory Id="VS10_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
+                    <Component Id='VS10extension.manifestComp' Guid='$(var.VS10VsixManifestCompGuid)'>
+                      <Condition>VS10_ROOT_FOLDER</Condition>
+                      <File Id='VS10extension.manifest' Name='extension.vsixmanifest' Source='VS10.extension.vsixmanifest' Vital='yes'/>
+                      <File Id='VS10codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
+                    </Component>            
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="VS11_ROOT_FOLDER" Name="VS11Root">
+        <Directory Id="VS11_Common7" Name="Common7">
+          <Directory Id="VS11_IDE" Name="IDE">
+            <Directory Id="VS11_Extensions" Name="Extensions">
+              <Directory Id="VS11_ExtensionsMicrosoft" Name="Microsoft">
+                <Directory Id="VS11_ExtensionsMicrosoftContracts" Name="CodeContracts">
+                  <Directory Id="VS11_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
+                    <Component Id='VS11extension.manifestComp' Guid='$(var.VS11VsixManifestCompGuid)'>
+                      <Condition>VS11_ROOT_FOLDER</Condition>
+                      <File Id='VS11extension.manifest' Name='extension.vsixmanifest' Source='VS11.extension.vsixmanifest' Vital='yes'/>
+                      <File Id='VS11codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
+                      <File Id='VS11codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
+                      <File Id='VS11codecontracts_license.rtf' Name='license.rtf' Source='$(var.License)' Vital='yes'/>
+                    </Component>            
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="VS12_ROOT_FOLDER" Name="VS12Root">
+        <Directory Id="VS12_Common7" Name="Common7">
+          <Directory Id="VS12_IDE" Name="IDE">
+            <Directory Id="VS12_Extensions" Name="Extensions">
+              <Directory Id="VS12_ExtensionsMicrosoft" Name="Microsoft">
+                <Directory Id="VS12_ExtensionsMicrosoftContracts" Name="CodeContracts">
+                  <Directory Id="VS12_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
+                    <Component Id='VS12extension.manifestComp' Guid='$(var.VS12VsixManifestCompGuid)'>
+                      <Condition><![CDATA[Installed OR VS12_ROOT_FOLDER_EXISTS]]></Condition>
+                      <File Id='VS12extension.manifest' Name='extension.vsixmanifest' Source='VS12.extension.vsixmanifest' Vital='yes'/>
+                      <File Id='VS12codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
+                      <File Id='VS12codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
+                      <File Id='VS12codecontracts_license.rtf' Name='license.rtf' Source='$(var.License)' Vital='yes'/>
+                    </Component>            
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+
+      <Component Id='EnvironmentVariables'
+                 Guid='$(var.EnvironmentVariablesCompGuid)'>
+        <Environment Id='ContractsInstallRootEnvSystem'
+                     Action="set"
+                     Name="CodeContractsInstallDir"
+                     Part="all"
+                     Permanent="no"
+                     System="yes"
+                     Value="[INSTALLDIR]"
+                     />
+        <Environment Id='ContractsInstallRootEnvUser'
+                     Action="set"
+                     Name="CodeContractsInstallDir"
+                     Part="all"
+                     Permanent="no"
+                     System="no"
+                     Value="[INSTALLDIR]"
+                     />
+      </Component>                   
+ 
+    </DirectoryRef>
+
+
+    <!--=====================================================================
+       Install directory: Program Files\Microsoft\Contracts
+    ======================================================================-->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <!--====================================================================
+          Extended Reflection MSM
+      ======================================================================-->
+      <?if $(var.Feature_Pex) = true ?>
+      <Merge Id="ExtendedReflectionModule" Language="0" SourceFile="$(var.ExtendedReflectionMsm)" DiskId="1" />
+      <?endif?>
+
+      <!--====================================================================
+          CodeTools MSM
+      ======================================================================-->
+      <Merge Id="CodeToolsModule" Language="0" SourceFile="CodeTools.msm" DiskId="1" />
+
+      <Directory Id='ProgramFilesFolder' >
+      
+        <!--=====================================================================
+           Program Files\Microsoft\Contracts
+        ======================================================================-->
+        <Directory Id='Microsoft' Name='Microsoft'>
+          <Directory Id='INSTALLDIR' Name='Contracts'>
+            <!--=====================================================================
+               Samples
+            ======================================================================-->
+            <Directory Id='SAMPLESDIR' Name='Samples'>
+              <Component Id='Samples' Guid='$(var.SamplesCompGuid)'>
+                <File Id='$(var.SamplesZip)' Name='$(var.SamplesZip)' Source='$(var.SamplesZip)' Vital='yes'/>
+                <Shortcut Show="normal"
+                  Id="SamplesShortCut"
+                  Directory="ProgramMenuSamples"
+                  Name="Samples"
+                  Description="Sample uses of contracts"
+                  Advertise="yes"
+                  Icon="zip.ico"
+                  />
+              </Component>
+            </Directory>
+            <!--=====================================================================
+               Sandcastle
+            ======================================================================-->
+            <Directory Id='SANDCASTLEDIR' Name='Sandcastle'>
+              <Component Id='Sandcastle' Guid='$(var.SandcastleCompGuid)'>
+                <File Id='$(var.SandcastleZip)' Name='$(var.SandcastleZip)' Source='$(var.SandcastleZip)' Vital='yes'/>
+                <Shortcut Show="normal"
+                  Id="SandcastleShortCut"
+                  Directory="ProgramMenuSandcastle"
+                  Name="Sandcastle"
+                  Description="Patching Sandcastle for CodeContracts"
+                  Advertise="yes"
+                  Icon="zip.ico"
+                  />
+              </Component>
+            </Directory>
+            <!--=====================================================================
+               Out of band contracts
+            ======================================================================-->
+            <Directory Id='OUTOFBANDDIR' Name='Contracts'>
+              <Directory Id='OUTOFBANDDIR35' Name='v3.5'>
+                <Component Id='OutOfBandContracts35' Guid='$(var.OutOfBandCompGuid35)'>
+                  <File
+                     Id='$(var.MicrosoftVBCompatContracts)35'
+                     Name='$(var.MicrosoftVBCompatContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.MicrosoftVBCompatContracts)' Vital='yes'/>
+                  <File 
+                     Id='$(var.MicrosoftContracts)InContracts35'
+                     Name='$(var.MicrosoftContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.MicrosoftContracts)' Vital='yes'/>
+                  <File Id='$(var.mscorlibContracts)35'
+                        Name='$(var.mscorlibContracts)'
+                        Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.mscorlibContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemContracts)35' 
+                     Name='$(var.SystemContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemConfigurationContracts)35' 
+                     Name='$(var.SystemConfigurationContracts)' 
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemConfigurationContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemConfigurationInstallContracts)35' 
+                     Name='$(var.SystemConfigurationInstallContracts)' 
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemConfigurationInstallContracts)' Vital='yes'/>
+                  <File 
+                     Id='$(var.SystemCoreContracts)35'
+                     Name='$(var.SystemCoreContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemCoreContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemDataContracts)35'
+                     Name='$(var.SystemDataContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemDataContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemDirectoryServicesContracts)35'
+                     Name='$(var.SystemDirectoryServicesContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemDirectoryServicesContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemDrawingContracts)35'
+                     Name='$(var.SystemDrawingContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemDrawingContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemSecurityContracts)35'
+                     Name='$(var.SystemSecurityContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemSecurityContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemServiceProcessContracts)35'
+                     Name='$(var.SystemServiceProcessContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemServiceProcessContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemWebContracts)35'
+                     Name='$(var.SystemWebContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemWebContracts)' Vital='yes'/>
+                  <File 
+                     Id='$(var.SystemWindowsFormsContracts)35'
+                     Name='$(var.SystemWindowsFormsContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemWindowsFormsContracts)'
+                     Vital='yes'/>
+                  <File
+                     Id='$(var.MSFTVBContracts)35'
+                     Name='$(var.MSFTVBContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.MSFTVBContracts)'
+                     Vital='yes'/>
+                  <File 
+                     Id='$(var.SystemXmlContracts)35'
+                     Name='$(var.SystemXmlContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemXmlContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.SystemXmlLinqContracts)35'
+                     Name='$(var.SystemXmlLinqContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                  <File
+                     Id='$(var.WindowsBaseContracts)35'
+                     Name='$(var.WindowsBaseContracts)'
+                     Source='$(var.ContractReferenceAssemblyRoot)\v3.5\$(var.WindowsBaseContracts)' Vital='yes'/>
+                </Component>
+              </Directory>
+              <Directory Id='OUTOFBANDDIRNETFRAMEWORK' Name='.NETFramework'>
+                <Directory Id='OUTOFBANDDIR40' Name='v4.0'>
+                  <Component Id='OutOfBandContracts40' Guid='$(var.OutOfBandCompGuid40)'>
+                    <File
+                       Id='$(var.mscorlibContracts)40'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationCoreContracts)40' 
+                       Name='$(var.PresentationCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.PresentationCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationFrameworkContracts)40' 
+                       Name='$(var.PresentationFrameworkContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.PresentationFrameworkContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)40' 
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemComponentModelCompositionContracts)40' 
+                       Name='$(var.SystemComponentModelCompositionContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemComponentModelCompositionContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationContracts)40' 
+                       Name='$(var.SystemConfigurationContracts)' 
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemConfigurationContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationInstallContracts)40' 
+                       Name='$(var.SystemConfigurationInstallContracts)' 
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemConfigurationInstallContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemCoreContracts)40'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataContracts)40'
+                       Name='$(var.SystemDataContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemDataContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataServicesContracts)40' 
+                       Name='$(var.SystemDataServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemDataServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDirectoryServicesContracts)40' 
+                       Name='$(var.SystemDirectoryServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemDirectoryServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDrawingContracts)40'
+                       Name='$(var.SystemDrawingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemDrawingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemNumericsContracts)40'
+                       Name='$(var.SystemNumericsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemNumericsContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemRuntimeCachingContracts)40'
+                       Name='$(var.SystemRuntimeCachingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemRuntimeCachingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemSecurityContracts)40'
+                       Name='$(var.SystemSecurityContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemSecurityContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceModelContracts)40'
+                       Name='$(var.SystemServiceModelContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemServiceModelContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceProcessContracts)40'
+                       Name='$(var.SystemServiceProcessContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemServiceProcessContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebContracts)40'
+                       Name='$(var.SystemWebContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemWebContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebApplicationServicesContracts)40'
+                       Name='$(var.SystemWebApplicationServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemWebApplicationServicesContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemWindowsFormsContracts)40'
+                       Name='$(var.SystemWindowsFormsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemWindowsFormsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)40'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlContracts)40'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemXmlContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemXmlLinqContracts)40'
+                       Name='$(var.SystemXmlLinqContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.WindowsBaseContracts)40'
+                       Name='$(var.WindowsBaseContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.WindowsBaseContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.MicrosoftVBCompatContracts)40'
+                       Name='$(var.MicrosoftVBCompatContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.0\$(var.MicrosoftVBCompatContracts)' Vital='yes'/>
+                  </Component>
+                </Directory>
+                <Directory Id='OUTOFBANDDIR45' Name='v4.5'>
+                  <Component Id='OutOfBandContracts45' Guid='$(var.OutOfBandCompGuid45)'>
+                    <File
+                       Id='$(var.MicrosoftVBCompatContracts)45'
+                       Name='$(var.MicrosoftVBCompatContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.MicrosoftVBCompatContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)45'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.mscorlibContracts)45'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationCoreContracts)45'
+                       Name='$(var.PresentationCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.PresentationCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationFrameworkContracts)45'
+                       Name='$(var.PresentationFrameworkContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.PresentationFrameworkContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemComponentModelCompositionContracts)45'
+                       Name='$(var.SystemComponentModelCompositionContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemComponentModelCompositionContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationContracts)45'
+                       Name='$(var.SystemConfigurationContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemConfigurationContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationInstallContracts)45'
+                       Name='$(var.SystemConfigurationInstallContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemConfigurationInstallContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)45'
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemCoreContracts)45'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataContracts)45'
+                       Name='$(var.SystemDataContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemDataContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataServicesContracts)45'
+                       Name='$(var.SystemDataServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemDataServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDirectoryServicesContracts)45'
+                       Name='$(var.SystemDirectoryServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemDirectoryServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDrawingContracts)45'
+                       Name='$(var.SystemDrawingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemDrawingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemNumericsContracts)45'
+                       Name='$(var.SystemNumericsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemNumericsContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemRuntimeCachingContracts)45'
+                       Name='$(var.SystemRuntimeCachingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemRuntimeCachingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemSecurityContracts)45'
+                       Name='$(var.SystemSecurityContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemSecurityContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceModelContracts)45'
+                       Name='$(var.SystemServiceModelContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemServiceModelContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceProcessContracts)45'
+                       Name='$(var.SystemServiceProcessContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemServiceProcessContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebApplicationServicesContracts)45'
+                       Name='$(var.SystemWebApplicationServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemWebApplicationServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebContracts)45'
+                       Name='$(var.SystemWebContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemWebContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsFormsContracts)45'
+                       Name='$(var.SystemWindowsFormsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemWindowsFormsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.SystemXmlContracts)45'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemXmlContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemXmlLinqContracts)45'
+                       Name='$(var.SystemXmlLinqContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.WindowsBaseContracts)45'
+                       Name='$(var.WindowsBaseContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.WindowsBaseContracts)' Vital='yes'/>
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id='SilverlightContracts' Name='Silverlight'>
+                <Directory Id='OUTOFBANDDIRSL30' Name='v3.0'>
+                  <Component Id='OutOfBandContractsSL30' Guid='$(var.OutOfBandCompGuidSL30)'>
+                    <File
+                       Id='$(var.mscorlibContracts)SL30'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)SL30' 
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemCoreContracts)SL30'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsContracts)SL30'
+                       Name='$(var.SystemWindowsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemWindowsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsBrowserContracts)SL30'
+                       Name='$(var.SystemWindowsBrowserContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemWindowsBrowserContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)SL30'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlContracts)SL30'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemXmlContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlLinqContracts)SL30'
+                       Name='$(var.SystemXmlLinqContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.MicrosoftContracts)InContractsSL30'
+                       Name='$(var.MicrosoftContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.MicrosoftContracts)' Vital='yes'/>
+                  </Component>
+                </Directory>
+                <Directory Id='OUTOFBANDDIRSL50' Name='v5.0'>
+                  <Component Id='OutOfBandContractsSL50' Guid='$(var.OutOfBandCompGuidSL50)'>
+                    <File
+                       Id='$(var.mscorlibContracts)SL50'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)SL50' 
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.SystemContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemCoreContracts)SL50'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsContracts)SL50'
+                       Name='$(var.SystemWindowsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.SystemWindowsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsBrowserContracts)SL50'
+                       Name='$(var.SystemWindowsBrowserContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.SystemWindowsBrowserContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)SL50'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlContracts)SL50'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v5.0\$(var.SystemXmlContracts)' Vital='yes'/>
+                  </Component>
+                </Directory>
+                <Directory Id='OUTOFBANDDIRSL40' Name='v4.0'>
+                  <Component Id='OutOfBandContractsSL40' Guid='$(var.OutOfBandCompGuidSL40)'>
+                    <File
+                       Id='$(var.mscorlibContracts)SL40'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)SL40' 
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemCoreContracts)SL40'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsContracts)SL40'
+                       Name='$(var.SystemWindowsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemWindowsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsBrowserContracts)SL40'
+                       Name='$(var.SystemWindowsBrowserContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemWindowsBrowserContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)SL40'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlContracts)SL40'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemXmlContracts)' Vital='yes'/>
+                    <File 
+                       Id='$(var.SystemXmlLinqContracts)SL40'
+                       Name='$(var.SystemXmlLinqContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                  </Component>
+                  <Directory Id='OUTOFBANDDIRSL40Profile' Name='Profile'>
+                    <Directory Id='OUTOFBANDDIRSL40ProfileWindowsPhone' Name='WindowsPhone'>
+                      <Component Id='OutOfBandContractsSL40WP' Guid='$(var.OutOfBandCompGuidSL40WP)'>
+                        <File
+                            Id='$(var.mscorlibContracts)SL40WP'
+                            Name='$(var.mscorlibContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.mscorlibContracts)' Vital='yes'/>
+                        <File
+                            Id='$(var.SystemContracts)SL40WP' 
+                            Name='$(var.SystemContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.SystemContracts)' Vital='yes'/>
+                        <File 
+                            Id='$(var.SystemCoreContracts)SL40WP'
+                            Name='$(var.SystemCoreContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.SystemCoreContracts)' Vital='yes'/>
+                        <File
+                            Id='$(var.SystemWindowsContracts)SL40WP'
+                            Name='$(var.SystemWindowsContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.SystemWindowsContracts)'
+                            Vital='yes'/>
+                        <File 
+                            Id='$(var.SystemXmlContracts)SL40WP'
+                            Name='$(var.SystemXmlContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.SystemXmlContracts)' Vital='yes'/>
+                        <File 
+                            Id='$(var.SystemXmlLinqContracts)SL40WP'
+                            Name='$(var.SystemXmlLinqContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                        <File 
+                            Id='$(var.MicrosoftContracts)InContractsSL40WP'
+                            Name='$(var.MicrosoftContracts)'
+                            Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.MicrosoftContracts)' Vital='yes'/>
+                      </Component>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id='INSTALLBINDIR' Name='Bin'>
+              <!--=====================================================================
+                 Bin Directory
+              ======================================================================-->
+                        
+              <!--=====================================================================
+                 Contracts propertypane implementation
+              ======================================================================-->
+              <Component Id='ContractsPropertyPane' Guid='$(var.ContractsPropertyPaneCompGuid)'>
+                <File Id='$(var.CodeContractsPane).dll' Name='$(var.CodeContractsPane).dll' 
+                      Source='$(var.CodeContractsPane).dll' Vital='yes' />
+                <!-- COM registration -->
+                <RegistryKey Root="HKCR"
+                             Key="CLSID\$(var.ContractsPropertyPaneGuid)"
+                             Action="createAndRemoveOnUninstall">
+                  <RegistryValue Value="Microsoft.Contracts.VisualStudio.PropertyPane" Type="string" />
+                  <RegistryValue Key="ProgId"
+                        Value="Microsoft.Contracts.VisualStudio.PropertyPane" Type="string" />
+                  <RegistryValue Key="Implemented Categories\{62c8fe65-4ebb-45e7-b440-6e39b2cdbf29}"
+                        Value="Categories" Type="string" />
+                  <RegistryKey Key="InProcServer32" Action="createAndRemoveOnUninstall">
+                    <RegistryValue Value="[SystemFolder]mscoree.dll" Type="string" />
+                    <RegistryValue Name="Assembly"
+                                   Value="$(var.CodeContractsPane), Version=$(var.ContractsPropertyPaneVersion), Culture=neutral"
+                                   Type="string" />
+                    <RegistryValue Name="Class"
+                          Value="Microsoft.Contracts.VisualStudio.PropertyPane" Type="string" />
+                    <RegistryValue Name="CodeBase"
+                          Value="[INSTALLBINDIR]$(var.CodeContractsPane).dll" Type="string" />
+                    <RegistryValue Name="ThreadingModel" Value="Both" Type="string" />
+                  </RegistryKey>
+                </RegistryKey>
+
+              </Component>
+
+
+              <!--=====================================================================
+                 Foxtrot and Clousot binaries
+              ======================================================================-->
+              <Component Id='CodeContractTools' Guid='$(var.CodeContractsToolsCompGuid)'>
+
+                <!-- Static checking Executables -->
+
+                <?if $(var.Feature_CCCheck) = true ?>
+                  <File Id='$(var.Clousot)' Name='$(var.Clousot)' Source='$(var.Clousot)' Vital='yes'>
+                    <netfx:NativeImage Id="ngen_cccheck.exe" Platform="32bit" Priority="1" AppBaseDirectory="INSTALLBINDIR"/>
+                  </File>
+                  <File Id='CCCheckConfig' Name='CCCheck.exe.config' Source='CCCheck.exe.config' Vital='yes' />
+
+                  <!-- Libraries 
+                  <File Id='AbstractDomainsId' Name='$(var.AbstractDomains)' Source='$(var.AbstractDomains)' Vital='yes' />
+                  <File Id='$(var.Graphs)' Name='$(var.Graphs)' Source='$(var.Graphs)' Vital='yes' />
+                  <File Id='$(var.Analyzers)' Name='$(var.Analyzers)' Source='$(var.Analyzers)' Vital='yes' />
+                  <File Id='$(var.RevisedSimplex)' Name='$(var.RevisedSimplex)' Source='$(var.RevisedSimplex)' Vital='yes' />
+                  <File Id='$(var.CodeAnalysis)' Name='$(var.CodeAnalysis)' Source='$(var.CodeAnalysis)' Vital='yes' />
+                  <File Id='$(var.ControlFlow)' Name='$(var.ControlFlow)' Source='$(var.ControlFlow)' Vital='yes' />
+                  <File Id='$(var.CodeFixes)' Name='$(var.CodeFixes)' Source='$(var.CodeFixes)' Vital='yes' />
+                  <File Id='$(var.DataStructures)' Name='$(var.DataStructures)' Source='$(var.DataStructures)' Vital='yes' />
+                  -->
+                  <File Id='$(var.MsBuildCodeContracts)' Name='$(var.MsBuildCodeContracts)' Source='$(var.MsBuildCodeContracts)' Vital='yes' />
+                  <File Id='$(var.ITaskManager)' Name='$(var.ITaskManager)' Source='$(var.ITaskManager)' Vital='yes' />
+
+<!--
+                  <?if $(var.Feature_Pex) = true ?>
+                    <File Id='$(var.RegressionTestUtils)' Name='$(var.RegressionTestUtils)' Source='$(var.RegressionTestUtils)' Vital='yes' />
+                  <?endif?>
+-->
+                  <?if $(var.IncludePDBs) = true ?>
+                    <!--
+                    <File Id='Microsoft.Contracts2Id' Name='$(var.MicrosoftContracts)' Source='$(var.MicrosoftContracts)' Vital='yes' />
+                    <File Id='AbstractDomains.pdb' Name='AbstractDomains.pdb' Source='AbstractDomains.pdb' Vital='yes' />
+                    <File Id='CodeAnalysis.pdb' Name='CodeAnalysis.pdb' Source='CodeAnalysis.pdb' Vital='yes' />
+                    <File Id='Analyzers.pdb' Name='Analyzers.pdb' Source='Analyzers.pdb' Vital='yes' />
+                    <File Id='Graphs.pdb' Name='Graphs.pdb' Source='Graphs.pdb' Vital='yes' />
+                    <File Id='CodeFixes.pdb' Name='CodeFixes.pdb' Source='CodeFixes.pdb' Vital='yes' />
+                    <File Id='DataStructures.pdb' Name='DataStructures.pdb' Source='DataStructures.pdb' Vital='yes' />
+                    -->
+                    <File Id='ccrewrite.pdb' Name='ccrewrite.pdb' Source='ccrewrite.pdb' Vital='yes' />
+                    <File Id='ccrefgen.pdb' Name='ccrefgen.pdb' Source='ccrefgen.pdb' Vital='yes' />
+                    <File Id='ccdocgen.pdb' Name='ccdocgen.pdb' Source='ccdocgen.pdb' Vital='yes' />
+                    <File Id='cccheck.pdb' Name='cccheck.pdb' Source='cccheck.pdb' Vital='yes' />
+                  <?endif?>
+                  <!--  Include leaderboard uploading 
+                  <?if $(var.Feature_Leaderboard) = true ?>
+                    <File Id='ContractMSInternal.dll' Name='ContractMSInternal.dll' Source='ContractMSInternal.dll' Vital='yes' />
+                    <File Id='ContractMSInternal.XmlSerializers.dll' Name='ContractMSInternal.XmlSerializers.dll' Source='ContractMSInternal.XmlSerializers.dll' Vital='yes' />
+                  <?endif?>
+                  -->
+                <?endif?>
+
+                <!-- General Executables -->
+                <File Id='$(var.Foxtrot)' Name='$(var.Foxtrot)' Source='$(var.Foxtrot)' Vital='yes'>
+                  <netfx:NativeImage Id="ngen_ccrewrite.exe" Platform="32bit" Priority="1" AppBaseDirectory="INSTALLBINDIR"/>
+                </File>
+                <File Id='CCRewriteConfig' Name='ccrewrite.exe.config' Source='ccrewrite.exe.config' Vital='yes' />
+
+                <File Id='$(var.AsmMeta)' Name='$(var.AsmMeta)' Source='$(var.AsmMeta)' Vital='yes'>
+                   <netfx:NativeImage Id="ngen_ccrefgen.exe" Platform="32bit" Priority="1" AppBaseDirectory="INSTALLBINDIR"/>
+                </File>
+                <File Id='CCRefgenConfig' Name='ccrefgen.exe.config' Source='ccrefgen.exe.config' Vital='yes' />
+
+                <File Id='$(var.CCDoc)' Name='$(var.CCDoc)' Source='$(var.CCDoc)' Vital='yes'>
+                   <netfx:NativeImage Id="ngen_ccdocgen.exe" Platform="32bit" Priority="1" AppBaseDirectory="INSTALLBINDIR"/>
+                </File>
+                <File Id='CCDocgenConfig' Name='ccdocgen.exe.config' Source='ccdocgen.exe.config' Vital='yes' />
+                <File Id='CodeToolsUpdate' Name='CodeToolsUpdate.exe' Source='CodeToolsUpdate.exe' Vital='yes' />
+              </Component>
+            </Directory>
+            <!--=====================================================================
+               Contracts MSBuild targets files
+            ======================================================================-->
+            <Directory Id='MsBuild' Name='MsBuild'>
+              <Directory Id='MsBuildv35' Name='v3.5'>
+                <Component Id='ContractsTargets35' Guid='$(var.ContractsTargets35CompGuid)'>
+                  <File Id='ContractsTargets35' Name="$(var.CodeContractsTargets)"
+                        Source="MsBuild\v3.5\$(var.CodeContractsTargets)" Vital='yes' />
+                  <?if $(var.Feature_CCCheck) = true ?>
+                    <File Id='ContractsAnalysisTargets35' Name="$(var.CodeContractsTargets2)"
+                          Source="MsBuild\v3.5\$(var.CodeContractsTargets2)" Vital='yes' />
+                  <?endif?>
+                </Component>                   
+              </Directory>
+              <Directory Id='MsBuildv40' Name='v4.0'>
+                <Component Id='ContractsTargets40' Guid='$(var.ContractsTargets40CompGuid)'>
+                  <File Id='ContractsTargets40' Name="$(var.CodeContractsTargets)"
+                        Source="MsBuild\v4.0\$(var.CodeContractsTargets)" Vital='yes' />
+                  <?if $(var.Feature_CCCheck) = true ?>
+                    <File Id='ContractsAnalysisTargets40' Name="$(var.CodeContractsTargets2)"
+                          Source="MsBuild\v4.0\$(var.CodeContractsTargets2)" Vital='yes' />
+                  <?endif?>
+                </Component>                   
+              </Directory>
+              <Directory Id='MsBuildv120' Name='v12.0'>
+                <Component Id='ContractsTargets120' Guid='$(var.ContractsTargets120CompGuid)'>
+                  <File Id='ContractsTargets120' Name="$(var.CodeContractsTargets)"
+                        Source="MsBuild\v12.0\$(var.CodeContractsTargets)" Vital='yes' />
+                  <?if $(var.Feature_CCCheck) = true ?>
+                    <File Id='ContractsAnalysisTargets120' Name="$(var.CodeContractsTargets2)"
+                          Source="MsBuild\v12.0\$(var.CodeContractsTargets2)" Vital='yes' />
+                  <?endif?>
+                </Component>                   
+              </Directory>
+            </Directory>
+
+            <!--=====================================================================
+               License
+            ======================================================================-->
+            <Component Id='LicenseCompId' Guid='$(var.LicenseCompGuid)'>
+                <File Id='LicenseFile' Name="License.rtf"
+                    Source="$(var.License)" Vital='yes' />
+            </Component>
+            <!--=====================================================================
+               Languages
+            ======================================================================-->
+            <Directory Id='LanguagesDirId' Name='Languages'>
+              <Directory Id='CSharpDirId' Name='CSharp'>
+                <!--=====================================================================
+                     CSharp Sources
+                  ======================================================================-->
+                <Component Id='CSharpSourceDirectoryId' Guid='$(var.CSharpSourceCompGuid)'>
+                  <File Id='$(var.DeclarativeAssemblyAttributeCS)' Name='$(var.DeclarativeAssemblyAttributeCS)' Source='$(var.DeclarativeAssemblyAttributeCS)' Vital='yes' />
+                  <File Id='$(var.ContractExtensionsCS)' Name='$(var.ContractExtensionsCS)' Source='$(var.ContractExtensionsCS)' Vital='yes' />
+                </Component>
+                <Directory Id='INSTALLSNIPPETSCSHARPLOCATION' Name='Code Contract Snippets'>
+                  <!--=====================================================================
+                      CSharp Contract snippets
+                   ======================================================================-->
+                  <Component Id='CSharpSnippets' Guid='$(var.CSharpSnippetsGuid)'>
+                    <File Id='CScontractassert.snippet' Name='contractassert.snippet' Source='CSharpCodeSnippets\contractassert.snippet' Vital='yes' />
+                    <File Id='CScontractassume.snippet' Name='contractassume.snippet' Source='CSharpCodeSnippets\contractassume.snippet' Vital='yes' />
+                    <File Id='CScontractensures.snippet' Name='contractensures.snippet' Source='CSharpCodeSnippets\contractensures.snippet' Vital='yes' />
+                    <File Id='CScontractinvariant.snippet' Name='contractinvariant.snippet' Source='CSharpCodeSnippets\contractinvariant.snippet' Vital='yes' />
+                    <File Id='CScontractinvariantnonnull.snippet' Name='contractinvariantnonnull.snippet' Source='CSharpCodeSnippets\contractinvariantnonnull.snippet' Vital='yes' />
+                    <File Id='CScontractinvariantnotisnullorempty.snippet' Name='contractinvariantnotisnullorempty.snippet' Source='CSharpCodeSnippets\contractinvariantnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='CScontractinvariantmethod.snippet' Name='contractinvariantmethod.snippet' Source='CSharpCodeSnippets\contractinvariantmethod.snippet' Vital='yes' />
+                    <File Id='CScontractrequires.snippet' Name='contractrequires.snippet' Source='CSharpCodeSnippets\contractrequires.snippet' Vital='yes' />
+                    <File Id='CScontractresult.snippet' Name='contractresult.snippet' Source='CSharpCodeSnippets\contractresult.snippet' Vital='yes' />
+                    <File Id='CScontractold.snippet' Name='contractold.snippet' Source='CSharpCodeSnippets\contractold.snippet' Vital='yes' />
+                    <File Id='CScontractrequiresnotnull.snippet' Name='contractrequiresnotnull.snippet' Source='CSharpCodeSnippets\contractrequiresnotnull.snippet' Vital='yes' />
+                    <File Id='CScontractensuresnonnull.snippet' Name='contractensuresnonnull.snippet' Source='CSharpCodeSnippets\contractensuresnonnull.snippet' Vital='yes' />
+                    <File Id='CScontractrequiresnotisnullorempty.snippet' Name='contractrequiresnotisnullorempty.snippet' Source='CSharpCodeSnippets\contractrequiresnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='CScontractensuresnotisnullorempty.snippet' Name='contractensuresnotisnullorempty.snippet' Source='CSharpCodeSnippets\contractensuresnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='CScontractrequiresalways.snippet' Name='contractrequiresalways.snippet' Source='CSharpCodeSnippets\contractrequiresalways.snippet' Vital='yes' />
+                    <File Id='CScontractrequiresalwaysnotnull.snippet' Name='contractrequiresalwaysnotnull.snippet' Source='CSharpCodeSnippets\contractrequiresalwaysnotnull.snippet' Vital='yes' />
+                    <File Id='CScontractrequiresalwaysnotisnullorempty.snippet' Name='contractrequiresalwaysnotisnullorempty.snippet' Source='CSharpCodeSnippets\contractrequiresalwaysnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='CScontractinterface.snippet' Name='contractinterface.snippet' Source='CSharpCodeSnippets\contractinterface.snippet' Vital='yes' />
+                  </Component>
+                </Directory>
+              </Directory>
+
+              <Directory Id='VisualBasicDirId' Name='VisualBasic'>
+                <!--=====================================================================
+                    VB Sources
+                ======================================================================-->
+                <Component Id='VBSourceDirectoryId' Guid='$(var.VBSourceCompGuid)'>
+                  <File Id='$(var.DeclarativeAssemblyAttributeVB)' Name='$(var.DeclarativeAssemblyAttributeVB)' Source='$(var.DeclarativeAssemblyAttributeVB)' Vital='yes' />
+                  <File Id='$(var.ContractExtensionsVB)' Name='$(var.ContractExtensionsVB)' Source='$(var.ContractExtensionsVB)' Vital='yes' />
+                </Component>
+
+                <Directory Id='INSTALLSNIPPETSVBLOCATION' Name='Code Contract Snippets'>
+                  <!--=====================================================================
+                      VB Contract snippets
+                  ======================================================================-->
+                  <Component Id='VBSnippets' Guid='$(var.VBSnippetsGuid)'>
+                    <File Id='VBcontractassert.snippet' Name='contractassert.snippet' Source='VBCodeSnippets\contractassert.snippet' Vital='yes' />
+                    <File Id='VBcontractassume.snippet' Name='contractassume.snippet' Source='VBCodeSnippets\contractassume.snippet' Vital='yes' />
+                    <File Id='VBcontractensures.snippet' Name='contractensures.snippet' Source='VBCodeSnippets\contractensures.snippet' Vital='yes' />
+                    <File Id='VBcontractinvariant.snippet' Name='contractinvariant.snippet' Source='VBCodeSnippets\contractinvariant.snippet' Vital='yes' />
+                    <File Id='VBcontractinvariantnonnull.snippet' Name='contractinvariantnonnull.snippet' Source='VBCodeSnippets\contractinvariantnonnull.snippet' Vital='yes' />
+                    <File Id='VBcontractinvariantnotisnullorempty.snippet' Name='contractinvariantnotisnullorempty.snippet' Source='VBCodeSnippets\contractinvariantnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='VBcontractinvariantmethod.snippet' Name='contractinvariantmethod.snippet' Source='VBCodeSnippets\contractinvariantmethod.snippet' Vital='yes' />
+                    <File Id='VBcontractrequires.snippet' Name='contractrequires.snippet' Source='VBCodeSnippets\contractrequires.snippet' Vital='yes' />
+                    <File Id='VBcontractresult.snippet' Name='contractresult.snippet' Source='VBCodeSnippets\contractresult.snippet' Vital='yes' />
+                    <File Id='VBcontractold.snippet' Name='contractold.snippet' Source='VBCodeSnippets\contractold.snippet' Vital='yes' />
+                    <File Id='VBcontractrequiresnotnull.snippet' Name='contractrequiresnotnull.snippet' Source='VBCodeSnippets\contractrequiresnotnull.snippet' Vital='yes' />
+                    <File Id='VBcontractensuresnonnull.snippet' Name='contractensuresnonnull.snippet' Source='VBCodeSnippets\contractensuresnonnull.snippet' Vital='yes' />
+                    <File Id='VBcontractrequiresnotisnullorempty.snippet' Name='contractrequiresnotisnullorempty.snippet' Source='VBCodeSnippets\contractrequiresnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='VBcontractensuresnotisnullorempty.snippet' Name='contractensuresnotisnullorempty.snippet' Source='VBCodeSnippets\contractensuresnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='VBcontractrequiresalways.snippet' Name='contractrequiresalways.snippet' Source='VBCodeSnippets\contractrequiresalways.snippet' Vital='yes' />
+                    <File Id='VBcontractrequiresalwaysnotnull.snippet' Name='contractrequiresalwaysnotnull.snippet' Source='VBCodeSnippets\contractrequiresalwaysnotnull.snippet' Vital='yes' />
+                    <File Id='VBcontractrequiresalwaysnotisnullorempty.snippet' Name='contractrequiresalwaysnotisnullorempty.snippet' Source='VBCodeSnippets\contractrequiresalwaysnotisnullorempty.snippet' Vital='yes' />
+                    <File Id='VBcontractinterface.snippet' Name='contractinterface.snippet' Source='VBCodeSnippets\contractinterface.snippet' Vital='yes' />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <!--=====================================================================
+               VS Public Assembly Discovery
+            ======================================================================-->
+            <Directory Id='PublicAssembliesDirId' Name='PublicAssemblies'>
+              <!--=====================================================================
+                  Microsoft.Contracts for desktop CLR
+               ======================================================================-->
+              <Directory Id='VSPublicAssembliesForContracts' Name='v3.5'>
+                <Component Id='Microsoft.Contracts' Guid='$(var.MicrosoftContractsCompGuid)'>
+                  <File Id='MicrosoftContracts.dll' Name='Microsoft.Contracts.dll' Source='Microsoft.Contracts.dll' Vital='yes' />
+                  <File Id='$(var.Redist)1' Name='$(var.Redist)' Source='$(var.Redist)' Vital='yes' />
+                  <RegistryKey
+                     Root="HKLM"
+                     Key="SOFTWARE\Microsoft\.NETFramework\AssemblyFolders">
+                     <RegistryKey
+                        Id="AssemblyFolderRegistryKey"
+                        Key="Microsoft.Contracts"
+                        Action="createAndRemoveOnUninstall">
+                        <RegistryValue
+                          Action="write"
+                          Type="string"
+                          Value="[INSTALLDIR]PublicAssemblies\v3.5" />
+                     </RegistryKey>
+                   </RegistryKey>
+                  <!-- Registry key for v3.5 targets under VS2010 -->
+                  <RegistryKey
+                     Root="HKLM"
+                     Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx">
+                     <RegistryKey
+                        Id="AssemblyFolderRegistryKey2"
+                        Key="CodeContracts"
+                        Action="createAndRemoveOnUninstall">
+                        <RegistryValue
+                          Action="write"
+                          Type="string"
+                          Value="[INSTALLDIR]PublicAssemblies\v3.5" />
+                     </RegistryKey>
+                   </RegistryKey>
+                </Component>
+              </Directory>
+              <!--=====================================================================
+                 Microsoft.Contracts for Silverlight 3
+              ======================================================================-->
+              <Directory Id='VSSilverlight3AssembliesForContracts' Name='Silverlight3'>
+                <Component Id='Microsoft.ContractsSL3' Guid='$(var.MicrosoftContractsSL3CompGuid)'>
+                  <File Id='MicrosoftContractsSL3.dll' Name='Microsoft.Contracts.dll' Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v3.0\$(var.MicrosoftContracts)' Vital='yes' />
+                  <File Id='$(var.Redist)3' Name='$(var.Redist)' Source='$(var.Redist)' Vital='yes' />
+                  <RegistryKey
+                     Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Microsoft SDKs\Silverlight\v3.0\AssemblyFoldersEx">
+                     <RegistryKey
+                        Id="AssemblyFolderSL3RegistryKey"
+                        Key="Microsoft.Contracts"
+                        Action="createAndRemoveOnUninstall">
+                        <RegistryValue
+                          Action="write"
+                          Type="string"
+                          Value="[INSTALLDIR]PublicAssemblies\Silverlight3" />
+                     </RegistryKey>
+                   </RegistryKey>
+                </Component>
+              </Directory>
+              <!--=====================================================================
+                 Microsoft.Contracts for WP7.1 (Silverlight 4, but really 3)
+              ======================================================================-->
+              <Directory Id='VSWP7AssembliesForContracts' Name='WindowsPhone71'>
+                <Component Id='Microsoft.ContractsWP71' Guid='$(var.MicrosoftContractsWP71CompGuid)'>
+                  <File Id='MicrosoftContractsWP71.dll' Name='Microsoft.Contracts.dll' Source='$(var.ContractReferenceAssemblyRoot)\Silverlight\v4.0\Profile\WindowsPhone\$(var.MicrosoftContracts)' Vital='yes' />
+                  <File Id='$(var.Redist)4' Name='$(var.Redist)' Source='$(var.Redist)' Vital='yes' />
+                  <RegistryKey
+                     Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Microsoft SDKs\Silverlight for WindowsPhone\v4.0\AssemblyFoldersEx">
+                     <RegistryKey
+                        Id="AssemblyFolderWP71RegistryKey"
+                        Key="Microsoft.Contracts"
+                        Action="createAndRemoveOnUninstall">
+                        <RegistryValue
+                          Action="write"
+                          Type="string"
+                          Value="[INSTALLDIR]PublicAssemblies\WindowsPhone71" />
+                     </RegistryKey>
+                   </RegistryKey>
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <!-- program menu items -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="Microsoft Code Contracts">
+          <Directory Id="ProgramMenuDocumentation" Name="Documentation" />
+          <Directory Id="ProgramMenuSamples" Name="Samples" />
+          <Directory Id="ProgramMenuSandcastle" Name="Sandcastle" />
+        </Directory>
+      </Directory>
+
+    </Directory>
+
+    <!--=====================================================================
+       Features
+    ======================================================================-->
+    <Feature Id='Complete' Title='Microsoft Code Contracts $(var.Flavor) $(var.Version) for .NET' Description='The complete package.'
+      TypicalDefault='install' Display='expand' Level='1'
+      ConfigurableDirectory='INSTALLDIR'>
+      <Feature Id='CodeTools' Title='Microsoft CodeTools' Description='Visual Studio CodeTools Extensibility package.' Level='1'>
+        <MergeRef Id="CodeToolsModule"/>        
+      </Feature>
+      <Feature Id='Contracts' Title='Microsoft Code Contracts' Description='Contracts verification package.' Level='1'>
+        <?if $(var.Feature_Pex) = true ?>
+          <MergeRef Id="ExtendedReflectionModule"/>
+        <?endif?>
+        <ComponentRef Id='VisualStudioCloseCheck' />
+        <ComponentRef Id='VS10extension.manifestComp' />
+        <ComponentRef Id='VS11extension.manifestComp' />
+        <ComponentRef Id='VS12extension.manifestComp' />
+        <ComponentRef Id='Microsoft.Contracts' />
+        <ComponentRef Id='Microsoft.ContractsSL3' />
+        <ComponentRef Id='Microsoft.ContractsWP71' />
+        <ComponentRef Id='ContractsTargets35' />
+        <ComponentRef Id='ContractsTargets40' />
+        <ComponentRef Id='ContractsTargets120' />
+        <ComponentRef Id='ContractsPropertyPane' />
+        <ComponentRef Id='CodeContractTools' />
+        <ComponentRef Id='OutOfBandContracts35' />
+        <ComponentRef Id='OutOfBandContracts40' />
+        <ComponentRef Id='OutOfBandContracts45' />
+        <ComponentRef Id='OutOfBandContractsSL30' />
+        <ComponentRef Id='OutOfBandContractsSL40' />
+        <ComponentRef Id='OutOfBandContractsSL50' />
+        <ComponentRef Id='OutOfBandContractsSL40WP' />
+        <ComponentRef Id='CSharpSnippets' />
+        <ComponentRef Id='VBSnippets' />
+        <ComponentRef Id='ContractsDocumentationComponent' />
+        <ComponentRef Id='Samples' />
+        <ComponentRef Id='Sandcastle' />
+        <ComponentRef Id='CSharpSourceDirectoryId' />
+        <ComponentRef Id='VBSourceDirectoryId' />
+        <ComponentRef Id='LicenseCompId' />
+        <ComponentRef Id='VS90PackageRegistryComponent' />
+        <ComponentRef Id='VS10PackageRegistryComponent' />
+        <ComponentRef Id='VS11PackageRegistryComponent' />
+        <ComponentRef Id='VS12PackageRegistryComponent' />
+<!--        <ComponentRef Id='VS10ExpressPackageRegistryComponent' /> -->
+        <ComponentRef Id='EnvironmentVariables' />
+      </Feature>
+    </Feature>
+
+    <!-- Documentation -->
+    <DirectoryRef Id='INSTALLDIR'>
+      <Directory Id='Documentation' Name='Documentation'>
+        <Component
+         Id="ContractsDocumentationComponent"
+         Guid="$(var.DocumentationCompGuid)"
+         Win64="no">
+          <File Id="ContractsManualPdf" Source="..\..\Documentation\User Documentation\userdoc.pdf" Name="ContractsManual.pdf" KeyPath="yes" />
+          <Shortcut Show="normal"
+                  Id="ContractsManualShortCut"
+                  Directory="ProgramMenuDocumentation"
+                  Name="Contracts User Manual"
+                  Advertise="yes"
+                  Icon="pdf.ico"
+                  />
+          <RemoveFolder Id="RemoveProgramMenuDocumentation" Directory="ProgramMenuDocumentation" On="both"/>
+          <RemoveFolder Id="RemoveProgramMenuSandcastle" Directory="ProgramMenuSandcastle" On="both"/>
+          <RemoveFolder Id="RemoveProgramMenuSamples" Directory="ProgramMenuSamples" On="both"/>
+          <RemoveFolder Id="RemoveProgramMenuDir" Directory="ProgramMenuDir" On="both"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+
+    <!-- regsitry entries for the packages -->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 9.0 hive (VS90) -->
+      <Component
+        Id="VS90PackageRegistryComponent"
+        Guid="$(var.VS90RegistryCompGuid)" Transitive="yes"
+        Win64="no">
+<!-- Always write these registry entries, otherwise Daan's CodeTools won't put the msbuild hook in
+        <Condition>
+          <![CDATA[VS90DEVENV]]>
+        </Condition>
+-->
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VisualStudio\9.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+          <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts\CommonTargets\After" >
+             <RegistryValue Name="TargetsFile" Value="$$(CodeContractsInstallDir)MsBuild\v3.5\Microsoft.CodeContracts.targets" Type="string" />
+             <RegistryValue Name="MSBuildVersions" Value="3.5" Type="string" />   <!-- semicolon seperated list of versions -->
+          </RegistryKey>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 10.0 hive (VS10) -->
+      <Component
+        Id="VS10PackageRegistryComponent"
+        Guid="$(var.VS10RegistryCompGuid)" Transitive="yes"
+        Win64="no">
+<!-- Always write these registry entries, otherwise Daan's CodeTools won't put the msbuild hook in
+        <Condition>
+          <![CDATA[VS10DEVENV]]>
+        </Condition>
+-->
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VisualStudio\10.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+          <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts\CommonTargets\After" >
+             <RegistryValue Name="TargetsFile" Value="$$(CodeContractsInstallDir)MsBuild\v4.0\Microsoft.CodeContracts.targets" Type="string" />
+             <RegistryValue Name="MSBuildVersions" Value="4.0" Type="string" />   <!-- semicolon seperated list of versions -->
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+<!--
+      <Component
+        Id="VS10ExpressPackageRegistryComponent"
+        Guid="$(var.VS10ExpressRegistryCompGuid)" Transitive="yes"
+        Win64="no">
+        <Condition>
+          <![CDATA[VS10EXPRESSDEVENV]]>
+        </Condition>
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VCSExpress\10.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+        </RegistryKey>
+      </Component>
+-->
+    </DirectoryRef>
+
+    <!-- regsitry entries for the packages -->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 11.0 hive (VS11) -->
+      <Component
+        Id="VS11PackageRegistryComponent"
+        Guid="$(var.VS11RegistryCompGuid)" Transitive="yes"
+        Win64="no">
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VisualStudio\11.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+          <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts\CommonTargets\After" >
+             <RegistryValue Name="TargetsFile" Value="$$(CodeContractsInstallDir)MsBuild\v4.0\Microsoft.CodeContracts.targets" Type="string" />
+             <RegistryValue Name="MSBuildVersions" Value="4.0" Type="string" />   <!-- semicolon seperated list of versions -->
+          </RegistryKey>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+      
+    <!-- regsitry entries for the packages -->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 12.0 hive (VS12) -->
+      <Component
+        Id="VS12PackageRegistryComponent"
+        Guid="$(var.VS12RegistryCompGuid)" Transitive="yes"
+        Win64="no">
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VisualStudio\12.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+          <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts\CommonTargets\After" >
+             <RegistryValue Name="TargetsFile" Value="$$(CodeContractsInstallDir)MsBuild\v12.0\Microsoft.CodeContracts.targets" Type="string" />
+             <RegistryValue Name="MSBuildVersions" Value="12.0" Type="string" />   <!-- semicolon seperated list of versions -->
+          </RegistryKey>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+      
+    <!--=====================================================================
+       The user interface: link in "UI.wxs" (which is a generic reusable module)
+    ======================================================================-->
+    <UIRef Id='FragmentUI' />
+    
+    
+    <!--=====================================================================
+       Execute sequence: make sure we do the condition test not too soon..
+    ======================================================================-->
+    <AdminExecuteSequence />
+
+    <!-- Removing any previous install -->
+    <Upgrade Id="$(var.UpgradeGuid)">
+      <UpgradeVersion 
+        Minimum="0.0.0.0"
+        Property="OLDVERSIONFOUND" 		
+        IncludeMinimum="yes"
+        MigrateFeatures="yes" />
+    </Upgrade>
+
+    <InstallExecuteSequence>
+      <LaunchConditions After='AppSearch' />
+      <!-- automatically uninstall previous installation -->
+      <RemoveExistingProducts Before="InstallInitialize">
+        <![CDATA[OLDVERSIONFOUND]]>
+      </RemoveExistingProducts>      
+    </InstallExecuteSequence>
+	
+    <!--
+      Starting with VS2012, "devenv /setup" must be run after installation
+      in order for the contracts pane to show up in the project properties
+      page.
+    -->
+    <CustomActionRef Id="VS2012Setup" />
+    <CustomActionRef Id="VS2013Setup" />
+
+  </Product>
+
+  <!-- Indicates whether the Visual Studio Team Dev Tools is installed -->
+  <Fragment>
+    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS90DevToolsUnderVSSetup"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
+        Type="raw"
+        />
+    </Property>
+    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS90DevToolsUnderVSSetup2"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
+        Type="raw"
+        />
+    </Property>
+    <Property Id="VS90_IDE_VSTA_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTA90"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
+        Type="raw"
+        />
+    </Property>
+    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS10DevToolsUnderVSSetup"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
+        Type="raw"
+        />
+    </Property>
+    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTS10DevToolsUnderVSSetup2"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
+        Type="raw"
+        />
+    </Property>
+    <Property Id="VS10_IDE_VSTA_INSTALLED" Secure="yes">
+      <RegistrySearch
+        Id="SearchForVSTA10"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
+        Type="raw"
+        />
+    </Property>
+  </Fragment>
+
+ 
+
+
+</Wix>

@@ -1,0 +1,173 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- default installation path -->
+  <PropertyGroup>
+    <SpecSharpBinPath Condition="'$(SpecSharpBinPath)'=='' AND '$(SpecSharpInstallDir)'!=''">$(SpecSharpInstallDir)\bin</SpecSharpBinPath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <UseContracts Condition="'$(UseContracts)'==''">false</UseContracts>
+  </PropertyGroup>
+  
+
+  <!-- The SpecSharp task -->
+  <UsingTask TaskName="Microsoft.SpecSharp.SpecSharpCompile" AssemblyFile="$(SpecSharpBinPath)\Microsoft.SpecSharp.dll" /> 
+
+  <!-- register ourselves as an "after-build" target -->
+  <PropertyGroup>
+    <PrepareForRunDependsOn>RunSpecSharp;$(PrepareForRunDependsOn)</PrepareForRunDependsOn>
+  </PropertyGroup>
+
+  
+  <!-- Our main target, only run when "$(UseContracts)" is true. -->
+  <Target
+      Name="RunSpecSharp"
+      Condition="'$(UseContracts)'=='true'"
+      Inputs="$(MSBuildAllProjects);
+              @(Compile);
+              @(ManifestResourceWithNoCulture);
+              $(ApplicationIcon);
+              $(AssemblyOriginatorKeyFile);
+              @(ManifestNonResxWithNoCultureOnDisk);
+              @(ReferencePath);
+              @(CompiledLicenseFile)"
+      Outputs="$(NonExistentFile);@(SpecIntermediateAssembly)"
+      DependsOnTargets="Compile"
+   >
+  
+    <SpecSharpCompile
+      AdditionalLibPaths="$(AdditionalLibPaths)"
+      AddModules="@(AddModules)"
+      AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+      BaseAddress="$(BaseAddress)"
+      CheckContractAdmissibility="$(CheckContractAdmissibility)"
+      CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+      CheckPurity="$(CheckPurity)"
+      CodePage="$(CodePage)"
+      ContractsHideCSharpErrors="$(ContractsHideCSharpErrors)"
+      DebugType="$(DebugType)"
+      DefineConstants="$(DefineConstants)"
+      DelaySign="$(DelaySign)"
+      DisabledContractFeatures="$(DisabledContractFeatures)"
+      DisabledWarnings="$(NoWarn)"
+      DocumentationFile="@(DocFileItem)"
+      EmitDebugInformation="$(DebugSymbols)"
+      ErrorReport="$(ErrorReport)"
+      FileAlignment="$(FileAlignment)"
+      GenerateFullPaths="$(GenerateFullPaths)"
+      KeyContainer="$(KeyContainerName)"
+      KeyFile="$(KeyOriginatorFile)"
+      LangVersion="$(LangVersion)"
+      MainEntryPoint="$(StartupObject)"
+      NoConfig="true"
+      NoLogo="$(NoLogo)"
+      NoStandardLib="$(NoStdLib)"
+      Optimize="$(Optimize)"
+      OriginalAssembly="$(OriginalAssembly)"
+      OutputAssembly="@(IntermediateAssembly)"
+      ProduceContractAssembly="$(ProduceContractAssembly)"
+      Platform="$(PlatformTarget)"
+      ProgramVerifierCommandLineOptions="$(ProgramVerifierCommandLineOptions)"
+      ProjectName="$(ProjectName)"
+      References="@(ReferencePath)"
+      ReferenceTypesAreNonNullByDefault="$(ReferenceTypesAreNonNullByDefault)"
+      ResponseFiles="$(CompilerResponseFile)"
+      Resources="@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile)"
+      Sources="@(Compile)"
+      TargetType="$(OutputType)"
+      ToolPath="$(CscToolPath)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+      Utf8Output="$(Utf8Output)"
+      Verify="$(Verify)"
+      WarningLevel="$(WarningLevel)"
+      WarningsAsErrors="$(WarningsAsErrors)"
+      WarningsNotAsErrors="$(WarningsNotAsErrors)"
+      Win32Icon="$(ApplicationIcon)"
+      Win32Resource="$(Win32Resource)"
+      >
+      <Output TaskParameter="OutputAssembly" ItemName="SpecIntermediateAssembly" />
+    </SpecSharpCompile>
+
+    <!-- Copy the build product (.dll or .exe). -->
+    <Copy
+        SourceFiles="@(SpecIntermediateAssembly)"
+        DestinationFolder="$(OutDir)"
+        SkipUnchangedFiles="true">
+      <Output TaskParameter="DestinationFiles" ItemName="SpecContractAssembly"/>
+      <Output TaskParameter="DestinationFiles" ItemName="FileWrites"/>
+    </Copy>
+    
+  </Target>
+
+
+  <!-- A future target for "idle" time builds -->
+  <Target
+      Name="IdleSpecSharp"
+      Inputs="$(MSBuildAllProjects);
+              @(Compile);
+              @(ManifestResourceWithNoCulture);
+              $(ApplicationIcon);
+              $(AssemblyOriginatorKeyFile);
+              @(ManifestNonResxWithNoCultureOnDisk);
+              @(ReferencePath);
+              @(CompiledLicenseFile)"
+      Outputs="@(DocFileItem);
+               @(IntermediateAssembly);
+               $(NonExistentFile)"
+      DependsOnTargets="Compile"
+   >
+  
+    <SpecSharpCompile 
+      AdditionalLibPaths="$(AdditionalLibPaths)"
+      AddModules="@(AddModules)"
+      AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+      BaseAddress="$(BaseAddress)"
+      CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+      CodePage="$(CodePage)"
+      DebugType="$(DebugType)"
+      DefineConstants="$(DefineConstants)"
+      DelaySign="$(DelaySign)"
+      DisabledWarnings="$(NoWarn)"
+      DocumentationFile="@(DocFileItem)"
+      EmitDebugInformation="$(DebugSymbols)"
+      ErrorReport="$(ErrorReport)"
+      FileAlignment="$(FileAlignment)"
+      GenerateFullPaths="$(GenerateFullPaths)"
+      KeyContainer="$(KeyContainerName)"
+      KeyFile="$(KeyOriginatorFile)"
+      LangVersion="$(LangVersion)"
+      MainEntryPoint="$(StartupObject)"
+      NoConfig="true"
+      NoLogo="$(NoLogo)"
+      NoStandardLib="$(NoStdLib)"
+      Optimize="$(Optimize)"
+      OriginalAssembly="$(OriginalAssembly)"
+      OutputAssembly="@(IntermediateAssembly)"
+      Platform="$(PlatformTarget)"
+      ProjectName="$(ProjectName)"
+      References="@(ReferencePath)"
+      ResponseFiles="$(CompilerResponseFile)"
+      Resources="@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile)"
+      Sources="@(Compile)"
+      TargetType="$(OutputType)"
+      ToolPath="$(CscToolPath)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"      
+      Utf8Output="$(Utf8Output)"
+      Verify="$(Verify)"
+      WarningLevel="$(WarningLevel)"
+      WarningsAsErrors="$(WarningsAsErrors)"
+      WarningsNotAsErrors="$(WarningsNotAsErrors)"
+      Win32Icon="$(ApplicationIcon)"
+      Win32Resource="$(Win32Resource)"
+     />
+  </Target>
+
+	<PropertyGroup>
+        <RunSpecSharpTargets>
+            RunSpecSharp
+        </RunSpecSharpTargets>
+   </PropertyGroup>
+
+</Project>

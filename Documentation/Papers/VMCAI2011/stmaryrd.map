@@ -1,0 +1,17 @@
+% If you use the CM/PS fonts then add the following lines to psfonts.map
+% or add the single line "p +psfonts.CMPS" to config.ps.
+%
+% AMS/PS fonts.
+%
+stmary5  stmary5  <stmary5.pfb
+stmary6  stmary6  <stmary6.pfb
+stmary7  stmary7  <stmary7.pfb
+stmary8  stmary8  <stmary8.pfb
+stmary9  stmary9  <stmary9.pfb
+stmary10 stmary10 <stmary10.pfb
+stmary11 stmary11 <stmary11.pfb
+stmary12 stmary12 <stmary12.pfb
+stmary14 stmary14 <stmary14.pfb
+stmary17 stmary17 <stmary17.pfb
+stmary20 stmary20 <stmary20.pfb
+stmary25 stmary25 <stmary25.pfb

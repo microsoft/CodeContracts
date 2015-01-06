@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.32" Name="CodeTools">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.32\Xml\FxCopReport.Xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>100</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>10</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+  <VersionAware>False</VersionAware>
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/IPropertyPane/bin/Debug/IPropertyPane.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ITaskManager/bin/Debug/ITaskManager.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/PropertyPage/bin/Debug/PropertyPage.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/TaskManager/bin/Debug/TaskManager.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.32">
+  <Targets>
+   <Target Name="$(ProjectDir)/IPropertyPane/bin/Debug/IPropertyPane.dll">
+    <Modules>
+     <Module Name="ipropertypane.dll">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithComVisible" Category="Microsoft.Design" CheckId="CA1017" Status="Excluded" Created="2005-08-19 20:04:35Z">
+        <Issue Name="AttributeTrue" Level="Error">
+         <Item>IPropertyPane</Item>
+        </Issue>
+        <Notes>
+         <User Name="t-daan">
+          <Note Id="7" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ITaskManager/bin/Debug/ITaskManager.dll">
+    <Modules>
+     <Module Name="itaskmanager.dll">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithComVisible" Category="Microsoft.Design" CheckId="CA1017" Status="Excluded" Created="2005-08-19 19:48:58Z">
+        <Issue Name="AttributeTrue" Level="Error">
+         <Item>ITaskManager</Item>
+        </Issue>
+        <Notes>
+         <User Name="t-daan">
+          <Note Id="6" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Microsoft.VisualStudio.CodeTools">
+        <Types>
+         <Type Name="IVsTask">
+          <Members>
+           <Member Name="GetHierarchy(System.Object&amp;,System.Int32&amp;):System.Void">
+            <Messages>
+             <Message Id="0#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2005-08-19 19:48:58Z">
+              <Issue>
+               <Item>hierarchy</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2005-08-19 19:48:58Z">
+              <Issue>
+               <Item>hierarchyItem</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="3" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="UseGenericsWhereAppropriate" Category="Microsoft.Design" CheckId="CA1007" Status="Excluded" Created="2005-08-19 19:48:58Z">
+              <Issue>
+               <Item>IVsTask.GetHierarchy(Object&amp;, Int32&amp;):Void</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/PropertyPage/bin/Debug/PropertyPage.dll">
+    <Modules>
+     <Module Name="propertypage.dll">
+      <Namespaces>
+       <Namespace Name="Microsoft.VisualStudio.CodeTools">
+        <Types>
+         <Type Name="Common">
+          <Members>
+           <Member Name="Trace(System.String):System.Void">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2005-08-19 20:05:16Z">
+              <Issue>
+               <Item>Common.Trace(String):Void</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="10" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PropertyPage">
+          <Members>
+           <Member Name="GetDynamicProperty(System.String,System.Object):System.Object">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2005-08-19 20:05:16Z">
+              <Issue>
+               <Item>PropertyPage.GetDynamicProperty(String, Object):Object</Item>
+               <Item>System.Object</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SetDynamicProperty(System.String,System.Object,System.Object):System.Int32">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2005-08-19 20:05:16Z">
+              <Issue>
+               <Item>PropertyPage.SetDynamicProperty(String, Object, Object):Int32</Item>
+               <Item>System.Object</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PropertyPagePackage">
+          <Members>
+           <Member Name="Dispose(System.Boolean):System.Void">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Status="Excluded" Created="2005-08-19 21:13:22Z">
+              <Issue>
+               <Item>disposing</Item>
+               <Item>PropertyPagePackage.Dispose(Boolean):Void</Item>
+               <Item />
+               <Item>Package.Dispose(Boolean):Void</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="11" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/TaskManager/bin/Debug/TaskManager.dll">
+    <Modules>
+     <Module Name="taskmanager.dll">
+      <Namespaces>
+       <Namespace Name="Microsoft.VisualStudio.CodeTools">
+        <Types>
+         <Type Name="Common">
+          <Members>
+           <Member Name="Trace(System.String):System.Void">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2005-08-19 19:48:58Z">
+              <Issue>
+               <Item>Common.Trace(String):Void</Item>
+              </Issue>
+              <Notes>
+               <User Name="t-daan">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="t-daan">
+    <Note Id="1" Modified="2005-08-19 19:50:05Z">Interface should be VSIP independent</Note>
+    <Note Id="2" Modified="2005-08-19 19:56:28Z">Multiple return values.</Note>
+    <Note Id="3" Modified="2005-08-19 19:56:31Z">Multiple return values.</Note>
+    <Note Id="4" Modified="2005-08-19 19:56:42Z">Used for debugging purposes</Note>
+    <Note Id="6" Modified="2005-08-19 19:57:08Z">All types are meant to be public</Note>
+    <Note Id="7" Modified="2005-08-19 20:04:57Z">All types are meant to be visible</Note>
+    <Note Id="8" Modified="2005-08-19 20:06:04Z">Too cumbersome to check for all exception kinds on this single line of code</Note>
+    <Note Id="9" Modified="2005-08-19 20:06:08Z">Too cumbersome to check for all exception kinds on this single line of code</Note>
+    <Note Id="10" Modified="2005-08-19 21:17:19Z">Used for debugging</Note>
+    <Note Id="11" Modified="2005-08-19 21:18:06Z">Bug in fxcop?</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
+    <Resolution Name="Default">Consider a design that does not require that '{0}' be an out parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify '{0}' to catch a more specific exception than '{1}' or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithComVisible" Category="Microsoft.Design" CheckId="CA1017">
+    <Resolution Name="AttributeTrue">Consider changing the ComVisible attribute on '{0}' to false, and opting in at the type level.</Resolution>
+   </Rule>
+   <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
+    <Resolution Name="Default">Change parameter name '{0}' of method {1} to '{2}' in order to match the identifier as it has been declared in {3}.</Resolution>
+   </Rule>
+   <Rule TypeName="UseGenericsWhereAppropriate" Category="Microsoft.Design" CheckId="CA1007">
+    <Resolution Name="Default">Consider using generics instead of a reference to System.Object in {0}.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

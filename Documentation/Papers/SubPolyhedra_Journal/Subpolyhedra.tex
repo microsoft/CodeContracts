@@ -1,0 +1,1696 @@
+\documentclass[sttt]{svjour}
+
+% Packages LaTeX
+\input{Packages}
+
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{listings}
+\usepackage{upgreek}
+\usepackage{enumerate}
+
+\usepackage{fancyvrb}
+% \usepackage{wrapfig}
+
+\newcommand{\sopra}{}
+
+% Definizioni di Macro ed ambienti
+\input{DefinizioniFrancesco.tex}
+
+%\setlength{\textheight}{8.6in}
+
+\title{SubPolyhedra: A family of numerical abstract domains for the (more) scalable  inference of linear inequalities} 
+\author{Vincent Laviron \inst{1} \and Francesco Logozzo \inst{2}}
+
+\institute{
+ \'Ecole Normale Sup\'erieure, 45, rue d'Ulm, Paris (France) \\
+\email{Vincent.Laviron@ens.fr}
+\and
+Microsoft Research,  Redmond, WA (USA) \\
+\email{logozzo@microsoft.com}
+}
+
+
+\begin{document}
+
+\pagestyle{plain}
+
+\maketitle
+
+\begin{abstract}
+We introduce  Subpolyhedra (\SubPoly) a new family of numerical abstract domains to infer and propagate linear inequalities.
+The key insight is that the reduced product of linear equalities and intervals produces powerful yet scalable analyses.
+Abstract domains in \Subpoly\ are as expressive as Polyhedra, but they drop some of the deductive power to achieve scalability.
+The cost/precision ratio of abstract domains in the \Subpoly\ family can be fined tuned according to: (i) the precision one wants to retain at join pointsl; and (ii) the algorithm used to infer tight bounds on intervals. 
+
+We implemented \Subpoly\ on the top of  \Clousot, a generic  abstract interpreter for \NET.
+\Clousot\ with \Subpoly\ analyzes very large and complex code bases in few minutes. 
+\Subpoly\ can efficiently capture linear inequalities among hundreds of variables, a result well-beyond state-of-the-art implementations of Polyhedra.
+\end{abstract}
+
+\newcommand\codefamily\sffamily
+\lstset{language={[Sharp]C},mathescape=false,flexiblecolumns=true,morekeywords={assume},basicstyle=\codefamily\small,frame=lines,moredelim=[is][\itshape]{@}{@},captionpos=b,numberstyle=\tiny,stepnumber=1,numbersep=2pt}
+
+\algsetup{indent=2em}
+
+\section{Introduction}
+
+The goal of an abstract interpretation-based static analyzer is to statically infer properties of the execution of a program that can be used to check its specification.
+The specification usually includes the absence of runtime exceptions (division by zero, integer overflow, array index out of bounds \dots) and programmer annotations in the form of preconditions, postconditions, object invariants and assertions (``contracts''~\cite{meyer97,BarnettFahndrichLogozzo-SAC10}).
+Proving that a piece of code satisfies its specification often requires discovering numerical invariants on program variables. 
+
+The concept of abstract domain is central in the design and the implementation of a static analyzer~\cite{CousotCousot77}.
+Abstract domains capture the properties of interest on programs.
+In particular \emph{numerical} abstract domains are used to infer numerical relationships among program variables.
+Cousot and Halbwachs introduced the Polyhedra numerical abstract domain (\Polyhedra) in~\cite{CousotHalbwachs78}.
+\Polyhedra\  infers all the linear equalities on the program variables.
+The application and scalability of \Polyhedra{} has been severely limited by its performance which is worst-case exponential (easily attained in practice).
+To overcome this shortcoming and to achieve scalability, new numerical abstract domains have been designed moving in two orthogonal directions: either only considering  inequalities of a particular shape (weakly relational domains) or fixing \emph{ahead} of the analysis the maximum number of linear inequalities to be considered (bounded domains).
+The first class includes Octagons (which capture properties in the form $\pm \code{x} \pm \code{y} \leq c$)~\cite{Mine01-2}, TVPI ($a \cdot \code{x} + b \cdot \code{y} \leq c$)~\cite{SimonKing02-2}, Pentagons ($\code{x} \leq \code{y} \wedge a \leq \code{x} \leq b$)~\cite{LogozzoMaf08}, Stripes ($\code{x} + a \cdot (\code{y} + \code{z}) > b$)~\cite{FerraraLogozzoMaf08} and Octahedra ($\pm \code{x}_0 \dots \pm \code{x}_n \leq c$)~\cite{ClarisoCortadella04}.
+The latter includes constraint template matrices (which capture at most $m$ linear inequalities)~\cite{Sankaranarayanan05,GulwaniEtAl08-2} and  methods to generate polynomial invariants \eg~\cite{MullerSeidl04-2,CarbonellKapur07,Kovacs08}.
+
+\begin{figure}%[t]
+{
+\small
+\begin{Verbatim}
+class StringBuilder {
+  int m_ChunkLength; char[] m_ChunkChars;
+  // ...
+  public void Append(int wb, int count) {
+    Contract.Requires(wb >= 2 * count); 
+    if (count + m_ChunkLength > m_ChunkChars.Length)        
+(*)   CopyChars(wb, m_ChunkChars.Length - m_ChunkLength);
+    // ... }
+  
+  private void CopyChars(int wb, int len) {
+    Contract.Requires(wb >= 2 * len); 
+  // ...  
+\end{Verbatim}
+}
+\caption{An example extracted from \code{mscorlib.dll}. The function \code{Contract.Requires(\dots)} expresses method preconditions. Proving the precondition of \code{CopyChars} requires propagating an invariant involving three variables and non-unary coefficients.}
+\label{fig:ex_vance}
+\end{figure}
+
+Although impressive results have been achieved using weakly relational and bounded abstract domains, we experienced situations where the full  \emph{expressive} power of \Poly{} is required.
+As an example, let us consider the code snippet of Fig.~\ref{fig:ex_vance}, extracted from \code{mscorlib.dll}, the main library of the \NET\ framework.
+Checking the precondition at the call site \code{(*)}  involves:
+\begin{enumerate}[(i)]
+ \item \emph{propagating} the given constraints:
+ \[\code{wb} \geq 2 \cdot \code{count}\]
+ \[\code{count}  +  \code{m\_ChunkLength > m\_ChunkChars.Length}\]
+ \item \emph{deducing} the precondition for \code{CopyChars}:
+ \[\code{wb} \geq  2 \cdot ( \code{m\_ChunkChars.\allowbreak Length}-\code{m\_ChunkLength})\] 
+\end{enumerate}
+The aforementioned weakly relational domains cannot be used to check the precondition: Octahedra do not capture the first constraint (it involves a constraint with a non-unary coefficient); TVPI do not propagate the second constraint (it involves three variables); Pentagons and Octagons cannot represent any of the constraints; Stripes can propagate both constraints, but because of the incomplete closure it cannot deduce the precondition.
+Bounded domains does the job, provided we fix \emph{before} the analysis the  template for the constraints.
+This is inadequate for our purposes: The analysis of a \emph{single} method in \code{mscorlib.dll} may involve hundreds of constraints, whose shape cannot be fixed ahead of the analysis, \eg\ by a textual inspection.
+\Polyhedra{} easily propagates the constraints. 
+However, in the general case the price to pay for using \Polyhedra{}  is too elevated: the analysis will be limited to few tens of variables.
+
+\subsection{Subpolyhedra}
+We propose a new family of  numerical abstract domains, Subpolyhedra (\Subpoly), which has the same \emph{expressive} power as \Polyhedra, but it drops some  inference power to achieve scalability:
+\Subpoly\  exactly represents and  propagates linear inequalities containing hundreds of variables and constraints. 
+\Subpoly\ is based on the fundamental insight that the reduced product of linear equalities, \LinEq~\cite{Karr76}, and intervals, \Intervals~\cite{CousotCousot77}, can produce very powerful yet efficient program analyses.
+\Subpoly\ can represent linear inequalities using slack variables, \eg\  $\code{wb} \geq 2 \cdot \code{count}$ is represented in \Subpoly\ by $\code{wb} - 2 \cdot \code{count} = \beta \wedge \beta \in [0, +\infty]$.
+As a consequence, \Subpoly\  easily proves that  the precondition for \code{CopyChars} is satisfied at the call site~\code{(*)}.
+In general the join of  \Subpoly\ is less precise than the one on \Polyhedra{}, so that it may not infer \emph{all} the linear inequalities.
+The reason for that is that the pairwise join  on \LinEq\ and \Intervals\ is in general less precise than the join on \Poly.
+To mitigate this loss of precision, we introduce a technique called hints~\cite{Lavironlogozzo09-2} which enable recovering some of the precision.
+This technique is not limited to \Subpoly, and indeed we show that several existing refinement techniques can be seen as a particular case of hints.
+
+The cardinal operation for \Subpoly\  is the join, which computes a compact yet precise upper approximation of two incoming abstract states.
+The join of \Subpoly\ is parameterized by the: (i) the reduction algorithm, which propagates the information between \LinEq\ and \Intervals;   and (ii) the hints, which recover information lost at join points.
+Every instantiation of the (reduction, hints) produces a new abstract domain in the \Subpoly\ family, allowing the fine tuning of the cost/precision ratio.
+The most imprecise yet fast abstract domain in the \Subpoly\ family is the one in which the reduction is the simple identity (no interval is refined) and the no hints are used.
+The most precise yet expensive abstract domain is one where the reduction is a complete linear programming algorithm and the hints are the usual \Polyhedra\ join. 
+
+\begin{figure}%[ht]
+% \begin{wrapfigure}{l}{0pt}
+\small
+\begin{minipage}{5.5cm}
+\begin{Verbatim}
+void Foo(int i, int j) {
+  int x = i, y = j;
+  if (x <= 0) return;
+  while (x > 0) { x--; y--; }
+  if (y == 0) 
+    Assert(i == j); 
+}
+\end{Verbatim}
+\end{minipage}
+\caption{\small An example from~\cite{SankaranarayananEtAl07}. \Subpoly\ infers the loop invariant $\code{x} - \code{i} = \code{y} - \code{j} \wedge \code{x} \geq 0$, propagates it and prove the assertion.}
+\label{fig:ex_paperSriramNEC}
+\end{figure}
+% \end{wrapfigure}
+
+\subsection{Reduction}
+Let us consider the example in Fig.~\ref{fig:ex_paperSriramNEC}, taken from~\cite{SankaranarayananEtAl07}.
+The program contains operations and predicates that can be exactly represented with Octagons.
+Proving that the assertion is not violated requires discovering the loop invariant $\code{x} - \code{y}  = \code{i} - \code{j} \wedge \code{x} \geq 0$.
+The loop invariant cannot be fully represented in Octagons: it involves a relation on four variables.
+Bounded numerical domains are unlikely to help here as there is no way to syntactically figure out the required template. 
+The \LinEq\ component of \SubPoly\ infers the relation $\code{x} - \code{y}  =  \code{i} - \code{j}$. 
+The \Intervals\ component of \SubPoly\ infers the loop invariant $\code{x} \in [0, +\infty]$, which in conjunction with the negation of the guard implies that $\code{x} \in [0, 0]$.
+The simplification of \SubPoly\ propagates the interval, refining the linear constraint to $\code{y} = \code{j} - \code{i}$.
+This is enough to prove the assertion (in conjunction with the if-statement guard).
+It is worth noting that unlike~\cite{SankaranarayananEtAl07} \Subpoly\ does not require any hypothesis on the order of variables to prove the assertion.
+
+
+
+\subsection{Join and Hints} Let us consider the code in Fig.~\ref{fig:ex_paperSriramMS}, taken from~\cite{GulavaniEtAl08}.
+The loop invariant required to prove that  the assertion  is unreached (and hence that the program is correct) is $\code{x} \leq \code{y} \leq 100 \cdot \code {x} \wedge \code{z} = \code{10} \cdot \code{w}$.
+Without hints, \Subpoly\ can only infer  $\code{z} = \code{10 \cdot w}$.
+\emph{Template} hints, inspired by~\cite{Sankaranarayanan05}, are used to recover linear inequalities that are dropped by the imprecision of the join: In the example the template is $\code{x} - \code{y} \leq b$, and the analysis automatically figures out that $b = 0$.
+\emph{Planar Convex hull} hints, inspired by~\cite{SimonKing02-2}, are used to introduce at join points linear inequalities derived by a planar convex hull: In the example it helps the analysis figure out that $\code{y} \leq \code{100} \cdot \code{x}$.
+It is worth noting that \Subpoly\ does not need any of the techniques of~\cite{GulavaniEtAl08} to infer the loop invariant.
+
+\begin{figure}%[t]
+{
+\small
+\begin{verbatim}
+int x = 0, y = 0, w = 0, z = 0;
+while (...) {
+  if (...) { x++; y += 100; }
+  else if (...) { if (x >= 4) { x++; y++; } }
+  else if (y > 10 * w && z >= 100 * x) { y = -y; }
+        
+  w++; z += 10;
+}
+if (x >= 4 && y <= 2) Assert(false); 
+\end{verbatim}
+}
+\caption{An example from~\cite{GulavaniEtAl08}. \Subpoly\ infers the loop invariant $\code{x} \leq \code{y} \leq 100 \cdot \code {x} \wedge \code{z} = \code{10} \cdot \code{w}$, propagates it out of the loop, and proves that the assertion is unreached.}
+\label{fig:ex_paperSriramMS}
+\end{figure}
+
+
+\section{Abstract Interpretation}
+
+\subsection{Abstract domains}
+
+We assume the concrete domain to be the complete Bool-ean lattice of environments, $\adom{C} =  \tupla{\parti{\Sigma}, \subseteq, \emptyset, \Sigma, \cup, \cap}$, where $\Sigma = \funzione{\Vars}{\mathbb{Z}}$.
+An abstract domain \adom{A} is a tuple \tupla{\ael{D}, \gamma, \aless, \abot, \atp, \ajoin, \ameet, \awidening, \rho, \sigma}.
+The set of abstract elements $\ael{D}$ is related to the concrete domain by a \emph{monotonic} concretization function $\gamma \in \funzione{\ael{D}}{\ael{C}}$.
+With an abuse of notation, we will not distinguish between an abstract domain and the set of its elements.
+The approximation order is $\aless$ is a sound approximation of the concrete order: 
+\[
+\forall \ael{d}_0, \ael{d}_1 \in \adom{D}.\ \ael{d}_0 \aless \ael{d}_1 \Longrightarrow \gamma(\ael{d}_0) \subseteq \gamma(\ael{d}_1)
+\]
+The smallest element is $\abot$, the largest element is  $\atp$.
+The join operator   $\ajoin$  satisfies:
+\[
+\forall \ael{d}_0, \ael{d}_1 \in \ael{D}.\ \ael{d}_0 \aless \ael{d}_0 \ajoin \ael{d}_1 \wedge 
+\ael{d}_1 \aless \ael{d}_0 \ajoin \ael{d}_1
+\]
+The meet operator $\ameet$ satisfies:
+\[
+\forall \ael{d}_0, \ael{d}_1 \in \ael{D}.\ \ael{d}_0 \ameet \ael{d}_1  \aless  \ael{d}_0 \wedge 
+ \ael{d}_0 \ameet \ael{d}_1 \aless \ael{d}_1
+\]
+The widening  $\awidening$ ensures the convergence of the fixpoint iterations, \ie\ it satisfies:
+\begin{enumerate}[(i)]
+
+ \item $ \forall \ael{d}_0, \ael{d}_1 \in \ael{D}.\ \ael{d}_0 \aless \ael{d}_0 \awidening \ael{d}_1 \wedge  \ael{d}_1 \aless \ael{d}_0 \awidening \ael{d}_1$
+ \item for each sequence of abstract elements $\ael{d}_0, \ael{d}_1, \dots \ael{d}_k $ the sequence defined by: \\
+ $\ael{d}_0^\awidening\! = \ael{d}_0, \ael{d}_1^\awidening = \ael{d}^\awidening_0 \awidening \ael{d}_1  \dots \ael{d}^\awidening_k = \ael{d}^\awidening_{k-1} \awidening \ael{d}_{k} $ \\
+ is ultimately stationary.
+\end{enumerate}
+In general, we do not require abstract elements to be in some canonical or closed form, \ie\ there may exist $\ael{d}_0, \ael{d}_1 \in \adom{D}$, such that $\ael{d}_0 \neq \ael{d}_1$, but $\gamma(\ael{d}_0) = \gamma(\ael{d}_1)$.
+The \emph{reduction} operator $\rho \in \funzione{\ael{D}}{\ael{D}}$ puts an abstract element into a (pseudo-)canonical form without adding or losing any information: $\forall \ael{d}.\  \gamma(\rho(\ael{d})) = \gamma(\ael{d}) \wedge \rho(\ael{d}) \aless \ael{d}$. 
+We do not require $\rho$ to be idempotent.
+The \emph{simplification} operator $\sigma \in \funzione{\ael{D}}{\ael{D}}$ removes  redundancies in an abstract state. 
+It may introduce some loss of precision: $\forall \ael{d}.\ \gamma(\ael{d}) \subseteq \gamma(\sigma(\ael{d}))$.
+
+In most of the literature, reduction and simplification are not given the status of lattice operation. However, several domains use internally some specific operations that gives a more adapted representation of the abstract state, for a given operation.
+For instance, there is an operation on Octagons that is called \emph{closure}, and which has the properties of a reduction operator.
+We believe that this is general enough to warrant adding two operators to the standard abstract domain definition.
+Of course, the identity is always a reduction operator and a simplification operator, so it can be defined even for domains which have no corresponding specific operation.
+Those operators are particularly important when the abstract elements considered are representations of mathematical objects, such that some objects have multiple equivalent representations.
+
+New abstract domains can be systematically derived by cartesian composition or functional lifting~\cite{CousotCousot79}. 
+Following~\cite{Cousot98}, we use the dot-notation to denote point wise or functional extensions.
+
+\subsection{Transfer functions}
+ It is common practice for the implementation of an
+ abstract domain \dom{A} to provide three  abstract transfer functions:
+ one for the assignment, one for the handling of
+ tests, and one to perform abstract checking.  
+ The abstract transfer function for assignment, \dom{A}.\aassign, is an
+ over-approximation of the states reached after the concrete assignment ($\semantica{E}{\code{E}}(\sigma)$ denotes the evaluation of the expression \code{E} in the state $\sigma$) :
+\begin{small}
+  \[
+  \begin{array}{l}
+  \forall \code{x}, \code{E}. \forall \ael{e} \in \dom{A}. \\
+  \{ \sigma[\code{x} \mapsto v] \mid \sigma\! \in\! \gamma(\ael{e}), \semantica{E}{\code{E}}(\sigma) = v \} \subseteq \gamma(\dom{A}.\aassign(\ael{e}, \code{x}, \code{E}))
+    \end{array}
+  \]
+\end{small}
+%\sopra
+%\noindent 
+The test abstract transfer function, \adom{A}.\atest, filters the input states ($\semantica{B}{\code{B}}(\sigma)$ denotes the evaluation of a Boolean  expression \code{B} in the state $\sigma$):
+\begin{small}
+\begin{equation*}
+% \(
+\forall \code{B}. \forall \ael{e} \in  \dom{A}.\ \{ \sigma \in \gamma(\ael{e}) \mid \semantica{B}{\code{B}}(\sigma) = \mathit{true} \} \subseteq \gamma(\dom{A}.\atest(\ael{e}, \code{B})).
+% \)
+\label{for:soundnesstest}
+\end{equation*}
+\end{small}
+%\sopra
+%\noindent 
+The abstract checking $\dom{A}.\checkif$ verifies if an assertion \code{A} holds in an abstract state \ael{e}.
+It has four possible outcomes: $\mathit{true}$ meaning that \code{A} holds in all the concrete states $\gamma(\ael{e})$; $\mathit{false}$, meaning that \code{!A} holds in all the concrete states $\gamma(\ael{e})$; $\mathit{bottom}$, meaning that the assertion is unreached; $\mathit{top}$, meaning that the validity of \code{A} cannot be decided in $\gamma(\ael{e})$.
+Formally, $\adom{A}.\checkif$ satisfies $\forall \code{A}.\ \forall
+\ael{e} \in \adom{A}$:
+
+\vspace{-0.2cm}
+\begin{small}
+  \begin{equation*}
+    \begin{array}{l}
+      \adom{A}.\checkif(\code{A},\ael{e}) = \mathit{v} \Rightarrow  \forall \sigma \!\in\! \gamma(\ael{e}).\ \semantica{B}{\code{A}}(\sigma) = \mathit{v},  \mathit{v} \!\in\! \{\! \mathit{true}, \mathit{false}\! \} \\
+      \adom{A}.\checkif(\code{A},\ael{e}) = \mathit{bot} \Rightarrow  \gamma(\ael{e}) = \emptyset \\
+      \adom{A}.\checkif(\code{A},\ael{e}) = \mathit{top} \Rightarrow  \exists \sigma_0, \sigma_1 \in \gamma(\ael{e}).\   \semantica{B}{\code{A}}(\sigma_0) \neq  \semantica{B}{\code{A}}(\sigma_1)
+    \end{array}
+ \label{for:soundnesscheck}
+\end{equation*}
+\end{small}
+
+
+% define Karr, Intervals, Octagons, Polyhedra with gammas
+
+% Domain      Reduction               Simplification
+% Intervals   id                      id
+% Karr                                Gaussian elimination
+% Octagon     Floyd Marshal           (put in sparse form?)
+% Polyhedra   Generators inference    All the constraints not implied (look in Axel's book)
+
+\subsection{Intervals}
+The abstract domain of interval environments is $\tupla{\Intervals, \gamma_\Intervals,\allowbreak \dot\aless_\Intervals, \dot\abot_\Intervals, \allowbreak \dot\atp_\Intervals, \dot\ajoin_\Intervals, \dot\ameet_\Intervals, \dot\awidening_\Intervals}$.
+The abstract elements are maps from program variables to open intervals. 
+The concretization of an interval environment \ael{i} is 
+\[
+\gamma_\Intervals(\ael{i}) = \{ s \in \Sigma \mid \forall \code{x} \in \mathrm{dom}(\ael{i}).\ \ael{i}(\code{x}) = [a, b] \wedge  a \leq s(\code{x}) \leq b\}.
+\]
+The lattice operations are the functional extension of those in Fig.~\ref{tab:intervals}.
+The reduction and the simplification for intervals are the identity function.
+All the domain operations can be implemented in linear time. 
+
+\begin{figure}%[t]
+\small
+\begin{tabular}{rl}
+Order:& $\![a_1, b_1] \aless_\Intervals [a_2, b_2] \Longleftrightarrow a_1 \geq a_2 \wedge b_1 \leq b_2$ \\
+Bottom:& $\![a, b] = \abot_\Intervals \Longleftrightarrow a > b$ \\
+Top:& $\![a, b] = \atp_\Intervals \Longleftrightarrow a = -\infty \wedge b = +\infty$\\
+Join:& $\![a_1, b_1] \ajoin_\Intervals [a_2, b_2] = \![\mathrm{min}(a_1, a_2), \mathrm{max}(b_1, b_2)]$ \\
+Meet:& $\![a_1, b_1] \ameet_\Intervals [a_2, b_2] = \![\mathrm{max}(a_1, a_2), \mathrm{min}(b_1, b_2)]$ \\
+Widening:& $\![a_1, b_1] \awidening_\Intervals [a_2, b_2] =$ \\
+& $\quad \quad [\mathtt{if}\, a_1 > a_2 \,\mathtt{then}\, a_2 \,\mathtt{else}\, -\infty,$\\
+& $\quad \quad \phantom{[}\mathtt{if}\, b_1 < b_2 \,\mathtt{then}\, b_2 \,\mathtt{else}\, +\infty]$\\
+\end{tabular}
+\caption{Lattice operations over single intervals}
+\label{tab:intervals}
+\end{figure}
+
+\subsection{Linear Equalities}
+The abstract domain of linear \emph{equalities}  is $\tupla{\LinEq, \gamma_\LinEq,\allowbreak \aless_\LinEq, \abot_\LinEq, \allowbreak \atp_\LinEq, \ajoin_\LinEq, \ameet_\LinEq}$.
+The elements are sets of linear equalities, their meaning is given by the set of concrete states which satisfy the constraints, \ie\ 
+\[
+\gamma_\LinEq = \lambda \ael{l}.\ \{ s \in \Sigma \mid \forall (\sum a_i \cdot \code{x}_i = b) \in \ael{l}.\ \sum a_i \cdot s(\code{x}_i) = b  \} 
+.
+\]
+The order is sub-space inclusion, the bottom is the empty space, the top is the whole space, the join is the smallest space which contains the two arguments,  the meet is space intersection.
+\Karr\ satisfies the ascending chain condition, so that the join suffices to ensure analysis termination.
+The reduction and the simplification are just Gaussian elimination.
+The complexity of the domain operations is subsumed by the complexity of Gaussian elimination, which is cubic.
+
+\subsection{Polyhedra}
+The abstract domain of linear \emph{inequalities} is   $\tupla{\Poly, \gamma_\Poly,\allowbreak \aless_\Poly, \abot_\Poly, \allowbreak \atp_\Poly, \ajoin_\Poly, \ameet_\Poly, \awidening_\Poly}$.
+The elements are sets of linear inequalities, the concretization is the set of concrete states which satisfy the constraints 
+ \ie\ 
+\[
+\gamma_\Poly = \lambda \ael{p}.\ \{ s \in \Sigma \mid \forall (\sum a_i \cdot \code{x}_i \leq b) \in \ael{p}.\ \sum a_i \cdot s(\code{x}_i) \leq b  \},
+\]
+ the order is the polyhedron inclusion, the bottom is the empty polyhedron, the top is the whole space, the join is the convex hull, the meet is just the union of the set of constraints, and the widening preserves the inequalities stable  among two successive iterations.
+The reduction and the simplification respectively infers the set of generators  and removes the redundant inequalities.
+The cost of the \Polyhedra{} operations is subsumed by the cost of the conversion between the algebraic representation (set of inequalities) and the geometric representation (set of generators) used in the implementation~\cite{PPL}.
+In fact, some operations  require the algebraic representation  (\eg\ $\ameet_\Poly$), some require the geometrical representation (\eg\ $\ajoin_\Poly$), and some others require both (\eg\ $\aless_\Poly$).
+The conversion between the two representations is exponential in the number of variables, and it cannot be done better~\cite{KhachiyanBBEG06}.
+
+\section{Subpolyhedra}
+
+We introduce the numerical abstract domain of Subpolyhedra, \Subpoly.
+The main idea of \Subpoly\ is to combine \Intervals\ and \Lineq\ to capture complex linear \emph{inequalities}.
+Slack variables are introduced to replace inequality constraints with equalities. 
+
+
+\subsection{Variables}
+A variable $\var \in \Vars$ can  either be  a \emph{program} variable ($\progvar \in \VarProg$) or a \emph{slack} variable ($\slackvar \in \VarSlack$).
+A slack variable $\slackvar$  has an associated information, denoted by $\slackvarinfo$,  which is a linear form  $a_1 \cdot \variable{v}_1 + \dots + a_k \cdot \variable{v}_k$.
+
+Let  $\kappa \equiv \sum a_i \cdot \progvariable{i} +  \sum b_j \cdot \slackvariable{j} = c$ be a linear equality:
+$\code{s_\kappa} = \sum_{\progvar_i \in \VarProg} a_i \cdot \progvar_i$ denotes the partial sum of the monomials involving just program variables;
+ $\VarProg(\kappa) = \{ \progvariable{i} \mid a_i \cdot \progvariable{i} \in \kappa, a_i \neq 0  \}$ and   $\VarSlack(\kappa) = \{ \slackvariable{j} \mid b_j \cdot \slackvariable{j} \in \kappa, b_j \neq 0  \}$ denote respectively the program variables and the slack variables  in $\kappa$.
+The generalization to inequalities and sets of equalities and inequalities is straightforward.
+
+
+\subsection{Domain structure}
+
+The elements of \SubPoly\ belong to the reduced product $\Lineq \times \Intervals$~~\cite{CousotCousot79}.
+Inequalities are represented in \SubPoly{}  with slack variables:
+\[\sum a_i \cdot \progvariable{i} \leq c \Longleftrightarrow \sum a_i \cdot \progvariable{i} - c = \slackvar \wedge \slackvar \in [-\infty, 0]
+\] 
+(\slackvar{} is a fresh slack variable with the  associated information  $\slackvarinfo = \sum a_i \cdot \progvariable{i}$). 
+
+
+
+\subsection{Concretization}
+An element of \Subpoly\ can be interpreted as a polyhedron by projecting out the slack variables: $\gamma^\Poly_{S} \in \funzione{\Subpoly}{\Poly}$ is
+\[
+\gamma^\Poly_{S} = \lambda \subpolyPair{}{}.\ \pi_{\VarSlack}(\ael{l} \cup \{ a \leq \var \leq b \mid \ael{i}(\var) = [a, b]  \} )
+,\]
+ where $\pi$ denotes the projection of variables in $\Poly$.
+The concretization   $\gamma_{S} \in \funzione{\SubPoly}{\parti{\Sigma}}$ is then
+$
+\gamma_{S} = \gamma_\Poly \circ \gamma^{\Poly}_{S}.
+$
+
+
+\subsection{Approximation Order}
+The order on \Subpoly\ may be defined in terms of order over \Polyhedra.
+Given two subpolyhedra $\subpoly_0, \subpoly_1$, the most precise order relation $\lessS^{*}$ is 
+\[
+\subpoly_{0} \lessS^{*} \subpoly_{1} \Longleftrightarrow  \gamma^\Poly_{S}(\subpoly_{0})  \aless_\Poly \gamma^\Poly_{S}(\subpoly_{1}).
+\]
+However,  $\lessS^{*}$ may be too expensive to compute: it involves mapping subpolyhedra in the dual representation of \Polyhedra.
+ This can easily cause an exponential blow up.
+We define a weaker approximation order relation which first tries to find a renaming $\theta$ for the slack variables, and then checks  the pairwise order.
+Formally:  
+\begin{multline*}
+\subpolyPair{0}{} \lessS \subpolyPair{1}{} \Longleftrightarrow \\
+\quad \exists \theta.~ \VarSlack(\subpolyPair{0}{}) \stackrel{\mathrm{inj}}{\longrightarrow}  \VarSlack(\subpolyPair{1}{}). \\
+\qquad \forall \slackvar  \in \VarSlack(\subpolyPair{0}{}).\  \slackvarinfo =  \slackvariableinfo{\theta(\slackvar)} \\
+\qquad \wedge \theta(\subpolyPair{0}{}) \dot{\aless} \subpolyPair{1}{}.
+\end{multline*}
+In general $\lessS \subsetneq \lessS^{*}$.
+In practice, \lessS{} is used to check if a fixpoint has been reached. 
+A weaker order relation means that the analysis may perform some extra widening steps, which may introduce  precision loss.
+However, we found the definition of $\lessS$ satisfactory in our experience.
+
+One other important consequence of using a weak approximation order is that we are not always able to tell whether two abstract elements
+are actually equivalent representations of the same geometric shape.
+This is why, unlike some other domains like \Polyhedra{}, in \Subpoly\ the elements do not correspond to a geometrical shape, even up to equivalence; there are some elements that correspond to the same polyhedron, but are not comparable with our weak ordering.
+
+\subsection{Bottom}
+An element of \Subpoly\ is equivalent to  bottom if after a reduction one of the two components is bottom:
+\[
+\subpoly = \bottomS \Longleftrightarrow \reduction{\ael{s}} = \tupla{\lineq, \intv} \wedge (\intv = \dot\bot_\Intervals \vee \lineq = \bot_\Lineq).
+\]
+ 
+\subsection{Top}
+An element of \Subpoly\ is top if after the simplification both components are top:
+\[
+\subpoly = \topS \Longleftrightarrow \simplify{\ael{s}} = \tupla{\lineq, \intv} \wedge \intv = \dot\top_\Intervals \wedge \lineq = \top_\Lineq.
+\]
+
+\subsection{Linear form evaluation}
+Let \code{s} be a linear form: $\sem{s}\in \funzione{\SubPoly}{\Intervals}$ denotes the evaluation of \code{s} in an element of \Subpoly\ after that the reduction has inferred the tightest bounds: 
+\(
+\left\sx\sum \mathit{a_i} \cdot \var_\mathit{i} \right\dx\subpolyPair{}{} = \mathbf{let}\ \subpolyPair{}{*} = \rho(\subpolyPair{}{})\ \mathbf{in} \sum a_i \cdot \ael{i}^*(\var_i). 
+\)
+
+
+
+\subsection{Join}
+As with the order, one could define a most precise join operation by concretizing on \Polyhedra{}, doing the convex hull, then abstracting again to \Subpoly.
+However, this is a very expensive operation, and the aim of \Subpoly\ is to give faster, but potentially less precise, operations.
+So we define instead a specific join algorithm \joinS\ in three steps.
+First,  inject the information of the slack variables into the abstract elements.
+Second,  perform the  pairwise join  on the saturated arguments. 
+Third, add the constraints that are implied by the two operands of the join, but that were not preserved by the previous step.
+The join is defined by the Algorithm~\ref{alg:join} 
+(We let $\underline{0} = 1$, $\underline{1} = 0$).
+We illustrate it with examples.
+
+\begin{algorithm}[t]
+\caption{The join $\joinS$ on Subpolyhedra}
+\label{alg:join}
+\begin{algorithmic}
+\STATE \textbf{input} $\subpolyPair{i}{} \in \Subpoly$, $i \in \{0, 1\}$
+\medskip
+\STATE \textbf{let} \subpolyPair{i}{'} = \subpolyPair{i}{}
+\STATE
+\smallskip
+\COMMENT{Step 1. Propagate the information of the slack variables}
+\FORALL{$\slackvar \in \VarSlack(\lineq_i) \setminus \VarSlack(\lineq_{\underline{i}})$}
+\STATE  \subpolyPair{\underline{i}}{'} := \tupla{\ael{l}'_{\underline{i}} \meet_\LinEq\{ \slackvar = \slackvarinfo \};\ \ael{i}'_{\underline{i}} }  
+\ENDFOR
+\STATE
+\smallskip
+\COMMENT{Step 2. Perform the point-wise join on the saturated operands}
+\STATE  \textbf{let}  \subpolyPair{\sqcup}{} = $\rho(\subpolyPair{0}{'}) \dot\sqcup   \rho(\subpolyPair{1}{'})$
+\STATE
+\smallskip
+\COMMENT{Step 3. Hints: Recover the lost information }
+\STATE \textbf{let} $D_{i}$ be the linear equalities dropped from $\lineq'_i$ at the previous step
+\FORALL{$\kappa \in D_{i}$}
+\IF {$\kappa$ contains no slack variable }
+\STATE \textbf{let} $\intv_{s_\kappa} = \sem{s_\kappa}\subpolyPair{\underline{i}}{'}$
+\IF {$\intv_{s_\kappa} \neq \top_\Intervals$}
+\STATE \textbf{let} \slackvar\  be a fresh slack variable
+\STATE \subpolyPair{\sqcup}{} := $\tupla{\lineq_\sqcup \meet_\LinEq \{ \slackvar = \kappa\};\ \intv_\sqcup \dot \sqcap_\Intervals \{ \slackvar= \intv_{s_\kappa} \sqcup_\Intervals [0,0]\}}$ 
+\ENDIF
+\ELSIF {$\kappa$ contains exactly one slack variable \slackvar}
+\STATE \textbf{let} $\intv_{s_\kappa} = \sem{s_\kappa}\subpolyPair{\underline{i}}{'}$
+\IF {$\intv_{s_\kappa} \neq \top_\Intervals$}
+\STATE  \subpolyPair{\sqcup}{} := $\tupla{\lineq_\sqcup \meet_\LinEq \{ \kappa\};\intv_\sqcup \dot\sqcap_\Intervals \{ \slackvar = \intv_{s_\kappa} \sqcup_\Intervals \intv_i(\slackvar)\}}$  
+\ENDIF
+\ELSE[$\kappa$ contains strictly more than one slack variable]
+\STATE \textbf{continue}
+\ENDIF
+\ENDFOR
+\RETURN  \subpolyPair{\sqcup}{} 
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{figure}%[t]
+  \begin{subfloat}
+    \begin{minipage}{4cm}
+\begin{verbatim}
+ if(...) 
+  { assume x - y <= 0; } 
+ else 
+  { assume x - y <= 5; }
+\end{verbatim}
+    \end{minipage}
+\caption{}    
+  \end{subfloat}    
+\qquad
+  \begin{subfloat}
+    \begin{minipage}{6cm}
+\begin{verbatim}
+if(...) 
+ { assume x == y; assume y <= z; } 
+else 
+ { assume x <= y; assume y == z; }   
+\end{verbatim}
+\caption{}
+    \end{minipage}
+  \end{subfloat}
+\caption{Examples illustrating the need for Step 1 in the join algorithm }
+\label{fig:example-join}
+\end{figure}
+
+\begin{example}[Steps 1 \& 2]
+Let us consider the code in Fig.~\ref{fig:example-join}(a).
+After the assumption, the abstract states on the left branch and the right branch are respectively:
+\(
+\subpoly_0 =  \tupla{\code{x} -\code{y} = \slackvariable{0};\ \slackvariable{0} \in [-\infty, 0]}\) and % \quad
+\(
+\subpoly_1 = \tupla{\code{x} -\code{y} = \slackvariable{1};\ \slackvariable{1} \in [-\infty, 5]}
+\).
+The  information associated  with the slack variables is $\slackvariableinfo{ \slackvariable{0}} = \slackvariableinfo{ \slackvariable{1}} = \code{x} -\code{y}$.
+At the join point we apply Algorithm~\ref{alg:join}.
+Step 1 refines the abstract states by introducing the information associated with the slack variables:
+\(
+\subpoly'_0  =  \tupla{\code{x} -\code{y} =  \slackvariable{0} =  \slackvariable{1};\  \slackvariable{0} \in [-\infty, 0]}\) and % \quad
+\(
+\subpoly'_1  = \tupla{\code{x} -\code{y} =  \slackvariable{1} =  \slackvariable{0};\ \slackvariable{1} \in [-\infty, 5]}
+\).
+Step 2 requires the reduction of the operands. 
+The interval for   \slackvariable{1} (resp.  \slackvariable{0}) in $\subpoly'_0$ (resp. $\subpoly'_1$) is refined:
+%\begin{align*}
+\(
+\rho(\subpoly'_0) =  \tupla{\code{x} -\code{y} =\slackvariable{0} = \slackvariable{1};\ \slackvariable{0} \in [-\infty, 0], \slackvariable{1} \in [-
+\infty, 0]}
+\)
+and
+\(
+\rho(\subpoly'_1) = \tupla{\code{x} -\code{y} = \slackvariable{1} = \slackvariable{0};\ \slackvariable{0} \in [-\infty, 5], \slackvariable{1} \in [-\infty, 5]}.
+\)
+%\end{align*}
+The pairwise join gets the expected invariant:
+\(
+\subpoly_\sqcup = \rho(\subpoly'_0) \dot\sqcup \rho(\subpoly'_1) = \tupla{\code{x} -\code{y} = \slackvariable{0} = \slackvariable{1};\ \slackvariable{0}\in [-\infty, 5], \slackvariable{1} \in [-\infty, 5]}. 
+\) \qed
+\end{example}
+
+\begin{example}[Non-trivial information for  slack variables]
+Let us consider the code snippet in Fig.~\ref{fig:example-join}(b).
+The abstract states to be joined are 
+\(
+\tupla{\code{x} -\code{y} = 0, \code{y} - \code{z}  = \slackvariable{0};  \slackvariable{0} \in [-\infty, 0]} 
+\) and
+\(
+\tupla{\code{y} -\code{z} = 0, \code{x} - \code{y}  = \slackvariable{1};  \slackvariable{1} \in [-\infty, 0]}
+\).
+The associated information are $\slackvariableinfo{ \slackvariable{0}} = \code{y} -\code{z}$ and $\slackvariableinfo{ \slackvariable{1}} = \code{x} -\code{y}$.
+Step 1 allows to refine the abstract states with the slack variable information, and hence to infer that after the join $\code{x} \leq \code{y}$ and $\code{y} \leq \code{z}$. \qed
+\end{example}
+
+
+
+
+The two examples above show the importance of introducing the information associated with slack variables in Step 1 and the reduction in Step 2.
+Without those, the relation between the slack variables and the program point where they were introduced would have been lost.
+
+
+
+The join of \Lineq{} is \emph{precise} in that if a linear equality is implied by both operands, then it is implied by the result too.
+The same for the join of \Intervals.
+The pairwise join in $\Lineq \times \Intervals$ may drop some inequalities.
+Some of those can be recovered by the refinement step.
+The next example illustrates it.
+
+
+\begin{example}[Step 3]
+Let us consider the code in Fig.~\ref{ex:joinwiden}(a).
+The analysis of the two branches of the conditional  produces the abstract states: 
+\(
+\subpoly_0  = \tupla{\code{x} - 3 \cdot \code{y} = 0;\ \dot\top_\Intervals} 
+\) 
+and
+\(
+\subpoly_1  =\tupla{\code{x} = 0, \code{y} = 1;\ \code{x} \in [0,0], \code{y} \in [1,1] }
+\).
+The reduction $\rho$ does not refine the states (we already have the tightest bounds).
+The point-wise join produces the abstract state \topS.
+Step 3 identifies the dropped constraints: $D_0 = \{\code{x} - 3 \cdot \code{y} = 0\}$ and $D_1 = \{\code{x} = 0, \code{y} = 1 \}$.
+The algorithm  inspects them to check if the corresponding linear form can be bounded by the ``other'' branch.
+The linear form in $D_0$  is also bounded in the right branch: $\sem{\code{x} - \mathrm{3} \cdot \code{y}}(\subpoly_1)$ = $[-3,-3]$ ($\neq \dot\top_\Intervals$).
+Therefore it is meaningful to add a slack variable $\slackvar$ corresponding to this linear form to the result.
+The linear formss of $D_1$ cannot be bounded on the left branch,so they are discarded. 
+The abstract state after the join is then
+\(
+\subpoly_\sqcup =\tupla{\code{x} - \code{y} = \slackvar;\ \slackvar \in [-3,0] }.
+\) \qed
+\end{example}
+
+\begin{figure}%[t]
+\centering
+  \begin{subfloat}
+    \begin{minipage}{5cm}
+\begin{verbatim}
+if(...) { assume x == 3 * y; } 
+else    { x = 0; y = 1; }
+\end{verbatim}
+    \end{minipage}
+    \caption{}
+  \end{subfloat}    
+  \qquad 
+  \begin{subfloat}
+    \begin{minipage}{2.5cm}
+\begin{verbatim}
+i := k;
+while(...) i++;
+assert i >= k;
+\end{verbatim}
+    \end{minipage}
+    \caption{}
+  \end{subfloat}
+\caption{Examples illustrating the need for the Step 3 in the join and the widening.}
+\label{ex:joinwiden}
+\end{figure}
+
+\subsection{Meet} 
+The meet $\meet_S$ is simply the pairwise meet on $\LinEq \times \Intervals$.
+
+\subsection{Widening}
+The algorithm for the widening is similar to the join, with the main differences that: 
+(i) the information associated to  slack variables is propagated only in one direction; 
+(ii) only the right argument is saturated; and
+(iii) the recovery step is applied only to one of the operands.
+Those hypotheses avoid the well-known problems of interaction between reduction, refinement and convergence of the iterations~\cite{Mine04,Simon08}.
+
+
+\begin{algorithm}[t]
+\caption{The widening $\wideningS$ on Subpolyhedra}
+\label{alg:widening}
+\begin{algorithmic}
+\STATE \textbf{input} $\subpolyPair{i}{} \in \Subpoly$, $i \in \{0, 1\}$
+\medskip
+\STATE \textbf{let} \subpolyPair{i}{'} = \subpolyPair{i}{}
+\STATE
+\smallskip
+\COMMENT{Step 1. Propagate the information of the slack variables}
+\FORALL{$\slackvar \in \VarSlack(\lineq_0) \setminus \VarSlack(\lineq_1)$}
+\STATE  \subpolyPair{0}{'} := \tupla{\ael{l}'_{0}  \meet_{\Lineq} \{ \slackvar = \slackvarinfo\};\ \ael{i}'_{0}}  
+\ENDFOR
+\STATE
+\smallskip
+\COMMENT{Step 2. Perform the point-wise widening}
+\STATE  \textbf{let}  \subpolyPair{\widening}{} = $ \subpolyPair{0}{'} \dot\widening  \rho(\subpolyPair{1}{'})$
+\STATE
+\smallskip
+\COMMENT{Step 3. Recover the lost information }
+\STATE \textbf{let} $D_{0}$ be the linear equalities dropped from $\lineq'_0$ at the previous step
+\FORALL{$\kappa \in D_{0}$}
+\IF {$\kappa$ contains no slack variables }
+\STATE \textbf{let} $\intv_{s_\kappa} = \sem{s_\kappa}\subpolyPair{1}{'}$
+\IF {$\intv_{s_\kappa} \neq \top_\Intervals$}
+\STATE \textbf{let} \slackvar\ be a fresh slack variable
+\STATE \subpolyPair{\widening}{} := $\tupla{\lineq_\widening \meet_\LinEq \{ \slackvar = \kappa\};\ \intv_\widening \dot\sqcap_\Intervals \{ \slackvar =  [0,0] \widening \intv_{s_\kappa} \}}$ 
+\ENDIF
+\ELSIF {$\kappa$ contains exactly one slack variable \slackvar}
+\STATE \textbf{let} $\intv_{s_\kappa} = \sem{s_\kappa}\subpolyPair{1}{'}$
+\IF {$\intv_{s_\kappa} \neq \top_\Intervals$}
+\STATE  \subpolyPair{\widening}{} := $\tupla{\lineq_\widening \meet_\Lineq \{ \kappa\};\ \intv_\widening \dot\sqcap_\Intervals \{ \slackvar =  \intv_0(\code{v}) \widening \intv_{s_\kappa} \}}$  
+\ENDIF
+\ELSE[$\kappa$ contains strictly more than one slack variable]
+\STATE \textbf{continue}
+\ENDIF
+\ENDFOR
+\smallskip
+\RETURN \subpolyPair{\widening}{}
+\end{algorithmic}
+\end{algorithm} 
+
+
+\begin{example}[Refinement step for the widening]
+Let us consider the code snippet in Fig.~\ref{ex:joinwiden}(b).
+The entry state to the loop is
+\(
+\subpoly_0  = \tupla{ \code{i} - \code{k} = 0;\ \dot \top_\Intervals} \).
+The state after one iteration is
+\(\subpoly_1  = \tupla{ \code{i} -\code{k} = 1;\  \dot \top_\Intervals} \).
+We apply the widening operator. 
+Step 1 does not refine the states as there are no slack variables.
+The pairwise widening of Step 2 lose all the information.
+Step 3 recovers the constraint $\code{k} \leq \code{i}$:
+ $D_0 = \{ \code{i} -\code{k} = 0 \}$  contains no slack variables and 
+$\sem{\code{i} -\code{k} }(\subpoly_1) = [1, 1]$ so that 
+\(
+\subpoly_\widening = \tupla{ \code{i} -\code{k} = \slackvar;\ \slackvar \in [0, +\infty] }.
+\)
+\qed
+\end{example}
+
+\begin{theorem}[Fixpoint convergence]
+The operator defined in Algorithm~\ref{alg:widening} is a widening. Moreover, \lessS\ can be used to check  that the fixpoint iterations eventually stabilize.
+\end{theorem}
+\textit{Proof sketch.}
+Algorithm~\ref{alg:widening} ensures that the number of linear equalities at any step is at most the number of equalities in the first step. 
+So there exists a point from which no more slack variables will be added. 
+Existing slack variables may be renamed to fresh ones to avoid conflicts.
+In the definition of  \lessS\ the renaming $\theta$ takes care of those.
+Up to the renaming, the widening is  the pairwise widening, which is convergent and whose stability can be checked by the pairwise partial order.
+\qed
+
+\section{Reduction for Subpolyhedra}
+The reduction in \SubPolyhedra\  infers tighter bounds on linear forms and hence on program variables.
+Reduction is cardinal to fine tuning the precision/cost ratio.
+We propose two reduction algorithms, one based on linear programming, $\rho_{LP}$, and the other on basis exploration, $\rho_{BE}$.
+Both of them have been implemented in \Clousot, our abstract interpretation-based static analyzer for \NET~\cite{MafLogozzo10}.
+
+\subsection{Linear programming-based reduction}
+A linear programming problem is the problem of maximizing (or minimizing) a linear function subject to a finite number of linear constraints.
+We consider \emph{upper bounding} linear problems (UBLP)~\cite{LinearProgramming}, \ie\ problems in the form ($n$ is the number of variables, $m$ is the number of equations):
+\[
+% \small
+\begin{aligned}
+\text{maximize}  &\quad c \cdot \var_k \quad \quad\quad  k \in {1 \dots n}, c \in \{ -1, +1 \} \\
+\text{subject to} & \quad\sum_{j=1}^n a_{ij} \cdot \var_j = b_j \quad (i = 1, \dots m)  \\
+ & \quad \text{and} \quad l_j \leq \var_j \leq u_j \quad  (j = 1, \dots n). 
+\end{aligned}
+ \]
+
+The Linear programming-based reduction $\rho_{LP}$ is trivially an instance of UBLP:
+To infer the tightest upper bound (resp. lower bound) on a variable $\code{v}_k$ in an element of \Subpoly\ $\subpolyPair{}{}$ instantiate UBLP with $c = 1$ (resp. $c = -1$) subject to the linear equalities $\ael{l}$ and the numerical bounds $\ael{i}$.
+
+UBLP can be solved in polynomial time~\cite{LinearProgramming}. 
+However, polynomial time algorithms for UBLP do not perform well in practice.
+The Simplex method~\cite{Dantzig48}, exponential in the worst-case, in practice performs a lot better than other known linear programming algorithms~\cite{SpielmanTeng04}.
+The Simplex algorithm works by visiting the \emph{feasible bases} (informally, the vertices) of the polyhedron associated with the constraints. 
+At each step, the algorithm visits the adjacent basis (vertex) that maximizes the current value of the objective by the largest amount. 
+The iteration strategy of the Simplex guarantees the convergence to a basis which exhibits the optimal value for the objective. 
+
+The advantages of using Simplex for  $\rho_{LP}$ are that: (i) it is well-studied and optimized; (ii) it is complete in $\mathbb{R}$, \ie\ it finds the best solution over real numbers; and (iii) it guarantees that all the information is propagated at once: $\rho_{LP} \circ \rho_{LP} = \rho_{LP}$.
+
+The drawbacks of using Simplex are that (i) the computation over machine floating point  may introduce imprecision or unsoundness in the result; and (ii) the reduction $\rho_{LP}$ requires to solve $2 \cdot n$ UBLP problems to find the lower bound and the upper bound for each of the $n$ variables in an abstract state.
+We have observed (i) in our experiences (cf. Sect.~\ref{sect:Experience}). 
+There exists methods to circumvent the problem at the price of extra computational cost, \eg\ using arbitrary precision rationals, or a combination of machine floating arithmetic and precise arithmetic.
+Even if (i) is solved, we observed that (ii) dominates the cost of the reduction, in particular in presence of abstract states with a large number of variables: the $2 \cdot n$ UBLP problems are \emph{disjoints} and there is no easy way to share the sequence of bases visited by the Simplex algorithm over the different runs of the algorithm for the same abstract state.
+
+\begin{algorithm}[t]
+\begin{algorithmic}
+\STATE \textbf{input} $\subpolyPair{}{} \in \Subpoly$, $\delta \in \parti{\{ \upzeta \mid \upzeta\ \text{is a basis change}\}} $
+\medskip
+\STATE Put $\lineq$ into row echelon form. Call the result $\lineq'$
+\STATE \textbf{let} $\tupla{\lineq^*, \intv^*} =  \tupla{\lineq', \intv}$
+\FORALL{$\upzeta \in \delta$}
+ \STATE $\lineq^*$ := $\upzeta(\lineq^*)$
+ \FORALL{$\var_k + a_{k+1}\cdot \var_{k+1} + \dots + a_n\cdot \var_{n} = b \in \lineq^*$}
+ \STATE $\intv^* := \intv^*[\var_k \mapsto \intv^*(\var_k) \meet_\Intervals \sx b-a_{k+1}\cdot \var_{k+1} + \dots + a_n\cdot \var_{n}\dx(\intv^*)]$  
+ \ENDFOR
+\ENDFOR
+\smallskip
+\RETURN \tupla{\lineq^*, \intv^*}
+\end{algorithmic}
+\caption{The reduction algorithm $\rho_{BE}$, para-metrized by the oracle $\delta$}
+\label{alg:reduction}
+\end{algorithm}
+
+\subsection{Basis exploration-based reduction}
+We have developed a new reduction  $\rho_{BE}$,  less subject to the drawbacks from floating point computation than $\rho_{LP}$,  which enables a better tuning of the precision/cost ratio than the Simplex. 
+The basic ideas are: (i) to fix \emph{ahead} of time the bases we want to explore; and (ii) to refine at each step the variable bounds.
+The reduction $\rho_{BE}$, parametrized by a set of changes of basis $\delta$, is formalized by Algorithm~\ref{alg:reduction}. 
+First, we put the initial set of linear constraints into triangular form (row echelon form). 
+Then, we apply the basis changes in $\delta$ and we refine all the variables \emph{in the basis}.
+With respect to $\rho_{LP}$, $\rho_{BE}$ is faster: (i) the number of bases to explore is statically bounded; (ii) at each step, $k$ variables may be refined at once. 
+
+In theory, $\rho_{BE}$ is an abstraction of  $\rho_{LP}$, in that it may not infer the \emph{optimal} bounds on variables (it depends on the choice of $\delta$).
+In practice, we found that $\rho_{BE}$ is much more numerically stable and it can infer better bounds than $\rho_{LP}$.
+The reason  is in  the handling of numerical errors in the computation. 
+Suppose we are seeking a (lower or upper) bound for a variable  using the Simplex. 
+If we detect a numerical error (\ie\ a loss of precision in floating point computations or a huge coefficient in the exact arithmetic computation), the only sound solution is to stop the iterations, and return the current value of the objective function as the result.
+On the other hand, when we detect a numerical error in $\rho_{BE}$, we can just skip the current basis (abstraction), and move to the next one in $\delta$.
+
+
+\subsubsection{Linear Explorer ($\delta_L$)} The linear bases explorer  is based on the empirical observation that in most cases, to infer the tightest bounds for some variable $\var_0$, you need to have it in the basis while some other variable $\var_1$ is out of the basis.
+Following this, the linear explorer generates a sequence of bases $\delta_L$  with the property that for each unordered pair of distinct variables $\tupla{\var_0, \var_1}$, there exists $\upzeta \in \delta_L$ such that $\var_0$ is in the basis and $\var_1$ is not.
+The sequence $\delta_L$ is defined as 
+\(
+\delta_L = \{ \upzeta_i \mid i \in [0, n],\  \var_{i} \dots \var_{(i + m - 1)\, \mathtt{mod}\, n} \text{ are in basis for}\ \upzeta_i\}.
+\)
+
+\begin{example}(Reduction with the linear explorer)
+Let the initial state be $\subpoly= \tupla{\var_0 + \var_2 + \var_3 = 1, \var_1 + \var_2 - \var_3 = 0;\ \var_0 \in [0,2], \var_1 \in [0,3] }$, so that $\delta_L = \{ \{ \var_0, \var_1\},$  $\{ \var_1, \var_2\},$ $ \{ \var_2, \var_3 \},$ $\{\var_3, \var_0 \}\}$.
+The reduction $\rho_{BE}(\subpoly)$ contains the tightest bounds for $\var_2, \var_3$:
+\(
+\tupla{\var_2 + \frac{1}{2} \cdot \var_0 + \frac{1}{2} \cdot \var_1 = 0, \var_3 + \frac{1}{2} \cdot \var_0 - \frac{1}{2} \cdot \var_1 = 0;
+\var_0\in [0,2], \var_1 \in [0, 3], \var_2 \in[-\frac{5}{2}, 0], \var_3 \in [-1, \frac{3}{2}] }. 
+\)
+\qed
+\end{example}
+Properties of $\delta_L$ are that: (i) each variable appears exactly $m$ times in the basis; (ii) it can be implemented efficiently as the basis change from $\upzeta_i$ to $\upzeta_{i+1}, i \in [0, n-1]$ requires just one variable swap; (iii) in general it is not idempotent: it may be the case that $\rho_L \circ \rho_L \neq \rho_L$; (iv) the result may depend on the initial order of variables, as shown by the next example.
+
+
+\begin{example}[Incompleteness of the linear explorer]
+Let us consider an initial state $\subpoly = \tupla{ \var_0 + \var_1 + \var_2 = 0, \var_3 + \var_1 = 0;\ \var_2 \in [0,1], \var_3 \in [0,1]}$.
+The reduced state $\rho_{BE}(\subpoly) = \tupla{\var_3 + \var_1 = 0, \var_2 + \var_0 - \var_1 = 0 ; \var_1 \in [-1,0], \var_2 \in [0,1], \var_3 \in [0,1] }$ does not contain the bound $\var_0 \in [-1, 1]$. \qed
+\end{example}
+
+
+
+\subsubsection{Combinatorial Explorer ($\delta_C$)} The combinatorial explorer $\delta_C$ systematically visits all the bases.
+It generates all possible combinations of $\variable{m}$ variables trying to minimize the number of swaps at each basis change. 
+It is very costly, but it finds the best bounds for each variable: it visits all the bases, in particular the one where the optimum is reached.
+The main advantage with respect to the Simplex is a better tolerance to numerical errors.
+However it is largely impractical because of (i) the huge cost; and (ii) the negligible gain of precision w.r.t. the use of $\delta_L$ that it showed in our benchmark examples.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Start of hints paper %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}%[t]
+ \centering
+  \begin{subfloat}
+    \begin{minipage}{3.5cm}
+\begin{verbatim}
+void AbsEl(int x) 
+{ if(...)  x  =-1; 
+  else     x  = 1; 
+
+  assert   x != 0; 
+}
+\end{verbatim}
+    \end{minipage}
+    \caption{}
+    \label{fig:gathering1}
+  \end{subfloat}    
+  \qquad 
+  \begin{subfloat}
+    \begin{minipage}{3.6cm}
+\begin{verbatim}
+void Transfer(int x, y) 
+{ assume 2 <= x <= 3;
+  assume -1 <= y <= 1;  
+  
+  int z = (x + y) * y;
+
+  assert -2 <= z; 
+}
+\end{verbatim}
+    \end{minipage}
+\caption{}
+\label{fig:transfer}
+  \end{subfloat}
+% \qquad
+%   \begin{subfloat}
+%     \begin{minipage}{4cm}
+% \begin{verbatim}
+% void DomOp() 
+% { int x = 0, y = 0;
+%   while (...) 
+%   { if (...) { x++; y += 100; }
+%     else if (...)  
+%      if (x >= 4) { x++; y++; } 
+%    }
+% (*) assert x <= y;
+%     assert y <= 100 * x; 
+% }
+% \end{verbatim}
+%     \end{minipage}
+%     \caption{}
+% \label{fig:gathering2}
+%   \end{subfloat}
+\vspace{-0.2cm}
+\caption{Examples of orthogonal losses of precision in abstract interpretations:
+(a) a convex domain cannot represent $\code{x} \neq 0$; and 
+(b) a compositional transfer function does not infer the tightest
+lower bound for $\code{z}$ 
+% (c) the standard domain operations on Polyhedra are not precise enough to infer the loop invariant $\code{x} \leq \code{y}$.
+}
+\label{fig:gathering}
+\vspace{-0.5cm}
+\end{figure}
+
+\section{Hints}
+
+% Journal version
+The relative loss of precision of the join operator incited us to search some ways to recover precision on imprecise operators.
+We discovered several of those, and they share some properties that led us to define a new concept called hints, which generalizes all of them as well as several known refining techniques.
+% End journal version
+
+Hints are precision improving operators which can be used
+to systematically refine and improve the precision of domain
+operations in abstract interpretation.
+Domain operations are either  \emph{basic} domain operations (\eg, \cjoin\
+or \cmeet)
+or their compositions (\eg, $\lambda (\ael{e}_0, \ael{e}_1,
+\ael{e}_2).\ (\ael{e}_0 \cmeet \ael{e}_1) \cjoin  (\ael{e}_0 \cmeet \ael{e}_2)$).
+
+\begin{definition}[Hint, \hint{}]
+\label{def:hints}
+Let $\op \in \funzione{\dom{C}^n}{\dom{C}}$ be a concrete domain operation defined over a concrete domain \tupla{\dom{C}, \less, \join, \meet}.
+Let $\ael{\op} \in \funzione{\adom{A}^n}{\adom{A}}$ be the abstract counterpart for \op\ defined over the abstract domain  \tupla{\adom{A}, \cless, \cjoin, \cmeet}.
+A hint $\hint{\ael{\op}}\in \funzione{\adom{A}^n}{\adom{A}}$ is  such that:
+\[
+\begin{aligned}
+\hint{\ael{\op}}(\ael{e}_0 \dots \ael{e}_{n-1}) \cless \ael{\op}(\ael{e}_0 \dots \ael{e}_{n-1}) & \quad \text{\textrm{(Refinement)}}  \\
+\op(\gamma( \ael{e}_0) \dots \gamma(\ael{e}_{n-1})) \less \gamma(\hint{\ael{\op}}(\ael{e}_0 \dots \ael{e}_{n-1})) & \quad \text(\textrm{Soundness}).
+\end{aligned}
+\]
+\end{definition}
+The first condition states that $\hint{\ael{\op}}$ is a more precise operations than $\ael{\op}$.
+The second condition requires $\hint{\ael{\op}}$ to be a sound approximation of \op.
+An important property of hints is that they can be designed separately and the combined to obtain a more precise hint.
+\begin{lemma}[Hints combination]
+If $\hint{\ael{\op}}^1$ and $\hint{\ael{\op}}^2$ are hints, then 
+\[
+\hint{\ael{\op}}^\cmeet(\ael{e}_0 \dots \ael{e}_{n-1}) = \hint{\ael{\op}}^1(\ael{e}_0 \dots \ael{e}_{n-1}) \cmeet \hint{\ael{\op}}^2(\ael{e}_0 \dots \ael{e}_{n-1})\]
+is a hint.
+\end{lemma}
+\textit{Proof.}
+\textit{(Refinement)} follows  from the definition of \cmeet.
+\textit{(Soundness)} is because $\op(\gamma( \ael{e}_0), \dots \gamma(\ael{e}_{n-1}))$ $\less \gamma$ $(\hint{\ael{\op}}^1$ \allowbreak $(\ael{e}_0, \dots \ael{e}_{n-1}))$ $\meet  \gamma(\hint{\ael{\op}}^2(\ael{e}_0, \dots \ael{e}_{n-1})) \less  \gamma(\hint{\ael{\op}}^1(\ael{e}_0, \dots \ael{e}_{n-1}) \cmeet \hint{\ael{\op}}^2(\ael{e}_0, \dots \ael{e}_{n-1}))$.
+\qed
+
+The next theorem states that hints improve the precision of static analyses without introducing unsoundness and preserving termination:
+
+\begin{theorem}[Refinement of the abstract semantics]
+Let $\hint{\widening}$ and $\hint{\cjoin}$ be two hints refining respectively the widening and the abstract union, and let $\hint{\widening}$ be a widening operator.
+Let \asemRefined{\cdot} be the abstract semantics obtained from \asem{\cdot} by replacing \widening with $\hint{\widening}$ and \cjoin\ with $\hint{\cjoin}$.
+Let \code{P} be a program.
+Then, $\forall \el{e}\in \parti{\Sigma}. \forall \ael{e} \in \dom{A}.$ 
+\[
+\begin{aligned}
+\asemRefined{P}(\ael{e}) \cless \asem{P}(\ael{e}) & \qquad \text{\textrm{(Refinement)}}  \\
+\el{e} \subseteq \gamma(\ael{e}) \Longrightarrow \sem{P}(\el{e}) \subseteq \gamma(\asemRefined{P}(\ael{e})) & \qquad \text{\textrm{(Soundness)}}.
+\end{aligned}
+\]
+\end{theorem}
+\textit{Proof sketch.}
+The cases to consider are those for the conditional and the while loop.
+The conditional can be proven by structural induction.
+The while loop  by instantiating the abstract fixpoint transfer theorem of~\cite{CousotCousot92-1}.
+\qed
+
+% \sopra\sopra
+\subsection{Syntactic hints}
+\label{sec:Syntactichints}
+Syntactic hints use some part of the program text to refine the operations of the abstract domain.
+They exploit user annotations to preserve as much information as possible in gathering operations (user-provided hints), and systematically improve the widening heuristics to find tighter loop invariants (thresholds hints).
+
+% \vspace{-0.3cm}
+
+\subsubsection{User-provided hints}
+\begin{figure}%[t]
+
+\small
+{
+\[
+\begin{array}{rcl}
+\mathsf{pred}(\code{skip};) &=& \emptyset \\ 
+\mathsf{pred}(\code{x = E};) &=& \emptyset \\ 
+\mathsf{pred}(\code{assert}\ \code{B};) &=& \mathsf{atomize}(\code{B}) \\
+\mathsf{pred}(\code{assume}\ \code{B};) &=& \mathsf{atomize}(\code{B}) \\
+\mathsf{pred}(\code{C\ C'}) & = & \mathsf{pred}(\code{C}) \cup \mathsf{pred}(\code{C'}) \\
+\mathsf{pred}(\If(\code{B})~ \{ \code{C} \} \Else~\{ \code{C'} \}) & = & \mathsf{atomize}(\code{B}) \cup \mathsf{pred}(\code{C}) \cup \mathsf{pred}(\code{C'}) \\ 
+\mathsf{pred}(\While(\code{B})~\{\code{C}\}) & = & \mathsf{atomize}(\code{B}) \cup \mathsf{pred}(\code{C}) 
+\end{array}
+\]
+\[
+\begin{array}{rcl}
+\mathsf{atomize}(\code{B}_1 \wedge\code{B}_2)&=& \mathsf{atomize}(\code{B}_1) \cup \mathsf{atomize}(\code{B}_2) \\
+\mathsf{atomize}(\code{B}_1 \vee \code{B}_2) &=& \mathsf{atomize}(\code{B}_1) \cup \mathsf{atomize}(\code{B}_2) \\
+\mathsf{atomize}(\code{B})  &=& \{ \code{B} \}  \qquad \text{otherwise}.
+\end{array}
+\]
+}
+
+\caption{The functions $\mathsf{pred}$ and $\mathsf{atomize}$ collect the atomic predicates in statements and Boolean expressions.}
+\label{fig:pred}
+\end{figure}
+They are the easiest, and probably cheapest form of hints.
+First, we collect all the predicates appearing as assertions or as guards.
+Then, the gathering operations are refined by explicitly checking for each collected predicate $\code{B}$, if it holds for \emph{all} the operands.
+If this is the case, $\code{B}$ is  added to the result.
+The predicate seeker $\mathsf{pred} \in \funzione{\Stm}{\parti{\BExp}}$ is defined in Fig.~\ref{fig:pred}.
+User provided hints do not affect the termination of the widening as  we can only add finitely many new predicates.
+
+
+\begin{lemma}[User-provided hints]
+
+
+Let $\diamond \in \{ \cjoin, \widening\}$, and let \code{P} be a program. 
+Then: (i) $\hint{\diamond}^{\mathsf{pred}}$ defined below is a hint;
+and (ii) $\hint{\widening}^{\mathsf{pred}}$ is a widening operator.
+
+
+\begin{small}
+\[
+\begin{array}{rcl}
+\hint{\diamond}^{\mathsf{pred}}(\ael{e}_0, \ael{e}_1) &=&
+\mathrm{let}\ S = \{ \code{B} \!\in\! \mathsf{pred}(\code{P}) \mid
+\dom{A}.\checkif(\code{B}, \ael{e}_0) = \mathit{true} \\
+& & \phantom{\mathrm{let}\ S = \{ \code{B} \!\in\! \mathsf{pred}(\code{P}) \mid}\wedge \dom{A}.\checkif(\code{B}, \ael{e}_1) = \mathit{true}   \} \\
+& & \mathrm{in}\ \dom{A}.\guard(\bigwedge_{\code{B} \in S} \code{B}, \diamond(\ael{e}_0, \ael{e}_1)).
+\end{array}
+\]
+\end{small}
+\end{lemma}
+\textit{Proof sketch.}
+Note that (\ref{for:soundnesstest}) implies that $\adom{A}.\atest(\code{b1} \wedge \code{b2}, \ael{e}) \cless  \adom{A}.\atest(\code{b1}, \ael{e})$, which is enough to prove \textit{(Refinement)}.
+The soundness condition (\ref{for:soundnesscheck}) of $\checkif$ guarantees that no inconsistent predicate is added to the result, implying \textit{(Soundness)}.
+\qed
+
+\begin{figure}
+\begin{verbatim}
+void DomOp() 
+{ int x = 0, y = 0;
+  while (...) 
+  { if (...) { x++; y += 100; }
+    else if (...)  
+     if (x >= 4) { x++; y++; } 
+   }
+    (*) assert x <= y;
+    assert y <= 100 * x; 
+}
+\end{verbatim}
+\caption{Example requiring user-provided hints}
+\label{fig:userhints}
+\end{figure}
+
+\begin{example}[Refined \SubPoly\ operations] 
+In example of Fig.~\ref{fig:userhints}, $\mathsf{pred}(\code{DomOp}) = \{ \code{x} \leq \code{y}, 4 \leq \code{x}, \code{y} \leq 100 \cdot \code{x} \}$.
+The refined domain operations keep the predicate $\code{x} \leq \code{y}$, which is stable among loop iterations, and hence is  a loop invariant. \qed
+\end{example}
+
+%\Fsubsubsection{Discussion}
+
+We found user-provided hints very useful in \Clousot, our abstract interpretation based static analyzer for \NET.
+\Clousot\ analyzes methods in isolation, and supports assume/guarantee
+reasoning (``contracts'' ~\cite{meyer97}) via executable annotations~\cite{FoxtrotClousot}.
+Precision in propagating and checking program annotations is crucial to provide a satisfactory user experience.
+User-provided hints help to reach this goal as the analyzer makes sure that at each joint point no user annotation is lost, if it is implied by the incoming abstract states.
+They make the analyzer more robust w.r.t. incompleteness of $\cjoin$ or a buggy implementation which may cause $\cjoin$ to return a more abstract element than the one predicted by the theory.
+The downside is that user-provided hints are syntactically based:
+\begin{example}[Fragility of user-provided hints]
+\label{ex:syntactic}
+Let us consider again the code in Fig.~\ref{fig:userhints}.
+If we replace the assertion at $\mathtt{(*)}$ with \code{if\ 10 <= x \ then\ assert\  5 <= y }, then $\mathsf{pred}(\code{DomOp}) =  \{ 10 \leq \code{x} , 5 \leq \code{y} \}$, so that  $\hint{\widening_{\Poly}}^{\mathsf{pred}}$ cannot figure out that $\code{x} \leq \code{y}$, and hence the analyzer cannot prove that the assertion is valid.
+Semantic hints (Sect.~\ref{sec:Templatehints}) will fix it. \qed
+\end{example}
+
+\subsubsection{Thresholds hints}
+Widening with threshold has been introduced in~\cite{BlanchetCousotEtAl03} to improve the precision of standard widenings over non-relational or weakly relational domains.
+Roughly, the idea of a widening with thresholds is to stage the extrapolation process, so that before projecting a bound to the infinity, values from a set $T$ are considered as candidate bounds.
+The set $T$ can be either provided by the user or it can be extracted from the program text.
+The widening with thresholds is just another form of hint.
+Let $\ael{e}_0$ and $\ael{e}_1$ be abstract states belonging to some numerical abstract domain.
+Without loss of generality we can assume that the basic facts in $\ael{e}_0, \ael{e}_1$ are in the form $\code{p} \leq k$, where \code{p} is some polynomial.
+For instance $\code{x} \in [-2, 4]$ is equivalent to $\{ -\code{x} \leq 2, \code{x} \leq 4 \}$.
+The standard widening preserves the linear forms with stable upper bounds:
+%\begin{small}
+\(
+\widening (\ael{e}_0,\ael{e}_1) = \{ \code{p} \leq k \mid \code{p} \leq k_0\in \ael{e}_0, \code{p} \leq k_1\in \ael{e}_1, k = \text{if } k_1 > k_0 \text{ then} +\infty \text{ else }  k_0\}.
+\)
+%\end{small}
+%\sopra
+%\noindent 
+Given a finite set of values \code{T}, threshold hints refine the standard widening by:
+
+% \sopra
+\begin{small}
+  \begin{align*}
+    \hint{\widening}^T(\ael{e}_0,\ael{e}_1) =  \{ \code{p} \leq k \mid \code{p} & \leq k_0\in \ael{e}_0, \code{p} \leq k_1\in \ael{e}_1, \\
+    & k = \text{if } k_1 > k_0 \text{ then } \\
+    & \qquad\mathrm{min}\{ t \in T \cup \{ +\infty \} \mid k_1 \leq t \} \\
+    & \qquad \text{ else }  k_0\}.
+  \end{align*}
+\end{small}
+%The next lemma states that $\hint{\widening}^T$ refines the standard widening, and it does  not compromise the termination nor the soundness of the analysis:
+\begin{lemma}
+$\hint{\widening}^T$ is: (i) a hint; and (ii) a widening.
+\end{lemma}
+\textit{Proof sketch.}
+\textit{Refinement}  and \textit{Soundness} are a direct consequence of definition of $\hint{\widening}^T$.
+Termination follows from the fact that $T$ is finite.
+\qed
+
+
+\begin{figure}%[t]
+\centering
+\begin{subfloat}
+  \begin{minipage}{3cm}
+\begin{verbatim}
+void LessThan() {
+  int x = 0;
+  while (x < 1000) {
+    x++;
+  }
+}
+\end{verbatim}
+  \end{minipage}
+  \caption{Narrowing}
+  \label{fig:tresholds1}
+\end{subfloat}    
+\qquad 
+\begin{subfloat}
+  \begin{minipage}{2.5cm}
+\begin{verbatim}
+void NotEq() {
+  int x = 0;
+  while (x != 1000) {
+    x++;
+  }
+}
+\end{verbatim}
+  \end{minipage}
+  \caption{Thresholds}
+  \label{fig:tresholds2}
+\end{subfloat}
+\vspace{-0.2cm}
+\caption{Two programs to be analyzed with Intervals.
+  The iterations with widening infer the loop invariant $\code{x} \in [0,+\infty]$.
+  In the first case, the narrowing step refines the loop invariant to $\code{x} \in [0, 1000]$.
+  In the second case, the narrowing fails to refine it.}
+\label{fig:tresholds}
+%\vspace{-0.2cm}
+\end{figure}
+
+\begin{example}[Widening with thresholds]
+Let us consider the code snippets in Fig.~\ref{fig:tresholds} to be analyzed with Intervals.
+In the both cases, the (post-)fixpoint is reached after the first iteration $\widening([0,0],  [1,1]) = [0, +\infty]$.
+In the first case, the invariant can be improved by a narrowing step to $ \narrowing([0, +\infty], [-\infty, 1000])= [0, 1000]$ (see \cite{CousotCousot77} for a definition of narrowing of \Intervals).
+In the second case, the narrowing is of no help as  $\narrowing([0, +\infty], $ $\cjoin([-\infty, 1000],$  $[1002, +\infty]))$ $= [0, +\infty]$.
+A widening with Thresholds $T = \{ 1000 \}$ helps discovering the tightest loop invariant for both examples in one step as $\hint{\widening}^T([0,0],[1,1]) = [0, 1000]$.
+\qed
+\end{example}
+Please note that user-provided hints are of no help in the previous example, as $\mathsf{pred}(\code{NotEq}) = \{ \code{x} \neq 1000\}$ does not hold for  all the operands of the widening. 
+
+We are left with problem of generating the set $T$ of thresholds.
+A common practice in static analyzers is to have $T = \{ -1, 0, 1\}$. 
+A better solution is to have the user provide $T$, left  as parameter of the analyzer. 
+This is the approach of~\cite{BlanchetCousotEtAl03}.
+In \Clousot\ we chose a slightly different solution, which consists in populating $T$ with the constants appearing in the program text.
+Constants are fetched from the source using a function $\mathsf{const} \in
+\funzione{\Stm}{\parti{\code{int}}}$ defined as one may expect.
+We found $\hint{\widening}^{\mathsf{const}}$ very satisfactory.
+The hint $\hint{\widening}^{\mathsf{const}}$: (i) helps inferring precise \emph{numerical} loop invariants  without requiring the extra iteration steps required for applying the narrowing; and (ii) improves the precision of the analysis of code involving disequalities, \eg, Fig.~\ref{fig:tresholds}(b).
+A drawback of threshold hints is that the set $T$ may grow too large, slowing down the convergence of the fixpoint iterations.
+In \Clousot, we infer thresholds on a per-method basis, which helps maintaining the cardinality of $T$ quite small.
+
+
+\subsection{Semantic hints}
+Semantic hints provide a more refined yet more expensive form of operator refinement.
+For instance, they exploit information in the abstract states to materialize constraints that were implied by the operands (saturation hints, die-hard hints and template hints) or they iterate the application of operators to get a more precise abstract state (reductive hints).
+
+\subsubsection{Saturation hints}
+A common way to design abstract interpreters is to build the abstract domain as a composition of basic abstract domains, which interact through a well-defined interface~\cite{CousotEtAl06,ChangLeino05,GulwaniEtAl08}.
+Formally, given two abstract domains $\adom{A}_0$, $\adom{A}_{1}$, the Cartesian product $\adom{A}^\times = \adom{A}_0 \times \adom{A}_{1}$ is still an abstract domain, whose operations are defined as the point-wise extension of those over $\adom{A}_0$ and $\adom{A}_{1}$.
+Let $\ael{\op}_i \in \funzione{\adom{A}_i^n}{\adom{A}_i}$, $i \in \{ 0, 1\}$, then 
+\[
+\ael{\op}^\times\!((\ael{e}^0_0, \ael{e}^0_1) \!\dots\! (\ael{e}^{n\!-\!1}_0, \ael{e}^{n\!-\!1}_1)) \!=\! (\ael{\op}_0(\ael{e}^0_0 \!\dots\! \ael{e}^{n\!-\!1}_0), \ael{\op}_1(\ael{e}^{0}_1 \!\dots\! \ael{e}^{n\!-\!1}_1))
+\]
+The Cartesian product enables the modular design (and refinement) of static analyses.
+However, a naive design which does not consider the flow of information between the abstract elements may lead to imprecise analyses, as illustrated by the following example.
+
+\begin{example}[Cartesian join]
+\label{ex:cartesian}
+Let us consider the abstract domain $\adom{Z} = \Intervals \times \LT$, where $\LT = \funzione{\Var}{\parti{\Var}}$ is an abstract domain capturing the \emph{``less than''} relation between \emph{variables}.
+For instance, $\code{x} < \code{y} \wedge \code{x} < \code{z}$ is represented in \LT\ by $[ \code{x} \mapsto \{ \code{y}, \code{z}\}]$.
+The domain operations are defined as one may expect~\cite{LogozzoMaf08}.
+Let $\ael{z}_0 = ([\code{x} \mapsto [-\infty, 0], \code{y} \mapsto [1, +\infty]], \emptyfun )$ and $\ael{z}_1 = (\emptyfun, [\code{x} \mapsto \{ \code{y}\}]  )$ be two elements of \adom{Z} (\emptyfun\ denotes the empty map).
+Then the Cartesian join loses all the information: $\cjoin^\times(\ael{z}_0, \ael{z}_1) = (\emptyfun, \emptyfun )$. \qed
+\end{example}
+
+A common solution is: (i) saturate the operands; and (ii)  apply the operation pairwise.
+The saturation materializes all the constraints implicitly expressed
+by the product abstract state.
+Let $\rho \in \funzione{\adom{A}^\times}{\adom{A}^\times}$ be a saturation (\emph{a.k.a.} closure) procedure.
+Then the next lemma provides a systematic way to refine an operator $\ael{\op}^\times$.
+
+\begin{lemma}
+The operator $\hint{\op^\times}^{\rho}$ below is a hint.
+\begin{small}
+  \[
+  \begin{split}
+    &\hint{\ael{\op}^\times}^{\rho}((\ael{e}^0_0, \ael{e}^0_1) \dots
+    (\ael{e}^{n-1}_0, \ael{e}^{n-1}_1)) = \\   
+& \quad \mathrm{let}\ \ael{r}^i
+    = \rho(\ael{e}_0^i, \ael{e}_1^i)\ \mathrm{for}\ i \in 0 \dots n-1\ 
+ \mathrm{in}\ \ael{\op}^\times(\ael{r}^0 \dots \ael{r}^{n-1}).
+  \end{split}
+ \]
+\end{small}
+\end{lemma}
+
+
+\begin{example}[Cartesian join, continued]
+The saturation of $\ael{z}_0$ materializes the constraint $\code{x} < \code{y}$ : $\ael{r}_0 = ([\code{x} \mapsto [-\infty, 0], \code{y} \mapsto [1, +\infty],  [\code{x} \mapsto \{ \code{y}\}] )$, and it leaves $\ael{z}_1$ unchanged.
+The constraint $\code{x} < \code{y}$ is now  present in both the operands, and it is retained by the pairwise join. \qed
+\end{example}
+
+It is worth noting that in general $\hint{\widening}^{\rho}$ does not
+guarantee the convergence of the iterations, as the saturation
+procedure may re-introduce constraints which were abstracted away from
+the widening (\eg, Fig.~10 of~\cite{Mine01-2}).
+
+Saturation hints can provide very precise operations for Cartesian abstract interpretations:
+They allow the analysis to get additional precision by combining the information present in different abstract domains.
+The quality of the result depends on the quality of the saturation procedure.
+The main drawbacks of saturation hints are that: (i) the iteration convergence is not ensured, so that extra care should be put in the design of the widening; (ii) the systematic application of saturation may cause a dramatic slow-down of the  analysis.
+In our experience with the combination of domains implemented in \Clousot, we found that the slow-down introduced by saturation hints was too high to be practical.
+Die-hard hints, introduced in the next section, are a better solution to achieve precision without giving up scalability.
+
+\subsubsection{Die-hard hints}
+These hints are based on the observation that often the constraints that one wants to keep at a  gathering point  often appears explicitly in one of the operands.
+For instance in Ex.~\ref{ex:cartesian} the constraint $\code{x} < \code{y}$ is explicit in $\ael{z}_1$, and implicit in $\ael{z}_0$ (as $\code{x} \leq 0 \wedge 1 \leq \code{y} \Longrightarrow \code{x} < \code{y}$).
+Therefore $\code{x} < \code{y}$ holds for all the operands of the join so it is sound to add it to its result.
+Die-hard hints generalize and formalize it.
+They work in three steps: (i) apply the gathering operation, call the result \ael{r}; (ii) collect the constraints $C$ that are explicit in one of the operands, but are neither present nor implied by \ael{r}; and (iii) add to \ael{r} all the constraints in $C$ which are implied by \emph{all} the operands.
+Formally:
+
+% \sopra
+\begin{small}
+  \[
+  \begin{split}
+    \hint{(\ael{\op}, I)}^{d}(\ael{e}_0, \ael{e}_1) = \ &  \mathrm{let}\ \ael{r} = \ael{\op}(\ael{e}_0, \ael{e}_1),\\
+    & C = \cup_{i \in I }\{ \kappa \in \ael{e}_i \mid \adom{A}.\checkif(\kappa, \ael{r}) = \mathit{top} \} \\
+    & \mathrm{let}\ S = \{ \kappa \in C \mid \adom{A}.\checkif(\kappa, \ael{e}_0) = \\
+    & \phantom{ S = \{ \kappa \in C \mid} \quad \adom{A}.\checkif(\kappa, \ael{e}_1) = \mathit{true} \} \\
+& \mathrm{in}\ \adom{A}.\atest\left(\wedge_{\kappa \in S} \kappa, \ael{r}\right).
+\end{split}
+\]
+\end{small}
+\sopra
+
+In defining the die-hard hint for \widening, one should pay attention
+to avoid loops which re-introduce a constraint that as been dropped by
+the widening. 
+One way to do it is to have an asymmetric hint, which restricts $C$
+only to the first operand (\eg, the candidate invariant):
+\begin{lemma}
+$\hint{(\cjoin, \{ 0, 1 \})}^{d}$  and $\hint{(\widening, \{ 0 \})
+}^{d}$ are hints and  $\hint{(\widening, \{0\})}^{d}$ is a widening.
+\end{lemma}
+
+
+\subsubsection{Computed hints}
+\label{sec:Templatehints}
+Hints can be inferred from the abstract states themselves. 
+By looking at some properties of the elements involved in the
+operation, one can try to guess useful hints. 
+
+\begin{lemma}[Computed hints]
+Let $\ael{e}_0, \ael{e}_1 \in \adom{A}$,  $\hintcomp \in \funzione{\dom{A} \times \dom{A}}{\adom{A}}$
+a function which returns a set of likely bounds of $\ael{e}_0 \cjoin \ael{e}_1$. 
+Then $\hint{\cjoin}^{\hintcomp}$ below is a hint.
+
+% \sopra
+\begin{small}
+  \[
+  \begin{array}{rcl}
+    \hint{\cjoin}^{\hintcomp}(\ael{e}_0, \ael{e}_1) &=& \mathrm{let}\ S =
+    \{ \code{B} \in \hintcomp(\ael{e}_0, \ael{e}_1) \mid
+    \dom{A}.\checkif(\code{B}, \ael{e}_0) =\mathit{true} \\
+    & & \qquad \qquad \qquad \wedge\  \dom{A}.\checkif(\code{B}, \ael{e}_1) = \mathit{true}   \} \\ 
+    & & \mathrm{in}\ \dom{A}.\guard(\bigwedge_{\code{B} \in S} \code{B}, \ael{e}_0 \cjoin \ael{e}_1).
+  \end{array}
+  \]
+\end{small}
+\end{lemma}
+
+Computed hints are useful when the abstract join \cjoin\ is not optimal.
+Otherwise, $\hint{\cjoin}^{\hintcomp}$ is no more precise than \ajoin.
+For instance, in a Galois connections-based abstract interpretation,
+\ajoin\ is optimal, in that it returns the most precise
+abstract element overapproximating the concrete union.
+As a consequence, no further information can be extracted from the operands.
+It is worth noting that in general
+$\hint{\widening}^{\hintcomp}$ is not a widening.
+However, one can extend the arguments of the previous section to define
+an asymmetric hint $\hint{\widening}^{\hintcomp}$.
+
+% Journal version
+The next two kinds of hints (template hints and 2D-convex hull hints) are examples of computed hints.
+
+% Journal version : should this be a subsubsubsection ?
+\subsubsection{Template hints}
+Let  $\adom{A}.\arange \in
+\funzione{\Exp \times \adom{A}}{\Intervals}$ be a  function that returns
+the range  for an expression in some abstract state, \eg,
+it satisfies:
+  \(
+  \forall \code{E}.\ \forall \ael{e} \in \adom{A}.\
+  \adom{A}.\arange(\code{E}, \ael{e}) = [l, u] \Longrightarrow \forall \sigma \in
+  \gamma(\ael{e}).\   l \leq \semantica{E}{\code{E}}(\sigma) \leq u.
+  \)
+If $\adom{A}.\arange(\code{E}, \ael{e}_i) = [l_i, u_i]$ for $i \in \{
+0, 1 \}$, then  $\gamma(\join_{\Intervals}([l_0, u_0],  [l_1, u_1]))$ is an upper
+bound for \code{E} in $\cup(\gamma(\ael{e}_0),  \gamma(\ael{e}_1))$.
+As a consequence given a set $P$ of polynomial forms, one can design
+the guessing function $\hintcomp^{P}$:
+
+% \sopra
+\begin{small}
+\[
+\begin{split}
+\hintcomp^{P}(\ael{e}_0, \ael{e}_1) & =  \{ l \leq \code{p} \leq u \mid
+\code{p} \in P \wedge [l, u]  \\
+& = \join_{\Intervals}(\adom{A}.\arange(\code{p}, \ael{e}_0),
+\adom{A}.\arange(\code{p}, \ael{e}_1) \}.
+\end{split}
+\] 
+\end{small}
+
+% \sopra
+The main difference between $\hint{\cjoin}^{\hintcomp^{P}}$ and
+syntactic hints is that the bounds for the polynomials in $P$ are \emph{semantic},
+as they are inferred from the abstract states and not from the
+program text.
+For instance, computed hints infer the right invariant in
+Ex.~\ref{ex:syntactic}  using the set of templates $\mathit{Oct} \equiv \{ \code{x}_0 - \code{x}_1
+\mid \code{x}_0, \code{x}_1\ \text{are}$ $\text{program}\
+\text{variables} \}$.
+In general, template hints with $\mathit{Oct}$ refine \SubPoly\
+so to make it as precise as \Octagons.
+
+% Journal version : should this be a subsubsubsection ?
+\subsubsection{2D-Convex Hull hints}
+New linear inequalities can be discovered at join points using the convex hull
+algorithm.
+For instance, the standard join on \Polyhedra\ is defined in that way~\cite{CousotHalbwachs78}.
+However the convex hull algorithm requires an expensive conversion
+from a tableau of linear constraints to a set of vertices and
+generators, which causes the analysis time to blow up.
+A possible solution is to consider a planar convex hull, which 
+computes possible linear relations between \emph{pairs} of variables by: (i) projecting
+the \Intervals part of the abstract states on all the two-dimensional planes; and (ii) computing the
+planar convex hull (of two rectangles, a particularly simple case) on those planes. 
+Planar convex hull, combined with a smart representation of the
+abstract elements allows us to automatically discover complex invariants
+without giving up performances.
+
+
+\begin{example}[2D-Convex hull]
+Let us consider the code in Fig.~\ref{fig:2dhints}
+from~\cite{CousotHalbwachs78}.
+At a price of exponential complexity, \Poly\ can infer the correct loop invariant, and prove the assertion
+correct.
+\Subpoly\ refined with 2D-Convex hull hints can prove the assertion,
+yet keeping a worst-case polynomial complexity~\cite{LavironLogozzo09}. \qed
+\end{example}
+
+\begin{figure}%[t]
+\centering
+\begin{verbatim}
+void Foo() {
+  int i = 2, j = 0;
+  while (...) {
+    if (...) { i = i + 4; }
+    else     { i = i + 2; j++; } }
+  assert  2 <= i - 2 * j; }
+\end{verbatim}
+\vspace{-2pt}
+\caption{Example requiring the use of 2D-convex hull hints to infer the right invariant, expressed by the assertion}
+\label{fig:2dhints}
+\vspace{-3pt}
+\end{figure}
+
+
+\subsubsection{Reductive hints}
+Intuitively, one way to improve the precision of a unary operator is to iterate its application~\cite{Granger92}.
+However, an unconditional iteration may be source of unsoundness, as shown by the following example.
+\begin{example}[Unsoundness of unconditional iterations]
+Let $- \in \funzione{\Intervals}{\Intervals}$ be the operator which
+applies the unary minus to an interval.
+In general, $\forall n \in \mathbb{N}.\ \ael{e} = -^{2n}(\ael{e}) \neq
+-^{2n+1}(\ael{e})$ so that the iterations are unstable. \qed
+\end{example}
+We say that a function $f$ is \emph{reductive} if $\forall x. f(x) \less x$; and  \emph{closing} if it is reductive and $\forall x. f(f(x)) = f(x)$.
+
+\
+\begin{lemma}[Reductive hints]
+\label{lem:reductive}
+Let $\op \in \funzione{\dom{C}}{\dom{C}}$ be a unary operator and $\ael{\op} \in \funzione{\adom{A}}{\adom{A}}$ its abstract counterpart.
+Let $\op$ be closing,  $\ael{\op}$ be reductive, and $n \geq 0$.
+Then $\hint{\ael{\op}}(\ael{e}) =\ael{\op}^{n}(\ael{e})$ is a hint.
+\end{lemma}
+\textit{Proof. (Sketch)}
+\textit{(Refinement)} follows from the definition.
+To prove \textit{(Soundness)}, it is enough to  prove that  $\op(\gamma(\ael{e})) \subseteq \gamma(\ael{\op}^2(\ael{e}))$.
+It holds as $\op(\gamma(\ael{e})) = \op^2(\gamma(\ael{e})) \subseteq  \op(\gamma(\ael{\op}(\ael{e}))) \subseteq \gamma(\ael{\op}^2(\ael{e}))$.
+\qed
+
+The main application of reductive hints is to improve the precision in handling the guards in non-relational abstract domains.
+Given a Boolean guard \code{B} and an abstract domain \adom{A}, $\psi \equiv \lambda{\ael{e}}.\ \adom{A}.\atest(\code{B}, \ael{e})$ is an abstract operator which satisfies the hypotheses of Lemma~\ref{lem:reductive}.
+Abstract compilation can be used to express $\psi$ in terms of domain operations, their compositions and state update.
+Lemma~\ref{lem:reductive} justifies the use of local fixpoint iterations to refine the result of the analysis.
+
+\begin{example}
+Let us consider the following Boolean expression :
+\[
+ \code{b1} == \code{b2} \wedge \code{b2} == \code{b3}
+\]
+Its abstract compilation in an abstract domain \funzione{\code{Var}}{\{ \mathsf{true}, \mathsf{false}, \top, \bottom \}} is :
+\[
+ \begin{array}{rl}
+ \psi \equiv & \lambda \el{b}. (\el{b}[\code{b1},\code{b2} \mapsto \el{b}(\code{b1}) \wedge \el{b}(\code{b2})]) \\
+ & \quad \dot\wedge (\el{b}[\code{b2},\code{b3} \mapsto \el{b}(\code{b2}) \wedge \el{b}(\code{b3})]) \\
+ \end{array}
+\]
+where $\dot\wedge$ denotes the pointwise extension of $\wedge$. 
+In an initial abstract state  $\el{b_0} = [\code{b1}, \code{b2} \mapsto \top; \code{b3} \mapsto \mathsf{true}]$,  
+$\psi(\el{b}_0) = [ \code{b1} \mapsto \top; \code{b2}, \code{b3} \mapsto \mathsf{true}  ]$, and $\psi^2(\el{b}_0) = [ \code{b1}, \code{b2}, \code{b3} \mapsto \mathsf{true}] = \psi^n(\el{b}_0)$, $n \geq 2$. \qed 
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% End of hints paper   %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Refinements for Subpolyhedra}
+
+\subsection{Precision improvement: Hints}
+
+% Journal version
+Many of the hints presented above can be used to improve the precision of \Subpoly.
+User-provided hints provide a simple but efficient way to deal with programs that are not too complicated,
+and the intervals part of \Subpoly\ can of course use the threshold hints.
+
+Saturation hints are impractical for \Subpoly, but die-hard hints are very useful; indeed, step 3 of the join algorithm (\ref{alg:join}) can be seen as a particular case of die-hard hints, with the difference that the constraints marked as deleted in the join of the linear equalities domain migth not have been actually present in the initial states, but have been introduced in place of an equivalent one by Karr's algorithm.
+
+Both kinds of computed hints are useful, but in a different way : they can be used for tricky programs that require some complex reasoning, but in most cases the algorithm already returns a good enough result, and use of those hints only slows down the analysis.
+As an example, template hints can be used to manually set the invariants to infer on a complicated program.
+They can also be used to guarantee some minimal precision (e.g., at least the precision of octagons) if one can afford the extra time it costs.
+2D-convex hull hints are useful in the case of pointer access validation, to infer bounds with non-unary coefficients between pairs of variables.
+
+Reductive hints can also be used on cases involving reduction, because our reduction is not idempotent; however, reduction is rather expensive and there is no guarantee of an actual gain of precision in this case, so we do not use it in practice. Instead, when precision matters, we use reduction with the combinatorial explorer, which does have guarantees on the precision of the result.
+% The inference power of \Subpoly\ can be increased  using \emph{hints}.
+% Hints are linear functionals associated with a subpolyhedra \subpoly.
+% They represent some linear inequality that may hold in \subpoly, but that it is not explicitly represented by a slack variable, or that it is not been checked to hold in \subpoly\ yet. 
+% 
+% Hints increase the precision of joins and widenings.
+% Let \code{h} be an hint, let $\subpoly_0$ and $\subpoly_1$ two subpolyhedra, and let $\ael{b} = \semantica{}{h}(\subpoly_0) \join_\Intervals \semantica{}{h}(\subpoly_1)$. 
+% If $\ael{b} \neq \top_\Intervals$, then $\code{h} \in \ael{b}$ holds in both $\subpoly_0$ and $\subpoly_1$, so that the constraint can be safely added to $\subpoly_0 \joinS \subpoly_1$.
+% That helps recovering linear inequalities that may have been dropped by the Algorithm~\ref{alg:join}.
+% The situation for widening is similar, with the main difference that the number of hints should be bounded, to ensure convergence.
+% Hints can be automatically generated during the analysis or they can be provided by the user in the form of annotations.
+% We have three ways to generate hints, inspired by existing solutions in the literature: program text, templates and planar convex hull.
+% They provide very powerful hints, but some of them may be expensive. 
+% 
+% \Fsubsubsection{Program text hints} They introduce a new hint each time a guard or assume statement (user annotation) is encountered in the analysis. 
+% This way, properties that are obvious when looking at the syntax of the program will be proved.
+% Also, every time a slack variable \slackvar\ is removed,  \slackvarinfo\ is added to the hints. 
+% This is useful in the realistic case when \Subpoly\ is used in conjunction with an heap analysis which may introduce unwanted renamings.
+% 
+% \Fsubsubsection{Template hints} They consider hints of fixed shape~\cite{Sankaranarayanan05}. 
+% For instance, hints in the form $\code{x}_0 - \code{x}_1$ guarantee a precision at least as good as difference bounds matrices~\cite{ModelChecking,Mine01-1}, provided that the reduction is complete.
+% 
+% \Fsubsubsection{Planar convex hull hint} It materializes new hints by performing the planar convex hull of the subpolyhedra to join~\cite{SimonKing02-2}.
+% First, it projects the interval components on every two-dimensional plane (there are a quadratic number of such planes).
+% Then performs the convex hull of the resulting pair of rectangles (in constant time, since the number of vertices is at most eight). 
+% The resulting new linear constraints are a sound approximation by construction.
+% They can be safely added to the result of the join.
+
+% End journal version
+
+\subsection{Speed Improvement: Simplification} 
+The simplification operator $\sigma$ removes redundant information from an abstract element. 
+It is required neither for soundness nor completeness nor to improve the precision of the analysis (unlike $\rho$), but it is cardinal to the implementation of scalable analyses.
+The simplification $\sigma$ of an element of \Subpoly\ $\subpolyPair{}{}$ reduces the number of variables in \ael{l}, which is the more expensive domain, without losing any precision.
+It consists in the application of the following three rules:
+
+\begin{enumerate}
+\setlength{\itemindent}{25pt}
+\item[(Const)]  If an equality $\var = b$ is detected, \\
+  $\var$ is projected from $\ael{l}$ and added to $\ael{i}$; 
+\item[(Slack)]  If a slack variable $\slackvar$ does not appear in \subpolyPair{}{}, \\
+  then it should be removed; 
+\item[(Dep)]  If $\subpolyPair{}{}$ implies  $\slackvariable{0} + a \cdot \slackvariable{1} = b$, \\
+  then one between  $\slackvariable{0}$ and $\slackvariable{1}$ can be removed.
+\end{enumerate}
+
+
+\noindent The rationale behind (Const) is that constants are very expensive when represented in \Karr\ but very cheap if represented with \Intervals;
+(Slack) performs a kind of garbage collection, by removing slack variables $\beta$ which are in the domain of  $\subpolyPair{}{}$, but such that $\beta$ does not appear in any of the constraints of \ael{l} and $\ael{i}(\beta) = \top_\Intervals$; (Dep) is justified by the fact that after refining the intervals for both variables, removing one of the slack variables does not change the concretization of the abstract element.
+(Const) is useful when we introduce a new slack variable; (Slack) helps reducing the number of slack variables after joins; and (Dep) is applied as a pre-step of the reduction, to reduce the number of variables and hence make it faster.
+
+\section{Experience}
+\label{sect:Experience}
+
+\begin{figure*}
+\centering
+\small
+\begin{tabular}{@{}r | r r |r r r | r r r | c@{}}
+                      & & Bounds & \multicolumn{3}{c|}{Simplex $\rho_{LP}$} &  \multicolumn{3}{c|}{Linear Explorer $\rho_{BE}$} & Max  \\
+Assembly & Methods   &  Checked & Valid & \% & Time & Valid & \% & Time    & Vars\vspace{3pt}  \\
+\hline
+\code{mscorlib.dll} &  18 084  &  17 181 & 14 432   & 84.00 & 73:48  (3) & 14 466 & 84.20  & 23:19 (0) & 373 \\
+\code{System.dll}    &   13 776 &  11 891 & 10 225  & 85.99  & 58:15 (2) & 10 427 & 87.69 & 14:45 (0) & 140 \\
+\code{System.Web.dll} &  22 076 &  14 165 & 13 068  &  92.26  & 24:41 (0) & 13 078 & 92.33 & 6:33 (0) & 182 \\
+ \code{System.}\phantom{ciaoc}  & & & & & & & & &\\
+\code{Design.dll} &  11 419&  10 519 & 10 119  & 96.20  & 26:07 (0) & 10 148 & 96.47 & 5:18 (0) & 73\\
+\hline
+Average &                &  &        & 89.00 &      &       &  89.51          \\
+\end{tabular}
+\caption{The experimental results of   checking array creation and accesses.
+ \Subpoly\ is instantiated with two reductions $\rho_{LP}$ and $\rho_{BE}$. 
+Time is expressed in minutes, the time-out per method is set to two minutes (in parentheses). 
+The last column reports the maximum number of variables related by an element of  \Subpoly.}
+\label{fig:results}
+\end{figure*}
+
+We have implemented \Subpoly\ on the top of \Clousot, our modular abstract interpretation-based static analyzer for \NET. 
+\Clousot\ directly analyzes MSIL, a  bytecode target for more than seventy compilers (including C\#, Managed C++, VB.NET, F\#, \dots).
+Prior to the numerical analysis \Clousot\ performs a heap analysis and an expression recovery analysis~\cite{LogozzoMaf08-2}.
+\Clousot\ performs \emph{intra-}procedural analysis and it supports assume-guarantee reasoning via \Foxtrot\ annotations~\cite{FoxtrotClousot,FerraraLogozzoMaf08}.
+%\Foxtrot\ allows specifying contracts in \NET\ without requiring any language support (cf. Appendix~\ref{sec:foxtrot}). 
+Contracts are expressed directly in the language as method calls and are persisted to MSIL using the normal compilation process of the source language (cf. Appendix~\ref{sec:foxtrot}).
+Classes and methods are annotated with class invariants, preconditions and postconditions.
+Preconditions are asserted at call sites and assumed at the method entry point.
+Postconditions are assumed at call sites and asserted at the method exit point.
+\Clousot\ also checks the absence of specific errors, \eg\ out of bounds array accesses, null dereferences, buffer overruns, and divisions by zero.
+
+Figure ~\ref{fig:results} summarizes our experience in analyzing array creations and accesses in four libraries shipped with \NET.
+The test machine is an ordinary 2.4Ghz dual core machine, running Windows Vista.
+The assemblies are directly taken from the standard .NET directory of our PC.
+The shipped versions of the assemblies do not contain contracts (We are actively working to annotate the \NET\ libraries). 
+On average, we were able to validate almost 89.5\% of the proof obligations. 
+We manually inspected some of the warnings issued for \code{mscorlib.dll}. 
+Most of them are due to lack of contracts, \eg\ an array is accessed using a method parameter or the return value of some helper method.
+However, we also found real bugs (dead code and off-by-one). 
+That is remarkable considering that \code{mscorlib.dll} has been tested \emph{in extenso}.
+We also tried \Subpoly\ on the examples of~\cite{CousotHalbwachs78,SankaranarayananEtAl07,GulavaniEtAl08}, proving all of them.
+
+\subsection{Reduction Algorithms}
+We run the tests using the Simplex-based and the Linear explorer-based reduction algorithms.
+We used the Simplex implementation shipped with the Microsoft Automatic Graph Layout tool, widely tested and optimized.
+The results in Fig.~\ref{fig:results} show that $\rho_{LP}$ is significantly slower than  $\rho_{BE}$, and in particular the analysis of five methods was aborted as it reached the two minutes time-out.
+Larger time-outs did not help.
+
+\Subpoly\ with the reduction  $\rho_{LP}$ validates less accesses than $\rho_{BE}$.
+Two reasons for that.
+First, it is slower, so that the analysis of some methods is aborted and hence some proof obligations cannot be validated.
+Second, our implementation of the Simplex uses floating point arithmetic which induces some loss of precision. 
+In particular we need to read back the result (a \code{float}) into an interval of \code{int}s containing it.
+In general this may cause a loss of precision and even worse unsoundness.
+We experienced both of them in our tests.
+For instance the 39 ``missing''   proof obligations in \code{System.Web.dll} and \code{System.Design.dll} (validated using $\rho_{BE}$, but not  with $\rho_{LP}$) 
+are  due to floating point imprecision in the Simplex.
+We have considered replacing a floating point-based Simplex with one using exact rationals.
+However,  the Simplex has the tendency to generate coefficients with large denominators.
+The code we analyze contains many large constants which cause the Simplex to produce enormous denominators.
+
+\Subpoly\ with $\rho_{BE}$ instantiated with the linear bases explorer perform very well in practice: it is extremely fast and precise.
+However, the result may depend on the variables order.
+A ``bad'' variable order may cause  $\rho_{BE}$ not to infer bounds tight enough.
+Possible solutions are: (i) to reduce the number of variables using $\sigma$ (less bases to explore);
+(ii) to mark variables which can be safely kept in the basis at all times: In the best case, only one basis needs to be explored. 
+In the general case, it still makes the reduction more precise because the bases explored are more likely to give bounds on the variables.
+
+\subsection{Max Variables} 
+It is worth noting, that even if \Clousot\ performs an intra-procedural analysis, the methods we analyze may be very complex, and they may require tracking linear inequalities among many abstract locations.
+Abstract locations are produced by the heap analysis~\cite{Logozzo07}, and they abstract stack locations and heap locations. 
+Figure~\ref{fig:results} shows that it is not uncommon to have methods which requires the abstract state to track more than 100 variables.
+One single method of \code{mscorlib.dll} required to track relations among 373 distinct variables.
+\Subpoly\ handles it: the analysis with  $\rho_{BE}$ took a little bit more than a minute.
+To the best of our knowledge those performances in presence of so many variables are largely beyond state-of-the-art \Polyhedra\ implementations.
+
+\subsection{Hints}
+
+Figure~\ref{tab:subpoly} focuses on the analysis of \code{mscorlib} using \Subpoly{} refined with hints and no-reduction.
+The first column in the table shows the results of the analysis  with no hints.
+This is roughly equivalent to precisely propagating arbitrary linear equalities and intervals, with limited inference and no propagation of information between linear equalities and intervals. 
+User-provided hints and die-hard hints add more inference power, at the price of a still acceptable slow-down.
+Computed hints (with Octagons and 2D-Convex hull) further slow-down of the analysis, causing the analysis of various methods to time out.
+We manually inspected the analysis logs to investigate the differences.
+Ignoring the methods that timed-out, with respect to $\Subpoly^*$, $\tupla{\Subpoly^*, \hint{\cjoin}^{\hintcomp^\mathit{Oct}} }$ and  $\tupla{\Subpoly^*,  \hint{\cjoin}^{\hintcomp^\mathit{2DCH}}}$ report respectively 125 and  124 less false positives. 
+Out of those, only 13 overlap.
+
+One may wonder if computed hints are needed at all.
+We observed that, when considering annotated code (unfortunately, just a small fraction of the overall codebase at the moment of writing), one needs to refine the operations of the abstract domains with hints in order to get a very low (and hence acceptable) false alarms ratio (around 0.5\%) . 
+In fact, even if (relatively) rare, assertions as in Fig.~\ref{fig:gathering}(b) and Fig.~\ref{fig:2dhints} are present in real code.
+Thanks to the incremental structure of \Clousot, we do not need to run \Subpoly{} with \emph{all} the hints on \emph{all} the analyzed methods, but we can focus the highest precision only on the few methods which require it.
+
+
+\begin{figure*}
+\centering
+\small
+\begin{tabular}{@{}r r | r r r| r r r | r r r@{}}
+                        \multicolumn{2}{c|}{\Subpoly{}} & 
+                        \multicolumn{2}{c}{$\Subpoly^*$}
+                          & Slow &
+                       \multicolumn{2}{c}{$\Subpoly{}^*$ + $ \hint{\cjoin}^{\hintcomp^\mathit{Oct}}$}
+                          & Slow 
+&  \multicolumn{2}{c}{$\Subpoly{}^*$ + $ \hint{\cjoin}^{\hintcomp^\mathit{2DCH}}$} & Slow
+                           \\
+Valid & Time & Valid & Time & down & Valid & Time & down  & Valid & Time & down  \\
+
+\hline
+ 14 230 &  4:29(0) & 14 432 & 20:22(0)     &  4.5x & 13 948 & 81:24(20) & 18.2x & 14 396 & 36:33(7) & 8.1x
+\end{tabular}
+\caption{The experimental results analyzing \code{mscorlib}  with \Subpoly{} and different semantic hints and no-reduction.
+$\Subpoly^*$ denotes $\Subpoly$  refined with $\hint{\diamond}^{\mathsf{pred}}$   and  $\hint{\cjoin,\widening}^{d}$.
+Computed hints significantly slow-down the analysis, but they are needed to reach a very low false alarm ratio.}
+\label{tab:subpoly}
+\end{figure*}
+
+
+\section{Conclusions}
+We introduced \Subpoly, a new numerical abstract domain based on the combination of linear equalities and intervals.
+\Subpoly\ can track linear inequalities involving hundred of variables.
+We defined the operations of the abstract domain (order, join, meet, widening); the simplification operator (to speed up the analysis); and two reduction operators (one based on linear programming and another based on basis exploration).
+We found Simplex-based reduction quite unsatisfactory for program analysis purposes: because of floating point errors the result may be too imprecise, or worse unsound.
+We introduced then  the basis exploration-based reduction, in practice more precise and faster.
+
+\Subpoly\ precisely propagates linear inequalities, but it may fail to infer some of them at join points. 
+Precision can be recovered using hints either provided  by the programmer in the form of program annotations; or automatically generated (at some extra cost).
+\Subpoly\ worked fine on some well known examples in literature that required the use of \Polyhedra.
+We tried \Subpoly\ on shipped code, and we showed that it scales  to several hundreds of variables, a result far beyond existing \Polyhedra{} implementations.
+
+
+
+
+\Fsubsubsection{Acknowledgments} Thanks to Lev Nachmanson for providing us the Simplex implementation.
+Thanks to Manuel F\"ahndrich, J\'er\^ome Feret, Corneliu Popeea for the useful discussions.
+
+\bibliographystyle{plain}
+{
+\small
+\bibliography{bib}
+}
+
+\appendix
+
+
+\section{Foxtrot}
+\label{sec:foxtrot}
+% Foxtrot
+\Foxtrot\ is a language independent solution for contract
+specifications in \NET.  It does not require any source language
+support or compiler modification.  Preconditions and postconditions
+are expressed by invocations of static methods
+(\code{Contract.Requires} and \code{Contract.Ensures}) at the start of
+methods.  Class
+invariants are contained in a method with an opportune name
+(\code{ObjectInvariant}) or tagged by a special attibute
+(\code{[ObjectInvariant]}).  Dummy static methods are used to express
+meta-variables such as \eg\ \code{Contract.Old(x)} for the value in the
+pre-state of \code{x} or \code{Contract.WritableBytes(p)} for the
+length of the memory region associated with \code{p}. These contracts are
+persisted to MSIL using the standard source language compiler.
+
+Contracts in the \Foxtrot{} notation (using static method calls) can
+express arbitrary boolean expressions as pre-conditions and
+post-conditions. We expect the expressions to be side effect free (and
+only call side-effect free methods). We use a separate purity checker
+to optionally enforce this~\cite{BarnettEtAl07}. 
+
+A binary rewriter tool enables dynamic checking.  It extracts the
+specifications and instruments the binary with the appropriate runtime
+checks at the applicable program points, taking contract inheritance
+into account. Most \Foxtrot{} contracts can be enforced at runtime.
+
+For static checking, \Foxtrot\ contracts are presented
+to \Clousot\ as simple \code{assert} or \code{assume}
+statements. E.g., a pre-condition of a method appears as an assumption
+at the method entry, whereas it appears as an assertion at every
+call-site.
+
+\section{Simplex algorithm}
+\label{sec:simplex}
+
+We recall some basic facts about the Simplex algorithm, and in particular the notion of basis.
+The Simplex algorithm finds the best solution to the problem:
+\[
+\begin{aligned}
+\text{maximize}  &\quad c^T \code{v} \\
+\text{subject to}  &\quad A\ \code{v} = b 
+\end{aligned}
+\]
+There may  be also  interval constraints  ($l_i \leq \var_i \leq u_i$), but they are not important for the notion of basis.
+The problem above can be rewritten in matricial form as
+\[
+\left( \begin{tabular}{c|c}
+ $A$ & $b$
+\end{tabular}
+ \right)
+\left( \begin{tabular}{c}
+ \code{v} \\ $-1$
+\end{tabular}
+ \right) = 0
+\]
+We let $S = ( A | b)$. 
+There are infinitely many   matrices $S$ with the same space of solutions as $S\ \code{v} = 0$, so we can make a few assumptions on $S$.
+First, we can use Gaussian elimination get an upper triangular matrix (row echelon form). 
+Gaussian elimination updates the matrix by adding to a row a linear combination of the other rows of the matrix, which does not change the space of solutions; after several of such updates, the result is triangular. 
+We can then remove all zero rows and divide each row by its leading coefficient (which is the left-most non-zero coefficient). These operations do not change the space of solutions. 
+As Gaussian elimination guarantees that the leading coefficient of each row is strictly right of the leading coefficients of the rows above it, there is at most one leading coefficient in each column. 
+The variables whose columns contain a leading coefficient are called \emph{basic variables}, the ones whose columns do not contain a leading coefficient are called \emph{non-basic variables}. 
+The set of basic variables is  the \emph{basis}.
+It is also  convenient to have the columns corresponding to basic variables containing only zeros except for a single one (the leading coefficient).
+This can be achieved from the previous matrix by a way similar to Gaussian elimination.
+
+The Simplex algorithm starts with a matrix in this form, and at each iteration changes the basis. \emph{Changing the basis} consists in choosing a basic variable, $\var_b$, with the associated row $r$ (the row whose leading coefficient is in the column for $\var_b$), then choosing a non-basic variable $\var_n$ whose coefficient $c$ in the row $r$ is non-zero, then divide the row $r$ by $c$, and use row operations to make all the other coefficients in the column for $\var_n$ zeros. 
+The basis is now the previous basis plus $\var_n$ minus $\var_b$ (and so $\var_b$ is now non-basic and $\var_n$ is now basic).
+Note that the matrix may not be triangular anymore; this is not required for the simplex algorithm.
+The simplex algorithm uses the cost function $c$ and the bounds $l_i$ and $u_i$ on variables to change the basis.
+Furthermore the simplex chooses the variables to ensures that $c$ will not be zero; if this is not the case, a zero coefficient means that a particular exchange is not possible.
+
+
+\end{document}

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC40F8DC-AA1F-4816-8E2D-18AC2B02E847}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ManyClousot</RootNamespace>
+    <AssemblyName>ManyClousot</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal9|AnyCPU'">
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Cci.MetadataModel">
+      <HintPath>..\ImportedCCI2\Microsoft.Cci.MetadataModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+      <Project>{d7e16b38-3893-4eef-847f-a3be807e9546}</Project>
+      <Name>System.CompilerCC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractInterpretation\Abstract Domains\Abstract Domains.csproj">
+      <Project>{510f44fc-18d0-484f-b2f7-f6a565354a8c}</Project>
+      <Name>Abstract Domains</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Analyzers\Analyzers.csproj">
+      <Project>{93b9248c-d3b5-4b05-9172-b9436e3c2a54}</Project>
+      <Name>Analyzers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clousot.Cache\Clousot.Cache.csproj">
+      <Project>{b3c2e776-3a69-4f9a-9434-c8bee3cd6a40}</Project>
+      <Name>Clousot.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClousotMain\ClousotMain.csproj">
+      <Project>{15d63d49-0aad-4eff-b6ff-8e9b9d3a7b0d}</Project>
+      <Name>ClousotMain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj">
+      <Project>{91b4c2f9-5cd7-47ce-bdca-1c1cf02d6605}</Project>
+      <Name>CodeAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeProviders\CCI1\CCI1.CodeProvider.csproj">
+      <Project>{297c2bd0-beb9-4f4c-9c0b-59021acd6b45}</Project>
+      <Name>CCI1.CodeProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeProviders\CCI2\CCI2.CodeProvider.csproj">
+      <Project>{a95e0f22-0b11-4a4b-a938-d060cb91dac8}</Project>
+      <Name>CCI2.CodeProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControlFlow\ControlFlow.csproj">
+      <Project>{c8af1b1d-3a71-40b7-9b40-5391b783d9d6}</Project>
+      <Name>ControlFlow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{35d2ef6d-ddb0-481b-a21d-9bd2634f503a}</Project>
+      <Name>DataStructures</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ManyClousot.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

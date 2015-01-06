@@ -1,0 +1,7 @@
+foreach($f in dir *.dll)
+{
+    write-host "** Analysis of $f"
+    write-host "   Started at $(get-date)"
+    .\repro.bat -warninglevel low -nobox  -nologo -bounds -nonnull $f
+    if($? -ne 'True') { $Failed++ }  
+}

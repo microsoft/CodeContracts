@@ -1,0 +1,76 @@
+// Package Command Bar Definition
+#include "stdidcmd.h"
+#include "vsshlids.h"
+#include "msobtnid.h"
+#include "pkgcmdid.h"
+#include "resource.h"
+
+#define _CTC_GUIDS_
+#include "guids.h"
+
+CMDS_SECTION GuidTaskManagerPackage
+    MENUS_BEGIN
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub0,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 0";
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub1,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 1";
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub2,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 2";
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub3,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 3";
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub4,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 4";
+    	GuidTaskManagerGroupRoot:menuTaskManagerSub5,	 GuidTaskManagerGroupRoot:groupTaskManagerRoot,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 5";
+
+    	GuidTaskManagerGroupSub0:menuTaskManagerSub00,	 GuidTaskManagerGroupRoot:groupTaskManagerSub0,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 00";
+    	GuidTaskManagerGroupSub0:menuTaskManagerSub01,	 GuidTaskManagerGroupRoot:groupTaskManagerSub0,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 01";
+
+    	GuidTaskManagerGroupSub1:menuTaskManagerSub10,	 GuidTaskManagerGroupRoot:groupTaskManagerSub1,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 10";
+    	GuidTaskManagerGroupSub1:menuTaskManagerSub11,	 GuidTaskManagerGroupRoot:groupTaskManagerSub1,   0xf000,  TEXTCHANGES | DYNAMICVISIBILITY,  "&Custom menu 11";
+    MENUS_END
+
+    NEWGROUPS_BEGIN
+      // NewGroup                                     Parent Group                            Priority
+      GuidTaskManagerGroupRoot:groupTaskManagerRoot, guidSHLMainMenu:IDM_VS_CTXT_ERRORLIST,	 0x0000;      
+      GuidTaskManagerGroupRoot:groupTaskManagerSub0, GuidTaskManagerGroupRoot:menuTaskManagerSub0, 0x0000;
+      GuidTaskManagerGroupRoot:groupTaskManagerSub1, GuidTaskManagerGroupRoot:menuTaskManagerSub1, 0x0000;
+      GuidTaskManagerGroupRoot:groupTaskManagerSub2, GuidTaskManagerGroupRoot:menuTaskManagerSub2, 0x0000;
+      GuidTaskManagerGroupRoot:groupTaskManagerSub3, GuidTaskManagerGroupRoot:menuTaskManagerSub3, 0x0000;
+      GuidTaskManagerGroupRoot:groupTaskManagerSub4, GuidTaskManagerGroupRoot:menuTaskManagerSub4, 0x0000;
+      GuidTaskManagerGroupRoot:groupTaskManagerSub5, GuidTaskManagerGroupRoot:menuTaskManagerSub5, 0x0000;
+
+      GuidTaskManagerGroupSub0:groupTaskManagerSub00, GuidTaskManagerGroupSub0:menuTaskManagerSub00, 0x0000;
+      GuidTaskManagerGroupSub0:groupTaskManagerSub01, GuidTaskManagerGroupSub0:menuTaskManagerSub01, 0x0000;
+
+      GuidTaskManagerGroupSub1:groupTaskManagerSub10, GuidTaskManagerGroupSub1:menuTaskManagerSub10, 0x0000;
+      GuidTaskManagerGroupSub1:groupTaskManagerSub11, GuidTaskManagerGroupSub1:menuTaskManagerSub11, 0x0000;
+    NEWGROUPS_END
+
+    BUTTONS_BEGIN
+      // Command                                  Parent Group                                    Priority    Image                           Type    Visibility                                                                               Text        
+      GuidTaskManagerGroupRoot:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerRoot, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustom1";	  
+      GuidTaskManagerGroupSub0:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub0, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub0";	  
+      GuidTaskManagerGroupSub1:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub1, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub1";	  
+      GuidTaskManagerGroupSub2:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub2, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub2";	  
+      GuidTaskManagerGroupSub3:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub3, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub3";	  
+      GuidTaskManagerGroupSub4:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub4, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub4";	  
+      GuidTaskManagerGroupSub5:cmdTaskManagerStart, GuidTaskManagerGroupRoot:groupTaskManagerSub5, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub5";	  
+    
+      GuidTaskManagerGroupSub00:cmdTaskManagerStart, GuidTaskManagerGroupSub0:groupTaskManagerSub00, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub00";	  
+      GuidTaskManagerGroupSub01:cmdTaskManagerStart, GuidTaskManagerGroupSub0:groupTaskManagerSub01, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub01";	      
+
+      GuidTaskManagerGroupSub10:cmdTaskManagerStart, GuidTaskManagerGroupSub1:groupTaskManagerSub10, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub10";	  
+      GuidTaskManagerGroupSub11:cmdTaskManagerStart, GuidTaskManagerGroupSub1:groupTaskManagerSub11, 0x0000,     guidOfficeIcon:msotcidNoIcon,   BUTTON, TEXTCHANGES | DYNAMICITEMSTART | DYNAMICVISIBILITY, "C&ustomSub11";	      
+    BUTTONS_END
+
+    BITMAPS_BEGIN
+    BITMAPS_END
+CMDS_END
+
+CMDUSED_SECTION
+CMDUSED_END
+
+CMDPLACEMENT_SECTION
+CMDPLACEMENT_END
+
+VISIBILITY_SECTION
+VISIBILITY_END
+
+KEYBINDINGS_SECTION
+KEYBINDINGS_END
+

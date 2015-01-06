@@ -1,0 +1,438 @@
+\documentclass{llncs}
+
+\usepackage{fancyvrb}
+\usepackage{listings}
+\include{Packages}
+\include{DefinizioniFrancesco}
+
+
+\usepackage{algorithm2e}
+
+\newcommand\codefamily\ttfamily
+\lstset{language={[Sharp]C},mathescape=false,flexiblecolumns=true,morekeywords={Contract},basicstyle=\codefamily\small,moredelim=[is][\itshape]{@}{@},captionpos=b,numberstyle=\tiny,stepnumber=1,numbersep=2pt,keywordstyle=\bfseries}
+
+\newcommand{\labelFig}[1]{\label{fig:#1}}
+\newcommand{\labelfig}[1]{\label{fig:#1}}
+
+\newcommand{\refEq}[1]{(\ref{eq:#1})}
+\newcommand{\refSec}[1]{\refSect{#1}}
+\newcommand{\refAlg}[1]{Algorithm~\ref{alg:#1}}
+
+
+\newcommand{\Pre}[1]{\mathcal{I}(#1)}
+
+\newcommand{\cccheck}{\texttt{cccheck}}
+\newcommand{\verifyOne}[1]{\cccheck(#1)}
+\newcommand{\verify}[2]{\cccheck(#1, \mathbf{out}\ #2)}
+
+\title{On the Inference of Necessary Field Conditions with Abstract Interpretation}
+
+\author{Mehdi Bouaziz, Francesco Logozzo, Manuel F{\"a}hndrich}
+\institute{Microsoft Research, Redmond, WA (USA)}
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present a new static analysis to infer necessary field conditions for object-oriented programs.
+A necessary field condition is a property that should hold on the fields of a given object, otherwise it exists a context leading the object in a bad state.
+Our analysis also infers the provenance of the necessary condition, so that if a necessary field condition is violated then it produces the sequence of method calls leading to a failing assertion. 
+
+When the analysis is restricted to readonly fields, \emph{i.e.}, fields that can only be set in the initialization phases of the object,  it infers object invariants.
+Inference of object invariants for readonly fields was the \#1 feature request from \cccheck\ users, our static analyzer for .NET based on abstract interpretation.
+\end{abstract}
+
+\section{Introduction}
+The verification of object-oriented programs relies on the concept of \emph{object invariant} (sometimes called, with an abuse, class invariant)~\cite{eiffel}.
+An object invariant is a property on the object fields that holds in the \emph{steady} states of the object.
+An enourmous amount of research has been conducted to characterize \emph{when} the object invariant can be assumed and when it should be checked~\cite{DrossopoulouEtAl08}.
+Orthogonally, some static analyses have been developed to infer object-invariants when those points are known, \emph{e.g.} \cite{LogozzoPhD04}.
+Those analyses over-approximate the strongest object invariant which at its turn over-approximates the trace-based object  semantics~\cite{LogozzoPhD04}
+
+In this paper we tackle the problem of inferring \emph{necessary} conditions on the object-invariants, \emph{i.e.} conditions on the object fields that should necessarly hold, at the price of the existance of an instantiation context causing the object to reach an erroneous (failing) state.
+Necessary object invariants differentiate from ``usual'' object invariants in that they do not focus on what the object effectively \emph{does}, but on what the object \emph{should do}.
+In a way, they can be seen as an under-approximation of the object concrete semantics.
+
+\begin{figure}[th]
+\begin{lstlisting}
+public class Person
+{
+  private readonly string Name;
+  private readonly JobTitle JobTitle;
+
+  public Person(string name, JobTitle jobTitle)
+  {
+    Contract.Requires(jobTitle != null && name != null);
+
+    this.Name = name;
+    this.JobTitle = jobTitle;
+  }
+
+  public string GetFullName()
+  {
+    if (this.JobTitle != null)
+      return string.Format("{0} ({1})", 
+       PrettyPrint(this.Name), 
+       this.JobTitle.ToString()));
+
+    return PrettyPrint(this.Name);
+  }
+
+  public int BaseSalary()
+  {
+    return this.JobTitle.BaseSalary;
+  }
+
+  public string PrettyPrint(string s)
+  {
+    Contract.Requires(s != null);  
+    // ...
+  }
+}
+\end{lstlisting}
+\caption{The running example}
+\labelFig{example}
+\end{figure}
+
+\section{Motivation}
+Let us consider the code in~\refFig{example}.
+A \code{Person} object contains two private fields, the name of the person and his job title.
+The C\#\ \code{readonly} marker specifies that those fields can only be assigned inside the constructors.
+The method \code{GetFullName} returns a string with the name of the person and the job title, if any.
+The method \code{BaseSalary} returns the base salary for the job title of the given person.
+
+
+\subsection{Method-level analysis}
+\label{sec:methodlevelanalysis}
+A method-level modular analysis of \code{Person} will analyze each constructor/method in isolation.
+At the entry point, it will assume the precondition and the object invariant.
+At the exit point, it will assert the postcondition and the object invariant.
+In our simple example the object invariant is empty.
+The analysis  reports $3$ possible non-null dereferences.
+In the method \code{GetFullName}, the field \code{Name} may be null, violating the precondition of \code{PrettyPrint}.
+in the method \code{BaseSalary} the field \code{JobTitle} may be null (in \code{GetFullName},  \code{JobTitle} is checked before being dereferenced). 
+This  is a \emph{false} warnings as both fields are initialized to non-null values in the constructor, and the semantics of the language guarantees that they cannot be modified anymore.
+
+The usual solution to this problem is to ask the user to manually provide the object invariant.
+This is for instance the approach of tools like ESC/Java~\cite{ESCJava,ChalinEtAl-FMCO05} or Krakatoa~\cite{FilliatreMarche:CAV07}.
+The advantage is that the provided invariant can be used as documentation, as it clearly states the user intent.
+The drawback is that it may lead to too many annotations, quickly overwhelming the programmer.
+
+\subsection{Class-level modular analysis}
+\label{sec:overappr}
+
+A class-level modular analysis~\cite{Logozzo03} exploits the information that the methods are executed after the constructor to improve precision.
+The main insight is that an object invariant can be given a fixpoint characterization as follows:
+\begin{equation}
+I = \bigsqcup_{\code{c} \in \mathit{Constrs}}\asem{c}  \sqcup \bigsqcup_{\code{m} \in \mathit{Methods}}  \asem{m}(I),
+\label{eq:objInv}
+\end{equation}
+\emph{i.e.}, an object invariant is a property that holds after the execution of the constructors and before and after the execution of the public methods\footnote{Here for simplicity we omit the treatement of aliasing, of inheritance, of the projection operators, and of method calls. The interested reader can find the extension of~\refEq{objInv} for the  treatment of those features in~\cite{LogozzoPhD04}.}.
+Once we fixed an abstract domain \adom{A}, the equation~\refEq{objInv} can be solved with standard fixpoints techniques.
+A widening operator may be required to enforce the convergence of the iterations.
+
+In our example, we let \adom{A} be the non-nullness abstract domain~\cite{FahndrichLeino03}.
+At the first iteration, the analysis  infers that \code{JobTitle} and \code{Name} are not null at the exit of the constructor:
+\[
+I_0 = \langle \code{Name} \mapsto \mathsf{NN}, \code{JobTitle} \mapsto \mathsf{NN} \rangle.
+\] 
+The analysis then propagates  $I_0$ at the entry point of the two methods:
+\[
+\asem{GetFullName}(I_0) = \asem{BaseSalary}(I_0) = I_0
+\]
+so that $I_0$ is an object invariant.
+It is easy to see that $I_0$ is the \emph{strongest} state-based invariant for \code{Person}.
+Using the invariant $I_0$ a static analyzer can prove the safety of all the field dereferences in the class.
+
+\subsection{Drawbacks of Class-level modular analysis}
+
+In general a class-level modular analysis  is brittle.
+We identify two main source of brittlness.
+The first one has to do with the adding of new class members (constructors, methods).
+The second one is due on what it is known on the parameters of the constructors.
+
+\subsubsection{Adding of new class members}
+Suppose that a new constructor is added to the class as follows:
+
+\begin{lstlisting}
+public Person(string name)
+{
+  Contract.Requires(name != null);
+
+  this.Name = name;
+ }
+\end{lstlisting}
+Let us call the modified class \code{Person'}.
+The field \code{JobTitle} is not assigned in the constructor, and it gets the default value \code{null}.
+The \C\# compiler does not issue any warning: it is perfectly legal to \emph{not} assign a field (even if marked as  readonly) in the constructor.
+
+The class-level modular analysis  should now consider that there are two constructors, and hence two ways of initializing the object.
+The object state after the constructors invocation is:
+\[
+\begin{split}
+J^0_0 & = \asem{Person(string, JobTitle)} = \langle \code{Name} \mapsto \mathsf{NN}, \code{JobTitle} \mapsto \mathsf{NN} \rangle \\
+J^1_0 & = \asem{Person(string)} = \langle \code{Name} \mapsto \mathsf{NN}, \code{JobTitle} \mapsto \mathsf{T} \rangle \\
+J_0   & = J^0_0 \sqcup J^1_0 = J^1_0.
+\end{split}
+\] 
+The analysis of the methods yields:
+\[
+\begin{split}
+J^0_1 & = \asem{GetFullName}(J_0) = \langle \code{Name} \mapsto \mathsf{NN}, \code{JobTitle} \mapsto \mathsf{T} \rangle \\
+J^1_1 & = \asem{BaseSalary}(J_0) = \langle \code{Name} \mapsto \mathsf{NN}, \code{JobTitle} \mapsto \mathsf{NN} \rangle \\
+J_1   & = J^0_0 \sqcup J^1_0 = J_0.
+\end{split}
+\] 
+It is easy to see that $J_0$ is the strongest state-based object invariant for the modified class \code{Person'}.
+
+The analysis verifies the field dereferences in \code{GetFullName}: the explicit check for \code{JobTitle} nullness ensures that the successive access is correct.
+On the other hand, the analysis now issues a warning for the dereference of \code{JobTitle} in \code{BaseSalary}.
+Please note that the alarm this time is no more a false warning, but a symptom for a real defect in the code.
+However, \emph{which} is the real origin of this problem?
+Who should be blamed? 
+Was the original class correct?
+In the first version of \code{Person}, the verification of \code{BaseSalary} was it just a lucky incident? 
+The programmer was protecting against \code{JobTitle} being null in \code{GetFullName}, but she forgot to do so in the other method.
+The static analysis was smart enough to prove that the field \code{JobTitle} was always not-null.
+But was it the intent of the programmer?
+If the programmer wanted \code{JobTitle} to be not-null, then we should emit the warning in the new version of the class  where the field is assigned  a null value (\emph{i.e.}, the constructor).
+If, on the other hand, the programmer allowed \code{JobTitle} to be null, then we should emit the warning where the field is dereferenced (\emph{i.e.}, \code{BaseSalary}), and we should produce an inter-procedural trace leading to the alarm.
+
+\subsubsection{Initial state of constructors}
+Suppose that in the example of~\refFig{example} the precondition for the $\code{Person(string, string)}$ was omitted or deleted.
+Call the resulting class \code{Person''}.
+Then the object fields can be assigned \code{null} so that~\refEq{objInv} is $\mathsf{T}$.
+As a consequence the analysis cannot prove anymore the safety of the field dereference in~\code{Person}, and it emits a warning in that method.
+While the analyzer is correct in pointing out that dereference, because that is the point where the runtime error will occur, the \emph{real} error is in the constructor where the programmer has not protected her implementation from having \code{jobTitle} to be a null value.
+Catching this kind of weakness in realistic and large classes it is in general very difficult.
+
+
+\subsection{Necessary object invariants}
+In general, an apparently innocent and harmless code addition as a new constructor caused a warning in a piece of code that was previously verified.
+Adding new constructors or  new methods may cause the object invariant to be weaker, hence causing the analysis to emit alarms in many places that are apparently unrelated with the changes.
+Debugging those problems can be very painful for the user: it is hard from~\refEq{objInv} to trace back the origin of a warning.
+In a  realistic setting, a class definition may contain tenths of methods, some of them with a complex control flow graph.
+Furthermore, the underlying abstract domain used by the analyzer is pretty complex - in general, the reduced product many abstract domains, \emph{e.g.} alias, numerical, symbolic, arrays ...
+As a consequence, the object invariant inferred according to~\refEq{objInv}  may not be immediately evident to the user.
+Pretty-printing the inferred invariant is of little help.
+The user should understand why the tool inferred the object invariant, and how it used it to prove the assertions in the previous version of the class.
+Then, it should look at the newly inferred invariant, understand why it is different from the previous one, \emph{i.e.}, which is the root cause of  the alarm.
+In real code this process is time consuming, and it requires the user to have some expertise on the internals of the analyzer that we want to avoid.
+
+We propose a different approach to the object-invariant inference problem.
+We detect conditions that \emph{should} hold on the object fields otherwise it \emph{exists} an instantiation context for the object which lead the object to a failing (bad) state. 
+Those conditions are \emph{necessary} for the object correctness. 
+Technically, instead of performing a forward analysis as in~\refEq{objInv} we perform a goal-directed backward inter-procedural propagation of potentially failing assertions.
+By proceeding backwards, we can infer an abstract error trace, producing a more meaningful message for the user.
+We illustrate our technique with the \code{Person}  example.
+We have implemented the technique in our abstract interpretation-based static analyzer for .NET, \cccheck~\cite{FahndrichLogozzo10}.
+
+In the original class \code{Person}, we first run a method-level separate modular analysis of the methods, assuming the object invariant to be $\mathsf{T}$.
+\cccheck\ will report the warnings as in~\refSec{methodlevelanalysis}.
+Using the techniques of~\cite{CousotCousotLogozzo11} we try to infer preconditions by pushing the violating assertion at the entry point.
+We get the two conditions on the entry state:
+\[
+\begin{split}
+\Pre{\code{GetFullName}} & = \code{this.Name != null} \\
+\Pre{\code{BaseSalary}}  & = \code{this.JobTitle != null}.
+\end{split}
+\]
+The conditions are necessary  for the correctness of the method: if violated, an error will definitely occur.
+They are also sufficient: if the hold at entry, then no error will appear at runtime.
+However, they cannot be made \emph{pre-}conditions as they violate the visibility rules of the language: a precondition cannot be less visible than the enclosing method~\cite{eiffel}.
+The two fields are \emph{private} to the object, but the conditions are on the entry of \emph{public} methods.
+Nevertheless, there is no way for the client to satisfy  the conditions \emph{on call}.
+The  conditions are internal to the object, but they should hold whenever the respective method is called.
+In particular, they should hold just after the object construction, \emph{i.e.}, just after the constructor is done.
+Our analysis pushes them at the \code{Person(string, JobTitle)} exit point as postconditions that should now be established by the constructor.
+The analyzer  can easily prove the two assertions (they follow from the constructor precondition).
+As the fields are marked as readonly, their value cannot be changed by the methods, and so 
+\[
+\Pre{\code{GetFullName}} \wedge \Pre{\code{BaseSalary}}
+\]
+is an object invariant.
+Overall, no warning is raised for \code{Person}.
+
+In \code{Person'}, the conditions $\Pre{\code{GetFullName}}$ and $\Pre{\code{BaseSalary}}$ are propagated backwards to both constructors.
+In the newly added constructor, the assertion $\code{this.JobTitle != null}$ is  definitely false.
+\cccheck\ emits an alarm pointing to the  newly added constructor (instead of the field dereference in \code{BaseSalary} as in \refSect{overappr}).
+Furthermore, \cccheck\ produces an error \emph{trace}: the sequence of calls  $\langle \code{Person'}(s), \code{BaseSalary} \rangle$, for any  $s$ will drive the object in a bad state.
+
+In \code{Person''}, the conditions are propagated to the constructor.
+Any of the conditions is satisfied by the constructor at the exit point: both $\code{this.Name}$ and $\code{this.JobTitle}$ can be null.
+The analysis pushes the failing assertions to the constructor entry, as preconditions:
+\[
+\code{name != null} \&\& \code{jobTitle != null}.
+\]
+It also infers a provenance trace: violating the first (second) condition will expose to a failure in \code{GetFullName} (\code{BaseSalary}). 
+
+\section{Preliminars}
+
+A class is a triple $\langle  \code{F}, \code{C}, \code{M}, \code{I}_\code{F}  \rangle$, where $\code{F}$ is a set of fields,   $\code{C}$ is a set of  object constructors,   $\code{M}$ is a set of methods, and $\code{I}_\code{F}$ is an object invariant,.
+A field $\code{f} \in \code{F}$ has a type, a visibility modifier \code{private} or \code{public}, and an optional \code{readonly} flag specifying if the
+ field can be assigned only in constructors.
+We refer to constructors and methods as members ($\code{f} \in \code{C} \cup \code{M}$).
+Each member has a signature (return type, parameter types), a visibility modifier \code{private} or \code{public}, a body $\code{b}_\code{f} \in \mathbb{S}$ , an optional precondition $\code{Pre}_\code{f}$, and an optional postcondtion $\code{Post}_\code{f}$.
+When clear from the context, we omit the subscript for the member from the body, the precondition and the postcondition.
+The optional object invariant $\code{I}_\code{F}$ is a property only on the fields in $\code{F}$.
+Preconditions, postconditions, and object invariant are collectively called contracts.
+We assume the contracts  are expressed in a side-effect free language $\mathbb{B}$.
+For the sake of simplicity, we focus our attention on private fields and public constructor and methods.
+It is difficult to state an object invariant on public fields (preconditions and postconditions are better suited for it) and private methods do not contribute to the object invariant.  
+Here we do not consider inheritance.
+
+Let $\Sigma$ be a set of states and $\tau \in \parti{\Sigma \times \Sigma}$ be the transition function.
+The partial-traces semantics of the body \code{b} of a member is 
+\[
+\tau_\code{b}^+(S) = \mathsf{lfp} \lambda T.\ S \cup \{ \sigma_0 \dots \sigma_n \sigma_{n+1} \mid \sigma_0 \dots \sigma_n \in T \wedge \tau(\sigma_n, \sigma_{n+1}) \}.
+\]
+The concretization function $\gamma_\mathbb{B} \in \mathbb{B} \rightarrow \parti{\Sigma}$ gives the semantics of a contracts in terms of set of states $\Sigma$.
+The initial states for the execution of a member are $S_0 = \gamma_\mathbb{B}(I_\code{F}) \cap  \gamma_\mathbb{B}(\code{Pre})$.
+The partial-traces semantics of a member is $\tau_\code{b}^+(S_0)$.
+The bad states $B$ are the ones violating some code or language assertions ($B_s \subseteq \Sigma$), or the postconditions: $B = B_s \cup \gamma_\mathbb{B}(\code{!Post})$.
+The finite bad traces are those that contain at least one bad state: $B^* = \{ \sigma_0 \dots \sigma_n \in \Sigma^* \mid \exists i \in [0, n]. \sigma_i \in B\}$.
+The good runs of a member from $S \subseteq S_0$ are $\mathcal{G}(\code{b}, S) = \tau_\code{b}^+(S) \cap (\Sigma^* \setminus B^*)$.
+Dually, the bad runs of a member  from $S \subseteq S_0$ are $\mathcal{B}(\code{b}, S) = \tau_\code{b}^+(S) \cap  B^*$.
+
+We assume  an abstract domain $\mathcal{A}$ soundly approximating the set of states, \emph{i.e.} $\langle \mathcal{A}, \sqsubseteq \rangle \galois{\alpha}{\gamma} \langle \parti{\Sigma}, \subseteq \rangle$ ~\cite{CousotCousot77}.
+When $\ael{a} \in \mathcal{A}$ is such that if $S_0 \subseteq \gamma(\ael{a})$ then the abstract semantics $\asem{\code{b}}(\ael{a}) \in \mathcal{A}$ overapproximates $\tau_\code{b}^+(S_0)$.
+We also assume a mapping $\mu \in \mathcal{A} \rightarrow \mathbb{B}$ converting abstract elements into side-effect free formulae.
+
+In~\cite{CousotCousotLogozzo11} we defined the problem of  necessary initial conditions inference as finding an initial condition $\code{e} \in \mathbb{B}$ such that: 
+\[
+\begin{split}
+\mathcal{G}(\code{b}, \gamma_\mathbb{B}(\code{e}) \cap S_0) & = \mathcal{G}(\code{b}, S_0) \\
+\mathcal{B}(\code{b}, \gamma_\mathbb{B}(\code{e}) \cap S_0) & \subseteq \mathcal{B}(\code{b}, S_0),
+\end{split}
+\]
+\emph{i.e.}, \code{e} is a condition at  the entry of \code{b} such that: (i) all good runs are preserved; and (ii) only bad runs are eliminated.
+Please note that the problem is different from the inference of the weakest (liberal) preconditions, which imposes that \emph{all} the bad traces are eliminated.
+For instance, a trivial solution to our problem is $\code{e} = \code{true}$, but $\code{true}$ is not (in general) a solution of $\lambda X. X \Longrightarrow\mathsf{wlp}(\code{b}, \code{Post})$.
+
+Cousot, Cousot and Logozzo~\cite{CousotCousotLogozzo11}  presented several static analyses $\Pre{\code{b}} \in \mathcal{A} \rightarrow \mathbb{B}$ to infer non-trivial initial necessary conditions, parameterized by the  abstract domain $\mathcal{A}$.
+Those analyses are more or less precise. 
+They can discover simple predicates (\emph{e.g.}, \code{x != null}), disjunctive conditions (\emph{e.g.}, \code{x \leq 0 || 0 < y}), or quantified conditions over collections (\emph{e.g.}, $\forall i. 0 \leq \code{arr}[i]$ or $\exists i. \code{arr}[i] = 123$).
+The common idea behind the analyses of~\cite{CousotCousotLogozzo11} is to find a Boolean expression \code{e}, in terms of the member entry point values such that if \code{e} is violated at the entry point, for an assertion~\code{a}  will later definitely fail (up to non-termination).
+We denote this relation as $\code{e} \leadsto \code{a}$.
+We do not repeat the analyses here,  leaving them as a parameter of our necessary object fields conditions analysis.
+
+\begin{algorithm}[t]
+\DontPrintSemicolon
+  \SetKw{Continue}{continue}
+  \SetKw{Return}{return}
+  \KwResult{A necessary condition $\mathcal{I}^*$ on object fields}
+  \BlankLine
+  \While{true}
+        {         
+          $\phi$ $\leftarrow$ \code{true}\;
+          \BlankLine
+          \ForEach{$\code{m} \in \code{M}$}{
+            \If(// Strengthen the precondition and the invariant){$!\verify{\code{m}}{\ael{a}}$}
+               {
+                 $\langle \phi_p, \phi_I \rangle$ $\leftarrow$ $\pi_2(\Pre{\code{m}}(\ael{a}))$ \;
+                 $\code{Pre}_\code{m}$ $\leftarrow$ $\code{Pre_\code{m}} \wedge \phi_P$\;
+                 $\phi$ $\leftarrow$ $\phi \wedge \phi_I$
+               }
+          }            
+          
+          \If{$\phi = \code{true}$} { \Return $\code{I_\code{F}}$} 
+          \Else{$\code{I_\code{F}}$ $\leftarrow$ $\code{I_\code{F}} \wedge \phi$}
+        }
+          \ForEach{$\code{c} \in \code{C}$}{
+            \If(// Strengthen the precondition){!$\verify{\code{c}}{\ael{a}}$}
+               {
+                 $\code{Pre_\code{c}}$ $\leftarrow$  $\code{Pre_\code{c}} \wedge \pi_1(\Pre{\code{c}}(\ael{a}))$
+               }
+          }
+\caption{The necessary field conditions inference algorithm. The algorithm can be easily instrumented to trace the provenance of the $\phi$s appearing in $\mathcal{I}^*$ and hence to construct a failing context.}
+\label{alg:necessaryConditions}
+ \end{algorithm}
+
+\section{Inference of necessary conditions on object fields}
+
+The verification of a member \code{f}, $\verify{\code{f}}{\ael{a}}$ works in two steps: (i) first analyze the method to infer invariants at each internal program point - call it $\ael{a}$; (ii) use the inferred invariants to prove the assertions. 
+The member precondition and the postconditions of the called functions are turned into assumptions (nothing to be proven).
+The member postcondition, the object invariant and the preconditions of the called functions are turned into assertions (they should be proven).
+For methods only, the object invariant is assumed at the entry point.
+
+If no alarm is raised, \emph{i.e.}, the member has been verified there is nothing to do.
+Otherwise, \cccheck\ tries to infer an initial condition.
+The necessary initial condition for a member \code{f} is $\mathcal{I}_0 = \Pre{\code{f}}(\ael{a})$.
+If $\mathcal{I}_0 \equiv \code{true}$ we are done: there is no way to push any of the failing assertions to the entry point.
+
+If \code{f} is a constructor, then $\mathcal{I}_0$ contains predicates on parameters, on the  public fields reachable from the parameters, or on private fields of an object of the same type as \code{f}.
+
+In the first two cases, $\mathcal{I}_0$ can be made a precondition of \code{f}.
+We denote by $\phi_P = \pi_1(\mathcal{I}_0)$ the components of $\mathcal{I}_0$ that are valid preconditions.
+Note that $\phi_P$ does not guarantees the \emph{safety} of \code{f} (\emph{e.g.},  if \code{f} contains loops or the $\mathcal{I}$ does not infer disjunctive conditions).
+The safety of the constructor can be checked by re-running the verification with the new precondition: $\verifyOne{\code{f}[\code{Pre} \mapsto \code{Pre}_\code{f} \wedge \phi_P]}$.
+
+In the last case, when an object of the same type of the type \code{f} belongs to, we leave the warning, and we point out to the user the assumption she is doing on the private field of a different object, suggesting a refactoring.
+
+If \code{f} is a method then there is a fourth case for $\mathcal{I}_0$: it may cointain some condition $\phi_I$ on the private field of \code{this} object.
+The condition $\phi_I$ cannot be made a precondition of \code{f} as a precondition less visible than the enclosing member is denied by the Design by Contracts methodology (there is no way for the client to satisfy the client)\footnote{Remember that we are only considering public methods. If the method was private, then the condition could have been made a precondition.}. 
+Nevertheless, $\phi_I$ is a necessary condition on the object fields, which should hold whenever the method is invoked.
+In particular, it is a condition that should hold just after any of the constructors $\code{c}$ or any of the (public) methods $\code{m}$ is executed.
+Also, it should hold before the execution of any method $\code{m}$: otherwise we can construct a context where the call to \code{m} is replaced by a call to \code{f}, and we know by construction that invoking \code{f} with $\code{!}\phi_I$ definitely will causes a failure (up to termination).
+Therefore we can strenghten the object invariant to $\code{I}_\code{F} \mapsto \code{I}_\code{F} \wedge \phi_I$, and repeat the analysis of all the class members.
+We denote by $\langle \phi_p, \phi_I \rangle = \pi_2(\mathcal{I}_0)$ the pair containing the new precondition for \code{f} and the necessary condition on the object field.
+
+For each new condition  $\phi$ added to the object invariant we can remember its provenance (the failing assertion and the including member).
+In general, we can generate a  provenance chain $\code{a}_{n} \leadsto \code{a}_{n-1}  \leadsto \dots  \code{a}_0$.
+Suppose that $\code{a}_n$ is an assertion in one of the object constructors.
+By construction we know (up to termination) that if $\code{a}_n$ is violated, then we can construct a sequence of public method calls (the ones containing the assertions $\code{a}_i, i \in [0, n]$) causing $\code{a}_0$ to fail at runtime.
+Therefore, we can produce more meaningfull warnings to the user by pointing out the assertion  $\code{a}_{n}$ and the sequence of public method calls that will lead to an assertion failure at runtimeif $\code{a}_n$ is violated.
+
+The~\refAlg{necessaryConditions} formalizes what said above.
+It computes a greatest fixpoint on $\mathbb{B} \times (\code{C} \rightarrow \mathbb{B}) \times (\code{M} \rightarrow \mathbb{B})$.
+The partial order is the pointwise lifting of the logical implication $\Rightarrow$.
+Please note that the algorithm  may not terminate so that a widening may be needed for the convergence. 
+A simple widening is to limit the number of iterations.
+The algorithm can be optimized using Gauss-Seidl chaotic iterations~\cite{Cousot77}, \emph{i.e.}, by strengthening $\code{I}_\code{F}$ after the analysis of each  method.
+It is easy to modify it to track the origin of the assertions.
+The object condition is in conjunctive form: $\phi_I = \phi^0_I \wedge \dots \wedge \phi^{n}_I$.
+By properties of $\mathcal{I}$, each $ \phi^i_I, i \in [0, n]$ originates by some assertion $\code{a}$ that cannot be proven: $\exists \code{a}.\ \code{a} \leadsto \phi^i_I$.
+At its turn, $\code{a}$ may be some inferred condition with some provenance, and so on, effectively building a provenance chain.
+We denote by $\mathcal{I}^*$ the condition computed by the algorithm.
+
+
+
+\section{Object invariants for readonly fields}
+
+The predicate $\mathcal{I}^*$ inferred by the~\refAlg{necessaryConditions}  is a necessary condition on the object fields. 
+It states a condition that should hold on the object fields otherwise it exists a context that can drive the object in a bad state.
+
+In general, we need an additional checking step to see whether $\mathcal{I}^*$ ensures the object safety, and to check it is an object invariant.
+Checking if $\mathcal{I}^*$ is an object invariant, requires chosing a particular methodology for object invariants validity.
+Those programming  methodologies define at which program points the object invariant holds, and which aliasing containment policy is assumed and enforced.
+Different tools adopt different policies (\emph{e.g.}, \cccheck, Spec\#~\cite{SpecSharp}, jStar~\cite{jstar} or Veri\-Fast~\cite{Verifast}).
+The programming methodology is an orthogonal issue to the present paper, that we do not consider here.
+
+If we restrict ourselves to \code{readonly} fields then we can skip the extra-checking phase and speed-up the fixpoint computation of~\refAlg{necessaryConditions}. 
+A field marked as readonly can only be set: (i) in the field declaration or; (ii)  in one of the constructors of the class the field belongs to~\cite{cSharp}.
+The assignment to a readonly field is not compulsory. 
+If a readonly field is not initialized, it gets the default value (\emph{e.g.}, \code{null} for heap objects).
+A readonly field is different from a \emph{constant} field in that it is not a compile time constant.
+
+The algorithm for the inference of object invariants for readonly fields differs from~\refAlg{necessaryConditions} in the way the inferred necessary conditions for the methods are selected:
+\[
+\langle \phi_p, \phi_I, \phi_A  \rangle  = \pi_3(\Pre{\code{m}}(\ael{a})).
+\]
+The function $\pi_3 \in \mathbb{B} \rightarrow \mathbb{B}^3$ partitions the inferred conditions according to visibility rules.
+The precondition  $\phi_P$  contains only variables as visibible as the method.
+The readonly object invariant   $\phi_I$ contains only readonly fields of \code{this} object.
+Finally the input assumption $\phi_A$  contains  conditions necessary for the method correctness, which violates the visibility rules, \emph{e.g.}, mixing private and publicy visible variables.
+
+It is easy to see that $\mathcal{I}^*$ is an invariant on object fields, no matter which framework for object invariants validity is chosen.
+The initial, user-provided condition $I_\code{F}$ is an invariant. 
+All the successive additions are properties on readonly fields that should hold at the end of the constructor, and by language semantics cannot be further changed.
+
+
+\section{Experiments}
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

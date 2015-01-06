@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="testbinarysearch" storage="c:\cci\microsoft.research\regressiontest\basic\testbinarysearch\testbinarysearch.generictest" id="a74c32b8-3d75-4a6c-bcdd-c2c4a893ee95" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="ba966465-34ef-4e4d-b12d-9dacb062fc9b" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -Bounds TestBinarySearch.dll -show unreached" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\CCI\TestResults\logozzo_LOGOZZO3 2010-01-12 14_49_43\In\LOGOZZO3\ba966465-34ef-4e4d-b12d-9dacb062fc9b" />
+      <EnvironmentVariable name="testlocation" value="c:\cci\microsoft.research\regressiontest\basic\testbinarysearch" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

@@ -1,0 +1,72 @@
+FELTDIR = ..\..\..\CCICodeBox
+#CONFIG = Release
+CONFIG = Debug
+
+move:
+	sd edit *
+	copy $(FELTDIR)\Samples\AsmMeta\bin\$(CONFIG)\asmmeta.exe .
+	copy $(FELTDIR)\Samples\AsmMeta\bin\$(CONFIG)\asmmeta.pdb .
+
+	copy $(FELTDIR)\Samples\CCDoc\bin\$(CONFIG)\CCDoc.exe .
+	copy $(FELTDIR)\Samples\CCDoc\bin\$(CONFIG)\CCDoc.pdb .
+	copy $(FELTDIR)\Samples\CCDoc\bin\$(CONFIG)\CCDoc.exe.config .
+
+	copy $(FELTDIR)\Samples\Foxtrot\bin\$(CONFIG)\Foxtrot.exe .
+	copy $(FELTDIR)\Samples\Foxtrot\bin\$(CONFIG)\Foxtrot.pdb .
+
+	copy $(FELTDIR)\Converters\NewILToCodeModel\bin\$(CONFIG)\Microsoft.Cci.NewILToCodeModel.dll
+	copy $(FELTDIR)\Converters\NewILToCodeModel\bin\$(CONFIG)\Microsoft.Cci.NewILToCodeModel.pdb
+
+	copy $(FELTDIR)\CoreObjectModel\CodeModel\bin\$(CONFIG)\Microsoft.Cci.CodeModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\CodeModel\bin\$(CONFIG)\Microsoft.Cci.CodeModel.pdb .
+
+	copy $(FELTDIR)\Converters\CodeModelToIL\bin\$(CONFIG)\Microsoft.Cci.CodeModelToIL.dll .
+	copy $(FELTDIR)\Converters\CodeModelToIL\bin\$(CONFIG)\Microsoft.Cci.CodeModelToIL.pdb .
+
+	copy $(FELTDIR)\Converters\ContractExtractor\bin\$(CONFIG)\Microsoft.Cci.ContractExtractor.dll .
+	copy $(FELTDIR)\Converters\ContractExtractor\bin\$(CONFIG)\Microsoft.Cci.ContractExtractor.pdb .
+
+	copy $(FELTDIR)\CodeGenerators\ControlAndDataFlowGraph\bin\$(CONFIG)\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll .
+	copy $(FELTDIR)\CodeGenerators\ControlAndDataFlowGraph\bin\$(CONFIG)\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.pdb .
+
+	copy $(FELTDIR)\Converters\ILGenerator\bin\$(CONFIG)\Microsoft.Cci.ILGenerator.dll .
+	copy $(FELTDIR)\Converters\ILGenerator\bin\$(CONFIG)\Microsoft.Cci.ILGenerator.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\MetadataHelper\bin\$(CONFIG)\Microsoft.Cci.MetadataHelper.dll .
+	copy $(FELTDIR)\CoreObjectModel\MetadataHelper\bin\$(CONFIG)\Microsoft.Cci.MetadataHelper.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\MetadataModel\bin\$(CONFIG)\Microsoft.Cci.MetadataModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\MetadataModel\bin\$(CONFIG)\Microsoft.Cci.MetadataModel.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\MutableMetadataModel\bin\$(CONFIG)\Microsoft.Cci.MutableMetadataModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\MutableMetadataModel\bin\$(CONFIG)\Microsoft.Cci.MutableMetadataModel.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\MutableCodeModel\bin\$(CONFIG)\Microsoft.Cci.MutableCodeModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\MutableCodeModel\bin\$(CONFIG)\Microsoft.Cci.MutableCodeModel.pdb .
+
+	copy $(FELTDIR)\PEReaderAndWriter\PEReader\bin\$(CONFIG)\Microsoft.Cci.PEReader.dll .
+	copy $(FELTDIR)\PEReaderAndWriter\PEReader\bin\$(CONFIG)\Microsoft.Cci.PEReader.pdb .
+
+	copy $(FELTDIR)\PEReaderAndWriter\PEWriter\bin\$(CONFIG)\Microsoft.Cci.PeWriter.dll .
+	copy $(FELTDIR)\PEReaderAndWriter\PEWriter\bin\$(CONFIG)\Microsoft.Cci.PeWriter.pdb .
+
+	copy $(FELTDIR)\PDBReaderAndWriter\PdbReader\bin\$(CONFIG)\Microsoft.Cci.PdbReader.dll .
+	copy $(FELTDIR)\PDBReaderAndWriter\PdbReader\bin\$(CONFIG)\Microsoft.Cci.PdbReader.pdb .
+
+	copy $(FELTDIR)\PDBReaderAndWriter\PdbWriter\bin\$(CONFIG)\Microsoft.Cci.PdbWriter.dll .
+	copy $(FELTDIR)\PDBReaderAndWriter\PdbWriter\bin\$(CONFIG)\Microsoft.Cci.PdbWriter.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\SourceModel\bin\$(CONFIG)\Microsoft.Cci.SourceModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\SourceModel\bin\$(CONFIG)\Microsoft.Cci.SourceModel.pdb .
+
+	copy $(FELTDIR)\Converters\RoslynToCodeModel\bin\$(CONFIG)\RoslynToCodeModel.exe .
+	copy $(FELTDIR)\Converters\RoslynToCodeModel\bin\$(CONFIG)\RoslynToCodeModel.pdb .
+
+	copy $(FELTDIR)\SourceEmitters\CSharpSourceEmitter\bin\$(CONFIG)\Microsoft.Cci.CSharpSourceEmitter.dll .
+	copy $(FELTDIR)\SourceEmitters\CSharpSourceEmitter\bin\$(CONFIG)\Microsoft.Cci.CSharpSourceEmitter.pdb .
+
+	copy $(FELTDIR)\SourceEmitters\VB\VBSourceEmitter\bin\$(CONFIG)\Microsoft.Cci.VBSourceEmitter.dll .
+	copy $(FELTDIR)\SourceEmitters\VB\VBSourceEmitter\bin\$(CONFIG)\Microsoft.Cci.VBSourceEmitter.pdb .
+
+	copy $(FELTDIR)\CoreObjectModel\AstsProjectedAsCodeModel\bin\$(CONFIG)\Microsoft.Cci.AstsProjectedAsCodeModel.dll .
+	copy $(FELTDIR)\CoreObjectModel\AstsProjectedAsCodeModel\bin\$(CONFIG)\Microsoft.Cci.AstsProjectedAsCodeModel.pdb .

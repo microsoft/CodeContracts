@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+
+  <Commands>
+
+    <Groups>
+      <Group guid="ConvertingPasteExtensionCommandSetId" id ="AskCodeContractsExtensionGroupId" priority="0x0080">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="ConvertingPasteExtensionCommandSetId" id="AnalyzeVBCommandId" priority="0x0000" type="Button">
+        <Parent guid="ConvertingPasteExtensionCommandSetId" id="AskCodeContractsExtensionGroupId"/>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Ask CodeContracts! (Visual Basic version not yet implemented)</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="ConvertingPasteExtensionCommandSetId" id="AnalyzeCSharpCommandId" priority="0x0000" type="Button">
+        <Parent guid="ConvertingPasteExtensionCommandSetId" id="AskCodeContractsExtensionGroupId"/>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Ask CodeContracts!</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="ConvertingPasteExtensionCommandSetId" value="{D432ABEA-6825-4B63-B4BF-1E56A370FB92}">
+      <IDSymbol name="AskCodeContractsExtensionGroupId" value="0x1000"/>
+      <IDSymbol name="AnalyzeVBCommandId" value="1"/>
+      <IDSymbol name="AnalyzeCSharpCommandId" value="2"/>
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>

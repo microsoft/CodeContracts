@@ -1,0 +1,296 @@
+// CodeContracts
+// 
+// Copyright (c) Microsoft Corporation
+// 
+// All rights reserved. 
+// 
+// MIT License
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// File System.Globalization.CompareInfo.cs
+// Automatically generated contract file.
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Diagnostics.Contracts;
+using System;
+
+// Disable the "this variable is not used" warning as every field would imply it.
+#pragma warning disable 0414
+// Disable the "this variable is never assigned to".
+#pragma warning disable 0067
+// Disable the "this event is never assigned to".
+#pragma warning disable 0649
+// Disable the "this variable is never used".
+#pragma warning disable 0169
+// Disable the "new keyword not required" warning.
+#pragma warning disable 0109
+// Disable the "extern without DllImport" warning.
+#pragma warning disable 0626
+// Disable the "could hide other member" warning, can happen on certain properties.
+#pragma warning disable 0108
+
+
+namespace System.Globalization
+{
+  public partial class CompareInfo : System.Runtime.Serialization.IDeserializationCallback
+  {
+    #region Methods and constructors
+    public virtual new int Compare(string string1, string string2, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int Compare(string string1, int offset1, int length1, string string2, int offset2, int length2)
+    {
+      return default(int);
+    }
+
+    public virtual new int Compare(string string1, string string2)
+    {
+      return default(int);
+    }
+
+    public virtual new int Compare(string string1, int offset1, string string2, int offset2, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int Compare(string string1, int offset1, string string2, int offset2)
+    {
+      return default(int);
+    }
+
+    public virtual new int Compare(string string1, int offset1, int length1, string string2, int offset2, int length2, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    internal CompareInfo()
+    {
+    }
+
+    public override bool Equals(Object value)
+    {
+      return default(bool);
+    }
+
+    public static CompareInfo GetCompareInfo(int culture, System.Reflection.Assembly assembly)
+    {
+      return default(CompareInfo);
+    }
+
+    public static CompareInfo GetCompareInfo(string name, System.Reflection.Assembly assembly)
+    {
+      return default(CompareInfo);
+    }
+
+    public static CompareInfo GetCompareInfo(string name)
+    {
+      return default(CompareInfo);
+    }
+
+    public static CompareInfo GetCompareInfo(int culture)
+    {
+      return default(CompareInfo);
+    }
+
+    public override int GetHashCode()
+    {
+      return default(int);
+    }
+
+    public virtual new SortKey GetSortKey(string source, CompareOptions options)
+    {
+      return default(SortKey);
+    }
+
+    public virtual new SortKey GetSortKey(string source)
+    {
+      return default(SortKey);
+    }
+
+    public virtual new int IndexOf(string source, string value, int startIndex, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value, int startIndex, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, string value, int startIndex)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value, int startIndex, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, string value, int startIndex, int count, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value, int startIndex, int count, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, string value, int startIndex, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, string value)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, char value, int startIndex)
+    {
+      return default(int);
+    }
+
+    public virtual new int IndexOf(string source, string value, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new bool IsPrefix(string source, string prefix, CompareOptions options)
+    {
+      return default(bool);
+    }
+
+    public virtual new bool IsPrefix(string source, string prefix)
+    {
+      return default(bool);
+    }
+
+    public static bool IsSortable(string text)
+    {
+      return default(bool);
+    }
+
+    public static bool IsSortable(char ch)
+    {
+      return default(bool);
+    }
+
+    public virtual new bool IsSuffix(string source, string suffix)
+    {
+      return default(bool);
+    }
+
+    public virtual new bool IsSuffix(string source, string suffix, CompareOptions options)
+    {
+      return default(bool);
+    }
+
+    public virtual new int LastIndexOf(string source, string value, int startIndex, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value, int startIndex, int count)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, string value, int startIndex, int count, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value, int startIndex, int count, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, string value, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, string value)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value, int startIndex, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, string value, int startIndex, CompareOptions options)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, char value, int startIndex)
+    {
+      return default(int);
+    }
+
+    public virtual new int LastIndexOf(string source, string value, int startIndex)
+    {
+      return default(int);
+    }
+
+    void System.Runtime.Serialization.IDeserializationCallback.OnDeserialization(Object sender)
+    {
+    }
+
+    public override string ToString()
+    {
+      return default(string);
+    }
+    #endregion
+
+    #region Properties and indexers
+    public int LCID
+    {
+      get
+      {
+        return default(int);
+      }
+    }
+
+    public virtual new string Name
+    {
+      get
+      {
+        return default(string);
+      }
+    }
+    #endregion
+  }
+}

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="BasicInfrastructureGenerics" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basicinfrastructure\basicinfrastructuregenerics.generictest" id="9cb7e2d4-26fe-40f8-8818-702aed98d3b9" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="8d5cd47e-9922-4931-999f-8b634e797fd3" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -bounds BasicInfrastructure.dll -define generics -assemblyMode=standard" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\Users\maf\CCI1\TestResults\maf_MAF1 2009-08-31 16_27_01\In\MAF1\8d5cd47e-9922-4931-999f-8b634e797fd3" />
+      <EnvironmentVariable name="testlocation" value="c:\users\maf\cci1\microsoft.research\regressiontest\basicinfrastructure" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

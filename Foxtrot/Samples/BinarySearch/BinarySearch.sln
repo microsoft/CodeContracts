@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{925866A3-321A-4BA2-B95F-739B669FE471}"
+	ProjectSection(SolutionItems) = preProject
+		BinarySearch.pdf = BinarySearch.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch", "BinarySearch.csproj", "{00FB5E83-1E37-4745-A81B-4F598FF37DF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00FB5E83-1E37-4745-A81B-4F598FF37DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FB5E83-1E37-4745-A81B-4F598FF37DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FB5E83-1E37-4745-A81B-4F598FF37DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FB5E83-1E37-4745-A81B-4F598FF37DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

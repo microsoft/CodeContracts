@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="BasicInfrastructure2" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basicinfrastructure\basicinfrastructure2.generictest" id="c7a68ee6-10c8-4d82-81e3-ef16f919e2c8" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="d589c861-f15c-4b4f-87e9-6b26d2fe24f9" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds -nonnull BasicInfrastructure.dll -define regular;cci2only -nobox -show progress -assemblyMode=standard" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

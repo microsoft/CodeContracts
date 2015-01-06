@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>System.ServiceModel</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <ProjectGuid>{0C2F5C12-CFB2-485A-900E-14547F93CE9E}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.ServiceModel.XML</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ServiceModel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ServiceModel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ServiceModel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.ServiceModel.Configuration.HttpBindingBaseElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.HttpBindingBase.cs" />
+    <Compile Include="Sources\IClassFactory.cs" />
+    <Compile Include="Sources\System.Collections.Generic.KeyedByTypeCollection_1.cs" />
+    <Compile Include="Sources\System.Collections.Generic.SynchronizedCollection_1.cs" />
+    <Compile Include="Sources\System.Collections.Generic.SynchronizedKeyedCollection_2.cs" />
+    <Compile Include="Sources\System.Collections.Generic.SynchronizedReadOnlyCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Basic128SecurityAlgorithmSuite.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Basic192SecurityAlgorithmSuite.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Basic256SecurityAlgorithmSuite.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.BasicSecurityProfileVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.BinarySecretKeyIdentifierClause.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ChannelProtectionRequirements.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.DataProtectionSecurityStateEncoder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustDec2005.DriverDec2005.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustFeb2005.DriverFeb2005.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ExpiredSecurityTokenException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.HttpDigestClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IAcceptorSecuritySessionProtocol.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IChannelSecureConversationSessionSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IdentityVerifier.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IEndpointIdentityProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.TimeBoundedCache.IExpirableItem.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IInitiatorSecuritySessionProtocol.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecuritySessionServerSettings.IInputQueueChannelAcceptor.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IListenerSecureConversationSessionSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.InfocardInteractiveChannelInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ISecureConversationSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ISecurityCommunicationObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ISecuritySession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecuritySessionServerSettings.IServerSecuritySessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ISspiNegotiation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ISspiNegotiationInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IssuedTokenClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.IssuedTokenServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustDec2005.DriverDec2005.IWsTrustDec2005SecurityTokenService.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustFeb2005.DriverFeb2005.IWsTrustFeb2005SecurityTokenService.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.KeyNameIdentifierClause.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.MessagePartSpecification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.MessageSecurityException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.PeerCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ScopedMessagePartSpecification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecureConversationServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecureConversationVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityAccessDeniedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityAlgorithmSuite.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityContextKeyIdentifierClause.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityCredentialsManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityNegotiationException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityPolicyVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecuritySessionServerSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityStateEncoder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityTokenSpecification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SecurityVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.ServiceCredentialsSecurityTokenManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SspiSecurityTokenProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.SupportingTokenSpecification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.TimeBoundedCache.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.TripleDesSecurityAlgorithmSuite.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.TrustVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.UserNamePasswordClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.UserNamePasswordServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WindowsClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WindowsServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSSecurityTokenSerializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustDec2005.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.WSTrustFeb2005.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509CertificateInitiatorClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509CertificateInitiatorServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509CertificateRecipientClientCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509CertificateRecipientServiceCredential.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509ClientCertificateAuthentication.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509PeerCertificateAuthentication.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.X509ServiceCertificateAuthentication.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.AddressHeader.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.AddressHeaderCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.AddressingVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.AsymmetricSecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BinaryMessageEncodingBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.Binding.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BindingContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BindingElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BindingParameterCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BodyWriter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.BufferManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CallbackContextMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ServiceChannel.CallOnceManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelFactoryBase_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelFactoryBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelListenerBase_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelListenerBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelManagerBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelParameterCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ChannelPoolSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableChannelBinder.ChannelSynchronizer_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CommunicationObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CompositeDuplexBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CompositeDuplexBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ConnectionOrientedTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ContextBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ContextBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ContextMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CorrelationCallbackMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CorrelationDataDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CorrelationDataMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CorrelationKey.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CorrelationMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.CustomBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.DatagramAdapter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.DatagramAdapter.DatagramAdapterListenerBase_3.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.FaultConverter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpChannelListener.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpRequestMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpResponseMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpsTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MsmqUri.IAddressTranslator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IAnonymousUriPrefixMatcher.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IAsyncRequest.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IBindingDeliveryCapabilities.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IBindingMulticastCapabilities.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IBindingRuntimePreferences.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IBufferedMessageData.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ServiceChannel.ICallOnce.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelAcceptor_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelBindingProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelDemuxer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelDemuxerFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelDemuxFailureHandler.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelFactory.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelFactory_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelListener_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IChannelListener.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IClientReliableChannelBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ICommunicationWaiter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectAlgorithms.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionInitiator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionListener.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionOrientedConnectionSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionOrientedListenerSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionOrientedTransportChannelFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IConnectionOrientedTransportFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IContextBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IContextManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ICorrelationDataSource.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IDuplexChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IDuplexSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IDuplexSessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IFlooderForThrottle.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpChannelListener.IHttpAuthenticationContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IHttpCookieContainerManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.HttpRequestMessageProperty.IHttpHeaderProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IHttpTransportFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IInputChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IInputSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IInputSessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ILockingQueue.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IMessageHeaderWithSharedNamespace.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IMessageSource.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IMsmqMessagePool.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.InvalidChannelBindingException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerNodeImplementation.SimpleStateManager.IOperation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IOutputChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IOutputSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IOutputSessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerConnectorContract.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerFactory.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerFlooderContract_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerMaintainer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerNeighbor.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerNodeMessageHandling.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerProxy.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerService.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPeerServiceContract.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPoisonHandlingStrategy.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IPostRollbackErrorStrategy.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransmissionStrategy.IQueueAdder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IReceiveContextSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IReliableChannelBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IReliableFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableRequestSessionChannel.IReliableRequest.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RemoteEndpointMessageProperty.IRemoteEndpointProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IReplyChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IReplySessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IRequest.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IRequestBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IRequestChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IRequestReplyCorrelator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IRequestSessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISecurityCapabilities.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IServerReliableChannelBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISession.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISessionChannel_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISessionPreambleHandler.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISingletonChannelListener.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ISocketListenerSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.IStreamUpgradeChannelBindingProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITcpChannelFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransactedBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransactionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransactionChannelManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransportFactorySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransportManagerRegistration.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransportPolicyImport.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ITransportTokenAssertionProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableChannelBinder.ChannelSynchronizer.IWaiter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.DatagramAdapter.DatagramAdapterListenerBase.IWaiter_3.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ServiceChannel.CallOnceManager.IWaiter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.LocalClientSecuritySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.LocalServiceSecuritySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.Message.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageBuffer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageEncoder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageEncoderFactory.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageEncodingBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageEncodingBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageFault.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageHeader.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageHeaderInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageHeaders.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageProperties.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MessageVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MsmqBindingElementBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MsmqMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MsmqTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MsmqUri.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.MtomMessageEncodingBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.NamedPipeConnectionPoolSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.NamedPipeTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.OneWayBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.OneWayBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerCustomResolverBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerNodeImplementation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerResolverBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PnrpPeerResolverBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PrivacyNoticeBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PrivacyNoticeBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReceiveContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RedirectionDuration.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RedirectionException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RedirectionLocation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RedirectionScope.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RedirectionType.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableChannelBinder_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableRequestSessionChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableSessionBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ReliableSessionBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RemoteEndpointMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RequestContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.RetryException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.SecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.SecurityBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.ServiceChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.PeerNodeImplementation.SimpleStateManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.SslStreamSecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StandardBindingImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamSecurityUpgradeAcceptor.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamSecurityUpgradeInitiator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamSecurityUpgradeProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamUpgradeAcceptor.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamUpgradeBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamUpgradeInitiator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.StreamUpgradeProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.SymmetricSecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TcpConnectionPoolSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TcpTransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TextMessageEncodingBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransactionFlowBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransactionFlowBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransactionMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransmissionStrategy.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransportBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransportBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.TransportSecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.UnderstoodHeaders.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.UseManagedPresentationBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.UseManagedPresentationBindingElementImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.WindowsStreamSecurityBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.WrappedOptions.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.XmlSerializerImportOptions.cs" />
+    <Compile Include="Sources\System.ServiceModel.Channels.cs" />
+    <Compile Include="Sources\System.ServiceModel.ActionNotSupportedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.AddressAccessDeniedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.AddressAlreadyInUseException.cs" />
+    <Compile Include="Sources\System.ServiceModel.BasicHttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.BasicHttpContextBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.BasicHttpMessageSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.BasicHttpSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.CallbackBehaviorAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.ClientBase.ChannelBase_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.ChannelFactory_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.ChannelFactory.cs" />
+    <Compile Include="Sources\System.ServiceModel.ChannelTerminatedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ClientBase_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.ClientCredentialsSecurityTokenManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.CommunicationException.cs" />
+    <Compile Include="Sources\System.ServiceModel.CommunicationObjectAbortedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.CommunicationObjectFaultedException.cs" />
+    <Compile Include="Sources\System.ServiceModel.DataContractFormatAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.DeliveryRequirementsAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.DnsEndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.DuplexChannelFactory_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.DuplexClientBase_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointAddress.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointAddress10.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointAddressAugust2004.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointAddressBuilder.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.EndpointNotFoundException.cs" />
+    <Compile Include="Sources\System.ServiceModel.EnvelopeVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.ExceptionDetail.cs" />
+    <Compile Include="Sources\System.ServiceModel.ExtensionCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultCode.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultContractAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultException.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultException_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultImportOptions.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultReason.cs" />
+    <Compile Include="Sources\System.ServiceModel.FaultReasonText.cs" />
+    <Compile Include="Sources\System.ServiceModel.FederatedMessageSecurityOverHttp.cs" />
+    <Compile Include="Sources\System.ServiceModel.HttpTransportSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.IChannelBaseProxy.cs" />
+    <Compile Include="Sources\System.ServiceModel.IClientChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.ICommunicationObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.IContextChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.IContextSessionProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.IDefaultCommunicationTimeouts.cs" />
+    <Compile Include="Sources\System.ServiceModel.IDuplexContextChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.IExtensibleObject_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.IExtension_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.IExtensionCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.InstanceContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.InvalidMessageContractException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ClientBase.InvokeAsyncCompletedEventArgs_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.IOnlineStatus.cs" />
+    <Compile Include="Sources\System.ServiceModel.IOperationContractAttributeProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.IServiceChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageBodyMemberAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageContractAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageContractMemberAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageHeader_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageHeaderArrayAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageHeaderAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageHeaderException.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageParameterAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessagePropertyAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageSecurityOverHttp.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageSecurityOverMsmq.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageSecurityOverTcp.cs" />
+    <Compile Include="Sources\System.ServiceModel.MessageSecurityVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqBindingBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqException.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqPoisonMessageException.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqTransportSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.NamedPipeTransportSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetMsmqBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetMsmqSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetNamedPipeBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetNamedPipeSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetPeerTcpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetTcpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetTcpContextBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.NetTcpSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.NonDualMessageSecurityOverHttp.cs" />
+    <Compile Include="Sources\System.ServiceModel.OperationBehaviorAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.OperationContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.OperationContextScope.cs" />
+    <Compile Include="Sources\System.ServiceModel.OperationContractAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.OptionalReliableSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerHopCountAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerMessagePropagationFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerNode.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerNodeAddress.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolver.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerSecuritySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerTransportSecuritySettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.PoisonMessageException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ProtocolException.cs" />
+    <Compile Include="Sources\System.ServiceModel.QuotaExceededException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ReceiveContextEnabledAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.ReliableMessagingVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.ReliableSession.cs" />
+    <Compile Include="Sources\System.ServiceModel.RsaEndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServerTooBusyException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceActivationException.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceAuthenticationManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceAuthorizationManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceBehaviorAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceContractAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceHost.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceHostBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceKnownTypeAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.ServiceSecurityContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.SpnEndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.TcpTransportSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.TransactionFlowAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.TransactionProtocol.cs" />
+    <Compile Include="Sources\System.ServiceModel.UnknownMessageReceivedEventArgs.cs" />
+    <Compile Include="Sources\System.ServiceModel.UpnEndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.UriSchemeKeyedCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.WS2007FederationHttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WS2007HttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSDualHttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSDualHttpSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSFederationHttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSFederationHttpSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSHttpBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSHttpBindingBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSHttpContextBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.WSHttpSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.X509CertificateEndpointIdentity.cs" />
+    <Compile Include="Sources\System.ServiceModel.XmlSerializerFormatAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.XPathMessageQuery.cs" />
+    <Compile Include="Sources\System.ServiceModel.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.BinarySecretSecurityToken.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ClaimTypeRequirement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.IIssuanceSecurityTokenAuthenticator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ILogonTokenCacheManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.InitiatorServiceModelSecurityTokenRequirement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ISecurityContextSecurityTokenCache.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ISecurityContextSecurityTokenCacheProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.IssuedSecurityTokenProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.KerberosSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.RecipientServiceModelSecurityTokenRequirement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.RsaSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SecureConversationSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SecurityContextSecurityToken.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SecurityContextSecurityTokenAuthenticator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SecurityContextSecurityTokenResolver.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ServiceModelSecurityTokenRequirement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.ServiceModelSecurityTokenTypes.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SslSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SspiSecurityToken.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SspiSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.SupportingTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.UserNameSecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.WrappedKeySecurityToken.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.X509SecurityTokenParameters.cs" />
+    <Compile Include="Sources\System.ServiceModel.Security.Tokens.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.CallbackDebugBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ClientCredentials.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ClientViaBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ContractDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.DataContractSerializerMessageContractImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.DataContractSerializerOperationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.DispatcherSynchronizationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.FaultDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.FaultDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IContractBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IContractBehaviorAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IContractResolver.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IEndpointBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceMetadataExtension.IHttpGetMetadata.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IMetadataExchange.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IOperationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IOperationContractGenerationExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationGenerator.MethodSignatureGenerator.IPartCodeGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IPolicyExportExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IPolicyImportExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IServiceBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IServiceContractGenerationExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IWrappedBodyTypeGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IWsdlExportExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.IWsdlImportExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessageBodyDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessageDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessageDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessageHeaderDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessageHeaderDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessagePartDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessagePartDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessagePropertyDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MessagePropertyDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataConversionError.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataExchangeBindings.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataExchangeClient.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataExporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataImporterQuotas.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataLocation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataReference.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataResolver.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MetadataSet.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationGenerator.MethodSignatureGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.MustUnderstandBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationContractGenerationContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationDescriptionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.OperationGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ParameterXPathQueryGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.PolicyAssertionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.PolicyConversionContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.PolicyVersion.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceAuthenticationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceAuthorizationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceContractGenerationContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceContractGenerator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceCredentials.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceDebugBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceDescription.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceEndpoint.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceEndpointCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceMetadataBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceMetadataContractBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceMetadataEndpoint.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceMetadataExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceSecurityAuditBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.ServiceThrottlingBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.SynchronousReceiveBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.TransactedBatchingBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.TypedMessageConverter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.UseRequestHeadersForMetadataAddressBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.WsdlContractConversionContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.WsdlEndpointConversionContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.WsdlExporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.WsdlImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.XmlSerializerMessageContractImporter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.XmlSerializerOperationBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Description.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.AddressHeaderCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.AllowedAudienceUriElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.AllowedAudienceUriElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.AuthorizationPolicyTypeElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.AuthorizationPolicyTypeElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BaseAddressElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BaseAddressElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BaseAddressPrefixFilterElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BaseAddressPrefixFilterElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpContextBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpContextBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpMessageSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BasicHttpSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BehaviorExtensionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BehaviorsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BinaryMessageEncodingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BindingElementExtensionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.BindingsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CallbackDebugElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CallbackTimeoutsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CertificateElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CertificateReferenceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ChannelEndpointElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ChannelEndpointElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ChannelPoolSettingsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClaimTypeElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClaimTypeElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClearBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClientCredentialsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClientSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ClientViaElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComContractElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComContractElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComContractsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComMethodElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComMethodElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CommonBehaviorsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CommonEndpointBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CommonServiceBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComPersistableTypeElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComPersistableTypeElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CompositeDuplexElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComUdtElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ComUdtElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ConfigurationChannelFactory_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ConfigurationDuplexChannelFactory_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ConnectionOrientedTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ContextBindingElementExtensionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CustomBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CustomBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.CustomBindingElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DataContractSerializerElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DefaultPortElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DefaultPortElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DiagnosticSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DispatcherSynchronizationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.DnsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.EndpointAddressElementBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.EndpointBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.EndpointBehaviorElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.EndpointCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.EndToEndTracingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ExtensionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ExtensionElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ExtensionsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.FederatedMessageSecurityOverHttpElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HostElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HostTimeoutsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HttpDigestClientElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HttpsTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HttpTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.HttpTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IBindingConfigurationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IConfigurationContextProviderInternal.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IdentityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenClientBehaviorsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenClientBehaviorsElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenClientElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenParametersElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenParametersEndpointAddressElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.IssuedTokenServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.LocalClientSecuritySettingsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.LocalServiceSecuritySettingsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MessageLoggingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MessageSecurityOverHttpElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MessageSecurityOverMsmqElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MessageSecurityOverTcpElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MetadataElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexBindingBindingCollectionElement_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexBindingElement_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexHttpsBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexHttpsBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexNamedPipeBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexNamedPipeBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexTcpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MexTcpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqBindingElementBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqElementBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqIntegrationBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqIntegrationBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqIntegrationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqIntegrationSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MsmqTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.MtomMessageEncodingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NamedPipeConnectionPoolSettingsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NamedPipeTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NamedPipeTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NamedServiceModelExtensionCollectionElement_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetMsmqBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetMsmqBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetMsmqSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetNamedPipeBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetNamedPipeBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetNamedPipeSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetPeerTcpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetPeerTcpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetTcpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetTcpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetTcpContextBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetTcpContextBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NetTcpSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.NonDualMessageSecurityOverHttpElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.OneWayElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerCredentialElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerCustomResolverElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerResolverElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PeerTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PnrpPeerResolverElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PolicyImporterElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PolicyImporterElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.PrivacyNoticeElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ProtocolMappingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ProtocolMappingElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ProtocolMappingSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ReliableSessionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.RemoveBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.RsaElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.SecureConversationServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.SecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.SecurityElementBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceActivationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceActivationElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceAuthenticationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceAuthorizationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceBehaviorElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceBehaviorElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceCredentialsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceDebugElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceEndpointElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceEndpointElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceHostingEnvironmentSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceMetadataEndpointCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceMetadataEndpointElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceMetadataPublishingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceModelConfigurationElementCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceModelEnhancedConfigurationElementCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceModelExtensionCollectionElement_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceModelExtensionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceModelSectionGroup.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServicePrincipalNameElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceSecurityAuditElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServicesSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceThrottlingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.ServiceTimeoutsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.SslStreamSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardBindingCollectionElement_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardBindingElementCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardBindingOptionalReliableSessionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardBindingReliableSessionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardEndpointCollectionElement_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardEndpointElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardEndpointElementCollection_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.StandardEndpointsSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.SynchronousReceiveElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TcpConnectionPoolSettingsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TcpTransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TcpTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TextMessageEncodingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TransactedBatchingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TransactionFlowElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TransportConfigurationTypeElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TransportConfigurationTypeElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.TransportElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.UseManagedPresentationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.UseRequestHeadersForMetadataAddressElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.UserNameServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.UserPrincipalNameElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WindowsClientElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WindowsServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WindowsStreamSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WS2007FederationHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WS2007FederationHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WS2007HttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WS2007HttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WsdlImporterElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WsdlImporterElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSDualHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSDualHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSDualHttpSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSFederationHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSFederationHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSFederationHttpSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpBindingBaseElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpContextBindingCollectionElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpContextBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.WSHttpTransportSecurityElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509CertificateTrustedIssuerElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509CertificateTrustedIssuerElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509ClientCertificateAuthenticationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509ClientCertificateCredentialsElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509DefaultServiceCertificateElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509InitiatorCertificateClientElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509InitiatorCertificateServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509PeerCertificateAuthenticationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509PeerCertificateElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509RecipientCertificateClientElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509RecipientCertificateServiceElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509ScopedServiceCertificateElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509ScopedServiceCertificateElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.X509ServiceCertificateAuthenticationElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XmlDictionaryReaderQuotasElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XmlElementElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XmlElementElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XPathMessageFilterElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XPathMessageFilterElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.XPathMessageFilterElementComparer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Configuration.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ActionMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ChannelDispatcher.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ChannelDispatcherBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ChannelDispatcherCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ClientOperation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ClientRuntime.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ConcurrencyBehavior.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.DispatchOperation.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.DispatchRuntime.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.DuplexChannelBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.EndpointAddressMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.EndpointDispatcher.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ExceptionHandler.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.FaultContractInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.FilterInvalidBodyAccessException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ICallContextInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IChannelBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IChannelInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IClientFaultFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IClientMessageFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IClientMessageInspector.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IClientOperationSelector.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.IDemuxer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IDispatchFaultFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IDispatchMessageFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IDispatchMessageInspector.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IDispatchOperationSelector.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.DuplexChannelBinder.IDuplexRequest.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IErrorHandler.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IFunctionLibrary.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInputSessionShutdown.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInstanceContextInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInstanceContextManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInstanceContextProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInstanceProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInstanceTransaction.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInteractiveChannelInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IInvokeReceivedNotification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IItemComparer_2.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IListenerBinder.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IManualConcurrencyOperationInvoker.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IMessageFilterTable_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.INodeCounter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.InvalidBodyAccessException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IOperationInvoker.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IParameterInspector.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.IResumeMessageRpc.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ISessionThrottleNotification.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ConcurrencyBehavior.IWaiter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MatchAllMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MatchNoneMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageFilterException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageFilterTable_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageQuery.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageQueryCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MessageQueryTable_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.MultipleFilterMatchesException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.NavigatorInvalidBodyAccessException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.PrefixEndpointAddressMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.SeekableXPathNavigator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.ServiceThrottle.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathMessageContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathMessageFilter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathMessageFilterTable_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathMessageQueryCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathNavigatorException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.XPathResult.cs" />
+    <Compile Include="Sources\System.ServiceModel.Dispatcher.cs" />
+    <Compile Include="Sources\System.ServiceModel.XamlIntegration.XPathMessageContextMarkupExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.XamlIntegration.XPathMessageContextTypeConverter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.DiagnosticSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.NetPipeSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.NetTcpSection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.SecurityIdentifierElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.SecurityIdentifierElementCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.Configuration.ServiceModelActivationSectionGroup.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.MsmqIntegrationBinding.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.MsmqIntegrationBindingElement.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.MsmqIntegrationMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.MsmqIntegrationSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.MsmqMessage_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.MsmqIntegration.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.CustomPeerResolverService.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.IPeerResolverClient.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.IPeerResolverContract.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.PeerCustomResolverSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.PeerResolverSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.RefreshInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.RefreshResponseInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.RegisterInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.RegisterResponseInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.ResolveInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.ResolveResponseInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.ServiceSettingsResponseInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.UnregisterInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.UpdateInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.PeerResolvers.cs" />
+    <Compile Include="Sources\System.UriTemplate.cs" />
+    <Compile Include="Sources\System.UriTemplateEquivalenceComparer.cs" />
+    <Compile Include="Sources\System.UriTemplateMatch.cs" />
+    <Compile Include="Sources\System.UriTemplateMatchException.cs" />
+    <Compile Include="Sources\System.UriTemplateTable.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Atom10FeedFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Atom10FeedFormatter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Atom10ItemFormatter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Atom10ItemFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.AtomPub10CategoriesDocumentFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.AtomPub10ServiceDocumentFormatter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.AtomPub10ServiceDocumentFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.CategoriesDocument.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.CategoriesDocumentFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.IExtensibleSyndicationObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.InlineCategoriesDocument.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.ReferencedCategoriesDocument.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.ResourceCollectionInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Rss20FeedFormatter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Rss20FeedFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Rss20ItemFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Rss20ItemFormatter_1.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.ServiceDocument.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.ServiceDocumentFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationCategory.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationContent.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationElementExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationElementExtensionCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationFeed.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationFeedFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationItem.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationItemFormatter.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationLink.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationPerson.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.SyndicationVersions.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.TextSyndicationContent.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.UrlSyndicationContent.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.Workspace.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.XmlSyndicationContent.cs" />
+    <Compile Include="Sources\System.ServiceModel.Syndication.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IEnumWbemClassObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemClassObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemDecoupledRegistrar.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemObjectSink.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemProviderInit.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemProviderInitSink.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemQualifierSet.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.IWbemServices.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.IWmiInstance.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.IWmiInstanceProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.IWmiInstances.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.IWmiMethodContext.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.IWmiProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.Administration.WbemNative.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.AspNetCompatibilityRequirementsAttribute.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.IAspNetMessageProperty.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.IConnectionDuplicator.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.IConnectionRegister.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.ListenerUnsafeNativeMethods.ICorRuntimeHost.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.ListenerUnsafeNativeMethods.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.ServiceHostFactoryBase.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.VirtualPathExtension.cs" />
+    <Compile Include="Sources\System.ServiceModel.Activation.cs" />
+    <Compile Include="Sources\System.IO.PipeException.cs" />
+    <Compile Include="Sources\System.ServiceModel.Diagnostics.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.DllHostInitializer.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ICatalog2.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ICatalogCollection.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ICatalogObject.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IChannelCredentials.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IChannelOptions.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IComThreadingInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IContextSecurityPerimeter.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ICreateServiceChannel.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IMoniker.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IObjectContextInfo.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IParseDisplayName.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IPersist.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IPersistStream.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IProvideChannelBuilderSettings.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IProxyCreator.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IProxyManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IProxyProvider.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IPseudoDispatch.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServerSecurity.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceActivity.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceCall.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServicePartitionConfig.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceSxsConfig.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceSysTxnConfig.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceThreadPoolConfig.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.IServiceTransactionConfig.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ITransactionOutcomeEvents.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ITransactionProxy.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ITransactionVoterBallotAsync2.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ITransactionVoterNotifyAsync2.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ITypeCacheManager.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.PersistStreamTypeWrapper.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.ServiceMoniker.cs" />
+    <Compile Include="Sources\System.ServiceModel.ComIntegration.WasHostedComPlusFactory.cs" />
+    <Compile Include="Sources\System.ServiceModel.Transactions.OleTxTransactionFormatter.ISaneDtcTransaction.cs" />
+    <Compile Include="Sources\System.ServiceModel.Transactions.OleTxTransactionFormatter.ITransactionOptions.cs" />
+    <Compile Include="Sources\System.ServiceModel.Transactions.OleTxTransactionFormatter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="SMDiagnostics" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Data" />
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Accessibility" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="Microsoft.Transactions.Bridge" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Activities" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Management" />
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="System.Activities.DurableInstancing" />
+    <Reference Include="System.Xaml.Hosting" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

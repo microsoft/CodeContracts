@@ -1,0 +1,132 @@
+% Macro file for Electronic Notes in Theoretical Computer Science.
+% Adopted from document-style for journals published by Elsevier Science. 
+% To be used with LaTeX version 2.09 of 14 January 1992 (or later) 
+%
+% Version: 1.10
+% Date:    13 February 1998
+%
+% Copyright (C) 1998. All rights reserved.
+%
+% IMPORTANT NOTICE:
+%
+% You are not allowed to change this file. You may however copy this file 
+% to a file with a different name and then change the copy. 
+% 
+% You are NOT ALLOWED to distribute this file alone. You are NOT ALLOWED 
+% to take money for the distribution or use of this file (or a changed 
+% version) except for a nominal charge for copying etc. 
+% 
+% You are allowed to distribute this file under the condition that it is 
+% distributed together with all files mentioned in readme.els. 
+% 
+% If you receive only some of these files from someone, complain! 
+% 
+%
+
+\headheight 10pt
+\headsep 20pt
+\footskip 20pt
+\setlength{\topmargin}{-30pt}
+\addtolength{\textheight}{25pt} 
+
+\def\labelenumi{\rm\normalshape (\theenumi)}     
+\def\labelenumii{\rm\normalshape (\theenumii)}
+
+\font\eightrm=cmr8 scaled\magstep1
+\font\eightbf=cmbx8 scaled\magstep1
+\font\eighttt=cmtt8 scaled\magstep1
+\font\eightit=cmsl10
+\font\sixrm=cmr6 scaled\magstep1
+\font\bfone=cmbx10 scaled\magstep2
+\font\smc=cmcsc10 scaled\magstep1
+\font\sc=cmcsc10 
+
+\def\date{\ifcase\month\or January\or February \or March\or April\or May
+\or June\or July\or August\or September\or October\or November
+\or December\fi\space\number\day, \number\year}
+
+\volume{NN}
+\def\volu{NN}
+\journal{Electronic Notes in Theoretical Computer Science}
+\def\jour{Electronic Notes in Theoretical Computer Science}
+\def\vol{NN}
+
+\def\rightheadline{\ifnum\value{page}=\hypergetpageref{FirstPage}\firstheadline
+      \else\hfill\sc\lastname\hfill\fi}    
+\def\leftheadline{\hfill\sc\lastname\hfill}
+
+\def\firstheadline{\vbox{\baselineskip=8pt \parindent 0pt \obeylines
+    Replace this file with \texttt{prentcsmacro.sty} for your
+    meeting,\\ or with \texttt{entcsmacro.sty} for your meeting.
+    Both can be \\ found at the \href{http://www.math.tulane.edu/~entcs}
+    {ENTCS Macro Home Page}.}}
+    
+
+\def\firstfootline{\hfill
+  \eightit \copyright \annum\ Published by Elsevier Science B.~V.\hfill}
+
+\pagestyle{headings}
+
+% THE NEXT LINES GIVE DEFINITIONS FOR THE THEOREM ENVIRONMENTS.
+% EACH IS VIEWED AS A theorem environment IN THE SENSE OF LaTeX.
+% THEIR NAMES ARE: Theorem, Proposition, Lemma, Corollary, Proposition,
+% Criterion, Definition, Conjecture, Example, Problem, Remark, 
+% Summary, and Acknowledgement.  ALSO INCLUDED WITHIN encs.sty ARE THE
+% ENVIRONMENTS Note, Claim and Case UNDER THEIR OWN NAMES, AND THE
+% ENVIRONMENT Algorithm UNDER THE NAME alg; FOR THIS USE 
+% \begin{alg} text \end{alg}.
+% TYPE \begin{name} text \end{name} AS USUAL FOR ENVIRONMENTS IN LaTeX.
+% THE ENVIRONMENT name IS NUMBERED WITHIN section. E.G. THE FIRST 'Name' 
+% IN SECTION 1 IS NUMBERED 'Name 1.1'
+
+\newenvironment{theorem}{\vspace{-\lastskip}\par\addvspace{.6pc plus
+    .2pc minus .1pc}\begin{thm}}{\end{thm}\par\addvspace{.6pc plus
+    .2pc minus .1pc}} \newenvironment{lemma}{\vspace{-\lastskip}\par
+  \addvspace{.6pc plus .2pc minus .1pc}\begin{lem}}
+  {\end{lem}\par\addvspace{.6pc plus .2pc minus .1pc}}
+\newenvironment{corollary}{\vspace{-\lastskip}\par \addvspace{.6pc
+    plus .2pc minus .1pc}\begin{cor}}{\end{cor}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+\newenvironment{proposition}{\vspace{-\lastskip}\par \addvspace{.6pc
+    plus .2pc minus .1pc}\begin{prop}}{\end{prop}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+\newenvironment{criterion}{\vspace{-\lastskip}\par \addvspace{.6pc
+    plus .2pc minus .1pc} \begin{crit}}{\end{crit}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+\newenvironment{definition}{\vspace{-\lastskip}\par \addvspace{.6pc
+    plus .2pc minus
+    .1pc}\begin{defn}\rm}{\end{defn}\par\addvspace{.6pc plus .2pc
+    minus .1pc}}
+\newenvironment{conjecture}{\vspace{-\lastskip}\par \addvspace{.6pc
+    plus .2pc minus .1pc}\begin{conj}}{\end{conj}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+\newenvironment{example}{\vspace{-\lastskip}\par \addvspace{.6pc plus
+    .2pc minus .1pc}\begin{exmp}\rm}{\end{exmp}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+\newenvironment{problem}{\vspace{-\lastskip}\par \addvspace{.6pc plus
+    .2pc minus .1pc}\begin{prob}}{\end{prob}\par\addvspace{.6pc plus
+    .2pc minus .1pc}} \newenvironment{remark}{\vspace{-\lastskip}\par
+  \addvspace{.6pc plus .2pc minus .1pc}\begin{rem}\rm}
+{\end{rem}\par\addvspace{.6pc plus .2pc minus .1pc}}
+\newenvironment{summary}{\vspace{-\lastskip}\par \addvspace{.6pc plus
+    .2pc minus .1pc}\begin{summ}}{\end{summ}\par\addvspace{.6pc plus
+    .2pc minus .1pc}}
+\newenvironment{acknowledgement}{\vspace{-\lastskip}\par\addvspace{.6pc
+    plus .2pc minus .1pc}\begin{ack}}{\end{ack}\par\addvspace{.6pc
+    plus .2pc minus .1pc}}
+
+\newenvironment{exercise}{\begin{trivlist}\item[\hskip%
+    \labelsep{\bf Exercise.}]}% 
+    {\end{trivlist}}
+
+%% THE ENVIRONMENT \begin{proof} ... \end{proof} PRODUCES AN
+%% END-OF-PROOF SIGN.
+
+\newenvironment{proof}{\begin{pf}}{\qed\end{pf}}
+
+%% THE ENVIRONMENT \begin{proof*} ... \end{proof*} SUPPORTS ADDING
+%% INFORMATION SUCH AS  'Proof (Sketch)' AS THE LABEL FOR THE PROOF.
+
+\newenvironment{proof*}{\begin{pf*}}{\qed\end{pf*}}
+
+%% END OF `entcsmacro.sty'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

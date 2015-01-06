@@ -1,0 +1,1364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Speech</name>
+  </assembly>
+  <members>
+    <member name="T:System.Speech.AudioFormat.AudioBitsPerSample">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.AudioFormat.AudioBitsPerSample.Eight">
+      <summary />
+    </member>
+    <member name="F:System.Speech.AudioFormat.AudioBitsPerSample.Sixteen">
+      <summary />
+    </member>
+    <member name="T:System.Speech.AudioFormat.AudioChannel">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.AudioFormat.AudioChannel.Mono">
+      <summary />
+    </member>
+    <member name="F:System.Speech.AudioFormat.AudioChannel.Stereo">
+      <summary />
+    </member>
+    <member name="T:System.Speech.AudioFormat.EncodingFormat">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.AudioFormat.EncodingFormat.Pcm">
+      <summary />
+    </member>
+    <member name="F:System.Speech.AudioFormat.EncodingFormat.ALaw">
+      <summary />
+    </member>
+    <member name="F:System.Speech.AudioFormat.EncodingFormat.ULaw">
+      <summary />
+    </member>
+    <member name="T:System.Speech.AudioFormat.SpeechAudioFormatInfo"></member>
+    <member name="M:System.Speech.AudioFormat.SpeechAudioFormatInfo.#ctor(System.Int32,System.Speech.AudioFormat.AudioBitsPerSample,System.Speech.AudioFormat.AudioChannel)"></member>
+    <member name="M:System.Speech.AudioFormat.SpeechAudioFormatInfo.#ctor(System.Speech.AudioFormat.EncodingFormat,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Byte[])">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.AverageBytesPerSecond">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.BitsPerSample">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.BlockAlign">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.ChannelCount"></member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.EncodingFormat"></member>
+    <member name="M:System.Speech.AudioFormat.SpeechAudioFormatInfo.Equals(System.Object)"></member>
+    <member name="M:System.Speech.AudioFormat.SpeechAudioFormatInfo.FormatSpecificData">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.AudioFormat.SpeechAudioFormatInfo.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.AudioFormat.SpeechAudioFormatInfo.SamplesPerSecond"></member>
+    <member name="T:System.Speech.Recognition.AudioLevelUpdatedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.AudioLevelUpdatedEventArgs.AudioLevel"></member>
+    <member name="T:System.Speech.Recognition.AudioSignalProblem">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.TooNoisy">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.NoSignal">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.TooLoud">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.TooSoft">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.TooFast">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioSignalProblem.TooSlow">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.AudioSignalProblemOccurredEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.AudioSignalProblemOccurredEventArgs.AudioLevel"></member>
+    <member name="P:System.Speech.Recognition.AudioSignalProblemOccurredEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Recognition.AudioSignalProblemOccurredEventArgs.AudioSignalProblem"></member>
+    <member name="P:System.Speech.Recognition.AudioSignalProblemOccurredEventArgs.RecognizerAudioPosition"></member>
+    <member name="T:System.Speech.Recognition.AudioState"></member>
+    <member name="F:System.Speech.Recognition.AudioState.Stopped">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioState.Silence">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.AudioState.Speech">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.AudioStateChangedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.AudioStateChangedEventArgs.AudioState"></member>
+    <member name="T:System.Speech.Recognition.Choices"></member>
+    <member name="M:System.Speech.Recognition.Choices.#ctor"></member>
+    <member name="M:System.Speech.Recognition.Choices.#ctor(System.Speech.Recognition.GrammarBuilder[])"></member>
+    <member name="M:System.Speech.Recognition.Choices.#ctor(System.String[])"></member>
+    <member name="M:System.Speech.Recognition.Choices.Add(System.Speech.Recognition.GrammarBuilder[])"></member>
+    <member name="M:System.Speech.Recognition.Choices.Add(System.String[])"></member>
+    <member name="M:System.Speech.Recognition.Choices.ToGrammarBuilder"></member>
+    <member name="T:System.Speech.Recognition.DictationGrammar"></member>
+    <member name="M:System.Speech.Recognition.DictationGrammar.#ctor"></member>
+    <member name="M:System.Speech.Recognition.DictationGrammar.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.DictationGrammar.SetDictationContext(System.String,System.String)"></member>
+    <member name="T:System.Speech.Recognition.DisplayAttributes">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Recognition.DisplayAttributes.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.DisplayAttributes.ZeroTrailingSpaces">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.DisplayAttributes.OneTrailingSpace">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.DisplayAttributes.TwoTrailingSpaces">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.DisplayAttributes.ConsumeLeadingSpaces">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.EmulateRecognizeCompletedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.EmulateRecognizeCompletedEventArgs.Result"></member>
+    <member name="T:System.Speech.Recognition.Grammar"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Object[])"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri)">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.String,System.String)"></member>
+    <member name="M:System.Speech.Recognition.Grammar.#ctor(System.String,System.String,System.Object[])"></member>
+    <member name="P:System.Speech.Recognition.Grammar.Enabled"></member>
+    <member name="P:System.Speech.Recognition.Grammar.IsStg"></member>
+    <member name="P:System.Speech.Recognition.Grammar.Loaded"></member>
+    <member name="M:System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType(System.Type,System.Object[])">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.Grammar.Name"></member>
+    <member name="P:System.Speech.Recognition.Grammar.Priority"></member>
+    <member name="P:System.Speech.Recognition.Grammar.ResourceName"></member>
+    <member name="P:System.Speech.Recognition.Grammar.RuleName"></member>
+    <member name="E:System.Speech.Recognition.Grammar.SpeechRecognized"></member>
+    <member name="M:System.Speech.Recognition.Grammar.StgInit(System.Object[])"></member>
+    <member name="P:System.Speech.Recognition.Grammar.Weight"></member>
+    <member name="T:System.Speech.Recognition.GrammarBuilder"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.Speech.Recognition.Choices)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.Speech.Recognition.GrammarBuilder,System.Int32,System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.Speech.Recognition.SemanticResultKey)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.Speech.Recognition.SemanticResultValue)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.String,System.Int32,System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.#ctor(System.String,System.Speech.Recognition.SubsetMatchingMode)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Add(System.Speech.Recognition.Choices,System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Add(System.Speech.Recognition.GrammarBuilder,System.Speech.Recognition.Choices)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Add(System.Speech.Recognition.GrammarBuilder,System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Add(System.Speech.Recognition.GrammarBuilder,System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Add(System.String,System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.Speech.Recognition.Choices)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.Speech.Recognition.GrammarBuilder,System.Int32,System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.Speech.Recognition.SemanticResultKey)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.Speech.Recognition.SemanticResultValue)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.String,System.Int32,System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.Append(System.String,System.Speech.Recognition.SubsetMatchingMode)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.AppendDictation"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.AppendDictation(System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.AppendRuleReference(System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.AppendRuleReference(System.String,System.String)"></member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.AppendWildcard"></member>
+    <member name="P:System.Speech.Recognition.GrammarBuilder.Culture"></member>
+    <member name="P:System.Speech.Recognition.GrammarBuilder.DebugShowPhrases">
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Addition(System.Speech.Recognition.Choices,System.Speech.Recognition.GrammarBuilder)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Addition(System.Speech.Recognition.GrammarBuilder,System.Speech.Recognition.Choices)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Addition(System.Speech.Recognition.GrammarBuilder,System.Speech.Recognition.GrammarBuilder)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Addition(System.Speech.Recognition.GrammarBuilder,System.String)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Addition(System.String,System.Speech.Recognition.GrammarBuilder)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Implicit(System.Speech.Recognition.Choices)~System.Speech.Recognition.GrammarBuilder">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Implicit(System.Speech.Recognition.SemanticResultKey)~System.Speech.Recognition.GrammarBuilder">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Implicit(System.Speech.Recognition.SemanticResultValue)~System.Speech.Recognition.GrammarBuilder">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.GrammarBuilder.op_Implicit(System.String)~System.Speech.Recognition.GrammarBuilder">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Speech.Recognition.LoadGrammarCompletedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.LoadGrammarCompletedEventArgs.Grammar"></member>
+    <member name="T:System.Speech.Recognition.RecognitionEventArgs"></member>
+    <member name="P:System.Speech.Recognition.RecognitionEventArgs.Result"></member>
+    <member name="T:System.Speech.Recognition.RecognitionResult"></member>
+    <member name="P:System.Speech.Recognition.RecognitionResult.Alternates"></member>
+    <member name="P:System.Speech.Recognition.RecognitionResult.Audio"></member>
+    <member name="M:System.Speech.Recognition.RecognitionResult.GetAudioForWordRange(System.Speech.Recognition.RecognizedWordUnit,System.Speech.Recognition.RecognizedWordUnit)"></member>
+    <member name="M:System.Speech.Recognition.RecognitionResult.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"></member>
+    <member name="T:System.Speech.Recognition.RecognizeCompletedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.RecognizeCompletedEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Recognition.RecognizeCompletedEventArgs.BabbleTimeout"></member>
+    <member name="P:System.Speech.Recognition.RecognizeCompletedEventArgs.InitialSilenceTimeout"></member>
+    <member name="P:System.Speech.Recognition.RecognizeCompletedEventArgs.InputStreamEnded"></member>
+    <member name="P:System.Speech.Recognition.RecognizeCompletedEventArgs.Result"></member>
+    <member name="T:System.Speech.Recognition.RecognizedAudio">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.RecognizedAudio.AudioPosition"></member>
+    <member name="P:System.Speech.Recognition.RecognizedAudio.Duration"></member>
+    <member name="P:System.Speech.Recognition.RecognizedAudio.Format"></member>
+    <member name="M:System.Speech.Recognition.RecognizedAudio.GetRange(System.TimeSpan,System.TimeSpan)"></member>
+    <member name="P:System.Speech.Recognition.RecognizedAudio.StartTime"></member>
+    <member name="M:System.Speech.Recognition.RecognizedAudio.WriteToAudioStream(System.IO.Stream)"></member>
+    <member name="M:System.Speech.Recognition.RecognizedAudio.WriteToWaveStream(System.IO.Stream)"></member>
+    <member name="T:System.Speech.Recognition.RecognizedPhrase"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Confidence"></member>
+    <member name="M:System.Speech.Recognition.RecognizedPhrase.ConstructSmlFromSemantics"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Grammar"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.HomophoneGroupId"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Homophones"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.ReplacementWordUnits"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Semantics"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Text"></member>
+    <member name="P:System.Speech.Recognition.RecognizedPhrase.Words"></member>
+    <member name="T:System.Speech.Recognition.RecognizedWordUnit"></member>
+    <member name="M:System.Speech.Recognition.RecognizedWordUnit.#ctor(System.String,System.Single,System.String,System.String,System.Speech.Recognition.DisplayAttributes,System.TimeSpan,System.TimeSpan)"></member>
+    <member name="P:System.Speech.Recognition.RecognizedWordUnit.Confidence"></member>
+    <member name="P:System.Speech.Recognition.RecognizedWordUnit.DisplayAttributes"></member>
+    <member name="P:System.Speech.Recognition.RecognizedWordUnit.LexicalForm"></member>
+    <member name="P:System.Speech.Recognition.RecognizedWordUnit.Pronunciation"></member>
+    <member name="P:System.Speech.Recognition.RecognizedWordUnit.Text"></member>
+    <member name="T:System.Speech.Recognition.RecognizeMode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Recognition.RecognizeMode.Single">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.RecognizeMode.Multiple">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.RecognizerInfo">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.AdditionalInfo"></member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.Culture"></member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.Description"></member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.Id"></member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.Name"></member>
+    <member name="P:System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats"></member>
+    <member name="T:System.Speech.Recognition.RecognizerState"></member>
+    <member name="F:System.Speech.Recognition.RecognizerState.Stopped">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.RecognizerState.Listening">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.RecognizerUpdateReachedEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.RecognizerUpdateReachedEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Recognition.RecognizerUpdateReachedEventArgs.UserToken"></member>
+    <member name="T:System.Speech.Recognition.ReplacementText">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.ReplacementText.CountOfWords"></member>
+    <member name="P:System.Speech.Recognition.ReplacementText.DisplayAttributes"></member>
+    <member name="P:System.Speech.Recognition.ReplacementText.FirstWordIndex"></member>
+    <member name="P:System.Speech.Recognition.ReplacementText.Text"></member>
+    <member name="T:System.Speech.Recognition.SemanticResultKey"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultKey.#ctor(System.String,System.Speech.Recognition.GrammarBuilder[])"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultKey.#ctor(System.String,System.String[])"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultKey.ToGrammarBuilder"></member>
+    <member name="T:System.Speech.Recognition.SemanticResultValue"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultValue.#ctor(System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultValue.#ctor(System.Speech.Recognition.GrammarBuilder,System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultValue.#ctor(System.String,System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SemanticResultValue.ToGrammarBuilder"></member>
+    <member name="T:System.Speech.Recognition.SemanticValue"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.#ctor(System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.#ctor(System.String,System.Object,System.Single)"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.Confidence"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.Contains(System.Collections.Generic.KeyValuePair{System.String,System.Speech.Recognition.SemanticValue})"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.ContainsKey(System.String)"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.Count"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SemanticValue.Item(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#ICollection{T}#Add(System.Collections.Generic.KeyValuePair{System.String,System.Speech.Recognition.SemanticValue})"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#ICollection{T}#Clear"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#ICollection{T}#CopyTo(System.Collections.Generic.KeyValuePair{System.String,System.Speech.Recognition.SemanticValue}[],System.Int32)"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.System#Collections#Generic#ICollection{T}#IsReadOnly"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#ICollection{T}#Remove(System.Collections.Generic.KeyValuePair{System.String,System.Speech.Recognition.SemanticValue})"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IDictionary{TKey@TValue}#Add(System.String,System.Speech.Recognition.SemanticValue)"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IDictionary{TKey@TValue}#Keys"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IDictionary{TKey@TValue}#Remove(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IDictionary{TKey@TValue}#TryGetValue(System.String,System.Speech.Recognition.SemanticValue@)"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IDictionary{TKey@TValue}#Values"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#Generic#IEnumerable{T}#GetEnumerator"></member>
+    <member name="M:System.Speech.Recognition.SemanticValue.System#Collections#IEnumerable#GetEnumerator"></member>
+    <member name="P:System.Speech.Recognition.SemanticValue.Value"></member>
+    <member name="T:System.Speech.Recognition.SpeechDetectedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.SpeechDetectedEventArgs.AudioPosition"></member>
+    <member name="T:System.Speech.Recognition.SpeechHypothesizedEventArgs"></member>
+    <member name="T:System.Speech.Recognition.SpeechRecognitionEngine"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.#ctor(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.#ctor(System.Speech.Recognition.RecognizerInfo)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.#ctor(System.String)"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.AudioFormat"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.AudioLevel">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.AudioLevelUpdated">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.AudioPosition">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.AudioSignalProblemOccurred">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.AudioState"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.AudioStateChanged"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.BabbleTimeout">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.Dispose"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.Dispose(System.Boolean)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognize(System.Speech.Recognition.RecognizedWordUnit[],System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognize(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognize(System.String,System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognizeAsync(System.Speech.Recognition.RecognizedWordUnit[],System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognizeAsync(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognizeAsync(System.String,System.Globalization.CompareOptions)"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.EmulateRecognizeCompleted"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.EndSilenceTimeout">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.EndSilenceTimeoutAmbiguous">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.Grammars"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.InitialSilenceTimeout">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.InstalledRecognizers"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.LoadGrammar(System.Speech.Recognition.Grammar)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.LoadGrammarAsync(System.Speech.Recognition.Grammar)"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.LoadGrammarCompleted"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.MaxAlternates"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.QueryRecognizerSetting(System.String)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.Recognize"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.Recognize(System.TimeSpan)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeAsync"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeAsync(System.Speech.Recognition.RecognizeMode)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeAsyncCancel"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeAsyncStop"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeCompleted"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.RecognizerAudioPosition"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognitionEngine.RecognizerInfo"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.RecognizerUpdateReached">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RequestRecognizerUpdate">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RequestRecognizerUpdate(System.Object)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.RequestRecognizerUpdate(System.Object,System.TimeSpan)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream,System.Speech.AudioFormat.SpeechAudioFormatInfo)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.SetInputToDefaultAudioDevice"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.SetInputToNull"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.SetInputToWaveFile(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.SetInputToWaveStream(System.IO.Stream)"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.SpeechDetected"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.SpeechHypothesized"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.SpeechRecognitionRejected"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognitionEngine.SpeechRecognized"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.UnloadAllGrammars"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.UnloadGrammar(System.Speech.Recognition.Grammar)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.UpdateRecognizerSetting(System.String,System.Int32)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognitionEngine.UpdateRecognizerSetting(System.String,System.String)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Speech.Recognition.SpeechRecognitionRejectedEventArgs"></member>
+    <member name="T:System.Speech.Recognition.SpeechRecognizedEventArgs"></member>
+    <member name="T:System.Speech.Recognition.SpeechRecognizer"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.#ctor"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.AudioFormat">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.AudioLevel">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.AudioLevelUpdated">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.AudioPosition">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.AudioSignalProblemOccurred">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.AudioState"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.AudioStateChanged"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.Dispose"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.Dispose(System.Boolean)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognize(System.Speech.Recognition.RecognizedWordUnit[],System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognize(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognize(System.String,System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognizeAsync(System.Speech.Recognition.RecognizedWordUnit[],System.Globalization.CompareOptions)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognizeAsync(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.EmulateRecognizeAsync(System.String,System.Globalization.CompareOptions)"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.EmulateRecognizeCompleted"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.Enabled"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.Grammars"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.LoadGrammar(System.Speech.Recognition.Grammar)"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.LoadGrammarAsync(System.Speech.Recognition.Grammar)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.LoadGrammarCompleted"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.MaxAlternates"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.PauseRecognizerOnRecognition">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.RecognizerAudioPosition">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.RecognizerInfo"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.RecognizerUpdateReached">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.RequestRecognizerUpdate">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.RequestRecognizerUpdate(System.Object)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.RequestRecognizerUpdate(System.Object,System.TimeSpan)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.SpeechDetected"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.SpeechHypothesized"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.SpeechRecognitionRejected"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.SpeechRecognized"></member>
+    <member name="P:System.Speech.Recognition.SpeechRecognizer.State"></member>
+    <member name="E:System.Speech.Recognition.SpeechRecognizer.StateChanged"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.UnloadAllGrammars"></member>
+    <member name="M:System.Speech.Recognition.SpeechRecognizer.UnloadGrammar(System.Speech.Recognition.Grammar)"></member>
+    <member name="T:System.Speech.Recognition.SpeechUI"></member>
+    <member name="M:System.Speech.Recognition.SpeechUI.SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)"></member>
+    <member name="T:System.Speech.Recognition.StateChangedEventArgs"></member>
+    <member name="P:System.Speech.Recognition.StateChangedEventArgs.RecognizerState"></member>
+    <member name="T:System.Speech.Recognition.SubsetMatchingMode"></member>
+    <member name="F:System.Speech.Recognition.SubsetMatchingMode.Subsequence">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SubsetMatchingMode.OrderedSubset">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SubsetMatchingMode.SubsequenceContentRequired">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SubsetMatchingMode.OrderedSubsetContentRequired">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsDocument"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.#ctor(System.Speech.Recognition.GrammarBuilder)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsRule)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.#ctor(System.Xml.XmlReader)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.AssemblyReferences"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.CodeBehind"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Culture"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Debug"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.ImportNamespaces"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Language"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Mode"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Namespace"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.PhoneticAlphabet"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Root"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Rules"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.Script"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsDocument.WriteSrgs(System.Xml.XmlWriter)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsDocument.XmlBase"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsElement"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsElement.#ctor"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.IO.Stream)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile(System.String,System.IO.Stream)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile(System.Xml.XmlReader,System.IO.Stream)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.CompileClassLibrary(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.String[],System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.CompileClassLibrary(System.String[],System.String,System.String[],System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.CompileClassLibrary(System.Xml.XmlReader,System.String,System.String[],System.String)"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsGrammarMode"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsGrammarMode.Voice">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsGrammarMode.Dtmf">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsItem"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.Int32,System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.Int32,System.Int32,System.Speech.Recognition.SrgsGrammar.SrgsElement[])"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.Int32,System.Int32,System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsElement[])"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.Add(System.Speech.Recognition.SrgsGrammar.SrgsElement)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsItem.Elements"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsItem.MaxRepeat"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsItem.MinRepeat"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsItem.RepeatProbability"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.SetRepeat(System.Int32)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsItem.SetRepeat(System.Int32,System.Int32)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsItem.Weight"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.Object)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.String,System.Object)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsOneOf"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsOneOf.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsOneOf.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsItem[])"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsOneOf.#ctor(System.String[])"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsOneOf.Add(System.Speech.Recognition.SrgsGrammar.SrgsItem)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsOneOf.Items"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsPhoneticAlphabet"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsPhoneticAlphabet.Sapi">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsPhoneticAlphabet.Ipa">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsPhoneticAlphabet.Ups">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsRule"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRule.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRule.#ctor(System.String,System.Speech.Recognition.SrgsGrammar.SrgsElement[])"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRule.Add(System.Speech.Recognition.SrgsGrammar.SrgsElement)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.BaseClass"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.Elements"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.Id"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.OnError"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.OnParse"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.OnRecognition"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.Scope"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRule.Script"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsRule)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsRule,System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsRule,System.String,System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Uri)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Uri,System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Uri,System.String,System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.#ctor(System.Uri,System.String,System.String,System.String)"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Dictation"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Garbage"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.MnemonicSpelling"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Null"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Params"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.SemanticKey"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Uri"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef.Void"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsRulesCollection"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRulesCollection.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsRulesCollection.Add(System.Speech.Recognition.SrgsGrammar.SrgsRule[])"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsRuleScope"></member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleScope.Public">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Recognition.SrgsGrammar.SrgsRuleScope.Private">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsSemanticInterpretationTag"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsSemanticInterpretationTag.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsSemanticInterpretationTag.#ctor(System.String)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsSemanticInterpretationTag.Script"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsSubset"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsSubset.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsSubset.#ctor(System.String,System.Speech.Recognition.SubsetMatchingMode)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsSubset.MatchingMode"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsSubset.Text"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsText"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsText.#ctor"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsText.#ctor(System.String)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsText.Text"></member>
+    <member name="T:System.Speech.Recognition.SrgsGrammar.SrgsToken"></member>
+    <member name="M:System.Speech.Recognition.SrgsGrammar.SrgsToken.#ctor(System.String)"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsToken.Display"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsToken.Pronunciation"></member>
+    <member name="P:System.Speech.Recognition.SrgsGrammar.SrgsToken.Text"></member>
+    <member name="T:System.Speech.Synthesis.BookmarkReachedEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.BookmarkReachedEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Synthesis.BookmarkReachedEventArgs.Bookmark"></member>
+    <member name="T:System.Speech.Synthesis.FilePrompt">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.FilePrompt.#ctor(System.String,System.Speech.Synthesis.SynthesisMediaType)"></member>
+    <member name="M:System.Speech.Synthesis.FilePrompt.#ctor(System.Uri,System.Speech.Synthesis.SynthesisMediaType)"></member>
+    <member name="T:System.Speech.Synthesis.InstalledVoice"></member>
+    <member name="P:System.Speech.Synthesis.InstalledVoice.Enabled"></member>
+    <member name="M:System.Speech.Synthesis.InstalledVoice.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Synthesis.InstalledVoice.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.InstalledVoice.VoiceInfo"></member>
+    <member name="T:System.Speech.Synthesis.PhonemeReachedEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.PhonemeReachedEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Synthesis.PhonemeReachedEventArgs.Duration"></member>
+    <member name="P:System.Speech.Synthesis.PhonemeReachedEventArgs.Emphasis"></member>
+    <member name="P:System.Speech.Synthesis.PhonemeReachedEventArgs.NextPhoneme"></member>
+    <member name="P:System.Speech.Synthesis.PhonemeReachedEventArgs.Phoneme"></member>
+    <member name="T:System.Speech.Synthesis.Prompt"></member>
+    <member name="M:System.Speech.Synthesis.Prompt.#ctor(System.Speech.Synthesis.PromptBuilder)"></member>
+    <member name="M:System.Speech.Synthesis.Prompt.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.Prompt.#ctor(System.String,System.Speech.Synthesis.SynthesisTextFormat)"></member>
+    <member name="P:System.Speech.Synthesis.Prompt.IsCompleted"></member>
+    <member name="T:System.Speech.Synthesis.PromptBreak">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.ExtraSmall">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.Small">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.Large">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptBreak.ExtraLarge">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.PromptBuilder"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.#ctor"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.#ctor(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendAudio(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendAudio(System.Uri)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendAudio(System.Uri,System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendBookmark(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendBreak"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendBreak(System.Speech.Synthesis.PromptBreak)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendBreak(System.TimeSpan)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendPromptBuilder(System.Speech.Synthesis.PromptBuilder)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendSsml(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendSsml(System.Uri)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendSsml(System.Xml.XmlReader)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendSsmlMarkup(System.String)">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendText(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendText(System.String,System.Speech.Synthesis.PromptEmphasis)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendText(System.String,System.Speech.Synthesis.PromptRate)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendText(System.String,System.Speech.Synthesis.PromptVolume)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendTextWithAlias(System.String,System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendTextWithHint(System.String,System.Speech.Synthesis.SayAs)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendTextWithHint(System.String,System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.AppendTextWithPronunciation(System.String,System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.ClearContent"></member>
+    <member name="P:System.Speech.Synthesis.PromptBuilder.Culture"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.EndParagraph"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.EndSentence"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.EndStyle"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.EndVoice"></member>
+    <member name="P:System.Speech.Synthesis.PromptBuilder.IsEmpty"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartParagraph"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartParagraph(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartSentence"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartSentence(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartStyle(System.Speech.Synthesis.PromptStyle)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.Speech.Synthesis.VoiceGender)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.Speech.Synthesis.VoiceGender,System.Speech.Synthesis.VoiceAge)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.Speech.Synthesis.VoiceGender,System.Speech.Synthesis.VoiceAge,System.Int32)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.Speech.Synthesis.VoiceInfo)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.StartVoice(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.PromptBuilder.ToXml"></member>
+    <member name="T:System.Speech.Synthesis.PromptEmphasis">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptEmphasis.NotSet">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptEmphasis.Strong">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptEmphasis.Moderate">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptEmphasis.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptEmphasis.Reduced">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.PromptEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.PromptEventArgs.Prompt"></member>
+    <member name="T:System.Speech.Synthesis.PromptRate">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.NotSet">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.ExtraFast">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.Fast">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.Slow">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptRate.ExtraSlow">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.PromptStyle">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.PromptStyle.#ctor"></member>
+    <member name="M:System.Speech.Synthesis.PromptStyle.#ctor(System.Speech.Synthesis.PromptEmphasis)"></member>
+    <member name="M:System.Speech.Synthesis.PromptStyle.#ctor(System.Speech.Synthesis.PromptRate)"></member>
+    <member name="M:System.Speech.Synthesis.PromptStyle.#ctor(System.Speech.Synthesis.PromptVolume)"></member>
+    <member name="P:System.Speech.Synthesis.PromptStyle.Emphasis"></member>
+    <member name="P:System.Speech.Synthesis.PromptStyle.Rate"></member>
+    <member name="P:System.Speech.Synthesis.PromptStyle.Volume"></member>
+    <member name="T:System.Speech.Synthesis.PromptVolume">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.NotSet">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.Silent">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.ExtraSoft">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.Soft">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.Loud">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.ExtraLoud">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.PromptVolume.Default">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.SayAs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.SpellOut">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.NumberOrdinal">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.NumberCardinal">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Date">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.DayMonthYear">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.MonthDayYear">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.YearMonthDay">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.YearMonth">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.MonthYear">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.MonthDay">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.DayMonth">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Year">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Month">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Day">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Time">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Time24">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Time12">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Telephone">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SayAs.Text">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.SpeakCompletedEventArgs"></member>
+    <member name="T:System.Speech.Synthesis.SpeakProgressEventArgs"></member>
+    <member name="P:System.Speech.Synthesis.SpeakProgressEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Synthesis.SpeakProgressEventArgs.CharacterCount"></member>
+    <member name="P:System.Speech.Synthesis.SpeakProgressEventArgs.CharacterPosition"></member>
+    <member name="P:System.Speech.Synthesis.SpeakProgressEventArgs.Text"></member>
+    <member name="T:System.Speech.Synthesis.SpeakStartedEventArgs"></member>
+    <member name="T:System.Speech.Synthesis.SpeechSynthesizer"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.#ctor"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.AddLexicon(System.Uri,System.String)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.BookmarkReached">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Dispose"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.GetCurrentlySpokenPrompt">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.GetInstalledVoices"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.GetInstalledVoices(System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Pause"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.PhonemeReached">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.SpeechSynthesizer.Rate">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.RemoveLexicon(System.Uri)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Resume"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SelectVoice(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender,System.Speech.Synthesis.VoiceAge)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender,System.Speech.Synthesis.VoiceAge,System.Int32)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender,System.Speech.Synthesis.VoiceAge,System.Int32,System.Globalization.CultureInfo)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToAudioStream(System.IO.Stream,System.Speech.AudioFormat.SpeechAudioFormatInfo)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToDefaultAudioDevice"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToNull"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToWaveFile(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToWaveFile(System.String,System.Speech.AudioFormat.SpeechAudioFormatInfo)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SetOutputToWaveStream(System.IO.Stream)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Speak(System.Speech.Synthesis.Prompt)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Speak(System.Speech.Synthesis.PromptBuilder)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.Speak(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakAsync(System.Speech.Synthesis.Prompt)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakAsync(System.Speech.Synthesis.PromptBuilder)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakAsync(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakAsyncCancel(System.Speech.Synthesis.Prompt)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakAsyncCancelAll"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.SpeakCompleted"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.SpeakProgress"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakSsml(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.SpeechSynthesizer.SpeakSsmlAsync(System.String)"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.SpeakStarted"></member>
+    <member name="P:System.Speech.Synthesis.SpeechSynthesizer.State"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.StateChanged"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.VisemeReached">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.SpeechSynthesizer.Voice"></member>
+    <member name="E:System.Speech.Synthesis.SpeechSynthesizer.VoiceChange"></member>
+    <member name="P:System.Speech.Synthesis.SpeechSynthesizer.Volume">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Speech.Synthesis.StateChangedEventArgs"></member>
+    <member name="P:System.Speech.Synthesis.StateChangedEventArgs.PreviousState"></member>
+    <member name="P:System.Speech.Synthesis.StateChangedEventArgs.State"></member>
+    <member name="T:System.Speech.Synthesis.SynthesisMediaType">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesisMediaType.Text">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesisMediaType.Ssml">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesisMediaType.WaveAudio">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.SynthesisTextFormat">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesisTextFormat.Text">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesisTextFormat.Ssml">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.SynthesizerEmphasis">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesizerEmphasis.Stressed">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesizerEmphasis.Emphasized">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.SynthesizerState"></member>
+    <member name="F:System.Speech.Synthesis.SynthesizerState.Ready">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesizerState.Speaking">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.SynthesizerState.Paused">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.VisemeReachedEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.VisemeReachedEventArgs.AudioPosition"></member>
+    <member name="P:System.Speech.Synthesis.VisemeReachedEventArgs.Duration"></member>
+    <member name="P:System.Speech.Synthesis.VisemeReachedEventArgs.Emphasis"></member>
+    <member name="P:System.Speech.Synthesis.VisemeReachedEventArgs.NextViseme"></member>
+    <member name="P:System.Speech.Synthesis.VisemeReachedEventArgs.Viseme"></member>
+    <member name="T:System.Speech.Synthesis.VoiceAge"></member>
+    <member name="F:System.Speech.Synthesis.VoiceAge.NotSet">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceAge.Child">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceAge.Teen">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceAge.Adult">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceAge.Senior">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.VoiceChangeEventArgs">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.VoiceChangeEventArgs.Voice"></member>
+    <member name="T:System.Speech.Synthesis.VoiceGender"></member>
+    <member name="F:System.Speech.Synthesis.VoiceGender.NotSet">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceGender.Male">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceGender.Female">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.VoiceGender.Neutral">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.VoiceInfo"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.AdditionalInfo">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Age"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Culture"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Description"></member>
+    <member name="M:System.Speech.Synthesis.VoiceInfo.Equals(System.Object)"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Gender"></member>
+    <member name="M:System.Speech.Synthesis.VoiceInfo.GetHashCode"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Id"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.Name"></member>
+    <member name="P:System.Speech.Synthesis.VoiceInfo.SupportedAudioFormats">
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ContourPoint"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.#ctor(System.Single,System.Single,System.Speech.Synthesis.TtsEngine.ContourPointChangeType)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ContourPoint.Change"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ContourPoint.ChangeType"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.Equals(System.Speech.Synthesis.TtsEngine.ContourPoint)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.op_Equality(System.Speech.Synthesis.TtsEngine.ContourPoint,System.Speech.Synthesis.TtsEngine.ContourPoint)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ContourPoint.op_Inequality(System.Speech.Synthesis.TtsEngine.ContourPoint,System.Speech.Synthesis.TtsEngine.ContourPoint)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ContourPoint.Start"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ContourPointChangeType"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ContourPointChangeType.Hz">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ContourPointChangeType.Percentage">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.EmphasisBreak"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.ExtraWeak">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.Weak">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.Strong">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.ExtraStrong">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisBreak.Default">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.EmphasisWord"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisWord.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisWord.Strong">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisWord.Moderate">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisWord.None">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EmphasisWord.Reduced">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.EventParameterType"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EventParameterType.Undefined">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EventParameterType.Token">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EventParameterType.Object">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EventParameterType.Pointer">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.EventParameterType.String">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.FragmentState"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.#ctor(System.Speech.Synthesis.TtsEngine.TtsEngineAction,System.Int32,System.Int32,System.Int32,System.Speech.Synthesis.TtsEngine.SayAs,System.Speech.Synthesis.TtsEngine.Prosody,System.Char[])"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.Action"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.Duration"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.Emphasis"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.Equals(System.Speech.Synthesis.TtsEngine.FragmentState)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.LangId"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.op_Equality(System.Speech.Synthesis.TtsEngine.FragmentState,System.Speech.Synthesis.TtsEngine.FragmentState)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.FragmentState.op_Inequality(System.Speech.Synthesis.TtsEngine.FragmentState,System.Speech.Synthesis.TtsEngine.FragmentState)">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.Phoneme"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.Prosody"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.FragmentState.SayAs"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ITtsEngineSite"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.Actions"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.AddEvents(System.Speech.Synthesis.TtsEngine.SpeechEventInfo[],System.Int32)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.CompleteSkip(System.Int32)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.GetSkipInfo"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.LoadResource(System.Uri,System.String)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.Rate"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.Volume"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.Write(System.IntPtr,System.Int32)"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.Prosody"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.Prosody.#ctor"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.Prosody.Duration"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.Prosody.GetContourPoints"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.Prosody.Pitch"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.Prosody.Range"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.Prosody.Rate"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.Prosody.SetContourPoints(System.Speech.Synthesis.TtsEngine.ContourPoint[])"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.Prosody.Volume"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyNumber"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.#ctor(System.Int32)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.#ctor(System.Single)"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyNumber.AbsoluteNumber"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.Equals(System.Speech.Synthesis.TtsEngine.ProsodyNumber)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ProsodyNumber.IsNumberPercent"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ProsodyNumber.Number"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.op_Equality(System.Speech.Synthesis.TtsEngine.ProsodyNumber,System.Speech.Synthesis.TtsEngine.ProsodyNumber)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.ProsodyNumber.op_Inequality(System.Speech.Synthesis.TtsEngine.ProsodyNumber,System.Speech.Synthesis.TtsEngine.ProsodyNumber)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ProsodyNumber.SsmlAttributeId"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.ProsodyNumber.Unit"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyPitch"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.ExtraLow">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.Low">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.High">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyPitch.ExtraHigh">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyRange"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.ExtraLow">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.Low">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.High">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRange.ExtraHigh">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyRate"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.ExtraSlow">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.Slow">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.Fast">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyRate.ExtraFast">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyUnit"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyUnit.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyUnit.Hz">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyUnit.Semitone">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.ProsodyVolume"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.Default">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.Silent">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.ExtraSoft">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.Soft">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.Medium">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.Loud">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.ProsodyVolume.ExtraLoud">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.SayAs"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SayAs.#ctor"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SayAs.Detail"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SayAs.Format"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SayAs.InterpretAs"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.SkipInfo"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SkipInfo.#ctor"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SkipInfo.Count"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SkipInfo.Type"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.SpeakOutputFormat"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.SpeakOutputFormat.WaveFormat">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.SpeakOutputFormat.Text">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.SpeechEventInfo"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.#ctor(System.Int16,System.Int16,System.Int32,System.IntPtr)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.Equals(System.Object)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.Equals(System.Speech.Synthesis.TtsEngine.SpeechEventInfo)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.EventId"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.GetHashCode">
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.op_Equality(System.Speech.Synthesis.TtsEngine.SpeechEventInfo,System.Speech.Synthesis.TtsEngine.SpeechEventInfo)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.op_Inequality(System.Speech.Synthesis.TtsEngine.SpeechEventInfo,System.Speech.Synthesis.TtsEngine.SpeechEventInfo)"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.Param1"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.Param2"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.ParameterType"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.TextFragment"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TextFragment.#ctor"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.TextFragment.State"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset"></member>
+    <member name="P:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.TtsEngineAction"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Silence">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Pronounce">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Bookmark">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.SpellOut">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.StartSentence">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.StartParagraph">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEngineAction.ParseUnknownTag">
+      <summary />
+    </member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.TtsEngineSsml"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.#ctor(System.String)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.AddLexicon(System.Uri,System.String,System.Speech.Synthesis.TtsEngine.ITtsEngineSite)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.GetOutputFormat(System.Speech.Synthesis.TtsEngine.SpeakOutputFormat,System.IntPtr)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.RemoveLexicon(System.Uri,System.Speech.Synthesis.TtsEngine.ITtsEngineSite)"></member>
+    <member name="M:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak(System.Speech.Synthesis.TtsEngine.TextFragment[],System.IntPtr,System.Speech.Synthesis.TtsEngine.ITtsEngineSite)"></member>
+    <member name="T:System.Speech.Synthesis.TtsEngine.TtsEventId"></member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.StartInputStream">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.EndInputStream">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.VoiceChange">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.Bookmark">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.Phoneme">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.SentenceBoundary">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.Viseme">
+      <summary />
+    </member>
+    <member name="F:System.Speech.Synthesis.TtsEngine.TtsEventId.AudioLevel">
+      <summary />
+    </member>
+  </members>
+</doc>

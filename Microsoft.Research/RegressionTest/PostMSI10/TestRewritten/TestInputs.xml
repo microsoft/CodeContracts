@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestInputs>
+  <PEVerify Name="Microsoft.Research\RegressionTest\PostMSI10\PostMSIApp1\bin\Debug\PostMSIApp1.exe"/>
+  <PEVerify Name="Microsoft.Research\RegressionTest\PostMSI10\PostMSILib1\bin\Debug\PostMSILib1.dll"/>
+  <PEVerify Name="Microsoft.Research\RegressionTest\PostMSI10\Samples\Samples\bin\Debug\Samples.dll"/>
+  <PEVerify Name="Microsoft.Research\RegressionTest\PostMSI10\Samples\SampleClients\bin\Debug\SampleClients.exe"/>
+  <PEVerify Name="Microsoft.Research\RegressionTest\PostMSI10\VBLib\bin\Debug\VBLib.dll"/>
+</TestInputs>

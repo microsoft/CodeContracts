@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProofObligations", "ProofObligations\ProofObligations.csproj", "{DC399DCF-AE7E-4C5F-B6D9-8612CA9FA0DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFlow", "..\DataFlow\DataFlow\DataFlow.csproj", "{E5782A99-EBA3-46A0-BA85-017360ED9F0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytecode", "Bytecode\Bytecode.csproj", "{242B4FC2-4BD0-47C3-979D-DDC2F9F17950}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC399DCF-AE7E-4C5F-B6D9-8612CA9FA0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC399DCF-AE7E-4C5F-B6D9-8612CA9FA0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC399DCF-AE7E-4C5F-B6D9-8612CA9FA0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC399DCF-AE7E-4C5F-B6D9-8612CA9FA0DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5782A99-EBA3-46A0-BA85-017360ED9F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5782A99-EBA3-46A0-BA85-017360ED9F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5782A99-EBA3-46A0-BA85-017360ED9F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5782A99-EBA3-46A0-BA85-017360ED9F0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{242B4FC2-4BD0-47C3-979D-DDC2F9F17950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242B4FC2-4BD0-47C3-979D-DDC2F9F17950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242B4FC2-4BD0-47C3-979D-DDC2F9F17950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242B4FC2-4BD0-47C3-979D-DDC2F9F17950}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

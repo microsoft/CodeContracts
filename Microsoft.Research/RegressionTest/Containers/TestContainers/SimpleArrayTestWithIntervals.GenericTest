@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="simplearraytestwithintervals" storage="c:\users\maf\cci1\microsoft.research\regressiontest\containers\testcontainers\simplearraytestwithintervals.generictest" id="34174468-9acf-43cb-9aba-0b10ae028abc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="764c6f7d-7b9b-4b16-9b60-710d84aa4528" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-arrays -bounds:&quot;noObl,diseq=false&quot; -show progress -regression TestContainers.exe -show &quot;validations;unreached&quot; -wp=false -define Intervals -libpaths ..\..\..\..\..\contracts\bin\Debug\v3.5" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="D:\CCI\TestResults\logozzo_LOGOZZO4 2010-02-11 14_24_22\In\LOGOZZO4\764c6f7d-7b9b-4b16-9b60-710d84aa4528" />
+      <EnvironmentVariable name="testlocation" value="d:\cci\microsoft.research\regressiontest\containers\testcontainers" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

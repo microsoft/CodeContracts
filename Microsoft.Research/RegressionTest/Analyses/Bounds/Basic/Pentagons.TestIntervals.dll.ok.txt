@@ -1,0 +1,56 @@
+Microsoft Clousot, 2007
+Method 1 : TestIntervals.UsePostcondition.Error
+Ok!
+Method 2 : TestIntervals.IntervalsBasic.Abs0(System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestIntervals\IntervalsTest.cs(12,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestIntervals\IntervalsTest.cs(18,5): location related to previous warning
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 3 : TestIntervals.IntervalsBasic.Abs1(System.Int32)
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 4 : TestIntervals.IntervalsBasic.Arithmetics0
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 5 : TestIntervals.IntervalsBasic.#ctor
+Ok!
+Method 6 : TestIntervals.UseGuards.Guard0(System.Int32)
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 7 : TestIntervals.UseGuards.Guard1(System.Boolean)
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 8 : TestIntervals.UseGuards.Guard2(System.Boolean)
+Checked 4 assertions: 4 correct 
+Validated: 100%
+Method 9 : TestIntervals.UseGuards.Guard3
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestIntervals\IntervalsTest.cs(116,7): assertion unproven
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 10 : TestIntervals.UseGuards.Guard4(System.Int32)
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 11 : TestIntervals.UseGuards.#ctor
+Ok!
+Method 12 : TestIntervals.Loops.Loop0
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 13 : TestIntervals.Loops.Loop1
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestIntervals\IntervalsTest.cs(155,7): assertion unproven
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 14 : TestIntervals.Loops.Loop2
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 15 : TestIntervals.Loops.Loop3
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 16 : TestIntervals.Loops.#ctor
+Ok!
+Method 17 : TestIntervals.UsePostcondition.CheckGreaterThanZero(System.Int32)
+Checked 1 assertion: 1 correct 
+Validated: 100%
+Method 18 : TestIntervals.UsePostcondition.#ctor
+Ok!
+Checked 19 assertions: 16 correct 3 unknown 
+Validated: 84.2%

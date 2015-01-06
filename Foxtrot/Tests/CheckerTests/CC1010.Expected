@@ -1,0 +1,1 @@
+ (0,0) : error CC1010: Field 'CC1010.f' is marked [ContractPublicPropertyName("F")], but no public field/property named 'F' with type 'System.Int32' can be found

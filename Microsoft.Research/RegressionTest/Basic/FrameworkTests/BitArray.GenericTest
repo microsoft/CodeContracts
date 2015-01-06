@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="BitArray" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basic\frameworktests\bitarray.generictest" id="951dadf4-432e-4fe4-8c50-df7e81c35d70" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="7633755f-3c86-4cc8-a99e-50a72a6ecf19" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -define bitarray;cci1only -nonnull -bounds -bounds:type=subpolyhedra,diseq=false,reduction=fast  FrameworkTests.dll" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\CCI\TestResults\logozzo_LOGOZZO3 2009-08-12 15_09_18\In\LOGOZZO3\7633755f-3c86-4cc8-a99e-50a72a6ecf19" />
+      <EnvironmentVariable name="testlocation" value="c:\cci\microsoft.research\regressiontest\basic\frameworktests" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

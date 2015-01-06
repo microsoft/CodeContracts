@@ -1,0 +1,8 @@
+﻿How to use CCVersions
+
+1. Create a config.xml file in %USER$\AppData\Roaming\Microsoft\CCVersions\v.1.0.0.0
+	a- An example of the .XML file is in Config.cs
+2. Run the program
+
+Needed:
+- The source depository manager should be installed

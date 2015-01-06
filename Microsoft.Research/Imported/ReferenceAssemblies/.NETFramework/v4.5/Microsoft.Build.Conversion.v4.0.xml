@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Build.Conversion.v4.0</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.Conversion.ProjectFileConverter">
+      <summary>Converts a Visual Studio project file to the Visual Studio 2010 project file format. </summary>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Conversion.ProjectFileConverter" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.ConversionSkippedBecauseProjectAlreadyConverted">
+      <summary>Gets a value indicating whether the last attempted conversion was skipped because the project file is already in the latest format.</summary>
+      <returns>true if the last attempted conversion was skipped because the project file is already in the latest format; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.ConversionWarnings">
+      <summary>Gets a list of warnings generated during the conversion.</summary>
+      <returns>A string array containing any warnings generated during the conversion.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.Convert">
+      <summary>Converts the project specified by the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.OldProjectFile" /> property and saves it in the file specified by the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.NewProjectFile" /> property.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.Convert(Microsoft.Build.BuildEngine.ProjectLoadSettings)">
+      <summary>Converts the project specified by the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.OldProjectFile" /> property and saves it in the file specified by the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.NewProjectFile" /> property.</summary>
+      <param name="projectLoadSettings">A <see cref="T:Microsoft.Build.BuildEngine.ProjectLoadSettings" /> flag that determine whether the project ignores non-existent .target files when loading.</param>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.Convert(System.String)">
+      <summary>This is the entry point method, which performs the project file format conversion. This method will overwrite "newProjectFile" if it already exists, so the caller of this method should confirm with the user that that's what he really wants to do.</summary>
+      <param name="msbuildBinPath">The fully qualified path to MSBuild.exe.</param>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.ConvertInMemory">
+      <summary>Creates a new project in memory from the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.OldProjectFile" />.</summary>
+      <returns>Returns the converted <see cref="T:Microsoft.Build.BuildEngine.Project" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.ConvertInMemory(Microsoft.Build.BuildEngine.Engine)">
+      <summary>Creates a new project in memory from the <see cref="P:Microsoft.Build.Conversion.ProjectFileConverter.OldProjectFile" />.</summary>
+      <returns>Returns the converted <see cref="T:Microsoft.Build.BuildEngine.Project" />.</returns>
+      <param name="engine">The <see cref="T:Microsoft.Build.BuildEngine.Engine" /> in which to create the new project.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.ConvertInMemory(Microsoft.Build.BuildEngine.Engine,Microsoft.Build.BuildEngine.ProjectLoadSettings)">
+      <summary>This is the entry point method, which performs the project file format conversion. This method will simply create a new MSBuild Project object in memory, instead of trying to write it to disk.</summary>
+      <returns>Returns the converted <see cref="T:Microsoft.Build.BuildEngine.Project" />.</returns>
+      <param name="engine">The <see cref="T:Microsoft.Build.BuildEngine.Engine" /> in which to create the new project.</param>
+      <param name="projectLoadSettings">A <see cref="T:Microsoft.Build.BuildEngine.ProjectLoadSettings" /> flag that determines whether the project ignores non-existent .target files when loading.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Conversion.ProjectFileConverter.FSharpSpecificConversions(System.Boolean)">
+      <summary>Performs conversions specific to F# projects (VS2008 CTP -&gt; VS2012) and (VS2010 -&gt; VS2012). This involves: changing the location of FSharp targets, and for 2008CTP, adding explicit mscorlib and FSharp.Core references.</summary>
+      <returns>Returns true if anything was (would be) changed, false otherwise</returns>
+      <param name="actuallyMakeChanges">if true, make the changes, otherwise, don't actually make any changes, but return whether you would make the changes</param>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.IsUserFile">
+      <summary>Gets or sets a value indicating whether the project file being converted is a .user file.</summary>
+      <returns>true if the project file being converted is a .user file; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.NewProjectFile">
+      <summary>Gets or sets the new project file name.</summary>
+      <returns>A string representing the new project file name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.OldProjectFile">
+      <summary>Gets or sets the old project file name.</summary>
+      <returns>The old project file name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Conversion.ProjectFileConverter.SolutionFile">
+      <summary>Gets or sets the name of the solution file that contains the project being converted.</summary>
+      <returns>The name of the solution file that contains the project being converted.</returns>
+    </member>
+  </members>
+</doc>

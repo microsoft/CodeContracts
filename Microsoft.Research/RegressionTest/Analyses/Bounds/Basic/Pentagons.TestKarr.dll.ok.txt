@@ -1,0 +1,32 @@
+Microsoft Clousot, 2007
+Method 1 : TestKarr.Test.Karr0(System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(17,9): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(22,7): assertion unproven
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 2 : TestKarr.Test.Karr1(System.Int32,System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(34,11): assertion unproven
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 3 : TestKarr.Test.Karr2(System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(59,7): assertion unproven
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 4 : TestKarr.Test.Karr3(System.Int32,System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(70,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(73,5): location related to previous warning
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 5 : TestKarr.Test.Karr4(System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(79,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(84,5): location related to previous warning
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 6 : TestKarr.Test.Karr5(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs(94,7): assertion unproven
+Checked 1 assertion: 1 unknown 
+Validated: 0%
+Method 7 : TestKarr.Test.#ctor
+Ok!
+Checked 7 assertions: 7 unknown 
+Validated: 0%

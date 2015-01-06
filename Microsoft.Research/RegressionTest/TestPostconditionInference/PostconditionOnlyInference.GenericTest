@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="postconditiononlyinference" storage="d:\cci\microsoft.research\regressiontest\testpostconditioninference\postconditiononlyinference.generictest" id="0caffdde-f215-4b13-860c-2573db195537" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="8ad409aa-7c26-44cd-8b71-be8da44c388a" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression  -bounds TestPostconditionInference.dll -infer methodensures  -define postonly  -show validations -nonnull:noobl " workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="D:\CCI\TestResults\logozzo_LOGOZZO4 2009-09-04 14_43_41\In\LOGOZZO4\8ad409aa-7c26-44cd-8b71-be8da44c388a" />
+      <EnvironmentVariable name="testlocation" value="d:\cci\microsoft.research\regressiontest\testpostconditioninference" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

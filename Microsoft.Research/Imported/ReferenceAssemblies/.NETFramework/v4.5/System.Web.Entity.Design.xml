@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.Entity.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control. </summary>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" />.</summary>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.CanConfigure">
+      <summary>Gets a value that indicates whether the <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure" /> method can be called by the design host. </summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure" /> method can be called; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.CanRefreshSchema">
+      <summary>Gets a value that indicates whether the <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)" /> method can be called by the design host.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)" /> method can be called; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.CommandText">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.CommandText" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.CommandText" /> property.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Configure">
+      <summary>Launches the data source configuration utility in the design host.</summary>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.ConnectionString">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.ConnectionString" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.ConnectionString" /> property.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.DefaultContainerName">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.DefaultContainerName" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.DefaultContainerName" /> property.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.EntitySetName">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntitySetName" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntitySetName" /> property.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.EntityTypeFilter">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntityTypeFilter" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.EntityTypeFilter" /> property.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.GetView(System.String)">
+      <summary>Returns a data source view that has the specified name.</summary>
+      <returns>A <see cref="T:System.Web.UI.WebControls.Design.EntityDesignerDataSourceView" /> object with the name specified by <paramref name="viewName" />.</returns>
+      <param name="viewName">The name of the view to return.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.GetViewNames">
+      <summary>Gets a list of available views.</summary>
+      <returns>A collection with one element that contains the name "DefaultView".</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the control designer and loads the specified component.</summary>
+      <param name="component">An <see cref="T:System.ComponentModel.IComponent" /> object to initialize.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.OrderBy">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.OrderBy" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.OrderBy" /> property.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.PreFilterProperties(System.Collections.IDictionary)">
+      <summary>Used by the designer to add properties or remove properties in the properties grid, or to shadow properties of the associated control.</summary>
+      <param name="properties">The properties to be filtered.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.RefreshSchema(System.Boolean)">
+      <summary>Refreshes the schema from the underlying data source.</summary>
+      <param name="preferSilent">true to suppress all data source events until the schema is refreshed.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Select">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Select" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Select" /> property.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDataSourceDesigner.Where">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Where" /> property of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Where" /> property.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView">
+      <summary>Provides a design-time view of data for the <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" /> class.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.#ctor(System.Web.UI.Design.WebControls.EntityDataSourceDesigner)">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.WebControls.Design.EntityDesignerDataSourceView" /> with the provided data source designer.</summary>
+      <param name="owner">The parent <see cref="T:System.Web.UI.Design.WebControls.EntityDataSourceDesigner" /> object.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanDelete">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports deletes.</summary>
+      <returns>true if deletes are supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanInsert">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports inserts.</summary>
+      <returns>true if inserts are supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanPage">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports paging through data returned by a query.</summary>
+      <returns>true if paging is supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanSort">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports a sorted view of the underlying data source.</summary>
+      <returns>true if sorting is supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.CanUpdate">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports updates.</summary>
+      <returns>true if updates are supported; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.GetDesignTimeData(System.Int32,System.Boolean@)">
+      <summary>Gets the design-time data that matches the schema of the associated data source control by using the specified number of rows. </summary>
+      <returns>The data to display at design time.</returns>
+      <param name="minimumRows">The minimum number of rows to return.</param>
+      <param name="isSampleData">true to indicate that the returned data is sample data; false to indicate that the returned data is live data.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.EntityDesignerDataSourceView.Schema">
+      <summary>Gets the schema that describes the data source view that is represented by the current view object.</summary>
+      <returns>An object that represents the schema.</returns>
+    </member>
+  </members>
+</doc>

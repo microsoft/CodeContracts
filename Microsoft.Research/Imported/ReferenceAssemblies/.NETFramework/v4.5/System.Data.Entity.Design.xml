@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Data.Entity.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Data.Entity.Design.EdmToObjectNamespaceMap">
+      <summary>Represents a collection of conceptual model to code namespace mappings.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EdmToObjectNamespaceMap.Add(System.String,System.String)">
+      <summary>Adds a namespace mapping to the <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" />.</summary>
+      <param name="edmNamespace">The model namespace name.</param>
+      <param name="objectNamespace">The code namespace name.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EdmToObjectNamespaceMap.Clear">
+      <summary>Removes all namespace mappings from the <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" />.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EdmToObjectNamespaceMap.Contains(System.String)">
+      <summary>Gets a value indicating whether the <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" /> contains the specified model namespace name.</summary>
+      <returns>true if the model namespace name is found; otherwise false.</returns>
+      <param name="edmNamespace">The model namespace name.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EdmToObjectNamespaceMap.Count">
+      <summary>Gets the number of mappings in the <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" />.</summary>
+      <returns>The number of mappings.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EdmToObjectNamespaceMap.EdmNamespaces">
+      <summary>Gets the list of model namespace names in the <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" />.</summary>
+      <returns>The list of model namespace names.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EdmToObjectNamespaceMap.Item(System.String)">
+      <summary>Gets or sets the code namespace name of the specified model namespace name.</summary>
+      <returns>The code namespace name that maps to the specified model namespace name.</returns>
+      <param name="edmNamespace">The model namespace name.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EdmToObjectNamespaceMap.Remove(System.String)">
+      <summary>Removes the specified namespace mapping.</summary>
+      <returns>true if the namespace mapping was successfully removed; otherwise false.</returns>
+      <param name="edmNamespace">The model namespace mapping to remove.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EdmToObjectNamespaceMap.TryGetObjectNamespace(System.String,System.String@)">
+      <summary>Gets a value indicating whether the object namespace was retrieved.</summary>
+      <returns>true if the object namespace was retrieved; otherwise false.</returns>
+      <param name="edmNamespace">The model namespace name.</param>
+      <param name="objectNamespace">The code namespace name.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityClassGenerator">
+      <summary>Generates object context and entity classes (object layer code) from conceptual schema definition language (CSDL) files.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityClassGenerator" /> class with a <see cref="F:System.Data.Entity.Design.LanguageOption.GenerateCSharpCode" /> language option. </summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.#ctor(System.Data.Entity.Design.LanguageOption)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityClassGenerator" /> class with the specified <see cref="T:System.Data.Entity.Design.LanguageOption" />. </summary>
+      <param name="languageOption">A <see cref="T:System.Data.Entity.Design.LanguageOption" /> value that specifies the language of the generated code. The default language is C#.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityClassGenerator.EdmToObjectNamespaceMap">
+      <summary>Gets an <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" /> that contains the conceptual schema definition language (CSDL) to code namespace mappings.</summary>
+      <returns>The CSDL to code namespace mappings.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.GenerateCode(System.String,System.String)">
+      <summary>Generates a source code file that contains the objects that were generated from the specified conceptual schema definition language (CSDL) file.</summary>
+      <returns>An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> that contains any generated errors.</returns>
+      <param name="sourceEdmSchemaFilePath">The CSDL file path.</param>
+      <param name="targetFilePath">The generated source code file path.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.GenerateCode(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Generates source code using the specified conceptual schema definition language (CSDL) file. The list of schema file paths is used to resolve any references contained in the CSDL file.</summary>
+      <returns>An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchemaFilePath">The CSDL file path.</param>
+      <param name="targetPath">The generated source code file path.</param>
+      <param name="additionalEdmSchemaFilePaths">A list of schema file paths that can be used to resolve any references in the source schema (the CSDL file). If the source schema does not have any dependencies, pass in an empty list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.GenerateCode(System.Xml.XmlReader,System.IO.TextWriter)">
+      <summary>Generates source code using the conceptual schema definition language (CSDL) file contained in the <see cref="T:System.Xml.XmlReader" /> object and outputs the generated source code to a <see cref="T:System.IO.TextWriter" />.</summary>
+      <returns>An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> that contains any generated errors.</returns>
+      <param name="sourceEdmSchema">An <see cref="T:System.Xml.XmlReader" /> that contains the CSDL file.</param>
+      <param name="target">The <see cref="T:System.IO.TextWriter" /> to which the source code is written.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityClassGenerator.GenerateCode(System.Xml.XmlReader,System.IO.TextWriter,System.Collections.Generic.IEnumerable{System.Xml.XmlReader})">
+      <summary>Generates source code based on the conceptual schema definition language (CSDL) file in the <see cref="T:System.Xml.XmlReader" /> object, then outputs the generated source code to a <see cref="T:System.IO.TextWriter" />. An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Xml.XmlReader" /> objects is used to resolve any references that are contained in the CSDL file.</summary>
+      <returns>A list of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchema">An <see cref="T:System.Xml.XmlReader" /> that contains the CSDL file.</param>
+      <param name="target">The <see cref="T:System.IO.TextWriter" /> to which you want to output the generated source code.</param>
+      <param name="additionalEdmSchemas">The list of <see cref="T:System.Xml.XmlReader" /> objects that contain schemas that are referenced by the source schema (the CSDL file). If the source schema does not have any dependencies, pass in an empty <see cref="T:System.Collections.IList" /> object.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityClassGenerator.LanguageOption">
+      <summary>Gets or sets a <see cref="T:System.Data.Entity.Design.LanguageOption" /> value that indicates the language of the generated code. </summary>
+      <returns>One of the <see cref="T:System.Data.Entity.Design.LanguageOption" /> values. The default is <see cref="F:System.Data.Entity.Design.LanguageOption.GenerateCSharpCode" />.</returns>
+    </member>
+    <member name="E:System.Data.Entity.Design.EntityClassGenerator.OnPropertyGenerated">
+      <summary>Occurs when a property has changed.</summary>
+    </member>
+    <member name="E:System.Data.Entity.Design.EntityClassGenerator.OnTypeGenerated">
+      <summary>Occurs when type information has changed.</summary>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityCodeGenerator">
+      <summary>Generates object layer source code from conceptual schema definition language (CSDL).</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityCodeGenerator.#ctor(System.Data.Entity.Design.LanguageOption)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityCodeGenerator" /> class with the specified <see cref="T:System.Data.Entity.Design.LanguageOption" />.</summary>
+      <param name="languageOption">Specifies the language of the generated code.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityCodeGenerator.EdmToObjectNamespaceMap">
+      <summary>Gets an <see cref="T:System.Data.Entity.Design.EdmToObjectNamespaceMap" /> that contains the conceptual schema definition language (CSDL) to code namespace mappings.</summary>
+      <returns>The CSDL to code namespace mappings.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityCodeGenerator.GenerateCode(System.String,System.String)">
+      <summary>Creates a source code file that contains the object layer code generated from the specified conceptual schema definition language (CSDL) file.</summary>
+      <returns>A list of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchemaFilePath">The path of the CSDL file.</param>
+      <param name="targetPath">The path of the file that contains the generated object layer code.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityCodeGenerator.GenerateCode(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Creates a source code file that contains object layer code generated from the specified conceptual schema definition language (CSDL) file. The list of schema file paths is used to resolve any references contained in the CSDL file.</summary>
+      <returns>A list of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchemaFilePath">The path of the CSDL file.</param>
+      <param name="targetPath">The path of the file that contains the generated object layer code.</param>
+      <param name="additionalEdmSchemaFilePaths">A list of schema file paths that can be used to resolve any references in the source schema (the CSDL file). If the source schema does not have any dependencies, pass in an empty list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityCodeGenerator.GenerateCode(System.Xml.XmlReader,System.IO.TextWriter)">
+      <summary>Generates object layer code using the conceptual schema definition language (CSDL) specified in the <see cref="T:System.Xml.XmlReader" /> object, and outputs the generated code to a <see cref="T:System.IO.TextWriter" />.</summary>
+      <returns>A list of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchema">An <see cref="T:System.Xml.XmlReader" /> that contains the CSDL.</param>
+      <param name="target">The <see cref="T:System.IO.TextWriter" /> to which the object layer code is written.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityCodeGenerator.GenerateCode(System.Xml.XmlReader,System.IO.TextWriter,System.Collections.Generic.IEnumerable{System.Xml.XmlReader})">
+      <summary>Generates object layer code based on the conceptual schema definition language (CSDL) specified in the <see cref="T:System.Xml.XmlReader" /> object, then outputs the generated code to a <see cref="T:System.IO.TextWriter" />. An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Xml.XmlReader" /> objects is used to resolve any references that are contained in the CSDL.</summary>
+      <returns>A list of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects that contains any generated errors.</returns>
+      <param name="sourceEdmSchema">An <see cref="T:System.Xml.XmlReader" /> that contains the CSDL.</param>
+      <param name="target">The <see cref="T:System.IO.TextWriter" /> to which you want to output the generated object layer code.</param>
+      <param name="additionalEdmSchemas">A list of <see cref="T:System.Xml.XmlReader" /> objects that contain schemas that are referenced by the source schema (the CSDL). If the source schema does not have any dependencies, pass in an empty <see cref="T:System.Collections.IList" /> object.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityCodeGenerator.LanguageOption">
+      <summary>Gets or sets a <see cref="T:System.Data.Entity.Design.LanguageOption" /> value that indicates the language of the generated code. </summary>
+      <returns>One of the <see cref="T:System.Data.Entity.Design.LanguageOption" /> values.</returns>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityFrameworkVersions">
+      <summary>Provides information about different versions of the Entity Framework.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityFrameworkVersions.GetSchemaXsd(System.Version,System.Data.Metadata.Edm.DataSpace)">
+      <summary>Returns a stream of the XSD that corresponds to the specified Entity Framework version, with default model names as specified in the <see cref="T:System.Data.Metadata.Edm.DataSpace" /> parameter.</summary>
+      <returns>A <see cref="T:System.IO.Stream" /> of the XSD that corresponds to the specified Entity Framework version and <see cref="T:System.Data.Metadata.Edm.DataSpace" />.</returns>
+      <param name="entityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+      <param name="dataSpace">The desired <see cref="T:System.Data.Metadata.Edm.DataSpace" /> of the XSD.</param>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityFrameworkVersions.Version1">
+      <summary>A read-only property that represents version 1 of the Entity Framework.</summary>
+      <returns>A <see cref="T:System.Version" /> object that represents version 1 of the Entity Framework.</returns>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityFrameworkVersions.Version2">
+      <summary>A read-only property that represents version 2 of the Entity Framework.</summary>
+      <returns>A <see cref="T:System.Version" /> object that represents version 2 of the Entity Framework.</returns>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityModelSchemaGenerator">
+      <summary>Generates conceptual schema definition language (CSDL) and mapping specification language (MSL), based on store schema definition language (SSDL).</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.#ctor(System.Data.Metadata.Edm.EntityContainer)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityModelSchemaGenerator" /> class.</summary>
+      <param name="storeEntityContainer">The storage model <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> from which conceptual and mapping metadata is created.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.#ctor(System.Data.Metadata.Edm.EntityContainer,System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityModelSchemaGenerator" /> class.</summary>
+      <param name="storeEntityContainer">The storage model <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> from which conceptual and mapping metadata is created.</param>
+      <param name="namespaceName">The name for the conceptual model namespace. If this value is null, the <paramref name="storeEntityContainer" /> name is used for the namespace name.</param>
+      <param name="modelEntityContainerName">The EntityContainer name declared in the conceptual model.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityModelSchemaGenerator.EdmItemCollection">
+      <summary>Gets the <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> that was created by the <see cref="M:System.Data.Entity.Design.EntityModelSchemaGenerator.GenerateMetadata" /> method.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> object that contains the conceptual schema definition language (CSDL).</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityModelSchemaGenerator.EntityContainer">
+      <summary>Gets the conceptual model <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> that was created by the <see cref="M:System.Data.Entity.Design.EntityModelSchemaGenerator.GenerateMetadata" /> method.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> object that contains the conceptual model EntityContainer.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityModelSchemaGenerator.GenerateForeignKeyProperties">
+      <summary>Gets or sets the flag for generating foreign key properties in a conceptual model.</summary>
+      <returns>If the value of this property is set to true then foreign key properties are generated in the conceptual model; otherwise foreign key properties are not generated in the conceptual model.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.GenerateMetadata">
+      <summary>Generates the conceptual model metadata information and returns any schema errors.</summary>
+      <returns>A collection of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.GenerateMetadata(System.Version)">
+      <summary>Generates the conceptual model metadata information and returns any schema errors.</summary>
+      <returns>A collection of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects.</returns>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityModelSchemaGenerator.PluralizationService">
+      <summary>Gets or sets the <see cref="T:System.Data.Entity.Design.PluralizationServices.PluralizationService" /> value that indicates the service used when generating a model.</summary>
+      <returns>The <see cref="T:System.Data.Entity.Design.PluralizationServices.PluralizationService" /> value that indicates the service used when generating a model.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.WriteModelSchema(System.String)">
+      <summary>Writes the generated conceptual schema definition language (CSDL) to the specified file.</summary>
+      <param name="outputFileName">The name of the output file.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.WriteModelSchema(System.Xml.XmlWriter)">
+      <summary>Writes the generated conceptual schema definition language (CSDL) to an <see cref="T:System.Xml.XmlWriter" /> object.</summary>
+      <param name="writer">The <see cref="T:System.Xml.XmlWriter" /> to which the CSDL is written.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.WriteStorageMapping(System.String)">
+      <summary>Writes the generated mapping specification language (MSL) to the specified file.</summary>
+      <param name="outputFileName">The name of the output file.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityModelSchemaGenerator.WriteStorageMapping(System.Xml.XmlWriter)">
+      <summary>Writes the generated mapping specification language (MSL) to an <see cref="T:System.Xml.XmlWriter" /> object.</summary>
+      <param name="writer">The <see cref="T:System.Xml.XmlWriter" /> to which the MSL is written.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityStoreSchemaFilterEffect">
+      <summary>Specifies whether to allow or exclude database objects that match the pattern specified in the <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry" />.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterEffect.Allow">
+      <summary>Allow the entries that match the specified pattern.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterEffect.Exclude">
+      <summary>Exclude the entries that match the specified pattern.</summary>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry">
+      <summary>Represents a single filter entry. The filter is used to allow or exclude particular database objects during generation.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.#ctor(System.String,System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry" /> class with the specified catalog, schema, and name filters. </summary>
+      <param name="catalog">The pattern to use to select the appropriate catalog.</param>
+      <param name="schema">The pattern to use to select the appropriate schema or null to not limit by schema.</param>
+      <param name="name">The pattern to use to select the appropriate name or null to not limit by name.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.#ctor(System.String,System.String,System.String,System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes,System.Data.Entity.Design.EntityStoreSchemaFilterEffect)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry" /> class the specified catalog, schema, name, and type filters, and filter effect setting.</summary>
+      <param name="catalog">The pattern to use to select the appropriate catalog or null to not limit by catalog.</param>
+      <param name="schema">The pattern to use to select the appropriate schema or null to not limit by schema.</param>
+      <param name="name">The pattern to use to select the appropriate name or null to not limit by name.</param>
+      <param name="types">The type of objects to apply this filter to.</param>
+      <param name="effect">An <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEffect" /> value indicating whether to allow or exclude entries that match the specified filters.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.Catalog">
+      <summary>Gets the pattern that will be used to select the appropriate catalog.</summary>
+      <returns>The Catalog part of the database name where the database name is formatted as Catalog.Schema.Name.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.Effect">
+      <summary>Gets the effect that this filter has on results.</summary>
+      <returns>An <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEffect" /> value that indicates whether to allow or exclude entries that match the specified filters.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.Name">
+      <summary>Gets the pattern that will be used to select the appropriate name.</summary>
+      <returns>The Name part of the database name where the database name is formatted as Catalog.Schema.Name.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.Schema">
+      <summary>Gets the pattern that will be used to select the appropriate schema.</summary>
+      <returns>The Schema part of the database name where the database name is formatted as Catalog.Schema.Name.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaFilterEntry.Types">
+      <summary>Gets the types of objects that this filter applies to.</summary>
+      <returns>An <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes" /> value indicating the types of objects to apply to the filter to.</returns>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes">
+      <summary>Specifies the store object type to apply the schema filter to.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes.None">
+      <summary>Initial value. This is not a valid value to apply.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes.Table">
+      <summary>Apply the filter to table object types.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes.View">
+      <summary>Apply the filter to view object types.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes.Function">
+      <summary>Apply this filter to function object types.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.EntityStoreSchemaFilterObjectTypes.All">
+      <summary>Apply the filter to all object types.</summary>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityStoreSchemaGenerator">
+      <summary>Provides methods and properties for loading database schema information and generating store schema definition language (SSDL).</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.#ctor(System.String,System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityStoreSchemaGenerator" /> class. </summary>
+      <param name="providerInvariantName">The invariant name of a provider.The invariant name is a name that can be used programmatically to refer to the data provider. You can retrieve information about all of the data providers installed on the local computer by using the <see cref="M:System.Data.Common.DbProviderFactories.GetFactoryClasses" />  method.</param>
+      <param name="connectionString">The connection used to open the database.</param>
+      <param name="namespaceName">The namespace name for the store schema definition language (SSDL).</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.CreateStoreSchemaConnection(System.String,System.String)">
+      <summary>Creates an <see cref="T:System.Data.EntityClient.EntityConnection" /> loaded with the conceptual schema metadata of the specified the provider.</summary>
+      <returns>An <see cref="T:System.Data.EntityClient.EntityConnection" /> that can query the <see cref="F:System.Data.Common.DbProviderManifest.ConceptualSchemaDefinition" /> for the provider.</returns>
+      <param name="providerInvariantName">The invariant name of a provider.The invariant name is a name that can be used programmatically to refer to the data provider. You can retrieve information about all of the data providers installed on the local computer by using the <see cref="M:System.Data.Common.DbProviderFactories.GetFactoryClasses" />  method.</param>
+      <param name="connectionString">The connection used to open the database.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaGenerator.EntityContainer">
+      <summary>Gets the storage model <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> that was created. The returned <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> is the same as the <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> in the <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> that is returned by the <see cref="P:System.Data.Entity.Design.EntityStoreSchemaGenerator.StoreItemCollection" /> property.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.EntityContainer" /> object.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaGenerator.GenerateForeignKeyProperties">
+      <summary>Gets or sets the flag for generating foreign key properties in a storage model.</summary>
+      <returns>true (True in Visual Basic) if foreign key properties are generated in the storage model; false (False in Visual Basic) otherwise.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.GenerateStoreMetadata">
+      <summary>Generates store metadata and returns any schema errors.</summary>
+      <returns>A collection of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.GenerateStoreMetadata(System.Collections.Generic.IEnumerable{System.Data.Entity.Design.EntityStoreSchemaFilterEntry})">
+      <summary>Generates store metadata and returns any schema errors.</summary>
+      <returns>A collection of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects.</returns>
+      <param name="filters">An <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry" /> that specifies which database objects to allow or exclude during generation.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.GenerateStoreMetadata(System.Collections.Generic.IEnumerable{System.Data.Entity.Design.EntityStoreSchemaFilterEntry},System.Version)">
+      <summary>Generates store schema definition language (SSDL) and returns any schema errors.</summary>
+      <returns>A collection of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" /> objects.</returns>
+      <param name="filters">An <see cref="T:System.Data.Entity.Design.EntityStoreSchemaFilterEntry" /> that specifies which database objects to allow or exclude during generation.</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityStoreSchemaGenerator.StoreItemCollection">
+      <summary>Gets the <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> that was created.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> object.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.WriteStoreSchema(System.String)">
+      <summary>Writes the generated store schema definition language (SSDL) to a file.</summary>
+      <param name="outputFileName">The name of the output file.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityStoreSchemaGenerator.WriteStoreSchema(System.Xml.XmlWriter)">
+      <summary>Writes the generated store schema definition language (SSDL) to an <see cref="T:System.Xml.XmlWriter" /> object.</summary>
+      <param name="writer">The <see cref="T:System.Xml.XmlWriter" /> to which the SSDL is written.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.EntityViewGenerator">
+      <summary>Generates views for the extents in the <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />, and creates a source code file for a type that will cache these views.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityViewGenerator" /> class with a <see cref="F:System.Data.Entity.Design.LanguageOption.GenerateCSharpCode" /> language option.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.#ctor(System.Data.Entity.Design.LanguageOption)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.EntityViewGenerator" /> class with the specified <see cref="T:System.Data.Entity.Design.LanguageOption" />.</summary>
+      <param name="languageOption">One of the <see cref="T:System.Data.Entity.Design.LanguageOption" /> values that specifies the language of the generated code. The default language is C#.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.GenerateViews(System.Data.Mapping.StorageMappingItemCollection,System.IO.TextWriter)">
+      <summary>Generates views at compile time for the extents in a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />. Sends a source code file to a <see cref="T:System.IO.TextWriter" /> to make these views available at run time.</summary>
+      <returns>A list that contains any generated errors.</returns>
+      <param name="mappingCollection">The <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> from which views will be generated. </param>
+      <param name="outputWriter">The <see cref="T:System.IO.TextWriter" /> to which the generated code will be sent.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.GenerateViews(System.Data.Mapping.StorageMappingItemCollection,System.IO.TextWriter,System.Version)">
+      <summary>Generates views at compile time for the extents in a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />. Sends a source code file to a <see cref="T:System.IO.TextWriter" /> to make these views available at run time.</summary>
+      <returns>A list that contains any generated errors.</returns>
+      <param name="mappingCollection">The <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> to be validated.</param>
+      <param name="outputWriter">The <see cref="T:System.IO.TextWriter" /> to which the output is written.</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.GenerateViews(System.Data.Mapping.StorageMappingItemCollection,System.String)">
+      <summary>Generates views at compile time for the extents in a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />. Writes a source code file to a specified location that makes the views available at run time.</summary>
+      <returns>A list that contains any generated errors.</returns>
+      <param name="mappingCollection">The <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> from which views will be generated.</param>
+      <param name="outputPath">The <see cref="T:System.String" /> that specifies the location to which the source code file will be written.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.EntityViewGenerator.LanguageOption">
+      <summary>Gets or sets a <see cref="T:System.Data.Entity.Design.LanguageOption" /> value that indicates the language of the generated code.</summary>
+      <returns>One of the <see cref="T:System.Data.Entity.Design.LanguageOption" /> values. The default is <see cref="F:System.Data.Entity.Design.LanguageOption.GenerateCSharpCode" />.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.Validate(System.Data.Mapping.StorageMappingItemCollection)">
+      <summary>Validates a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />.</summary>
+      <returns>A list that contains any generated errors.</returns>
+      <param name="mappingCollection">The <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> to be validated.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.EntityViewGenerator.Validate(System.Data.Mapping.StorageMappingItemCollection,System.Version)">
+      <summary>Validates a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" />.</summary>
+      <returns>A list that contains any validation errors. </returns>
+      <param name="mappingCollection">The <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> to be validated.</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.LanguageOption">
+      <summary>Specifies the language for the generated code.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.LanguageOption.GenerateCSharpCode">
+      <summary>C# code. This is the default.</summary>
+    </member>
+    <member name="F:System.Data.Entity.Design.LanguageOption.GenerateVBCode">
+      <summary>Visual Basic code. </summary>
+    </member>
+    <member name="T:System.Data.Entity.Design.MetadataItemCollectionFactory">
+      <summary>Represents a set of methods for creating metadata <see cref="T:System.Data.Metadata.Edm.ItemCollection" /> instances.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateEdmItemCollection(System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Creates an <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> and loads the metadata that is contained in the <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" />.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> that contains the specified metadata.</returns>
+      <param name="readers">An <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" /> that contains the metadata files.</param>
+      <param name="errors">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" />. Any errors that are generated during the <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> creation are added to the list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateEdmItemCollection(System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Version,System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Creates an <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> and loads the metadata that is contained in the <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" />.</summary>
+      <returns>An <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> that contains the specified metadata.</returns>
+      <param name="readers">An <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" /> that contains the metadata files.</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+      <param name="errors">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" />. Any errors that are generated during the <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> creation are added to the list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateStorageMappingItemCollection(System.Data.Metadata.Edm.EdmItemCollection,System.Data.Metadata.Edm.StoreItemCollection,System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Creates a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> and loads the metadata that is contained in the specified <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" />, <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" />, and collection of <see cref="T:System.Xml.XmlReader" /> objects.</summary>
+      <returns>A <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> that contains the specified metadata.</returns>
+      <param name="edmCollection">An <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> object.</param>
+      <param name="storeCollection">A <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> object.</param>
+      <param name="readers">An <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" /> containing the metadata files.</param>
+      <param name="errors">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" />. Any errors generated during the <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> creation are added to the list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateStorageMappingItemCollection(System.Data.Metadata.Edm.EdmItemCollection,System.Data.Metadata.Edm.StoreItemCollection,System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Version,System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Creates a <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> from the mapping information in the <see cref="T:System.Xml.XmlReader" /> objects and the metadata in the specified <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> and <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> objects.</summary>
+      <returns>A <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> that contains the specified metadata.</returns>
+      <param name="edmCollection">An <see cref="T:System.Data.Metadata.Edm.EdmItemCollection" /> object.</param>
+      <param name="storeCollection">A <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> object.</param>
+      <param name="readers">An <see cref="T:System.Collections.IEnumerable" /> of <see cref="T:System.Xml.XmlReader" /> containing the metadata files.</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+      <param name="errors">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Data.Metadata.Edm.EdmSchemaError" />. Any errors generated during the <see cref="T:System.Data.Mapping.StorageMappingItemCollection" /> creation are added to the list.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateStoreItemCollection(System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Constructs a <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> and provides a list of errors and warnings.</summary>
+      <returns>A <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" />.</returns>
+      <param name="readers">A collection of <see cref="T:System.Xml.XmlReader" /> objects, each of which each reads from a storage model file. The storage model file is written in the store schema definition language (SSDL).</param>
+      <param name="errors">A list of errors that were encountered while loading the SSDL metadata.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.MetadataItemCollectionFactory.CreateStoreItemCollection(System.Collections.Generic.IEnumerable{System.Xml.XmlReader},System.Version,System.Collections.Generic.IList{System.Data.Metadata.Edm.EdmSchemaError}@)">
+      <summary>Constructs a <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" /> and provides a list of errors and warnings.</summary>
+      <returns>A <see cref="T:System.Data.Metadata.Edm.StoreItemCollection" />.</returns>
+      <param name="readers">A collection of <see cref="T:System.Xml.XmlReader" /> objects, each of which each reads from a storage model file. The storage model file is written in the store schema definition language (SSDL).</param>
+      <param name="targetEntityFrameworkVersion">The property of <see cref="T:System.Data.Entity.Design.EntityFrameworkVersions" /> that corresponds to the targeted version of the Entity Framework.</param>
+      <param name="errors">A list of errors that were encountered while loading the SSDL metadata.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.PropertyGeneratedEventArgs">
+      <summary>Provides data for the <see cref="E:System.Data.Entity.Design.EntityClassGenerator.OnPropertyGenerated" /> event. </summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.PropertyGeneratedEventArgs.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.PropertyGeneratedEventArgs" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.PropertyGeneratedEventArgs.#ctor(System.Data.Metadata.Edm.MetadataItem,System.String,System.CodeDom.CodeTypeReference)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.PropertyGeneratedEventArgs" /> class with the specified property source, backing field name, and return type.</summary>
+      <param name="propertySource">The <see cref="T:System.Data.Metadata.Edm.MetadataItem" /> object that is the source of the property.</param>
+      <param name="backingFieldName">The name of the field that backs the property.</param>
+      <param name="returnType">The base type of the property.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.AdditionalAttributes">
+      <summary>Gets a List(CodeAttributeDeclaration) of attributes that will be added to the property.</summary>
+      <returns>A collection that contains the attributes that will be added to the property. The collection is empty if no attributes will be added.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.AdditionalGetStatements">
+      <summary>Gets a List(CodeStatement) containing the get statements to be added to the property.</summary>
+      <returns>A collection that contains the get statements to be added to the property.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.AdditionalSetStatements">
+      <summary>Gets a List(CodeStatement) containing the set statements to be added to the property.</summary>
+      <returns>A collection that contains the set statements to be added to the property. </returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.BackingFieldName">
+      <summary>Gets the name of the field that backs the property.</summary>
+      <returns>The name of the field that backs the property. This can be null for navigation properties.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.PropertySource">
+      <summary>Gets the <see cref="T:System.Data.Metadata.Edm.MetadataItem" /> object that is the source of the property.</summary>
+      <returns>The <see cref="T:System.Data.Metadata.Edm.MetadataItem" /> object that is the source of the property.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.PropertyGeneratedEventArgs.ReturnType">
+      <summary>Gets or sets the type of the property.</summary>
+      <returns>The type of the property. </returns>
+    </member>
+    <member name="T:System.Data.Entity.Design.PropertyGeneratedEventHandler">
+      <summary>Represents the method that will handle the <see cref="E:System.Data.Entity.Design.EntityClassGenerator.OnPropertyGenerated" /> event. </summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">The data for the event.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.TypeGeneratedEventArgs">
+      <summary>Provides data for the <see cref="E:System.Data.Entity.Design.EntityClassGenerator.OnTypeGenerated" /> event. </summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.TypeGeneratedEventArgs.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.TypeGeneratedEventArgs" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.TypeGeneratedEventArgs.#ctor(System.Data.Metadata.Edm.GlobalItem,System.CodeDom.CodeTypeReference)">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.TypeGeneratedEventArgs" /> class with the specified source and base type. </summary>
+      <param name="typeSource">The source of the type.</param>
+      <param name="baseType">The base type.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.TypeGeneratedEventArgs.AdditionalAttributes">
+      <summary>Gets a List(CodeAttributeDeclaration) containing the attributes that will be added to the type.</summary>
+      <returns>A collection that contains the attributes that will be added to the type. The collection is empty if no attributes will be added to the type.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.TypeGeneratedEventArgs.AdditionalInterfaces">
+      <summary>Gets a List(Type) containing the interfaces that will be added to the type.</summary>
+      <returns>A collection that contains the interfaces that will be added to the type. The collection is empty if no interfaces will be added.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.TypeGeneratedEventArgs.AdditionalMembers">
+      <summary>Gets a List(CodeTypeMember) containing the members that will be added to the type.</summary>
+      <returns>A collection that contains the members that will be added to the type. The collection is empty if no members will be added.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.TypeGeneratedEventArgs.BaseType">
+      <summary>Gets or sets the base type.</summary>
+      <returns>The base type. The default is <see cref="T:System.Data.Objects.DataClasses.EntityObject" />, <see cref="T:System.Data.Objects.DataClasses.ComplexObject" />, or <see cref="T:System.Data.Objects.ObjectContext" />, depending on the <see cref="P:System.Data.Entity.Design.TypeGeneratedEventArgs.TypeSource" /> property value.</returns>
+    </member>
+    <member name="P:System.Data.Entity.Design.TypeGeneratedEventArgs.TypeSource">
+      <summary>Gets the <see cref="T:System.Data.Metadata.Edm.GlobalItem" /> object that is the source of the type.</summary>
+      <returns>The <see cref="T:System.Data.Metadata.Edm.GlobalItem" /> object that is the source of the type.</returns>
+    </member>
+    <member name="T:System.Data.Entity.Design.TypeGeneratedEventHandler">
+      <summary>Represents the method that will handle the <see cref="E:System.Data.Entity.Design.EntityClassGenerator.OnTypeGenerated" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">The data for the event.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.AspNet.EntityDesignerBuildProvider">
+      <summary>Extracts the model and mapping portions of .edmx files under the App_Code directory of an ASP.NET Web site, and embeds them as resources in the assembly that is dynamically compiled by the ASP.NET runtime. </summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityDesignerBuildProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.AspNet.EntityDesignerBuildProvider" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityDesignerBuildProvider.GenerateCode(System.Web.Compilation.AssemblyBuilder)">
+      <summary>Generates C# or Visual Basic code based on the model and mapping portions of an .edmx file.</summary>
+      <param name="assemblyBuilder">A container for building an assembly.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityDesignerBuildProvider.GetResultFlags(System.CodeDom.Compiler.CompilerResults)">
+      <summary>Provides instructions to the ASP.NET compiler about building a project.</summary>
+      <returns>The required behavior when a virtual path is built.</returns>
+      <param name="results">The results of compilation returned from the ASP.NET compiler.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.AspNet.EntityModelBuildProvider">
+      <summary>Represents the CSDL build provider for the ASP.NET build environment.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityModelBuildProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.AspNet.EntityModelBuildProvider" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityModelBuildProvider.GenerateCode(System.Web.Compilation.AssemblyBuilder)">
+      <summary>Generates source code for the entity model build provider, and adds the source code to a specified assembly builder.</summary>
+      <param name="assemblyBuilder">The assembly builder that references the source code generated by the build provider.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.EntityModelBuildProvider.GetResultFlags(System.CodeDom.Compiler.CompilerResults)">
+      <summary>Returns a value indicating actions required when a entity model build provider is built.</summary>
+      <returns>The <see cref="F:System.Web.Compilation.BuildProviderResultFlags.ShutdownAppDomainOnChange" /> value, which indicates that the containing <see cref="T:System.AppDomain" /> will be unloaded and restarted.</returns>
+      <param name="results">The compilation results for the build provider.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.AspNet.MappingModelBuildProvider">
+      <summary>Represents the MSL build provider for the ASP.NET build environment.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.MappingModelBuildProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.AspNet.MappingModelBuildProvider" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.MappingModelBuildProvider.GenerateCode(System.Web.Compilation.AssemblyBuilder)">
+      <summary>Embeds the MSL file as a resource to the specified assembly builder.</summary>
+      <param name="assemblyBuilder">The assembly builder that references the source code generated by the build provider.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.MappingModelBuildProvider.GetResultFlags(System.CodeDom.Compiler.CompilerResults)">
+      <summary>Returns a value indicating actions required when a storage model build provider is built.</summary>
+      <returns>The <see cref="F:System.Web.Compilation.BuildProviderResultFlags.ShutdownAppDomainOnChange" /> value, which indicates that the containing <see cref="T:System.AppDomain" /> will be unloaded and restarted.</returns>
+      <param name="results">The compilation results for the build provider.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.AspNet.StorageModelBuildProvider">
+      <summary>Represents the SSDL build provider for the ASP.NET build environment.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.StorageModelBuildProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.AspNet.StorageModelBuildProvider" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.StorageModelBuildProvider.GenerateCode(System.Web.Compilation.AssemblyBuilder)">
+      <summary>Embeds the SSDL file as a resource to the specified assembly builder.</summary>
+      <param name="assemblyBuilder">The assembly builder that references the source code generated by the build provider.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.AspNet.StorageModelBuildProvider.GetResultFlags(System.CodeDom.Compiler.CompilerResults)">
+      <summary>Returns a value indicating actions required when a storage model build provider is built.</summary>
+      <returns>The <see cref="F:System.Web.Compilation.BuildProviderResultFlags.ShutdownAppDomainOnChange" /> value, which indicates that the containing <see cref="T:System.AppDomain" /> will be unloaded and restarted.</returns>
+      <param name="results">The compilation results for the build provider.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.PluralizationServices.ICustomPluralizationMapping">
+      <summary>Represents a collection of the singular and plural forms of words.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.ICustomPluralizationMapping.AddWord(System.String,System.String)">
+      <summary>Adds singular and plural forms of a word to the <see cref="T:System.Data.Entity.Design.PluralizationServices.ICustomPluralizationMapping" /> object.</summary>
+      <param name="singular">The singular version of the word added to the <see cref="T:System.Data.Entity.Design.PluralizationService" />.</param>
+      <param name="plural">The plural version of the word added to the <see cref="T:System.Data.Entity.Design.PluralizationService" />.</param>
+    </member>
+    <member name="T:System.Data.Entity.Design.PluralizationServices.PluralizationService">
+      <summary>Provides methods for constructing plural and singular forms of words.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Data.Entity.Design.PluralizationServices" /> class.</summary>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.CreateService(System.Globalization.CultureInfo)">
+      <summary>Creates a <see cref="T:System.Data.Entity.Design.PluralizationServices.PluralizationService" /> that applies language rules that correspond to the specified <see cref="T:System.Globalization.CultureInfo" />.</summary>
+      <returns>A <see cref="T:System.Data.Entity.Design.PluralizationServices.PluralizationService" />.</returns>
+      <param name="culture">The <see cref="T:System.Globalization.CultureInfo" /> that corresponds to the language rules applied for singular and plural forms of words.</param>
+    </member>
+    <member name="P:System.Data.Entity.Design.PluralizationServices.PluralizationService.Culture">
+      <summary>Gets or sets the <see cref="T:System.Data.Entity.Design.PluralizationServices.PluralizationService" /> culture.</summary>
+      <returns>An object that specifies which language rules to apply for singulars and plurals.</returns>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.IsPlural(System.String)">
+      <summary>Determines if the specified word is plural.</summary>
+      <returns>true if the word is plural; otherwise, false.</returns>
+      <param name="word">The <see cref="T:System.String" /> value to be analyzed.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.IsSingular(System.String)">
+      <summary>Determines if the specified word is singular.</summary>
+      <returns>true if the word is singular; otherwise, false.</returns>
+      <param name="word">The value to be analyzed.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.Pluralize(System.String)">
+      <summary>Returns the plural form of the specified word</summary>
+      <returns>A <see cref="T:System.String" /> that is the plural form of the input parameter.</returns>
+      <param name="word">The word to be made plural.</param>
+    </member>
+    <member name="M:System.Data.Entity.Design.PluralizationServices.PluralizationService.Singularize(System.String)">
+      <summary>Returns the singular form of the specified word.</summary>
+      <returns>The singular form of the input parameter.</returns>
+      <param name="word">The  the word to be made singular.</param>
+    </member>
+  </members>
+</doc>

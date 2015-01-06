@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITaskManager7", "ITaskManager\ITaskManager7.csproj", "{29772BE4-07EA-4461-8A27-33FF139C7041}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPropertyPane7", "IPropertyPane\IPropertyPane7.csproj", "{15DA77A0-6527-489A-AC71-B04E05999C75}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{29772BE4-07EA-4461-8A27-33FF139C7041}.Debug.ActiveCfg = Debug|.NET
+		{29772BE4-07EA-4461-8A27-33FF139C7041}.Debug.Build.0 = Debug|.NET
+		{29772BE4-07EA-4461-8A27-33FF139C7041}.Release.ActiveCfg = Release|.NET
+		{29772BE4-07EA-4461-8A27-33FF139C7041}.Release.Build.0 = Release|.NET
+		{15DA77A0-6527-489A-AC71-B04E05999C75}.Debug.ActiveCfg = Debug|.NET
+		{15DA77A0-6527-489A-AC71-B04E05999C75}.Debug.Build.0 = Debug|.NET
+		{15DA77A0-6527-489A-AC71-B04E05999C75}.Release.ActiveCfg = Release|.NET
+		{15DA77A0-6527-489A-AC71-B04E05999C75}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

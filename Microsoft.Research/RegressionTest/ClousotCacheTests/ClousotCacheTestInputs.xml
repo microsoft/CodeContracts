@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TestInputs>
+  <!-- These 4 TestRun must be run together in that order ! -->
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test.cs"
+   CompilerOptions="/optimize /d:FIRST"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test2.cs"
+   CompilerOptions="/optimize /d:FIRST"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test.cs"
+   CompilerOptions="/optimize"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test2.cs"
+   CompilerOptions="/optimize"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <!-- The remaining TestRun's are paired. Each pair must be run in that order -->
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestQuantifiers.cs"
+   CompilerOptions="/optimize /d:FIRST"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -arrays -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer=""  -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   SkipCCI2="true"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestQuantifiers.cs"
+   CompilerOptions="/optimize"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -arrays -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   SkipCCI2="true"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\DB.cs"
+   CompilerOptions="/optimize /d:FIRST /debug-"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\DB.cs"
+   CompilerOptions="/optimize /debug-"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Serialization.cs"
+   CompilerOptions="/optimize /d:FIRST /debug-"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Serialization.cs"
+   CompilerOptions="/optimize /debug-"
+   LibPaths=""
+   References=""
+   Options='-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SerializationInferred.cs"
+   CompilerOptions="/optimize /d:FIRST /debug-"
+   LibPaths=""
+   References=""
+   Options='-includesuggestionsinregression -suggest requires -suggest methodensures -infer methodensures -infer requires -nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SerializationInferred.cs"
+   CompilerOptions="/optimize /debug-"
+   LibPaths=""
+   References=""
+   Options='-includesuggestionsinregression -suggest requires -suggest methodensures  -infer methodensures -infer requires -nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="" -cacheName:Test'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+   Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SemanticBaseliningTests.cs"
+   CompilerOptions="/optimize /d:FIRST"
+   LibPaths=""
+   References=""
+   Options='-show progress,validations -emitErrorOnCacheLookup -clearCache -cache -cacheServer="" -cacheName:Test -infer methodensures -suggest methodensures -suggest assumes -suggest requires -nonnull -bounds -repairs -premode combined -saveSemanticBaseline:semanticTest'
+   ContractReferenceAssemblies="true"
+   Exe="false"
+   Compiler="CS"
+   />
+  <TestRun
+  Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SemanticBaseliningTests.cs"
+  CompilerOptions="/optimize"
+  LibPaths=""
+  References=""
+  Options='-show progress,validations -emitErrorOnCacheLookup -cache -cacheServer="" -cacheName:Test -infer methodensures -suggest methodensures -suggest assumes -suggest requires -nonnull -bounds -repairs -premode combined -useSemanticBaseline:semanticTest -skipIdenticalMethods=false'
+  ContractReferenceAssemblies="true"
+  Exe="false"
+  Compiler="CS"
+   />
+<!--
+  <TestRun
+      Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestPurity.cs"
+      CompilerOptions="/optimize /d:FIRST"
+      LibPaths=""
+      References=""
+      Options="-nonnull:noobl -bounds:noobl -arrays:arraypurity -infer arraypurity -suggest arraypurity -show progress -cache -emitErrorOnCacheLookup -cacheName:Test"
+      ContractReferenceAssemblies="true"
+      Exe="false"
+      Compiler="CS"
+      SkipCCI2="true"
+   />
+
+  <TestRun
+      Name="Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestPurity.cs"
+      CompilerOptions="/optimize"
+      LibPaths=""
+      References=""
+      Options="-nonnull:noobl -bounds:noobl -arrays:arraypurity -infer arraypurity -suggest arraypurity -show progress -cache -emitErrorOnCacheLookup -cacheName:Test"
+      ContractReferenceAssemblies="true"
+      Exe="false"
+      Compiler="CS"
+      SkipCCI2="true"
+   />
+-->
+</TestInputs>

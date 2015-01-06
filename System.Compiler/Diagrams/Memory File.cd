@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" DisplayMemberTypes="true">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Metadata.MemoryCursor">
+    <Position X="5.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>MemoryMappedFile.cs</FileName>
+      <HashCode>4gYAgAQDIwAAABkjAAAAgADUJCACRGAEFUBVUgECAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Metadata.MemoryMappedFile">
+    <Position X="0.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>MemoryMappedFile.cs</FileName>
+      <HashCode>AQAAAAAAEGAAAAAACEAASCBEAAACAAAAAABAAAAAQAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="System.Compiler.Metadata.MemoryMappedFile.PageAccess">
+        <TypeIdentifier>
+          <NewMemberFileName>MemoryMappedFile.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="System.Compiler.Metadata.MemoryMappedFile.FileMapAccess">
+        <TypeIdentifier>
+          <NewMemberFileName>MemoryMappedFile.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="System.Compiler.ISourceTextBuffer">
+    <Position X="3.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Compiler.ISourceText">
+    <Position X="3.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAEAAAAAACgAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

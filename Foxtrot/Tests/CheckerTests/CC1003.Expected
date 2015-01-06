@@ -1,0 +1,1 @@
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1003.cs(9,5) : error CC1003: Malformed contract. Found Invariant after assignment in method 'CC1003.ObjectInvariant'.

@@ -1,0 +1,2 @@
+ITaskManager.dll
+IPropertyPage.dll

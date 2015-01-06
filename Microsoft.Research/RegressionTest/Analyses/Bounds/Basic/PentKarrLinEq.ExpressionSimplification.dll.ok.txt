@@ -1,0 +1,18 @@
+Microsoft Clousot, 2007
+Method 1 : ExpressionSimplification.SimplifyExpression.Simplify0(System.Int32,System.Int32)
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 2 : ExpressionSimplification.SimplifyExpression.Simplify1
+Checked 3 assertions: 3 correct 
+Validated: 100%
+Method 3 : ExpressionSimplification.SimplifyExpression.Simplify2(System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(38,7): assertion unproven
+Checked 3 assertions: 2 correct 1 unknown 
+Validated: 66.6%
+Method 4 : ExpressionSimplification.SimplifyExpression.Simplify3(System.Int32,System.Int32)
+Checked 2 assertions: 2 correct 
+Validated: 100%
+Method 5 : ExpressionSimplification.SimplifyExpression.#ctor
+Ok!
+Checked 10 assertions: 9 correct 1 unknown 
+Validated: 90%

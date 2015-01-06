@@ -1,0 +1,24 @@
+﻿<Window x:Class="CloudotControlCenter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cloudot Control Center App" Height="350" Width="975">
+  <Grid Margin="1,2,1,0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Label Grid.Row="0" Grid.Column="0" Content="Cloudot Address"></Label>
+    <TextBox Name="TextBoxForCloudotServiceAddress" Grid.Row="0" Grid.Column="1"></TextBox>
+    <Label Name="LabelForAnalyses" Grid.Row="1" Grid.Column="0" Content="Analyses"></Label>
+    <DataGrid  Name="AnalysesDataGrid" Grid.Row="1" Grid.Column="1" MouseDoubleClick="AnalysesDataGrid_MouseDoubleClick"></DataGrid>
+    <Button Grid.Row="1" Grid.Column="2" Content="Analyze Selected" Click="AnalyzeSelectedEntry"></Button>
+    <Label Grid.Row="2" Grid.Column="0" Content="Log"></Label>
+    <TextBox Name ="TextBoxForLogging" Grid.Row="2" Grid.Column ="1" Height="125" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+  </Grid>
+</Window>

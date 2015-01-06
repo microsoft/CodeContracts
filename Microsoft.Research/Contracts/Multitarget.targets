@@ -1,0 +1,631 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--=====================================================================
+      Build project for multiple targets
+
+      To use, add the following in your project (or any subset thereof)
+
+    <ItemGroup>
+      <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+      <MultiTargetReferencePaths Include="c:\"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <ReferenceAssemblyRoot>optional path to directory containing .NetFramework and Silverlight reference assemblies</ReferenceAssemblyRoot>
+      <ContractReferenceOutputPathRoot>optional specific path for contract reference assembly output</ContractReferenceOutputPathRoot> 
+    </PropertyGroup>
+
+    <Import Project="Multitarget.targets"/>
+
+    The following defines are passed to the C# compile depending on the version:
+     SILVERLIGHT;SILVERLIGHT_3_0
+     SILVERLIGHT;SILVERLIGHT_4_0
+     SILVERLIGHT;SILVERLIGHT_5_0
+     NETFRAMEWORK;NETFRAMEWORK_3_5
+     NETFRAMEWORK;NETFRAMEWORK_4_0
+     NETFRAMEWORK;NETFRAMEWORK_4_5
+
+  ======================================================================-->
+  <Import Project="AsmMeta.MsBuild.Tasks"/>
+
+  <PropertyGroup>
+    <ReferenceAssemblyRoot>..\..\Imported\ReferenceAssemblies</ReferenceAssemblyRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MultiTargetProjectReferenceNames Include="@(ProjectReference->'%(Name)')"/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target">
+      <TargetFramework>Silverlight</TargetFramework>
+      <ExternalContracts>true</ExternalContracts>
+      <TargetDefinesCS>SILVERLIGHT%3BSILVERLIGHT_3_0%3BSILVERLIGHT_4_0_WP</TargetDefinesCS>
+      <TargetDefinesVB>SILVERLIGHT=-1%2CSILVERLIGHT_3_0=-1%2CSILVERLIGHT_4_0_WP=-1</TargetDefinesVB>
+      <TargetDir>Silverlight\v4.0\Profile\WindowsPhone\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\Silverlight\v3.0\Target">
+      <TargetFramework>Silverlight</TargetFramework>
+      <ExternalContracts>true</ExternalContracts>
+      <TargetDefinesCS>SILVERLIGHT%3BSILVERLIGHT_3_0</TargetDefinesCS>
+      <TargetDefinesVB>SILVERLIGHT=-1%2CSILVERLIGHT_3_0=-1</TargetDefinesVB>
+      <TargetDir>Silverlight\v3.0\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\Silverlight\v4.0\Target">
+      <TargetFramework>Silverlight</TargetFramework>
+      <TargetDefinesCS>SILVERLIGHT%3BSILVERLIGHT_4_0</TargetDefinesCS>
+      <TargetDefinesVB>SILVERLIGHT=-1%2CSILVERLIGHT_4_0=-1</TargetDefinesVB>
+      <TargetDir>Silverlight\v4.0\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\Silverlight\v5.0\Target">
+      <TargetFramework>Silverlight</TargetFramework>
+      <TargetDefinesCS>SILVERLIGHT%3BSILVERLIGHT_5_0</TargetDefinesCS>
+      <TargetDefinesVB>SILVERLIGHT=-1%2CSILVERLIGHT_5_0=-1</TargetDefinesVB>
+      <TargetDir>Silverlight\v5.0\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\v3.5\Target">
+      <TargetFramework>NetFramework</TargetFramework>
+      <ExternalContracts>true</ExternalContracts>
+      <TargetDefinesCS>NETFRAMEWORK%3BNETFRAMEWORK_3_5</TargetDefinesCS>
+      <TargetDefinesVB>NETFRAMEWORK=-1%2CNETFRAMEWORK_3_5=-1</TargetDefinesVB>
+      <TargetDir>v3.5\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\.NETFramework\v4.0\Target">
+      <TargetFramework>NetFramework</TargetFramework>
+      <TargetDefinesCS>NETFRAMEWORK%3BNETFRAMEWORK_4_0</TargetDefinesCS>
+      <TargetDefinesVB>NETFRAMEWORK=-1%2CNETFRAMEWORK_4_0=-1</TargetDefinesVB>
+      <TargetDir>.NETFramework\v4.0\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\.NETFramework\v4.5\Target">
+      <TargetFramework>NetFramework</TargetFramework>
+      <TargetDefinesCS>NETFRAMEWORK%3BNETFRAMEWORK_4_0%3BNETFRAMEWORK_4_5</TargetDefinesCS>
+      <TargetDefinesVB>NETFRAMEWORK=-1%2CNETFRAMEWORK_4_0=-1%2CNETFRAMEWORK_4_5=-1</TargetDefinesVB>
+      <TargetDir>.NETFramework\v4.5\</TargetDir>
+    </ReferenceAssemblyDirectories>
+  </ItemGroup>
+
+
+  <!-- Clear PrepareForRunDependsOn to avoid copy to output dir -->
+  <PropertyGroup>
+      <PrepareForRunDependsOn>
+      </PrepareForRunDependsOn>
+      <MultiTargetAbsoluteDefaultOutputPath>@(_OutputPathItem->'%(FullPath)v3.5\$(TargetName)$(TargetExt)')</MultiTargetAbsoluteDefaultOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup
+      Condition="'$(CodeContractsEmitXMLDocs)' == 'true'">
+    <PrepareForRunDependsOn>$(PrepareForRunDependsOn);ContractXmlDocumentation</PrepareForRunDependsOn>
+  </PropertyGroup>
+
+
+  <!-- Trick studio in finding a reasonable target (default to v3.5) -->
+  <Target
+     Name="GetTargetPath"
+     Outputs="$(MultiTargetAbsoluteDefaultOutputPath)"
+     Returns="$(MultiTargetAbsoluteDefaultOutputPath)"
+     >
+    <Message Text="Providing TargetPath=$(MultiTargetAbsoluteDefaultOutputPath) from project $(MSBuildProjectFile)"
+             Importance="high"/>
+  </Target>
+
+  <Target
+     Name="Build"
+     DependsOnTargets="PreDebug;GatherMultiTargets;BuildMultiTargets;RunMultiPostBuild;CodeContractReferenceAssembly"
+     Outputs="$(MultiTargetAbsoluteDefaultOutputPath)"
+     Returns="$(MultiTargetAbsoluteDefaultOutputPath)"
+     >
+    <Message Text="Built $(TargetName) for @(_MultiTargetsBuilt,', ')"
+             Importance="high"/>
+  </Target>
+
+  <Target
+     Name="Clean"
+     DependsOnTargets="PreDebug;GatherMultiTargets;CleanMultiTargets;CoreClean"
+  >
+    <Message Text="Cleaned $(TargetName) for @(_MultiTargetsCleaned,', ')"
+             Importance="high"/>
+  </Target>
+
+
+  <Target
+     Name="PreDebug"
+     >
+<!--
+    <Message Text="Inside project $(MSBuildProjectFile)" Importance="high"/>
+
+    <Message Text="referenced project names @(MultiTargetProjectReferenceNames)" Importance="high"/>
+
+    <Message Text="project references @(_MSBuildProjectReferenceExistent)" Importance="high"/>
+
+
+    <Message Text="resolved project outputs @(_ResolvedProjectReferencePaths)" Importance="high"/>
+-->
+  </Target>
+
+  <Target
+     Name="GatherMultiTargets"
+     Inputs="@(ReferenceAssemblyDirectories)"
+     Outputs="%(ReferenceAssemblyDirectories.TargetDir)\dummy"
+  >
+    <PropertyGroup>
+      <CurrentFrameworkDir>@(ReferenceAssemblyDirectories)</CurrentFrameworkDir>
+      <CurrentExternalContracts>%(ReferenceAssemblyDirectories.ExternalContracts)</CurrentExternalContracts>
+      <CurrentTargetDir>$(TargetDir)%(ReferenceAssemblyDirectories.TargetDir)</CurrentTargetDir>
+      <CurrentRelativeTargetDir>%(ReferenceAssemblyDirectories.TargetDir)</CurrentRelativeTargetDir>
+      <CurrentTargetFramework>%(ReferenceAssemblyDirectories.TargetFramework)</CurrentTargetFramework>
+      <CurrentTargetVersion>%(ReferenceAssemblyDirectories.TargetVersion)</CurrentTargetVersion>
+      <CurrentTargetDefinesCS>%(ReferenceAssemblyDirectories.TargetDefinesCS)</CurrentTargetDefinesCS>
+      <CurrentTargetDefinesVB>%(ReferenceAssemblyDirectories.TargetDefinesVB)</CurrentTargetDefinesVB>
+    </PropertyGroup>
+
+    <Message Text="Selecting by framework $(CurrentFrameworkDir) and %(BuildTargetList.RelativeDir)%(BuildTargetList.FileName)%(BuildTargetList.Extension)" 
+      Importance="low"/>
+
+    <CreateItem
+       Include="$(CurrentFrameworkDir)"
+       AdditionalMetadata="RelativeTargetDir=$(CurrentRelativeTargetDir);TargetDir=$(CurrentTargetDir);TargetFramework=$(CurrentTargetFramework);TargetDefinesCS=$(CurrentTargetDefinesCS);TargetDefinesVB=$(CurrentTargetDefinesVB);ExternalContracts=$(CurrentExternalContracts)"
+       Condition="'$(CurrentFrameworkDir)' == '%(BuildTargetList.RelativeDir)%(BuildTargetList.FileName)%(BuildTargetList.Extension)'"
+    >
+      <Output TaskParameter="Include"
+              ItemName="MultiTargets"/>
+    </CreateItem>
+
+<!--
+    <Message Text="Selecting by framework $(CurrentTargetFramework) with $(CurrentTargetVersion) and %(BuildSilverlightVersions.FileName)%(BuildSilverlightVersions.Extension)" 
+      Importance="high"/>
+
+
+    <CreateItem
+       Include="$(CurrentFrameworkDir)"
+       AdditionalMetadata="RelativeTargetDir=$(CurrentRelativeTargetDir);TargetDir=$(CurrentTargetDir);TargetFramework=$(CurrentTargetFramework);TargetDefinesCS=$(CurrentTargetDefinesCS);TargetDefinesVB=$(CurrentTargetDefinesVB)"
+       Condition="'$(CurrentTargetFramework)' == 'Silverlight' and $(CurrentTargetVersion) == '%(BuildSilverlightVersions.FileName)%(BuildSilverlightVersions.Extension)'"
+    >
+      <Output TaskParameter="Include"
+              ItemName="MultiTargets"/>
+    </CreateItem>
+-->
+<!--
+    <Message Text="Selecting by framework $(CurrentTargetFramework) with $(CurrentTargetVersion) and %(BuildNetFrameworkVersions.FileName)%(BuildNetFrameworkVersions.Extension)" 
+      Importance="high"/>
+
+
+    <CreateItem
+       Include="$(CurrentFrameworkDir)"
+       AdditionalMetadata="RelativeTargetDir=$(CurrentRelativeTargetDir);TargetDir=$(CurrentTargetDir);TargetFramework=$(CurrentTargetFramework);TargetDefinesCS=$(CurrentTargetDefinesCS);TargetDefinesVB=$(CurrentTargetDefinesVB)"
+       Condition="'$(CurrentTargetFramework)' == 'NetFramework' and $(CurrentTargetVersion) == '%(BuildNetFrameworkVersions.FileName)%(BuildNetFrameworkVersions.Extension)' and ('$(MSBuildToolsVersion)' != '3.5' or '$(CurrentRelativeTargetDir)' != '.NetFramework\v4.0\')"
+    >
+      <Output TaskParameter="Include"
+              ItemName="MultiTargets"/>
+    </CreateItem>
+-->
+  </Target>
+
+  <Target
+     Name="BuildMultiTargets"
+     Condition="@(MultiTargets) != ''"
+     DependsOnTargets="GatherMultiTargets;ResolveKeySource"
+     Inputs="$(MSBuildAllProjects);
+             @(Compile)"
+     Outputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentOutputDirectory>%(MultiTargets.TargetDir)</CurrentOutputDirectory>
+      <CurrentRelativeOutputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeOutputDirectory>
+      <CurrentTargetFramework>%(MultiTargets.TargetFramework)</CurrentTargetFramework>
+      <CurrentTargetVersion>%(MultiTargets.TargetVersion)</CurrentTargetVersion>
+      <CurrentExternalContracts>%(MultiTargets.ExternalContracts)</CurrentExternalContracts>
+      <CurrentTargetDefinesCS>%(MultiTargets.TargetDefinesCS)</CurrentTargetDefinesCS>
+      <CurrentTargetDefinesVB>%(MultiTargets.TargetDefinesVB)</CurrentTargetDefinesVB>
+      <CurrentOutputAssembly>$(CurrentOutputDirectory)$(TargetName)$(TargetExt)</CurrentOutputAssembly>
+      <CurrentRelativeInputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeInputDirectory>
+    </PropertyGroup>
+
+    <PropertyGroup
+      Condition="'$(CodeContractsEmitXMLDocs)'=='true'">
+      <CurrentOutputXml>$(CurrentOutputDirectory)$(TargetName).xml</CurrentOutputXml>
+    </PropertyGroup>
+
+    <Message
+       Condition="'$(Language)'=='C#'"
+       Text="Building for $(CurrentTargetFramework) to $(CurrentRelativeOutputDirectory) with $(CurrentTargetDefinesCS)"/>
+    <Message
+       Condition="'$(Language)'=='VB'"
+       Text="Building for $(CurrentTargetFramework) to $(CurrentRelativeOutputDirectory) with $(CurrentTargetDefinesVB)"/>
+
+    <ResolveAssemblyReference
+       Condition="'$(NoStdLib)'!='true'"
+       AllowedAssemblyExtensions=".dll"
+       SearchPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
+       Assemblies="mscorlib"
+       FindRelatedFiles="false"
+       FindSatellites="false"
+       FindSerializationAssemblies="false"
+       IgnoreDefaultInstalledAssemblyTables="true"
+       TargetProcessorArchitecture="x86"
+       Silent="true"
+       >
+      <Output TaskParameter="ResolvedFiles" ItemName="CurrentMscorlibReferencePath"/>
+    </ResolveAssemblyReference>
+
+    <Message Text="CurrentMscorlibReferencePath is @(CurrentMscorlibReferencePath)"/>
+
+    <ItemGroup
+       Condition="'$(NoStdLib)'!='true'"
+       >
+      <CurrentReferencePath Include="@(CurrentMscorlibReferencePath)"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <MultiTargetReference Include="@(Reference)"/>
+    </ItemGroup>
+
+    <Message Text="MultiTargetReference is @(MultiTargetReference)"/>
+    <Message Text="Reference search path is @(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"/>
+
+    <ItemGroup
+      Condition="'$(CurrentExternalContracts)' == 'true' and '$(TargetName)' != 'Microsoft.Contracts' and '$(TargetName)' != 'mscorlib'">
+      <MultiTargetProjectReferenceNames Include="Microsoft.Contracts"/>
+    </ItemGroup>                         
+
+    <Message Text="ProjectReferenceNames = @(MultiTargetProjectReferenceNames)"/>
+
+    <ResolveAssemblyReference
+       AllowedAssemblyExtensions=".dll;.exe"
+       SearchPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
+       Assemblies="@(MultiTargetReference);@(MultiTargetProjectReferenceNames)"
+       FindRelatedFiles="false"
+       FindSatellites="false"
+       FindSerializationAssemblies="false"
+       IgnoreDefaultInstalledAssemblyTables="true"
+       TargetProcessorArchitecture="x86"
+       Silent="true"
+       >
+      <Output TaskParameter="ResolvedFiles" ItemName="_CurrentReferencePath"/>
+    </ResolveAssemblyReference>
+
+    <ItemGroup>
+      <CurrentReferencePath Include="@(_CurrentReferencePath)"/>
+    </ItemGroup>
+
+    <MakeDir
+       Condition="!Exists('$(CurrentOutputDirectory)')"
+       Directories="$(CurrentOutputDirectory)"
+       />
+
+    <Message Text="Resolved References = @(CurrentReferencePath)"/>
+
+
+    <Csc  
+       Condition="'$(Language)'=='C#'"
+       AdditionalLibPaths="$(AdditionalLibPaths)"
+       AddModules="@(AddModules)"
+       AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+       BaseAddress="$(BaseAddress)"
+       CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+       CodePage="$(CodePage)"
+       DebugType="$(DebugType)"
+       DefineConstants="$(DefineConstants);$(CurrentTargetDefinesCS)"
+       DelaySign="$(DelaySign)"
+       DisabledWarnings="$(NoWarn)"
+       DocumentationFile="$(CurrentOutputXml)"
+       EmitDebugInformation="$(DebugSymbols)"
+       ErrorReport="$(ErrorReport)"
+       FileAlignment="$(FileAlignment)"
+       GenerateFullPaths="$(GenerateFullPaths)"
+       KeyContainer="$(KeyContainerName)"
+       KeyFile="$(KeyOriginatorFile)"
+       LangVersion="$(LangVersion)"
+       MainEntryPoint="$(StartupObject)"
+       ModuleAssemblyName="$(ModuleAssemblyName)"
+       NoConfig="true"
+       NoLogo="$(NoLogo)"
+       NoStandardLib="true"
+       NoWin32Manifest="$(NoWin32Manifest)"
+       Optimize="$(Optimize)"
+       OutputAssembly="$(CurrentOutputAssembly)"
+       PdbFile="$(PdbFile)" 
+       Platform="$(PlatformTarget)"
+       References="@(CurrentReferencePath)"
+       Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)"
+       ResponseFiles="$(CompilerResponseFile)"
+       Sources="@(Compile)"
+       TargetType="$(OutputType)"
+       ToolExe="$(CscToolExe)"
+       ToolPath="$(CscToolPath)"
+       TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+       UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+       Utf8Output="$(Utf8Output)"
+       WarningLevel="$(WarningLevel)"
+       WarningsAsErrors="$(WarningsAsErrors)"
+       WarningsNotAsErrors="$(WarningsNotAsErrors)"
+       Win32Icon="$(ApplicationIcon)"
+       Win32Manifest="$(Win32Manifest)"
+       Win32Resource="$(Win32Resource)"
+       />            
+    
+    <Vbc  
+       Condition="'$(Language)'=='VB'"
+       AdditionalLibPaths="$(AdditionalLibPaths)"
+       AddModules="@(AddModules)"
+       BaseAddress="$(BaseAddress)"          
+       CodePage="$(CodePage)"
+       DebugType="$(DebugType)"
+       DefineConstants="$(FinalDefineConstants),$(CurrentTargetDefinesVB)"
+       DelaySign="$(DelaySign)"
+       DisabledWarnings="$(NoWarn)"
+       DocumentationFile="$(CurrentOutputXml)"
+       EmitDebugInformation="$(DebugSymbols)"
+       ErrorReport="$(ErrorReport)"
+       FileAlignment="$(FileAlignment)"
+       GenerateDocumentation="$(GenerateDocumentation)"
+       Imports="@(Import)"
+       KeyContainer="$(KeyContainerName)"
+       KeyFile="$(KeyOriginatorFile)"
+       LangVersion="$(LangVersion)"
+       MainEntryPoint="$(StartupObject)"
+       ModuleAssemblyName="$(ModuleAssemblyName)"
+       NoConfig="true"
+       NoStandardLib="true"
+       NoVBRuntimeReference="true"
+       NoWarnings="$(_NoWarnings)"
+       NoWin32Manifest="$(NoWin32Manifest)"
+       Optimize="$(Optimize)"
+       OptionCompare="$(OptionCompare)"
+       OptionExplicit="$(OptionExplicit)"
+       OptionInfer="$(OptionInfer)"
+       OptionStrict="$(OptionStrict)"
+       OptionStrictType="$(OptionStrictType)" 
+       OutputAssembly="$(CurrentOutputAssembly)"
+       Platform="$(PlatformTarget)"
+       References="@(CurrentReferencePath)"
+       RemoveIntegerChecks="$(RemoveIntegerChecks)"
+       Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)"
+       ResponseFiles="$(CompilerResponseFile)"
+       RootNamespace="$(RootNamespace)"
+       SdkPath="@(CurrentMscorlibReferencePath->'%(RootDir)%(Directory)')"
+       Sources="@(Compile)"
+       TargetCompactFramework="$(TargetCompactFramework)"
+       TargetType="$(OutputType)"
+       ToolExe="$(VbcToolExe)"
+       ToolPath="$(VbcToolPath)"
+       TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+       UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+       Utf8Output="$(Utf8Output)"
+       Verbosity="$(VbcVerbosity)"
+       WarningsAsErrors="$(WarningsAsErrors)"
+       WarningsNotAsErrors="$(WarningsNotAsErrors)"
+       Win32Icon="$(ApplicationIcon)"
+       Win32Manifest="$(Win32Manifest)"              
+       Win32Resource="$(Win32Resource)"
+       />
+
+    <ItemGroup>
+      <_MultiTargetsBuilt Include="$(CurrentRelativeOutputDirectory)"/>
+      <FileWrites
+         Include="$(CurrentOutputAssembly)"
+         />
+    </ItemGroup>
+  </Target>
+
+  <Target
+     Name="CleanMultiTargets"
+     Condition="@(MultiTargets) != ''"
+     DependsOnTargets="GatherMultiTargets"
+     >
+
+    <Delete
+       Files="@(MultiTargets->'%(TargetDir)$(TargetName)$(TargetExt)')"
+       />
+
+
+    <ItemGroup>
+      <_MultiTargetsCleaned Include="@(MultiTargets->'%(RelativeTargetDir)')"/>
+    </ItemGroup>
+  </Target>
+
+
+  <Target
+     Name="RunMultiPostBuild"
+     Condition="@(MultiTargets) != '' and '$(PostBuildEvent)' != ''"
+     Inputs="$(MSBuildAllProjects);
+             @(Compile);
+             %(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentOutputDirectory>%(MultiTargets.TargetDir)</CurrentOutputDirectory>
+      <CurrentTargetFramework>%(MultiTargets.TargetFramework)</CurrentTargetFramework>
+      <CurrentTargetVersion>%(MultiTargets.TargetVersion)</CurrentTargetVersion>
+      <CurrentTargetDefinesCS>%(MultiTargets.TargetDefinesCS)</CurrentTargetDefinesCS>
+      <CurrentTargetDefinesVB>%(MultiTargets.TargetDefinesVB)</CurrentTargetDefinesVB>
+      <CurrentOutputAssembly>$(CurrentOutputDirectory)$(TargetName)$(TargetExt)</CurrentOutputAssembly>
+    </PropertyGroup>
+
+    <Message Text="Running post build step on $(CurrentOutputDirectory)"/>
+
+    <Exec WorkingDirectory="$(CurrentOutputDirectory)" Command="$(PostBuildEvent)" />
+
+  </Target>
+
+  <PropertyGroup>
+    <_ContractReferenceOutputPathRoot>$(TargetDir)</_ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <PropertyGroup
+     Condition="'$(ContractReferenceOutputPathRoot)'!=''">
+    <_ContractReferenceOutputPathRoot>$(ContractReferenceOutputPathRoot)</_ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+
+  <Target
+     Name="CodeContractReferenceAssembly"
+     DependsOnTargets="CreateMultiTargetContractReferenceAssembly;CodeContractDummyReferenceAssembly;CreateMultiTargetContractXMLDoc"
+     />
+  <Target
+     Name="CreateMultiTargetContractReferenceAssembly"
+     DependsOnTargets="CreateMultiTargetContractReferenceAssemblyDirectories"
+     Condition="@(MultiTargets) != '' and '$(CodeContractsReferenceAssembly)'=='Build'"
+     Outputs="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)$(TargetName).Contracts.dll"
+     Inputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentOutputDirectory>%(MultiTargets.TargetDir)</CurrentOutputDirectory>
+      <CurrentRelativeOutputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeOutputDirectory>
+      <CurrentRelativeInputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeInputDirectory>
+      <CurrentContractReferenceOutputPathRoot>$(_ContractReferenceOutputPathRoot)</CurrentContractReferenceOutputPathRoot>
+      <CurrentOutputAssembly>$(CurrentOutputDirectory)$(TargetName)$(TargetExt)</CurrentOutputAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+      <ContractReferenceAssemblyOutput Include="$(CurrentContractReferenceOutputPathRoot)$(CurrentRelativeOutputDirectory)$(TargetName).Contracts.dll"/>
+      <AbsoluteContractReferenceAssemblyOutput Include="@(ContractReferenceAssemblyOutput->'%(FullPath)')"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <AbsoluteContractReferenceAssemblyOutput>@(AbsoluteContractReferenceAssemblyOutput)</AbsoluteContractReferenceAssemblyOutput>
+    </PropertyGroup>
+
+    <Message Text="Asmmeta on $(CurrentOutputDirectory) /out:$(AbsoluteContractReferenceAssemblyOutput)"
+             Importance="high"/>
+
+    <CCRefGen
+       Input="$(CurrentOutputAssembly)"
+       Output="$(AbsoluteContractReferenceAssemblyOutput)"
+       LibPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
+       WritePDB="true"
+       />
+
+    <Exec
+       Condition="'$(CodeContractsCheckReferenceAssembly)'=='true'"
+       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(AbsoluteContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+
+    <ItemGroup>
+      <FileWrites
+         Include="$(AbsoluteContractReferenceAssemblyOutput)"
+         />
+    </ItemGroup>
+
+  </Target>
+
+  <Target
+     Name="CodeContractDummyReferenceAssembly"
+     Condition="'$(CodeContractsReferenceAssembly)' == 'doNotBuild'"
+     DependsOnTargets="MakeCodeContractOutputDirectory"
+     Outputs="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)CodeContracts\$(TargetName).noReferenceAssembly"
+     Inputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+    <Touch
+      Files="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)CodeContracts\$(TargetName).noReferenceAssembly"
+      AlwaysCreate="true"
+      ForceTouch="true"/>
+    <ItemGroup>
+      <FileWrites
+        Include="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)CodeContracts\$(TargetName).noReferenceAssembly"/>
+    </ItemGroup>
+  </Target>
+
+
+  <Target
+     Name="MakeCodeContractOutputDirectory"
+     Outputs="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)CodeContracts\dummy"
+     >
+    <PropertyGroup>
+      <_ContractReferenceDirectory>$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)CodeContracts</_ContractReferenceDirectory>
+    </PropertyGroup>
+    <MakeDir
+       Condition="!Exists('$(_ContractReferenceDirectory)')"
+       Directories="$(_ContractReferenceDirectory)"/>
+  </Target>
+
+  <Target
+     Name="CheckFrameworkContractReferenceAssembly"
+     Condition="@(MultiTargets) != '' and '$(CodeContractsCheckReferenceAssembly)'=='true'"
+     Outputs="%(MultiTargets.TargetDir)$(TargetName).Contracts.dll"
+     Inputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentOutputDirectory>%(MultiTargets.TargetDir)</CurrentOutputDirectory>
+      <CurrentRelativeOutputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeOutputDirectory>
+      <CurrentRelativeInputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeInputDirectory>
+      <CurrentContractReferenceOutputPathRoot>$(_ContractReferenceOutputPathRoot)</CurrentContractReferenceOutputPathRoot>
+      <CurrentTargetFramework>%(MultiTargets.TargetFramework)</CurrentTargetFramework>
+      <CurrentTargetVersion>%(MultiTargets.TargetVersion)</CurrentTargetVersion>
+      <CurrentTargetDefinesCS>%(MultiTargets.TargetDefinesCS)</CurrentTargetDefinesCS>
+      <CurrentTargetDefinesVB>%(MultiTargets.TargetDefinesVB)</CurrentTargetDefinesVB>
+      <CurrentOutputAssembly>$(CurrentOutputDirectory)$(TargetName)$(TargetExt)</CurrentOutputAssembly>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_ContractReferenceAssemblyOutput>$(CurrentContractReferenceOutputPathRoot)$(CurrentRelativeOutputDirectory)$(TargetName).Contracts.dll</_ContractReferenceAssemblyOutput>
+    </PropertyGroup>
+
+    <Message Text="crasantitizer on $(_ContractReferenceAssemblyOutput)"
+             Importance="high"/>
+
+    <Exec
+       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(_ContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+  </Target>
+
+  <Target
+     Name="CreateMultiTargetContractXMLDoc"
+     Condition="'$(CodeContractsEmitXMLDocs)'=='true' and @(MultiTargets) != '' and '$(CodeContractsReferenceAssembly)'=='Build' and Exists($(CodeContractsCCdocgenCommand))"
+     Outputs="$(_ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)$(TargetName).xml"
+     Inputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentOutputDirectory>%(MultiTargets.TargetDir)</CurrentOutputDirectory>
+      <CurrentRelativeOutputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeOutputDirectory>
+      <CurrentRelativeInputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeInputDirectory>
+      <CurrentContractReferenceOutputPathRoot>$(_ContractReferenceOutputPathRoot)</CurrentContractReferenceOutputPathRoot>
+      <CurrentOutputAssembly>$(CurrentOutputDirectory)$(TargetName)$(TargetExt)</CurrentOutputAssembly>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+      <CurrentOutputXml>$(CurrentOutputDirectory)$(TargetName).xml</CurrentOutputXml>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_CodeContractsCCDocGenArguments>-assembly "$(CurrentContractReferenceOutputPathRoot)$(CurrentRelativeOutputDirectory)$(TargetName).Contracts.dll" -xmlFile "$(CurrentOutputXml)" "-libpaths:@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)') " "-resolvedPaths:@(ReferencePath)"</_CodeContractsCCDocGenArguments>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_CodeContractsCCDocGenArgumentLines
+         Include="$(_CodeContractsCCDocGenArguments)"
+         />
+    </ItemGroup>
+
+    <WriteLinesToFile
+      File="$(CurrentOutputDirectory)$(ProjectName)ccdocgen.rsp"
+      Lines="@(_CodeContractsCCDocGenArgumentLines, ';')"
+      Overwrite="true"
+      />
+
+    <Exec
+       Command='"$(CodeContractsCCdocgenCommand)" "@$(CurrentOutputDirectory)$(ProjectName)ccdocgen.rsp"' 
+       />
+  </Target>
+
+  <Target
+     Name="CreateMultiTargetContractReferenceAssemblyDirectories"
+     Condition="@(MultiTargets) != '' and '$(CodeContractsReferenceAssembly)'=='Build' and '$(ContractReferenceOutputPathRoot)'!=''"
+     Outputs="$(ContractReferenceOutputPathRoot)%(MultiTargets.RelativeTargetDir)dummy"
+     Inputs="%(MultiTargets.TargetDir)$(TargetName)$(TargetExt)"
+     >
+
+    <PropertyGroup>
+      <CurrentRelativeOutputDirectory>%(MultiTargets.RelativeTargetDir)</CurrentRelativeOutputDirectory>
+      <CurrentContractReferenceAssemblyOutputDirectory>$(ContractReferenceOutputPathRoot)$(CurrentRelativeOutputDirectory)</CurrentContractReferenceAssemblyOutputDirectory>
+    </PropertyGroup>
+
+    <!--
+    <Message Text="@(MultiTargets): %(MultiTargets.RelativeTargetDir)" Importance="high"/>
+    -->
+    <MakeDir
+       Condition="!Exists('$(CurrentContractReferenceAssemblyOutputDirectory)')"
+       Directories="$(CurrentContractReferenceAssemblyOutputDirectory)"
+       />
+
+  </Target>
+
+</Project>

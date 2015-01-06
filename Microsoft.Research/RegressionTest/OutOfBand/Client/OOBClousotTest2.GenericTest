@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="OOBClousotTest2" storage="c:\users\maf\cci1\microsoft.research\regressiontest\outofband\client\oobclousottest2.generictest" id="d671a8d0-e020-49ac-8380-01572f9dd8af" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="cb7cbd7a-bdfc-4e5a-b0a4-7a900b47a3fa" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="client.dll -regression -show progress -bounds:type=subpolyhedra,reduction=fast,noObl -libpaths  ..\..\..\contracts\bin\debug" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="E:\CCI\TestResults\logozzo_LOGOZZO-XW4600 2009-02-25 15_54_43\In\LOGOZZO-XW4600\cb7cbd7a-bdfc-4e5a-b0a4-7a900b47a3fa" />
+      <EnvironmentVariable name="testlocation" value="e:\cci\microsoft.research\regressiontest\outofband\client" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

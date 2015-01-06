@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Drawing.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Drawing.Design.BitmapEditor">
+      <summary>Provides a user interface for selecting bitmap files in a property browser.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.BitmapEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.BitmapEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.BitmapEditor.GetExtensions">
+      <summary>Gets the extensions for the file list filter that the bitmap editor will initially use to filter the file list.</summary>
+      <returns>The default set of file extensions used to filter the file list.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.BitmapEditor.GetFileDialogDescription">
+      <summary>Gets the description for the default file list filter provided by this editor.</summary>
+      <returns>The description for the default type of files to filter the file list for.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.BitmapEditor.LoadFromStream(System.IO.Stream)">
+      <summary>Loads an image from the specified stream.</summary>
+      <returns>The <see cref="T:System.Drawing.Image" /> loaded from the stream.</returns>
+      <param name="stream">The stream from which to load the image. </param>
+    </member>
+    <member name="T:System.Drawing.Design.ColorEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> for visually picking a color.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ColorEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ColorEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.ColorEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the given object value using the editor style provided by the <see cref="M:System.Drawing.Design.ColorEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)" /> method.</summary>
+      <returns>The new value of the object. If the value of the object has not changed, this should return the same object it was passed.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+      <param name="provider">An <see cref="T:System.IServiceProvider" /> through which editing services may be obtained. </param>
+      <param name="value">An instance of the value being edited. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ColorEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets the editing style of the Edit method. If the method is not supported, this will return <see cref="F:System.Drawing.Design.UITypeEditorEditStyle.None" />.</summary>
+      <returns>An enum value indicating the provided editing style.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ColorEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets a value indicating if this editor supports the painting of a representation of an object's value.</summary>
+      <returns>true if <see cref="Overload:System.Drawing.Design.ColorEditor.PaintValue" /> is implemented; otherwise, false.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ColorEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)">
+      <summary>Paints a representative value of the given object to the provided canvas.</summary>
+      <param name="e">What to paint and where to paint it. </param>
+    </member>
+    <member name="T:System.Drawing.Design.ContentAlignmentEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> for visually editing content alignment.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ContentAlignmentEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ContentAlignmentEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.ContentAlignmentEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the given object value using the editor style provided by the <see cref="Overload:System.Drawing.Design.ContentAlignmentEditor.GetEditStyle" /> method.</summary>
+      <returns>The new value of the object. If the value of the object has not changed, this should return the same object it was passed.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+      <param name="provider">An <see cref="T:System.IServiceProvider" /> through which editing services may be obtained. </param>
+      <param name="value">An instance of the value being edited. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ContentAlignmentEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets the editing style of the <see cref="Overload:System.Drawing.Design.ContentAlignmentEditor.EditValue" /> method.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.UITypeEditorEditStyle" /> value indicating the provided editing style. If the method to retrieve the edit style is not supported, this will return <see cref="F:System.Drawing.Design.UITypeEditorEditStyle.None" />.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="T:System.Drawing.Design.CursorEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> that can perform default file searching for cursor (.cur) files.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.CursorEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.CursorEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.CursorEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the given object value using the editor style provided by the <see cref="Overload:System.Drawing.Design.CursorEditor.GetEditStyle" /> method.</summary>
+      <returns>The new value of the object. If the value of the object has not changed, this should return the same object it was passed.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+      <param name="provider">A service provider object through which editing services may be obtained. </param>
+      <param name="value">An instance of the value being edited. </param>
+    </member>
+    <member name="M:System.Drawing.Design.CursorEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Retrieves the editing style of the <see cref="Overload:System.Drawing.Design.CursorEditor.EditValue" /> method. </summary>
+      <returns>An enum value indicating the provided editing style. If the method is not supported, this will return <see cref="F:System.Drawing.Design.UITypeEditorEditStyle.None" />.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+    </member>
+    <member name="P:System.Drawing.Design.CursorEditor.IsDropDownResizable"></member>
+    <member name="T:System.Drawing.Design.FontEditor">
+      <summary>Provides a user interface to select and configure a <see cref="T:System.Drawing.Font" /> object.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.FontEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.FontEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.FontEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the value of the specified object using the editor style indicated by <see cref="M:System.Drawing.Design.FontEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)" />.</summary>
+      <returns>The new value of the object. If the value of the object has not changed, this should return the same object that was passed to it.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+      <param name="provider">An <see cref="T:System.IServiceProvider" /> that this editor can use to obtain services. </param>
+      <param name="value">The object to edit. </param>
+    </member>
+    <member name="M:System.Drawing.Design.FontEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.FontEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)" /> method.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.UITypeEditorEditStyle" /> value that indicates the style of editor used by <see cref="M:System.Drawing.Design.FontEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)" />.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="T:System.Drawing.Design.FontNameEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> that paints a glyph for the font name.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.FontNameEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.FontNameEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.FontNameEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Determines if this editor supports the painting of a representation of an object's value.</summary>
+      <returns>true if <see cref="Overload:System.Drawing.Design.FontNameEditor.PaintValue" /> is implemented; otherwise, false.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.FontNameEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)">
+      <summary>Paints a representative value of the given object to the provided canvas. Painting should be done within the boundaries of the provided rectangle.</summary>
+      <param name="e">What to paint and where to paint it. </param>
+    </member>
+    <member name="T:System.Drawing.Design.IconEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> for visually choosing an icon.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.IconEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.CreateExtensionsString(System.String[],System.String)">
+      <summary>Creates a string representing the valid file extensions for icons.</summary>
+      <returns>A string containing the icon file extensions, or null if <paramref name="extensions" /> is null or empty.</returns>
+      <param name="extensions">An array of strings holding valid file extensions.</param>
+      <param name="sep">A string that specifies the separator character.</param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.CreateFilterEntry(System.Drawing.Design.IconEditor)">
+      <summary>Creates a filter string for the file dialog box.</summary>
+      <returns>The filter string, created from the string returned by <see cref="M:System.Drawing.Design.IconEditor.CreateExtensionsString(System.String[],System.String)" />.</returns>
+      <param name="e">The <see cref="T:System.Drawing.Design.IconEditor" /> for which the filter string will be created.</param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the given object value using the editor style provided by the <see cref="M:System.Drawing.Design.IconEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)" /> method.</summary>
+      <returns>The new value of the object. If the value of the object has not changed, this should return the same object it was passed.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+      <param name="provider">A service provider object through which editing services may be obtained. </param>
+      <param name="value">An instance of the value being edited. </param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Retrieves the editing style of the <see cref="Overload:System.Drawing.Design.IconEditor.EditValue" /> method.</summary>
+      <returns>One of the <see cref="T:System.Drawing.Design.UITypeEditorEditStyle" /> values indicating the provided editing style.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.GetExtensions">
+      <summary>Retrieves an array of valid file extensions for icons.</summary>
+      <returns>An array of valid file extensions for icons.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.GetFileDialogDescription">
+      <summary>Gets the description for the default file list filter provided by this editor.</summary>
+      <returns>The description for the default type of files to filter the file list for.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Determines if this editor supports the painting of a representation of an object's value.</summary>
+      <returns>true if <see cref="Overload:System.Drawing.Design.UITypeEditor.PaintValue" /> is implemented; otherwise, false.</returns>
+      <param name="context">A type descriptor context that can be used to provide additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.LoadFromStream(System.IO.Stream)">
+      <summary>Creates a new <see cref="T:System.Drawing.Icon" /> from the given stream.</summary>
+      <returns>The newly created <see cref="T:System.Drawing.Icon" />.</returns>
+      <param name="stream">The source stream from which the icon will be created.</param>
+    </member>
+    <member name="M:System.Drawing.Design.IconEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)">
+      <summary>Paints a representative value of the given object to the provided canvas.</summary>
+      <param name="e">What to paint and where to paint it. </param>
+    </member>
+    <member name="T:System.Drawing.Design.ImageEditor">
+      <summary>Provides a user interface for selecting an image for a property in a property grid.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ImageEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.CreateExtensionsString(System.String[],System.String)">
+      <summary>Creates a string of file name extensions using the specified array of file extensions and the specified separator.</summary>
+      <returns>A string containing the specified file name extensions, each separated by the specified separator.</returns>
+      <param name="extensions">The extensions to filter for. </param>
+      <param name="sep">The separator to use. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.CreateFilterEntry(System.Drawing.Design.ImageEditor)">
+      <summary>Creates a filter entry for a file dialog box's file list.</summary>
+      <returns>The new filter entry string.</returns>
+      <param name="e">An <see cref="T:System.Drawing.Design.ImageEditor" /> to get the filter entry from.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the specified object value using the edit style provided by the <see cref="M:System.Drawing.Design.ImageEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)" /> method.</summary>
+      <returns>An <see cref="T:System.Object" /> representing the new value. If the value of the object has not changed, <see cref="M:System.Drawing.Design.ImageEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)" /> returns the object that was passed to it.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+      <param name="provider">An <see cref="T:System.IServiceProvider" /> through which editing services can be obtained. </param>
+      <param name="value">An <see cref="T:System.Object" /> being edited. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets the editing style of the <see cref="M:System.Drawing.Design.ImageEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)" /> method.</summary>
+      <returns>One of the <see cref="T:System.Drawing.Design.UITypeEditorEditStyle" /> values indicating the supported editing style.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.GetExtensions">
+      <summary>Gets the extensions for the file-list filter that this editor initially uses to filter the file list.</summary>
+      <returns>A set of file extensions used to filter the file list.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.GetFileDialogDescription">
+      <summary>Gets the description for the default file-list filter provided by this editor.</summary>
+      <returns>The description for the default file-list filter.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.GetImageExtenders">
+      <summary>Gets an array of supported image types.</summary>
+      <returns>An array of <see cref="T:System.Type" /> representing supported image types.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets a value indicating whether this editor supports painting a representation of an object's value.</summary>
+      <returns>true if <see cref="M:System.Drawing.Design.ImageEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)" /> is implemented; otherwise, false.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.LoadFromStream(System.IO.Stream)">
+      <summary>Loads an image from the specified stream.</summary>
+      <returns>The <see cref="T:System.Drawing.Image" /> that has been loaded.</returns>
+      <param name="stream">A <see cref="T:System.IO.Stream" /> that contains the image to load.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ImageEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)">
+      <summary>Paints a value indicated by the specified <see cref="T:System.Drawing.Design.PaintValueEventArgs" />.</summary>
+      <param name="e">A <see cref="T:System.Drawing.Design.PaintValueEventArgs" /> indicating what to paint and where to paint it. </param>
+    </member>
+    <member name="T:System.Drawing.Design.MetafileEditor">
+      <summary>Provides a <see cref="T:System.Drawing.Design.UITypeEditor" /> that can perform default file searching for metafile (.emf) files.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.MetafileEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.MetafileEditor" /> class. </summary>
+    </member>
+    <member name="M:System.Drawing.Design.MetafileEditor.GetExtensions">
+      <returns>A set of file extensions used to filter the file list.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.MetafileEditor.GetFileDialogDescription">
+      <returns>The description for the default file-list filter.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.MetafileEditor.LoadFromStream(System.IO.Stream)">
+      <returns>The <see cref="T:System.Drawing.Image" /> that has been loaded.</returns>
+      <param name="stream">A <see cref="T:System.IO.Stream" /> that contains the image to load.</param>
+    </member>
+    <member name="T:System.Drawing.Design.ToolboxItemContainer">
+      <summary>Encapsulates a <see cref="T:System.Drawing.Design.ToolboxItem" />.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.#ctor(System.Drawing.Design.ToolboxItem)">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> class from a <see cref="T:System.Drawing.Design.ToolboxItem" />.</summary>
+      <param name="item">The <see cref="T:System.Drawing.Design.ToolboxItem" /> for which to create a <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> class from a serialization stream.</summary>
+      <param name="info">The serialization information passed in by the serializer when deserializing the <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</param>
+      <param name="context">The streaming context passed in by the serializer when deserializing the <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.#ctor(System.Windows.Forms.IDataObject)">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> class from a <see cref="T:System.Windows.Forms.IDataObject" />.</summary>
+      <param name="data">A data object that represents a <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.Equals(System.Object)">
+      <summary>Determines whether two <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> instances are equal.</summary>
+      <returns>true if the specified <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> is equal to the current <see cref="T:System.Drawing.Design.ToolboxItemContainer" />; otherwise, false.</returns>
+      <param name="obj">The <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> to compare with the current <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.GetFilter(System.Collections.ICollection)">
+      <summary>Returns a collection of <see cref="T:System.ComponentModel.ToolboxItemFilterAttribute" /> objects that represent the current filter for the <see cref="T:System.Drawing.Design.ToolboxItem" />.  </summary>
+      <returns>A collection of <see cref="T:System.ComponentModel.ToolboxItemFilterAttribute" /> objects. This never returns null.</returns>
+      <param name="creators">A collection of <see cref="T:System.Drawing.Design.ToolboxItemCreator" /> objects.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.GetHashCode">
+      <summary>Returns the hash code for this instance.</summary>
+      <returns>A hash code for the current <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Saves the serialization state for the object.</summary>
+      <param name="info">The serialization information passed in by the serializer when serializing this object.</param>
+      <param name="context">The streaming context passed in by the serializer when serializing this object.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.GetToolboxItem(System.Collections.ICollection)">
+      <summary>Returns the <see cref="T:System.Drawing.Design.ToolboxItem" /> contained in the <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</summary>
+      <returns>The <see cref="T:System.Drawing.Design.ToolboxItem" /> contained in the <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</returns>
+      <param name="creators">A collection of <see cref="T:System.Drawing.Design.ToolboxItemCreator" /> objects.</param>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxItemContainer.IsCreated">
+      <summary>Gets a value indicating whether the underlying toolbox item has been deserialized.</summary>
+      <returns>true if the underlying toolbox item has been deserialized; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxItemContainer.IsTransient">
+      <summary>Gets a value indicating if the <see cref="T:System.Drawing.Design.ToolboxItem" /> contained in the <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> is transient.</summary>
+      <returns>true, if the <see cref="T:System.Drawing.Design.ToolboxItem" /> contained in the <see cref="T:System.Drawing.Design.ToolboxItemContainer" /> is marked as transient; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.ToolboxItemContainer.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)" /> method.</summary>
+      <param name="info">The serialization information passed in by the serializer when serializing this object.</param>
+      <param name="context">The streaming context passed in by the serializer when serializing this object.</param>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxItemContainer.ToolboxData">
+      <summary>Gets an <see cref="T:System.Windows.Forms.IDataObject" /> that describes this <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</summary>
+      <returns>An <see cref="T:System.Windows.Forms.IDataObject" /> that describes this <see cref="T:System.Drawing.Design.ToolboxItemContainer" />.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemContainer.UpdateFilter(System.Drawing.Design.ToolboxItem)">
+      <summary>Merges the container's filter with the filter from the given item.</summary>
+      <param name="item">The source of the filter to merge with the container's filter.</param>
+    </member>
+    <member name="T:System.Drawing.Design.ToolboxItemCreator">
+      <summary>Encapsulates a <see cref="T:System.Drawing.Design.ToolboxItemCreatorCallback" />. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxItemCreator.Create(System.Windows.Forms.IDataObject)">
+      <summary>Creates a new <see cref="T:System.Drawing.Design.ToolboxItem" /> from a <see cref="T:System.Windows.Forms.IDataObject" />.</summary>
+      <returns>A new instance of the <see cref="T:System.Drawing.Design.ToolboxItem" /> class.</returns>
+      <param name="data">A data object that represents a <see cref="T:System.Drawing.Design.ToolboxItem" />.</param>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxItemCreator.Format">
+      <summary>Gets the Clipboard format that represents the data needed to deserialize a <see cref="T:System.Drawing.Design.ToolboxItem" />.</summary>
+      <returns>A string representing the Clipboard format.</returns>
+    </member>
+    <member name="T:System.Drawing.Design.ToolboxService">
+      <summary>Provides a default implementation of the <see cref="T:System.Drawing.Design.IToolboxService" /> interface.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Drawing.Design.ToolboxService" /> class. </summary>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxService.CategoryNames">
+      <summary>Gets a collection of strings depicting available categories of the toolbox.</summary>
+      <returns>A collection of category names.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.CreateItemContainer(System.Drawing.Design.ToolboxItem,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Creates a new toolbox item container from a toolbox item.</summary>
+      <returns>A new toolbox item container.</returns>
+      <param name="item">The toolbox item for which to create an item container.</param>
+      <param name="link">An optional designer host that should be linked to this toolbox item. This parameter can be null.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="item" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.CreateItemContainer(System.Windows.Forms.IDataObject)">
+      <summary>Creates a new toolbox item container from a saved data object.</summary>
+      <returns>A new toolbox item container.</returns>
+      <param name="dataObject">A data object containing saved toolbox data.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="dataObject" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.FilterChanged">
+      <summary>Occurs when the toolbox service detects that the active designer’s toolbox item filter has changed.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetItemContainers">
+      <summary>Returns an <see cref="T:System.Collections.IList" /> containing all items on the toolbox.</summary>
+      <returns>An <see cref="T:System.Collections.IList" /> containing all items on the toolbox.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetItemContainers(System.String)">
+      <summary>Returns an <see cref="T:System.Collections.IList" /> containing all items in a given category.</summary>
+      <returns>An <see cref="T:System.Collections.IList" /> containing all items in the category specified by <paramref name="categoryName" />.</returns>
+      <param name="categoryName">The category for which to retrieve the item container list.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItem(System.Type)">
+      <summary>Returns a toolbox item for a given type.</summary>
+      <returns>A toolbox item associated with the given type, or null if the type has no corresponding toolbox item.</returns>
+      <param name="toolType">The type of component for which to retrieve the toolbox item.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="toolType" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItem(System.Type,System.Boolean)">
+      <summary>Returns a toolbox item for a given type.</summary>
+      <returns>A toolbox item associated with the given type, or null if the type has no corresponding toolbox item.</returns>
+      <param name="toolType">The type of component for which to retrieve the toolbox item.</param>
+      <param name="nonPublic">true to search for non-public constructors on the type; false to search for public constructors.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="toolType" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItems(System.Reflection.Assembly,System.String)">
+      <summary>Returns an <see cref="T:System.Collections.ICollection" /> containing all the toolbox items in the given assembly.</summary>
+      <returns>A collection containing all the toolbox items in the given assembly.</returns>
+      <param name="a">The assembly to enumerate.</param>
+      <param name="newCodeBase">A string that is the URL location of the assembly.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="a" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItems(System.Reflection.Assembly,System.String,System.Boolean)">
+      <summary>Returns an <see cref="T:System.Collections.ICollection" /> of <see cref="T:System.Drawing.Design.ToolboxItem" /> objects for the given assembly.</summary>
+      <returns>A collection containing all the toolbox items in the assembly represented by the given assembly name.</returns>
+      <param name="a">The assembly to enumerate.</param>
+      <param name="newCodeBase">A string that is the URL location of the assembly.</param>
+      <param name="throwOnError">true to throw an exception on error; otherwise, false.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="a" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItems(System.Reflection.AssemblyName)">
+      <summary>Returns an <see cref="T:System.Collections.ICollection" /> of <see cref="T:System.Drawing.Design.ToolboxItem" /> objects for the given assembly.</summary>
+      <returns>A collection containing all the toolbox items in the assembly represented by the given assembly name.</returns>
+      <param name="an">An assembly name from which to load an assembly.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="an" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.GetToolboxItems(System.Reflection.AssemblyName,System.Boolean)">
+      <summary>Returns an <see cref="T:System.Collections.ICollection" /> of <see cref="T:System.Drawing.Design.ToolboxItem" /> objects for the given assembly.</summary>
+      <returns>A collection containing all the toolbox items in the assembly represented by the given assembly name.</returns>
+      <param name="an">An assembly name from which to load an assembly.</param>
+      <param name="throwOnError">true to throw an exception on error; otherwise, false.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="an" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.IsItemContainer(System.Windows.Forms.IDataObject,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Returns a value indicating whether the given data object represents an item container.</summary>
+      <returns>true if the given data object represents an item container; otherwise, false.</returns>
+      <param name="dataObject">The data object to examine for the presence of a toolbox item container.</param>
+      <param name="host">An optional designer host. This parameter can be null.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="dataObject" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.IsItemContainerSupported(System.Drawing.Design.ToolboxItemContainer,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Determines whether the toolbox item container is supported by the given designer host.</summary>
+      <returns>true if the toolbox item container is supported by the given designer host; otherwise, false.</returns>
+      <param name="container">The toolbox item container.</param>
+      <param name="host">The given designer host.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="container" /> or <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.Refresh">
+      <summary>Refreshes the state of the toolbox items.</summary>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxService.SelectedCategory">
+      <summary>Gets or sets the name of the currently selected category.</summary>
+      <returns>A string containing the name of the currently selected category.</returns>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxService.SelectedItemContainer">
+      <summary>Gets or sets the currently selected item container.</summary>
+      <returns>The item container for the currently selected toolbox item, or null if no item is selected.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.SelectedItemContainerUsed">
+      <summary>Receives a call from the toolbox service when a user reports that a selected toolbox item has been used.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.SetCursor">
+      <summary>Sets the current application's cursor to a cursor that represents the currently selected tool.</summary>
+      <returns>true if there is an item selected; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#ComponentModel#Design#IComponentDiscoveryService#GetComponentTypes(System.ComponentModel.Design.IDesignerHost,System.Type)">
+      <summary>Gets the list of available component types.</summary>
+      <returns>The list of available component types.</returns>
+      <param name="designerHost">The designer host providing design-time services.</param>
+      <param name="baseType">The base type specifying the components to retrieve. Can be null.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddCreator(System.Drawing.Design.ToolboxItemCreatorCallback,System.String)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddCreator(System.Drawing.Design.ToolboxItemCreatorCallback,System.String)" /> method.</summary>
+      <param name="creator">A <see cref="T:System.Drawing.Design.ToolboxItemCreatorCallback" /> that can create a component when the toolbox item is invoked.</param>
+      <param name="format">The data format that the creator handles.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddCreator(System.Drawing.Design.ToolboxItemCreatorCallback,System.String,System.ComponentModel.Design.IDesignerHost)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddCreator(System.Drawing.Design.ToolboxItemCreatorCallback,System.String,System.ComponentModel.Design.IDesignerHost)" /> method.</summary>
+      <param name="creator">A <see cref="T:System.Drawing.Design.ToolboxItemCreatorCallback" /> that can create a component when the toolbox item is invoked.</param>
+      <param name="format">The data format that the creator handles.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that represents the designer host to associate with the creator.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddLinkedToolboxItem(System.Drawing.Design.ToolboxItem,System.ComponentModel.Design.IDesignerHost)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddLinkedToolboxItem(System.Drawing.Design.ToolboxItem,System.ComponentModel.Design.IDesignerHost)" /> method.</summary>
+      <param name="toolboxItem">The linked <see cref="T:System.Drawing.Design.ToolboxItem" /> to add to the toolbox.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> for the current design document.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddLinkedToolboxItem(System.Drawing.Design.ToolboxItem,System.String,System.ComponentModel.Design.IDesignerHost)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddLinkedToolboxItem(System.Drawing.Design.ToolboxItem,System.String,System.ComponentModel.Design.IDesignerHost)" />method.</summary>
+      <param name="toolboxItem">The linked <see cref="T:System.Drawing.Design.ToolboxItem" /> to add to the toolbox.</param>
+      <param name="category">The toolbox item category to add the toolbox item to.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> for the current design document.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddToolboxItem(System.Drawing.Design.ToolboxItem)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddToolboxItem(System.Drawing.Design.ToolboxItem)" /> method.</summary>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to add to the toolbox.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#AddToolboxItem(System.Drawing.Design.ToolboxItem,System.String)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.AddToolboxItem(System.Drawing.Design.ToolboxItem,System.String)" /> method.</summary>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to add to the toolbox.</param>
+      <param name="category">The toolbox item category to add the <see cref="T:System.Drawing.Design.ToolboxItem" /> to.</param>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#CategoryNames">
+      <summary>For a description of this member, see the <see cref="P:System.Drawing.Design.IToolboxService.CategoryNames" /> property.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.CategoryNameCollection" /> containing the tool categories.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#DeserializeToolboxItem(System.Object)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.DeserializeToolboxItem(System.Object)" /> method.</summary>
+      <returns>The <see cref="T:System.Drawing.Design.ToolboxItem" /> created from deserialization.</returns>
+      <param name="serializedObject">The object that contains the <see cref="T:System.Drawing.Design.ToolboxItem" /> to retrieve.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#DeserializeToolboxItem(System.Object,System.ComponentModel.Design.IDesignerHost)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.DeserializeToolboxItem(System.Object,System.ComponentModel.Design.IDesignerHost)" /> method.</summary>
+      <returns>The <see cref="T:System.Drawing.Design.ToolboxItem" /> created from deserialization.</returns>
+      <param name="serializedObject">The object that contains the <see cref="T:System.Drawing.Design.ToolboxItem" /> to retrieve.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> to associate with this <see cref="T:System.Drawing.Design.ToolboxItem" />.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetSelectedToolboxItem">
+      <summary>For a description of this member, see the <see cref="Overload:System.Drawing.Design.IToolboxService.GetSelectedToolboxItem" /> method.</summary>
+      <returns>The <see cref="T:System.Drawing.Design.ToolboxItem" /> that is currently selected, or null if no toolbox item is currently selected.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetSelectedToolboxItem(System.ComponentModel.Design.IDesignerHost)">
+      <summary>For a description of this member, see the <see cref="M:System.Drawing.Design.IToolboxService.GetSelectedToolboxItem(System.ComponentModel.Design.IDesignerHost)" /> method.</summary>
+      <returns>The <see cref="T:System.Drawing.Design.ToolboxItem" /> that is currently selected, or null if no toolbox item is currently selected.</returns>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that the selected tool must be associated with for it to be returned.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetToolboxItems">
+      <summary>Gets the entire collection of toolbox items from the toolbox.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.ToolboxItemCollection" /> that contains the current toolbox items.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetToolboxItems(System.ComponentModel.Design.IDesignerHost)">
+      <summary>Gets the collection of toolbox items that are associated with the specified designer host from the toolbox.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.ToolboxItemCollection" /> that contains the current toolbox items that are associated with the specified designer host.</returns>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that is associated with the toolbox items to retrieve.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetToolboxItems(System.String)">
+      <summary>Gets a collection of toolbox items from the toolbox that match the specified category.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.ToolboxItemCollection" /> that contains the current toolbox items that are associated with the specified category.</returns>
+      <param name="category">The toolbox item category from which to retrieve all the toolbox items.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#GetToolboxItems(System.String,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Gets the collection of toolbox items that are associated with the specified designer host and category from the toolbox.</summary>
+      <returns>A <see cref="T:System.Drawing.Design.ToolboxItemCollection" /> that contains the current toolbox items that are associated with the specified category and designer host.</returns>
+      <param name="category">The toolbox item category to retrieve the toolbox items from.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that is associated with the toolbox items to retrieve.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="category " />or <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#IsSupported(System.Object,System.Collections.ICollection)">
+      <summary>Gets a value indicating whether the specified object, which represents a serialized toolbox item, matches the specified attributes.</summary>
+      <returns>true if the object matches the specified attributes; otherwise, false.</returns>
+      <param name="serializedObject">The object that contains the <see cref="T:System.Drawing.Design.ToolboxItem" /> to retrieve.</param>
+      <param name="filterAttributes">An <see cref="T:System.Collections.ICollection" /> that contains the attributes to test the serialized object for.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="serializedObject" /> or <paramref name="filterAttributes" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#IsSupported(System.Object,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Gets a value indicating whether the specified object, which represents a serialized toolbox item, can be used by the specified designer host.</summary>
+      <returns>true if the specified object is compatible with the specified designer host; otherwise, false.</returns>
+      <param name="serializedObject">The object that contains the <see cref="T:System.Drawing.Design.ToolboxItem" /> to retrieve.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> to test for support for the <see cref="T:System.Drawing.Design.ToolboxItem" />.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="serializedObject" /> or <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#IsToolboxItem(System.Object)">
+      <summary>Gets a value indicating whether the specified object is a serialized toolbox item.</summary>
+      <returns>true if the object contains a toolbox item object; otherwise, false.</returns>
+      <param name="serializedObject">The object to inspect.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#IsToolboxItem(System.Object,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Gets a value indicating whether the specified object is a serialized toolbox item byusing the specified designer host.</summary>
+      <returns>true if the object contains a toolbox item object; otherwise, false.</returns>
+      <param name="serializedObject">The object to inspect.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that is making this request.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#Refresh">
+      <summary>Refreshes the state of the toolbox items.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#RemoveCreator(System.String)">
+      <summary>Removes a previously added toolbox item creator of the specified data format.</summary>
+      <param name="format">The data format of the creator to remove.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#RemoveCreator(System.String,System.ComponentModel.Design.IDesignerHost)">
+      <summary>Removes a previously added toolbox creator that is associated with the specified data format and the specified designer host.</summary>
+      <param name="format">The data format of the creator to remove.</param>
+      <param name="host">The <see cref="T:System.ComponentModel.Design.IDesignerHost" /> that is associated with the creator to remove.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> or <paramref name="host" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#RemoveToolboxItem(System.Drawing.Design.ToolboxItem)">
+      <summary>Removes the specified toolbox item from the toolbox.</summary>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to remove from the toolbox.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="toolboxItem" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#RemoveToolboxItem(System.Drawing.Design.ToolboxItem,System.String)">
+      <summary>Removes the specified toolbox item from the toolbox.</summary>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to remove from the toolbox.</param>
+      <param name="category">The toolbox item category to remove the <see cref="T:System.Drawing.Design.ToolboxItem" /> from.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="toolboxItem" /> or <paramref name="category" /> is null.</exception>
+    </member>
+    <member name="P:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#SelectedCategory">
+      <summary>For a description of this member, see the <see cref="P:System.Drawing.Design.IToolboxService.SelectedCategory" /> property.</summary>
+      <returns>The name of the currently selected category.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#SelectedToolboxItemUsed">
+      <summary>Notifies the toolbox service that the selected tool has been used.</summary>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#SerializeToolboxItem(System.Drawing.Design.ToolboxItem)">
+      <summary>Gets a serializable object that represents the specified toolbox item.</summary>
+      <returns>An object that represents the specified <see cref="T:System.Drawing.Design.ToolboxItem" />.</returns>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to serialize.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="toolboxItem" /> is null.</exception>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#SetCursor">
+      <summary>Sets the current application's cursor to a cursor that represents the currently selected tool.</summary>
+      <returns>true if the cursor is set by the currently selected tool; false if there is no tool selected and the cursor is set to the standard Windows cursor.</returns>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.System#Drawing#Design#IToolboxService#SetSelectedToolboxItem(System.Drawing.Design.ToolboxItem)">
+      <summary>Selects the specified toolbox item.</summary>
+      <param name="toolboxItem">The <see cref="T:System.Drawing.Design.ToolboxItem" /> to select.</param>
+    </member>
+    <member name="M:System.Drawing.Design.ToolboxService.UnloadToolboxItems">
+      <summary>Unloads any assemblies that were locked as a result of calling the <see cref="Overload:System.Drawing.Design.ToolboxService.GetToolboxItems" /> method.</summary>
+    </member>
+  </members>
+</doc>

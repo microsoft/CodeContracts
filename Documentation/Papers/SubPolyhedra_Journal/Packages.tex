@@ -1,0 +1,97 @@
+% Packages.tex
+
+% Packages di latex utilizzati 
+
+  % Standard dell'ams
+\usepackage{amssymb,amsmath}
+
+  % Per le definizioni di connessioni di Galois
+\usepackage{galois}
+
+  % Per formattare ed includere il testo
+\usepackage{lgrind}
+     % Cambiamento dei font per lgrind: tutti in Courier
+\def\CMfont{\ttfamily\itshape}
+\def\KWfont{\ttfamily\bfseries}
+\def\VRfont{\ttfamily}
+\def\BGfont{\ttfamily}
+\def\NOfont{\ttfamily}
+
+  % Caratteri speciali per i nomi di funzione
+\usepackage{bbm}
+
+  % Caratteri ``cal'' carini
+\usepackage[mathcal]{euscript}
+
+  % per \baro
+\usepackage{stmaryrd}
+
+  % per \xspace
+\usepackage{xspace}
+
+  % per i diagrammi
+\usepackage[all]{xy}
+
+  % for scalebox
+\usepackage{graphicx}
+ 
+   % Per le figure incastrate l'una nell'altra
+\usepackage{subfigure}
+
+  % Per le figure nel testo
+\usepackage{wrapfig}
+
+
+\usepackage{tabularx}
+
+  % Per includere i verbatim
+\newbox\subfigbox
+\makeatletter
+\newenvironment{subfloat}
+{\def\caption##1{\gdef\subcapsave{\relax##1}}%
+\let\subcapsave\@empty
+\setbox\subfigbox\hbox
+\bgroup}
+{\egroup
+\subfigure[\subcapsave]{\box\subfigbox}}
+\makeatother
+
+   % Per la compilazione Condizionale
+\usepackage{ifthen}
+
+\usepackage{empheq}
+
+   % Per i riferimenti incrociati
+
+
+
+%\ifx\pdfoutput\undefined % Se compilo con ``latex'' ed uso ps2pdf
+%\usepackage{color}
+%\usepackage[dvips]{graphicx}       %%% graphics for dvips
+%\DeclareGraphicsExtensions{.eps}   %%% standard extension for included graphics
+%\usepackage[bookmarks=true]{hyperref}
+%\else                    % Se compilo con ``pdflatex'' 
+%\usepackage[pdftex]{graphicx}      %%% graphics for pdfLaTeX 
+%\DeclareGraphicsExtensions{.pdf}   %%% standard extension for included graphics
+%\usepackage[pdftex]{thumbpdf}      %%% thumbnails for pdflatex
+%\usepackage[pdftex,                %%% hyper-references for pdflatex
+%bookmarks=true,%                   %%% generate bookmarks ...
+%bookmarksnumbered=true,%           %%% ... with numbers
+%hypertexnames=false,%              %%% needed for correct links to figures !!!
+%breaklinks=true,%                  %%% break links if exceeding a single line
+%linkbordercolor={0 0 1}]{hyperref} %%% blue frames around links
+%                                  %%% pdfborder={0 0 1} is the default
+%\hypersetup{
+%pdfauthor   = {Francesco Logozzo \& Agostino Cortesi},
+%pdftitle    = {to be decided},
+%pdfsubject  = {Objects},
+%pdfkeywords = {Abstract Interpretation, Static Analysis, Object Oriented}
+%}
+%\pdfadjustspacing=1                %%% force LaTeX-like character spacing
+%\fi 
+
+
+%%% Local Variables: 
+%%% mode: plain-tex
+%%% TeX-master: "main"
+%%% End: 

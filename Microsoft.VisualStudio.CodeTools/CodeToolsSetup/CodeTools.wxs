@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+<!--=====================================================================
+   Version
+======================================================================-->
+
+<?ifndef var.Version ?>
+ <?define var.Version="1.0.7.7" ?>
+<?endif?>
+<?ifndef var.Flavor ?>
+ <?define var.Flavor="Debug" ?>
+<?endif?>
+<?ifndef var.ProductGuid ?>
+ <?define var.ProductGuid                    = "{DAA2CAEF-1AAE-4fa6-A178-9BF282060120}" ?>
+<?endif?>
+
+<!--=====================================================================
+   Installer Configurations
+
+   Inputs:
+
+     var.Version
+     var.Flavor
+     var.License
+     var.IncludePDBs
+
+======================================================================-->
+
+
+<!--=====================================================================
+   Assembly Versions
+
+   IMPORTANT: if these implementations rev their version, these 
+   need to be updated below.
+======================================================================-->
+    
+<?define var.PropertyPageVersion            = "1.0.0.0" ?>
+<?define var.PropertyPageGuid               = "{072dd0c6-ae1e-4ed6-a0bf-b99d5b68d29e}" ?>
+<?define var.PropertyPagePublicKey          = "5e76132811ce6d44" ?>
+
+<?define var.TaskManagerVersion             = "1.0.0.0" ?>
+<?define var.TaskManagerGuid                = "{da85543e-97ec-4478-90ec-45cbcb4fa5c1}" ?>
+<?define var.TaskManagerPublicKey           = "0644c261138ab94f" ?>
+
+<?define var.Redist                         ="Redist.txt" ?>
+
+<?define var.ITaskManagerGacPath            ='\assembly\GAC_MSIL\ITaskManager\1.0.0.0__ecdac5c7b9b7112f\ITaskManager.dll' ?>
+
+<!--=====================================================================
+   Installer component guid's
+======================================================================-->
+<?define var.UpgradeGuid                      = "{DAA2F423-76CC-4a4f-9EDC-038CC04B6C60}" ?>
+<?define var.CodeToolsPkgGuid                 = "{DAA2CAE0-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ICodeToolsCompGuid               = "{DAA2CAE1-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ITaskManagerCompGuid             = "{DAA2CAE2-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.TaskManagerCompGuid              = "{DAA2CAE4-1AAE-4fa6-A178-9BF28206012F}" ?> 
+<?define var.IPropertyPaneCompGuid            = "{DAA2CAE5-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.PropertyPageCompGuid             = "{DAA2CAE7-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.TaskManagerUICompGuid            = "{DAA2CAE9-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.PropertyPageUICompGuid           = "{DAA2CAEA-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ITaskManagerCOMCompGuid          = "{DAA2CAEB-1AAE-4fa6-A178-9BF28206012F}" ?> 
+<?define var.ITaskManagerTLBCompGuid          = "{DAA2CAEC-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.LicenseCompGuid                  = "{DAA2CAF4-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS9RegistryCompGuid              = "{DAA2CAF5-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS10RegistryCompGuid             = "{DAA2CAF6-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS11RegistryCompGuid             = "{DAA2CAF7-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS12RegistryCompGuid             = "{DAA2CAF8-1AAE-4fa6-A178-9BF28206012F}" ?>
+
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Module Id='CodeToolsModule' Language='0' Version='$(var.Version)' >
+  
+    <Package Id='$(var.ProductGuid)'
+      Description="Microsoft CodeTools $(var.Flavor) $(var.Version) for Visual Studio"
+      InstallerVersion='200' 
+      InstallPrivileges='elevated'
+      Manufacturer='Microsoft Research'
+    />
+    
+    <!--=====================================================================
+       Useful shorthands
+    ======================================================================-->
+    <!-- Public objects -->
+    <!-- Misc. -->
+    <?define var.EmptyGuid                ="{00000000-0000-0000-0000-000000000000}" ?>
+    <?define var.ITaskManagerFactoryGuid  ="{6ef71237-5832-4cd5-a75c-067911af5d14}" ?>
+    <?define var.Vs9RootKey               ="Software\Microsoft\VisualStudio\9.0" ?>
+    <?define var.Vs10RootKey              ="Software\Microsoft\VisualStudio\10.0" ?>
+    <?define var.Vs11RootKey              ="Software\Microsoft\VisualStudio\11.0" ?>
+    <?define var.Vs12RootKey              ="Software\Microsoft\VisualStudio\12.0" ?>
+    
+    <!-- Derived -->
+    <?define var.TaskManagerPackageKey    ="Packages\$(var.TaskManagerGuid)" ?>
+    <?define var.PropertyPagePackageKey   ="Packages\$(var.PropertyPageGuid)" ?>
+    <?define var.AutoLoadOnProjectKey     ="AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}" ?>
+    <?define var.CodeToolsKey             ="CodeTools" ?>
+    <?define var.ITaskManagerFactoryServiceKey ="Services\$(var.ITaskManagerFactoryGuid)" ?>
+
+    <!--=====================================================================
+       Checks       
+    ======================================================================-->
+    
+    <!-- check which visual studios are installed -->
+    <Property Id="VS9" Secure="yes">
+      <RegistrySearch Id="SearchVS9" Root="HKLM" Key="$(var.Vs9RootKey)" Name="ApplicationID" Type="raw" />
+    </Property>
+
+    <Property Id="VS10" Secure="yes">
+      <RegistrySearch Id="SearchVS10" Root="HKLM" Key="$(var.Vs10RootKey)" Name="ApplicationID"  Type="raw" />
+    </Property>
+
+    <!--
+    <Condition Message="This installer requires Visual Studio 2008 or 2010.">
+      <![CDATA[Installed OR VS90DEVENV OR VS10DEVENV]]>
+    </Condition>
+    -->  
+
+    <SetProperty Id="WindowsFolder" Before="InstallInitialize" Sequence="execute" Value="[%SYSTEMROOT]" />
+
+
+    <!--=====================================================================
+       Install directory: Program Files\Microsoft\CodeTools
+    ======================================================================-->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' >
+        <!--=====================================================================
+           Program Files\Microsoft\CodeTools
+        ======================================================================-->
+        <Directory Id='Microsoft' Name='Microsoft'>
+          <Directory Id='INSTALLDIR' Name='CodeTools'>
+            <Directory Id='INSTALLBINDIR' Name='Bin'>
+              <!--=====================================================================
+                 Bin Directory
+              ======================================================================-->
+                        
+              <!--=====================================================================
+                 TaskManager implementation
+              ======================================================================-->
+              <Component Id='TaskManager' Guid='$(var.TaskManagerCompGuid)'>
+                <File Id='TaskManager.dll' Name='TaskManager.dll' 
+                      Source='TaskManager.dll' Vital='yes' />
+
+              </Component>
+              <Directory Id='TaskManagerUI' Name='1033'>
+                <Component Id='TaskManagerUI' Guid='$(var.TaskManagerUICompGuid)'>
+                  <File Id='TaskManagerUI.dll' Name='TaskManagerUI.dll' 
+                        Source='1033\TaskManagerUI.dll' Vital='yes' />
+
+                </Component>
+              </Directory>
+
+              <!--=====================================================================
+                 PropertyPage implementation
+              ======================================================================-->
+              <Component Id='PropertyPage' Guid='$(var.PropertyPageCompGuid)'>
+                <File Id='PropertyPage.dll' Name='PropertyPage.dll' 
+                      Source='PropertyPage.dll' Vital='yes' />
+              </Component>
+              
+              <Directory Id='PropertyPageUI' Name='1033'>
+                <Component Id='PropertyPageUI' Guid='$(var.PropertyPageUICompGuid)'>
+                  <File Id='PropertyPageUI.dll' Name='PropertyPageUI.dll' 
+                        Source='1033\PropertyPageUI.dll' Vital='yes'
+                        />
+                </Component>
+              </Directory>
+
+              <!--=====================================================================
+                 ITaskManager interface: will be installed into the GAC
+              ======================================================================-->
+              <Component Id='ITaskManager' Guid='$(var.ITaskManagerCompGuid)'>
+                <File Id='ITaskManager.dll' Name='ITaskManager.dll' 
+                      KeyPath='yes'
+                      Assembly='.net'
+                      Source='ITaskManager.dll' Vital='yes' />
+              </Component>      
+
+              <!--=====================================================================
+                 IPropertyPage component: will be installed into the GAC
+              ======================================================================-->
+              <Component Id='IPropertyPane' Guid='$(var.IPropertyPaneCompGuid)'>
+                <File Id='IPropertyPane.dll' Name='IPropertyPane.dll' 
+                      KeyPath='yes'
+                      Assembly='.net'
+                      Source='IPropertyPane.dll' Vital='yes' />
+              </Component>
+
+
+              <!--=====================================================================
+                 COM registration of ITaskManager interfaces
+              ======================================================================-->
+              <Component Id="ITaskManagerCOM" Guid="$(var.ITaskManagerCOMCompGuid)">
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71243-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Class" Value="Microsoft.VisualStudio.CodeTools.TaskMarker" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71243-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Assembly" Value="ITaskManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ecdac5c7b9b7112f" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71243-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="RuntimeVersion" Value="v2.0.50727" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71243-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="CodeBase" Value="[WindowsFolder]\$(var.ITaskManagerGacPath)" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71245-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Class" Value="Microsoft.VisualStudio.CodeTools.TaskCategory" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71245-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Assembly" Value="ITaskManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ecdac5c7b9b7112f" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71245-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="RuntimeVersion" Value="v2.0.50727" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71245-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="CodeBase" Value="[WindowsFolder]\$(var.ITaskManagerGacPath)" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71246-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Class" Value="Microsoft.VisualStudio.CodeTools.TaskPriority" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71246-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Assembly" Value="ITaskManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ecdac5c7b9b7112f" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71246-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="RuntimeVersion" Value="v2.0.50727" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71246-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="CodeBase" Value="[WindowsFolder]\$(var.ITaskManagerGacPath)" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71249-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Class" Value="Microsoft.VisualStudio.CodeTools.TaskMenuKind" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71249-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="Assembly" Value="ITaskManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ecdac5c7b9b7112f" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71249-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="RuntimeVersion" Value="v2.0.50727" Type="string" Action="write" />
+                  <RegistryValue Root="HKCR" Key="Record\{6EF71249-5832-4CD5-A75C-067911AF5D14}\1.0.0.0" Name="CodeBase" Value="[WindowsFolder]\$(var.ITaskManagerGacPath)" Type="string" Action="write" />
+              </Component>
+
+              <Component Id="ITaskManagerTLB" Guid="$(var.ITaskManagerTLBCompGuid)">                  
+                  <File Id="ITaskManager.tlb" KeyPath="yes" Source="ITaskManager.tlb">
+                      <TypeLib Id="{266BD68A-3441-467F-B659-E580F3778531}" Description="ITaskManager" HelpDirectory="INSTALLBINDIR" Language="0" MajorVersion="1" MinorVersion="0">
+                          <Interface Id="{01E2D533-2994-3DDD-AB55-73F6A67D9F8F}" Name="_TaskOutputPane" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71237-5832-4CD5-A75C-067911AF5D14}" Name="ITaskManagerFactory" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71240-5832-4CD5-A75C-067911AF5D14}" Name="IClearTasksEvent" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71241-5832-4CD5-A75C-067911AF5D14}" Name="IVsTaskManager" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71242-5832-4CD5-A75C-067911AF5D14}" Name="ITaskManager" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71247-5832-4CD5-A75C-067911AF5D14}" Name="ITask" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF71248-5832-4CD5-A75C-067911AF5D14}" Name="IVsTask" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF7124A-5832-4CD5-A75C-067911AF5D14}" Name="ITaskMenuItem" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{6EF7124B-5832-4CD5-A75C-067911AF5D14}" Name="ITaskCommands" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                          <Interface Id="{717FAE99-0672-3EFF-9E80-C9AB3FF0AF31}" Name="_TaskMenuItem" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                      </TypeLib>                      
+                  </File>
+              </Component>
+
+
+            </Directory> <!-- bin -->
+            
+            <!--=====================================================================
+               License
+            ======================================================================-->
+            <!-- 
+            <Component Id='LicenseCompId' Guid='$(var.LicenseCompGuid)'>
+                <File Id='LicenseFile' Name="License.rtf"
+                    Source="$(var.License)" Vital='yes' />
+            </Component>            
+            -->
+          </Directory> <!-- codetools -->
+        </Directory> <!-- microsoft -->
+      </Directory> <!-- program files -->
+    </Directory> <!-- TARGETDIR  -->
+
+
+    <!--=====================================================================
+       Registry entries for the various versions of VS
+    ======================================================================-->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 9.0 hive (VS9) -->
+      <Component Id="VS9RegistryComponent" Guid="$(var.VS9RegistryCompGuid)" Transitive="yes" Win64="no">
+        <Condition>
+          <![CDATA[VS9]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="$(var.Vs9RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 10.0 hive (VS10) -->
+      <Component Id="VS10RegistryComponent" Guid="$(var.VS10RegistryCompGuid)" Transitive="yes" Win64="no">
+        <Condition>
+          <![CDATA[VS10]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="$(var.Vs10RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 11.0 hive (VS11) -->
+      <Component Id="VS11RegistryComponent" Guid="$(var.VS11RegistryCompGuid)" Transitive="yes" Win64="no">
+        <!--
+        <Condition>
+          <![CDATA[VS11]]>
+        </Condition>
+        -->
+        <RegistryKey Root="HKLM" Key="$(var.Vs11RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 12.0 hive (VS12) -->
+      <Component Id="VS12RegistryComponent" Guid="$(var.VS12RegistryCompGuid)" Transitive="yes" Win64="no">
+        <!--
+        <Condition>
+          <![CDATA[VS12]]>
+        </Condition>
+        -->
+        <RegistryKey Root="HKLM" Key="$(var.Vs12RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+
+    <!--=====================================================================
+       Custom action to register any installed proper pages
+    ======================================================================-->
+    <Binary Id='BinCodeToolsUpdate' SourceFile='CodeToolsUpdate.exe' />
+    <CustomAction Id='CodeToolsUpdate' Impersonate='no' Execute='deferred' Return='check' BinaryKey='BinCodeToolsUpdate' ExeCommand='' HideTarget='no'/>
+    
+    <!--=====================================================================
+       Execute sequence: 
+    ======================================================================-->
+    <InstallExecuteSequence>
+      <Custom Action='CodeToolsUpdate' After='PublishProduct' />
+    </InstallExecuteSequence>
+
+  </Module>
+</Wix>

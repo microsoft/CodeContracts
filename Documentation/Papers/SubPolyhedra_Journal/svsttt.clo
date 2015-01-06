@@ -1,0 +1,195 @@
+% SVJour DOCUMENT CLASS OPTION STTT -- Software Tools for Technology Transfer
+%
+% This is an enhancement for the
+% LaTeX document class for Springer journals (two column version)
+% by Andreas Holzmann <Andreas.Holzmann@informatik.uni-dortmund.de>
+%
+%%
+%%
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\ProvidesFile{svsttt.clo}
+              [1998/02/19 v1.0
+      style option for Software Tools for Technology Transfer]
+\typeout{SVJour Class option: svsttt.clo for
+     Software Tools for Technology Transfer}
+\ExecuteOptions{final,10pt,twocolumn,runningheads}
+% No size changing allowed, hence a copy of size10.clo is included
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize\@xpt{12}%
+   \abovedisplayskip 8.55\p@ \@plus4\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+\normalsize
+\newcommand\small{%
+   \@setfontsize\small\@ixpt{11}%
+   \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus2\p@
+   \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \parsep 0\p@ \@plus1\p@ \@minus\p@
+               \topsep 8\p@ \@plus2\p@ \@minus4\p@
+               \itemsep0\p@}%
+   \belowdisplayskip \abovedisplayskip
+}
+\newcommand\footnotesize{%
+   \@setfontsize\footnotesize\@viiipt{9.5}%
+   \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus\p@
+   \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 3\p@ \@plus\p@ \@minus\p@
+               \parsep 2\p@ \@plus\p@ \@minus\p@
+               \itemsep \parsep}%
+   \belowdisplayskip \abovedisplayskip
+}
+\newcommand\scriptsize{\@setfontsize\scriptsize\@viipt\@viiipt}
+\newcommand\tiny{\@setfontsize\tiny\@vpt\@vipt}
+\newcommand\large{\@setfontsize\large\@xiipt{13dd}}
+\newcommand\Large{\@setfontsize\Large\@xviipt{17dd}}
+\newcommand\LARGE{\@setfontsize\LARGE\@xviipt{17dd}}
+\newcommand\huge{\@setfontsize\huge\@xxpt{25}}
+\newcommand\Huge{\@setfontsize\Huge\@xxvpt{30}}
+%
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule\@width 1.9cm%.4\columnwidth
+  \kern2.6\p@}
+%
+\setlength{\textwidth}{17.8cm}
+\setlength{\textheight}{640dd}
+\setlength\columnsep{6mm}
+\setcounter{tocdepth}{3}
+\setlength\headsep   {14\p@}
+\setlength\topmargin{-60pt}
+\setlength\@fptop{0\p@ \@plus 1fil}
+\setlength\@fpsep{8\p@ \@plus 2fil}
+\setlength\@dblfptop{0\p@ \@plus 1fil}
+\setlength\@dblfpsep{8\p@ \@plus 2fil}
+\def\captionstyle{\normalfont\footnotesize}
+%
+\def\stttrunnhead{%
+    \def\\{\unskip\ \ignorespaces}\def\inst##1{\unskip{}}%
+    \def\thanks##1{\unskip{}}\def\fnmsep{\unskip}%
+    \instindent=\textwidth
+    \advance\instindent by-\headlineindent
+    \if!\the\titlerunning!\else
+      \edef\@title{\the\titlerunning}%
+    \fi
+    \global\setbox\titrun=\hbox{\small\rm\ignorespaces\@title}%
+    \ifdim\wd\titrun>\instindent
+       \typeout{^^JSVJour Warning: Title too long for running head.}%
+       \typeout{Please supply a shorter form with \string\titlerunning
+                \space prior to \string\maketitle}%
+       \global\setbox\titrun=\hbox{\small\rm
+       Title Suppressed Due to Excessive Length}%
+    \fi
+    \xdef\@title{\copy\titrun}%
+%
+    \if!\the\authorrunning!
+    \else
+      \setcounter{auth}{1}%
+      \edef\@author{\the\authorrunning}%
+    \fi
+    \ifnum\value{auth}>2
+       \def\stripauthor##1\and##2\endauthor{%
+       \protected@xdef\@author{##1\unskip\unskip\if!##2!\else\ et al.\fi}}%
+       \expandafter\stripauthor\@author\and\endauthor
+    \else
+       \gdef\and{\unskip, \ignorespaces}%
+       {\def\and{\noexpand\protect\noexpand\and}%
+       \protected@xdef\@author{\@author}}
+    \fi
+    \global\setbox\authrun=\hbox{\small\ignorespaces
+                                 \@author\unskip: \unhbox\titrun}%
+    \ifdim\wd\authrun>\instindent
+    \typeout{^^JSVJour Warning: The running head built automatically from
+             \string\author\space and \string\title
+             ^^Jexceeds the pagewidth, please supply a shorter form
+             ^^Jwith \string\authorrunning\space and
+             \string\titlerunning\space prior to \string\maketitle}%
+    \global\setbox\authrun=\hbox{\small\rm Please give a shorter version
+          with: {\tt\string\authorrunning\space and
+             \string\titlerunning\space prior to \string\maketitle}}%
+    \fi
+    \xdef\@author{\copy\authrun}%
+    \markboth{\@author}{\@author}%
+}
+%
+\AtEndOfClass{%
+\let\ProcessRunnHead=\stttrunnhead
+\logodepth=1.3cm%
+\headerboxheight=202.23pt%
+\aftertext=2mm%
+\def\keywordname{{\bf Key words:}}
+\def\mailname{{\it Correspondence to\/}:}
+\def\betweenumberspace{2.5mm}%
+\def\leftlegendglue{\hfil}%
+\let\if@smartand\iffalse
+\def\@evenhead{\small\rlap{\thepage}\hfil\leftmark\hfil}%
+\def\@oddhead{\small\hfil\rightmark\hfil\llap{\thepage}}%
+\def\runinend{.}%
+\def\floatcounterend{.\ }%
+\def\sectcounterend{}%
+\def\@thmcounterend{.\hskip 1mm}%
+\def\section{\@startsection{section}{1}{\z@}%
+    {-21dd plus-4pt minus-4pt}{15dd plus 4pt
+     minus4pt}{\normalsize\bfseries\boldmath}}
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+    {-15dd plus-3pt minus-3pt}{13dd plus 3pt
+     minus3pt}{\normalsize\itshape}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+    {-13dd plus-2pt minus-2pt}{10dd plus 2pt
+     minus2pt}{\normalsize}}
+\def\paragraph{\@startsection{subsubsection}{4}{\z@}%
+    {-10.5dd plus-2pt minus-2pt}{-1pt}{\normalsize\it}}
+\def\@listi{\leftmargin\leftmargini
+    \parsep \z@
+    \topsep 4\p@ \@plus2\p@ \@minus4\p@
+    \itemsep\parsep}
+%
+\def\smallskip{\vspace\medskipamount\noindent}
+\let\medskip\smallskip
+\let\bigskip\smallskip
+%
+\def\sttt@spynthm#1#2#3#4{{\@definecounter{#1}%
+   \expandafter\xdef\csname the#1\endcsname{\@thmcounter{#1}}%
+   \expandafter\xdef\csname #1name\endcsname{#2}%
+   \global\@namedef{#1}{\@spthm{#1}{\csname #1name\endcsname}{#3}{#4}}%
+                               \global\@namedef{end#1}{\@endtheorem}}}
+\sttt@spynthm{property}{Property}{\bf}{\rm}
+\sttt@spynthm{question}{Question}{\bf}{\rm}
+\sttt@spynthm{definition}{Definition}{\bf}{\rm}
+\renewenvironment{figure}
+               {\@float{figure}\begin{center}}
+               {\end{center}\end@float}
+\renewenvironment{figure*}
+               {\@dblfloat{figure}\begin{center}}
+               {\end{center}\end@dblfloat}
+\renewenvironment{table}
+               {\@float{table}\begin{center}}
+               {\end{center}\end@float}
+\renewenvironment{table*}
+               {\@dblfloat{table}\begin{center}}
+               {\end{center}\end@dblfloat}
+%
+\journalname{Software Tools for Technology Transfer}}
+%
+\endinput
+%%
+%% End of file `svsttt.clo'.

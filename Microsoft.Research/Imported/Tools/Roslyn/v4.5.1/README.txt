@@ -1,0 +1,1 @@
+The files in this directory were copied from the Roslyn Drop: \\roslyn-build1\Drops\Signed\Signed_20140110.1. If you need other assemblies, then it is best to get them from that directory.

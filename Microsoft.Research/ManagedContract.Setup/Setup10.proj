@@ -1,0 +1,221 @@
+<!--
+   Usage: msbuild /p:CCNetLabel=1.1.1125.1
+
+   where the label should reflect the current date (e.g.Nov 25), and the day's build number (1)
+-->
+<Project DefaultTargets="JustBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+<!-- cbtools tasks -->
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateGuid" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateRelease" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.DeleteReleases" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateWixComponent" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Email" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.MsiExec" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepot" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotEdit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSubmit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSync" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotLabel" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotLabelSync" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WikiDump" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Wix" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteProgressToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateAssemblyInfo" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Policheck" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <Target Name="All"
+    DependsOnTargets="DevlabTSMSI;InternalMSI;InternalVSIX;Publish"/>
+
+  <Target Name="JustBuild"
+    DependsOnTargets="DebugMSI;DevlabTSMSI;AcademicMSI;DevlabSTDMSI;InternalMSI"/>
+
+  <Target Name="AcademicMSI">
+          <!--DependsOnTargets="AddMSRToUploaded">-->
+    <MSBuild
+     Projects="buildMSI10.xml"
+     Properties="CCNetLabel=$(CCNetLabel);ReleaseConfig=msr9;ContinuousBuild=$(ContinuousBuild);IgnoreCpx=$(IgnoreCpx)"
+     Targets="All"
+    />
+  </Target>
+
+  <Target Name="DevlabTSMSI">
+          <!--DependsOnTargets="AddDEVLABTSToUploaded">-->
+    <MSBuild
+     Projects="buildMSI10.xml"
+     Properties="CCNetLabel=$(CCNetLabel);ReleaseConfig=devlab9ts;ContinuousBuild=$(ContinuousBuild);IgnoreCpx=$(IgnoreCpx)"
+     Targets="All"
+    />
+  </Target>
+
+  <Target Name="DevlabSTDMSI">
+        <!--  DependsOnTargets="AddDEVLABSTDToUploaded">-->
+    <MSBuild
+     Projects="buildMSI10.xml"
+     Properties="CCNetLabel=$(CCNetLabel);ReleaseConfig=devlab9std;ContinuousBuild=$(ContinuousBuild);IgnoreCpx=$(IgnoreCpx)"
+     Targets="All"
+    />
+  </Target>
+
+  <Target Name="InternalMSI"
+          DependsOnTargets="AddINTERNALToUploaded">
+    <MSBuild
+     Projects="buildMSI10.xml"
+     Properties="CCNetLabel=$(CCNetLabel);ReleaseConfig=msft9;ContinuousBuild=$(ContinuousBuild);IgnoreCpx=$(IgnoreCpx)"
+     Targets="All"
+    />
+  </Target>
+  
+  <Target Name="DebugMSI">
+        <!--  DependsOnTargets="AddDEVLABSTDToUploaded">-->
+    <MSBuild
+     Projects="buildMSI10.xml"
+     Properties="CCNetLabel=$(CCNetLabel);ReleaseConfig=debug;ContinuousBuild=$(ContinuousBuild);IgnoreCpx=$(IgnoreCpx)"
+     Targets="All"
+    />
+  </Target>
+
+<!--
+  <Target Name="DevlabVSIX"
+          DependsOnTargets="AddDevLabsAdornmentsToUploaded"/>
+-->
+  
+  <Target Name="InternalVSIX"
+          DependsOnTargets="AddINTERNALAdornmentsToUploaded"/>
+
+  <Target Name="Publish"
+          DependsOnTargets="CleanReleases;TagRelease"
+  >
+    <Message Importance="high" Text="Creating new release on CodeBox" />
+<!--
+    <ItemGroup>
+      <UploadedFiles
+         Include="releaseNotes.docx">
+        <FriendlyLabel>Code Contracts Release Notes</FriendlyLabel>
+      </UploadedFiles>
+      <UploadedFiles
+         Include="Reflector\Reflector.Contracts.dll">
+        <FriendlyLabel>Contract Viewer Plugin for Reflector</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+-->
+    <CreateRelease
+       ProjectName="contracts"
+       HomePage="false"
+       Public="true"
+       Default="false"
+       Description="Automated build"
+       QualityName="Beta"
+       Version="$(CCNetLabel)"
+       Files="@(UploadedFiles)">
+      <Output TaskParameter="ReleaseId" PropertyName="ReleaseId"/>
+    </CreateRelease>
+  </Target>
+
+  <Target Name="CleanReleases">
+    <DeleteReleases
+      ProjectName="contracts"
+      KeepCount="2"
+      QualityName="Beta"
+      ContinueOnError="true"
+    />
+    <DeleteReleases
+      ProjectName="contracts"
+      KeepCount="1"
+      QualityName="ReleaseCandidate"
+      ContinueOnError="true"
+    />
+    <DeleteReleases
+      ProjectName="contracts"
+      KeepCount="1"
+      QualityName="SpecialBuild"
+      ContinueOnError="true"
+    />
+    <DeleteReleases
+      ProjectName="contracts"
+      KeepCount="1"
+      QualityName="Production"
+      ContinueOnError="true"
+    />
+  </Target>
+
+  <Target Name="TagRelease">
+    <SourceDepotLabel
+      Label="$(CCNetLabel)"
+      WorkingDirectory="."
+      Template="Contracts"
+      ToolPath="..\ImportedSD\sd.exe"
+   />
+    <SourceDepotLabelSync
+      Label="$(CCNetLabel)"
+      ToolPath="..\ImportedSD\sd.exe"
+   />
+  </Target>
+
+  <Target Name="ReUpload"
+          DependsOnTargets="AddINTERNALToUploaded;AddDEVLABTSToUploaded;AddDEVLABSTDToUploaded;AddMSRToUploaded;Publish">
+  </Target>
+
+
+  <Target Name="AddINTERNALAdornmentsToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="msft9\msi\ContractAdornments10.vsix">
+        <FriendlyLabel>VS2010 tool-tips for contracts in code and metadata</FriendlyLabel>
+      </UploadedFiles>
+      <UploadedFiles
+        Include="msft9\msi\ContractAdornments11.vsix">
+        <FriendlyLabel>VS2012 tool-tips for contracts in code and metadata</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+
+<!--
+  <Target Name="AddDevLabsAdornmentsToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="..\ContractAdornments\bin\Devlab9\CodeContractsHelper.vsix">
+        <FriendlyLabel>VS2010 extension to display contracts that are inherited and in metadata</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+-->
+  
+  <Target Name="AddMSRToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="msr9\msi\Contracts.msr9.msi">
+        <FriendlyLabel>Academic License Code Contracts Installer</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="AddDEVLABTSToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="devlab9ts\msi\Contracts.devlab9ts.msi">
+        <FriendlyLabel>Devlab Premium Code Contracts Installer</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="AddDEVLABSTDToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="devlab9std\msi\Contracts.devlab9std.msi">
+        <FriendlyLabel>Devlab Standard Code Contracts Installer</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="AddINTERNALToUploaded">
+    <ItemGroup>
+      <UploadedFiles
+        Include="msft9\msisigned\Contracts.msft9.msi">
+        <FriendlyLabel>Internal Microsoft Code Contracts Installer</FriendlyLabel>
+      </UploadedFiles>
+    </ItemGroup>
+  </Target>
+
+</Project>

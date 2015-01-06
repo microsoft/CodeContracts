@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.Entity</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.UI.WebControls.EntityDataSource">
+      <summary>Represents an Entity Data Model (EDM) to data-bound controls in an ASP.NET application.</summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> class. </summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.#ctor(System.Data.EntityClient.EntityConnection)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> class with the provided connection.</summary>
+      <param name="connection">An <see cref="T:System.Data.EntityClient.EntityConnection" /> to the Entity Data Model (EDM).</param>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.AutoGenerateOrderByClause">
+      <summary>Gets or sets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control dynamically creates an ORDER BY clause based on values in the <see cref="P:System.Data.WebControls.EntityDataSource.OrderByParameters" /> collection.</summary>
+      <returns>true if the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control creates the ORDER BY clause; otherwise, false. The default value is false.</returns>
+      <exception cref="T:System.InvalidOperationException">When the <see cref="P:System.Web.UI.WebControls.EntityDataSource.AutoGenerateOrderByClause" /> property is set to true and the <see cref="P:System.Web.UI.WebControls.EntityDataSource.OrderBy" /> property is not null.</exception>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.AutoGenerateWhereClause">
+      <summary>Gets or sets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control dynamically creates a WHERE clause based on values defined in the <see cref="P:System.Web.UI.WebControls.EntityDataSource.WhereParameters" /> collection.</summary>
+      <returns>true if the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control creates the WHERE clause; otherwise, false. The default value is false.</returns>
+      <exception cref="T:System.InvalidOperationException">When the <see cref="P:System.Web.UI.WebControls.EntityDataSource.AutoGenerateWhereClause" /> property is set to true and the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Where" /> property is not null.</exception>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.AutoPage">
+      <summary>Gets or sets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports navigation through sections of the data at run time.</summary>
+      <returns>true if the user can page through the data; otherwise, false. The default value is true.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.AutoSort">
+      <summary>Gets or sets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports sorting the data at run time.</summary>
+      <returns>true if the user can sort the data; otherwise, false. The default value is true.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.CommandParameters">
+      <summary>Gets the parameter collection for the query.</summary>
+      <returns>A <see cref="T:System.Web.UI.WebControls.ParameterCollection" /> that contains the parameters that are passed to the query command.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.CommandText">
+      <summary>Gets or sets an Entity SQL command that defines the query.</summary>
+      <returns>A string value that is the Entity SQL query.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.ConnectionString">
+      <summary>Gets or sets the connection string that is used to execute the query.</summary>
+      <returns>The connection string for the query.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.ContextCreated">
+      <summary>Occurs when the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> has finished creating the <see cref="T:System.Data.Objects.ObjectContext" /> that is used to work with entity data objects. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.ContextCreating">
+      <summary>Occurs when the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> creates the <see cref="T:System.Data.Objects.ObjectContext" /> that is used to work with entity data objects. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.ContextDisposing">
+      <summary>Occurs before an <see cref="T:System.Data.Objects.ObjectContext" /> is disposed of. </summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.ContextType">
+      <summary>Gets or sets the typed <see cref="T:System.Data.Objects.ObjectContext" /> used by the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>An object that derives from <see cref="T:System.Data.Objects.ObjectContext" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.ContextTypeName">
+      <summary>Gets or sets the fully qualified name of the typed <see cref="T:System.Data.Objects.ObjectContext" /> that is used by the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>A <see cref="T:System.String" /> that is the fully qualified name of the type.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.DefaultContainerName">
+      <summary>Gets or sets the default container name.</summary>
+      <returns>A <see cref="T:System.String" /> that is the default container name.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Deleted">
+      <summary>Occurs after an object has been deleted from the data source.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.DeleteParameters">
+      <summary>Gets the collection of parameters that are used during a delete operation.</summary>
+      <returns>The parameters that are used during a delete operation.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Deleting">
+      <summary>Occurs before an object is deleted from the data source.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EnableDelete">
+      <summary>Gets or sets a value that indicates whether objects can be deleted through the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>true if automatic delete operations are enabled; otherwise, false. The default value is false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EnableFlattening">
+      <summary>Gets or sets the value that indicates whether you want to turn off wrapper creation. </summary>
+      <returns>True if the properties will be flattened; otherwise false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EnableInsert">
+      <summary>Gets or sets a value that indicates whether objects can be added through the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>true if automatic insert operations are enabled; otherwise, false. The default value is false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EnableUpdate">
+      <summary>Gets or sets a value that indicates whether objects can be modified through the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>true if automatic update operations are enabled; otherwise, false. The default value is false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EntitySetName">
+      <summary>Gets or sets the name of the entity set used by the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>The entity set name.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.EntityTypeFilter">
+      <summary>Gets or sets the expression that limits the query to only results of a specific derived type.</summary>
+      <returns>The filter expression.</returns>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.GetView(System.String)">
+      <summary>Gets the named data source view that is associated with the data source control.</summary>
+      <returns>The <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> that is associated with the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</returns>
+      <param name="viewName">The name of the view to retrieve. Because the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports only one view, <paramref name="viewName" /> is ignored. </param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.GetViewNames">
+      <summary>Gets a collection of names representing the list of view objects that are associated with the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <returns>An <see cref="T:System.Collections.ICollection" /> that contains the names of the views associated with the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.GroupBy">
+      <summary>Gets or sets the Entity SQL expression that specifies how to group the query results.</summary>
+      <returns>The GROUP BY clause.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.Include">
+      <summary>Gets or sets the expression that specifies the related objects to include in the query results.</summary>
+      <returns>Comma-separated list of query paths to return in the query results.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Inserted">
+      <summary>Occurs after a new object is created at the data source. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Inserting">
+      <summary>Occurs before a new object is persisted to the data source.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.InsertParameters">
+      <summary>Gets the collection of parameters that are used during an insert operation.</summary>
+      <returns>The parameters that are used during an insert operation.</returns>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.LoadControlState(System.Object)">
+      <summary>Loads the state of the properties in the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control that need to be persisted.</summary>
+      <param name="savedState">The <see cref="T:System.Object" /> that contains state information. </param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.OnInit(System.EventArgs)">
+      <summary>Adds a <see cref="E:System.Web.UI.Page.LoadComplete" /> event handler to the <see cref="T:System.Web.UI.Page" /> control that contains the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+      <param name="e">An <see cref="T:System.EventArgs" /> object that contains event data. </param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.OnUnload(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Unload" /> event.</summary>
+      <param name="e">An <see cref="T:System.EventArgs" /> object that contains event data.  </param>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.OrderBy">
+      <summary>Gets or sets the Entity SQL expression that specifies how to order the query results.</summary>
+      <returns>The ORDER BY clause.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.OrderByParameters">
+      <summary>Gets the collection of parameters that are used to create the ORDER BY clause.</summary>
+      <returns>The parameters that are used for creating the ORDER BY clause.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.QueryCreated">
+      <summary>Occurs after the <see cref="E:System.Web.UI.WebControls.EntityDataSource" /> creates an Entity SQL query that was specified during the configuration of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.SaveControlState">
+      <summary>Saves the state of the properties in the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control that need to be persisted.</summary>
+      <returns>The <see cref="T:System.Object" /> that contains state information.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.Select">
+      <summary>Gets or sets the projection that defines the properties to include in the query results.</summary>
+      <returns>The parameters that are used for creating the ORDER BY clause.</returns>
+      <exception cref="T:System.InvalidOperationException">When the <see cref="P:System.Web.UI.WebControls.EntityDataSource.Select" /> property specifies a query projection and the value of <see cref="P:System.Web.UI.WebControls.EntityDataSource.EnableUpdate" />, <see cref="P:System.Web.UI.WebControls.EntityDataSource.EnableDelete" />, or <see cref="P:System.Web.UI.WebControls.EntityDataSource.EnableInsert" /> is true.</exception>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Selected">
+      <summary>Occurs after a query has been executed.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Selecting">
+      <summary>Occurs before a query is constructed and executed.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.SelectParameters">
+      <summary>Gets the collection of parameters that are used to create the projection.</summary>
+      <returns>The parameters that are used for creating the projection.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.StoreOriginalValuesInViewState">
+      <summary>Gets or sets a value that indicates whether the data from the data source should be stored in view state to make sure that the data has not been changed by another process before it is updated or deleted.</summary>
+      <returns>true if the values will be stored in view state; otherwise, false. The default value is true.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.System#Web#DynamicData#IDynamicDataSource#Exception">
+      <summary>Occurs when validation fails in a partial methods or when an exception is raised. </summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.System#Web#UI#WebControls#IQueryableDataSource#RaiseViewChanged">
+      <summary>Notifies the data-bound control that a parameter object has changed and the data-bound control needs to refresh.</summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSource.TrackViewState">
+      <summary>Causes tracking of view-state changes to the server control so they can be stored in the server control's <see cref="T:System.Web.UI.StateBag" /> object. This object is accessible through the <see cref="P:System.Web.UI.Control.ViewState" /> property.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Updated">
+      <summary>Occurs after changes to an object have been persisted to the data source.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.UpdateParameters">
+      <summary>Gets the collection of parameters that are used during an update operation.</summary>
+      <returns>The parameters that are used during an update operation.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSource.Updating">
+      <summary>Occurs before changes to an object are persisted to the data source.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.Where">
+      <summary>Gets or sets the Entity SQL expression that specifies how to filter the query results.</summary>
+      <returns>The WHERE clause.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSource.WhereParameters">
+      <summary>Gets the collection of parameters that are used to create the WHERE clause.</summary>
+      <returns>The parameters that are used for creating the WHERE clause.</returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceChangedEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Inserted" />, <see cref="E:System.Web.UI.WebControls.EntityDataSource.Updated" />, and <see cref="E:System.Web.UI.WebControls.EntityDataSource.Deleted" /> events.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangedEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> used by the data source.</summary>
+      <returns>The <see cref="T:System.Data.Objects.ObjectContext" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangedEventArgs.Entity">
+      <summary>Gets the object that was added, modified, or updated.</summary>
+      <returns>An <see cref="T:System.Object" /> that is the entity.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangedEventArgs.Exception">
+      <summary>Gets the exception that was thrown during the insert, update, or delete operation.</summary>
+      <returns>The exception, if an error occurred; otherwise, a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangedEventArgs.ExceptionHandled">
+      <summary>Gets or sets a value that indicates whether the exception was handled and that it should not be thrown again.</summary>
+      <returns>true if the exception was handled; otherwise, false. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceChangingEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Inserting" />, <see cref="E:System.Web.UI.WebControls.EntityDataSource.Updating" />, and <see cref="E:System.Web.UI.WebControls.EntityDataSource.Deleting" /> events.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangingEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> used by the data source.</summary>
+      <returns>The object context used by the data source.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangingEventArgs.Entity">
+      <summary>Gets the object being added, modified, or updated.</summary>
+      <returns>An <see cref="T:System.Object" /> that is the entity.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangingEventArgs.Exception">
+      <summary>Gets the exception that was thrown while the data was being validated before the insert, update, or delete operation.</summary>
+      <returns>The exception, if an error occurred; otherwise, a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceChangingEventArgs.ExceptionHandled">
+      <summary>Gets or sets a value that indicates whether the exception was handled and that it should not be thrown again.</summary>
+      <returns>true if the exception was handled; otherwise, false. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceContextCreatedEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.ContextCreated" /> event.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceContextCreatedEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> used by the data source.</summary>
+      <returns>The object context used by the data source. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceContextCreatingEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.ContextCreating" /> event.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceContextCreatingEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> that is used by the data source. </summary>
+      <returns>The object context that is used by the data source.</returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceContextDisposingEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.ContextDisposing" /> event.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceContextDisposingEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> used by the data source.</summary>
+      <returns>The object context used by the data source. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Selected" /> event.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.Context">
+      <summary>Gets the <see cref="T:System.Data.Objects.ObjectContext" /> used by the data source.</summary>
+      <returns>The <see cref="T:System.Data.Objects.ObjectContext" />.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.Exception">
+      <summary>Gets the exception that was thrown during the query.</summary>
+      <returns>The exception, if an error occurred; otherwise, a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.ExceptionHandled">
+      <summary>Gets or sets a value that indicates whether the exception was handled and that it should not be thrown again.</summary>
+      <returns>true if the exception was handled; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.Results">
+      <summary>Gets the objects returned by the query.</summary>
+      <returns>Objects returned by the query.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.SelectArguments">
+      <summary>Gets values that determine how the data is returned.</summary>
+      <returns>An object that contains values for determining how the data is returned.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectedEventArgs.TotalRowCount">
+      <summary>Gets the total number of objects returned by the query.</summary>
+      <returns>The total number of object returned. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceSelectingEventArgs">
+      <summary>Provides data for the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Selecting" /> event.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectingEventArgs.DataSource">
+      <summary>Gets the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> instance that raised the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Selecting" /> event.</summary>
+      <returns>The data source that raised the <see cref="E:System.Web.UI.WebControls.EntityDataSource.Selecting" /> event. </returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceSelectingEventArgs.SelectArguments">
+      <summary>Gets values that determine how the data is returned.</summary>
+      <returns>An object that contains values for determining how the data is returned. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceValidationException">
+      <summary>Represents errors that occur when validating properties of a dynamic data source.</summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceValidationException.#ctor">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSourceValidationException" /> class with a system-supplied message that describes the error.</summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceValidationException.#ctor(System.String)">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSourceValidationException" /> class with a specified message that describes the error.</summary>
+      <param name="message">The message that describes the exception. The caller of this constructor is required to ensure that this string has been localized for the current system culture.</param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceValidationException.#ctor(System.String,System.Exception)">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSourceValidationException" /> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
+      <param name="message">The message that describes the exception. The caller of this constructor is required to ensure that this string has been localized for the current system culture. </param>
+      <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException" /> parameter is not null, the current exception is raised in a catch block that handles the inner exception. </param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceValidationException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Creates a new instance of the <see cref="T:System.Web.UI.WebControls.EntityDataSourceValidationException" /> class with serialized data.</summary>
+      <param name="info">The object that holds the serialized object data. </param>
+      <param name="context">The contextual information about the source or destination. </param>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceValidationException.System#Web#DynamicData#IDynamicValidatorException#InnerExceptions">
+      <summary>Gets the exceptions that occur when a new or edited data field is validated.</summary>
+      <returns>A collection that contains all the exceptions that occurred. </returns>
+    </member>
+    <member name="T:System.Web.UI.WebControls.EntityDataSourceView">
+      <summary>Supports the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control and provides an interface for data-bound controls to perform queries and other operations against entity data.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanDelete">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports the delete operation.</summary>
+      <returns>true if the operation is supported; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanInsert">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports the insert operation.</summary>
+      <returns>true if the operation is supported; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanPage">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports paging of retrieved data.</summary>
+      <returns>true if the operation is supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanRetrieveTotalRowCount">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports retrieving the total number of data rows, in addition to retrieving the data.</summary>
+      <returns>true if the operation is supported; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanSort">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports a sorted view of the retrieved data.</summary>
+      <returns>true if the operation is supported; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.CanUpdate">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control supports the update operation.</summary>
+      <returns>true if the operation is supported; otherwise, false. </returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.ContextCreated">
+      <summary>Occurs when the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> has finished creating the <see cref="T:System.Data.Objects.ObjectContext" /> used to bind data to controls. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.ContextCreating">
+      <summary>Occurs when the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> creates the <see cref="T:System.Data.Objects.ObjectContext" /> used in data binding. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.ContextDisposing">
+      <summary>Occurs before an <see cref="T:System.Data.Objects.ObjectContext" /> is disposed. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Deleted">
+      <summary>Occurs after an object has been deleted from the data source.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Deleting">
+      <summary>Occurs before an object is deleted from the data source.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Exception">
+      <summary>Occurs when validation fails in a partial methods or when an exception is raised. </summary>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceView.GetViewSchema">
+      <summary>Returns a table that represents the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />.</summary>
+      <returns>A table that contains the properties of the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" />.</returns>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Inserted">
+      <summary>Occurs after a new object is created at the data source. </summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Inserting">
+      <summary>Occurs before a new object is persisted to the data source.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.QueryCreated">
+      <summary>Occurs after the <see cref="E:System.Web.UI.WebControls.EntityDataSource" /> has created an Entity SQL query that was specified during the configuration of the <see cref="T:System.Web.UI.WebControls.EntityDataSource" /> control.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Selected">
+      <summary>Occurs after a query has been executed.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Selecting">
+      <summary>Occurs before a query is constructed and executed.</summary>
+    </member>
+    <member name="P:System.Web.UI.WebControls.EntityDataSourceView.System#Web#UI#IStateManager#IsTrackingViewState">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> object is saving changes to its view state.</summary>
+      <returns>true if the data source view is marked to save its state; otherwise, false. </returns>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceView.System#Web#UI#IStateManager#LoadViewState(System.Object)">
+      <summary>Restores the previously saved view state for the data source view.</summary>
+      <param name="savedState">The <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> control state to restore. </param>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceView.System#Web#UI#IStateManager#SaveViewState">
+      <summary>Saves the changes to view state for the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> control since the time that the page was posted back to the server.</summary>
+      <returns>The object that contains the changes to the <see cref="T:System.Web.UI.WebControls.EntityDataSourceView" /> control's view state, or null (Nothing in Visual Basic) if there is no view state associated with the object.</returns>
+    </member>
+    <member name="M:System.Web.UI.WebControls.EntityDataSourceView.System#Web#UI#IStateManager#TrackViewState">
+      <summary>Tracks view state changes.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Updated">
+      <summary>Occurs after changes to an object have been persisted to the data source.</summary>
+    </member>
+    <member name="E:System.Web.UI.WebControls.EntityDataSourceView.Updating">
+      <summary>Occurs before changes to an object are persisted to the data source.</summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,1 @@
+ (0,0) : error CC1008: Class 'CC1008+CK' is annotated as being the contract for the interface 'CC1008+K' but doesn't implement the interface.

@@ -1,0 +1,1540 @@
+\makeatletter
+\let\@vec\vec
+\makeatother
+\documentclass[envcountsame]{llncs}
+\newif\iflong\longfalse%\input{short-long.tex}
+\iflong\else
+%%% \usepackage{vruler}
+%%% %\setvruler[<SCALE>][<INITIAL_COUNT>][<STEP>][<DIGITS>][<MODE>][<ODD_HSHIFT]>][<EVEN_HSHIFT>][<VSHIFT>][<HEIGHT>]
+%%% %         <SCALE>   distance between two consecutive vruler markings
+%%% %         <INITIAL_COUNT> first marking reading
+%%% %         <STEP>    is the line count increment
+%%% %         <DIGITS>  number of digits required for ruler markings
+%%% %         <MODE> =0 if each page has same vruler marking, =1 if otherwise
+%%% %         <ODD_HSHIFT>  horizontal shift for odd pages
+%%% %                       from the default value for the vruler
+%%% %         <EVEN_HSHIFT> horizontal shift for even pages
+%%% %                       from the default value for the vruler
+%%% %         <VSHIFT>  vertical shift from default value for vruler
+%%% %         <HEIGHT>  height of vertical ruler
+%%% \newdimen\hauteurregle
+%%% \hauteurregle\textheight
+%%% \advance \hauteurregle by 34pt
+%%% \setvruler[11pt][01][1][2][0][0pt][0pt][-3.5mm][\hauteurregle]
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modifications to llncs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% page numbering
+%\pagestyle{plain}
+% wider abstract
+\iflong\else
+\advance\textheight by 4em
+\advance\textwidth by 2em 
+\makeatletter
+\renewenvironment{abstract}{%
+      \list{}{\advance\topsep by0.35cm\relax\small
+      \leftmargin=5mm%\leftmargin=1cm
+      \labelwidth=\z@
+      \listparindent=\z@
+      \itemindent\listparindent
+      \rightmargin\leftmargin}\item[\hskip\labelsep
+                                    \bfseries\abstractname]}
+    {\endlist}
+\makeatother
+\fi
+% wider separation between columns of tabbles
+\arraycolsep2\arraycolsep
+% smaller space around sections
+\iflong\else
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+%                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+%                       {-12\p@ \@plus -2.66\p@ \@minus -2.66\p@}%
+%{-6\p@ \@plus -1.33\p@ \@minus -1.33\p@}%
+{-9\p@ \@plus -2\p@ \@minus -2\p@}%
+%                       {12\p@ \@plus 4\p@ \@minus 4\p@}%
+%{4\p@ \@plus 1.33\p@ \@minus 1.33\p@}%
+{6\p@ \@plus 2\p@ \@minus 2\p@}%
+                       {\normalfont\large\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+%                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+                       {-9\p@ \@plus -2\p@ \@minus -2\p@}%
+%                       {-6\p@ \@plus -1.33\p@ \@minus -1.33\p@}%
+%                       {8\p@ \@plus 4\p@ \@minus 4\p@}%
+%                       {2\p@ \@plus 1.33\p@ \@minus 1.33\p@}%
+                       {4\p@ \@plus 2\p@ \@minus 2\p@}%
+                       {\normalfont\normalsize\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+%                       {-18\p@ \@plus -4\p@ \@minus -4\p@}%
+                        {-9\p@ \@plus -2\p@ \@minus -2\p@}%
+%                       {-6\p@ \@plus -1.33\p@ \@minus -1.33\p@}%
+                       {-0.5em \@plus -0.22em \@minus -0.1em}%
+                       {\normalfont\normalsize\bfseries\boldmath}}
+\makeatother
+\fi
+% smaller space before and after equations, list
+\iflong\else
+\makeatletter
+%\newcommand{\@reductionfactor}{2}
+\newcommand{\@reductionfactor}{1}
+\newcommand{\@reduceskip}{\divide \abovedisplayskip by \@reductionfactor\divide \abovedisplayshortskip by \@reductionfactor\divide \belowdisplayshortskip by \@reductionfactor\divide \belowdisplayskip by \@reductionfactor}
+\newcommand{\@reducesep}{\divide \parsep by \@reductionfactor\divide \topsep by \@reductionfactor\divide \itemsep by \@reductionfactor}
+\renewcommand\@listI{\leftmargin\leftmargini
+            \parsep 0\p@ \@plus1\p@ \@minus\p@
+            \topsep 8\p@ \@plus2\p@ \@minus4\p@
+            \itemsep0\p@
+\@reducesep}
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize\@xpt\@xiipt
+   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI
+\@reduceskip}
+\normalsize
+\renewcommand\small{%
+   \@setfontsize\small\@ixpt{11}%
+   \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus2\p@
+   \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \parsep 0\p@ \@plus1\p@ \@minus\p@
+               \topsep 8\p@ \@plus2\p@ \@minus4\p@
+               \itemsep0\p@
+\@reducesep}%
+   \belowdisplayskip \abovedisplayskip
+\@reduceskip}
+\renewcommand\footnotesize{%
+   \@setfontsize\footnotesize\@viiipt{9.5}%
+   \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus\p@
+   \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 3\p@ \@plus\p@ \@minus\p@
+               \parsep 2\p@ \@plus\p@ \@minus\p@
+               \itemsep \parsep
+\@reducesep}%
+   \belowdisplayskip \abovedisplayskip
+\@reduceskip}
+% redefine \vec (not bold) and \pvec (p:partial)
+\makeatother
+\fi
+\makeatletter
+\let\llncsvec\vec
+\renewcommand{\vec}[1]{\@ifnextchar'{\@vec{#1}\mskip3mu}{\@vec{#1}\mskip1.5mu}}
+\def\p@vec#1{\rlap{$\acute{\phantom{#1}}$}\@vec{#1}}
+\newcommand{\pvec}[1]{\@ifnextchar'{\p@vec{#1}\mskip3mu}{\p@vec{#1}\mskip1.5mu}}
+% enforce a dot after the subsubsection title
+\let \@subsubsection \subsubsection
+\def \subsubsection#1{\@subsubsection{#1.}}
+% title
+\makeatother
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of modifications to llncs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-%%%%%%%%%%%%%%%%%%%%%%%%%%% Includes
+\usepackage[utf8]{inputenc}
+%\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\usepackage{randtext}
+\usepackage{amssymb}
+\ifnum\pdfoutput>0
+\pdfmapfile{+./amsfonts.map}
+\fi
+\usepackage{eqntabular}
+\usepackage{renumber}
+\usepackage{epstopdf}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{bbm}
+\ifnum\pdfoutput>0
+\pdfmapfile{+./bbm.map}
+\fi
+\usepackage{stmaryrd}
+\ifnum\pdfoutput>0
+\pdfmapfile{+./stmaryrd.map}
+\fi
+\newcommand{\sqb}[1]{\llbracket#1\rrbracket}
+\usepackage{datetime}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{galois}
+\usepackage{calculus}
+\usepackage{relsize}
+\newcommand{\relstrut}[1]{\mbox{\relsize{#1}\strut}}
+\usepackage{comment}
+\usepackage[colorlinks,linkcolor=black,anchorcolor=black,citecolor=black,
+filecolor=black,menucolor=black,runcolor=black,
+urlcolor=black,]{hyperref}
+\let\theorem\undefined
+\let\proposition\undefined
+\let\lemma\undefined
+\let\corollary\undefined
+\let\example\undefined
+\let\remark\undefined
+\let\definition\undefined
+\let\proof\undefined
+\usepackage[standard]{ntheorem}
+\usepackage[capitalise]{cleveref}
+\crefname{section}{Sect{.}\xspace}{Sect{.}\xspace}
+\Crefname{section}{Sect{.}\xspace}{Sect{.}\xspace}
+\crefname{theorem}{Th{.}\xspace}{Th{.}\xspace}
+\Crefname{theorem}{Th{.}\xspace}{Th{.}\xspace}
+\crefname{corollary}{Cor{.}\xspace}{Cor{.}\xspace}
+\Crefname{corollary}{Cor{.}\xspace}{Cor{.}\xspace}
+\crefname{lemma}{Lem{.}\xspace}{Lem{.}\xspace}
+\Crefname{lemma}{Lem{.}\xspace}{Lem{.}\xspace}
+\crefname{example}{Ex{.}\xspace}{Ex{.}\xspace}
+\Crefname{example}{Ex{.}\xspace}{Ex{.}\xspace}
+\crefname{definition}{Def{.}\xspace}{Def{.}\xspace}
+\Crefname{definition}{Def{.}\xspace}{Def{.}\xspace}
+\crefname{item}{\unskip}{\unskip}
+\Crefname{item}{\unskip}{\unskip}
+\def\skipnextchar#1{}
+\crefname{equation}{\skipnextchar}{\skipnextchar}
+\Crefname{equation}{\skipnextchar}{\skipnextchar}
+%
+\title{\mbox{\llap{Pre}condition} Inference from Intermittent \mbox{Assert\rlap{ions}}\\and Application to Contracts on Collections}
+\titlerunning{Precondition inference from intermittent assertions}
+\author {Patrick Cousot$\,$\inst{2,3} \and Radhia Cousot$\,$\inst{1,3} \and Francesco Logozzo$\,$\inst{4}}
+\tocauthor{Patrick Cousot, Radhia Cousot, Francesco Logozzo}% list of authors for the TOC (use if author list has to be modified)
+\authorrunning{P. Cousot, R. Cousot and F. Logozzo}% abbreviated author list (for running head)
+%
+\institute{Centre National de la Recherche Scientifique, Paris
+\and
+Courant Institute of Mathematical Sciences, New York University
+\and
+\'Ecole Normale Sup\'erieure, Paris
+\and
+MSR, Redmond}
+\date{\today, \currenttime}
+\pdfinfo{            
+          /Title      (Precondition Inference from Intermittent Assertions and Application to Contract on Collections)            
+          /Author     (P. Cousot, R. Cousot and F. Logozzo)
+          /Keywords   (Abstract interpretation, Contract, Design by Contract, Verification)          
+ }
+%-% Symbols
+\newcommand{\functor}{FunArray\xspace}
+\newcommand{\arrayal}{\texttt{Arrayal}\xspace}
+\newcommand{\Arrayal}{\arrayal}
+\newcommand{\Clousot}{\texttt{Clousot}\xspace}
+\newcommand{\CodeContracts}{\texttt{CodeContracts}\xspace}
+\newcommand{\NET}{\texttt{$\mskip-2mu${.}NET}\xspace}
+%
+% mathematical sets/classes
+%
+\newcommand{\classofallordinals}{\mathbbm{O}}
+\newcommand{\setofallnaturals}{\mathbbm{N}}
+\newcommand{\setofallintegers}{\mathbbm{Z}}
+%
+% Tuples
+%
+%   \ltuple{x1}\mtuple{x2}\mtuple{x3}...\rtuple{xn} = <x1, x2, ..., xn>
+%   \singleton{x}                                   = <x>
+%   \pair{x}{y}                                     = <x, y>
+%   \triple{x}{y}{z}                                = <x, y, z>
+%   \quadruplet{x}{y}{z}{t}                         = <x, y, z, s>
+%   \quintuple{x}{y}{z}{s}{t}                       = <x, y, z, s, t>
+%   \sextuple{x}{y}{z}{s}{t}{u}                     = <x, y, z, s, t, u>
+%   \septuple{x}{y}{z}...{v}                        = <x, y, z, s, t, u, v>
+%   \octuple{x}{y}{z}...{w}                         = <x, y, z, s, t, u, v, w>
+%
+\newcommand{\ltuple}[1]{\langle#1,\allowbreak}
+\newcommand{\mtuple}[1]{\:#1,\allowbreak}
+\newcommand{\rtuple}[1]{\:#1\rangle}
+\newcommand{\singleton}[1]{\langle#1\rangle}
+\newcommand{\interval}[2]{[#1,\allowbreak\:#2]}
+\newcommand{\pair}[2]{\ltuple{#1}\rtuple{#2}}
+\newcommand{\triple}[3]{\ltuple{#1}\mtuple{#2}\rtuple{#3}}
+\newcommand{\quadruple}[4]{\ltuple{#1}\mtuple{#2}\mtuple{#3}\rtuple{#4}}
+\newcommand{\quintuple}[5]{\ltuple{#1}\mtuple{#2}\mtuple{#3}\mtuple{#4}\rtuple{#5}}
+\newcommand{\sextuple}[6]{\ltuple{#1}\mtuple{#2}\mtuple{#3}\mtuple{#4}\mtuple{#5}\rtuple{#6}}
+\newcommand{\septuple}[7]{\ltuple{#1}\mtuple{#2}\mtuple{#3}\mtuple{#4}\mtuple{#5}\mtuple{#6}\rtuple{#7}}
+\newcommand{\octuple}[8]{\ltuple{#1}\mtuple{#2}\mtuple{#3}\mtuple{#4}\mtuple{#5}\mtuple{#6}\mtuple{#7}\rtuple{#8}}
+%
+% \identity{E}
+%
+\newcommand{\identity}[1]{\mathfrak{1}_{#1}}
+\newcommand{\domain}{\mathsf{dom}}
+%
+% abstract interpretation
+%
+\newcommand{\abstractdomain}[1]{\ensuremath{\mathbf{#1}}}
+\makeatletter
+\newcommand{\abstractproperties}[2]{\def\@paramone{#1}\ensuremath{\ifx\@paramone\@empty\else \abstractdomain{#1}.\fi\mathcal{#2}}}
+\newcommand{\abstractoperation}[2]{\def\@paramone{#1}\ensuremath{\ifx\@paramone\@empty\else \abstractdomain{#1}.\fi#2}}
+\makeatother
+
+% abstract interpretation
+\newcommand{\ASabstractdomain}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\ASabstractproperties}[1]{\ensuremath{\overline{\mathcal{#1}}}}
+\makeatletter
+\newcommand{\ASabstractoperation}[2]{\def\@paramone{#1}\ensuremath{\ifx\@paramone\@empty\else \ASabstractdomain{#1}.\fi#2}}
+\makeatother
+
+   % segment emptyness
+\let\boundemptinessdisjunction\curlyvee
+\let\boundemptinessconjunction\curlywedge
+\let\boundemptinessleq\preccurlyeq
+\let\boundemptinesslq\prec
+
+\newcommand{\wideningsymbol}{\mathchoice{\raisebox{0.25ex}{\relsize{-2}$\bigtriangledown$}}{\raisebox{0.25ex}{\relsize{-2}$\bigtriangledown$}}{\raisebox{0.115ex}{\relsize{-4}$\bigtriangledown$}}{\raisebox{0.0575ex}{\relsize{-6}$\bigtriangledown$}}}
+\newcommand{\narrowingsymbol}{\mathchoice{\raisebox{0.33ex}{\relsize{-2}$\bigtriangleup $}}{\raisebox{0.33ex}{\relsize{-2}$\bigtriangleup $}}{\raisebox{0.165ex}{\relsize{-4}$\bigtriangleup $}}{\raisebox{0.0825ex}{\relsize{-6}$\bigtriangleup $}}}
+\newcommand{\widen}{\mathbin{\wideningsymbol}}
+\newcommand{\narrow}{\mathbin{\narrowingsymbol}}
+%
+\newcommand{\zerovariable}{\ensuremath{\mathtt{v}_{0}}}
+%
+%
+% Fixpoints
+%
+%    \lfp{x} =  lfp x
+%    \gfp{x} =  gfp x
+%    \Lfp{x}{z} =  lfp  z
+%                     x
+%    \Gfp{x}{y){z} =  gfp  z
+%                        x
+%                        y
+%    \LFP{x}{y){z} =  lfp  z
+%                        x
+%                        y
+%    \GFP{x}{y){z} =  gfp  z
+%                        x
+\newcommand{\lfp}[1]{\mathsf{lfp}\,#1}
+\newcommand{\gfp}[1]{\mathsf{gfp}\,#1}
+\newcommand{\Lfp}[2]{\mathsf{lfp}\,\strut^{{\scriptstyle #1}}\,#2} 
+\newcommand{\Gfp}[2]{\mathsf{gfp}\,\strut^{{\scriptstyle #1}}\,#2} 
+\newcommand{\LFP}[3]{\mathsf{lfp}\,\strut^{{\scriptstyle #1}}_{{\scriptstyle #2}}\,#3} 
+\newcommand{\GFP}[3]{\mathsf{gfp}\,\strut^{{\scriptstyle #1}}_{{\scriptstyle #2}}\,#3}
+\newcommand{\postfp}[1]{\mathsf{postfp}\,#1}
+\newcommand{\Postfp}[2]{\mathsf{postfp}\strut^{{\scriptstyle #1}}\,#2} 
+% 
+% \LAMBDA{x}e    = \ x.e         meta lambda-expression
+% \LAMBDA{x}[X]e = \ x \in X.e
+\makeatletter
+\def\@LAMBDAoperator{\mathop{\mathchoice{\mbox{\boldmath$\lambda$}}{\mbox{\boldmath$\lambda$}}{\mbox{\relsize{-1}\boldmath$\lambda$}}{\mbox{\relsize{-2}\boldmath$\lambda$}}}}% bold lambda \def\@LAMBDAoperator{\lambda}%
+\def\@LAMBDApoint{%
+\mathchoice%
+{\,\mbox{\relsize{2}\bf\raisebox{0.3ex}{.}}\,}%
+{\,\mbox{\relsize{2}\bf\raisebox{0.3ex}{.}}\,}%
+{\,\mbox{\relsize{1}\bf\raisebox{0.3ex}{.}}\,}%
+{\,\mbox{\bf\raisebox{0.3ex}{.}}\,}%
+}
+\def\LAMBDA#1{\@ifnextchar[{\@@LAMBDA@IN{#1}}{\@@LAMBDA{#1}}}
+\def\@@LAMBDA#1{\@LAMBDAoperator{#1}\@LAMBDApoint}
+\def\@@LAMBDA@IN#1[#2]{\@LAMBDAoperator{#1}\,{\in}\,{#2}\@LAMBDApoint}
+\makeatother
+%
+% \length
+%
+\newcommand{\length}[1]{\mathopen{{|}}\mskip1mu#1\mskip1mu\mathclose{{|}}}
+%
+% \implies, \isimpliedby, \iff, 
+%
+\newcommand{\implies}{\ensuremath{\Rightarrow}}
+\newcommand{\isimpliedby}{\ensuremath{\Leftarrow}}
+\renewcommand{\iff}{\ensuremath{\Leftrightarrow}}
+%
+% pointwise \psubseteq \pbigcup \pimplies
+%
+\newcommand{\psubseteq}{\ensuremath{\mathrel{\dot{\mathord{\subseteq}}}}}
+\newcommand{\psupseteq}{\ensuremath{\mathrel{\dot{\mathord{\supseteq}}}}}
+\newcommand{\pbigcup}{\ensuremath{\mathop{\mathord{\dot{\bigcup}}}}}
+\newcommand{\pcap}{\ensuremath{\mathbin{\mathord{\dot{\cap}}}}}
+\newcommand{\pbigcap}{\ensuremath{\mathop{\mathord{\dot{\bigcap}}}}}
+\newcommand{\pimplies}{\mathrel{\mskip-5mu\dot{\mskip5mu\implies}}}
+\newcommand{\pisimpliedby}{\mathrel{\dot{\isimpliedby\mskip5mu}\mskip-5mu}}
+\newcommand{\pwedge}{\ensuremath{\mathbin{\mathord{\dot{\wedge}}}}}
+
+%
+% functions A \rightarrow B
+%
+\newcommand{\urightarrow}{\stackrel{\raisebox{-3pt}{$\scriptscriptstyle{}\cup{}\mskip2.5mu$}}{\longrightarrow}}
+\newcommand{\mrightarrow}{\stackrel{\raisebox{-3pt}{$\scriptscriptstyle{}\cap{}\mskip2.5mu$}}{\longrightarrow}}
+\newcommand{\umrightarrow}{\stackrel{\raisebox{-3pt}{$\scriptscriptstyle{}{\cup},{\cap}{}\mskip2.5mu$}}{\longrightarrow}}
+\newcommand{\upmrightarrow}{\stackrel{\raisebox{-3pt}{$\scriptscriptstyle{}{\cup},{\pcap}{}\mskip2.5mu$}}{\longrightarrow}}
+%
+% \predot
+%
+%\newcommand{\predot}[1]{\ensuremath{\,\dot{}#1}}
+\newcommand{\predot}[1]{\ensuremath{#1}}
+%\newcommand{\vecpredot}[1]{\ensuremath{\,\dot{}\vec{#1}}}
+%
+% s\assigngoto[x][v][c] = s[\mathtt{x} := y -> \mathtt{c}]
+% \controlpoint{s}
+% \state{c}{m}
+% \btau
+%
+\makeatletter
+\newcommand{\assigngoto}[3]{\def\@paramone{#1}\def\@paramtwo{#2}\def\@paramthree{#3}%
+[\,\ifx\@paramone\@empty\else\ifx\@paramtwo\empty\else\mathtt{#1}\mathrel{{:}{=}}#2\fi\fi\ifx\@paramthree\@empty\else\mathord{\,\rightarrow\,}\mathtt{#3}\fi\,]
+}
+\newcommand{\controlpoint}[1]{\llncsvec{\pi}#1}
+\makeatother
+\newcommand{\state}[2]{\singleton{\mathtt{#1}\mathord{\,\rightarrow\,}#2}}
+\newcommand{\btau}{\llncsvec{\tau}}
+%
+% \seqcomp,, \prefix
+%
+%\newcommand{\seqcomp}{\mathbin{\fatsemi}}
+\newcommand{\seqcomp}{\comp}
+\newcommand{\prefix}[2]{#2^{\downarrow#1}}
+%
+% \intermittent/state/trace/property{A}, \program/state/trace/property{\vec{A}}
+%
+\newcommand{\emptytrace}{\vec{\epsilon}}
+\newcommand{\programtraceproperty}[1]{\vec{\llncsvec{\mathcal{P}}}(#1)}
+\newcommand{\programstateproperty}[1]{\llncsvec{\mathcal{P}}(#1)}
+\newcommand{\intermittentstateproperty}[1]{\llncsvec{\mathcal{I}}(#1)}
+\newcommand{\intermittenttraceproperty}[1]{\vec{\llncsvec{\mathcal{I}}}(#1)}
+%
+% \TODO[Who]{What}
+%
+\makeatletter
+\long\def\TODO{\@ifnextchar[{\@TODO}{\@@TODO}}
+\long\def\@TODO[#1]#2{\textcolor{red}{#1:}\@@TODO{#2}}
+\long\def\@@TODO#1{\mbox{\textcolor{red}{TODO:}}\ \begingroup\color{blue}#1\endgroup}
+\makeatother
+%
+% footnotes (n)
+%
+\makeatletter
+\renewcommand\thefootnote{(\the\c@footnote)}%
+\makeatother
+%
+% wp wlp \post
+%
+\makeatletter
+\newcommand{\@postt}{\mathchoice{\rlap{$\:\widetilde{\phantom{\mathsf{pre}}}$}\mathsf{post}}{\rlap{$\:\widetilde{\phantom{\mathsf{pre}}}$}\mathsf{post}}{\rlap{\small$\:\widetilde{\phantom{\mathsf{pre}}}$}\mathsf{post}}{\rlap{\footnotesize$\:\widetilde{\phantom{\mathsf{pre}}}$}\mathsf{post}}}
+\newcommand{\@vpostt}{\mathchoice {\rlap{$\:\vec{\widetilde{\phantom{\mathsf{pre}}}}$}\mathsf{post}} {\rlap{$\:\vec{\widetilde{\phantom{\mathsf{pre}}}}$}\mathsf{post}} {\rlap{\small $\:\vec{\widetilde{\phantom{\mathsf{pre}}}}$}\mathsf{post}} {\rlap{\footnotesize $\:\vec{\widetilde{\phantom{\mathsf{pre}}}}$}\mathsf{post}}}
+\newcommand{\WP}[1]{\mathsf{wp}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\SP}[1]{\mathsf{sp}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\WLP}[1]{\mathsf{wlp}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\WLPinv}[1]{\mathsf{wlp}^{-1}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\SLP}[1]{\mathsf{slp}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\post}[1]{\mathsf{post}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\postt}[1]{\@postt\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\pre}[1]{\mathsf{pre}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\pret}[1]{\widetilde{\mathsf{pre}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vWP}[1]{\vec{\mathsf{wp}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vWLP}[1]{\vec{\mathsf{wlp}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vpost}[1]{\vec{\mathsf{post}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vpostt}[1]{\@vpostt\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vpre}[1]{\vec{\mathsf{pre}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\newcommand{\vpret}[1]{\vec{\widetilde{\mathsf{pre}}}\def\@param{#1}\ifx\@param\@empty\else[#1]\fi}
+\makeatother
+%
+% \subst{a}{b}{c}substitute a for b in c 
+%
+\newcommand{\subst}[3]{#3[#2\mathbin{{:}{=}}#1]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\let\@textvisiblespace\textvisiblespace
+\renewcommand{\textvisiblespace}{\ifmmode\mathchoice{\mbox{\@textvisiblespace}} {\mbox{\@textvisiblespace}} {\mbox{\small\@textvisiblespace}} {\mbox{\footnotesize\@textvisiblespace}}\else\@textvisiblespace\fi}
+\makeatother
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\iflong\else\vspace*{-5mm}\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+Programmers often insert assertions in their code to
+be optionally checked at runtime, at least during the debugging phase. In the context of design by contracts, these assertions would better
+be given as a precondition of the method/procedure \iflong\ in which they appear. Potential errors would
+be discovered earlier and, more importantly, the precondition could be used in the context of 
+separate static program analysis as part of the abstract semantics of the code. However
+in the case of collections (data structures such as arrays, lists, etc) checking both the precondition
+and the assertions at runtime appears superfluous and costly. So the precondition is often omitted
+since it is checked anyway at runtime by the assertions. It follows that the static analysis can be
+much less precise, a fact that can be difficult to understand since ``the precondition and assertions
+are equivalent'' (i.e.\ at runtime, up to the time at which warnings are produced, but not statically).
+
+\smallskip 
+
+\mbox{}\hspace*{1.5em}%
+\else
+which can detect that a caller has violated the procedure's contract in a way which definitely leads to an assertion violation (\emph{e.g.}, for separate static analysis).
+\fi
+We define precisely and formally the contract inference problem from intermittent assertions inserted in the code 
+by the programmer. Our definition excludes no good run even when a non-deterministic choice (e.g., an interactive input) could lead to a bad one (so this is not the weakest precondition, nor its strengthening by abduction, since a terminating successful execution is not guaranteed). We then introduce new abstract interpretation-based 
+methods to automatically  infer both the static contract precondition of a method/procedure and the code
+to check it at runtime on scalar and collection variables.
+\end{abstract}
+\iflong\else\vspace*{-5mm}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In the context of compositional/structural static program analysis for design by contract \cite {eiffel,Meyer92-DbC}, it is quite frequent that preconditions for the code (\emph{i.e.}\ a program/module/method/procedure/function/assembly/etc) have been only partially specified by the programmer (or even not at all for legacy code) and need to be automatically strengthened or inferred  by taking into account the implicit \emph{language assertions} (\emph{e.g.}, runtime errors) and the explicit \emph{programmer assertions} (\emph{e.g.}, assertions and contracts of called methods/procedures). Besides the
+methodological advantage of anticipating future inevitable requirements when running a code, precise contracts are necessary in the context of a separate program analysis as \emph{e.g.}, in \Clousot, an abstract interpretation-based static contract checker for \NET~\cite{MafLogozzo10}. \iflong A precise contract in a called code can be propagated to the caller, which makes both its specification and static analysis more precise. \fi We work in the context of contracts embedded in the program code \cite{BarnettFahndrichLogozzo-SAC-2010} so that specification conditions are expressed in the programming language itself (and extracted by the compiler for use in contract related tools). The precondition inference problem for a code is twofold~\cite{BarnettFahndrichLogozzo-SAC-2010}:
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+\item \emph{Static analysis problem:} infer the entry semantic precondition from control flow dependent language and programmer assertions embedded in the code to guard, whenever possible, against inevitable errors\iflong\ (and, optionally, termination, non-termination, or erroneous post-condition)\fi;
+\item \emph{Code synthesis problem:} generate visible side-effect free code checking for that precondition. This checking code must be separable from the checked code and should only involve elements visible to all callers of the checked code.
+\end{itemize}
+
+\begin{example}\label[example]{ex-array}The problem is illustrated by the following \texttt{AllNotNull} procedure where the precondition that the array \texttt{A} and all array elements should not be null $\texttt{A}\neq \texttt{null}\wedge\forall i\in[0,\texttt{A.length}):\texttt{A}[i] \neq \texttt{null}$ is checked by the implicit language assertions while iterating over the array. 
+\bgroup%
+\newdimen\largeurgauche%
+\newdimen\largeurdroite%
+\settowidth{\largeurgauche}{\qquad}%
+\largeurdroite\textwidth%
+\advance \largeurdroite by -\largeurgauche%
+\largeurgauche 8cm%
+\advance \largeurdroite by -\largeurgauche%
+\iflong\else\abovedisplayskip5pt\belowdisplayskip-5pt\fi%
+\begin{eqntabular}[fl]{@{}L@{\qquad}L@{}}
+\begin{minipage}[b]{\largeurgauche}\fontsize{9}{10}\selectfont
+\begin{verbatim}
+         void AllNotNull(Ptr[] A) {
+/* 1: */  int i = 0;
+/* 2: */  while /* 3: */ 
+             (assert(A != null); i < A.length) {  
+/* 4: */   assert((A != null) && (A[i] != null));
+/* 5: */   A[i].f = new Object();
+/* 6: */   i++;
+/* 7: */  }
+/* 8: */ }
+\end{verbatim}
+\end{minipage}
+&
+\iflong\else
+\begin{minipage}[b]{\largeurdroite}
+The language assertion \texttt{A[i] != null} for a \emph{given} value of \texttt{i} is \emph{intermittent} at program point \texttt{4:} but not \emph{invariant} since the array content is modified at program point \texttt{5:}.
+\vspace*{0.75em}
+\end{minipage}
+\fi
+\renumber{\raisebox{-2mm}[0pt][0pt]{\qed}}
+\end{eqntabular}
+\egroup
+\iflong
+The language assertion \texttt{A[i] != null} for a given value of \texttt{i} is \emph{intermittent} at program point \texttt{4:} but not \emph{invariant} since the array is modified at program point \texttt{5:}. The reason for not specifying the precondition explicitly might be that when checking this precondition at runtime (thanks to an appropriate compilation option), the program would have two iterations over the array elements, which may be thought of as a waste of resources. However, without this precondition, a modular analysis cannot propagate the hypothesis on the array content to the separate analysis of the caller, which makes the specification and static analysis of the caller less precise. 
+\fi
+\end{example}
+\iflong The problem we consider is therefore to automatically infer contract preconditions taking into account the \emph{intermittent assertions} (which will eventually hold when control reaches a program point but, maybe, not everytime it is reached) \emph{on elements of structured data} (collections in our examples). \fi
+On one hand, a solution \iflong\else to the contract inference problem \fi could be to infer the precondition as a set of states, logical formula, or abstract property ensuring proper termination without any language or programmer assertion failure (as  proposed \emph{e.g.}, in \cite[Sect.\ 10-4.6]{Cousot81-1-MuchnickJones}) or \cite[Sect.\ 3.4.5]{Cousot78-1-TheseEtat}). But this does not guarantee the precondition to be easily understandable and that efficient code can be generated to check it. Moreover this is stronger than strictly required (\emph{e.g.}, the code \texttt{\small x = random(); assert(x ==0)} is not guaranteed to terminate properly, but has at least one execution without failure, so should not be rejected). On the other hand, the precondition checking code could be a copy of the method body where all code with random or visible side effect (including input) as well as all further dependent code is removed.
+\iflong\else\vspace*{-0.25em}\fi
+\begin{example}\label[example]{ex-array-remove-side-effects}Continuing \cref{ex-array}, we get the straw man
+\advance\abovedisplayskip by 1pt
+\begin{eqntabular*}[fl]{@{\quad}L}
+\newdimen\largeur\settowidth{\largeur}{\quad}\advance\largeur by -\columnwidth \largeur-\largeur
+\begin{minipage}[b]{\largeur} \fontsize{9}{10}\selectfont
+ \begin{verbatim}
+ bool CheckAllNotNull(Ptr[] A) {
+    int i = 0;
+    while (if (A == null) { return false }; i < A.length) {
+       if ((A == null) || (0 > i) || (i >= A.length) || (A[i] == null)) 
+          { return false };
+       i++ }
+    return true }
+\end{verbatim}
+\end{minipage}
+%\renumber{\qed}
+\end{eqntabular*}
+Modifications of \texttt{i} have no visible side effects while those of elements of \texttt{A} do have, so the assignment \texttt{A[i].f} is dropped. There is no code that depends on this value, so no other code needs to be removed. 
+\qed\end{example}
+However, these simple solutions may not provide a simple precondition both easily understandable by the programmer, easily reusable for separate modular static analysis, and efficiently checkable at runtime, if necessary. 
+\iflong\else\vspace*{-0.25em}\fi
+\begin{example}\label[example]{ex-array-precondition}Continuing \cref{ex-array,ex-array-remove-side-effects}, we would like to automatically infer the precondition
+\iflong\begin{eqntabular*}[fl]{@{\quad}L}\else$\fi
+\texttt{\small ForAll(0,A.length,i => A[i] != null)} 
+\iflong\end{eqntabular*}\else$ \fi
+using \texttt{\small ForAll} quantifiers \cite{BarnettFahndrichLogozzo-SAC-2010} over integer ranges and collections. Iterative checking code is then easy to generate.
+\qed\end{example}
+\iflong\else\vspace*{-0.25em}\fi
+The semantics of code is formalized in \cref{sec:ProgramSemantics} and that of specifications by runtime assertions in \cref{sec:SpecificationSemantics}. The contract precondition inference problem is defined in 
+\cref{sec:ContractPreconditionInferenceProblem} and compared  with weakest preconditions computation.  Elements of abstract interpretation are recalled  in \cref{sec:ElementsAbstractInterpretation} and used in \cref{sec:FixpointStrongestContractPrecondition} to provide a fixpoint solution to the contract precondition inference problem. Several effective contract precondition inference are then proposed, by data flow analysis in \cref {sec:DataflowAnalysisContractPrecondition},  for scalar variables both by forward symbolic analysis in \cref{sec:ForwardSymbolicAnalysisContractPrecondition} and  by backward symbolic analysis in \cref {sec:BackwardSymbolicAnalysisContractPrecondition}, for collections  by forward analysis in \cref {sec:CollectionAnalysisContractPrecondition}. \Cref{sec:RelatedWorkConclusion} has a comparison with related work, suggestions for future work, and conclusions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Program semantics}\label[section]{sec:ProgramSemantics}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Small-step operational semantics}
+%------------------------------------------------------------------------------------------------------
+
+Following \cite{Cousot78-1-TheseEtat}, the small-step operational semantics of code is assumed to be given by a \emph{transition system} $\triple{\Sigma}{\tau}{\mathfrak{I}}$
+where $\Sigma$ is a set of \emph{states}, $\tau\in\wp(\Sigma\times \Sigma)$ is a non-deterministic \emph{transition relation} between a state and its possible successors, and $\mathfrak{I}\in\wp(\Sigma)$ is the set of \emph{initial states} (on code entry, assuming the precondition, if any, to be true). We write $\tau(s,s')$ for $\pair{s}{s'}\in\tau$. The \emph{final or blocking states} without any possible successor (on code exit or violation of a language assertion with unpredictable consequences) are $\mathfrak{B}\triangleq\{s\in\Sigma\mid \forall s': \neg\tau (s,s')\}$. If the code must satisfy a \emph{global invariant} $\mathfrak{G}\in\wp(\Sigma)$ (\emph{e.g.}, class invariant for a method), we assume this to be included in the definition of the transition relation $\tau$ (\emph{e.g.}, $\tau\subseteq \mathfrak{G}\times \mathfrak{G}$). We use a map $\controlpoint{}\in\Sigma\rightarrow\Gamma$ of states of $\Sigma$ into \emph{control points} in $\Gamma$ which is assumed to be of finite cardinality. The program has \emph{scalar variables}  $\mathtt{x}\in\mathbbm{x}$, \emph{collection variables} $\mathtt{X}\in\mathbbm{X}$ and visible side effect free expressions $\texttt{e}\in\mathbbm{E}$, including \emph{Boolean expressions} $\texttt{b}\in\mathbbm{B}\subseteq\mathbbm{E}$. Collection variables $\mathtt{X}$ have elements $\mathtt{X[i]}$ ranging from 0 to $\mathtt{X.count}-1$ ($\mathtt{A.length}-1$ for arrays $\mathtt{A}$). The value of $\texttt{e}\in\mathbbm{E}$ in state $s\in\Sigma$ is $\sqb{\texttt{e}}s\in\mathcal{V}$. The \emph{values} $\mathcal{V}$ include the Booleans $\mathcal{B}\triangleq\{\mathit{true},\mathit{false}\}$ where the complete Boolean algebra  $\pair{\mathcal{B}}{\implies}$ is ordered by $\mathit{false} \implies\mathit{true}$. The value $\sqb{\mathtt{X}}s$ of a collection $\mathtt{X}$ in a state $s\in\Sigma$ is a pair $\sqb{\mathtt{X}}s=\pair{n}{X}$ where $n=\sqb{\mathtt{X}.\texttt{count}}s\geqslant0$ is a non-negative integer and $X\in[0,n)\rightarrow\mathcal{V}$ denotes the value $X(i)$ of $i$-th element, $i\in[0,n)$, in the collection. When $i\in[0,n)$, we define $\sqb{\mathtt{X}}s[i]\triangleq X(i)$ (= $\sqb{\mathtt{X[e]}}s$ where $\sqb{\mathtt{e}}s=i$) to denote the $i$-th element in the collection. \iflong The collection index expressions are assumed to be converted in canonical normal form (\emph{e.g.}, via auxiliary variables, so that \emph{e.g.}, for integer arrays, \texttt{...A[B[i]]...}  becomes \texttt{...\{int x; x := B[i]; A[x]\}...}).\fi
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Traces}
+%------------------------------------------------------------------------------------------------------
+We let traces be sequences of states in $\Sigma$. $\vec{\Sigma}^n$ is the set of non-empty \emph{finite traces} $\vec{s}=\vec{s}_0\ldots\vec{s}_{n-1}$ of \emph{length} $\length{\vec{s}}\triangleq n\geqslant 0$ including the \emph{empty trace} $\emptytrace $ of length $\length{\emptytrace} \triangleq 0$. $\vec{\Sigma}^+\triangleq\bigcup_{n\geqslant1}\vec{\Sigma}^n$  is the set of \emph{non-empty finite traces} and $\vec{\Sigma}^\ast\triangleq\vec{\Sigma}^+\cup\{\emptytrace\}$.  As usual, \emph{concatenation} is denoted by juxtaposition and extended to sets of traces. Moreover, the \emph{sequential composition} of traces is
+\iflong
+\begin{eqntabular}[fl]{@{\quad}rcl}
+\vec{s}s\seqcomp s\vec{s}'&\triangleq&\vec{s}s\vec{s}'\renumber{\llap{when $\vec{s}\in\vec{\Sigma}^\ast$ and $s\in\Sigma$, otherwise undefined}}\\[-1pt]
+\vec{S} \seqcomp\vec{S}'&\triangleq&\{\vec{s}s\vec{s}'\mid\vec{s}s\in\vec{S}\cap\vec{\Sigma}^+\wedge s\vec{s}'\in\vec{S}'\}.\nonumber
+\end{eqntabular}
+\else
+$\vec{s}s\seqcomp s\vec{s}'\triangleq\vec{s}s\vec{s}'$ when $\vec{s},\vec{s}'\in\vec{\Sigma}^\ast$ and $s\in\Sigma$, and is otherwise undefined. $\vec{S} \seqcomp\vec{S}'\triangleq\{\vec{s}s\vec{s}'\mid\vec{s}s\in\vec{S}\cap\vec{\Sigma}^+\wedge s\vec{s}'\in\vec{S}'\}$.
+\fi
+The \emph{partial execution traces} or \emph{runs} of $\triple{\Sigma}{\tau}{\mathfrak{I}}$ are prefix traces generated by transitions, as follows
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\pvec{\tau}^n&\triangleq&\{\vec{s}\in\vec{\Sigma}^n\mid\forall i\in[0,n-1):\tau(\vec{s}_i,\vec{s}_{i+1})\}&\emph{partial runs of length $n\geqslant0$}\\[-2pt]
+\pvec{\tau}^+&\triangleq&\bigcup_{n\geqslant1}\pvec{\tau}^n&\emph{non-empty finite partial runs}\\[-2pt]
+\vec{\tau}^n&\triangleq&\{\vec{s}\in\pvec{\tau}^n\mid\vec{s}_{n-1}\in\mathfrak{B}\}&\emph{complete runs of length $n\geqslant0$}\\[-2pt]
+\vec{\tau}^+&\triangleq&\bigcup_{n\geqslant1}\vec{\tau}^n&\emph{non-empty finite complete runs.}
+\end {eqntabular*}
+The partial (resp.\ complete/maximal) runs starting from an initial state are $\pvec{\tau}^+_\mathfrak{I}\triangleq \{\vec{s}\in\pvec{\tau}^+\mid\vec{s}_0\in\mathfrak{I}\}$ (resp.\ $\vec{\tau}^+_\mathfrak{I}\triangleq \{\vec{s}\in\vec{\tau}^+\mid\vec{s}_0\in\mathfrak{I}\}$). Given $\mathfrak{S}\subseteq\Sigma$, we let $\vec{\mathfrak{S}}^n\triangleq\{\vec{s}\in\vec{\Sigma}^n\mid\vec{s}_0\in \mathfrak{S}\}$, $n\geqslant1$. Partial and maximal finite runs have the following fixpoint characterization \cite{Cousot02-TCS}
+\begin{eqntabular}[fl]{@{\quad}rclcl@{\qquad}L}
+\pvec{\tau}^+_{\mathfrak{I}}&=&\LFP{\subseteq} {\emptyset}\LAMBDA{\vec{T}}\vec {\mathfrak{I}}^1\cup\vec{T} \seqcomp\pvec{\tau}^2\nonumber\\
+\vec{\tau}^+&=&\LFP{\subseteq} {\emptyset}\LAMBDA{\vec{T}}\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}&=&\GFP{\subseteq} {\vec{\Sigma}^+}\LAMBDA{\vec{T}}\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}.
+\label[equation]{eq:vectau+-fixpoint}\stepcounter{equation}\renumber{\normalfont(\ref{eq:vectau+-fixpoint}-a,\ref{eq:vectau+-fixpoint}-b)}
+\end{eqntabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Specification semantics}\label[section]{sec:SpecificationSemantics}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The \emph{specification} includes the existing precondition and postcondition, if any, the language and programmer assertions, made  explicit in the form
+\begin{eqntabular*}[fl]{@{\quad}rcl@{}}
+\mathbbm{A} &=&\{\pair{\texttt{c}_j}{\texttt{b}_j}\mid j\in\Delta\}%\label[equation]{eq:ProgrammerSpecification}
+\end {eqntabular*}%
+whenever a runtime check \texttt{assert(b$_j$)} is attached to a control point $\texttt{c}_j\in\Gamma$, $j\in\Delta$. $\mathbbm{A}$ is computed by a syntactic pre-analysis of the code. The Boolean expressions \texttt{b$_j$} are assumed to be both visible side effect free and always well-defined when evaluated in a shortcut manner, which may have to be checked by a prior \texttt{assert} (\emph{e.g.}, \texttt{assert((A!= null) \&\& (A[i] == 0))}). For simplicity, we assume that \texttt{b$_j$} either refers to a scalar variable (written  \texttt{b$_j$(x)}) or to an element of a collection (written \texttt{b$_j$(X, i)}). This defines
+\begin{eqntabular}[fl]{@{\quad}rcl@{}}
+\mathfrak{E}_{\mathbbm{A}} &\triangleq&\{s\in\Sigma \mid \exists \pair{c}{\texttt{b}}\in \mathbbm{A}: \controlpoint{s}=c\wedge \neg\sqb{\texttt{b}}s\}\renumber{\emph{erroneous} or \emph{bad states}}\\
+\pvec{\mathfrak{E}}_{\mathbbm{A}} &\triangleq&\{\vec{s}\in\vec{\Sigma}^+\mid\exists i<\length{\vec{s}}: \vec{s}_i\in\mathfrak{E}_{\mathbbm{A}}\}
+\renumber{\emph{erroneous} or \emph{bad runs}.}
+\end {eqntabular}%
+As part of the implicit specification, and for the sake of brevity, we consider that program executions should terminate. Otherwise the results are similar after revisiting {\normalfont(\ref{eq:vectau+-fixpoint}-a,\ref{eq:vectau+-fixpoint}-b)} for infinite runs as considered in \cite{Cousot02-TCS}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The contract precondition inference problem}\label[section]{sec:ContractPreconditionInferenceProblem}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}\label[definition]{def:PreconditionInferenceProblem}\itshape
+Given a transition system $\triple{\Sigma}{\tau}{\mathfrak{I}}$ \iflong with maximal finite runs $\vec{\tau}_{\mathfrak{I}}^+$ \fi and a specification $\mathbbm{A}$, the \emph{contract precondition inference problem} consists in computing $\predot{P}_{\mathbbm{A}}\in\wp(\Sigma)$ such that when replacing the initial states $\mathfrak{I}$ by $\predot{P}_{\mathbbm{A}}\cap\mathfrak{I}$, we have
+\begin{eqntabular}[fl]{@{\quad}rcrcl@{\qquad}LR@{}}
+&&\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}\cap\mathfrak{I}}&\subseteq&\vec{\tau}^+_{\mathfrak{I}} &(no new run is introduced)
+&\label[equation]{eq:no-new-run}\stepcounter{equation}
+\renumber{\normalfont(\ref {eq:no-new-run})\quad\phantom{\squareforqed}}\\
+\vec{\tau}^+_{\mathfrak{I}\setminus\predot{P}_{\mathbbm{A}}}&=&\vec{\tau}^+_{\mathfrak{I}}\setminus\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}&\subseteq&\pvec{\mathfrak{E}}_{\mathbbm{A}}&(all eliminated runs are bad runs).
+&\label[equation]{eq:no-good-run-eliminated}\stepcounter{equation}
+\renumber{\normalfont(\ref{eq:no-good-run-eliminated})\quad\squareforqed}
+\end {eqntabular}%
+\end{definition}
+\iflong
+In \cref{def:PreconditionInferenceProblem}, we have
+\begin{calculus}[$\implies$\quad]
+\formula{\vec{\tau}^+_{\mathfrak{I} \setminus \predot{P}_{\mathbbm{A}}}}\\
+=\formulaexplanation{\{s\vec{s}\in\vec{\tau}^+\mid s\in\mathfrak{I} \setminus \predot{P}_{\mathbbm{A}}\}}{def.\ $\vec{\tau}^+_{Q}$, $Q\in\wp(\Sigma)$}\\
+=\formulaexplanation{\{s\vec{s}\in\vec{\tau}^+\mid s\in\mathfrak{I} \wedge s\not\in \predot{P}_{\mathbbm{A}}\}}{def.\ $\setminus\: $}\\
+=\formulaexplanation{\{s\vec{s}\in\vec{\tau}^+\mid s\in\mathfrak{I}\}\cap\neg\{ s\vec{s}\in\vec{\tau}^+\mid s\in  \predot{P}_{\mathbbm{A}}\}}{def.\ $\cap$ and $\neg\:$}\\
+=\numberedformulaexplanation{\vec{\tau}^+_\mathfrak{I}\cap\neg\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{def.\ $\vec{\tau}^+_{Q}$, $Q\in\wp(\Sigma)$}\label[equation]{eq:non-precondition}\\
+=\lastformulaexplanation{\vec{\tau}^+_\mathfrak{I}\setminus\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{def.\ $\setminus\:$}{\qed}
+\end{calculus}
+\fi
+The following lemma shows that, according to \cref{def:PreconditionInferenceProblem}, no finite maximal good run is ever eliminated.
+\begin{lemma}\label[lemma]{no-good-run-ever-eliminated}
+{\normalfont(\ref{eq:no-good-run-eliminated})} implies $\vec{\tau}^+_{\mathfrak{I}}\cap \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}$\ .
+\end{lemma}
+\iflong
+\begin{proof}\hfill~
+\begin{calculus}[$\implies$\ ]
+\formula{\vec{\tau}^+_{\mathfrak{I}}\setminus\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}\subseteq\pvec{\mathfrak{E}}_{\mathbbm{A}}}\\
+$\iff$\formulaexplanation {\vec{\tau}^+_{\mathfrak{I}}\cap \neg\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}\subseteq\pvec{\mathfrak{E}}_{\mathbbm{A}}}{def.\ $A\setminus B\triangleq A\cap \neg B$}\\
+$\iff$\formulaexplanation { \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\neg(\vec{\tau}^+_{\mathfrak{I}}\cap \neg\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}})}{def.\ $A\subseteq B\iff \neg B \subseteq \neg  A$}\\
+$\iff$\formulaexplanation { \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\neg\vec{\tau}^+_{\mathfrak{I}}\cup\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{de Morgan law}\\
+$\implies$\formulaexplanation {\vec{\tau}^+_{\mathfrak{I}}\cap \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\vec{\tau}^+_{\mathfrak{I}}\cap(\neg\vec{\tau}^+_{\mathfrak{I}}\cup\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}})}{$\cap$ is $\subseteq$-monotonically increasing}\\
+$\implies$\formulaexplanation {\vec{\tau}^+_{\mathfrak{I}}\cap \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\vec{\tau}^+_{\mathfrak{I}}\cap\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{distributivity and $\neg$ is complement}\\
+$\implies$\lastformulaexplanation {\vec{\tau}^+_{\mathfrak{I}}\cap \neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\subseteq\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{def. least upper bound (lub) $\cap$.}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+Choosing $\predot{P}_{\mathbbm{A}}=\mathfrak{I}$ so that $\mathfrak{I}\setminus\predot{P}_{\mathbbm{A}}=\emptyset$ hence $\vec{\tau}^+_{\mathfrak{I}\setminus\predot{P}_{\mathbbm{A}}}=\emptyset$ is a trivial solution, so we would like $\predot{P}_{\mathbbm{A}}$ to be minimal, whenever possible (so that $\vec{\tau}^+_{\mathfrak{I}\setminus\predot{P}_{\mathbbm{A}}}$ is maximal). Please note that this is \underline{not} the  weakest (liberal) precondition \cite{Dijkstra75-1}, which yields the weakest condition under which the code (either does not terminate or) terminates without assertion failure, whichever non-deterministic choice is chosen. So this is not either the
+problem of strengthening a precondition to a weaker one by abduction for specification synthesis \cite{CalcagnoEtAl-POPL09}.
+\begin{theorem}\label[theorem]{StrongestPreconditionErrorAvoidability}The strongest$\,$\footnote{Following \cite{Dijkstra75-1}, $P$ is said to be \emph{stronger} than $Q$ and $Q$ \emph{weaker} than $P$ if and only if $P\subseteq Q$.} solution to the precondition inference problem in \cref{def:PreconditionInferenceProblem} is 
+\bgroup\abovedisplayskip-5pt\belowdisplayskip0pt\begin{eqntabular}[fl]{@{\qquad}rcl@{}}
+\mathfrak{P}_{\mathbbm{A}}&\triangleq&\{s\mid\exists s\vec{s}\in\vec{\tau}^+\cap\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\}\label[equation]{eq:def-P-A}.%\stepcounter{equation}
+\renumber{\normalfont(\ref{eq:def-P-A})\quad\qed}
+\end{eqntabular}\egroup
+\end{theorem}
+\iflong
+\begin{proof}If $\predot{P}_{\mathbbm{A}}$ satisfies \cref {def:PreconditionInferenceProblem} then, by \cref {no-good-run-ever-eliminated}, $\mathfrak{P}_{\mathbbm{A}}\subseteq \predot{P}_{\mathbbm{A}}$. Reciprocally, we prove
+that any $\predot{P}_{\mathbbm{A}}$ such that $\mathfrak{P}_{\mathbbm{A}}\subseteq \predot{P}_{\mathbbm{A}}$ satisfies \cref {def:PreconditionInferenceProblem}.
+\begin{calculus}[$\implies$\quad]
+\rlap{\hyphen{5}}\phantom{$\implies$\quad}We have $\predot{P}_{\mathbbm{A}}\cap\mathfrak{I}\subseteq\mathfrak{I}$ and so $\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}\cap\mathfrak{I}}\subseteq\vec{\tau}^+_{\mathfrak{I}}$, proving (\ref {eq:no-new-run}).\\[1ex]
+\hyphen{5} \formula{\vec{\tau}^+_{\mathfrak{I}\setminus\predot{P}_{\mathbbm{A}}}}\\
+= \formulaexplanation{\vec{\tau}^+_\mathfrak{I}\cap\neg\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}}{\iflong by (\ref {eq:non-precondition})\else by def.\ $\vec{\tau}^+_\mathfrak{S}$ and $\setminus$\fi}\\
+$\subseteq $ \formulaexplanation{\vec{\tau}^+_\mathfrak{I}\cap\neg\vec{\tau}^+_{\mathfrak{P}_{\mathbbm{A}}}}{since $\mathfrak{P}_{\mathbbm{A}}\subseteq \predot{P}_{\mathbbm{A}}$ implies $\neg\predot{P}_{\mathbbm{A}} \subseteq\neg\mathfrak{P}_{\mathbbm{A}} $ so $\neg\vec{\tau}^+_{\predot{P}_{\mathbbm{A}}}\subseteq\neg\vec{\tau}^+_{\mathfrak{P}_{\mathbbm{A}}}$}\\
+= \formula{\{s\vec{s}\in\vec{\tau}^+_\mathfrak{I} \mid s\vec{s}\not\in\{s\vec{s}\mid s\vec{s}\in\vec{\tau}^+\wedge s\in\{s\mid\exists\vec{s}':s\vec{s}'\in\vec{\tau}^+\wedge s\vec{s}'\not\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}\}\}}\\\rightexplanation{def.\ $\cap$, $\neg$, and $\vec{\tau}^+_{\mathfrak{P}_{\mathbbm{A}}}$}\\
+= \formulaexplanation {\{s\vec{s}\in\vec{\tau}^+_\mathfrak{I} \mid s\vec{s}\not\in\vec{\tau}^+\vee (\forall\vec{s}':s\vec{s}'\in\vec{\tau}^+\implies s\vec{s}'\in\pvec{\mathfrak{E}}_{\mathbbm{A}})\}}{def.\ $\in$}\\
+= \formulaexplanation {\{s\vec{s}\in\vec{\tau}^+_\mathfrak{I} \mid  \forall\vec{s}':s\vec{s}'\in\vec{\tau}^+\implies s\vec{s}'\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{since $\vec{\tau}^+_\mathfrak{I} \subseteq\vec{\tau}^+$}\\
+$\subseteq$\lastformulaexplanation {\pvec{\mathfrak{E}}_{\mathbbm{A}}}{since $\vec{\tau}^+_\mathfrak{I} \subseteq\vec{\tau}^+$, proving (\ref{eq:no-good-run-eliminated})}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+\iflong
+\begin{corollary}
+The condition $s\in \mathfrak{P}_{\mathbbm{A}}$ is sufficient for the absence of errors in at least one run from $s$$\,$\footnote{$P$ is \emph{necessary} for $Q$ if and only if $Q\implies P$ (so if $P$ does not hold then $Q$ cannot hold)).}. So $s\not\in\mathfrak{P}_{\mathbbm{A}}$ is a necessary condition for the presence of an error along all runs from $s$$\,$\footnote{$P$ is \emph{sufficient} for $Q$ if and only if $P\implies Q$.}.
+\end{corollary}
+\begin{proof}\hfill~
+\begin{calculus}[$\iff$\ ]
+\formula{s\in \mathfrak{P}_{\mathbbm{A}}}\\
+$\implies$\formulaexplanation{\exists s\vec{s}\in\vec{\tau}^+\cap\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}}{def.\ $\mathfrak{P}_{\mathbbm{A}}$}\\
+$\implies$\formulaexplanation{\exists \vec{s}:s\vec{s}\in\vec{\tau}^+\wedge s\vec{s}\not\in\pvec{\mathfrak{E}}_{\mathbbm{A}}}{def.\ $\cap$ and $\neg$}\\
+$\implies$\formulaexplanation{\neg(\forall \vec{s}:s\vec{s}\not\in\vec{\tau}^+\vee s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}})}{def.\ $\neg$}\\
+$\implies$\formulaexplanation{\neg(\forall \vec{s}:(s\vec{s}\in\vec{\tau}^+)\implies( s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}))}{def.\ $\implies $}
+\end{calculus}
+and so $\forall s:(\forall s\vec{s}\in\vec{\tau}^+:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}) \implies(s\not\in \mathfrak{P}_{\mathbbm{A}})$. 
+\qed\end{proof}
+\fi
+Instead of reasoning on the set $\mathfrak{P}_{\mathbbm{A}} $ of states from which there exists a good run without any error, we can reason on the complement $\overline{\mathfrak{P}}_A$ that is the set of states from which all runs are bad in that they always lead to an error.
+\iflong  The program precondition should allow a superset of the potentially good initial states $ \mathfrak{P}_{\mathbbm{A}} $ and eliminate a subset of the definitely bad states $\overline{\mathfrak{P}}_A$.
+
+\fi
+Define $\overline{\mathfrak{P}}_{\mathbbm{A}}$ to be the set of states from which any complete run in $\vec{\tau}^+$ does fail.
+\bgroup\belowdisplayskip-1.5em
+\begin{eqntabular*}[fl]{@{\qquad}rcl@{}}
+\overline{\mathfrak{P}}_{\mathbbm{A}}&\triangleq&\neg\mathfrak{P}_{\mathbbm{A}} \colsep{=}\{s\mid\forall s\vec{s}\in\vec{\tau}^+:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}.
+\end{eqntabular*}\egroup
+\iflong
+\begin{proof}\hfill~
+\begin{calculus}[$\iff$\ ]
+\formulaexplanation{\overline{\mathfrak{P}}_{\mathbbm{A}}\colsep{\triangleq}\neg\mathfrak{P}_{\mathbbm{A}} }{def.\ $\overline{\mathfrak{P}}_{\mathbbm{A}}$}\\
+=\formulaexplanation{\neg\{s\mid\exists s\vec{s}\in\vec{\tau}^+\cap\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ {\normalfont(\ref{eq:def-P-A})} of $\mathfrak{P}_{\mathbbm{A}}$}\\
+=\formulaexplanation{\neg\{s\mid\exists s\vec{s}: s\vec{s}\in\vec{\tau}^+\wedge s\vec{s}\in\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\cap $}\\
+=\formulaexplanation{\{s\mid\forall s\vec{s}: s\vec{s}\not\in\vec{\tau}^+\vee s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\neg $}\\
+= \lastformulaexplanation{\{s\mid\forall s\vec{s}\in\vec{\tau}^+:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\implies$}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic elements of abstract interpretation}\label[section]{sec:ElementsAbstractInterpretation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Galois connections}
+%------------------------------------------------------------------------------------------------------
+
+\iflong A \emph{poset} $\pair{L}{\leqslant}$ is a set $L$ equipped with a partial order $\leqslant$. By the duality principle, its dual $\pair{L}{\geqslant}$ is also a poset. \fi A \emph{Galois connection} $\pair{L}{\leqslant}\galois{{\alpha}}{{\gamma}}\pair{\overline{L}}{\sqsubseteq}$ consists of posets $\pair{L}{\leqslant}$, $\pair{\overline{L}}{\sqsubseteq}$ and maps $\alpha\in L\rightarrow\overline{L}$, $\gamma\in\overline{L}\rightarrow L$ such that $\forall x\in L,y\in\overline{L}: \alpha(x) \sqsubseteq y\iff x\leqslant\gamma(y)$. The dual is $\pair{\overline{L}}{\sqsupseteq}\galois{{\gamma}} {{\alpha}}\pair{L}{\geqslant}$. In a Galois connection, the \emph{abstraction} $\alpha$ preserves existing least upper bounds (lubs) hence is monotonically increasing so, by duality, the \emph{concretization}  $\gamma$ preserves existing greatest lower bounds (glbs) and is monotonically increasing. \iflong The composition $\pair{L}{\leqslant}\galois{{\alpha_2\comp\alpha_1}}{{\gamma_1\comp\gamma_2}}\pair{\overline{\overline{L}}}{\preceq}$ of Galois connections $\pair{L}{\leqslant}\galois{{\alpha_1}}{{\gamma_1}}\pair{\overline{L}}{\sqsubseteq}$ and $\pair{\overline{L}}{\sqsubseteq}\galois{{\alpha_2}}{{\gamma_2}}\pair{\overline{\overline{L}}}{\preceq}$ is a Galois connection$\,$\footnote{Contrary to the original definition of \emph{Galois correspondances} $\pair{L}{\leqslant}\galois{{\alpha}}{{\gamma}}\pair{\overline{L}}{\sqsupseteq}$ hence the semi-dual definition of \cite{CousotCousot79-1-POPL}.}.\fi
+\iflong
+
+\fi
+If $\pair{L}{\leqslant}$ is a complete Boolean lattice with unique complement $\neg$ then the self-dual \emph{complement isomorphism} is $\pair{L}{\leqslant}\GaloiS{{\neg}}{{\neg}}\pair{L}{\geqslant}$ (since $\neg x \leqslant y\iff x\geqslant \neg y$).
+\iflong
+
+It follows, by composition, that if $\pair{\overline{L}}{\sqsubseteq}$ is a complete Boolean lattice with unique complement $\neg$ and  $\pair{L}{\leqslant}\galois{{\alpha}}{{\gamma}}\pair{\overline{L}}{\sqsubseteq}$ and  , then we have the \emph{complement abstraction} $\pair{L}{\leqslant}\galois{\neg\comp\alpha}{\gamma \comp \neg}\pair{\overline{L}}{\sqsupseteq}$ (\emph{i.e.}\ $\neg\alpha(x) \sqsupseteq y\iff \alpha(x)\sqsubseteq \neg  y\iff x\leqslant\gamma(\neg y)$). Similarly $\pair{L}{\leqslant}\galois{{\alpha}}{{\gamma}}\pair{\overline{L}}{\sqsubseteq}$ implies $\pair{\overline{L}}{\sqsupseteq}\galois{{\gamma}} {{\alpha}}\pair{L}{\geqslant}$ by duality so that from  $\pair{\overline{L}}{\sqsubseteq}\galois{{\neg}}{{\neg}}\pair{\overline{L}}{\sqsupseteq}$ we get $\pair{\overline{L}}{\sqsubseteq}\galois{{\neg\comp\gamma}} {{\alpha\comp\neg}}\pair{L}{\geqslant}$ hence $\pair{L}{\leqslant}\galois {{\alpha\comp\neg}} {{\neg\comp\gamma}}\pair{\overline{L}}{\sqsupseteq}$ by duality.
+
+When $\pair{L}{\leqslant}$ and $\pair{\overline{L}}{\sqsubseteq}$ are both complete Boolean lattices with unique complement $\neg$, $\pair{L}{\leqslant}\galois{{\alpha}}{{\gamma}}\pair{\overline{L}}{\sqsubseteq}$ implies $\pair{L}{\leqslant}\galois {{\alpha\comp\neg}} {{\neg\comp\gamma}}\pair{\overline{L}}{\sqsupseteq}$ so that by composition with $\pair{\overline{L}}{\sqsupseteq}\galois{{\neg}}{{\neg}}\pair{\overline{L}}{\sqsubseteq} $, we get the \emph{conjugate abstraction} that is $\pair{\overline{L}}{\sqsubseteq}\galois{\neg\comp\gamma\comp \neg} {\neg\comp\alpha \comp \neg}\pair{L}{\leqslant}$.
+\fi
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Fixpoint abstraction}
+%------------------------------------------------------------------------------------------------------
+Recall from  \cite[7.1.0.4]{CousotCousot79-1-POPL} \iflong (in the particular case $\pair{L}{\leqslant}\galois{\alpha}{\gamma}\pair{\overline{L}}{\sqsubseteq}$) \fi that
+\begin{lemma}\label[lemma]{fixpoint-abstraction}
+If $\strut\triple{L}{\leqslant}{\bot}$ is a complete lattice or a cpo, $F\in L\rightarrow L$ is monotonically increasing, $\pair{\overline{L}}{\sqsubseteq}$ is a poset, $\alpha\in L\rightarrow\overline{L}$ is continuous$\,$\footnote{$\alpha$ is \emph{continuous} if and only if it preserves existing lubs of increasing chains.}$^,$\footnote{The continuity hypothesis for $\alpha$ can be restricted to the iterates $F^0 \triangleq\bot$, $F^{n+1}\triangleq F(F^n)$, $F^{\omega}\triangleq\bigsqcup_{n\geqslant}F^n$ of the least fixpoint of $F$.}, $\overline{F}\in\overline{L}\rightarrow\overline{L}$ commutes (resp.\ semi-commutes) with $F$ that is $\alpha\comp F=\overline{F}\comp \alpha$\iflong$\,$\footnote{The commutation property $\alpha\comp F(x)=\overline{F}\comp \alpha(x)$ is only required for all $x\in L$ such that $\gamma\comp\alpha(x)\leqslant\Lfp{\leqslant} F$ \cite[Th.\ 2]{Cousot99-3-Marktoberdorf-paper} or even just for the iterates of the least fixpoint of $F$.}\fi\ (resp.\ $\alpha\comp F \sqsubseteq\overline{F}\comp \alpha$) then $\alpha(\LFP{\leqslant}{\bot}F)= \LFP{\sqsubseteq} {\alpha(\bot)}\overline{F}$ (resp.\ $\alpha(\LFP{\leqslant} {\bot} F) \,\sqsubseteq\, \LFP{\sqsubseteq} {\alpha(\bot)}\overline{F}$). 
+\end{lemma}
+Applying \cref{fixpoint-abstraction} to $\pair{L}{\leqslant}\GaloiS{{\neg}}{{\neg}}\pair{L}{\geqslant}$, we get \cref {Park-dual-fixpoint} and by duality \cref {dual-fixpoint-abstraction} below.
+\iflong\else\vspace*{-2.5mm}\fi
+\begin{corollary}[David Park {\cite[Sect.\ 2.3]{Park69-FxpInd}}]\label[corollary]{Park-dual-fixpoint}
+If $F\in L\rightarrow L$ is monotonically increasing on  a complete Boolean lattice $\quadruple{L}{\leqslant} {\bot}{\neg}$ then $\neg\, \LFP {\leqslant} {\bot} F= \GFP{{\leqslant}} {\neg\bot} \neg\comp F\comp\neg\,$.
+\end{corollary}
+\iflong
+\begin{proof}By \cref{fixpoint-abstraction}, for $\pair{L}{\leqslant}\galois {{\neg}} {{\neg}}\pair{L}{\geqslant}$, $\neg\comp \neg$ is the identity and $\Lfp {\geqslant}\overline{F}=\Gfp{\leqslant}\overline{F}$.
+\qed\end{proof}
+\fi
+\iflong
+By the dual of \cref{fixpoint-abstraction}, we get (in particular since $\pair{L}{\leqslant}\galois{\alpha}{\gamma}\pair{\overline{L}}{\sqsubseteq}$ implies $\pair{\overline{L}}{\sqsupseteq}\galois {\gamma}{\alpha}\pair{L}{\geqslant}$) 
+\fi
+\begin{corollary}\label[corollary]{dual-fixpoint-abstraction}
+If $\triple{\overline{L}}{\sqsubseteq}{\top}$ is a complete lattice or a dcpo, $\overline{F}\in\overline{L}\rightarrow\overline{L}$ is monotonically increasing, $\gamma\in \overline{L}\rightarrow L$ is co-continuous$\,$\footnote{$\gamma$ is \emph{co-continuous} if and only if it preserves existing glbs of decreasing chains.}, $F\in L\rightarrow L$ commutes with $F$ that is $\gamma\comp \overline{F}=F\comp \gamma $ then $\gamma(\GFP{\sqsubseteq} {\top}\overline{F})= \GFP{\leqslant} {\gamma(\top)} F$. 
+\end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Fixpoint strongest contract precondition}\label[section]{sec:FixpointStrongestContractPrecondition}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Following \cite{Cousot02-TCS}, let us define the abstraction generalizing \cite{Dijkstra75-1} to traces
+\begin{eqntabular*}[fl]{@{\qquad}rcl@{}}
+\WLP{\vec{T}}&\triangleq&\LAMBDA{\vec{Q}} \bigl\{s\bigm|\forall s\vec{s}\in\vec{T}:s\vec{s}\in\vec{Q} \bigr\}\\
+\WLPinv{\vec{Q}}&\triangleq&\LAMBDA{P}\bigl\{s\vec{s}\in\vec{\Sigma}^+\bigm|(s\in P)\implies(s\vec{s}\in\vec{Q}) \bigr\}
+\end{eqntabular*}
+such that $\pair{\wp(\vec{\Sigma}^+)}{\subseteq}\galois {\LAMBDA{\vec{T}}\WLP{\vec{T}}\vec{Q}} {\WLPinv{\vec{Q}}}\pair{\wp(\Sigma)}{\supseteq}$ and $\overline{\mathfrak{P}}_{\mathbbm{A}}=\WLP{\vec{\tau}^+}(\pvec{\mathfrak{E}}_{\mathbbm{A}})$.
+\iflong
+\begin{proof}\hfill~
+\begin{calculus}
+\formula {\WLP{\vec{T}}\supseteq P}\\
+$\iff$\formulaexplanation{\bigl\{s\bigm|\forall s\vec{s}\in\vec{T}:s\vec{s}\in\vec{Q} \bigr\}\supseteq P} {def.\ $\WLP{}$}\\
+$\iff$\formulaexplanation{\forall s\in P:\forall s\vec{s}\in\vec{T}:s\vec{s}\in\vec{Q}} {def.\ $\supseteq$}\\
+$\iff$\formulaexplanation{\forall s\vec{s}\in\vec{T}: (s\in P)\implies(s\vec{s}\in\vec{Q})} {def.\ $\implies$}\\
+$\iff$\formulaexplanation{\vec{T} \subseteq\bigl\{s\vec{s}\in\vec{\Sigma}^+\bigm|(s\in P)\implies(s\vec{s}\in\vec{Q}) \bigr\} } {def.\ $\subseteq$}\\
+$\iff$\lastformulaexplanation {\vec{T} \subseteq\WLPinv{\vec{Q}}(P)} {def.\ $\WLPinv{}$}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+By fixpoint abstraction, it follows from {\normalfont(\ref{eq:vectau+-fixpoint}-a)} and \cref{Park-dual-fixpoint}
+that
+\begin{theorem}\label[theorem]{fixpoint-P_A}$\overline{\mathfrak{P}}_{\mathbbm{A}}=\GFP{\subseteq} {\Sigma}\LAMBDA{P}\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}P)$ and\/  $\,\mathfrak{P}_{\mathbbm{A}}=\LFP{\subseteq} {\emptyset}\LAMBDA{P}\neg\mathfrak{E}_{\mathbbm{A}}\cap(\mathfrak{B}\cup\pre{\tau}P)$ where $\pre{\tau}Q\triangleq\{s\mid\exists s'\in Q:\pair{s}{s'}\in \tau\}$ and $\,\pret{\tau}Q \triangleq\neg\pre{\tau}(\neg Q)=\{s\mid\forall s':\pair{s}{s'}\in \tau \implies s'\in Q\}
+$.
+\qed\end{theorem}
+\iflong
+\begin{proof}\hfill~
+\begin{calculus}[$\iff$\ ]
+\hyphen{5}\formula{\WLP{\emptyset}(\pvec{\mathfrak{E}}_{\mathbbm{A}})}\\
+=\formulaexplanation{\{s\mid\forall s\vec{s}\in \emptyset:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\WLP {}$}\\
+=\formulaexplanation{\Sigma}{$\forall x\in \emptyset:P(x)$ is true}\\[1ex]
+\hyphen{5}\formula{\WLP{\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})}\\
+=\formulaexplanation {\WLP{\vec{\mathfrak{B}}^1}(\pvec{\mathfrak{E}}_{\mathbbm{A}})\cap\WLP{\pvec{\tau}^2\seqcomp\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})}{Galois connections preserve existing lubs}\\
+=\formulaexplanation{\{s\mid\forall s\vec{s}\in\vec{\mathfrak{B}}^1: s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}\cap\{s\mid\forall s\vec{s}\in\pvec{\tau}^2\seqcomp\vec{T}: s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\WLP{}$}\\
+=\formulaexplanation{\{s\mid s\in\mathfrak{B}\implies s\in\mathfrak{E}_{\mathbbm{A}}\}\cap\{s\mid\forall s\vec{s}\in\pvec{\tau}^2\seqcomp\vec{T}: s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}}{def.\ $\vec{\mathfrak{B}}^1$ and $\pvec{\mathfrak{E}}_{\mathbbm{A}}$}\\
+=\formula{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap\{s\mid\forall s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T})\implies(\exists i<\length{ss'\vec{s}}: (ss'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\}}\\\rightexplanation{def $\seqcomp $  and $\pvec{\mathfrak{E}}_{\mathbbm{A}}$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap\{s\mid\forall s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T})\implies(s\in\mathfrak{E}_{\mathbbm{A}}\vee\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\}}{separating the case $i=0$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\{s\in\mathfrak{E}_{\mathbbm{A}}\mid\forall s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T})\implies(s\in\mathfrak{E}_{\mathbbm{A}}\vee\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\}\cup\{s\not\in\mathfrak{E}_{\mathbbm{A}}\mid\forall s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T})\implies(s\in\mathfrak{E}_{\mathbbm{A}}\vee\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\})}{$X=(X\cap Y)\cup(X\cap \neg Y)$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\mathfrak{E}_{\mathbbm{A}}\cup\{s\not\in\mathfrak{E}_{\mathbbm{A}}\mid\forall s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T})\implies(\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\})}{def.\ $\vee $}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\mathfrak{E}_{\mathbbm{A}}\cup\{s\mid\forall s':\tau(s,s')\implies s'\in\{s'\mid\forall\vec{s}:(s'\vec{s}\in\vec{T})\implies(\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\}\})}{def.\ $\cup $, $\implies$ and $\in$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\mathfrak{E}_{\mathbbm{A}}\cup\{s\mid\forall s':\tau(s,s')\implies s'\in\{s'\mid\forall\vec{s}:(s'\vec{s}\in\vec{T})\implies(\exists i<\length{s'\vec{s}}: (s'\vec{s})_i\in\mathfrak{E}_{\mathbbm{A}})\}\})}{def.\ $\cup $, $\implies$ and $\in$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\mathfrak{E}_{\mathbbm{A}}\cup\{s\mid\forall s':\tau(s,s')\implies s'\in\WLP{\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})\})}{def.\ $\WLP{}$}\\
+=\formulaexplanation{(\neg\mathfrak{B}\cup\mathfrak{E}_{\mathbbm{A}})\cap(\mathfrak{E}_{\mathbbm{A}}\cup\pret{\tau}(\WLP{\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})))}{def.\ $\pret{}$}\\
+=\formulaexplanation{\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}(\WLP{\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})))}{commutativity and distributivity}\\[1ex]
+\hyphen{5} \formulaexplanation{\overline{\mathfrak{P}}_{\mathbbm{A}}\colsep{=}\WLP{\vec{\tau}^+}(\pvec{\mathfrak{E}}_{\mathbbm{A}})} {def.\ $\overline{\mathfrak{P}}_{\mathbbm{A}}$ and $\WLP{}$}\\
+= \formulaexplanation{\WLP{\LFP{\subseteq} {\emptyset}\LAMBDA{\vec{T}}\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}}(\pvec{\mathfrak{E}}_{\mathbbm{A}})}{by {\normalfont(\ref{eq:vectau+-fixpoint}-a)}}\\
+= \formula{\LFP{\supseteq} {\Sigma}\LAMBDA{P}\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}P)}\\
+\rightexplanation{by Galois connection, commutativity, \cref{fixpoint-abstraction},  and $\WLP{\emptyset}(\pvec{\mathfrak{E}}_{\mathbbm{A}})=\Sigma$}\\
+= \formulaexplanation{\GFP{\subseteq} {\Sigma}\LAMBDA{P}\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}P)}{by duality}\\[1ex]
+\hyphen{5} \formulaexplanation{\mathfrak{P}_{\mathbbm{A}}\colsep{=}\neg\overline{\mathfrak{P}}_{\mathbbm{A}}}{def.\ $\overline{\mathfrak{P}}_{\mathbbm{A}}$}\\
+= \formulaexplanation {\neg\GFP{\subseteq} {\Sigma}\LAMBDA{P}\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}P)}{as shown above}\\
+= \formulaexplanation {\LFP{\subseteq} {\neg\Sigma}\LAMBDA{P}\neg(\mathfrak{E}_{\mathbbm{A}}\cup(\neg\mathfrak{B}\cap\pret{\tau}(\neg P)))}{by \cref {Park-dual-fixpoint}}\\
+= \formulaexplanation {\LFP{\subseteq} {\emptyset}\LAMBDA{P}\neg\mathfrak{E}_{\mathbbm{A}}\cap(\mathfrak{B}\cup\neg\pret{\tau}(\neg P))}{de Morgan law}\\
+= \lastformulaexplanation {\LFP{\subseteq} {\emptyset}\LAMBDA{P}\neg\mathfrak{E}_{\mathbbm{A}}\cap(\mathfrak{B}\cup\pre{\tau}P)}{def.\ $\pret{\tau}Q\triangleq\neg\pre{\tau}(\neg Q)$.}{\qed}\\
+\end{calculus}
+\end{proof}
+\fi
+If the set $\Sigma$ of states is finite, as assumed in model-checking \cite{BaierKatoen08-POMC}, the fixpoint  definition of $\mathfrak{P}_{\mathbbm{A}}$ in \cref {fixpoint-P_A} is computable iteratively, up to combinatorial explosion. The code to check the precondition $s\in\mathfrak{P}_{\mathbbm{A}}$ can proceed by exhaustive enumeration. 
+In case this does not scale up or for infinite state systems, bounded model-checking \cite{BiereEtAl03-BMC} is an alternative using $\bigcup_{i=0}^k\vec{\tau}^i$ instead of $\vec{\tau}^+$ but, by \cref{StrongestPreconditionErrorAvoidability}, the bounded prefix abstraction $\alpha_k(\vec{T})\triangleq\bigl\{\vec{s}_0\ldots\vec{s}_{\min(k,\length{\vec{s}})-1}\bigm|\vec{s}\in\vec{T}\bigr\}$ is unsound for approximating both $\mathfrak{P}_{\mathbbm{A}}$ and $\overline{\mathfrak{P}}_{\mathbbm{A}}$. 
+\iflong
+\begin{proof}
+We have
+$\mathfrak{P}_{\mathbbm{A}}^k\triangleq\{s\mid\exists s\vec{s}\in\bigcup_{i=0}^k\vec{\tau}^i\cap\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\}\subseteq\{s\mid\exists s\vec{s}\in\vec{\tau}^+\cap\neg\pvec{\mathfrak{E}}_{\mathbbm{A}}\} \triangleq
+\mathfrak{P}_{\mathbbm{A}}$, but this provides an under-approximation, which is unsound since, by \cref{StrongestPreconditionErrorAvoidability},  we look for an overapproximation $\mathfrak{P}_{\mathbbm{A}}\subseteq \predot{P}_{\mathbbm{A}}$, not missing any initial state from which a good run is possible.
+
+For the complement $\overline{\mathfrak{P}}_{\mathbbm{A}}$, we have
+$\overline{\mathfrak{P}}^k_A\triangleq\{s\mid\forall s\vec{s}\in\bigcup_{i=0}^k\vec{\tau}^i:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}\supseteq\{s\mid\forall s\vec{s}\in\vec{\tau}^+:s\vec{s}\in\pvec{\mathfrak{E}}_{\mathbbm{A}}\}=\overline{\mathfrak{P}}_{\mathbbm{A}}$, but this provides an over-approximation, which is unsound since  we look for an underapproximation $\predot{\overline{P}} \subseteq\overline{\mathfrak{P}}_{\mathbbm{A}} $, eliminating only initial states from which no good run is possible.
+\qed\end{proof}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contract precondition inference by symbolic flow analysis}\label[section]{sec:DataflowAnalysisContractPrecondition}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Instead of state-based reasonings, as in \cref {sec:ContractPreconditionInferenceProblem,sec:FixpointStrongestContractPrecondition}, we can consider symbolic (or even syntactic) reasonings  moving the code assertions to the code entry, when the effect is the same.
+This can be done by a sound data flow analysis \cite{Hecht-DFA77} when
+\begin{enumerate}[leftmargin=*,itemsep=0pt,topsep=1pt]
+\item\label[item]{not-modified}the value of the visible side effect free Boolean expression on scalar or collection variables in the \texttt{assert} is exactly the same as the value of this expression when evaluated on entry;
+\item\label[item]{always-checked}the value of the expression checked on program entry is checked in an \texttt{assert} on all paths that can be taken from the program entry.
+\end{enumerate}
+\iflong Condition \cref {not-modified} is true in particular when none of the values of the variables involved in the expression have been changed in any possible execution between the entry and the \texttt{assert}, which can be determined by a forward data flow analysis. But condition \cref{always-checked} is better handled backwards, so w\else W\fi e propose a backward data flow analysis to check for both sufficient conditions \cref {not-modified} and \cref{always-checked}.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Backward expression propagation}
+%------------------------------------------------------------------------------------------------------
+
+Let $c\in\Gamma$ be a control point and $b$ be a Boolean expression. For example $b$ can contain \texttt{ForAll} or \texttt{Exists} assertions on unmodified collections without free scalar variables and no visible side effect (see \cref{sec:CollectionAnalysisContractPrecondition} otherwise).  $P(c,b)$ holds at program point $c$ when Boolean expression $b$ will definitely be checked in an \texttt{assert($b$)} on all paths from $c$ without being changed up to this check. {\large\strut}$P=\Gfp{\pimplies}B\sqb{\tau}$ is the $\pimplies$-greatest solution of the backward system of equations$\,$\footnote{$\pimplies$ is the pointwise extension of logical implication $\implies $}${}^{,}$\footnote{The system of equations $\vec{X}=\vec{F}(\vec{X})$ where $\vec{X}=X_1,\ldots,X_n$ is written \raisebox{-1.25ex}{\footnotesize$\left\{\begin{array}{l}
+X_i\colsep{=}F_i(X_1,\ldots,X_n)\rlap{~.}\\
+i=1,\ldots,n
+\end{array}\right.$}}%
+\bgroup\abovedisplayskip2pt\belowdisplayskip0pt\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\left\{\begin{array}{l}
+P(c,b)\colsep{=}B\sqb{\tau}(P)(c,b)\\[3pt]
+c\in\Gamma,\quad b\in \mathbbm{A}_{\mathtt{b}}
+\end{array}\right.
+\end {eqntabular*}\egroup
+where \iflong the expressions and control points of \texttt{assert}s are respectively $\mathbbm{A}_{\mathtt{b}}\triangleq\{b\mid\exists c:\pair{c}{b}\in \mathbbm{A}\}$ and $\mathbbm{A}_{\mathtt{c}}\triangleq\{c\mid\exists b:\pair{c}{b}\in \mathbbm{A}\}$, \else
+the expressions of \texttt{assert}s are $\mathbbm{A}_{\mathtt{b}}\triangleq\{b\mid\exists c:\pair{c}{b}\in \mathbbm{A}\}$ and \fi the transformer $B\in(\Gamma\times \mathbbm{A}_{\mathtt{b}} \rightarrow \mathcal{B}) \rightarrow (\Gamma\times \mathbbm{A}_{\mathtt{b}} \rightarrow \mathcal{B}) $ is
+\bgroup\iflong\else\belowdisplayskip1pt\fi\begin{eqntabular}[fl]{@{\quad}rcl@{\qquad}L}
+B\sqb{\tau}(P)(c,b)&=&\rlap{$\mathit{true}$}\phantom{\mathit{false}}\quad\mathrm{when} \quad\pair{c}{b}\in \mathbbm{A}& \renumber{(\texttt{assert($b$)} at $c$)}\\[2pt]
+B\sqb{\tau}(P)(c,b)&=&\mathit{false}\quad\mathrm{when} \quad\exists s\in\mathfrak{B}:\controlpoint{s}=c\wedge \pair{c}{b}\not\in \mathbbm{A}& \renumber{(exit at $c$)}\\[1pt]
+B\sqb{\tau}(P)(c,b)&=&\bigwedge_{c'\:\in\:\mathsf{succ}\sqb{\tau}(c)}\mathsf{unchanged}\sqb{\tau}(c,c',b) \wedge P(c',b)\renumber{(otherwise)}
+\end {eqntabular}\egroup%
+the set $\mathsf{succ}\sqb{\tau}(c)$ of successors of the program point $c\in\Gamma$ satisfies 
+\begin{eqntabular*}[fl]{@{\quad}rcl}
+\mathsf{succ}\sqb{\tau}(c)&\supseteq&\{c'\in\Gamma\mid\exists s,s':\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c'\}
+\end {eqntabular*}%
+($\mathsf{succ}\sqb{\tau}(c)\triangleq\Gamma$ yields a flow-insensitive analysis) and $\mathsf{unchanged}\sqb{\tau}(c,c',b)$ implies than a transition by $\tau$ from program point $c$ to program point $c'$ can never change the value of Boolean expression $b$
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\mathsf{unchanged}\sqb{\tau}(c,c',b)&\implies&\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s').
+\end {eqntabular*}%
+$\mathsf{unchanged}\sqb{\tau}(c,c',b)$ can be a syntactic underapproximation of its semantic definition \cite{BarnettEtAl-IWACO07}. Define
+\bgroup\iflong\else\advance\abovedisplayskip by 2pt\fi\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\mathfrak{R}_{\mathbbm{A}}& \triangleq&\LAMBDA{b}\{\pair{s}{s'}\mid\pair{\controlpoint{s'}}{b}\in \mathbbm{A}\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}s'\}\\
+\vec{\mathfrak{R}}_{\mathbbm{A}}& \triangleq&\LAMBDA{b}\{\vec{s}\in\vec{\Sigma}^+\mid\exists i<\length{\vec{s}}: \pair{\vec{s}_0} {\vec{s}_i}\in\mathfrak{R}_{\mathbbm{A}}(b)\}
+\end {eqntabular*} \egroup%
+and the abstraction
+\bgroup\iflong\else\belowdisplayskip1pt\fi\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+%\vec{\alpha}_D&\in&\vec{\Sigma}^+\rightarrow(\Gamma\times \mathbbm{A}_{\mathtt{b}} \rightarrow \mathcal{B})\\
+\vec{\alpha}_D(\vec{T})(c,b)&\triangleq&\forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)\\
+%\vec{\gamma}_D&\in&(\Gamma\times \mathbbm{A}_{\mathtt{b}} \rightarrow \mathcal{B}) \rightarrow\vec{\Sigma}^+\\
+\vec{\gamma}_D(P)&\triangleq&\{\vec{s}\mid\forall b\in \mathbbm{A}_{\mathtt{b}}: P(\controlpoint{\vec{s}_0},b)\implies
+\vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)\}
+\end {eqntabular*}\egroup%
+such that
+%\begin{lemma}
+$\pair{\vec{\Sigma}^+}{\subseteq}\galois{\vec{\alpha}_D}{\vec{\gamma}_D}\pair{\Gamma\times \mathbbm{A}_{\mathtt{b}} \rightarrow \mathcal{B}}{\pisimpliedby}$.
+%\end{lemma}
+\iflong
+\begin{proof}\hfill~
+\begin{calculus}[$\iff$\ ]
+\formula{\vec{\alpha}_D(\vec{T}) \pisimpliedby P}\\
+$\iff$\formulaexplanation{\forall c\in\Gamma: \forall b\in \mathbbm{A}_{\mathtt{b}}: P(c,b) \implies  \vec{\alpha}_D(\vec{T})(c,b) }{pointwise def.\ $\pimplies$}\\
+$\iff$\formulaexplanation{\forall c\in\Gamma: \forall b\in \mathbbm{A}_{\mathtt{b}}:P(c,b)\implies (\forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b))}{def.\ $\vec{\alpha}_D$}\\
+$\iff$\formulaexplanation{\forall c\in\Gamma:\forall \vec{s}\in\vec{T}: \forall b\in \mathbbm{A}_{\mathtt{b}}:P(c,b)\implies (\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b))}{def.\ $\forall $}\\
+$\iff$\formula {\forall\vec{s}\in\vec{T}:\forall b\in \mathbbm{A}_{\mathtt{b}}: P (\controlpoint{\vec{s}_0},b)\implies
+\vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)}\\\rightexplanation{($\implies$) for $c=\controlpoint{\vec{s}_0}$, ($\isimpliedby$) $\mathit{true}$ when $\vec{s}_0\neq c$}\\
+$\iff$\formulaexplanation{\vec{T}\subseteq\{\vec{s}\mid\forall b\in \mathbbm{A}_{\mathtt{b}}: P(\controlpoint{\vec{s}_0},b)\implies
+\vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)\}}{def.\ $\subseteq$}\\
+$\iff$\lastformulaexplanation{\vec{T}\subseteq\vec{\gamma}_D(P)}{def.\ $\vec{\gamma}_D$}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+By {\normalfont(\ref{eq:vectau+-fixpoint}-a)} and \cref{fixpoint-abstraction}, we have 
+\begin{theorem}\label[theorem]{soundness-dataflow-analysis}
+$\vec{\alpha}_D(\vec{\tau}^+)\colsep{\pisimpliedby}\Lfp{\pisimpliedby}B\sqb{\tau}\colsep{=}\Gfp{\pimplies}B\sqb{\tau}\colsep{\triangleq}P$.
+\qed\end{theorem}
+\iflong
+\begin{proof} By {\normalfont(\ref{eq:vectau+-fixpoint}-a)}, we have $\vec{\tau}^+=\LFP{\subseteq} {\emptyset}\LAMBDA{\vec{T}}\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}$ so, by \cref{fixpoint-abstraction}, it is sufficient to prove the semi-commutativity property $\vec{\alpha}_D(\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T})=\vec{\alpha}_D(\vec{\mathfrak{B}}^1)\pwedge\vec{\alpha}_D(\pvec{\tau}^2\seqcomp\vec{T})\pisimpliedby B\sqb{\tau}(\vec{\alpha}_D(\vec{T}))$. We proceed pointwise, and there are two cases.
+\begin{calculus}[$\iff$\ ]
+\hyphen{5}\formula{\vec{\alpha}_D(\vec{\mathfrak{B}}^1)(c,b)}\\
+=\formulaexplanation{\forall \vec{s}\in\vec{\mathfrak{B}}^1:\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)}{def.\ $\vec{\alpha}_D$}\\
+=\formulaexplanation{\forall s\in\mathfrak{B}:\controlpoint{s}=c\implies \pair{s}{s}\in\mathfrak{R}_{\mathbbm{A}}(b)}{def.\ $\vec{\mathfrak{B}}^1$ and $\vec{\mathfrak{R}}_{\mathbbm{A}}(b)$}\\
+=\formulaexplanation{\forall s\in\mathfrak{B}:\controlpoint{s}=c\implies \pair{c}{b}\in A}{def.\ $\mathfrak{R}_{\mathbbm{A}}$}\\
+=\formulaexplanation{\mathit{true}}{when $\pair{c}{b}\in A$}\\
+=\formulaexplanation{\mathit{false}}{when $\exists s\in\mathfrak{B}:\controlpoint{s}=c\wedge \pair{c}{b}\not\in A$}\\
+=\formulaexplanation{B\sqb{\tau}(\vec{\alpha}_D(\vec{T})(c,b)}{def.\ $B\sqb{\tau}$}
+\end {calculus} 
+\begin{calculus}[$\iff$\ ]<3pt>
+\hyphen{5}\formula{\vec{\alpha}_D(\pvec{\tau}^2\seqcomp\vec{T})(c,b)}\\
+=\formulaexplanation{\forall \vec{s}\in\pvec{\tau}^2\seqcomp\vec{T}:\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)}{def.\ $\vec{\alpha}_D$}\\
+=\formulaexplanation{\forall s,s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T} \wedge\controlpoint{s}=c)\implies ss'\vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)}{def.\ $\seqcomp $ and $\pvec{\tau}^2$}\\
+=\formula{\forall s,s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T} \wedge\controlpoint{s}=c)\implies (\exists j<\length{ss'\vec{s}}: \pair{s} {(ss'\vec{s})_j}\in\mathfrak{R}_{\mathbbm{A}}(b))}\\\rightexplanation{def.\ $\vec{\mathfrak{R}}_{\mathbbm{A}}$}\\
+=\formulaexplanation{\forall s,s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T} \wedge\controlpoint{s}=c)\implies (\exists j<\length{ss'\vec{s}}: \pair{\controlpoint{(ss'\vec{s})_j}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}(ss'\vec{s})_j)}{def.\ $\mathfrak{R}_{\mathbbm{A}}$}\\
+=\formulaexplanation{\forall s,s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T} \wedge\controlpoint{s}=c)\implies (\pair{\controlpoint{s}}{b}\in A\vee(\exists j<\length{s'\vec{s}}: \pair{\controlpoint{(s'\vec{s})_j}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}(s'\vec{s})_j))}{separating the case $j=0$}\\
+$\isimpliedby$\formulaexplanation{\pair{c}{b}\in A\vee\forall s,s',\vec{s}:(\tau(s,s')\wedge s'\vec{s}\in\vec{T} \wedge\controlpoint{s}=c)\implies (\exists j<\length{s'\vec{s}}: \pair{\controlpoint{(s'\vec{s})_j}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}(s'\vec{s})_j)}{def.\ $\implies$}\\
+=\formulaexplanation{\pair{c}{b}\in A\vee\forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\bigr)\implies\bigl(\forall s'\vec{s}\in\vec{T}:\exists j<\length{s'\vec{s}}:\pair{\controlpoint{(s'\vec{s})_j}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}(s'\vec{s})_j\bigr)} {def.\ $\implies$}\\
+$\isimpliedby$\formulaexplanation{\pair{c}{b}\in A\vee\forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\bigr)\implies\bigl(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s' \wedge \forall s'\vec{s}'\in\vec{T}:(\exists j<\length{s'\vec{s}'}:\pair{\controlpoint{(s'\vec{s}')_j}}{b}\in A\wedge \sqb{\texttt{b}}s'=\sqb{\texttt{b}}(s'\vec{s}')_j)\bigr)}{transitivity of $=$ and $\vec{s'}=\vec{s}$}\\
+=\formula{\pair{c}{b}\in A\vee\forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\bigr)\implies\bigl(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s' \wedge \forall s'\vec{s}'\in\vec{T}:\controlpoint{(s'\vec{s}')_0}=\controlpoint{s'}\implies (\exists j<\length{s'\vec{s}'}:\pair{\controlpoint{(s'\vec{s}')_j}}{b}\in A\wedge \sqb{\texttt{b}}(s'\vec{s}')_0=\sqb{\texttt{b}}(s'\vec{s}')_j)\bigr)}\\\rightexplanation{$(s'\vec{s}')_0=s'$}\\
+=\formulaexplanation{\pair{c}{b}\in A\vee\forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\bigr)\implies\bigl(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s' \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=\controlpoint{s'}\implies (\exists j<\length{\vec{s}}:\pair{\controlpoint{\vec{s}_j}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}_0=\sqb{\texttt{b}}\vec{s}_j)\bigr)}{letting $\vec{s}=s'\vec{s}'$}\\
+=\formulaexplanation{\pair{c}{b}\in A\vee\forall c': \forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\bigr)\implies\bigl(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s' \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies (\exists j<\length{\vec{s}}:\pair{\controlpoint{\vec{s}_j}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}_0=\sqb{\texttt{b}}\vec{s}_j)\bigr)}{letting $c'= \controlpoint{s'}$}\\
+$\isimpliedby$\formulaexplanation{\pair{c}{b}\in A\vee\forall c': \forall s,s':\bigl(\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\bigr)\implies\bigl(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies (\exists j<\length{\vec{s}}:\pair{\controlpoint{\vec{s}_j}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}_0=\sqb{\texttt{b}}\vec{s}_j)\bigr)}{since $A\implies(A\implies B\wedge C)$ implies $A\implies(B\wedge C)$}\\
+$\isimpliedby$\formulaexplanation{\pair{c}{b}\in A\vee\forall c':\bigl(\exists s,s':\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\bigr)\implies\bigl(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies (\exists j<\length{\vec{s}}:\pair{\controlpoint{\vec{s}_j}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}_0=\sqb{\texttt{b}}\vec{s}_j)\bigr)}{$(\exists x:A)\implies B$ iff $\forall x:(A\implies B)$}\\
+=\formulaexplanation{\pair{c}{b}\in A\vee\forall c':\bigl(\exists s,s':\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\bigr)\implies\bigl(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies (\exists j<\length{\vec{s}}: \pair{\vec{s}_0} {\vec{s}_j}\in\mathfrak{R}_{\mathbbm{A}}(b))\bigr)}{def.\ $\mathfrak{R}_{\mathbbm{A}}\triangleq\LAMBDA{b}\{\pair{s}{s'}\mid\pair{\controlpoint{s'}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}s'\}
+$}\\
+=\formula{\pair{c}{b}\in A\vee\forall c':\bigl(\exists s,s':\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\bigr)\implies\bigl(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)\bigr)}\\\rightexplanation{def.\ $\vec{\mathfrak{R}}_{\mathbbm{A}}(b)$}\\
+$\isimpliedby$\formula{\pair{c}{b}\in A\vee\forall c'\in\mathsf{succ}\sqb{\tau}(c):(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c'\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b))}\\\rightexplanation{def.\  $\mathsf{succ}\sqb{\tau}(c)\supseteq\{c'\in\Gamma\mid\exists s,s':\tau(s,s')\wedge \controlpoint{s}=c\wedge \controlpoint{s'}=c'\}$}\\
+=\formulaexplanation{\pair{c}{b}\in A\vee\forall c'\in\mathsf{succ}\sqb{\tau}(c):(\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s') \wedge \vec{\alpha}_D(\vec{T})(c',b))}{def.\ $\vec{\alpha}_D(\vec{T})(c,b)\triangleq\forall \vec{s}\in\vec{T}:\controlpoint{\vec{s}_0}=c\implies \vec{s}\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)$}\\
+$\isimpliedby$\formulaexplanation{\pair{c}{b}\in A\vee\forall c'\in\mathsf{succ}\sqb{\tau}(c):\mathsf{unchanged}\sqb{\tau}(c,c',b) \wedge \vec{\alpha}_D(\vec{T})(c',b)}{def.\ $\mathsf{unchanged}\sqb{\tau}(c,c',b)\implies\forall s,s':(\controlpoint{s}=c\wedge \tau(s,s')\wedge \controlpoint{s'}=c')\implies(\sqb{\texttt{b}}s=\sqb{\texttt{b}}s')$}\\
+=\lastformulaexplanation{B\sqb{\tau}(\vec{\alpha}_D(\vec{T}))(c,b)}{def.\ $B\sqb{\tau}$}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Precondition generation}
+%------------------------------------------------------------------------------------------------------
+
+The syntactic precondition generated at entry control point $i\in\mathfrak{I}_{\controlpoint{}}\triangleq\{i\in\Gamma \mid\exists s\in\mathfrak{I}:\controlpoint{s}=i\}$ is (assuming $\mathop{\texttt{\large\&\&}}\emptyset\triangleq\mathtt{true}$)
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\predot{\,\mathtt{P}}_i&\triangleq&\mathop{\texttt{\Large\&\&}}_{b\in \mathbbm{A}_{\mathtt{b}},\ P(i,b)} b
+\end {eqntabular*}%
+The set of states for which the syntactic precondition $\predot{\,\mathtt{P}}_i$ is evaluated to $\mathit{true}$ at program point $i\in\Gamma$ is
+\iflong
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\predot{P}_i&\triangleq&\{s\in \Sigma\mid \controlpoint{s}=i\wedge\sqb{\predot{\,\mathtt{P}}_i}s\}
+\end {eqntabular*}%
+\else
+$\predot{P}_i\triangleq\{s\in \Sigma\mid \controlpoint{s}=i\wedge\sqb{\predot{\,\mathtt{P}}_i}s\}
+$
+\fi
+and so for all program entry points (in case there is more than one)
+\iflong
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\predot{P}_{\mathfrak{I}}&\triangleq&\{s\in \Sigma\mid \exists i\in \mathfrak{I}_{\controlpoint{}}:s\in \predot{P}_i\}
+\end {eqntabular*}%
+\else
+$\predot{P}_{\mathfrak{I}}\triangleq\{s\in \Sigma\mid \exists i\in \mathfrak{I}_{\controlpoint{}}:s\in \predot{P}_i\}$.
+\fi
+We have 
+\begin{theorem}\label[theorem]{soundness-data-flow-analysis}%
+$\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}\subseteq \predot{P}_{\mathfrak{I}}$.
+\qed\end{theorem}
+\iflong
+\begin{proof}Assume, by reductio ad absurdum, that $\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}\not\subseteq \predot{P}_{\mathfrak{I}}$. Then there is an initial state in $\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}$ not in 
+$\predot{P}_{\mathfrak{I}}$. By def.\ {\normalfont(\ref{eq:def-P-A})} of $\mathfrak{P}_{\mathbbm{A}}$, this state initiates a good run
+$\vec{s}\in\vec{\tau}^+\cap\neg\vec{\mathfrak{E}}_{\mathbbm{A}}^+ $ which is refused on entry point $i\in \mathfrak{I}_{\controlpoint{}}$ such that $\controlpoint{\vec{s}_0}=i$ (the run start at program point $i$). This means that $\exists b\in \mathbbm{A}_{\mathtt{b}}$ such that  $P(i,b)$ (since otherwise $b$ would not have been checked) and $\neg\sqb{b}\vec{s}_0$ (the run is rejected on entry) while $\forall j<\length{\vec{s}}:\vec{s}_j\not \in \mathfrak{E}_{\mathbbm{A}}$ so $\forall j<\length{\vec{s}}:\forall \pair{\controlpoint{\vec{s}_j}}{\texttt{b'}}\in A:  \sqb{\texttt{b'}}\vec{s}_j$ (since $\mathfrak{E}_{\mathbbm{A}} \triangleq\{s\in\Sigma \mid \exists \pair{c}{\texttt{b}}\in A: \controlpoint{s}=c\wedge \sqb{\texttt{b}}s=\mathit{false}\}$). But
+\begin{calculus}[$\iff$\ ]<3pt>
+\formula{P(i,b)}\\
+$\implies$\formulaexplanation{\vec{\alpha}_D(\vec{\tau}^+)(i,b)}{by \cref{soundness-dataflow-analysis}}\\
+$\implies$\formulaexplanation{\forall \vec{s}'\in\vec{\tau}^+:\controlpoint{\vec{s}'_0}=i\implies \vec{s}'\in\vec{\mathfrak{R}}_{\mathbbm{A}}(b)}{def.\ $\vec{\alpha}_D$}\\
+$\implies$\formula{\forall \vec{s}'\in\vec{\tau}^+:\controlpoint{\vec{s}'_0}=i\implies (\exists k<\length{\vec{s}'}: \pair{\vec{s}'_0} {\vec{s}'_k}\in\mathfrak{R}_{\mathbbm{A}}(b))}\\\rightexplanation {def.\ $\vec{\mathfrak{R}}_{\mathbbm{A}}(b)\triangleq\{\vec{s}\in\vec{\Sigma}^+\mid\exists i<\length{\vec{s}}: \pair{\vec{s}_0} {\vec{s}_i}\in\mathfrak{R}_{\mathbbm{A}}(b)\}
+$}\\
+$\implies$\formula {\forall \vec{s}'\in\vec{\tau}^+:\controlpoint{\vec{s}'_0}=i\implies (\exists k<\length{\vec{s}'}: \pair{\controlpoint{\vec{s}'_k}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}'_0=\sqb{\texttt{b}}\vec{s}'_k)}\\
+\rightexplanation{def.\ $\mathfrak{R}_{\mathbbm{A}}(b)\triangleq\{\pair{s}{s'}\mid\pair{\controlpoint{s'}}{b}\in A\wedge \sqb{\texttt{b}}s=\sqb{\texttt{b}}s'\}
+$}\\
+$\implies$\formulaexplanation {\neg\sqb{b}\vec{s}_0 \wedge (\forall j<\length{\vec{s}}:\forall \pair{\controlpoint{\vec{s}_j}}{\texttt{b'}}\in A:  \sqb{\texttt{b'}}\vec{s}_j) \wedge (\exists k<\length{\vec{s}}: \pair{\controlpoint{\vec{s}_k}}{b}\in A\wedge \sqb{\texttt{b}}\vec{s}_0=\sqb{\texttt{b}}\vec{s}_k)}{for the rejected good run  $\vec{s}$}\\
+$\implies$\lastformulaexplanation {\exists k<\length{\vec{s}}: \pair{\controlpoint{\vec{s}_k}}{b}\in A  \wedge \neg\sqb{\texttt{b}}\vec{s}_k \wedge \sqb{\texttt{b}}\vec{s}_k}{a contradiction}{\qed}
+\end{calculus}
+\end{proof}
+\fi
+By \cref {soundness-data-flow-analysis,StrongestPreconditionErrorAvoidability}, the precondition generation is sound: a rejected initial state would inevitably have lead to an assertion failure. 
+\begin{example}Continuing \cref {ex-array}, the assertion \texttt{A != null} is checked on all paths and \texttt{A} is not changed (only its elements are), so the data flow analysis is able to move the assertion as a precondition.
+\qed\end{example}
+However, the data flow abstraction considered in this \cref{sec:DataflowAnalysisContractPrecondition} is rather imprecise because a precondition is checked on code entry only if
+\begin{enumerate}[leftmargin=*,itemsep=1pt,topsep=1pt]
+\item\label[item]{modifications-are-not-taken-into-account} the exact same precondition is checked in an \texttt{assert} (since scalar and collection variable modifications are not taken into account, other than by annihilating the backward propagation);
+\item\label[item]{paths-are-not-taken-into-account} and this, whichever execution path is taken (conditions are not taken into account).
+\end{enumerate}
+
+\smallskip
+
+\noindent We propose remedies to \cref{modifications-are-not-taken-into-account,paths-are-not-taken-into-account} in the following \cref{sec:ForwardSymbolicAnalysisContractPrecondition,sec:BackwardSymbolicAnalysisContractPrecondition}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contract precondition inference for scalar variables by forward symbolic analysis}\label[section]{sec:ForwardSymbolicAnalysisContractPrecondition}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let us define the $\mathsf{cmd}$, $\mathsf{succ}$ and $\mathsf{pred}$ functions mapping control points to their command, successors and predecessors ($\forall \mathtt{c},\mathtt{c}'\in \Gamma:\mathtt{c}'\in\mathsf{pred}(\mathtt{c})$ $\iff$ $\mathtt{c}\in\mathsf{succ}(\mathtt{c}')$).\bgroup\fontsize{9.5pt}{11pt}\selectfont
+\begin{eqntabular*}[fl]{@{}LL@{~~}l@{$\;$}c@{$\;$}l@{~~~}l@{$\;$}c@{$\;$}l@{~~~}l@{$\;$}c@{$\;$}l}
+\hyphen{5}&\texttt{c: x:=e; c$'$:\ldots}&\mathsf{cmd}(\texttt{c},\texttt{c}')  &\triangleq&\texttt{x:=e}&\mathsf{succ}(\texttt{c})&\triangleq&\{\texttt{c}'\}&\mathsf{pred}(\texttt{c}')&\triangleq&\{\texttt{c}\}\\[-3pt]
+\hyphen{5}&\texttt{c: assert(b); c$'$:\ldots}&\mathsf{cmd}(\texttt{c},\texttt{c}')  &\triangleq&\texttt{b}&\mathsf{succ}(\texttt{c})&\triangleq&\{\texttt{c}'\}&\mathsf{pred}(\texttt{c}')&\triangleq&\{\texttt{c}\}\\[-3pt]
+\hyphen{5}&\texttt{c: if b then }       &\mathsf{cmd}(\texttt{c},\texttt{c}'_t)&\triangleq&\texttt{b}&\mathsf{succ}(\texttt{c})&\triangleq&\{\texttt{c}'_t,\texttt{c}'_f\}\\[-3pt]
+&\quad \texttt{c$'_t$:\ldots c$''_t$:}  &\mathsf{cmd}(\texttt{c},\texttt{c}'_f)&\triangleq&\neg \texttt{b}&&&&\mathsf{pred}(\texttt{c}'_t)&\triangleq&\{\texttt{c}\}\\[-3pt]
+&\texttt{else}                          &\mathsf{cmd}(\texttt{c}''_t,c')&\triangleq&\texttt{skip}&\mathsf{succ}(\texttt{c}''_t)&\triangleq&\{\texttt{c}'\}\\[-3pt]
+&\quad\texttt{c$'_f$:\ldots c$''_f$:}   &\mathsf{cmd}(\texttt{c}''_f,c')&\triangleq&\texttt{skip}&\mathsf{succ}(\texttt{c}''_f)&\triangleq&\{\texttt{c}'\}&\mathsf{pred}(\texttt{c}'_f)&\triangleq&\{\texttt{c}\}\\[-3pt]
+&\texttt{fi; c$'$\ldots}&&&&&&&\mathsf{pred}(\texttt{c}')&\triangleq&\{\texttt{c}''_t,\texttt{c}''_f\}\\[-3pt]
+\hyphen{5}&\texttt{c :while c$'$: b do}&\mathsf{cmd}(\texttt{c},\texttt{c}')  &\triangleq&\texttt{skip}&\mathsf{succ}(\texttt{c})&\triangleq&\{\texttt{c}'\}&\mathsf{pred}(\texttt{c}')&\triangleq&\{\texttt{c},\texttt{c}''_b\}\\[-3pt]
+&\quad\texttt{c$'_b$:\ldots c$''_b$:}&\mathsf{cmd}(\texttt{c}',\texttt{c}'_b)  &\triangleq&\texttt{b}&\mathsf{succ}(\texttt{c}')&\triangleq&\{\texttt{c}'_b,\texttt{c}''\}&\mathsf{pred}(\texttt{c}'_b)&\triangleq&\{\texttt{c}'\}\\[-3pt]
+&\texttt{od; c$''$\ldots}&\mathsf{cmd}(\texttt{c}',\texttt{c}'')  &\triangleq&\neg\texttt{b}&\mathsf{succ}(\texttt{c}''_b)&\triangleq&\{\texttt{c}'\}&\mathsf{pred}(\texttt{c}'')&\triangleq&\{\texttt{c}'\}\\[-3pt]
+&                        &\mathsf{cmd}(\texttt{c}''_b,\texttt{c}) &\triangleq&\texttt{skip}&
+\end{eqntabular*}\egroup
+For programs with scalar variables $\vec{\texttt{x}}$, we denote by $\vec{\underline{x}}$ (or $\overrightarrow{{\footnotesize\strut}\texttt{x0}}\,$) their initial values
+and by $\vec{x}$ their current values. Following \cite[Sect.\ 3.4.5]{Cousot78-1-TheseEtat}, the symbolic execution \cite{King-CACM76} attaches invariants $\Phi(c)$ to program points $\mathtt{c}\in\Gamma$ defined as the pointwise $\pimplies$-least fixpoint of the system of equations $\Phi={F}(\Phi)$ with 
+\begin{eqntabular*}[fl]{@{\quad}l}
+\left\{\begin{array}{lc@{}l}
+{F}(\Phi)\mathtt{c}&=&\displaystyle\bigvee_{\mathtt{c}'\,\in\,\mathsf{pred}(\mathtt{c})}\mathcal{F}(\mathsf{cmd}(\texttt{c}',\texttt{c}), \Phi(c'))\vee \bigvee_{\mathtt{c}\,\in\,\mathfrak{I}_{\controlpoint{}}}(\vec{x}=\vec{\underline{x}})\\
+\rlap{$\mathtt{c}\in\Gamma$}
+\end{array}\right.
+\end {eqntabular*}%
+where $\mathsf{pred}(\mathtt{c})=\emptyset$ for program entry points $\mathtt{c}\in\mathfrak{I}_{\controlpoint{}}$ and the forward transformers are in Floyd's style (the predicates $\phi$ depends only on
+the symbolic initial $\vec{\underline{x}}$ and current $\vec{x}$ values of the program variables $\vec{\texttt{x}}$)
+\begin{eqntabular*}[fl]{@{\quad}r@{~~}c@{~~}l@{~~}Ll}
+\mathcal{F}(\texttt{skip},\phi)&\triangleq&\phi\\
+\mathcal{F}(\texttt{x:=e}, \phi)&\triangleq&\exists \vec{x}':\subst{\vec{x}'}{\vec{x}}{\phi}\wedge \mathsf{dom}(\mathtt{e},\vec{x}')\wedge \vec{x}=\subst{\subst{\vec{x}'}{\vec{\texttt{x}}}{\texttt{e}}}{x}{\vec{x}'}\\
+\mathcal{F}(\texttt{b}, \phi)&\triangleq& \phi\wedge\mathsf{dom}(\mathtt{b},\vec{x})\wedge\subst{\vec{x}}{\vec{\texttt{x}}}{\mathtt{b}}
+\end {eqntabular*}%
+where $\mathsf{dom}(\mathtt{e},\vec{x})$ is the condition  on $\vec{x}$ for evaluating $\mathtt{e}$ as a function of $\vec{x}$ without runtime error. By allowing infinitary disjunctions, we have  \cite[Sect.\ 3.4.5]{Cousot78-1-TheseEtat}
+\begin{theorem} $\Phi=\Lfp{\pimplies}{F}$ has the form  $\Phi(c)=\bigvee_{i\in\Delta_c}p_{c,i}(\vec{\underline{x}})\wedge \vec{x}=\vec{e}_{c,i}(\vec{\underline{x}})$ where $p_{c,i}(\vec{\underline{x}})$ is a Boolean expression defining the condition for control to reach the current program point $c$ as a 
+ function of the initial values $\vec{\underline{x}}$ of the scalar variables $\vec{\texttt{x}}$ and $\vec{e}_i(\vec{\underline{x}})$ defines the current values $\vec{x}$ of the scalar variables $\vec{\texttt{x}}$ as a function of their initial values $\vec{\underline{x}}$ when reaching program point $c$ with path condition $p_{c,i}(\vec{\underline{x}})$ true.
+\qed\end{theorem}
+The soundness follows from $\forall \vec{s}\in\vec{\tau}^+:\forall j<\length{\vec{s}}:\subst { \sqb{\vec{\texttt{x}}}\vec{s}_j}{\vec{x}}{\subst{ \sqb{\vec{\texttt{x}}}\vec{s}_0} {\vec{\underline{x}}}{\phi(c)}}$ = $\forall \vec{s}\in\vec{\tau}^+:\forall j<\length{\vec{s}}:\forall i\in\Delta_{\controlpoint{\vec{s}_j}}:\subst{\sqb{\vec{\texttt{x}}}\vec{s}_0}{\vec{\underline{x}}}{p_{\controlpoint{\vec{s}_j},i}}\implies \sqb{\vec{\texttt{x}}}\vec{s}_j=\subst{\sqb{\vec{\texttt{x}}}\vec{s}_0}{\vec{\underline{x}}}{\vec{e}_{\controlpoint{\vec{s}_j},i}}$ where $\sqb{\vec{\texttt{x}}}s$ is the value of the vector $\vec{\texttt{x}}$ of scalar variables in state $s$.
+
+\smallskip
+
+This suggests a method for calculating the precondition by adding for each assertion \texttt{c:assert(b)} the condition $\bigwedge_{i\in\Delta_c}\subst{\vec{\texttt{x}}}{\vec{\underline{x}}}{p_{c,i}}\implies \subst{\subst {\vec{\texttt{x}}}{\vec{\underline{x}}}{\vec{e}_{c,i}}}{\vec{\texttt{x}}}{\texttt{b}}$ which is checked on the initial values of variables.
+\begin{example}For the program\belowdisplayskip0pt%
+\begin{eqntabular*}[fl]{@{\quad}L}
+\newdimen\largeur\settowidth{\largeur}{\quad}\advance\largeur by -\columnwidth \largeur-\largeur
+\begin{minipage}[b]{\largeur} \small
+\begin{verbatim}
+/* 1: x=x0 & y=y0 */           if (x == 0 ) {
+/* 2: x0=0 & x=x0 & y=y0 */        x++;
+/* 3: x0=0 & x=x0+1 & y=y0 */      assert(x==y); 
+                               }    
+\end{verbatim}
+\end{minipage}
+%\renumber{\qed}
+\end{eqntabular*}
+the precondition at program point \texttt{\small {1:}} is \texttt{(!(x==0)||(x+1==y))}.
+\qed\end{example}
+Of course the iterative computation of $\Lfp{\pimplies}{F}$ will in general not terminate so that a widening \cite{CousotCousot77-3} is needed. A simple one would bound the number of iterations and widen $\bigvee_{i\in\Delta_c}p_{c,i}(\vec{\underline{x}})\wedge \vec{x}=\vec{e}_{c,i}(\vec{\underline{x}})$ to $\bigwedge_{i\in\Delta_c}p_{c,i}(\vec{\underline{x}})\implies \vec{x}=\vec{e}_{c,i}(\vec{\underline{x}})$.
+
+\iflong\else\vspace*{2mm}\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contract precondition inference by backward symbolic analysis}\label[section]{sec:BackwardSymbolicAnalysisContractPrecondition}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Backward symbolic precondition analysis of simple assertions}%------------------------------------------------------------------------------------------------------
+The symbolic relation between entry and \texttt{assert} conditions can be also established backwards, starting from the \texttt{assert} conditions and propagating towards the entry points taking assignments and tests into account with widening around unbounded loops. \iflong The advantage is that we start from a known condition and assignments and tests are easily handled symbolically using Hoare's weakest precondition rule.\fi We first consider simple assertions involving only scalar variables (including \emph{e.g.}, the size of collections as needed in \cref {sec:CollectionAnalysisContractPrecondition} where the case of collections is considered).
+ 
+\iflong
+In general the assertions on structured data are on elements of this data. Propagating these checks in
+the precondition will just duplicate the traversal on the data structure to test individual elements. At runtime,
+this duplicates the data structure traversal, which is the main reason which programmers do hesitate to
+write a contract precondition which is rechecked in assertions, which provides more precise information at
+debug time. Moreover, for static analysis, the information collected on individual elements of data structures
+through deep traversals is likely to be abstracted away. So the interest of a contract precondition on data structure seems to be obvious in the case of a global data structure property which is easily checked at runtime and efficiently abstracted without loss of precision in the static analysis. 
+\fi
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Abstract domain}
+%------------------------------------------------------------------------------------------------------
+
+Given the set $\mathbbm{B}$ of visible side effect free Boolean expressions on scalar variables\iflong\ (which can be chosen as a subset of the Boolean expressions of the language)\fi, we consider the abstract domain $\mathbbm{B}/_{\equiv}$ containing the infimum $\mathtt{false}$ (unreachable), the supremum $\mathtt{true}$ (unknown) and equivalence classes of expressions $[\mathtt{b}]/_{\equiv}$ for the abstract equivalence of expressions $\equiv $ abstracting semantic equality that is $\mathtt{b} \equiv \mathtt{b}'\implies \forall s\in\Sigma:\sqb{\mathtt{b}}s=\sqb{\mathtt{b}'}s$. The equivalence classes are encoded by choosing an arbitrary representative $\mathtt{b}'\in[\mathtt{b}]/_{\equiv}$. 
+\iflong 
+ 
+\fi
+The abstract equivalence $\equiv $ can be chosen within a wide range of possibilities, from syntactic equality, to the use of a simplifier, of abstract domains, or that of a SMT solver. This provides an abstract implication $\mathtt{b} \Mapsto \mathtt{b}'$ underapproximating the concrete implication $\implies$ in that $\mathtt{b} \Mapsto \mathtt{b}'$ implies that $\forall s\in\Sigma:\sqb{\mathtt{b}}s\implies\sqb{\mathtt{b}'}s$. The equivalence is defined as $\mathtt{b} \equiv \mathtt{b}'\triangleq\mathtt{b} \Mapsto \mathtt{b}'\wedge\mathtt{b}' \Mapsto \mathtt{b}$.
+The basic abstract domain is therefore $\pair{\mathbbm{B}/_{\equiv}}{\Mapsto}$.
+
+We now define the abstract domain functor
+\begin{eqntabular*}{rcl}
+\overline{\mathbbm{B}}^2&\triangleq&\{\mathtt{b}_p\leadsto\mathtt{b}_a\mid \mathtt{b}_p\in\mathbbm{B}\wedge\mathtt{b}_a\in\mathbbm{B}\wedge \mathtt{b}_p\not\Mapsto\mathtt{b}_a\}
+\end{eqntabular*}
+Notice that $\mathtt{b}_p\leadsto\mathtt{b}_a$ denotes the pair  $\pair{[\mathtt{b}_p]/_{\equiv}}{[\mathtt{b}_a]/_{\equiv}}$ of 
+$\mathbbm{B}/_{\equiv}\times\mathbbm{B}/_{\equiv}$. The interpretation of $\mathtt{b}_p\leadsto\mathtt{b}_a$ is that when the path condition $\mathtt{b}_p$ holds, an execution path will be followed to some \texttt{assert(b)} and checking $\mathtt{b}_a$ at the beginning of the path is the same as checking this \texttt{b} later in the path when reaching the assertion. We exclude the elements such that $\mathtt{b}_p\Mapsto\mathtt{b}_a$ which implies
+$\mathtt{b}_p\implies\mathtt{b}_a$ so that no precondition is needed. An example is \texttt{if ($\mathtt{b}_p$) \{ assert($\mathtt{b}_a$) \}} where the assertion has already been checked on the paths leading to that assertion. The abstract ordering on
+$\pair{\overline{\mathbbm{B}}^2}{\Mapsto}$ is $\mathtt{b}_p\leadsto\mathtt{b}_a\Mapsto \mathtt{b}'_p\leadsto\mathtt{b}'_a$ $\triangleq$ $\mathtt{b}'_p \Mapsto\mathtt{b}_p\wedge\mathtt{b}_a \Mapsto\mathtt{b}'_a$. 
+
+Different paths to different assertions are abstracted by elements of $\pair{\wp(\overline{\mathbbm{B}}^2)}{\subseteq}$, each $\mathtt{b}_p\leadsto\mathtt{b}_a$ corresponding to a different path to an assertion. The number of paths can grow indefinitely so $\pair{\wp(\overline{\mathbbm{B}}^2)}{\subseteq}$ must be equipped with a widening.
+
+Finally our abstract domain will be $\pair{\Gamma\rightarrow\wp(\overline{\mathbbm{B}}^2)}{\psubseteq}$ ordered pointwise so as to attach an abstract property $\rho(c)\in\wp(\overline{\mathbbm{B}}^2)$
+to each program point $c\in\Gamma$.
+\begin{example}\  The program on the left has abstract properties given on the right.
+\begin{eqntabular}[fl]{@{}L@{\qquad}l}
+\begin{minipage}[b]{4.6cm} \small
+\begin{verbatim}
+/* 1: */  if ( odd(x) ) {
+/* 2: */    y++;
+/* 3: */    assert(y > 0);
+          } else {
+/* 4: */    assert(y < 0); }
+/* 5: */
+\end{verbatim}
+\end{minipage}
+&
+\begin{array}[b]{rcl}
+\rho(\mathtt{1})&=&\{\texttt{\small odd(x)}\leadsto \texttt{\small y >= 0}, \neg\texttt{\small odd(x)}\leadsto \texttt{\small y < 0}\}\\
+\rho(\mathtt{2})&=&\{\texttt{\small true}\leadsto \texttt{\small y >= 0}\}\\
+\rho(\mathtt{3})&=&\{\texttt{\small true}\leadsto \texttt{\small y > 0}\}\\[0.9em]
+\rho(\mathtt{4})&=&\{\texttt{\small true}\leadsto \texttt{\small y < 0}\}\\
+\rho(\mathtt{5})&=&\emptyset
+\end{array}
+\renumber{\qed}
+\end{eqntabular}
+\end{example}
+Because the abstraction is syntactic, there may be no best abstraction, so we define the concretization (recall that $\mathbbm{A}$ is the set of pairs $\pair{\mathtt{c}}{\mathtt{b}}$ such that \texttt{assert(b)} is checked at program point $\mathtt{c}$ and define $\mathbbm{A}(\mathtt{c})\triangleq\bigwedge_{\pair{\mathtt{c}}{\mathtt{b}}\in \mathbbm{A}}\mathtt{b}$)
+\begin{eqntabular*}[fl]{@{\quad}l@{}}
+\dot{\gamma}\colsep{\in}(\Gamma\rightarrow\wp(\overline{\mathbbm{B}}^2))\rightarrow\wp(\vec{\Sigma}^+),\qquad \qquad \quad\ 
+\dot{\gamma}(\rho)\colsep{\triangleq}\rlap{$\displaystyle\bigcup_{c\:\in\: \Gamma}\{\vec{s}\in \overline{\gamma}_c(\rho(c)) \mid\controlpoint{\vec{s}_0}=c\}$}\\[-10ex]
+\overline{\gamma}_c\colsep{\in}\smash{\wp(\overline{\mathbbm{B}}^2)\rightarrow\wp(\{\vec{s}\in\vec{\Sigma}^+\mid\controlpoint{\vec{s}_0}=c\}),}\qquad\ \ \ 
+\overline{\gamma}_c(C)\colsep{\triangleq}\smash{\bigcap_{ b_p\: \leadsto\: b_a\:\in\: C}}\ \gamma_c( b_p \leadsto b_a)\\[2pt]
+\gamma_c\colsep{\in}\overline{\mathbbm{B}}^2\rightarrow\wp(\{\vec{s}\in\vec{\Sigma}^+\mid\controlpoint{\vec{s}_0}=c\})\\[1pt]
+\gamma_c(\mathtt{b}_p\leadsto\mathtt{b}_a)\colsep{\triangleq}\{\vec{s}\in\vec{\Sigma}^+ \mid\controlpoint{\vec{s}_0}=c\wedge\sqb{\mathtt{b}_p}\vec{s}_0\implies
+%\&&\qquad \qquad \qquad
+(\exists j<\length{\vec{s}}:\sqb{\mathtt{b}_a}\vec{s}_0=\sqb{\mathbbm{A}(\controlpoint{\vec{s}_j})}\vec{s}_j)\}.
+\end{eqntabular*}
+Observe that $\dot{\gamma}$ is decreasing which corresponds to the intuition that an analysis finding no path precondition $b_p \leadsto b_a$ defines all possible executions in $\vec{\Sigma}^+$.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Backward path condition and checked expression propagation}
+%------------------------------------------------------------------------------------------------------
+
+The system of backward equations $\rho={B}(\rho)$ is (recall that $\bigcup\emptyset= \emptyset$)
+\begin{eqntabular*}[fl]{@{\quad}l}
+\left\{\begin{array}{lc@{}l}
+{B}(\rho)\mathtt{c}&=&\displaystyle\bigcup_{\mathtt{c}'\:\in\:\mathsf{succ}(\mathtt{c}),\ b \:\leadsto\: b'\:\in\:\rho(\mathtt{c}')}\hspace*{-1cm}{B}(\mathsf{cmd}(\texttt{c},\texttt{c}'),b \leadsto b')\cup\{\mathtt{true} \leadsto \mathtt{b}\mid \pair{\mathtt{c}}{\mathtt{b}}\in \mathbbm{A}\}\\[-3pt]
+\rlap{$\mathtt{c}\in \Gamma$}
+\end{array}\right.
+\end {eqntabular*}%
+where (writing $\subst{e'}{x}{e}$ for the substitution of $e'$ for $x$ in $e$)
+\begin{eqntabular*}[fl]{@{\quad}r@{~}c@{~}l@{~~}Ll}
+{B}(\texttt{skip},\mathtt{b}_p\leadsto\mathtt{b}_a)&\triangleq&\{\mathtt{b}_p\leadsto\mathtt{b}_a\}\\[-3pt]
+{B}(\texttt{x:=e},\mathtt{b}_p\leadsto\mathtt{b}_a)&\triangleq&\{\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_p}\leadsto\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_a}\}&if&\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_p}\in\mathbbm{B} \wedge\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_a}\in\mathbbm{B}\\[-3pt]
+&&&&{}\wedge\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_p}\not\Mapsto\subst{\mathtt{e}}{\mathtt{x}}{\mathtt{b}_c}\\[-3pt]
+&\triangleq&\emptyset&\rlap{otherwise}\\[-3pt]
+{B}(\texttt{b},\mathtt{b}_p\leadsto\mathtt{b}_a)&\triangleq&\{\mathtt{b} \mathrel{\texttt{\small\&\&}}\mathtt{b}_p\leadsto\mathtt{b}_a\}&if&\mathtt{b}  \mathrel{\texttt{\small\&\&}}\mathtt{b}_p\in\mathbbm{B} \wedge\mathtt{b}  \mathrel{\texttt{\small\&\&}}\mathtt{b}_p\not\Mapsto\mathtt{b}_a\\[-3pt]
+&\triangleq&\emptyset&\rlap{otherwise}
+\end {eqntabular*}%
+By \cref{dual-fixpoint-abstraction} and {\normalfont(\ref{eq:vectau+-fixpoint}-b)}, the analysis is sound, \emph{i.e.}\begin{theorem}\label[theorem]{soundness-backward-analysis}
+If $\rho\psubseteq \Lfp{\psubseteq}{B}$ then $\vec{\tau}^+\subseteq\dot{\gamma}(\rho)$.
+\qed\end{theorem}
+Observe that $B$ can be $\dot{\rlap{$\,\Mapsto$}\phantom{\Mapsto}\;}$-overapproximated (\emph{e.g.}, to allow for simplifications of the Boolean expressions).
+\iflong
+\begin{proof}Apply \cref{dual-fixpoint-abstraction} to $\vec{\tau}^+=\GFP{\subseteq} {\vec{\Sigma}^+}\LAMBDA{\vec{T}}\vec{\mathfrak{B}}^1\cup\pvec{\tau}^2\seqcomp\vec{T}$ {\normalfont(\ref{eq:vectau+-fixpoint}-b)}.
+\end{proof}
+\fi
+\iflong
+\begin{example}\label[example]{unreachable}The analysis of the program \texttt{\small if false \{ assert(false) \}} leads to the precondition \textit{\small true} since the assert is never executed (the analyzer forward analysis will signal unreachability).
+\iflong\qed\end{example}
+\begin{example}\label[example]{always-true}
+\else
+
+\fi The analysis of the program \texttt{\small if x != null \{ assert(x != null) \}} leads to the precondition \textit{\small true} since the assert is always true when checked.
+\iflong\qed\end{example}
+\begin{example}\label[example]{always-false}
+\else
+
+\fi The analysis of the program \texttt{\small if x == null \{ assert(x != null) \}} leads to the precondition \texttt{\small x!=null} since the \texttt{\small assert(x!=null)} will always fail when \texttt{\small x==null} holds on program entry.
+\qed\end{example}
+\fi
+\iflong\else\vspace*{-1mm}\fi
+\begin{example}\label[example]{decrement-assert-positive}The analysis of the following program
+\begin{eqntabular*}[fl]{@{\quad}L}
+\begin{minipage}[b]{4.6cm} \small
+\begin{verbatim}
+/* 1: */   while (x != 0) {
+/* 2: */      assert(x > 0);
+/* 3: */      x--;
+/* 4: */   }   /* 5: */
+\end{verbatim}
+\end{minipage}
+%\renumber{\qed}
+\end{eqntabular*}
+leads to the following iterates at program point \texttt{1}: 
+\iflong
+\begin{eqntabular}[fl]{@{\quad}rcl@{\quad}L@{}}
+\rho^0(\texttt{1})&=&\emptyset& Initialization \nonumber\\
+\rho^1(\texttt{1})&=&\{\texttt{x}\neq0\leadsto\texttt{x}>0\}&\nonumber\\
+\rho^2(\texttt{1})&=&\rho^1(\texttt{1})& since $(\texttt{x}\neq0\wedge \texttt{x}>0\wedge\texttt{x}-1\neq0)\leadsto(\texttt{x}-1>0)$\nonumber\\
+&&&$\equiv$ $\texttt{x}>1 \leadsto\texttt{x}>1$\renumber{\qed}
+\end {eqntabular}
+\else
+$\rho^0(\texttt{1})=\emptyset$, $\rho^1(\texttt{1})=\{\texttt{x}\neq0\leadsto\texttt{x}>0\}$, which is stable since the next iterate
+is $(\texttt{x}\neq0\wedge \texttt{x}>0\wedge\texttt{x}-1\neq0)\leadsto(\texttt{x}-1>0)$ $\equiv$ $\texttt{x}>1 \leadsto\texttt{x}>1$, which is trivially satisfied hence not added to $\rho^2(\texttt{1})=\rho^1(\texttt{1})$. 
+\qed\fi
+\end{example}
+\begin{example}\label[example]{assert-A-not-null}The backward symbolic analysis of \cref{ex-array} moves the checks \texttt{(A != null)} to the precondition.
+\qed\end{example}
+A simple widening to enforce convergence would limit the size of the elements of $\wp(\overline{\mathbbm{B}}^2)$, which is sound since eliminating a pair $\mathtt{b}_p\leadsto\mathtt{b}_a$ would just lead to ignore some assertion in the precondition, which is always correct.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Precondition generation}
+%------------------------------------------------------------------------------------------------------
+
+Given an analysis $\rho\psubseteq\Lfp{\subseteq}{B}$, the syntactic precondition generated at entry control point $i\in\mathfrak{I}_{\controlpoint{}}\triangleq\{i\in\Gamma \mid\exists s\in\mathfrak{I}:\controlpoint{s}=i\}$ is
+\bgroup\iflong\else\belowdisplayskip-0.95em\fi
+\begin{eqntabular}[fl]{@{\quad}rcl@{\quad}L}
+\predot{\,\mathtt{P}}_i&\triangleq&\mathop{\texttt{\Large\&\&}}_{\mathtt{b}_p\:\leadsto\:\mathtt{b}_a\:\in\:\rho(i)} (\mathtt{!}(\mathtt{b}_p)\mathrel{\texttt{||}}(\mathtt{b}_a))\renumber{(again, assuming $\mathop{\texttt{\large\&\&}}\emptyset\triangleq\mathit{true}$)}
+\end {eqntabular}\egroup
+\begin{example}For \cref{decrement-assert-positive}, the precondition generated at program point \texttt{1} will
+be \texttt{!(x != 0) || (x > 0)} since the static analysis was able to show that only the first assert in the loop does matter because when passed successfully it implies all the following ones.
+\qed\end{example}
+The set of states for which the syntactic precondition $\predot{\,\mathtt{P}}_i$ is evaluated to $\mathit{true}$ at program point $i\in\Gamma$ is
+\iflong
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\predot{P}_i&\triangleq&\{s\in \Sigma\mid \controlpoint{s}=i\wedge\sqb{\predot{\,\mathtt{P}}_i}s\}
+\end {eqntabular*}%
+\else
+$\predot{P}_i\triangleq\{s\in \Sigma\mid \controlpoint{s}=i\wedge\sqb{\predot{\,\mathtt{P}}_i}s\}
+$
+\fi
+and so for all program entry points (in case there is more than one)
+\iflong
+\begin{eqntabular*}[fl]{@{\quad}rcl@{\quad}L}
+\predot{P}_{\mathfrak{I}}&\triangleq&\{s\in \Sigma\mid \exists i\in \mathfrak{I}_{\controlpoint{}}:s\in \predot{P}_i\}
+\end {eqntabular*}%
+\else
+$\predot{P}_{\mathfrak{I}}\triangleq\{s\in \Sigma\mid \exists i\in \mathfrak{I}_{\controlpoint{}}:s\in \predot{P}_i\}$.
+\fi
+\begin{theorem}
+$\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}\subseteq \predot{P}_{\mathfrak{I}}$.
+\qed\end{theorem}
+So, by \cref{StrongestPreconditionErrorAvoidability}, the data flow analysis is sound, a rejected initial state would inevitably have lead to an assertion failure.
+\iflong
+\begin{proof}Assume that $\rho\psubseteq \Lfp{\psubseteq}\mathcal{B}$ and that, by reductio ad absurdum, $\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}\not\subseteq \predot{P}_{\mathfrak{I}}$. Then there is an initial state in $\mathfrak{P}_{\mathbbm{A}}\cap\mathfrak{I}$ not in 
+$\predot{P}_{\mathfrak{I}}$ that is not in $\predot{P}_i$ for some $i\in \mathfrak{I}_{\controlpoint{}}$. By def.\ {\normalfont(\ref{eq:def-P-A})} of $\mathfrak{P}_{\mathbbm{A}}$, this state initiates a good run
+$\vec{s}\in\vec{\tau}^+\cap\neg\vec{\mathfrak{E}}_{\mathbbm{A}}^+ $ which is refused on entry point $i\in \mathfrak{I}_{\controlpoint{}}$ such that $\controlpoint{\vec{s}_0}=i$ (the run start at program point $i$). This means that $\exists\,\mathtt{b}_p\leadsto\mathtt{b}_a\in\rho(i)$ such that $\neg(\sqb{(\mathtt{b}_p\implies\mathtt{b}_a)}\vec{s}_0)$ (the run is rejected on entry) while $\forall j<\length{\vec{s}}:\vec{s}_j\not \in \mathfrak{E}_{\mathbbm{A}}$.
+ so $\forall j<\length{\vec{s}}:\forall \pair{\controlpoint{\vec{s}_j}}{\texttt{b'}}\in A:  \sqb{\texttt{b'}}\vec{s}_j$ (since $\mathfrak{E}_{\mathbbm{A}} \triangleq\{s\in\Sigma \mid \exists \pair{c}{\texttt{b}}\in A: \controlpoint{s}=c\wedge \sqb{\texttt{b}}s=\mathit{false}\}$). But then we have
+\begin{calculus}[$\iff$\ ]
+\formulaexplanation{\vec{\tau}^+\subseteq\dot{\gamma}(\rho)}{by \cref {soundness-backward-analysis} since $\rho\psubseteq \Lfp{\psubseteq}\mathcal{B}$}\\
+$\implies$\formulaexplanation{\{\vec{s}\in\vec{\tau}^+\mid\controlpoint{\vec{s}_0}=i\}\subseteq\{\vec{s}\in \dot{\gamma}(\rho)\mid\controlpoint{\vec{s}_0}=i\}}{def.\ $\subseteq$}\\
+$\implies$\formulaexplanation{\{\vec{s}\in\vec{\tau}^+\mid\controlpoint{\vec{s}_0}=i\}\subseteq
+\overline{\gamma}_c(\rho)}{def.\ $\dot{\gamma}$}
+\end{calculus}
+and so for the good run $\vec{s}\in\vec{\tau}^+\cap\neg\vec{\mathfrak{E}}_{\mathbbm{A}}^+ $ not in 
+$\predot{P}_{\mathfrak{I}}$, we have $\vec{s}\in\overline{\gamma}_c(\rho)$ and so, by def.\ of
+$\overline{\gamma}_c$, for the $\mathtt{b}_p\leadsto\mathtt{b}_a\in\rho(i)$ such that $\neg(\sqb{(\mathtt{b}_p\implies\mathtt{b}_a)}\vec{s}_0)$ $\iff$ $\sqb{\mathtt{b}_p}\vec{s}_0\wedge\neg(\sqb{\mathtt{b}_a}\vec{s}_0)$, we have
+\begin{calculus}[$\iff$\ ]
+\formula{\vec{s}\in\gamma_c(b_p \leadsto b_a)}\\
+$\implies$\formulaexplanation{\sqb{\mathtt{b}_p}\vec{s}_0\implies (\exists j<\length{\vec{s}}:\sqb{\mathtt{b}_a}\vec{s}_0=\sqb{A(\controlpoint{\vec{s}_j})}\vec{s}_j)}{def.\ $\gamma_c$}\\
+$\implies$\formulaexplanation{\exists j<\length{\vec{s}}:\sqb{\mathtt{b}_a}\vec{s}_0=\sqb{A(\controlpoint{\vec{s}_j})}\vec{s}_j}{since $\sqb{\mathtt{b}_p}\vec{s}_0=\mathit{true}$}\\
+$\implies$\formulaexplanation{\exists j<\length{\vec{s}}:\neg\sqb{A(\controlpoint{\vec{s}_j})}\vec{s}_j}{since $\sqb{\mathtt{b}_a}\vec{s}_0=\mathit{false}$}
+\end{calculus}
+in contradiction with the fact $\vec{s}\in\vec{\tau}^+\cap\neg\vec{\mathfrak{E}}_{\mathbbm{A}}^+ $ is a good run.
+{\qed}\end{proof}
+\fi
+\iflong
+Contract precondition inference by symbolic analysis in \cref {sec:BackwardSymbolicAnalysisContractPrecondition} is more precise that data flow analysis in \cref{sec:DataflowAnalysisContractPrecondition} and will be used for scalar variables, including size and bounds of collections, in next \cref {sec:CollectionAnalysisContractPrecondition} 
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section {Contract precondition inference for collections by forward static analysis}\label[section]{sec:CollectionAnalysisContractPrecondition}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Symbolic execution as considered in \cref{sec:BackwardSymbolicAnalysisContractPrecondition,sec:ForwardSymbolicAnalysisContractPrecondition} for scalars is harder for data structures since all the elements of the data structure must be handled
+individually without loss of precision. We propose a simple solution for collections (including arrays). The idea is to move to the precondition the assertions on elements of the collection which can be proved to be unmodified before reaching the condition.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Abstract domain for scalar variables}
+%------------------------------------------------------------------------------------------------------
+For scalar variables $\mathtt{x}\in\mathbbm{x}$, we assume that we are given abstract properties in $\eta\in\Gamma\rightarrow\ASabstractproperties{R}$ with concretization $\gamma_{\mathbbm{x}}(\eta)\in \wp(\Sigma)$. Moreover, we consider a dataflow analysis with abstract properties $\zeta\in\Gamma\rightarrow\mathbbm{x} \rightarrow\ASabstractproperties{A}$ and pointwise extension of the order $0\preceq 0 \prec 1 \preceq 1$ on $\ASabstractproperties{A}\triangleq\{0,1\}$ where $0$ means ``unmodified'' and $1$ ``unknown''. The concretization is
+\begin{eqntabular*}[fl]{@{\quad}rcl}
+\gamma(\eta,\zeta)&\triangleq&
+\{\vec{s}\in\vec{\Sigma}^+\mid\forall j<\length{\vec{s}}:\begin{array}[t]{@{}l@{}}\vec{s}_j\in\gamma_{\mathbbm{x}}(\eta)\wedge{}\\{}\qquad\forall \mathtt{x}\in\mathbbm{x}: \zeta(\controlpoint{\vec{s}_j})(\mathtt{x})=0\implies\sqb{\mathtt{x}}\vec{s}_0=\sqb{\mathtt{x}}\vec{s}_{j}\}\end{array}
+\end{eqntabular*}
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Segmentation abstract domain}
+%------------------------------------------------------------------------------------------------------
+For collections $\mathtt{X}\in\mathbbm{X}$, we propose to use segmentation as introduced by \cite{CousotCousotLogozzo-09}. 
+A segmentation abstract property in $\ASabstractproperties{S}(\ASabstractproperties{A})$ depends on abstract properties in $\ASabstractproperties{A}$ holding for elements of segments. So 
+\begin{eqntabular*}[fl]{@{\quad}rcl@{}}
+\ASabstractproperties{S}(\ASabstractproperties{A})&\triangleq &\{(\ASabstractproperties{B}\times\ASabstractproperties{A})\times (\ASabstractproperties{B}\times\ASabstractproperties{A} \times\{\textvisiblespace,?\} )^{k} \times (\ASabstractproperties{B} \times\{\textvisiblespace,?\})\mid k\geqslant 0\}\cup\{\bot\}
+\end {eqntabular*}
+and the segmentation abstract properties have the form
+\bgroup%\abovedisplayskip0.5\abovedisplayskip\belowdisplayskip-5pt
+\begin{eqntabular*}[fl]{@{\quad}l@{}}
+\{e^{1}_{1}\ \textrm{...}\ e^{1}_{m^{1}}\mskip-3mu\}\,{A_{1}}\,\{e^{2}_{1}\ \textrm{...}\ e^{2}_{m^{2}}\mskip-3mu\}[?^{2}]\,{A_{2}}\ \ldots\ 
+%\label{eq:arraysegmentation}%\\
+%\qquad\qquad \qquad \qquad \qquad{}
+{A_{n-1}}\,\{e^{n}_{1}\ \textrm{...}\ e^{n}_{m^{n}}\mskip-3mu\}[?^{n}]%\nonumber
+\end{eqntabular*}\egroup
+where 
+\begin{itemize}[leftmargin=*,topsep=2pt,itemsep=2pt]
+\item We let \ASabstractproperties{E} be a set of symbolic expressions in normal form depending on variables. 
+Here, the abstract expressions $\ASabstractproperties{E}$ are restricted to the normal form $\mathtt{v}+k$ where $\mathtt{v}\in\mathbbm{x}\cup\{\zerovariable\}$ is an integer variable plus an integer constant $k\in \mathbb{Z}$ (an auxiliary variable $\zerovariable\not\in\mathbbm{x}$ is assumed to be always 0 and is used to represent the integer constant $k$ as $\zerovariable+k$);
+
+
+\item the segment bounds $\{e^{i}_{1}\ \textrm{...}\ e^{i}_{m^{i}}\}\in\ASabstractproperties{B}$, $i\in[1,n]$, $n>1$, are finite non-empty sets of symbolic expressions in normal form $e^{i}_{j}\in\ASabstractproperties{E}$, $j=1,\ldots,m^{i}$;
+
+\item the abstract predicates $A_{i}\in\ASabstractproperties{A}$ denote properties that are valid for all the elements in the collection between the bounds; and 
+\item  the optional question mark $[?^{i}]$ follows the upper bound of a segment. 
+Its presence \texttt{?} means that the segment might be empty. 
+Its absence \textvisiblespace\ means that the segment cannot be empty. 
+Because this information is attached to the segment upper bound (which is also the lower bound of the next segment), the lower bound $\{e^{1}_{1}\ \ldots\ e^{1}_{m^{1}}\}$ of the first segment never has a question mark. 
+$\quadruple{\{\textvisiblespace,\texttt{?}\}}{\boundemptinessleq}{\boundemptinessdisjunction}{\boundemptinessconjunction}$ is a complete lattice with $\textvisiblespace \boundemptinesslq\texttt{?}$.
+\end{itemize}
+
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Segmentation modification and checking analyses}
+%------------------------------------------------------------------------------------------------------
+We consider a \emph{segmentation modification analysis} with abstract domain $\ASabstractproperties{S}(\ASabstractproperties{M})$ where $\ASabstractproperties{M}\triangleq\{\mathfrak{e}, \mathfrak{d}\}$ with $\mathfrak{e}\sqsubseteq \mathfrak{e}\sqsubset \mathfrak{d} \sqsubseteq \mathfrak{d}$.  The abstract property $\mathfrak{e}$ states that all the elements in the segment must be equal to their initial value (so $\gamma_{\mathcal{M}}(\mathfrak{e})\triangleq\{\pair{v}{v}\mid v\in \mathcal{V}\}$) and the abstract property $\mathfrak{d}$ means that some element in the segment might have been modified hence might be different from its initial value (in which case we define $\gamma_{\mathcal{M}}(\mathfrak{d})\triangleq\mathcal{V}\times\mathcal{V}$).
+
+For each \texttt{assert} in the program, we also use a \emph{segmentation checking analysis} with abstract domain $\ASabstractproperties{C}\triangleq\{\bot,\mathfrak{n}, \mathfrak{c}.\top\}$ where $\bot \sqsubset\mathfrak{n}\sqsubset \top$ and $\bot\sqsubset \mathfrak{c} \sqsubset \top$ to collect the set of elements of a collection that have been checked by this \texttt{assert}. The abstract property $\bot$ is unreachability, $\mathfrak{c}$ states that all the elements in the segment have definitely been checked by the relevant \texttt{assert}, $\mathfrak{n}$ when none of the elements in the segment have been checked, and $\top$ is unknown. 
+
+\iflong Let us start with a simple \fi
+\begin{example}\iflong
+Let us consider the following program.
+\begin{eqntabular*}[fl]{@{\quad}L}
+\begin{minipage}[b]{4.6cm} \small
+\begin{verbatim}
+          void AllNotNull(int[] A) {
+/* 1: */     int i = 0;
+/* 2: */     while /* 3: */ (i < A.length) {
+/* 4: */        assert(A[i] != null);
+/* 5: */        A[i]= new Object();
+/* 6: */        i++;
+/* 7: */     }
+/* 8: */  }
+\end{verbatim}
+\end{minipage}
+%\renumber{\qed}
+\end{eqntabular*}
+The analysis \else The analysis of \cref{ex-array} \fi proceeds as follows (the first segmentation in $\mbox{\large\strut}\ASabstractproperties{S}(\ASabstractproperties{M})$ collects element modifications for \texttt{A} while the second in segmentation  $\ASabstractproperties{S}(\ASabstractproperties{C})$ collects the set of elements \texttt{A[i]} of \texttt{A} checked by the assertion at program point \texttt{4:} while equal to its initial value. The classical analyses for \texttt{A} (not \texttt{null} whenever used) and  \texttt{i} are not shown.).
+\newcommand{\linenumber}[1]{(#1)}%
+\begin{eqntabular}[fl]{@{}l@{\ }L@{}R@{}}
+\linenumber{a}&\small\verb+1: {0}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0}+\normalsize$\mathfrak{n}$\verb+{A.length}?+&\nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize no element yet modified (\normalsize$\mathfrak{e}$) and none checked (\normalsize$\mathfrak{n}$), array may be empty}\\[-1.5pt]
+\linenumber{b}&\small\verb+2: {0,i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \renumber{\normalfont \normalsize $\texttt{i}=0$}\\[-1.5pt]
+\linenumber{c}&\small\verb+3: +$\bot$ $\sqcup$ (\verb+{0,i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+)\renumber{\normalfont\normalsize join}\\[-1.5pt]
+&\small\phantom{\texttt{3: }}\llap{= }\verb+{0,i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \nonumber\\[-1.5pt]
+\linenumber{d}&\small\verb+4: {0,i}+\normalsize$\mathfrak{e}$\verb+{A.length} - {0,i}+\normalsize$\mathfrak{n}$\verb+{A.length}+\nonumber\\[-1.5pt]
+\renumber{last and only segment hence array not empty (\normalfont \normalsize since $\texttt{A.length}>\texttt{i}=0$)}\\[-1.5pt]
+\linenumber{e}&\small\verb#5: {0,i}#\normalsize$\mathfrak{e}$\verb#{A.length} - {0,i}#\normalsize$\mathfrak{c}$\verb#{1,i+1}#\normalsize$\mathfrak{n}$\verb#{A.length}?#\nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize \texttt{A[i]} checked while unmodified}\\[-1.5pt]
+\linenumber{f}&\small\verb#6: {0,i}#\normalsize$\mathfrak{d}$\verb#{1,i+1}#\normalsize$\mathfrak{e}$\verb#{A.length}? - {0,i}#\normalsize$\mathfrak{c}$\verb#{1,i+1}#\normalsize$\mathfrak{n}$\verb#{A.length}?#\nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize \texttt{A[i]} appears on the left handside of an assignment, hence is potentially modified}\\[-1.5pt]
+\linenumber{g}&\small\verb+7: {0,i-1}+\normalsize$\mathfrak{d}$\verb+{1,i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0,i-1}+\normalsize$\mathfrak{c}$\verb+{1,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \nonumber\\[-1.5pt]
+ \renumber{\normalfont \normalsize invertible assignment $\texttt{i}_{\mathrm{old}}= \texttt{i}_{\mathrm{new}}-1$}\\[-1.5pt]
+\linenumber{h}&\small\verb+3: {0,i}+\normalsize$\mathfrak{e}$\verb+{A.length}?+ $\sqcup$ \verb+{0,i-1}+\normalsize$\mathfrak{d}$\verb+{1,i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - +\renumber{\normalfont \normalsize join}\\[-1.5pt]
+              &\small\phantom{\texttt{3: }}\verb+{0,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ $\sqcup$ \verb+{0,i-1}+\normalsize$\mathfrak{c}$\verb+{1,i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+\nonumber\\[-1.5pt]
+             &\small\phantom{\texttt{3: }}\llap{= }\verb+{0}+\normalsize$\mathfrak{e}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{d}$\verb+{i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - + \renumber{\normalfont \normalsize segment unification}\\[-1.5pt]
+             &\small\phantom{\texttt{3: }}\verb+{0}+\normalsize$\bot$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{c}$\verb+{i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \nonumber\\[-1.5pt]
+             &\small\phantom{\texttt{3: }}\llap{= }\verb+{0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize segmentwise join $\mathfrak{e}\sqcup \mathfrak{d}= \mathfrak{d}$,  $\mathfrak{e}\sqcup \mathfrak{e}= \mathfrak{e}$, $\bot \sqcup \mathfrak{c}= \mathfrak{c}$, $\mathfrak{n} \sqcup \mathfrak{n}= \mathfrak{n}$}\\[-1.5pt]
+\linenumber{i}&\small\verb+4: {0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length} - {0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}+ \renumber{\normalfont \normalsize last segment not empty}\\[-1.5pt]
+\linenumber{j}&\small\verb#5: {0}#\normalsize$\mathfrak{d}$\verb#{i}?#\normalsize$\mathfrak{e}$\verb#{A.length} - {0}#\normalsize$\mathfrak{c}$\verb#{i}?#\normalsize$\mathfrak{c}$\verb#{i+1}#\normalsize$\mathfrak{n}$\verb#{A.length}?# \nonumber\\[-1.5pt]
+\renumber {\normalfont \normalsize \texttt{A[i]} checked while unmodified}\\[-1.5pt]
+\linenumber{k}&\small\verb#6: {0}#\normalsize$\mathfrak{d}$\verb#{i}?#\normalsize$\mathfrak{d}$\verb#{i+1}#\normalsize$\mathfrak{e}$\verb#{A.length}? - {0}#\normalsize$\mathfrak{c}$\verb#{i}?#\normalsize$\mathfrak{c}$\verb#{i+1}#\normalsize$\mathfrak{n}$\verb#{A.length}?#\nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize \texttt{A[i]} potentially modified}\\[-1.5pt]
+\linenumber{l}&\small\verb+7: {0}+\normalsize$\mathfrak{d}$\verb+{i-1}?+\normalsize$\mathfrak{d}$\verb+{i}+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0}+\normalsize$\mathfrak{c}$\verb+{i-1}?+\normalsize$\mathfrak{c}$\verb+{i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+ \nonumber\\[-1.5pt]
+\renumber{\normalfont \normalsize invertible assignment $\texttt{i}_{\mathrm{old}}= \texttt{i}_{\mathrm{new}}-1$}\\[-1.5pt]
+\linenumber{m}&\small\verb+3: {0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{d}$\verb+{i-1}+\normalsize$\mathfrak{d}$\verb+{i}+\normalsize$\mathfrak{e}$\verb+{A.length}? -+  \renumber {\normalfont \normalsize join}\\[-1.5pt]
+              &\small\phantom{\texttt{3: }}\verb+{0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{c}$\verb+{i-1}+\normalsize$\mathfrak{c}$\verb+{i}+\normalsize$\mathfrak{n}$\verb+{A.length}?+\nonumber\\[-1.5pt]
+              &\small\phantom{\texttt{3: }}\llap{= }\verb+{0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}? -+  \renumber {\normalfont \normalsize segment unification}\\[-1.5pt]
+              &\small\phantom{\texttt{3: }}\verb+{0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+ $\sqcup$ \verb+{0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+\nonumber\\[-1.5pt]
+              &\small\phantom{\texttt{3: }}\llap{= }\verb+{0}+\normalsize$\mathfrak{d}$\verb+{i}?+\normalsize$\mathfrak{e}$\verb+{A.length}? - {0}+\normalsize$\mathfrak{c}$\verb+{i}?+\normalsize$\mathfrak{n}$\verb+{A.length}?+\nonumber\\[-1.5pt]\renumber{\normalfont \normalsize segmentwise join, convergence}\\[-1.5pt]
+\linenumber{n}&\small\verb+8: {0}+\normalsize$\mathfrak{d}$\verb+{i,A.length}? - {0}+\normalsize$\mathfrak{c}$\verb+{i,A.length}?+ \nonumber\\[-1.5pt]
+ \renumber{\normalfont \normalsize $i\leqslant\texttt{A.length}$ in segmentation and $\geqslant$ in test negation so \texttt{i} = \texttt{A.length}.}
+\end{eqntabular}
+To generate code for the precondition, the information \verb+{0}+\normalsize$\mathfrak{c}$\verb+{i,A.length}?+ in $\linenumber{n}$ is 
+ valid at program \texttt{8:} dominating the end  of the program, so \texttt{assert(A[i] != null)} has been checked on all the elements of the array before they where changed in the program. Hence the generated precondition is
+\texttt{Forall(0,A.length,k => A[k] != null)} where \texttt{k} is a dummy variable from which iterative code follows immediately.
+
+
+Notice that the size of a collection can change and that the values of the symbolic bounds in a collection can change from one program point to another. So these expressions in the final segmentation must be expressed in terms of values on entry, a problem solved in \cref {sec:ForwardSymbolicAnalysisContractPrecondition}.
+\qed\end {example}
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Abstract domain for collections}
+%------------------------------------------------------------------------------------------------------
+
+The abstract properties are
+\begin{eqntabular*}[fl]{@{\quad}rcl@{}}
+\xi&\in&\Gamma\rightarrow\texttt{X}\in\mathbbm{X} \mapsto\ASabstractproperties{S}(\ASabstractproperties{M})\times\mathbbm{A}(\texttt{X})\rightarrow\ASabstractproperties{S}(\ASabstractproperties{C})
+\end{eqntabular*}
+At program point $c\in\Gamma$, the collection $\mathtt{X}\in\mathbbm{X}$ has the collection segmentation abstract property $\xi(c)(\mathtt{X})$ which is a pair $\pair{\xi(c)(\mathtt{X})_{\ASabstractproperties{M}}} {\xi(c)(\mathtt{X})_{\ASabstractproperties{C}}}$. The abstract relational invariance property $\xi(c)(\mathtt{X})_{\ASabstractproperties{M}}$ specifies which elements of the collection are for sure equal to their initial values. For each assertion in $\pair{\texttt{c}}{\texttt{b(X,i)}}\in\mathbbm{A}(\texttt{X})$ (where \texttt{c} is a program point designating an \texttt{assert(b)} and \texttt{b(X,i)} is a side effect free Boolean expression checking a property of element \texttt{X[i]} of collection \texttt{X}$\,$\footnote{If more than one index is used, like in \texttt{assert(A[i]<A[i+1])} or \texttt{\texttt{assert(A[i]<A[A.length-i])}}, the modification analysis must check that the array \texttt{A} has not been modified for all these indexes.}), the abstract trace-based property $\xi(c)(\mathtt{X})_{\ASabstractproperties{C}}\pair{\texttt{c}}{\texttt{b(X,i)}}$ specifies which elements of the collection have been checked for sure by \texttt{b} at point \texttt{c} while equal to their initial values.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Collection segmentation concretization}
+%------------------------------------------------------------------------------------------------------
+\noindent\mbox{\rlap{(a)}\qquad}The concretization $\gamma^{\mathtt{X}}_{S}$ of a segmentation $B_{1}A_{1}B_{2}[?^{2}]A_{2}$ \ldots $\allowbreak A_{n-1}B_{n}[?^{n}]\in\ASabstractproperties{S}(\ASabstractproperties{A})$ for a collection $\mathtt{X}$ is the set of prefixes $\vec{s}=\vec{s}_0\ldots\vec{s}_{\ell}$ of the program run describing how the elements $\mathtt{A}[k]$, $k\in[0,\mathtt{A.count})$ of the collection $\mathtt{X}$ have been organized into consecutive, non-overlapping segments, covering the whole collection. 
+
+\indent\mbox{\rlap{(b)}\qquad}All the elements of the collection in each segment $B_{k}A_{k}B_{k+1}[?^{k}]$ have the property described by $A_{k}$.  The values of expressions in segment bounds $B_{1},\ldots,B_{n}$ should be understood as evaluated in this last state $\vec{s}_{\ell}$ while the properties $A_{k}$ may refer to some or all of the states $\vec{s}_0,\ldots,\vec{s}_{\ell}$. 
+
+\indent\mbox{\rlap{(c)}\qquad}The segmentation should fully cover all the elements of the collection $\mathtt{X}$. So all the expressions in $B_{1}$ should be equal and have value 0, $\forall\mathtt{e}_{1}\in B_{1}:\sqb{\mathtt{e}_{1}}\vec{s}_{\ell}=0$ while all the expressions in $B_{n}$ should be equal to the number $\sqb{\texttt{X.count}}\vec{s}_{\ell}$ of the elements in the collection, so
+$\forall\mathtt{e}_{n}\in B_{n}:\sqb{\mathtt{e}_{n}}\vec{s}_{\ell}=\sqb{\texttt{X.count}}\vec{s}_{\ell}$.
+
+\indent\mbox{\rlap{(d)}\qquad}The segment bounds $B_{k}$, $k\in[0,n]$ are sets of equal expressions when evaluated in the last state $\vec{s}_{\ell}$ of the prefix trace,  so $\forall\mathtt{e}_{1},\mathtt{e}_{2}\in B_{k}: \sqb{\mathtt{e}_{1}} \vec{s}_\ell =\sqb{\mathtt{e}_{2}} \vec{s}_\ell$.
+
+\indent\mbox{\rlap{(e)}\qquad}In a segment segment $B_{k}[?^{k}]M_{k}B_{k+1}[?^{k+1}]$, $k\in[0,n)$, the marker $[?^{k}]$, $k\in[1,n)$ is relevant to the previous segment, if any. $[?^{k+1}]$ specifies the possible emptiness of the segment. If ${[?^{k+1}]}={?}$ then the segment is possibly empty (in which case $\mathrel{{<}?}$ stands for $\leqslant$). If  ${[?^{k+1}]} ={\textvisiblespace}$ then the segment is definitely not empty (in which case there is no question mark and $\mathrel{{<}\textvisiblespace}\,$\ stands for $<$). The upper bound $h$ of the segment is therefore greater (for non-empty segments) or greater or equal (for possibly empty segments) than its lower bound $l$ and within the limit of the collection size so $\forall \mathtt{e}_{1},\mathtt{e}_{2}\in B_{k}$, $\forall \mathtt{e}'_{1},\mathtt{e}'_{2}\in B_{k+1}$, $0\leq l=\sqb{\mathtt{e}_{1}} \vec{s}_\ell =\sqb{\mathtt{e}_{2}} \vec{s}_\ell \mathrel{{<}[?^{k+1}]}\sqb{\mathtt{e}'_{1}} \vec{s}_\ell =\sqb{\mathtt{e}'_{2}} \vec{s}_\ell=h<\sqb{\texttt{X.count}}\vec{s}_\ell{}$.
+\iflong
+
+\fi
+(a---e) explains the following definition of segmentation concretization.
+\bgroup\belowdisplayskip2pt\begin{eqntabular*}[fl]{@{\quad}l@{}}
+\gamma^{\mathtt{X}}_{S}(B_{1}A_{1}B_{2}[?^{2}]A_{2}\ldots A_{n-1}B_{n}[?^{n}])\colsep{\triangleq}\{\vec{s}\mid\ell=\length{\vec{s}}-1:\forall\mathtt{e}_{1}\in B_{1}:\sqb{\mathtt{e}_{1}}\vec{s}_{\ell}=0\wedge{}\\
+\quad\forall\mathtt{e}_{n}\in B_{n}:\sqb{\mathtt{e}_{n}}\vec{s}_{\ell}=\sqb{\texttt{X.count}}\vec{s}_{\ell}\wedge\forall k\in[0,n):\forall\mathtt{e}_{1},\mathtt{e}_{2}\in B_{k}:\forall\mathtt{e}'_{1},\mathtt{e}'_{2}\in B_{k+1}: {}\\
+\qquad0\leq l=\sqb{\mathtt{e}_{1}} \vec{s}_\ell =\sqb{\mathtt{e}_{2}} \vec{s}_\ell \mathrel{{<}[?^{k+1}]}\sqb{\mathtt{e}'_{1}} \vec{s}_\ell =\sqb{\mathtt{e}'_{2}} \vec{s}_\ell=h<\sqb{\texttt{X.count}}\vec{s}_\ell{}\}
+\end{eqntabular*}\egroup
+and $\gamma^{\mathtt{X}}_{S}(\bot)=\emptyset$.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Segmented modification analysis concretization}
+%------------------------------------------------------------------------------------------------------
+
+The concretization $\gamma^{\mathtt{X}}_{M}$ of a segmentation $B_{1}M_{1}B_{2}[?^{2}]M_{2}$ \ldots $\allowbreak M_{n-1}B_{n}[?^{n}]\in\ASabstractproperties{S}(\ASabstractproperties{M})$ for a collection $\mathtt{X}$ is the set of prefixes $\vec{s}=\vec{s}_0\ldots\vec{s}_{\ell}$ of the program run describing how the collection $\mathtt{X}$ has been modified in the last state $\vec{s}_{\ell}$ compared to the initial state $\vec{s}_0$.
+
+The abstract value $M_{k}=\mathfrak{d}$ of segment $B_{k}[?^{k}]M_{k}B_{k+1}[?^{k+1}]$ provides no information
+while $M_{k}=\mathfrak{e}$ states that the values of the all the elements $\texttt{X}[i]$ of the collection $\texttt{X}$ have not changed between the initial state $\vec{s}_0$ and the current state $\vec{s}_\ell$ (which is the last of the prefix trace). So $\forall i\in \left[\,\ell,h\,\right):\sqb{\mathtt{X}}\vec{s}_0[i]=\sqb{\mathtt{X}}\vec{s}_j[i]$. 
+
+The size of the collections may change monotonically. If the collection size only decreased, then all the elements $\texttt{X}[i]$, $i\in \left[\,\ell,h\,\right)$ did exist in the initial collection. If the collection size only increased, its current size 
+$\sqb{\texttt{X.count}}\vec{s}_\ell$ is larger than the initial size $\sqb{\texttt{X.count}}\vec{s}_0$ so the comparison of elements can only be done for the elements  $\texttt{X}[i]$, $i\in\min(h,\sqb{\texttt{X.count}}\vec{s}_0)$ existing in both in the initial and current states.
+
+\vspace*{1pt}
+\begin{eqntabular*}[fl]{@{\quad}l@{}}
+\gamma^{\mathtt{X}}_{M}(B_{1}M_{1}B_{2}[?^{2}]M_{2}\ldots M_{n-1}B_{n}[?^{n}])\colsep{\triangleq}\{\vec{s}\in\gamma^{\mathtt{X}}_{S}(B_{1}M_{1}B_{2}[?^{2}]M_{2}\ldots M_{n-1}B_{n}[?^{n}])\mid{}\\
+\quad\ell=\length{\vec{s}}-1\wedge\forall k\in[0,n):\exists\mathtt{e}\in B_{k},l:l=\sqb{\mathtt{e}} \vec{s}_\ell\wedge\exists\mathtt{e}'\in B_{k+1},h:h=\sqb{\mathtt{e}'} \vec{s}_\ell\wedge{}\\
+\qquad
+\forall i\in \left[\,l,\min(h,\sqb{\texttt{X.count}}\vec{s}_0)\,\right):\pair{\sqb{\mathtt{X}}\vec{s}_0[i]}{\sqb{\mathtt{X}}\vec{s}_j[i]}\in\gamma_{\mathcal{M}}(M_{k})\}.
+\end{eqntabular*}
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Segmented checking analysis concretization}
+%------------------------------------------------------------------------------------------------------
+The concretization $\gamma^{\mathtt{X}}_{C}$ of a segmentation $B_{1}C_{1}B_{2}[?^{2}]C_{2}$ \ldots $\allowbreak C_{n-1}B_{n}[?^{n}]\in\ASabstractproperties{S}(\ASabstractproperties{C})$ of a collection $\mathtt{X}$ for an assertion check $\pair{\texttt{c}}{\texttt{b(X,i)}}\in\mathbbm{A}(\texttt{X})$ is the set of prefixes of traces such that, at the end of the prefix, the elements of the collection in all segments $[B_{k},B_{k+1})$, $k=1,\ldots,n-1$ with $C_k=\mathfrak{c}$ have been submitted to the check $\pair{\texttt{c}}{\texttt{b(X,i)}}\in\mathbbm{A}(\texttt{X})$  when $C_{k}= \mathfrak{c}$ while the situation is unknown when $C_{k}=\mathfrak{n}$.
+\begin{eqntabular*}[fl]{@{}l@{}}
+\gamma^{\mathtt{X}}_{C}(B_{1}C_{1}B_{2}[?^{2}]C_{2}\ldots C_{n-1}B_{n}[?^{n}]) (\pair{\texttt{c}}{\texttt{b(X,i)}})\triangleq\{\vec{s}\in\gamma^{\mathtt{X}}_{S}(B_{1}C_{1}B_{2}[?^{2}]C_{2}\ldots B_{n}[?^{n}])\mid{}\\
+\quad\ell=\length{\vec{s}}-1\wedge\forall k\in[0,n):\exists\mathtt{e}\in B_{k},l:l=\sqb{\mathtt{e}} \vec{s}_\ell\wedge\exists\mathtt{e}'\in B_{k+1},h:h=\sqb{\mathtt{e}'} \vec{s}_\ell\wedge{}\\
+\qquad(C_{k}= \mathfrak{c})\implies
+(\forall i\in \left[\,l,\min(h,\sqb{\texttt{X.count}}\vec{s}_0)\,\right):\exists j\leqslant\ell:\\
+\qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad\controlpoint{\vec{s}_j}=\texttt{c}\wedge \sqb{\texttt{i}}\vec{s}_j=i\wedge \sqb{\mathtt{X}}\vec{s}_0[i]=\sqb{\mathtt{X}}\vec{s}_j[i])\}.
+\end{eqntabular*}
+The modification analysis must be used to determine that $\sqb{\mathtt{X}}\vec{s}_0[i]=\sqb{\mathtt{X}}\vec{s}_j[i]$.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Segmented modification and checking analysis concretization}
+%------------------------------------------------------------------------------------------------------
+
+The concretization is
+\bgroup\iflong\else\abovedisplayskip5pt\belowdisplayskip5pt\fi
+\begin{eqntabular*}[fl]{@{\quad}rcl@{}}
+\gamma&\in&(\Gamma\rightarrow\texttt{X}\in\mathbbm{X} \mapsto\ASabstractproperties{S}(\ASabstractproperties{M})\times\mathbbm{A}(\texttt{X})\rightarrow\ASabstractproperties{S}(\ASabstractproperties{C}))\mapsto\vec{\Sigma}^+\\
+\gamma(\xi)&\triangleq& \bigl\{\vec{s}\in\vec{\Sigma}^+\bigm|\forall j<\length{\vec{s}}:
+\forall \mathtt{X}\in\mathbbm{X}:
+\forall \pair{\texttt{c}}{\texttt{b(X,i)}}\in\mathbbm{A}(\texttt{X}):\\
+&&\qquad \qquad \qquad \qquad \qquad \quad
+\vec{s}_{0}\ldots\in\vec{s}_{j}\in \gamma^{\mathtt{X}}_{C} \bigl(\xi(\controlpoint{\vec{s}_j})(\mathtt{X})_{\ASabstractproperties{C}}(\pair{\texttt{c}}{\texttt{b(X,i)}}) \bigr) \bigr\}
+\end {eqntabular*}\egroup
+The soundness of the result $\xi\in\Gamma\rightarrow\texttt{X}\in\mathbbm{X} \mapsto\ASabstractproperties{S}(\ASabstractproperties{M})\times\mathbbm{A}(\texttt{X})\rightarrow\ASabstractproperties{S}(\ASabstractproperties{C})$ of collection segmentation modification and checking static analysis is stated by $\vec{\tau}^+\subseteq\gamma(\xi)$. The details of the segmentation analysis are those of \cite{CousotCousotLogozzo-09} for the specific abstract domains $\ASabstractproperties{M}$ and $\ASabstractproperties{C}$.
+
+%------------------------------------------------------------------------------------------------------
+\subsubsection{Precondition generation}
+%------------------------------------------------------------------------------------------------------
+
+Let \texttt{f} be  the exit program point (assumed to be unique for simplicity and corresponding to a blocking state $\forall s\in\Sigma:\controlpoint{s}=\mathtt{f}\implies s\in\mathfrak{B}$). Let $\mathtt{X}\in\mathbbm{X}$ be any of the collection variables in the program. Let $\pair{\texttt{c}}{\texttt{b(X,i)}}\in\mathbbm{A}(\texttt{X})$ by any assertion check for element $\texttt{X[i]}$ of collection $\texttt{X}$. let $\xi(\texttt{f})(\mathtt{X})_{\ASabstractproperties{C}}(\pair{\texttt{c}}{\texttt{b(X,i)}})=B_{1}C_{1}B_{2}[?^{2}]C_{2}$ \ldots $\allowbreak C_{n-1}B_{n}[?^{n}]\in\ASabstractproperties{S}(\ASabstractproperties{C})$ be the information collected by the checking analysis (using the modification analysis no longer useful for the precondition generation). Let $\Delta\subseteq [1,n)$ be the set of indices  $k\in\Delta$ for which $C_{k}= \mathfrak{c}$. The precondition code is
+\bgroup\iflong\else\abovedisplayskip5pt\belowdisplayskip5pt\fi
+\begin{eqntabular}[fl]{@{\quad}l@{}}
+\mathop{\texttt{\Large\&\&}}_{\mathtt{X}\in\mathbbm{X}}\ \mathop{\texttt{\Large\&\&}}_{\pair{\mathtt{c}}{\mathtt{b(X,i)}}\in\mathbbm{A}(\mathtt{X})}\ \mathop{\texttt{\Large\&\&}}_{k\in\Delta}\quad\mathtt{ForAll(l}_k\mathtt{,h}_k\mathtt{,i => b(X,i))}
+\label[equation] {eq:precondition}\stepcounter{equation}\renumber{\normalfont(\ref {eq:precondition})}
+\end {eqntabular}\egroup
+where $\exists e_k\in B_{k}, e'_k\in B_{k+1}$ such that the value of $e_k$ (resp.\ $e'_k$) at program point $\mathtt{f}$ is always equal to that of $\mathtt{l}_k$ (resp.\ $\mathtt{h}_k$) on program entry and is less that the size of the collection on program entry.
+\begin{theorem}
+The precondition {\normalfont(\ref {eq:precondition})} based on a sound modification and checking static analysis $\xi$ is sound.
+\end{theorem}
+\iflong
+\begin{proof}Assume by reductio ad absurdum that there is a good run $\vec{s}\in\vec{\tau}^+$ which is rejected but should not.  Because the run is rejected, some conjunct in {\normalfont(\ref {eq:precondition})} must be false in the initial state $\vec{s}_0$ for some $\mathtt{X}\in\mathbbm{X}$, $\pair{\mathtt{c}}{\mathtt{b(X,i)}}\in\mathbbm{A}(\mathtt{X})$, $k\in\Delta$, and $i\in[\sqb{l_k}\vec{s}_0, \sqb{h_k}\vec{s}_0)$ with $\neg\sqb{\mathtt{b(X,i)}}\vec{s}_0$. Let $\mathtt{f}=\controlpoint{\vec{s}_\ell}$be the program exit point. Let $\xi(\texttt{f})(\mathtt{X})_{\ASabstractproperties{C}}(\pair{\texttt{c}}{\texttt{b(X,i)}})=B_{1}C_{1}B_{2}[?^{2}]C_{2}$ \ldots $\allowbreak C_{n-1}B_{n}[?^{n}]$ be the checking analysis used to generate the precondition. By soundness of the analysis $\vec{\tau}^+\subseteq\gamma(\xi)$ and def.\ of $\gamma$, we have $\vec{s}=\vec{s}_{0}\ldots\in\vec{s}_{\ell}\in \gamma^{\mathtt{X}}_{C} \bigl(\xi(\mathtt{f})(\mathtt{X})_{\ASabstractproperties{C}}(\pair{\texttt{c}}{\texttt{b(X,i)b(X,i)}}) \bigr)$ and since $C_{k}= \mathfrak{c}$ by def.\ of the precondition generation algorithm, and $i\in[\sqb{l_k}\vec{s}_0, \sqb{h_k}\vec{s}_0)=[\sqb{e_k}\vec{s}_\ell, \sqb{e'_k}\vec{s}_\ell)$ (where $e_k\in B_{k}, e'_k\in B_{k+1}$), there exists $j\leqslant\ell$ such that $\controlpoint{\vec{s}_j}=\texttt{c}\wedge \sqb{\texttt{i}}\vec{s}_j=i\wedge \sqb{\mathtt{X}}\vec{s}_0[i]=\sqb{\mathtt{X}}\vec{s}_j[i]$. Since the value $\sqb{\mathtt{b(X,i)}}s$ in any state $s\in\Sigma$ depends only on the values $i=\sqb{\mathtt{i}}s$ and $\sqb{\mathtt{X}}s$ and these values are equal in states $\vec{s}_0$ and $\vec{s}_j$, have $\neg\sqb{\mathtt{b(X,i)}}\vec{s}_j$, in contradiction with the fact that $\vec{s}$ is a good run without any evaluation of an \texttt{assert} to $\mathit{false}$.
+\qed\end{proof}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Related work, future work, and conclusions}\label[section]{sec:RelatedWorkConclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The problem of calculating (weakest)-preconditions has been intensively studied since \cite{Dijkstra75-1} e.g., \cite{FlanaganEtAL02-PLDI} using assisted theorem proving.
+In the context of static analysis by abstract interpretation, the problem can be handled by backward analysis \cite[Sect.\ 3.2]{CousotCousot79-1-POPL} including in symbolic form \cite{CousotCousot-CC02,ChandraFinkSridharan09-PLDI}, a combination of forward and backward analyzes \cite{Cousot78-1-TheseEtat} (see also \cite{CousotCousot92-2-JLP}), and overapproximation of negated properties to get underapproximations \cite{Cousot81-1-MuchnickJones} followed by \iflong\cite{Bourdoncle93-2,Bourdoncle93-3,Rival-SAS05}\else\cite{Bourdoncle93-2,Rival-SAS05}\fi. Most often the precondition inference problem is considered in the context of partial or total correctness, including for procedure summary \cite{CalcagnoEtAl-POPL09,CousotCousot77-3,GulwaniTiwari-ESOP07}, contract inference \cite{ArnoutMeyer03-HiddenContracts} or specification abduction \cite{CalcagnoEtAl-POPL09}, where no bad behavior is allowed at all \cite{Dijkstra75-1} so one has to consider under-approximations to  ensure that any assertion that exists in the code holds when reached \cite{MoyY-VMCAI08,Lev-AmiSagivRepsGulwani07-pre}. Our point of view for non-deterministic programs is different and, to our knowledge, our formalization of the precondition inference problem is the first in the context of design by contracts. The derived precondition never excludes a bad run when a non-deterministic choice could alternatively yield a good run. So the program is not checked for partial/total correctness, but the intentions of the programmer, as only expressed by his code and assertions within this code, are preserved, since only definite failures are prohibited. Future work includes the implementation, the combination of \cref{sec:CollectionAnalysisContractPrecondition} with path-conditions as in \cref{sec:ForwardSymbolicAnalysisContractPrecondition}, the study of the relation between forward and backward analyzes (using \cite[Th. 10.13]{Cousot81-1-MuchnickJones}), of infinite behaviors and of expressive abstract domains than segmentation to express relations between values of components of data structures in \texttt{assert}s and on code entry while preserving scalability.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Conclusion}\label[section]{sec:Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let \thebibliographyfont \normalfont
+\let \thebibliographysize \relax
+\def\thebibliographysize{\fontsize{8.5}{9.5}\selectfont}
+%\let \thebibliographysize \footnotesize
+\makeatletter
+\newdimen\thebibliographyitemsep
+%\thebibliographyitemsep1.5pt
+\thebibliographyitemsep1.pt
+\renewenvironment{thebibliography}[1]
+     {\section*{\refname
+        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\ifx \thebibliographyitemsep\undefined\else\itemsep \thebibliographyitemsep\fi\settowidth\labelwidth{\@biblabel{[]}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \thebibliographyfont\thebibliographysize
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+%\bibliographystyle{abbrv}
+\bibliographystyle{splncs03}
+\bibliography{biblio}
+\end{document} 
+\endinput
+
+

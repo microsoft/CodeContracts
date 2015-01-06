@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file defines all the registry keys necessary for the 
+  CodeContracts addin.
+  It should be included (i.e. <?include xxx?>) inside a 
+  registry key component pointing at the correct VS location
+  (HKLM\Software\Microsoft\VisualStudio\<version number>).
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- Registering the CodeTools product -->
+
+  <!-- Registering the Task Manager Package -->
+  <RegistryKey Key="$(var.TaskManagerPackageKey)" Action="createAndRemoveOnUninstall">
+    <RegistryValue Type="string"
+                   Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage, TaskManager, Version=$(var.TaskManagerVersion), Culture=neutral, PublicKeyToken=$(var.TaskManagerPublicKey)"/>
+    <RegistryValue Name="Class" Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage" Type="string" />
+    <RegistryValue Name="CodeBase" Value="[INSTALLBINDIR]TaskManager.dll" Type="string" />
+    <RegistryValue Name="InprocServer32" Value="[SystemFolder]mscoree.dll" Type="string" />
+    <RegistryValue Name="ID" Value="1" Type="integer" />
+    <RegistryValue Name="MinEdition" Value="Standard" Type="string" />
+    <RegistryValue Name="ProductVersion" Value="1.0" Type="string" />
+    <RegistryValue Name="ProductName" Value="Microsoft.VisualStudio.CodeTools.TaskManager" Type="string" />
+    <RegistryValue Name="CompanyName" Value="Microsoft" Type="string" />
+    <RegistryKey Key="SatelliteDll">
+      <RegistryValue Name="DllName" Value="TaskManagerUI.dll" Type="string" />
+      <RegistryValue Name="Path" Value="[INSTALLBINDIR]" Type="string" />
+    </RegistryKey>
+  </RegistryKey>
+
+  <RegistryKey Key="$(var.ITaskManagerFactoryServiceKey)" Action="createAndRemoveOnUninstall">
+    <RegistryValue Value="$(var.TaskManagerGuid)" Type="string" />
+    <RegistryValue Name="Name" Value="ITaskManagerFactory Service" Type="string" />
+  </RegistryKey>
+
+  <RegistryKey Key="$(var.AutoLoadOnProjectKey)">
+    <RegistryValue Name="$(var.TaskManagerGuid)" Value="0" Type="integer" />
+  </RegistryKey>
+  
+  <!--=====================================================================
+       PropertyPage registration
+      ======================================================================-->
+  <RegistryKey Key="$(var.PropertyPagePackageKey)" Action="createAndRemoveOnUninstall">
+    <RegistryValue Type="string"
+                   Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage, PropertyPage, Version=$(var.PropertyPageVersion), Culture=neutral, PublicKeyToken=$(var.PropertyPagePublicKey)"/>
+    <RegistryValue Name="Class" Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage" Type="string" />
+    <RegistryValue Name="CodeBase" Value="[INSTALLBINDIR]PropertyPage.dll" Type="string" />
+    <RegistryValue Name="InprocServer32" Value="[SystemFolder]mscoree.dll" Type="string" />
+    <RegistryValue Name="ID" Value="1" Type="integer" />
+    <RegistryValue Name="MinEdition" Value="Standard" Type="string" />
+    <RegistryValue Name="ProductVersion" Value="1.0" Type="string" />
+    <RegistryValue Name="ProductName" Value="Microsoft.VisualStudio.CodeTools.PropertyPage" Type="string" />
+    <RegistryValue Name="CompanyName" Value="Microsoft" Type="string" />
+    <RegistryKey Key="SatelliteDll" Action="createAndRemoveOnUninstall">
+      <RegistryValue Name="DllName" Value="PropertyPageUI.dll" Type="string" />
+      <RegistryValue Name="Path" Value="[INSTALLBINDIR]" Type="string" />
+    </RegistryKey>
+    
+  </RegistryKey>
+  <RegistryKey Key="$(var.AutoLoadOnProjectKey)">
+    <RegistryValue Name="$(var.PropertyPageGuid)" Value="0" Type="integer" />
+  </RegistryKey>
+
+</Include>

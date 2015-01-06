@@ -1,0 +1,115 @@
+\documentclass{sig-alternate-2013}
+
+\begin{document}
+\conferenceinfo{HILT}{'13 Pittsburgh, Pennsylvania USA}
+
+\newfont{\mycrnotice}{ptmr8t at 7pt}
+ \newfont{\myconfname}{ptmri8t at 7pt}
+ \let\crnotice\mycrnotice%
+ \let\confname\myconfname%
+
+ \permission{Permission to make digital or hard copies of part or all of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage, and that copies bear this notice and the full citation on the first page. Copyrights for third-party components of this work must be honored. For all other uses, contact the owner/author(s). Copyright is held by the author/owner(s).}
+ \conferenceinfo{HILT 2013}{Nov 10-14 2013, Pittsburgh, PA, USA} 
+ \copyrightetc{ACM \the\acmcopyr}
+ \crdata{ACM 978-1-4503-2466-3/13/11 \\
+http://dx.doi.org/10.1145/2527269.2527282 
+}
+\clubpenalty=10000 
+\widowpenalty = 10000
+
+
+\title{Practical Specification and Verification with CodeContracts}
+
+\numberofauthors{1} 
+\author{
+\alignauthor
+Francesco Logozzo\\
+       \affaddr{Microsoft Research}\\
+       \affaddr{One Microsoft Way, Redmond, WA, USA} \\
+       \email{logozzo@microsoft.com}
+}
+\maketitle
+
+\begin{abstract}
+In this tutorial I will introduce CodeContracts, the .NET solution for contract specifications.
+CodeContracts consist of a language and compiler-agnostic API to express contracts, and of a set of tools to automatically generate the documentation and to perform dynamic and static verification.
+The CodeContracts API is part of .NET since v$4$, the tools are available for download on the Visual Studio Gallery.
+To date, they have been downloaded more than 100,000 times.
+\end{abstract}
+
+% A category with the (minimum) three required fields
+\category{D}{Software}{Miscellaneous}
+\category{D.2.1}{Software Engineering}{Requirements/Specifications}
+\category{D.2.4}{Software Engineering}{Software/Program Verification}[Assertion checkers,Programming by contract]
+
+\terms{Contracts,Verification}
+
+\keywords{Abstract Interpretation,Contracts,Inference,Program Verification}
+
+\section{Introduction}
+Contracts are a popular software design methodology~\cite{eiffel}.
+They are based on the idea that software modules should expose a well-defined interface, clearly stating the properties each module expects on the input and ensures on the output values.
+In object-oriented languages, contracts take the form of an invariant attached to the object and of preconditions and postconditions attached to the methods.
+
+Traditionally a programmer who wants to use contracts has two choices.
+The first one is to adopt a programming language which has  first class support for contracts, as for instance Eiffel~\cite{eiffel} or Spark~\cite{spark03}.
+The second one is to keep the language she is used to, but to use a different compiler opportunely extended to support contracts, \emph{e.g.}, JML~\cite{jml} or Spec\#~\cite{SpecSharp} respectively extending Java and C\#.
+The advantages of the first choice are the evident beauty and uniformity provided by having language support for contracts.
+The main disadvantages is the requirement to learn a new programming language and new libraries.
+The second choice mitigates those problems, but it has the (big) practical the drawback of asking the programmer to trust a non-standard compiler.
+
+CodeContracts~\cite{BarnettFahndrichLogozzo-SAC10} provide a third option, which overcomes the problems above by using a library-based approach.
+With a library, there is no need to adopt a new language or  a new compiler.
+Writing contracts is as difficult as invoking as function.
+
+\section{CodeContracts}
+The main insight of CodeContracts is that code can be specified with code.
+We have developed a contract library and a set of tools that consume those contracts.
+CodeContracts originated from the Spec\# project, where the language-based approach to contracts was replaced with a library-based one and the deductive verification-based static analysis tool was replaced by an abstract interpretation-based one.
+
+
+\subsection{API}
+Since .NET v$4$, the static class \texttt{System\-.Diagnostic\-.Con\-tracts\-.Contract} contains the definitions for CodeContracts.
+The class contains methods to express preconditions, postconditions, object invariants, assertions, assumptions, and legacy requires.
+It also defines: (i) a few helper methods used as placeholder for the method return value and the old value of some element of the prestate;
+(ii) the attributes to help the tools find the contracts for abstract methods and interfaces.
+All members of the \texttt{Contract} class are conditionally defined.
+
+\subsection{Dynamic verification}
+We have developed \texttt{ccrewrite}, a tool to perform the runtime checking of contracts.
+The tool runs as a post-build step.
+It performs   rewriting of the binary.
+It takes care of basic things as inheriting contracts and inserting postconditions and object invariants checkings at the right spots.
+But it has also  some more advanced options, to provide: (i) customizable behavior for contract violation --- \emph{e.g.}, throw an exception, behave as an assertion violation, user-defined \dots ; (ii) fine-grain tuning of the contract checking --- \emph{e.g.}, check preconditions at call site, skip quantifier checks, check only public surface contracts \dots.
+
+\subsection{Static verification}
+Unlike most of existing solutions, we use abstract interpretation~\cite{CousotCousot77} for static verification.
+Abstract interpretation: (i) provides a high level of automation ---\emph{e.g.}, no  need to specify loop invariants, which are automatically inferred; (ii) enables a fine tuning of the analyzer towards the properties to prove; (iii) guarantees scalability.  
+Our static verification tool,~\texttt{cccheck}~\cite{FahndrichLogozzo10}, analyzes each method in isolation, infers the properties of interest~\cite{subpolyhedra,FerraraLogozzoFahndrich-OOPSLA08,LogozzoFahndrich08-2,arrayal}, and it uses those properties to prove user-provided contracts (\emph{e.g.}, preconditions, postconditions) and language-induced  contracts(\emph{e.g.}, absence of null-pointers, buffer overruns).
+When it fails to prove a contract, it suggest a verified code repair~\cite{LogozzoBall12}.
+It infers preconditions~\cite{CousotCousotFahndrichLogozzo13}, postconditions, and object invariants~\cite{BouazizLogozzoFahndrich12} which are propagated to the callers.
+It uses a database to cache the analysis results, ensuring scalability and sharing of results among team members.
+It uses advanced heuristics to prioritize warnings and to eliminate false positives.
+
+\subsection{Other tools}
+We have developed tools to automatically generate the documentation from CodeContracts and to enhance Visual Studio to show contracts while typing.
+Furthermore, we integrated all our  tools in Visual Studio~\cite{vsintegration}, so that: (i) they can be configured from within it; (ii) the errors and the alarms are presented in the programmer's usual environment.
+
+\subsection{Adoption}
+CodeContracts are increasingly adopted inside and outside Microsoft.
+They are available for download from the Visual Studio Gallery~\cite{downloadCC}.
+We frequently interact with our external customers via an external forum.
+The interaction with the customers enables us to improve the quality of the tools, fix bugs, add new features, and answer common and tricky questions on contracts.
+
+\vfill\eject 
+
+\bibliographystyle{abbrv}
+\bibliography{bib}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+\end{document}

@@ -1,0 +1,104 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5402B31A-8EDE-4240-B707-148BCA57A089}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Samples.Tests</RootNamespace>
+    <AssemblyName>Samples.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Pex.Framework, Version=0.10.40414.2, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Pex.Framework\0.10.40414.2__76a274db078248c8\Microsoft.Pex.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Samples\Samples.csproj">
+      <Project>{2B4BCDFB-4F68-49B9-98AE-FDC0BFBD28DC}</Project>
+      <Name>Samples %28Samples\Samples%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChunkerTest\ChunkerTest.ChunkSizeGet.g.cs">
+      <DependentUpon>ChunkerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChunkerTest\ChunkerTest.Constructor.g.cs">
+      <DependentUpon>ChunkerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChunkerTest\ChunkerTest.cs" />
+    <Compile Include="ChunkerTest\ChunkerTest.NextChunk.g.cs">
+      <DependentUpon>ChunkerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.Compute.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.ComputedDataGet.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.Constructor.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.cs" />
+    <Compile Include="ClassWithProtocolTest.DataGet.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.Initialize.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassWithProtocolTest.StateGet.g.cs">
+      <DependentUpon>ClassWithProtocolTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Factories\ClassWithProtocolFactory.cs" />
+    <Compile Include="Properties\PexAssemblyInfo.cs" />
+    <Compile Include="Properties\Properties\AssemblyInfo.cs.cs" />
+    <Compile Include="Samples.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Samples.stubx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Samples.stubx">
+      <Generator>StubGenerator</Generator>
+      <LastGenOutput>Samples.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

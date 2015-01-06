@@ -1,0 +1,177 @@
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--==================================================================================
+   Re-usable file to build a particular release config msi.
+
+   Inputs:
+     $(CCNetLabel)     : the version e.g. 1.1.20210.5
+     $(ReleaseConfig)  : one of debug or release
+
+   Outputs:
+     $(ReleaseConfig)\msi\CodeTools.$(ReleaseConfig).msm
+     $(ReleaseConfig)\cpx\<output from cpx tools>
+
+   ==================================================================================-->
+
+  <!-- cbtools tasks -->
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateGuid" AssemblyFile="Tools\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Wix" AssemblyFile="Tools\CodePlex.Tools.MsBuild.dll" />
+
+  <!--==============================================
+    Figure out features based on configurations
+    ================================================-->
+  <Choose>
+    <When Condition="'$(ReleaseConfig)'=='debug'">
+      <PropertyGroup>
+        <BuildConfig>Debug</BuildConfig>
+        <Flavor>(debug)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt>.debug</ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ReleaseConfig)'=='release'">
+      <PropertyGroup>
+        <BuildConfig>Release</BuildConfig>
+        <Flavor>(release)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt></ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <InvalidRelease>true</InvalidRelease>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!--==========================================================
+
+     Common properties used by many targets
+
+   ===========================================================-->
+  <PropertyGroup>
+    <MsiDir>$(ReleaseConfig)</MsiDir>       <!-- Used for final product -->
+    <BinDir>bin\$(BuildConfig)</BinDir>         <!-- Relative. used in source dirs -->
+    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
+    <CODETOOLS>..</CODETOOLS>
+    <ExportDir>$(CODETOOLS)\..\Microsoft.Research\ImportedCodeTools</ExportDir>
+  </PropertyGroup>
+
+  <Target Name="All"
+   DependsOnTargets="Validate;CopyBinaries;MakeMSI"
+  />
+
+  <Target Name="Validate">
+    <Error
+      Condition="'$(CCNetLabel)'==''"
+      Text="Please set CCNetLabel to a proper version using /p:CCNetLabel=x.x.x.x"
+    />
+    <Error
+      Condition="'$(ReleaseConfig)'==''"
+      Text="Please set ReleaseConfig to one of release or debug using /p:ReleaseConfig=xxx"
+    />
+    <Error
+      Condition="'$(InvalidRelease)'=='true'"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of release or debug using /p:ReleaseConfig=xxx"
+    />
+    <Message
+        Importance="high"
+        Text="Building MSI for configuration $(ReleaseConfig)"
+    />
+  </Target>
+
+  <Target Name="MakeDirs"
+          DependsOnTargets="Validate">
+    <MakeDir
+       Condition="!Exists('$(MsiDir)')"
+       Directories="$(MsiDir)"/>
+  </Target>
+
+ 
+  <!--==========================================================
+
+     Copy CodeToolsUpdate.exe, IPropertyPane.dll and ITaskManager.dll
+
+   ===========================================================-->
+  <Target Name="CopyBinaries"
+         DependsOnTargets="Validate;MakeDirs">
+      <Copy SourceFiles="$(CODETOOLS)\CodeToolsUpdate\$(BinDir)\CodeToolsUpdate.exe"
+            DestinationFolder="$(MsiDir)" />
+      <Copy SourceFiles="$(CODETOOLS)\IPropertyPane\$(BinDir)\IPropertyPane.dll"
+            DestinationFolder="$(MsiDir)"  />
+      <Copy SourceFiles="$(CODETOOLS)\ITaskManager\$(BinDir)\ITaskManager.dll"
+            DestinationFolder="$(MsiDir)"  />
+      <Copy SourceFiles="$(CODETOOLS)\TLB\ITaskManager.tlb"
+            DestinationFolder="$(MsiDir)"  />
+  </Target>
+ 
+
+  <!--==========================================================
+
+       Build the installer
+
+    ==========================================================-->
+
+  <ItemGroup>
+    <WixSources Include="
+      CodeTools.wxs
+    "/>
+    <WixBaseDirs Include="
+      $(CODETOOLS)\ITaskManager\$(BinDir);
+      $(CODETOOLS)\TaskManager\$(BinDir);
+      $(CODETOOLS)\IPropertyPane\$(BinDir);
+      $(CODETOOLS)\PropertyPage\$(BinDir);
+      $(CODETOOLS)\CodeToolsUpdate\$(BinDir);
+      .\Licenses;
+      $(MsiDir);
+     "/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MsiOutputFile>$(MsiDir)\CodeTools$(ReleaseConfigExt).msm</MsiOutputFile>
+  </PropertyGroup>
+  
+  <Target Name="MakeMSI" DependsOnTargets="">
+    <CreateGuid>
+      <Output TaskParameter="Guid" PropertyName="ProductGuid" />
+    </CreateGuid>
+    <Message Text="CCNetLabel: $(CCNetLabel)"/>
+    <Message Text="Assembly File Version: $(AssemblyFileVersion)"/>
+    <Wix
+       Files="@(WixSources)"
+       UseBuiltinExtensions="false"
+       WixDirectory="..\..\Microsoft.Research\ManagedContract.Setup\WixBinaries"
+       Extensions=""
+       OutputFile="$(MsiOutputFile)"
+       BaseDirectories="@(WixBaseDirs)"
+       Variables="
+                  License=$(License);
+                  ProductGuid=$(ProductGuid);
+                  Version=$(AssemblyFileVersion);
+                  Flavor=$(Flavor);
+                  IncludePDBs=$(IncludePDBs);
+                  ReleaseConfigExt=$(ReleaseConfigExt);
+                  ReleaseConfig=$(ReleaseConfig);
+                  Public=yes;
+                  NGen=no;
+                  "
+       />
+  </Target>
+
+
+
+  <!--==========================================================
+
+   Export build binaries in release
+
+ ===========================================================-->
+  <Target Name="Export" DependsOnTargets="Validate;CopyBinaries;MakeMSI">
+      <Copy SourceFiles="$(MsiDir)\CodeToolsUpdate.exe" DestinationFolder="$(ExportDir)" />
+      <Copy SourceFiles="$(MsiOutputFile)" DestinationFolder="$(ExportDir)"  />
+      <Copy SourceFiles="$(MsiDir)\IPropertyPane.dll" DestinationFolder="$(ExportDir)"  />
+      <Copy SourceFiles="$(MsiDir)\ITaskManager.dll" DestinationFolder="$(ExportDir)"  />
+  </Target>
+
+
+</Project>

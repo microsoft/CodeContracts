@@ -1,0 +1,1 @@
+c:\Users\maf\CCI1\Foxtrot\Tests\CheckerTests\CC1078.cs(47,5) : error CC1078: Method 'ExtractorChecks.CacheConstraints`2.AddExpiration(type parameter.TKey,System.Object)' annotating type 'ExtractorChecks.ICache`2<type parameter.TKey,type parameter.TValue>' should use Requires<E> instead of custom validation.

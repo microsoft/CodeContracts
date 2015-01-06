@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>XamlBuildTask</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.Tasks.Xaml.AttributeData">
+      <summary>Specifies attribute data.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.AttributeData.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.AttributeData" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeData.Parameters">
+      <summary>Gets the attribute data parameters.</summary>
+      <returns>The attribute data parameters.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeData.Properties">
+      <summary>Gets the attribute data properties.</summary>
+      <returns>The attribute data properties.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeData.Type">
+      <summary>Gets or sets the attribute data type.</summary>
+      <returns>The attribute data type.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.AttributeParameterData">
+      <summary>Specifies attribute parameter data.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.AttributeParameterData.#ctor(System.Xaml.XamlType,System.Collections.Generic.IEnumerable{Microsoft.Build.Tasks.Xaml.AttributeParameterData})">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.AttributeParameterData" /> class with specified type and array contents.</summary>
+      <param name="type">The type of the data..</param>
+      <param name="arrayContents">The array contents.</param>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.AttributeParameterData.#ctor(System.Xaml.XamlType,System.Object)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.AttributeParameterData" /> class with specified type and value.</summary>
+      <param name="type">The type of the data.</param>
+      <param name="value">The value of the data.</param>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.AttributeParameterData.#ctor(System.Xaml.XamlType,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.AttributeParameterData" /> class with specified type and text value.</summary>
+      <param name="type">The type of the data.</param>
+      <param name="textValue">The text value.</param>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeParameterData.ArrayContents">
+      <summary>Gets the array contents of the attribute parameter data.</summary>
+      <returns>The array contents of the attribute parameter data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeParameterData.TextValue">
+      <summary>Gets or sets the text value of the attribute parameter data.</summary>
+      <returns>The text value of the attribute parameter data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeParameterData.Type">
+      <summary>Gets or sets the XAML type of the attribute parameter data.</summary>
+      <returns>The XAML type of the attribute parameter data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.AttributeParameterData.Value">
+      <summary>Gets or sets the value of the attribute parameter data.</summary>
+      <returns>The value of the attribute parameter data.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.BuildExtensionContext">
+      <summary>Specifies settings for the build extension context.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.AddGeneratedFile(System.String)">
+      <summary>Generates a file for the build extension context.</summary>
+      <param name="fileName">The name of the generated file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.AddGeneratedResourceFile(System.String)">
+      <summary>Generates a resource file for the build extension context.</summary>
+      <param name="fileName">The file name for the generated resource file.</param>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.AssemblyName">
+      <summary>Gets or sets the assembly name for the build extension context.</summary>
+      <returns>The assembly name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.GeneratedFiles">
+      <summary>Gets the collection of build extension context generated files.</summary>
+      <returns>The collection of generated files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.GeneratedResourceFiles">
+      <summary>Gets the collection of build extension context generated resource files.</summary>
+      <returns>The collection of generated resource files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.HostObject">
+      <summary>Gets or sets the host objects used in the build extension context.</summary>
+      <returns>The host objects used.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.IsInProcessXamlMarkupCompile">
+      <summary>Gets or sets whether the build extension context is in process of Extensible Application Markup Language compilation.</summary>
+      <returns>True if the build extension context is in process of Extensible Application Markup Language compilation; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.Language">
+      <summary>Gets or sets the build extension context language.</summary>
+      <returns>The build extension context language</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.LocalAssembly">
+      <summary>Gets or sets the locally defined assembly for the build extension context.</summary>
+      <returns>The locally defined assembly for the build extension context.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.OutputPath">
+      <summary>Gets or sets the build extension context output path..</summary>
+      <returns>The output path.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.References">
+      <summary>Gets the collection of extension context reference.</summary>
+      <returns>The collection of extension context reference.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.RootNamespace">
+      <summary>Gets or sets the extension context root namespace.</summary>
+      <returns>The extension context root namespace.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.SourceCodeFiles">
+      <summary>Gets the collection of source code files of the build extension context.</summary>
+      <returns>The collection of source code files of the build extension context.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.BuildExtensionContext.XamlBuildLogger">
+      <summary>Gets or sets the XAML build logger.</summary>
+      <returns>The XAML build logger.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.ClassData">
+      <summary>Specifies class data settings.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.ClassData.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.ClassData" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.Attributes">
+      <summary>Gets the list of class data attributes.</summary>
+      <returns>The list of class data attributes.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.BaseType">
+      <summary>Gets or sets the class data base type.</summary>
+      <returns>The class data base type.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.CodeSnippets">
+      <summary>Gets the list of class data code snippets.</summary>
+      <returns>The list of class data code snippets.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.EmbeddedResourceFileName">
+      <summary>Gets or sets the embedded resource file name for the class data.</summary>
+      <returns>The embedded resource file name for the class data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.EmbeddedResourceXaml">
+      <summary>Gets or sets the embedded resource XAML for the class data.</summary>
+      <returns>The embedded resource XAML for the class data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.FileName">
+      <summary>Gets or sets the file name used for the class data.</summary>
+      <returns>The file name used for the class data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.HelperClassFullName">
+      <summary>Gets or sets the full name of the helper class used in the class data.</summary>
+      <returns>The full name of the helper class used in the class data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.IsPublic">
+      <summary>Gets or sets whether the class data is a public class.</summary>
+      <returns>True of the class data is a public class; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.Name">
+      <summary>Gets or sets the string that represents the name of the class data.</summary>
+      <returns>The string that represents the name of the class data.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.NamedObjects">
+      <summary>Gets a list of named objects.</summary>
+      <returns>The list of named objects.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.Namespace">
+      <summary>Gets or sets the namespace where the class data belong.</summary>
+      <returns>The namespace where the class data belong.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.ClassData.Properties">
+      <summary>Gets the collection of class data properties.</summary>
+      <returns>The collection of class data properties.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.CompilationPass2Task">
+      <summary>An MS Build task that verifies that all the types referenced in the original input XAML files are resolved.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.CompilationPass2Task" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.ApplicationMarkup">
+      <summary>A list of XAML files to process, populated by MS Build.</summary>
+      <returns>A list of the XAML files to process.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.ApplicationMarkupWithTypeName"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.AssemblyName">
+      <summary>Gets or sets the name of the assembly to be generated.</summary>
+      <returns>The name of the assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.BuildTaskPath">
+      <summary>Gets or sets the path to the assembly for this build task. </summary>
+      <returns>The assembly path.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.Execute">
+      <summary>Called by MS Build to execute the task.</summary>
+      <returns>true if the task executes successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.ExtensionGeneratedCodeFiles"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.IsInProcessXamlMarkupCompile"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.Language"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.LocalAssemblyReference">
+      <summary>Gets or sets the path to the generated temporary assembly.</summary>
+      <returns>The path to the generated temporary assembly.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.MSBuildProjectDirectory"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.OutputPath"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.References">
+      <summary>Gets or sets a list of assemblies to reference during the compilation process. </summary>
+      <returns>A list of the assemblies to reference during the compilation process.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.RootNamespace">
+      <summary>Gets or sets the root namespace for the project.</summary>
+      <returns>The root namespace.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.SourceCodeFiles"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.CompilationPass2Task.XamlBuildTypeInspectionExtensionNames"></member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask">
+      <summary>An MS Build task that generates a temporary assembly by compiling the source files generated by the <see cref="T:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask" />. </summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.ApplicationMarkupTypeName">
+      <summary>Gets or sets the build action for the  application markup files which are excluded from the project used to generate the temporary assembly.</summary>
+      <returns>The application markup type name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.AssemblyName">
+      <summary>Gets or sets the generated assembly’s name.</summary>
+      <returns>The assembly name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.CompileTargetName">
+      <summary>Gets or sets the compilation target name to build in the generated project file used to build the generated temporary assembly.</summary>
+      <returns>The compilation target name.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.CurrentProject">
+      <summary>Gets or sets the current project file name.</summary>
+      <returns>The current project.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.Execute">
+      <summary>Called by MS Build to execute the task.</summary>
+      <returns>true if the code is generated successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.GeneratedResourcesFiles"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.OutputPath">
+      <summary>Gets or sets the directory to place the generated files in.</summary>
+      <returns>The directory that stores the generated files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.ReferencePaths">
+      <summary>Gets or sets the paths to any referenced assemblies specified in the project.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the paths to referenced assemblies.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.GenerateTemporaryAssemblyTask.SourceCodeFiles">
+      <summary>Gets or sets a list of source code files to compile into a temporary assembly.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the source code files.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.IXamlBuildTypeGenerationExtension">
+      <summary>Specifies information about the XAML build type generation extension.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.IXamlBuildTypeGenerationExtension.Execute(Microsoft.Build.Tasks.Xaml.ClassData,Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext)">
+      <summary>Indicates whether the XAML build type generation extension executes.</summary>
+      <returns>True if the XAML build type generation extension executes; otherwise, false.</returns>
+      <param name="classData">The class data.</param>
+      <param name="buildContext">The build context.</param>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.IXamlBuildTypeInspectionExtension">
+      <summary>Specifies information about the XAML build type inspection extension.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.IXamlBuildTypeInspectionExtension.Execute(Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext)">
+      <summary>Indicates whether the XAML build type inspection extension executes.</summary>
+      <returns>True if the XAML build type inspection extension executes; otherwise, false.</returns>
+      <param name="buildContext">The build context for the extension.</param>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.MemberVisibility">
+      <summary>Specifies the member visibility options.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.Public">
+      <summary>The public visibility.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.Private">
+      <summary>The private visibility.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.Family">
+      <summary>The family visibility.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.Assembly">
+      <summary>The assembly visibility.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.FamilyOrAssembly">
+      <summary>The family or assembly visibility.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Tasks.Xaml.MemberVisibility.FamilyAndAssembly">
+      <summary>The family and assembly visibility.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.NamedObject">
+      <summary>Represents a named object.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.NamedObject.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.NamedObject" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.NamedObject.Name">
+      <summary>Gets or sets the string that represents the name of the named object.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.NamedObject.Type">
+      <summary>Gets or sets the named object type.</summary>
+      <returns>The named object type.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.NamedObject.Visibility">
+      <summary>Gets or sets the named object visibility.</summary>
+      <returns>The named object visibility.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask">
+      <summary>This task accesses XAML files that define types (with x:Class) and generates the corresponding source code that can be compiled into an assembly. </summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.ApplicationMarkup">
+      <summary>A list of XAML files to process, populated by MS Build.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the XAML files to process.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.AssemblyName">
+      <summary>Gets or sets the name of the assembly being compiled.</summary>
+      <returns>The name of the assembly being compiled.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.BuildTaskPath">
+      <summary>Gets or sets the path of the assembly that contains this build task. </summary>
+      <returns>The build task path.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.Execute">
+      <summary>Called by MS Build to execute the code generation task.</summary>
+      <returns>true if the code is generated successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.GeneratedCodeFiles">
+      <summary>Gets or sets a list of generated code files, one for each input file.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the source XAML files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.GeneratedResources">
+      <summary>Gets or sets a list of XAML files that contain the markup for instantiating the newly generated types, one for each input file.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the generated XAML files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.GeneratedSourceExtension">
+      <summary>Gets or sets the file extension to add to the generated source files.</summary>
+      <returns>The file extension.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.IsInProcessXamlMarkupCompile"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.KnownReferencePaths">
+      <summary>Gets or sets the known reference paths.</summary>
+      <returns>The known reference paths. </returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.Language">
+      <summary>Gets or sets the language to generate source code in.</summary>
+      <returns>The language to generate source code in.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.MSBuildProjectDirectory"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.OutputPath">
+      <summary>Gets or sets the directory to place the generated files.</summary>
+      <returns>The directory that stores the generated files.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.References">
+      <summary>Gets or sets a list of assemblies to reference.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents referenced assemblies.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.RequiresCompilationPass2">
+      <summary>Gets or sets a value that indicates whether this project requires executing the <see cref="T:Microsoft.Build.Tasks.Xaml.CompilationPass2Task" /> task.</summary>
+      <returns>true if there are unresolved types; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.RootNamespace">
+      <summary>Gets or sets the root namespace for the project.</summary>
+      <returns>The root namespace.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.SourceCodeFiles">
+      <summary>Gets or sets a list of source code files in the project.</summary>
+      <returns>A list of <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents the source code files in the project.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.XamlBuildTypeGenerationExtensionNames"></member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PartialClassGenerationTask.XamlBuildTypeInspectionExtensionNames"></member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.PropertyData">
+      <summary>Specifies property data.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.PropertyData.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.PropertyData" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PropertyData.Attributes">
+      <summary>Gets a list of property data attributes.</summary>
+      <returns>The list of property data attributes.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PropertyData.Name">
+      <summary>Gets or sets the name of the property data.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PropertyData.Type">
+      <summary>Gets or sets the property data type.</summary>
+      <returns>The property data type.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.PropertyData.Visibility">
+      <summary>Gets or sets the property data visibility.</summary>
+      <returns>The property data visibility.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext">
+      <summary>Specifies settings for the build type generation extension context.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.XamlBuildTypeGenerationExtensionContext.InputTaskItem">
+      <summary>Gets or sets the input task item for the XAML build type generation extension context.</summary>
+      <returns>The input task item for the XAML build type generation extension context.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext">
+      <summary>Specifies information about the XAML build type inspection context.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Tasks.Xaml.XamlBuildTypeInspectionExtensionContext.MarkupItemsByTypeName">
+      <summary>Gets the collection of markup items for XAML build type inspection context by type name.</summary>
+      <returns>The collection of markup items.</returns>
+    </member>
+  </members>
+</doc>

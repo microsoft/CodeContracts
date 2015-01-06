@@ -1,0 +1,6 @@
+; The DLLs containing the basic tests
+SimpleArrayAccesses.dll
+TestKarr.dll
+TestIntervals.dll
+ExpressionSimplification.dll
+

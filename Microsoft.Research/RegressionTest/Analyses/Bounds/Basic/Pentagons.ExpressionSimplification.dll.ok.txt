@@ -1,0 +1,24 @@
+Microsoft Clousot, 2007
+Method 1 : ExpressionSimplification.SimplifyExpression.Simplify0(System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(11,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(12,7): assertion unproven
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 2 : ExpressionSimplification.SimplifyExpression.Simplify1
+Checked 3 assertions: 3 correct 
+Validated: 100%
+Method 3 : ExpressionSimplification.SimplifyExpression.Simplify2(System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(35,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(38,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(41,7): assertion unproven
+Checked 3 assertions: 3 unknown 
+Validated: 0%
+Method 4 : ExpressionSimplification.SimplifyExpression.Simplify3(System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(51,7): assertion unproven
+C:\cci\Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs(54,7): assertion unproven
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 5 : ExpressionSimplification.SimplifyExpression.#ctor
+Ok!
+Checked 10 assertions: 3 correct 7 unknown 
+Validated: 30%

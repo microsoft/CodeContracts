@@ -1,0 +1,19 @@
+﻿<Window x:Class="Ding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CCCount" Height="147" Width="195" Loaded="PageLoaded">
+    <Grid>
+        <TextBlock Height="25" HorizontalAlignment="Left" Margin="13,12,0,0" Name="title" Text="CodeContracts" VerticalAlignment="Top" Width="124" />
+        <Label Content="Users" Height="28" HorizontalAlignment="Left" Margin="13,25,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="58,25,0,0" Name="UserCount" VerticalAlignment="Top" />
+        <Button Content="Force Increment" Height="23" HorizontalAlignment="Left" Margin="48,81,0,0" Name="button1" VerticalAlignment="Top" Width="Auto" Click="ForceUpdate" Visibility="Hidden" />
+        <Label Content="Runs" Height="28" HorizontalAlignment="Left" Margin="13,41,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="58,41,0,0" Name="RunCount" VerticalAlignment="Top" />
+        <Label Content="Updating" Height="28" HorizontalAlignment="Left" Margin="124,1,0,0" Name="updatingLabel" VerticalAlignment="Top" FontSize="9" Visibility="Hidden" Initialized="OnInitialized" />
+        <Label Content="Fail" Height="28" HorizontalAlignment="Left" Margin="13,57,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="58,57,0,0" Name="FailureCount" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="107,41,0,0" Name="RunCountDiff" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="107,25,0,0" Name="UserCountDiff" VerticalAlignment="Top" />
+        <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="107,57,0,0" Name="FailCountDiff" VerticalAlignment="Top" />
+    </Grid>
+</Window>

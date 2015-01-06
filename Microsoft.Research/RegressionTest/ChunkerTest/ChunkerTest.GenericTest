@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="chunkertest" storage="c:\users\maf\buddycci1\microsoft.research\regressiontest\chunkertest\chunkertest.generictest" id="2352e805-cd32-4712-b4ea-aacd5b582492" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="357c30f3-db62-4faf-9128-f9e09d4240b0" />
+  <Command filename="%testlocation%\..\..\clousot\bin\debug\clousot.exe" arguments="-regression -show validations;unreached -bounds:steps:2 ChunkerTest.dll -define cci1only -libpaths ..\..\..\..\Contracts\bin\debug\v3.5" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\Maf\SingSharp2\TestResults\maf_MAF1 2009-02-09 15_06_06\In\MAF1\3be7f6a6-581a-4cc0-8c0f-2a16bf98d600" />
+      <EnvironmentVariable name="testlocation" value="c:\maf\singsharp2\microsoft.research\regressiontest\chunkertest" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

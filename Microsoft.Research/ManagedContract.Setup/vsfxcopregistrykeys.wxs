@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file defines all the registry keys necessary for the 
+  CodeContracts addin.
+  It should be included (i.e. <?include xxx?>) inside a 
+  registry key component pointing at the correct VS location
+  (HKLM\Software\Microsoft\VisualStudio\<version number>).
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <!-- Registering the FxCop property pane if fxcop is present -->
+
+                
+  <!-- C# config property pages -->
+  <RegistryValue Key="$(var.CSharpConfigPropKey)\$(var.CodeAnalysisPgGuid)" 
+                 Value="CodeAnalysisPgGuid" Type="string" />
+  <RegistryValue Key="$(var.CSharpConfigPropKey)\$(var.CodeAnalysisPgGuid)" Name="PageOrder" 
+                 Value="3" Type="integer" />
+                
+  <!-- VB config property pages -->
+  <RegistryValue Key="$(var.VBConfigPropKey)\$(var.CodeAnalysisPgGuid)" 
+                 Value="CodeAnalysisPgGuid" Type="string" />
+  <RegistryValue Key="$(var.VBConfigPropKey)\$(var.CodeAnalysisPgGuid)" Name="PageOrder" 
+                 Value="3" Type="integer" />
+
+  <!-- Control FxCop Package Loading (force it or sometimes it crashes) -->
+  <RegistryKey Key="$(var.AutoLoadOnProjectKey)">
+    <RegistryValue Name="$(var.FxCopPackageGuid)" Value="0" Type="integer" />
+  </RegistryKey>
+
+</Include>

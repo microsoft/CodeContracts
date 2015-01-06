@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="System.Compiler.Statement">
+    <Position X="11" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Node" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAiACAABAAAQAAAAABCQAAAAAAAAAAAAAAAAAIAABA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Compiler.Expose">
+    <Position X="17" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Acquire">
+    <Position X="20.75" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AACAAAAAAACAAAEAAAABACAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Block">
+    <Position X="13.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAACCgQAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Scope" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="Statements" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.FunctionDeclaration">
+    <Position X="19.25" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAhAAQAAAAAAAAAAIAAAAAEABA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Parameters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.Assertion">
+    <Position X="11" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Assumption">
+    <Position X="13.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.AssignmentStatement">
+    <Position X="15.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAACAAAAAAAAAAAAAAACAAIAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ExpressionStatement">
+    <Position X="9.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Expression" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Branch">
+    <Position X="4" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAABAAAACAAAAgAAAEAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Try">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAgAAAAAYAAAAABAAAAAAAAAAAAAABAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Finally" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="Catchers" />
+      <Field Name="FaultHandlers" />
+      <Field Name="Filters" />
+    </ShowAsCollectionAssociation>
+    <InheritanceLine Type="System.Compiler.Statement" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="3.101" />
+        <Point X="11.75" Y="4.05" />
+        <Point X="5.188" Y="4.05" />
+        <Point X="5.188" Y="7.25" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="FaultHandlers" Type="System.Compiler.FaultHandler" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.938" Y="7.25" />
+        <Point X="5.938" Y="5.733" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.072" Y="0.15" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Catch">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Finally">
+    <Position X="7.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.EndFinally">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Filter">
+    <Position X="1.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="System.Compiler.Statement" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="3.101" />
+        <Point X="11.75" Y="4.05" />
+        <Point X="3.2" Y="4.05" />
+        <Point X="3.2" Y="5.95" />
+        <Point X="2.312" Y="5.95" />
+        <Point X="2.312" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="System.Compiler.EndFilter">
+    <Position X="1.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.FaultHandler">
+    <Position X="5.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Throw">
+    <Position X="17.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.If">
+    <Position X="1.75" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAIAAAAAAAAAAAAgAAAABAJAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.For">
+    <Position X="6.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAABAAAAAAEAAAAAAAAAAAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ForEach">
+    <Position X="8.5" Y="12.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAEAAAAAAEAAAAABAQAAAAAAAQAAAAAAAgAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Exit">
+    <Position X="17" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Continue">
+    <Position X="7.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Switch">
+    <Position X="14.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAEAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Cases" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.GotoCase">
+    <Position X="12.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.SwitchInstruction">
+    <Position X="12.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Typeswitch">
+    <Position X="19" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Cases" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.While">
+    <Position X="1.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.DoWhile">
+    <Position X="3.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Repeat">
+    <Position X="5.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Fixed">
+    <Position X="9.5" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAEAABAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Lock">
+    <Position X="12.25" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AACAAAAAAAAAABAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ResourceUse">
+    <Position X="14.5" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AECAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Goto">
+    <Position X="16.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.VariableDeclaration">
+    <Position X="21.25" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAhAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Field" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.LocalDeclarationsStatement">
+    <Position X="23.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAAAAAAAQAAAAAAAAAAAAAAAAAgAAAgAAQAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Declarations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.StatementSnippet">
+    <Position X="18.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ParserFactory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Expression" Collapsed="true" HideInheritanceLine="true">
+    <Position X="9.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.SwitchCase" HideInheritanceLine="true">
+    <Position X="14.75" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.TypeswitchCase" HideInheritanceLine="true">
+    <Position X="19" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAABACIAAAAAAAgAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.BlockScope">
+    <Position X="16.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAACAAAACAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="AssociatedBlock" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Field" Collapsed="true">
+    <Position X="21.25" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>wAAABAgI4BBAAoIAAACCAAAIEDBIAQAAAUAAIKEApAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.LocalDeclaration" Collapsed="true" HideInheritanceLine="true">
+    <Position X="23.5" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAQAAAAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAAAgAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Parameter" Collapsed="true">
+    <Position X="19.25" Y="15.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAABEACAAAAAAAAAAAAAAkQAQBAAQAgIIAAIAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="System.Compiler.IParserFactory" Collapsed="true">
+    <Position X="18.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>StandardVisitor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

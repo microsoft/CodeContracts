@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="MetadataContracts.Microsoft Research.67c337ef-1c25-4227-be54-24f9883b85e0">
+    <Name>MetadataContracts</Name>
+    <Author>Microsoft Research</Author>
+    <Version>1.0.0119.0</Version>
+    <Description xml:space="preserve">This is a sample text-relative adornment extension to the Visual Studio Editor.</Description>
+    <Locale>1033</Locale>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Pro</Edition>
+        <Edition>VST_All</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+  </Identifier>
+  <References />
+  <Content>
+    <MefComponent>MetadataContracts.dll</MefComponent>
+  </Content>
+</Vsix>

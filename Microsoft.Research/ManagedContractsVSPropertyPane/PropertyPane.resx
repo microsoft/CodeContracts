@@ -1,0 +1,2226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="EnableRuntimeCheckingBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="EnableRuntimeCheckingBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 29</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="EnableRuntimeCheckingBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="EnableRuntimeCheckingBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 24</value>
+  </data>
+  <data name="EnableRuntimeCheckingBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="EnableRuntimeCheckingBox.Text" xml:space="preserve">
+    <value>Perform Runtime Contract Checking</value>
+  </data>
+  <data name="&gt;&gt;EnableRuntimeCheckingBox.Name" xml:space="preserve">
+    <value>EnableRuntimeCheckingBox</value>
+  </data>
+  <data name="&gt;&gt;EnableRuntimeCheckingBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EnableRuntimeCheckingBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;EnableRuntimeCheckingBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="EnableStaticCheckingBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="EnableStaticCheckingBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 37</value>
+  </data>
+  <data name="EnableStaticCheckingBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="EnableStaticCheckingBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 24</value>
+  </data>
+  <data name="EnableStaticCheckingBox.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="EnableStaticCheckingBox.Text" xml:space="preserve">
+    <value>Perform Static Contract Checking</value>
+  </data>
+  <data name="&gt;&gt;EnableStaticCheckingBox.Name" xml:space="preserve">
+    <value>EnableStaticCheckingBox</value>
+  </data>
+  <data name="&gt;&gt;EnableStaticCheckingBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EnableStaticCheckingBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;EnableStaticCheckingBox.ZOrder" xml:space="preserve">
+    <value>35</value>
+  </data>
+  <data name="LibPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 35</value>
+  </data>
+  <data name="LibPathTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="LibPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>544, 26</value>
+  </data>
+  <data name="LibPathTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>92</value>
+  </data>
+  <data name="&gt;&gt;LibPathTextBox.Name" xml:space="preserve">
+    <value>LibPathTextBox</value>
+  </data>
+  <data name="&gt;&gt;LibPathTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LibPathTextBox.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;LibPathTextBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LibPathLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LibPathLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 42</value>
+  </data>
+  <data name="LibPathLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="LibPathLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 20</value>
+  </data>
+  <data name="LibPathLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>91</value>
+  </data>
+  <data name="LibPathLabel.Text" xml:space="preserve">
+    <value>Extra Contract Library Paths</value>
+  </data>
+  <data name="&gt;&gt;LibPathLabel.Name" xml:space="preserve">
+    <value>LibPathLabel</value>
+  </data>
+  <data name="&gt;&gt;LibPathLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LibPathLabel.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;LibPathLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 83</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 20</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>93</value>
+  </data>
+  <data name="ExtraRuntimeCheckerOptionsLabel.Text" xml:space="preserve">
+    <value>Extra Runtime Checker Options</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckerOptionsLabel.Name" xml:space="preserve">
+    <value>ExtraRuntimeCheckerOptionsLabel</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckerOptionsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckerOptionsLabel.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckerOptionsLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="ExtraRuntimeCheckingOptionsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 78</value>
+  </data>
+  <data name="ExtraRuntimeCheckingOptionsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ExtraRuntimeCheckingOptionsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>544, 26</value>
+  </data>
+  <data name="ExtraRuntimeCheckingOptionsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>94</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckingOptionsBox.Name" xml:space="preserve">
+    <value>ExtraRuntimeCheckingOptionsBox</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckingOptionsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckingOptionsBox.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;ExtraRuntimeCheckingOptionsBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="CustomRewriterMethodsClassTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>390, 85</value>
+  </data>
+  <data name="CustomRewriterMethodsClassTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="CustomRewriterMethodsClassTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 26</value>
+  </data>
+  <data name="CustomRewriterMethodsClassTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassTextBox.Name" xml:space="preserve">
+    <value>CustomRewriterMethodsClassTextBox</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassTextBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassTextBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 89</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="CustomRewriterMethodsClassLabel.Text" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassLabel.Name" xml:space="preserve">
+    <value>CustomRewriterMethodsClassLabel</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassLabel.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsClassLabel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 89</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyLabel.Text" xml:space="preserve">
+    <value>Assembly</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyLabel.Name" xml:space="preserve">
+    <value>CustomRewriterMethodsAssemblyLabel</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyLabel.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 85</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>205, 26</value>
+  </data>
+  <data name="CustomRewriterMethodsAssemblyTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyTextBox.Name" xml:space="preserve">
+    <value>CustomRewriterMethodsAssemblyTextBox</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyTextBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsAssemblyTextBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 60</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 20</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="CustomRewriterMethodsLabel.Text" xml:space="preserve">
+    <value>Custom Rewriter Methods</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsLabel.Name" xml:space="preserve">
+    <value>CustomRewriterMethodsLabel</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsLabel.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CustomRewriterMethodsLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Name" xml:space="preserve">
+    <value>SkipQuantifiersBox</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Name" xml:space="preserve">
+    <value>CallSiteRequiresBox</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Name" xml:space="preserve">
+    <value>AssertOnFailureBox</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Name" xml:space="preserve">
+    <value>OnlyPublicSurfaceContractsBox</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Name" xml:space="preserve">
+    <value>RuntimeCheckingLevelDropDown</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RuntimeCheckingGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 52</value>
+  </data>
+  <data name="RuntimeCheckingGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="RuntimeCheckingGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="RuntimeCheckingGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>836, 148</value>
+  </data>
+  <data name="RuntimeCheckingGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="RuntimeCheckingGroup.Text" xml:space="preserve">
+    <value>Runtime Checking</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingGroup.Name" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingGroup.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="SkipQuantifiersBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SkipQuantifiersBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SkipQuantifiersBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>574, 117</value>
+  </data>
+  <data name="SkipQuantifiersBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SkipQuantifiersBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 24</value>
+  </data>
+  <data name="SkipQuantifiersBox.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="SkipQuantifiersBox.Text" xml:space="preserve">
+    <value>Skip Quantifiers</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Name" xml:space="preserve">
+    <value>SkipQuantifiersBox</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SkipQuantifiersBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="CallSiteRequiresBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CallSiteRequiresBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>574, 88</value>
+  </data>
+  <data name="CallSiteRequiresBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="CallSiteRequiresBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 24</value>
+  </data>
+  <data name="CallSiteRequiresBox.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="CallSiteRequiresBox.Text" xml:space="preserve">
+    <value>Call-site Requires Checking</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Name" xml:space="preserve">
+    <value>CallSiteRequiresBox</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CallSiteRequiresBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AssertOnFailureBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AssertOnFailureBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>574, 58</value>
+  </data>
+  <data name="AssertOnFailureBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="AssertOnFailureBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 24</value>
+  </data>
+  <data name="AssertOnFailureBox.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="AssertOnFailureBox.Text" xml:space="preserve">
+    <value>Assert on Contract Failure</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Name" xml:space="preserve">
+    <value>AssertOnFailureBox</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;AssertOnFailureBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>574, 29</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 24</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="OnlyPublicSurfaceContractsBox.Text" xml:space="preserve">
+    <value>Only Public Surface Contracts</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Name" xml:space="preserve">
+    <value>OnlyPublicSurfaceContractsBox</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;OnlyPublicSurfaceContractsBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Items" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Items1" xml:space="preserve">
+    <value>Pre and Post</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Items2" xml:space="preserve">
+    <value>Preconditions</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Items3" xml:space="preserve">
+    <value>ReleaseRequires</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Items4" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>314, 23</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 28</value>
+  </data>
+  <data name="RuntimeCheckingLevelDropDown.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Name" xml:space="preserve">
+    <value>RuntimeCheckingLevelDropDown</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.Parent" xml:space="preserve">
+    <value>RuntimeCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;RuntimeCheckingLevelDropDown.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Name" xml:space="preserve">
+    <value>ExtraCodeAnalysisOptionsBox</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Name" xml:space="preserve">
+    <value>AdditionalCodeAnalysisOptionsLabel</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AdvancedGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 914</value>
+  </data>
+  <data name="AdvancedGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="AdvancedGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="AdvancedGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>836, 168</value>
+  </data>
+  <data name="AdvancedGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="AdvancedGroup.Text" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="&gt;&gt;AdvancedGroup.Name" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;AdvancedGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AdvancedGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AdvancedGroup.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="ExtraCodeAnalysisOptionsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 118</value>
+  </data>
+  <data name="ExtraCodeAnalysisOptionsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ExtraCodeAnalysisOptionsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>544, 26</value>
+  </data>
+  <data name="ExtraCodeAnalysisOptionsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>96</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Name" xml:space="preserve">
+    <value>ExtraCodeAnalysisOptionsBox</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;ExtraCodeAnalysisOptionsBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 123</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 20</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>95</value>
+  </data>
+  <data name="AdditionalCodeAnalysisOptionsLabel.Text" xml:space="preserve">
+    <value>Extra Static Checker Options</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Name" xml:space="preserve">
+    <value>AdditionalCodeAnalysisOptionsLabel</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.Parent" xml:space="preserve">
+    <value>AdvancedGroup</value>
+  </data>
+  <data name="&gt;&gt;AdditionalCodeAnalysisOptionsLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopLeft</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 360</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>259, 24</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1009</value>
+  </data>
+  <data name="InferEnsuresAutoPropertiesCheckBox.Text" xml:space="preserve">
+    <value>Infer ensures for autoproperties</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresAutoPropertiesCheckBox.Name" xml:space="preserve">
+    <value>InferEnsuresAutoPropertiesCheckBox</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresAutoPropertiesCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresAutoPropertiesCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresAutoPropertiesCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 218</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 24</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1008</value>
+  </data>
+  <data name="SuggestCalleeAssumptionsCheckBox.Text" xml:space="preserve">
+    <value>Show external assumptions</value>
+  </data>
+  <data name="&gt;&gt;SuggestCalleeAssumptionsCheckBox.Name" xml:space="preserve">
+    <value>SuggestCalleeAssumptionsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestCalleeAssumptionsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestCalleeAssumptionsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SuggestCalleeAssumptionsCheckBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>330, 437</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 24</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.TabIndex" type="System.Int32, mscorlib">
+    <value>1007</value>
+  </data>
+  <data name="skipAnalysisIfCannotConnectToCache.Text" xml:space="preserve">
+    <value>Skip the analysis if cannot connect to cache</value>
+  </data>
+  <data name="&gt;&gt;skipAnalysisIfCannotConnectToCache.Name" xml:space="preserve">
+    <value>skipAnalysisIfCannotConnectToCache</value>
+  </data>
+  <data name="&gt;&gt;skipAnalysisIfCannotConnectToCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skipAnalysisIfCannotConnectToCache.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;skipAnalysisIfCannotConnectToCache.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkMissingPublicEnsures.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkMissingPublicEnsures.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkMissingPublicEnsures.Location" type="System.Drawing.Point, System.Drawing">
+    <value>549, 143</value>
+  </data>
+  <data name="checkMissingPublicEnsures.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="checkMissingPublicEnsures.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 24</value>
+  </data>
+  <data name="checkMissingPublicEnsures.TabIndex" type="System.Int32, mscorlib">
+    <value>1006</value>
+  </data>
+  <data name="checkMissingPublicEnsures.Text" xml:space="preserve">
+    <value>Check missing public ensures</value>
+  </data>
+  <data name="&gt;&gt;checkMissingPublicEnsures.Name" xml:space="preserve">
+    <value>checkMissingPublicEnsures</value>
+  </data>
+  <data name="&gt;&gt;checkMissingPublicEnsures.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkMissingPublicEnsures.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;checkMissingPublicEnsures.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.Location" type="System.Drawing.Point, System.Drawing">
+    <value>594, 25</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 20</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.TabIndex" type="System.Int32, mscorlib">
+    <value>91</value>
+  </data>
+  <data name="linkUnderstandingTheStaticChecker.Text" xml:space="preserve">
+    <value>Undestanding the static checker</value>
+  </data>
+  <data name="&gt;&gt;linkUnderstandingTheStaticChecker.Name" xml:space="preserve">
+    <value>linkUnderstandingTheStaticChecker</value>
+  </data>
+  <data name="&gt;&gt;linkUnderstandingTheStaticChecker.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkUnderstandingTheStaticChecker.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;linkUnderstandingTheStaticChecker.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 289</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 24</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1005</value>
+  </data>
+  <data name="NecessaryEnsuresCheckBox.Text" xml:space="preserve">
+    <value>Suggest necessary ensures</value>
+  </data>
+  <data name="&gt;&gt;NecessaryEnsuresCheckBox.Name" xml:space="preserve">
+    <value>NecessaryEnsuresCheckBox</value>
+  </data>
+  <data name="&gt;&gt;NecessaryEnsuresCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NecessaryEnsuresCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;NecessaryEnsuresCheckBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 289</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 24</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1004</value>
+  </data>
+  <data name="AssertsToContractsCheckBox.Text" xml:space="preserve">
+    <value>Suggest asserts to contracts</value>
+  </data>
+  <data name="&gt;&gt;AssertsToContractsCheckBox.Name" xml:space="preserve">
+    <value>AssertsToContractsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AssertsToContractsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AssertsToContractsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;AssertsToContractsCheckBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="RedundantTestsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RedundantTestsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RedundantTestsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 183</value>
+  </data>
+  <data name="RedundantTestsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="RedundantTestsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 24</value>
+  </data>
+  <data name="RedundantTestsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1003</value>
+  </data>
+  <data name="RedundantTestsCheckBox.Text" xml:space="preserve">
+    <value>Check redundant conditionals</value>
+  </data>
+  <data name="&gt;&gt;RedundantTestsCheckBox.Name" xml:space="preserve">
+    <value>RedundantTestsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;RedundantTestsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RedundantTestsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;RedundantTestsCheckBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 254</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 24</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1002</value>
+  </data>
+  <data name="SuggestReadonlyCheckBox.Text" xml:space="preserve">
+    <value>Suggest readonly fields</value>
+  </data>
+  <data name="&gt;&gt;SuggestReadonlyCheckBox.Name" xml:space="preserve">
+    <value>SuggestReadonlyCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestReadonlyCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestReadonlyCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SuggestReadonlyCheckBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>361, 481</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 24</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1001</value>
+  </data>
+  <data name="BeingOptmisticOnExternalCheckBox.Text" xml:space="preserve">
+    <value>Be optimistic on external API</value>
+  </data>
+  <data name="&gt;&gt;BeingOptmisticOnExternalCheckBox.Name" xml:space="preserve">
+    <value>BeingOptmisticOnExternalCheckBox</value>
+  </data>
+  <data name="&gt;&gt;BeingOptmisticOnExternalCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BeingOptmisticOnExternalCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;BeingOptmisticOnExternalCheckBox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 143</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 24</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="missingPublicRequiresAsWarningsCheckBox.Text" xml:space="preserve">
+    <value>Check missing public requires</value>
+  </data>
+  <data name="&gt;&gt;missingPublicRequiresAsWarningsCheckBox.Name" xml:space="preserve">
+    <value>missingPublicRequiresAsWarningsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;missingPublicRequiresAsWarningsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;missingPublicRequiresAsWarningsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;missingPublicRequiresAsWarningsCheckBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="SQLServerLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SQLServerLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SQLServerLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 397</value>
+  </data>
+  <data name="SQLServerLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="SQLServerLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 20</value>
+  </data>
+  <data name="SQLServerLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="SQLServerLabel.Text" xml:space="preserve">
+    <value>SQL Server</value>
+  </data>
+  <data name="&gt;&gt;SQLServerLabel.Name" xml:space="preserve">
+    <value>SQLServerLabel</value>
+  </data>
+  <data name="&gt;&gt;SQLServerLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SQLServerLabel.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SQLServerLabel.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Name" xml:space="preserve">
+    <value>CacheResultsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="SQLServerTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>329, 394</value>
+  </data>
+  <data name="SQLServerTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SQLServerTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>463, 26</value>
+  </data>
+  <data name="SQLServerTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="&gt;&gt;SQLServerTextBox.Name" xml:space="preserve">
+    <value>SQLServerTextBox</value>
+  </data>
+  <data name="&gt;&gt;SQLServerTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SQLServerTextBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SQLServerTextBox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 218</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 24</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="SuggestAssumptionsCheckBox.Text" xml:space="preserve">
+    <value>Show entry assumptions</value>
+  </data>
+  <data name="&gt;&gt;SuggestAssumptionsCheckBox.Name" xml:space="preserve">
+    <value>SuggestAssumptionsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestAssumptionsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestAssumptionsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SuggestAssumptionsCheckBox.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 325</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 24</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="InferObjectInvariantsCheckBox.Text" xml:space="preserve">
+    <value>Infer invariants for readonly</value>
+  </data>
+  <data name="&gt;&gt;InferObjectInvariantsCheckBox.Name" xml:space="preserve">
+    <value>InferObjectInvariantsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;InferObjectInvariantsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;InferObjectInvariantsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;InferObjectInvariantsCheckBox.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>549, 254</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 24</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="SuggestObjectInvariantsCheckBox.Text" xml:space="preserve">
+    <value>Suggest object invariants </value>
+  </data>
+  <data name="&gt;&gt;SuggestObjectInvariantsCheckBox.Name" xml:space="preserve">
+    <value>SuggestObjectInvariantsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestObjectInvariantsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestObjectInvariantsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SuggestObjectInvariantsCheckBox.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="WarningFullLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WarningFullLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="WarningFullLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 458</value>
+  </data>
+  <data name="WarningFullLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="WarningFullLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="WarningFullLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1000</value>
+  </data>
+  <data name="WarningFullLabel.Text" xml:space="preserve">
+    <value>hi</value>
+  </data>
+  <data name="&gt;&gt;WarningFullLabel.Name" xml:space="preserve">
+    <value>WarningFullLabel</value>
+  </data>
+  <data name="&gt;&gt;WarningFullLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WarningFullLabel.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;WarningFullLabel.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="WarningLowLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WarningLowLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 458</value>
+  </data>
+  <data name="WarningLowLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="WarningLowLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 20</value>
+  </data>
+  <data name="WarningLowLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1000</value>
+  </data>
+  <data name="WarningLowLabel.Text" xml:space="preserve">
+    <value>low</value>
+  </data>
+  <data name="&gt;&gt;WarningLowLabel.Name" xml:space="preserve">
+    <value>WarningLowLabel</value>
+  </data>
+  <data name="&gt;&gt;WarningLowLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WarningLowLabel.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;WarningLowLabel.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="WarningLevelTrackBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>166, 481</value>
+  </data>
+  <data name="WarningLevelTrackBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="WarningLevelTrackBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 69</value>
+  </data>
+  <data name="WarningLevelTrackBar.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelTrackBar.Name" xml:space="preserve">
+    <value>WarningLevelTrackBar</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelTrackBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelTrackBar.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelTrackBar.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="WarningLevelLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WarningLevelLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="WarningLevelLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 504</value>
+  </data>
+  <data name="WarningLevelLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="WarningLevelLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 20</value>
+  </data>
+  <data name="WarningLevelLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="WarningLevelLabel.Text" xml:space="preserve">
+    <value>Warning Level:</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelLabel.Name" xml:space="preserve">
+    <value>WarningLevelLabel</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelLabel.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelLabel.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="CacheResultsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CacheResultsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CacheResultsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 393</value>
+  </data>
+  <data name="CacheResultsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="CacheResultsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 24</value>
+  </data>
+  <data name="CacheResultsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="CacheResultsCheckBox.Text" xml:space="preserve">
+    <value>Cache results</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Name" xml:space="preserve">
+    <value>CacheResultsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;CacheResultsCheckBox.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 183</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 24</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="redundantAssumptionsCheckBox.Text" xml:space="preserve">
+    <value>Check redundant assume</value>
+  </data>
+  <data name="&gt;&gt;redundantAssumptionsCheckBox.Name" xml:space="preserve">
+    <value>redundantAssumptionsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;redundantAssumptionsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;redundantAssumptionsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;redundantAssumptionsCheckBox.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="InferRequiresCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="InferRequiresCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 325</value>
+  </data>
+  <data name="InferRequiresCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="InferRequiresCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 24</value>
+  </data>
+  <data name="InferRequiresCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="InferRequiresCheckBox.Text" xml:space="preserve">
+    <value>Infer requires</value>
+  </data>
+  <data name="&gt;&gt;InferRequiresCheckBox.Name" xml:space="preserve">
+    <value>InferRequiresCheckBox</value>
+  </data>
+  <data name="&gt;&gt;InferRequiresCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;InferRequiresCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;InferRequiresCheckBox.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="InferEnsuresCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="InferEnsuresCheckBox.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopLeft</value>
+  </data>
+  <data name="InferEnsuresCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="InferEnsuresCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 359</value>
+  </data>
+  <data name="InferEnsuresCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="InferEnsuresCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 24</value>
+  </data>
+  <data name="InferEnsuresCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="InferEnsuresCheckBox.Text" xml:space="preserve">
+    <value>Infer ensures</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresCheckBox.Name" xml:space="preserve">
+    <value>InferEnsuresCheckBox</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;InferEnsuresCheckBox.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 254</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 24</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="SuggestRequiresCheckBox.Text" xml:space="preserve">
+    <value>Suggest requires</value>
+  </data>
+  <data name="&gt;&gt;SuggestRequiresCheckBox.Name" xml:space="preserve">
+    <value>SuggestRequiresCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestRequiresCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestRequiresCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;SuggestRequiresCheckBox.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="BaseLineUpdateButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>748, 549</value>
+  </data>
+  <data name="BaseLineUpdateButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BaseLineUpdateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 35</value>
+  </data>
+  <data name="BaseLineUpdateButton.TabIndex" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="BaseLineUpdateButton.Text" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="&gt;&gt;BaseLineUpdateButton.Name" xml:space="preserve">
+    <value>BaseLineUpdateButton</value>
+  </data>
+  <data name="&gt;&gt;BaseLineUpdateButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BaseLineUpdateButton.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;BaseLineUpdateButton.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 108</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 24</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="ImplicitArithmeticObligationsBox.Text" xml:space="preserve">
+    <value>Check arithmetic</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArithmeticObligationsBox.Name" xml:space="preserve">
+    <value>ImplicitArithmeticObligationsBox</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArithmeticObligationsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArithmeticObligationsBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArithmeticObligationsBox.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>549, 72</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 24</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="FailBuildOnWarningsCheckBox.Text" xml:space="preserve">
+    <value>Fail build on warnings</value>
+  </data>
+  <data name="&gt;&gt;FailBuildOnWarningsCheckBox.Name" xml:space="preserve">
+    <value>FailBuildOnWarningsCheckBox</value>
+  </data>
+  <data name="&gt;&gt;FailBuildOnWarningsCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FailBuildOnWarningsCheckBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;FailBuildOnWarningsCheckBox.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="ShowSquiggliesBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ShowSquiggliesBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 72</value>
+  </data>
+  <data name="ShowSquiggliesBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ShowSquiggliesBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 24</value>
+  </data>
+  <data name="ShowSquiggliesBox.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="ShowSquiggliesBox.Text" xml:space="preserve">
+    <value>Show squigglies</value>
+  </data>
+  <data name="&gt;&gt;ShowSquiggliesBox.Name" xml:space="preserve">
+    <value>ShowSquiggliesBox</value>
+  </data>
+  <data name="&gt;&gt;ShowSquiggliesBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ShowSquiggliesBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;ShowSquiggliesBox.ZOrder" xml:space="preserve">
+    <value>28</value>
+  </data>
+  <data name="RunInBackgroundBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RunInBackgroundBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 72</value>
+  </data>
+  <data name="RunInBackgroundBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="RunInBackgroundBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 24</value>
+  </data>
+  <data name="RunInBackgroundBox.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="RunInBackgroundBox.Text" xml:space="preserve">
+    <value>Check in background</value>
+  </data>
+  <data name="&gt;&gt;RunInBackgroundBox.Name" xml:space="preserve">
+    <value>RunInBackgroundBox</value>
+  </data>
+  <data name="&gt;&gt;RunInBackgroundBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RunInBackgroundBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;RunInBackgroundBox.ZOrder" xml:space="preserve">
+    <value>29</value>
+  </data>
+  <data name="BaseLineBox.AccessibleDescription" xml:space="preserve">
+    <value>Produce or use a baseline to filter warnings</value>
+  </data>
+  <data name="BaseLineBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BaseLineBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 558</value>
+  </data>
+  <data name="BaseLineBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BaseLineBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 24</value>
+  </data>
+  <data name="BaseLineBox.TabIndex" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="BaseLineBox.Text" xml:space="preserve">
+    <value>Baseline</value>
+  </data>
+  <data name="&gt;&gt;BaseLineBox.Name" xml:space="preserve">
+    <value>BaseLineBox</value>
+  </data>
+  <data name="&gt;&gt;BaseLineBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BaseLineBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;BaseLineBox.ZOrder" xml:space="preserve">
+    <value>30</value>
+  </data>
+  <data name="BaseLineTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 554</value>
+  </data>
+  <data name="BaseLineTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BaseLineTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>588, 26</value>
+  </data>
+  <data name="BaseLineTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="&gt;&gt;BaseLineTextBox.Name" xml:space="preserve">
+    <value>BaseLineTextBox</value>
+  </data>
+  <data name="&gt;&gt;BaseLineTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BaseLineTextBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;BaseLineTextBox.ZOrder" xml:space="preserve">
+    <value>31</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>549, 108</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 24</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="ImplicitArrayBoundObligationsBox.Text" xml:space="preserve">
+    <value>Check array bounds </value>
+  </data>
+  <data name="&gt;&gt;ImplicitArrayBoundObligationsBox.Name" xml:space="preserve">
+    <value>ImplicitArrayBoundObligationsBox</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArrayBoundObligationsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArrayBoundObligationsBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;ImplicitArrayBoundObligationsBox.ZOrder" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 112</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 24</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="ImplicitNonNullObligationsBox.Text" xml:space="preserve">
+    <value>Check non-null </value>
+  </data>
+  <data name="&gt;&gt;ImplicitNonNullObligationsBox.Name" xml:space="preserve">
+    <value>ImplicitNonNullObligationsBox</value>
+  </data>
+  <data name="&gt;&gt;ImplicitNonNullObligationsBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImplicitNonNullObligationsBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;ImplicitNonNullObligationsBox.ZOrder" xml:space="preserve">
+    <value>33</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 148</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 24</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="ImplicitEnumWritesBox.Text" xml:space="preserve">
+    <value>Check enum writes </value>
+  </data>
+  <data name="&gt;&gt;ImplicitEnumWritesBox.Name" xml:space="preserve">
+    <value>ImplicitEnumWritesBox</value>
+  </data>
+  <data name="&gt;&gt;ImplicitEnumWritesBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImplicitEnumWritesBox.Parent" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;ImplicitEnumWritesBox.ZOrder" xml:space="preserve">
+    <value>34</value>
+  </data>
+  <data name="StaticCheckingGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 209</value>
+  </data>
+  <data name="StaticCheckingGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="StaticCheckingGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="StaticCheckingGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>836, 620</value>
+  </data>
+  <data name="StaticCheckingGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="StaticCheckingGroup.Text" xml:space="preserve">
+    <value>Static Checking</value>
+  </data>
+  <data name="&gt;&gt;StaticCheckingGroup.Name" xml:space="preserve">
+    <value>StaticCheckingGroup</value>
+  </data>
+  <data name="&gt;&gt;StaticCheckingGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StaticCheckingGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StaticCheckingGroup.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <metadata name="WarningLevelToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="EmitContractDocumentationCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="EmitContractDocumentationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 29</value>
+  </data>
+  <data name="EmitContractDocumentationCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="EmitContractDocumentationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 24</value>
+  </data>
+  <data name="EmitContractDocumentationCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>82</value>
+  </data>
+  <data name="EmitContractDocumentationCheckBox.Text" xml:space="preserve">
+    <value>Emit contracts into XML doc file</value>
+  </data>
+  <data name="&gt;&gt;EmitContractDocumentationCheckBox.Name" xml:space="preserve">
+    <value>EmitContractDocumentationCheckBox</value>
+  </data>
+  <data name="&gt;&gt;EmitContractDocumentationCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EmitContractDocumentationCheckBox.Parent" xml:space="preserve">
+    <value>contractReferenceAssemblyGroup</value>
+  </data>
+  <data name="&gt;&gt;EmitContractDocumentationCheckBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Items" xml:space="preserve">
+    <value>(none)</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Items1" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Items2" xml:space="preserve">
+    <value>DoNotBuild</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 26</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 28</value>
+  </data>
+  <data name="ContractReferenceAssemblySelection.TabIndex" type="System.Int32, mscorlib">
+    <value>81</value>
+  </data>
+  <data name="&gt;&gt;ContractReferenceAssemblySelection.Name" xml:space="preserve">
+    <value>ContractReferenceAssemblySelection</value>
+  </data>
+  <data name="&gt;&gt;ContractReferenceAssemblySelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ContractReferenceAssemblySelection.Parent" xml:space="preserve">
+    <value>contractReferenceAssemblyGroup</value>
+  </data>
+  <data name="&gt;&gt;ContractReferenceAssemblySelection.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="VersionLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="VersionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>730, 42</value>
+  </data>
+  <data name="VersionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="VersionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 20</value>
+  </data>
+  <data name="VersionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="VersionLabel.Text" xml:space="preserve">
+    <value>version</value>
+  </data>
+  <data name="VersionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;VersionLabel.Name" xml:space="preserve">
+    <value>VersionLabel</value>
+  </data>
+  <data name="&gt;&gt;VersionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VersionLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;VersionLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 838</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>836, 66</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="contractReferenceAssemblyGroup.Text" xml:space="preserve">
+    <value>Contract Reference Assembly</value>
+  </data>
+  <data name="&gt;&gt;contractReferenceAssemblyGroup.Name" xml:space="preserve">
+    <value>contractReferenceAssemblyGroup</value>
+  </data>
+  <data name="&gt;&gt;contractReferenceAssemblyGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contractReferenceAssemblyGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;contractReferenceAssemblyGroup.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="AssemblyModeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AssemblyModeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 18</value>
+  </data>
+  <data name="AssemblyModeLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="AssemblyModeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 20</value>
+  </data>
+  <data name="AssemblyModeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="AssemblyModeLabel.Text" xml:space="preserve">
+    <value>Assembly Mode:</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeLabel.Name" xml:space="preserve">
+    <value>AssemblyModeLabel</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="AssemblyModeDropDown.Items" xml:space="preserve">
+    <value>Custom Parameter Validation</value>
+  </data>
+  <data name="AssemblyModeDropDown.Items1" xml:space="preserve">
+    <value>Standard Contract Requires</value>
+  </data>
+  <data name="AssemblyModeDropDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>138, 12</value>
+  </data>
+  <data name="AssemblyModeDropDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="AssemblyModeDropDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>336, 28</value>
+  </data>
+  <data name="AssemblyModeDropDown.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeDropDown.Name" xml:space="preserve">
+    <value>AssemblyModeDropDown</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeDropDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeDropDown.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AssemblyModeDropDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="PrecisionLevelToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>183, 17</value>
+  </metadata>
+  <data name="docLink.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="docLink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>726, 17</value>
+  </data>
+  <data name="docLink.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="docLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 20</value>
+  </data>
+  <data name="docLink.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="docLink.Text" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="&gt;&gt;docLink.Name" xml:space="preserve">
+    <value>docLink</value>
+  </data>
+  <data name="&gt;&gt;docLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;docLink.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;docLink.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="help_Link.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="help_Link.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="help_Link.Location" type="System.Drawing.Point, System.Drawing">
+    <value>664, 17</value>
+  </data>
+  <data name="help_Link.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="help_Link.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 20</value>
+  </data>
+  <data name="help_Link.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="help_Link.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="&gt;&gt;help_Link.Name" xml:space="preserve">
+    <value>help_Link</value>
+  </data>
+  <data name="&gt;&gt;help_Link.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;help_Link.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;help_Link.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>9, 20</value>
+  </data>
+  <data name="$this.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>867, 1102</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelToolTip.Name" xml:space="preserve">
+    <value>WarningLevelToolTip</value>
+  </data>
+  <data name="&gt;&gt;WarningLevelToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PrecisionLevelToolTip.Name" xml:space="preserve">
+    <value>PrecisionLevelToolTip</value>
+  </data>
+  <data name="&gt;&gt;PrecisionLevelToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>PropertyPane</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{7C47352C-1765-4025-92A8-E678048A9F48}"
+	ProjectSection(SolutionItems) = preProject
+		gcd.pdf = gcd.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCD", "GCD.csproj", "{ED567B6A-15E7-467C-BA89-CB6350F70346}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED567B6A-15E7-467C-BA89-CB6350F70346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED567B6A-15E7-467C-BA89-CB6350F70346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED567B6A-15E7-467C-BA89-CB6350F70346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED567B6A-15E7-467C-BA89-CB6350F70346}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

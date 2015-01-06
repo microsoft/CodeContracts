@@ -1,0 +1,2395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="C:\Program Files\Microsoft Visual Studio 8\xml\schemas\1033\Microsoft.Build.xsd" />
+  <xs:element name="CodeSign" substitutionGroup="msb:Task" type="msb:CodeSignType">
+    <xs:annotation>
+      <xs:documentation>A task that submits a set of files to be signed with certificate 10006 (SHA1)
+            and returns</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CodeSignType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the files to sign</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Description" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the description of the job</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Keywords" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the description of the job</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Approvers" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of require approved.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputPath" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path where the signed binaries will be copied</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DisplayUrl" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the display Url</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="JobNumber" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the job number assigned by the system</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="JobCompletionPath" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the path where the files will be dropped</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Authenticode" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the files should also have the authenticode certificate</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="StrongName" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the files should also have the authenticode certificate</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RetryCount" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the number of retries. By default, 3.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AsyncExec" substitutionGroup="msb:Task" type="msb:AsyncExecType">
+    <xs:annotation>
+      <xs:documentation>Task that launch an executable asynchronously
+            and write a semaphore file when done.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AsyncExecType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="SemaphoreFile" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to the file that will be used as a semaphore</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FileName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the name of the executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Arguments" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the command line arguments</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AsyncPoll" substitutionGroup="msb:Task" type="msb:AsyncPollType">
+    <xs:annotation>
+      <xs:documentation>Inspects if any async task returned, and throws an error
+            if any of them failed.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AsyncPollType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="SemaphoreFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of semaphore files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AsyncWait" substitutionGroup="msb:Task" type="msb:AsyncWaitType">
+    <xs:annotation>
+      <xs:documentation>Waits for a number of files get written on disk</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AsyncWaitType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="SemaphoreFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of semaphore files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WaitInterval" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the wait interval in seconds</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TimeOut" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Get or sets the maximum amount of time to wait</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConvertWord" substitutionGroup="msb:Task" type="msb:ConvertWordType">
+    <xs:annotation>
+      <xs:documentation>Converts word documents to various formats.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ConvertWordType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to the Word files to convert</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to write the converted files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Pdf" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the files have to be converted to pdf</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Xps" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the files have to be converted to xps</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ForceReadOnly" substitutionGroup="msb:Task" type="msb:ForceReadOnlyType">
+    <xs:annotation>
+      <xs:documentation>Forces read only files to be writeable</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ForceReadOnlyType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the files to force</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GenerateSolution" substitutionGroup="msb:Task" type="msb:GenerateSolutionType">
+    <xs:annotation>
+      <xs:documentation>Generate a Visual Studio solution from projects</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GenerateSolutionType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="SolutionFile" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to the solution file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="VisualStudioVersion" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the desired Visual Studio version (2008 or 2010)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Projects" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the projects</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PackageWord" substitutionGroup="msb:Task" type="msb:PackageWordType">
+    <xs:annotation>
+      <xs:documentation>Strips information from a word document</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PackageWordType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to the Word files to fix</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the path to write the converted files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PopulateVsixProject" substitutionGroup="msb:Task" type="msb:PopulateVsixProjectType">
+    <xs:annotation>
+      <xs:documentation>Populates a VSIX project file with Content file marked as 'IncludeInVSIX'.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PopulateVsixProjectType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ProjectFile" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the project file to update</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the project file should be overriden even if readonly</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the files to integrate in the project</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PublishSymbols" substitutionGroup="msb:Task" type="msb:PublishSymbolsType">
+    <xs:annotation>
+      <xs:documentation>Creates a request to index symbols on the symbol server. This task copies the symbols to a 'symbols' directory,
+            creates private symbols under 'symbols.pri', then submits them to the symbol server.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PublishSymbolsType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the location of the 'createrelease' script</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Project" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the name of the project</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BuildLabPhone" type="xs:integer" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the lab phone</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ContactPeople" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of owners for this project</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="StatusMail" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the alias to which the status mail is sent to</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BuildID" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the unique build ID. The combination of BuildID-BuildRemark should be unique.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BuildRemark" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the build remark. The combination of BuildID-BuildRemark should be unique.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of symbol files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SymbolDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the parent folder of the symbols, symbols.pri folders</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UserName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the username of the request</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PrefixToStrip" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the prefix to strip from symbol file name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UNCPath" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the path where the symbols will be stored</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Recursive" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the symbols should be indexed recursively</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Archive" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the symbols should be archived on the company server</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Internet" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a avlue indicating whether the symbols should be accessible from the public symbol server (internet).
+            Active when Archive is true; otherwise ignored.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LogDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the log directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RequestFile">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets or sets the request output file name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Staged" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Creates the request but does not submit it</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PdbCopy" substitutionGroup="msb:Task" type="msb:PdbCopyType">
+    <xs:annotation>
+      <xs:documentation>Copies symbols and strips out private information</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PdbCopyType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the full path to pdbcopy.exe. Default is $(SystemDrive)\debuggers\pdbcopy.exe.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SymbolFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of symbol files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PrivateSymbolFiles">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the list of generated private symbol files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Directory" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the directory to copy the file to</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element abstract="true" name="ReleaseServiceTask" substitutionGroup="msb:Task" type="msb:ReleaseServiceTaskType">
+    <xs:annotation>
+      <xs:documentation>Task that uses the CodeBox release service</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReleaseServiceTaskType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ProjectName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the project.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ReleaseServiceUrl" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the release service url</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PlanRelease" substitutionGroup="msb:Task" type="msb:PlanReleaseType">
+    <xs:annotation>
+      <xs:documentation>Creates a planned release on demand and returns the id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PlanReleaseType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:ReleaseServiceTaskType">
+        <xs:attribute name="QualityName" type="msb:ReleaseQualityNameType">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the release quality.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ReleaseId" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the release id.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ReleaseQualityNameType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Alpha">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Beta">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Production">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Draft">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Final">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RenameProjectReferences" substitutionGroup="msb:Task" type="msb:RenameProjectReferencesType">
+    <xs:annotation>
+      <xs:documentation>Updates the path to specific project references.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RenameProjectReferencesType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Projects" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of projects to update</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SourceReferences" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the source references</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DestinationReferences" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the new references</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReplaceText" substitutionGroup="msb:Task" type="msb:ReplaceTextType">
+    <xs:annotation>
+      <xs:documentation>Replace text in files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReplaceTextType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the files to update</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Pattern" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the pattern to look for</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Replacement" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Get or sets the string used to replace</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if ReadOnly files should be overriden.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SiteMap" substitutionGroup="msb:Task" type="msb:SiteMapType">
+    <xs:annotation>
+      <xs:documentation>Generates a sitemap according to http://sitemaps.org/</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SiteMapType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of files to import in the site map</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RootUrl" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the root url domain where files are mapped.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFile" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the name of the generated output file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Forces readonly if output file exists</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepotLabel" substitutionGroup="msb:Task" type="msb:SourceDepotLabelType">
+    <xs:annotation>
+      <xs:documentation>Create a new label</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotLabelType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Source depot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Label" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>the list of files to edit</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Template" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] A file containing a View: description to use for the label</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepotLabelSync" substitutionGroup="msb:Task" type="msb:SourceDepotLabelSyncType">
+    <xs:annotation>
+      <xs:documentation>sd edit a bunch of files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotLabelSyncType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Source depot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Label" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>The label to sync</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpgradeProject" substitutionGroup="msb:Task" type="msb:UpgradeProjectType">
+    <xs:annotation>
+      <xs:documentation>Upgrades a Visual Studio 2008 C# project to Visual Studio 2010</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpgradeProjectType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Project" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the project path</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputProject" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the output project</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpgradeProjects" substitutionGroup="msb:Task" type="msb:UpgradeProjectsType">
+    <xs:annotation>
+      <xs:documentation>Upgrades a list of projects to Visual Studio 2010</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpgradeProjectsType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Projects" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the projects</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FileNameFormatString" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the format string used to create the new project file name (without extension)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputProjects">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets or sets the output project paths</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WixBootstrap" substitutionGroup="msb:Task" type="msb:WixBootstrapType">
+    <xs:annotation>
+      <xs:documentation>Wix installer creating task</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WixBootstrapType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Get or sets the working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WixDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the path to the wix binaries folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Installers" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the installers</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output directory. If not specified, writes the .exe file
+            next to the .msi file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Executables">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the generated executables</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WixRandomizeComponentGuids" substitutionGroup="msb:Task" type="msb:WixRandomizeComponentGuidsType">
+    <xs:annotation>
+      <xs:documentation>Generates new guids and overrides them in wxs files.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WixRandomizeComponentGuidsType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="WixFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of wix files to update</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the output file should be overriden if readonly</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateWixRegistrationComponent" substitutionGroup="msb:Task" type="msb:CreateWixRegistrationComponentType">
+    <xs:annotation>
+      <xs:documentation>Creates a Wix 3.0 file to register Visual Studio addin registry keys.
+            The generated file is Registry hive agnostic.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateWixRegistrationComponentType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the assemblies to analyze</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFile" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the output file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteReleases" substitutionGroup="msb:Task" type="msb:DeleteReleasesType">
+    <xs:annotation>
+      <xs:documentation>Deletes all releases from the specified project 
+            that match the quality name, 
+            but keep the last n number of releases defined.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteReleasesType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:ReleaseServiceTaskType">
+        <xs:attribute name="QualityName" type="msb:ReleaseQualityNameType">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the release quality.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="KeepCount" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the number of release to keep</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateAssemblyInfo" substitutionGroup="msb:Task" type="msb:CreateAssemblyInfoType">
+    <xs:annotation>
+      <xs:documentation>Creates a build number using the current DateTime and
+            the existing drops in the drop path.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateAssemblyInfoType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Version" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the version.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Major" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets or sets the major version</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Minor" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the minor.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Revision" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the generated revision number</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Build" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the generated build number</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Company" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the company.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Product" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the product.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FileHeader" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the file header comment</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Copyright" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the copyright.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CreateVersionFile" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if a version file should be 
+            generated.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether readonly only existing files should
+            be overrided</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FixedAssemblyVersion" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the revision and build number
+            should be ignored for the assembly version, and only used in the assembly file version</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="VersionFileNames">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the version file names</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ManagedCppVersionFileNames">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the name of the managed C++ version files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FSharpVersionFileNames">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the name of the F# version files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UnmanagedVersionFileNames">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the unmanaged version file name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UnmanagedConstantPrefix" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the unmanaged constant prefix.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LatexVersionFileName">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the Latex version filename</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AssemblyVersion" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the assembly version.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AssemblyFileVersion" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the generated assembly file version</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateGuid" substitutionGroup="msb:Task" type="msb:CreateGuidType">
+    <xs:annotation>
+      <xs:documentation>Generates a new guid</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateGuidType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Guid" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Generated Guid value</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the C# file where the guid should be emited. Each file
+            must have a 'Template' metadata attribute that will be used to create
+            the content of the generated string (using String.Format)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ForceReadOnly" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether existing readonly files
+            should be overriden</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateRelease" substitutionGroup="msb:Task" type="msb:CreateReleaseType">
+    <xs:annotation>
+      <xs:documentation>Creates a new release on CodeBox.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateReleaseType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:ReleaseServiceTaskType">
+        <xs:attribute name="Files">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="QualityName" type="msb:ReleaseQualityNameType">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the release quality.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Version" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the version.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Description" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the description.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Public" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether this release will be shown to the public</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="HomePage" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the release is shown on the home page.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Default" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether this becomes the default release.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ReleaseId" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the release id.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateWixComponent" substitutionGroup="msb:Task" type="msb:CreateWixComponentType">
+    <xs:annotation>
+      <xs:documentation>Generates the xml to integrate the files into
+            a Wix installer.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateWixComponentType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="GuidFileName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the xml file containing the existing file guids</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FeatureName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the feature id.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FeatureId" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the feature id.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FeatureTitle" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the feature title.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FeatureLevel" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the feature level.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Conditions" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the feature property conditions.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ConditionLevel" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the condition message.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ComponentGroupId" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Id of the generated component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DirectoryId" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Id of the home directory of the component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PerUser" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] This component is installed in a per-user directory,
+            this requires some special handling.
+            The HKCURootKey and Version properties need to be set as well with this feature</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="HKCURootKey" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the registry root in the HKCU to put registry entries. Required
+            with PerUser option</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Version" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets a string indentifying this installer. Required with PerUser option</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Win64" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the Win64 attribute value</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of files to integrate</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ShortcutExtensions" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] File extension to upgrade to shortcuts</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ShortcutNames" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the shortcut names.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ShortcutDirectoryId" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the shortcut directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ShortcutIcon" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the shortcut icon.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MissingShortcutFormat" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the format string used to create a html shortcut reference
+            when the feature is not installed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MissingShorcutDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the missing shorcut directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DiskId" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the value of the 'DiskId' attribute</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFile" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the output file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteRelease" substitutionGroup="msb:Task" type="msb:DeleteReleaseType">
+    <xs:annotation>
+      <xs:documentation>Creates a new release on CodeBox.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteReleaseType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:ReleaseServiceTaskType">
+        <xs:attribute name="ReleaseIDs" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the release IDs</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DevEnv" substitutionGroup="msb:Task" type="msb:DevEnvType">
+    <xs:annotation>
+      <xs:documentation>Devenv wrapper</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DevEnvType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the path to devenv application</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Solution" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the solution.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ConfigurationName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the name of the configuration.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Action" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the action.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LogFile">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the log file location</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the working directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ErrorLog">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the error log.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RootSuffix" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the root suffix.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Email" substitutionGroup="msb:Task" type="msb:EmailType">
+    <xs:annotation>
+      <xs:documentation>Sends an email</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="EmailType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="SmtpHost" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>SMTP server name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UseDefaultCredentials" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value that controls 
+            whether the DefaultCredentials are sent 
+            with requests.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DeliveryMethod" type="msb:SmtpDeliveryMethodType">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the mail delivery method</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PickupDirectoryLocation" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the folder 
+            where applications save mail messages to 
+            be processed by the local SMTP server.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TimeOut" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Timeout for connecting to smtp server</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="From" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Senders email</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="To" use="required">
+          <xs:annotation>
+            <xs:documentation>List of recipients</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Subject" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Subject of the mail</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Body" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Body of the mail</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IsBodyHtml" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether this instance is body HTML.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SmtpDeliveryMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Network" />
+      <xs:enumeration value="SpecifiedPickupDirectory" />
+      <xs:enumeration value="PickupDirectoryFromIis" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GacUninstall" substitutionGroup="msb:Task" type="msb:GacUninstallType">
+    <xs:annotation>
+      <xs:documentation>Installs or uninstall assemblies in the Global Assembly Cache</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GacUninstallType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="AssemblyNames" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the assemblies.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NoLogo" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Suppresses display of the logo banner</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Silent" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Suppresses display of all output</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ToolPath" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the tool path.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GacUtil" substitutionGroup="msb:Task" type="msb:GacUtilType">
+    <xs:annotation>
+      <xs:documentation>Installs or uninstall assemblies in the Global Assembly Cache</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GacUtilType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the assemblies.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Action" type="msb:GacActionType" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the action</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NoLogo" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Suppresses display of the logo banner</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Silent" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Suppresses display of all output</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ToolPath" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the tool path.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="GacActionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Install">
+        <xs:annotation>
+          <xs:documentation>
+            Install assemblies
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Uninstall">
+        <xs:annotation>
+          <xs:documentation>
+            Uninstall assemblies
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GenerateTaskSchema" substitutionGroup="msb:Task" type="msb:GenerateTaskSchemaType">
+    <xs:annotation>
+      <xs:documentation>A Task that generates a 
+            XSD schema of the tasks in an assembly.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GenerateTaskSchemaType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies" use="required">
+          <xs:annotation>
+            <xs:documentation>List of assemblies</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputPath" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output path for the generated files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Schemas">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the list of path to the generated XSD schema.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TaskListAssemblyFormat" type="msb:TaskListAssemblyFormatTypeType">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating how the assembly is specified in the
+            UsingTask element.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoreDocumentation" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating wheter documentation should be ignored
+            even if available (Default is false).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TaskLists">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the path to the task list if it was generated.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoreMsBuildSchema" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating if the 
+            MsBuild schema inclusing should be ignored</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MsBuildSchema">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the msbuild schema</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Includes">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a list of included schemas</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoredUsingNamespaces" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a list of namespace where the task should be ignored for Using generation</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="TaskListAssemblyFormatTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AssemblyFileName">
+        <xs:annotation>
+          <xs:documentation>
+            Assembly file name (Default)
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AssemblyName">
+        <xs:annotation>
+          <xs:documentation>
+            Assembly Name
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AssemblyFullName">
+        <xs:annotation>
+          <xs:documentation>
+            Assembly fully qualified name
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AssemblyFullPath">
+        <xs:annotation>
+          <xs:documentation>
+            Assembly location
+            </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GenerateTaskWikiDocumentation" substitutionGroup="msb:Task" type="msb:GenerateTaskWikiDocumentationType">
+    <xs:annotation>
+      <xs:documentation>Generates CodePlex wiki documentation for msbuild tasks</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GenerateTaskWikiDocumentationType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies" use="required">
+          <xs:annotation>
+            <xs:documentation>List of assemblies</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputPath" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output path for the generated files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoreDocumentation" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating wheter documentation should be ignored
+            even if available (Default is false).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Pages">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the list of generated wiki pages</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAssemblyName" substitutionGroup="msb:Task" type="msb:GetAssemblyNameType">
+    <xs:annotation>
+      <xs:documentation>Fetches the assembly name, version, culture of managed assemblies etc...
+            Additional metadata:
+               AssemblyName, Version, Culture, PublicKey</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetAssemblyNameType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the assemblies.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AssemblyNames">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the assembly names.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCurrentDirectory" substitutionGroup="msb:Task" type="msb:GetCurrentDirectoryType">
+    <xs:annotation>
+      <xs:documentation>Gets the current directory</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetCurrentDirectoryType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Directory">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the current directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FullPath" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Expands to full path</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetMachineName" substitutionGroup="msb:Task" type="msb:GetMachineNameType">
+    <xs:annotation>
+      <xs:documentation>Gets the machine name</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetMachineNameType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="MachineName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Current machine name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LoggedExec" substitutionGroup="msb:Task" type="msb:LoggedExecType">
+    <xs:annotation>
+      <xs:documentation>Exteneded Exec task that stores the console
+            output to OutputText</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LoggedExecType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="OutputText" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the output text.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Verbose" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value that indicates whether the project output should always be displayed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFile">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="EnvironmentVariables">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the environment variables.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MsiClean" substitutionGroup="msb:Task" type="msb:MsiCleanType">
+    <xs:annotation>
+      <xs:documentation>Uninstalls all products for a given UpgradeCode. 
+            This is an efficient way to remove all side-by-side versions of
+            a product</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MsiCleanType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="UpgradeCodes" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of upgrade codes to remove</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MsiExec" substitutionGroup="msb:Task" type="msb:MsiExecType">
+    <xs:annotation>
+      <xs:documentation>Wrapper around msiexec</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MsiExecType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Install" type="xs:boolean" use="required">
+          <xs:annotation>
+            <xs:documentation>/i or /x</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Installers" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the installers.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Quiet" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] /quiet flag</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Passive" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] /passive</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LogFile">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the log file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Properties">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets additional properties</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element abstract="true" name="ToolTaskBase" substitutionGroup="msb:Task" type="msb:ToolTaskBaseType" />
+  <xs:complexType name="ToolTaskBaseType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MSTest" substitutionGroup="msb:Task" type="msb:MSTestType">
+    <xs:annotation>
+      <xs:documentation>VSTS test command line</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MSTestType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:ToolTaskBaseType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Path to the mstest.exe application</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NoLogo" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Do not display the startup banner and copyright message.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TestContainers">
+          <xs:annotation>
+            <xs:documentation>[Optional] Files containing the tests.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TestMetadata">
+          <xs:annotation>
+            <xs:documentation>[Optional] Load a metadata file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RunConfig">
+          <xs:annotation>
+            <xs:documentation>[Optional] Use the specified run configuration file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ResultsFile">
+          <xs:annotation>
+            <xs:documentation>[Optional] Save the test run results to the specified file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TestLists">
+          <xs:annotation>
+            <xs:documentation>[Optional] The test lists, as specified in the metadata
+            file, to be run.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Tests">
+          <xs:annotation>
+            <xs:documentation>[Optional] The name of tests to be run</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Details">
+          <xs:annotation>
+            <xs:documentation>[Optional] The name of a property that you want to
+            show values for, in addition to the test
+            outcome</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Unique" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Run a test only if one unique match is found for any given /test.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NoIsolation" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Run tests within the MSTest.exe process.
+            This choice improves test run speed but
+            increases risk to the MSTest.exe process.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PatchProjectReferences" substitutionGroup="msb:Task" type="msb:PatchProjectReferencesType">
+    <xs:annotation>
+      <xs:documentation>Removes project reference and replaces by assembly references</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PatchProjectReferencesType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Projects" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of projects to patch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="HintPath" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the hint path for patch references</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ReferencePath" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the reference path.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AssemblyFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the list of assemblies to patch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NodesToRemove">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a set of nodes to remove</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RemovePrePostBuildEvents" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets a value indicating if PreBuildEvent or PostBuildEvent needs to be removed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Policheck" substitutionGroup="msb:Task" type="msb:PolicheckType">
+    <xs:annotation>
+      <xs:documentation>Executes and analyses Policheck 5.0 results</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PolicheckType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the path to devenv application</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the files to process</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Severity" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the severity (0,1)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the output result directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Terms" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the semi-column separated list of term tables. Default 9 (english)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RulesDBPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the path to the exclusion rule database (unless default is used)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Results">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the location of the policheck result files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReadFromFile" substitutionGroup="msb:Task" type="msb:ReadFromFileType">
+    <xs:annotation>
+      <xs:documentation>Read the entire content of a file</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReadFromFileType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="File" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the file name to read</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Content" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the file content</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RegSvr" substitutionGroup="msb:Task" type="msb:RegSvrType">
+    <xs:annotation>
+      <xs:documentation>Register or unregister COM server using regsvr32</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegSvrType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="File" use="required">
+          <xs:annotation>
+            <xs:documentation>server to register/unregister</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Unregsiter" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] value to indicate to register or unresgiter</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RobustDelete" substitutionGroup="msb:Task" type="msb:RobustDeleteType">
+    <xs:annotation>
+      <xs:documentation>Deletes a set of files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RobustDeleteType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Force" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Force readonly files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepot" substitutionGroup="msb:Task" type="msb:SourceDepotType">
+    <xs:annotation>
+      <xs:documentation>Source Depot task wrapper</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Source depot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Action" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Source depot command</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Arguments" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Additional arguments</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputText" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the output text.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepotEdit" substitutionGroup="msb:Task" type="msb:SourceDepotEditType">
+    <xs:annotation>
+      <xs:documentation>sd edit a bunch of files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotEditType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Source depot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>the list of files to edit</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepotSubmit" substitutionGroup="msb:Task" type="msb:SourceDepotSubmitType">
+    <xs:annotation>
+      <xs:documentation>sd edit a bunch of files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotSubmitType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] Source depot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Description" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Change description</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Working directory</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RevertUnchanged" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether [revert unchanged].</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the files. Default '...'</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SourceDepotSync" substitutionGroup="msb:Task" type="msb:SourceDepotSyncType">
+    <xs:annotation>
+      <xs:documentation>Detects if chanages occured</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SourceDepotSyncType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="ToolPath">
+          <xs:annotation>
+            <xs:documentation>[Optional] sourcedepot executable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Working directory to execute the sync</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SynchedChanges" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Output] A value indicating wheter the action synched files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SyncText" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the output of the sync text</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TestExec" substitutionGroup="msb:Task" type="msb:TestExecType">
+    <xs:annotation>
+      <xs:documentation>Enhanced Exec task</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TestExecType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="EnvironmentVariables" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the environment variables. ( name=value)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VerifyCopyrightInAssembly" substitutionGroup="msb:Task" type="msb:VerifyCopyrightInAssemblyType">
+    <xs:annotation>
+      <xs:documentation>A task that ensures that assemblies contains correct copyright</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="VerifyCopyrightInAssemblyType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Assemblies" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the assemblies.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Company" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the company.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Product" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the product.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Copyright" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the copyright.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PublicKeyToken" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the required public key token</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VerifyCopyrightInSource" substitutionGroup="msb:Task" type="msb:VerifyCopyrightInSourceType">
+    <xs:annotation>
+      <xs:documentation>A task that verifies that the copyright header is present
+            in source files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="VerifyCopyrightInSourceType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Copyright" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the copyright.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Sources" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the sources.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element abstract="true" name="WikiTask" substitutionGroup="msb:Task" type="msb:WikiTaskType">
+    <xs:annotation>
+      <xs:documentation>Abstract base class for task operating on a wiki</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WikiTaskType" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="HostName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the name of the host. (default is http://codebox/")</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ProjectName" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the name of the project.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preview" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether the changes are not pushed to the server</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ProjectUrl" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the project URL.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WikiDump" substitutionGroup="msb:Task" type="msb:WikiDumpType">
+    <xs:annotation>
+      <xs:documentation>Dumps a codeplex wiki to disk</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WikiDumpType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:WikiTaskType">
+        <xs:attribute name="ProjectRenderedUrl" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the project link to be included in the generated wiki output</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CopyrightUrl" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the copyright URL.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ProjectDescription" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the project description.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ProjectLogo" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the project logo.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SiteMap" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Generated a sitemap.xml file in the output folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Copyright" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the copyright.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Version" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the version.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="HomePage" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the starting point page</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WikiXml">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the wiki XML.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BrokenLinks" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether a page with broken links should
+            be added</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MissingPages" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether a missing page index
+            should be added</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AllPages" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether a page index should be added</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WikiServiceProviderAssembly">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the wiki service provider assembly.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RendererAssemblies">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a set of assemblies that contains IWikiGraphRenderer implementations</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WikiUpload" substitutionGroup="msb:Task" type="msb:WikiUploadType">
+    <xs:annotation>
+      <xs:documentation>Uploads a list of files to a wiki</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WikiUploadType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:WikiTaskType">
+        <xs:attribute name="Pages" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of pages</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PageNameFormatString" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the format string used to create page name,
+            from the item file name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ParentPageName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the parent page name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Wix" substitutionGroup="msb:Task" type="msb:WixType">
+    <xs:annotation>
+      <xs:documentation>Wix installer creating task</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WixType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="IntermediateDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the directory where intermediate files should be stored</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorkingDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the working directory.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Files" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the list of files</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFile" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the output file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ObjectFiles">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the object files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UseBuiltinExtensions" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether default
+            Wix extensions should be include
+             Util, VS, .Net and UI extensions automatically.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Extensions">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the additional extensions.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Variables">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the additional defined variables.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Cultures" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the cultures. Default is 'en-us'.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TreatWarningAsErrors" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether [treat warning as errors].</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SuppressedWarnings">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the suppressed warnings IDs.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Verbose" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether this  is verbose.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Trace" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating whether to
+            show source trace for errors, warnings, and verbose messages</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="NumberOfThreads" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the number of threads to use when creating cabinets (default: %NUMBER_OF_PROCESSORS%)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="VisualStudioHives">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets the version number of visual studio to lookup Wix</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BaseDirectories">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the list of base directories (/b option)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CandleAdditionalArguments" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets additional arguments to pass to candle</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LightAdditionalArguments" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets additional arguments to pass to light</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Bootstrap" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets a value indicating if the generated installer should be bootstrapped in executables</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputExecutable">
+          <xs:annotation>
+            <xs:documentation>[Output] The bootstraped installers if any</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WixDirectory" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the path to the wix binaries folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WriteProgressToFile" substitutionGroup="msb:Task" type="msb:WriteProgressToFileType">
+    <xs:annotation>
+      <xs:documentation>Write a simple html line in a file with the current progress method</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WriteProgressToFileType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="File" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the file.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Message" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the message.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WriteToFile" substitutionGroup="msb:Task" type="msb:WriteToFileType">
+    <xs:annotation>
+      <xs:documentation>Write a string to disk</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WriteToFileType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="File" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the file name to read</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Content" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets the file content</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Overwrite" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a value indicating wheter the file should be
+            overwritten</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="XslTransform" substitutionGroup="msb:Task" type="msb:XslTransformType">
+    <xs:annotation>
+      <xs:documentation>Applies a XSL stylesheet transform to xml files</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="XslTransformType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="msb:TaskType">
+        <xs:attribute name="Stylesheet" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the stylesheet.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="XmlFiles" use="required">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the XML files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFiles">
+          <xs:annotation>
+            <xs:documentation>[Output] Gets the generated output files.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OutputFileFormatString" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets the output file format string. Default is 
+            '{0}{1}' where
+            {0} explands to the xml file name (without extension)
+            and {1} to the extension (with leading dot) derived from the xsl
+            output type.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Arguments">
+          <xs:annotation>
+            <xs:documentation>[Optional] Gets or sets a semi-column separated list of
+            argument values.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="EnableDocumentFunction" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Enable the document() function</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="EnableScript" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>[Optional] Enable inlined script</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

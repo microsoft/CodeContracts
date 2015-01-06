@@ -1,0 +1,1629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.WorkflowServices</name>
+  </assembly>
+  <members>
+    <member name="T:System.ServiceModel.WorkflowServiceHost">
+      <summary>Provides host for workflow-based services.</summary>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.IO.Stream,System.IO.Stream,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a byte stream that contains the workflow definition, a byte stream that contains the workflow rules definition, and the base addresses of the service specified.</summary>
+      <param name="workflowDefinition">
+        <see cref="T:System.IO.Stream" /> that contains the workflow definition.</param>
+      <param name="ruleDefinition">
+        <see cref="T:System.IO.Stream" /> that contains the workflow rules definition.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.IO.Stream,System.IO.Stream,System.Workflow.ComponentModel.Compiler.ITypeProvider,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a byte stream that contains the workflow definition, a byte stream that contains the workflow rules definition, a type provider for custom activity types, and the base addresses of the service specified.</summary>
+      <param name="workflowDefinition">
+        <see cref="T:System.IO.Stream" /> that contains the workflow definition.</param>
+      <param name="ruleDefinition">
+        <see cref="T:System.IO.Stream" /> that contains the workflow rules definition.</param>
+      <param name="typeProvider">A type provider that implements the <see cref="T:System.Workflow.ComponentModel.Compiler.ITypeProvider" /> interface.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.IO.Stream,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a byte stream that contains the workflow definition and the base addresses of the service specified.</summary>
+      <param name="workflowDefinition">
+        <see cref="T:System.IO.Stream" /> that contains the workflow definition.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.String,System.String,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a path to the workflow definition, a path to the workflow rules definition, and the base addresses of the service specified.</summary>
+      <param name="workflowDefinitionPath">A string that contains the path to the workflow definition file.</param>
+      <param name="ruleDefinitionPath">A string that contains the path to the workflow rules definition file.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.String,System.String,System.Workflow.ComponentModel.Compiler.ITypeProvider,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a path to the workflow definition, a path to the workflow rules definition, a type provider for custom activity types, and the base addresses of the service specified.</summary>
+      <param name="workflowDefinitionPath">A string that contains the path to the workflow definition file.</param>
+      <param name="ruleDefinitionPath">A string that contains the path to the workflow rules definition file.</param>
+      <param name="typeProvider">A type provider that implements the <see cref="T:System.Workflow.ComponentModel.Compiler.ITypeProvider" /> interface.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.String,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a path to the workflow definition and the base addresses of the service specified.</summary>
+      <param name="workflowDefinitionPath">A string that contains the path to the workflow definition file.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.#ctor(System.Type,System.Uri[])">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> class using a workflow type and the base addresses of the service specified.</summary>
+      <param name="workflowType">The <see cref="T:System.Type" /> of the workflow instance.</param>
+      <param name="baseAddress">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.AddServiceEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.String)">
+      <summary>Adds a service endpoint for the workflow service using the specified contract, binding, and endpoint address.</summary>
+      <returns>The <see cref="T:System.ServiceModel.Description.ServiceEndpoint" /> added to the workflow service.</returns>
+      <param name="implementedContract">The <see cref="T:System.Type" /> of contract for the endpoint added.</param>
+      <param name="binding">The <see cref="T:System.ServiceModel.Channels.Binding" /> for the endpoint added.</param>
+      <param name="address">The address for the endpoint added.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="implementedContract" /> is null.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="address" /> is null.</exception>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="T:System.ServiceModel.ServiceContractAttribute" /> not specified for <paramref name="implementedContract" />.</exception>
+      <exception cref="T:System.InvalidOperationException">The workflow service does not implement <paramref name="implementedContract" />.</exception>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.AddServiceEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.String,System.Uri)">
+      <summary>Adds a service endpoint to the workflow service with a specified contract, a binding, an endpoint address, and a URI on which the service listens. </summary>
+      <returns>The <see cref="T:System.ServiceModel.Description.ServiceEndpoint" /> added to the workflow service.</returns>
+      <param name="implementedContract">The <see cref="T:System.Type" /> of contract for the endpoint added.</param>
+      <param name="binding">The <see cref="T:System.ServiceModel.Channels.Binding" /> for the endpoint added.</param>
+      <param name="address">The endpoint address for the service.</param>
+      <param name="listenUri">The <see cref="T:System.Uri" /> on which the service endpoints can listen.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="implementedContract" /> is null.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="address" /> is null.</exception>
+      <exception cref="T:System.InvalidOperationException">The workflow service does not implement <paramref name="implementedContract" />.</exception>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="T:System.ServiceModel.ServiceContractAttribute" /> not specified for <paramref name="implementedContract" />.</exception>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.AddServiceEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.Uri)">
+      <summary>Adds a service endpoint to the workflow service with a specified contract, binding, and URI that contains the endpoint address.</summary>
+      <returns>The <see cref="T:System.ServiceModel.Description.ServiceEndpoint" /> added to the workflow service.</returns>
+      <param name="implementedContract">The <see cref="T:System.Type" /> of contract for the endpoint added.</param>
+      <param name="binding">The <see cref="T:System.ServiceModel.Channels.Binding" /> for the endpoint added.</param>
+      <param name="address">The <see cref="T:System.Uri" /> that contains the address for the endpoint added.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="implementedContract" /> is null.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="address" /> is null.</exception>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="T:System.ServiceModel.ServiceContractAttribute" /> not specified for <paramref name="implementedContract" />.</exception>
+      <exception cref="T:System.InvalidOperationException">The workflow service does not implement <paramref name="implementedContract" />.</exception>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.AddServiceEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.Uri,System.Uri)">
+      <summary>Adds a service endpoint to the workflow service with a specified contract, a binding, a URI that contains the endpoint address, and a URI on which the service listens. </summary>
+      <returns>The <see cref="T:System.ServiceModel.Description.ServiceEndpoint" /> added to the workflow service.</returns>
+      <param name="implementedContract">The <see cref="T:System.Type" /> of contract for the endpoint added.</param>
+      <param name="binding">The <see cref="T:System.ServiceModel.Channels.Binding" /> for the endpoint added.</param>
+      <param name="address">The <see cref="T:System.Uri" /> that contains the address for the endpoint added.</param>
+      <param name="listenUri">The <see cref="T:System.Uri" /> on which the service endpoints can listen.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="implementedContract" /> is null.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="address" /> is null.</exception>
+      <exception cref="T:System.InvalidOperationException">The workflow service does not implement <paramref name="implementedContract" />.</exception>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="T:System.ServiceModel.ServiceContractAttribute" /> not specified for <paramref name="implementedContract" />.</exception>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.CreateDescription(System.Collections.Generic.IDictionary{System.String,System.ServiceModel.Description.ContractDescription}@)">
+      <summary>Creates a description of the workflow service.</summary>
+      <returns>A <see cref="T:System.ServiceModel.Description.ServiceDescription" /> of the workflow service.</returns>
+      <param name="implementedContracts">When this method returns, the <see cref="T:System.Collections.Generic.IDictionary`2" /> object contains the keyed-contracts of the hosted service that have been implemented. </param>
+    </member>
+    <member name="M:System.ServiceModel.WorkflowServiceHost.OnClosing">
+      <summary>This method is called before the <see cref="T:System.ServiceModel.WorkflowServiceHost" /> is put into a closing state.</summary>
+    </member>
+    <member name="T:System.ServiceModel.Activation.WorkflowServiceHostFactory">
+      <summary>Factory that provides instances of <see cref="T:System.ServiceModel.WorkflowServiceHost" /> in managed hosting environments where the host instance is created dynamically in response to incoming messages.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Activation.WorkflowServiceHostFactory.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Activation.WorkflowServiceHostFactory" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Activation.WorkflowServiceHostFactory.CreateServiceHost(System.String,System.Uri[])">
+      <summary>Creates a <see cref="T:System.ServiceModel.WorkflowServiceHost" /> from a string that contains either the file name of the workflow markup file or the type name of the workflow service type and the base address of the service specified.</summary>
+      <returns>A <see cref="T:System.ServiceModel.ServiceHostBase" /> object associated with the workflow service. The default implementation returns a <see cref="T:System.ServiceModel.WorkflowServiceHost" /> object with the specified base addresses.</returns>
+      <param name="constructorString">The file name of the workflow markup file that defines the workflow service or the type name of the workflow service type. </param>
+      <param name="baseAddresses">An array of type <see cref="T:System.Uri" /> that contains the base addresses for the hosted service.</param>
+    </member>
+    <member name="T:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint">
+      <summary>The <see cref="T:System.Activities.DurableInstancing.SqlWorkflowInstanceStore" /> adds a default control endpoint using this class if the &lt;workflowInstanceControl&gt; sub-element in the &lt;sqlWorkflowInstanceStoreBehavior&gt; element is not specified explicitly.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.#ctor">
+      <summary>Initializes an instance of the <see cref="T:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.AddService(System.Object)">
+      <summary>Adds the specified service to the list of run-time services supported by the workflow run-time instance.</summary>
+      <param name="service">The service object that must be added to the list of run-time services.</param>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.GetService``1">
+      <summary>Gets the service object that corresponds to the service type specified as a template parameter.</summary>
+      <returns>The service object that corresponds to the service type.</returns>
+      <typeparam name="T"></typeparam>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.GetService(System.Type)">
+      <summary>Gets the service object for the specified service type from the list of service objects.</summary>
+      <returns>The service object for the specified service type.</returns>
+      <param name="serviceType">The type of the service whose object must retrieved from the list of objects.</param>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.OnGetInstanceId(System.Object[],System.ServiceModel.OperationContext)">
+      <summary>Gets the instance identifier based on the inputs and operation context passed as parameters.</summary>
+      <returns>The instance identifier.</returns>
+      <param name="inputs">The input objects.</param>
+      <param name="operationContext">The operation context information.</param>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.OnResolveBookmark(System.Object[],System.ServiceModel.OperationContext,System.ServiceModel.Activities.WorkflowHostingResponseContext,System.Object@)">
+      <summary>Resolves a bookmark.</summary>
+      <returns>A bookmark.</returns>
+      <param name="inputs">The input objects</param>
+      <param name="operationContext">The operation context information.</param>
+      <param name="responseContext">The response context information.</param>
+      <param name="value">The value object.</param>
+    </member>
+    <member name="M:System.ServiceModel.Activities.Description.WorkflowRuntimeEndpoint.RemoveService(System.Object)">
+      <summary>Removes the specified service from the list of run-time services supported by the workflow run-time instance.</summary>
+      <param name="service">The service object that must be removed from the list of run-time services supported.</param>
+    </member>
+    <member name="T:System.ServiceModel.Configuration.ExtendedWorkflowRuntimeServiceElementCollection">
+      <summary>Represents the collection of configuration elements that represents extended services to be added to the workflow runtime engine.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.ExtendedWorkflowRuntimeServiceElementCollection.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Configuration.ExtendedWorkflowRuntimeServiceElementCollection" /> class. </summary>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.ExtendedWorkflowRuntimeServiceElementCollection.Remove(System.String)">
+      <summary>Removes the configuration element with the specified key from this collection.</summary>
+      <param name="key">The key of the configuration element to be removed.</param>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.ExtendedWorkflowRuntimeServiceElementCollection.Remove(System.Workflow.Runtime.Configuration.WorkflowRuntimeServiceElement)">
+      <summary>Removes the first occurrence of a specific configuration element from the collection.</summary>
+      <param name="serviceSettings">The service configuration element to be removed.</param>
+    </member>
+    <member name="T:System.ServiceModel.Configuration.PersistenceProviderElement">
+      <summary>Represents a persistence service configuration element that specifies the type of the persistence provider implementation to use, as well as the time-out to use for persistence operations. Additional attributes that appear in this element are passed into the constructor for the specified persistence provider.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Configuration.PersistenceProviderElement" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.PersistenceProviderElement.BehaviorType">
+      <summary>Gets the type of behavior. </summary>
+      <returns>A <see cref="T:System.Type" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.CreateBehavior">
+      <summary>Creates a custom behavior based on the settings of this configuration element.</summary>
+      <returns>A custom behavior based on the settings of this configuration element.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.IsModified">
+      <summary>Indicates whether this configuration element has been modified since it was last saved or loaded.</summary>
+      <returns>true if the element has been modified; otherwise, false.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.OnDeserializeUnrecognizedAttribute(System.String,System.String)">
+      <summary>Gets a value that indicates whether an unknown attribute is encountered during deserialization.</summary>
+      <returns>true when an unknown attribute is encountered while deserializing; otherwise, false.</returns>
+      <param name="name">The name of the unrecognized attribute.</param>
+      <param name="value">The value of the unrecognized attribute.</param>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.PersistenceProviderElement.PersistenceOperationTimeout">
+      <summary>Gets or sets the time-out used for persistence operations. </summary>
+      <returns>A <see cref="T:System.Timespan" /> that specifies the time-out used for persistence operations. </returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.PersistenceProviderElement.PersistenceProviderArguments">
+      <summary>Retrieves additional attributes of this <see cref="T:System.ServiceModel.Configuration.PersistenceProviderElement" />.</summary>
+      <returns>A <see cref="T:System.Collections.Specialized.NameValueCollection" /> object that contains additional attributes of this <see cref="T:System.ServiceModel.Configuration.PersistenceProviderElement" />.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.PostDeserialize">
+      <summary>Called after deserialization.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.SerializeElement(System.Xml.XmlWriter,System.Boolean)">
+      <summary>Writes the contents of this configuration element to the configuration file.</summary>
+      <returns>true if any data was actually serialized; otherwise, false. </returns>
+      <param name="writer">The <see cref="T:System.Xml.XmlWriter" /> that is used to write to the configuration file.</param>
+      <param name="serializeCollectionKey">true to serialize only the collection key properties; otherwise, false.</param>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.PersistenceProviderElement.Type">
+      <summary>Gets or sets the type of the persistence provider to be used by the service.</summary>
+      <returns>A <see cref="T:System.Type" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.PersistenceProviderElement.Unmerge(System.Configuration.ConfigurationElement,System.Configuration.ConfigurationElement,System.Configuration.ConfigurationSaveMode)">
+      <summary>Modifies this configuration element object to remove all values that should not be saved.</summary>
+      <param name="sourceElement">A <see cref="T:System.Configuration.ConfigurationElement" /> at the current level containing a merged view of the properties.</param>
+      <param name="parentElement">The parent <see cref="T:System.Configuration.ConfigurationElement" />, or null if this is the top level.</param>
+      <param name="saveMode">A <see cref="T:System.Configuration.ConfigurationSaveMode" /> that determines which property values to include.</param>
+    </member>
+    <member name="T:System.ServiceModel.Configuration.WorkflowRuntimeElement">
+      <summary>Represents a configuration element that specifies settings for an instance of <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> for hosting workflow-based  services.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.WorkflowRuntimeElement.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Configuration.WorkflowRuntimeElement" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.BehaviorType">
+      <summary>Gets the type of this behavior element.</summary>
+      <returns>A <see cref="T:System.Type" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.CachedInstanceExpiration">
+      <summary>Gets or sets a value that specifies the time that a cached instance will expire.</summary>
+      <returns>A <see cref="T:System.Timespan" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.CommonParameters">
+      <summary>Gets the collection of common parameters used by services.</summary>
+      <returns>A NameValueConfigurationCollection that contains common parameters used by services. The default is null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Configuration.WorkflowRuntimeElement.CreateBehavior">
+      <summary>Creates a custom behavior based on the settings of this configuration element.</summary>
+      <returns>A custom behavior based on the settings of this configuration element.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.EnablePerformanceCounters">
+      <summary>Gets or sets whether performance counters are enabled.</summary>
+      <returns>true if performance counters are enabled; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.Name">
+      <summary>Gets or sets the name of the workflow runtime engine.</summary>
+      <returns>A string that contains the name of the workflow runtime engine.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.Properties">
+      <summary>Gets a <see cref="T:System.Configuration.ConfigurationPropertyCollection" /> instance that contains a collection of <see cref="T:System.Configuration.ConfigurationProperty" /> objects that can be attributes or <see cref="T:System.Configuration.ConfigurationElement" /> objects of this configuration element.</summary>
+      <returns>A <see cref="T:System.Configuration.ConfigurationPropertyCollection" /> instance that contains a collection of <see cref="T:System.Configuration.ConfigurationProperty" /> objects that can be attributes or <see cref="T:System.Configuration.ConfigurationElement" /> objects of this configuration element.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.Services">
+      <summary>Gets the collection of services that will be added to the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> engine.</summary>
+      <returns>A <see cref="T:System.Workflow.Runtime.Configuration.WorkflowRuntimeServiceElementCollection" /> that contains the collection of services that will be added to the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> engine.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.ServiceModel.Configuration.WorkflowRuntimeElement.ValidateOnCreate">
+      <summary>Gets or sets a value that indicates whether validation will occur on creation of the workflow instance. </summary>
+      <returns>true if validation will occur on creation; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.ServiceModel.Description.DurableOperationAttribute">
+      <summary>Specifies the local execution behavior of a durable service method.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableOperationAttribute.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Description.DurableOperationAttribute" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableOperationAttribute.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.DurableOperationAttribute" />.</summary>
+      <param name="operationDescription">Not implemented.</param>
+      <param name="bindingParameters">Not implemented.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableOperationAttribute.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.DurableOperationAttribute" />.</summary>
+      <param name="operationDescription">Not implemented.</param>
+      <param name="clientOperation">Not implemented.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableOperationAttribute.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)">
+      <summary>Implements the service-side behavior of the operation.</summary>
+      <param name="operationDescription">The operation description modified to support <see cref="T:System.ServiceModel.Description.DurableOperationAttribute" /> properties.</param>
+      <param name="dispatchOperation">The extensibility point to insert custom service modifications for this operation.</param>
+    </member>
+    <member name="P:System.ServiceModel.Description.DurableOperationAttribute.CanCreateInstance">
+      <summary>Gets or sets a value that indicates whether a new service instance can be created if an activation message is received on this operation. The dispatcher considers messages without an attached instance ID to be activation messages.</summary>
+      <returns>true if a new service instance can be created; otherwise, false.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Description.DurableOperationAttribute.CompletesInstance">
+      <summary>Gets or sets a value that indicates whether the service instance will be unloaded from memory and deleted from persistence once the operation has finished executing.</summary>
+      <returns>true if the instance will be unloaded after the operation has finished executing; otherwise, false.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableOperationAttribute.Validate(System.ServiceModel.Description.OperationDescription)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.DurableOperationAttribute" />.</summary>
+      <param name="operationDescription">Not implemented.</param>
+    </member>
+    <member name="T:System.ServiceModel.Description.DurableServiceAttribute">
+      <summary>Specifies the internal execution behavior of a durable service contract implementation.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableServiceAttribute.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Description.DurableServiceAttribute" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableServiceAttribute.AddBindingParameters(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase,System.Collections.ObjectModel.Collection{System.ServiceModel.Description.ServiceEndpoint},System.ServiceModel.Channels.BindingParameterCollection)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.DurableServiceAttribute" />.</summary>
+      <param name="serviceDescription">Not implemented.</param>
+      <param name="serviceHostBase">Not implemented.</param>
+      <param name="endpoints">Not implemented.</param>
+      <param name="bindingParameters">Not implemented.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableServiceAttribute.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Customizes the service runtime to support durable service behavior properties, such as specifying a <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> for the service.</summary>
+      <param name="serviceDescription">The service description.</param>
+      <param name="serviceHostBase">The service host.</param>
+    </member>
+    <member name="P:System.ServiceModel.Description.DurableServiceAttribute.SaveStateInOperationTransaction">
+      <summary>Gets or sets a value that indicates whether the service instance state is persisted to the <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> using the same transaction under which the operation is run.</summary>
+      <returns>true if the service instance state is persisted using the same transaction; otherwise, false.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Description.DurableServiceAttribute.UnknownExceptionAction">
+      <summary>Gets or sets the <see cref="T:System.ServiceModel.Description.UnknownExceptionAction" /> enumeration value associated with the durable service.</summary>
+      <returns>An <see cref="T:System.ServiceModel.Description.UnknownExceptionAction" /> enumeration value.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Description.DurableServiceAttribute.Validate(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Verifies that all durable operations on the service are set up correctly.</summary>
+      <param name="serviceDescription">The service description.</param>
+      <param name="serviceHostBase">The service host.</param>
+    </member>
+    <member name="T:System.ServiceModel.Description.PersistenceProviderBehavior">
+      <summary>Defines the behavior for a <see cref="T:System.ServiceModel.Persistence.PersistenceProviderFactory" /> associated with a <see cref="T:System.ServiceModel.WorkflowServiceHost" />. </summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.PersistenceProviderBehavior.#ctor(System.ServiceModel.Persistence.PersistenceProviderFactory)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Description.PersistenceProviderBehavior" /> class.</summary>
+      <param name="providerFactory">The <see cref="T:System.ServiceModel.Persistence.PersistenceProviderFactory" /> associated with the behavior object.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.PersistenceProviderBehavior.#ctor(System.ServiceModel.Persistence.PersistenceProviderFactory,System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Description.PersistenceProviderBehavior" /> class.</summary>
+      <param name="providerFactory">The <see cref="T:System.ServiceModel.Persistence.PersistenceProviderFactory" /> associated with the behavior object.</param>
+      <param name="persistenceOperationTimeout">The time-out after which persistence operations performed by persistence providers configured with this object abort.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.PersistenceProviderBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase,System.Collections.ObjectModel.Collection{System.ServiceModel.Description.ServiceEndpoint},System.ServiceModel.Channels.BindingParameterCollection)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.PersistenceProviderBehavior" />.</summary>
+      <param name="serviceDescription">Not implemented.</param>
+      <param name="serviceHostBase">Not implemented.</param>
+      <param name="endpoints">Not implemented.</param>
+      <param name="bindingParameters">Not implemented.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.ServiceModel.Description.PersistenceProviderBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.PersistenceProviderBehavior" />.</summary>
+      <param name="serviceDescription">Not implemented.</param>
+      <param name="serviceHostBase">Not implemented.</param>
+    </member>
+    <member name="P:System.ServiceModel.Description.PersistenceProviderBehavior.PersistenceOperationTimeout">
+      <summary>The timeout after which persistence operations performed by persistence providers configured with this object abort.</summary>
+      <returns>The time-out.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Description.PersistenceProviderBehavior.PersistenceProviderFactory">
+      <summary>The <see cref="T:System.ServiceModel.Persistence.PersistenceProviderFactory" /> associated with the behavior object.</summary>
+      <returns>The provider factory.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Description.PersistenceProviderBehavior.Validate(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.PersistenceProviderBehavior" />.</summary>
+      <param name="serviceDescription">Not implemented.</param>
+      <param name="serviceHostBase">Not implemented.</param>
+    </member>
+    <member name="T:System.ServiceModel.Description.UnknownExceptionAction">
+      <summary>Specifies how a durable service will handle an unknown exception.</summary>
+    </member>
+    <member name="F:System.ServiceModel.Description.UnknownExceptionAction.TerminateInstance">
+      <summary>The service will close all channels and remove its state information from its persistence store.</summary>
+    </member>
+    <member name="F:System.ServiceModel.Description.UnknownExceptionAction.AbortInstance">
+      <summary>The service will abruptly stop and leave existing state information in its persistence store. Any changes to instance state during the operation which threw the unknown exception will be lost.</summary>
+    </member>
+    <member name="T:System.ServiceModel.Description.WorkflowRuntimeBehavior">
+      <summary>Defines the behavior for the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> associated with a <see cref="T:System.ServiceModel.WorkflowServiceHost" />.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.WorkflowRuntimeBehavior.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Description.WorkflowRuntimeBehavior" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Description.WorkflowRuntimeBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase,System.Collections.ObjectModel.Collection{System.ServiceModel.Description.ServiceEndpoint},System.ServiceModel.Channels.BindingParameterCollection)">
+      <summary>Not implemented in <see cref="T:System.ServiceModel.Description.WorkflowRuntimeBehavior" />.</summary>
+      <param name="serviceDescription">Not implemented.</param>
+      <param name="serviceHostBase">Not implemented.</param>
+      <param name="endpoints">Not implemented.</param>
+      <param name="bindingParameters">Not implemented.</param>
+    </member>
+    <member name="M:System.ServiceModel.Description.WorkflowRuntimeBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Configures the workflow service to support the workflow run-time behavior. </summary>
+      <param name="serviceDescription">The service description.</param>
+      <param name="serviceHostBase">The service host.</param>
+    </member>
+    <member name="P:System.ServiceModel.Description.WorkflowRuntimeBehavior.CachedInstanceExpiration">
+      <summary>Gets or sets a value that indicates how long a workflow instance stays in-memory in the idle state before it is forcibly removed from memory.</summary>
+      <returns>A <see cref="T:System.TimeSpan" /> object indicating how long a workflow instance stays in-memory in the idle state before it is forcibly removed from memory.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Description.WorkflowRuntimeBehavior.Validate(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+      <summary>Verifies the scheduling service used for workflow services has been added to the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> object and that the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> object has not started before the call to <see cref="Overload:System.ServiceModel.Channels.CommunicationObject.Open" />.</summary>
+      <param name="serviceDescription">The service description.</param>
+      <param name="serviceHostBase">The service host.</param>
+      <exception cref="T:System.InvalidOperationException">The wrong <see cref="T:System.Workflow.Runtime.Hosting.WorkflowSchedulerService" /> is registered.</exception>
+    </member>
+    <member name="P:System.ServiceModel.Description.WorkflowRuntimeBehavior.WorkflowRuntime">
+      <summary>Gets the <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> associated with a <see cref="T:System.ServiceModel.WorkflowServiceHost" /> instance.</summary>
+      <returns>A <see cref="T:System.Workflow.Runtime.WorkflowRuntime" /> object.</returns>
+    </member>
+    <member name="T:System.ServiceModel.Dispatcher.DurableOperationContext">
+      <summary>Provides a set of static methods to gain access to related information and functionality.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Dispatcher.DurableOperationContext.AbortInstance">
+      <summary>Purges the current durable service instance from memory after the operation has completed.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Dispatcher.DurableOperationContext.CompleteInstance">
+      <summary>Unloads the durable service instance from memory and deletes it from persistence after the operation has completed.</summary>
+    </member>
+    <member name="P:System.ServiceModel.Dispatcher.DurableOperationContext.InstanceId">
+      <summary>Gets the service ID of this service instance.</summary>
+      <returns>A <see cref="T:System.Guid" /> that contains the ID of the service.</returns>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.InstanceLockException">
+      <summary>This exception is intended for use by classes that inherit from <see cref="T:System.ServiceModel.Persistence.LockingPersistenceProvider" /> when the operation cannot be performed because of the state of the instance lock.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.Guid)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="id">The unique identifier of the exception instance.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.Guid,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="id">The unique identifier of the exception instance.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> instance that caused the current exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.Guid,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="id">The unique identifier of the exception instance.</param>
+      <param name="message">The message that describes the current exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.Guid,System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="id">The unique identifier of the exception instance.</param>
+      <param name="message">The message that describes the current exception.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> instance that caused the current exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="message">The message that describes the current exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceLockException" /> class.</summary>
+      <param name="message">The message that describes the current exception.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> instance that caused the current exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceLockException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> with information about the exception. </summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.InstanceLockException.InstanceId">
+      <summary>The unique identifier of the exception instance.</summary>
+      <returns>A <see cref="T:System.Guid" /> that contains the unique identifier of the exception instance.</returns>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.InstanceNotFoundException">
+      <summary>This exception is thrown under the following circumstances: an operation is performed on a durable service instance that has been marked for completion, or a persistence provider created by a <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> attempts to lock, unlock, or otherwise process state data that is not found in the database.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.Guid)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+      <param name="id">The unique identifier associated with this instance.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.Guid,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+      <param name="id">The unique identifier associated with this instance.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> that caused the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" />.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.Guid,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class </summary>
+      <param name="id">The unique identifier associated with this instance.</param>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.Guid,System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class </summary>
+      <param name="id">The unique identifier associated with this instance.</param>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> that caused the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" />.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" />  that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" />  that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> that caused the <see cref="T:System.ServiceModel.Persistence.InstanceNotFoundException" />.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.InstanceNotFoundException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:system.runtime.serialization.SerializationInfo" /> with information about the exception, including the exception <see cref="P:System.ServiceModel.Persistence.InstanceNotFoundException.InstanceId" />.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" />  that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" />  that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.InstanceNotFoundException.InstanceId">
+      <summary>The unique identifier associated with this instance.</summary>
+      <returns>A <see cref="T:System.Guid" /> that contains the unique identifier of the exception instance.</returns>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.LockingPersistenceProvider">
+      <summary>The abstract base class from which all durable service persistence providers that implement locking are derived.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.#ctor(System.Guid)">
+      <summary>When implemented in a derived class, creates a new instance of the <see cref="T:System.ServiceModel.Persistence.LockingPersistenceProvider" /> class, configured with the specified identity value.</summary>
+      <param name="id">The unique identifier to be associated with this persistence provider instance.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginCreate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to create instance state information in the persistence store using the parameters. This method does not unlock the instance after saving the state information.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="instance">The instance whose state information is saved into the persistence store.</param>
+      <param name="timeout">The interval in which the operation must be completed without timing out.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information associated with the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginCreate(System.Object,System.TimeSpan,System.Boolean,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to create instance state information in the persistence store using the parameters. This method unlocks the instance after saving the instance state if the value of the <paramref name="unlockInstance" /> parameter is true.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="instance">The instance whose state information is saved into the persistence store.</param>
+      <param name="timeout">The interval in which the operation must be completed without timing out.</param>
+      <param name="unlockInstance">true if the instance must be unlocked in the persistence store; otherwise false.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information associated with the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginLoad(System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to load an instance based on state information in the persistence store using the parameters. This method does not lock the instance. </summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="timeout">The interval in which the operation must be completed without timing out.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information associated with the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginLoad(System.TimeSpan,System.Boolean,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to load an instance based on state information in the persistence store using the parameters. This method locks the instance after loading the instance state if the value of the <paramref name="lockInstance" /> parameter is true.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="timeout">An interval in which the operation must be completed before timing out.</param>
+      <param name="lockInstance">true if the instance must be locked; otherwise false.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information associated with the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginLoadIfChanged(System.TimeSpan,System.Object,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the LoadIfChanged phase. The LoadIfChanged phase occurs when state data is loaded into the persistence provider from the persistence store and the state data in the persistence store has been changed. This method call does not lock the instance in the persistence store.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this operation.</param>
+      <param name="instanceToken">The token returned by a previous Create or Update method that represents the current state held by the caller.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginLoadIfChanged(System.TimeSpan,System.Object,System.Boolean,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the LoadIfChanged phase. The LoadIfChanged phase occurs when state data is loaded into the persistence provider from the persistence store and the state data in the persistence store has been changed. This method call lets you specify whether you want to lock the instance in the persistence store.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this operation.</param>
+      <param name="instanceToken">The token returned by a previous Create or Update method that represents the current state held by the caller.</param>
+      <param name="lockInstance">true if the instance is locked in the persistence store; otherwise false.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginUnlock(System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to unlock an instance in the persistence store.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="timeout">An interval in which the operation must be completed before timing out.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information associated with the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginUpdate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to update instance state information in the persistence store using the parameters passed. This operation does not unlock the instance in the instance store.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="instance">The instance whose state information is being updated in the persistence store.</param>
+      <param name="timeout">The interval in which the operation must complete without timing out.</param>
+      <param name="callback">The delegate that receives the notification when the operation is completed.</param>
+      <param name="state">The state information about the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.BeginUpdate(System.Object,System.TimeSpan,System.Boolean,System.AsyncCallback,System.Object)">
+      <summary>Begins an asynchronous operation to update instance state information in the persistence store using the parameters passed. This operation locks the instance in the persistence store if the value of the <paramref name="unlockInstance" /> parameter is true.</summary>
+      <returns>The status of an asynchronous operation.</returns>
+      <param name="instance">The instance whose state information is being updated in the persistence store.</param>
+      <param name="timeout">The interval in which the operation must complete without timing out.</param>
+      <param name="unlockInstance">true if the instance must be locked after the instance state is updated in the persistence store; otherwise false.</param>
+      <param name="callback">The delegate that receives the notification when the operation completes.</param>
+      <param name="state">The state information about the asynchronous operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Create(System.Object,System.TimeSpan)">
+      <summary>Creates instance state information in the persistence store using parameters passed into the method. This method does not unlock the instance in the persistence store after saving the instance state.</summary>
+      <returns>The state information.</returns>
+      <param name="instance">The instance object whose state information must be saved into the persistence store.</param>
+      <param name="timeout">The interval in which the operation must complete before timing out.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Create(System.Object,System.TimeSpan,System.Boolean)">
+      <summary>This method creates instance state information in the persistence store using parameters passed into the method. The method unlocks the instance in the instance store if the value of the <paramref name="unlockInstance" /> parameter is true.</summary>
+      <returns>The state information.</returns>
+      <param name="instance">The instance object whose state information is saved into the persistence store.</param>
+      <param name="timeout">The interval within which the operation must complete before timing out.</param>
+      <param name="unlockInstance">true if the instance must be unlocked in the persistence store; otherwise false.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.EndUnlock(System.IAsyncResult)">
+      <summary>Ends the asynchronous operation to unlock an instance in the persistence store.</summary>
+      <param name="result">The result returned by the unlock operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Load(System.TimeSpan)">
+      <summary>Loads service state information from the persistence store without locking the instance.</summary>
+      <returns>The service state information.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Load(System.TimeSpan,System.Boolean)">
+      <summary>Loads state information from the persistence store after locking the instance.</summary>
+      <returns>The state information.</returns>
+      <param name="timeout">The period after which the persistence provider aborts this operation.</param>
+      <param name="lockInstance">true if the instance should be locked; otherwise false.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Boolean,System.Object@)">
+      <summary>Loads the instance state information from the persistence store if the state information has been changed since the last time the information was loaded by the caller. This method also lets the caller specify whether to lock the instance in the persistence store.</summary>
+      <returns>true if the instance should be locked in the persistence store at the end of this operation; otherwise false.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this operation.</param>
+      <param name="instanceToken">The token returned by the previous Create or Update method calls, which represents the current state held by the caller.</param>
+      <param name="lockInstance">true if the instance should be locked in the persistence store at the end of this operation; otherwise false.</param>
+      <param name="instance">The instance state information.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)">
+      <summary>Loads the instance state information from the persistence store if the state information has been changed since the last time the information was loaded by the caller. This method does not lock the instance in the persistence store.</summary>
+      <returns>true if the instance should be locked in the persistence store at the end of this operation; otherwise false.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this operation.</param>
+      <param name="instanceToken">The token returned by the previous Create or Update method calls, which represents the current state held by the caller.</param>
+      <param name="instance">The actual instance state information.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Unlock(System.TimeSpan)">
+      <summary>Unlocks the instance whose ID is specified when constructing the <see cref="T:System.ServiceModel.Persistence.LockingPersistenceProvider" /> object in the persistence store.</summary>
+      <param name="timeout">The time period after which the persistence provider aborts the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Update(System.Object,System.TimeSpan)">
+      <summary>When implemented in a derived class, updates the instance state information in the persistence store. This method does not unlock the instance after updating the instance state information in the persistence store.</summary>
+      <returns>The instance state information.</returns>
+      <param name="instance">The instance state information.</param>
+      <param name="timeout">The time period after which the persistence provider aborts the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.LockingPersistenceProvider.Update(System.Object,System.TimeSpan,System.Boolean)">
+      <summary>When implemented in a derived class, updates the instance state information in the persistence store. This method does not unlock the instance after updating the instance state information in the persistence store.</summary>
+      <returns>The instance state information.</returns>
+      <param name="instance">The instance state information.</param>
+      <param name="timeout">The time period after which the persistence provider aborts the operation.</param>
+      <param name="unlockInstance">true if the instance is unlocked after the instance state information is updated; otherwise false.</param>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.PersistenceException">
+      <summary>This exception is thrown by a <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> when general connectivity errors are encountered. </summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceException" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceException" /> class.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The <see cref="T:System.Exception" /> that caused the <see cref="T:System.ServiceModel.Persistence.PersistenceException" />. </param>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.PersistenceProvider">
+      <summary>The abstract base class from which all durable service persistence providers are derived. </summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.#ctor(System.Guid)">
+      <summary>When implemented in a derived class, initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> class.</summary>
+      <param name="id">The unique identifier of the service state data being saved.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.BeginCreate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the Create phase. The Create phase occurs when service instance records are first created in the persistence store.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.BeginCreate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.BeginDelete(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the Delete phase. The Delete phase occurs when service state data is permanently deleted from the persistence store.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.BeginDelete(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.BeginLoad(System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the Load phase. The Load phase occurs when state data is loaded into the persistence provider from the persistence store.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.BeginLoad(System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.BeginLoadIfChanged(System.TimeSpan,System.Object,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the LoadIfChanged phase. The LoadIfChanged phase occurs when state data is loaded into the persistence provider from the persistence store, and the state data in the persistence store has been changed.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.BeginLoadIfChanged(System.TimeSpan,System.Object,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="instanceToken">The token returned by a previous <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.Create(System.Object,System.TimeSpan)" /> or <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.Update(System.Object,System.TimeSpan)" /> that represents the current state held by the caller.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.BeginUpdate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>When implemented in a derived class, represents the beginning of the Update phase. The Update phase occurs when service state data is updated in the persistence store.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.BeginUpdate(System.Object,System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call. </returns>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.Create(System.Object,System.TimeSpan)">
+      <summary>When implemented in a derived class, creates a service state record in the persistence store.</summary>
+      <returns>The instance token corresponding to the state just saved. This can be passed to <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)" /> to determine whether the state in the persistence store differs from the state when Create was called.</returns>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.Delete(System.Object,System.TimeSpan)">
+      <summary>When implemented in a derived class, permanently deletes service state information from the persistence store.</summary>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.EndCreate(System.IAsyncResult)">
+      <summary>When implemented in a derived class, represents the end of the Create phase. The Create phase occurs when service state records are first created in the persistence store.</summary>
+      <returns>The instance token corresponding to the state just saved. This can be passed to <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)" /> to determine whether the state in the persistence store differs from the state when Create was called.</returns>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.EndDelete(System.IAsyncResult)">
+      <summary>When implemented in a derived class, represents the end of the Delete phase. The Delete phase occurs when state data is permanently deleted from the persistence store.</summary>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.EndLoad(System.IAsyncResult)">
+      <summary>When implemented in a derived class, represents the end of the Load phase. The Load phase occurs when state data is loaded into the persistence provider from the persistence store.</summary>
+      <returns>The service state information.</returns>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.EndLoadIfChanged(System.IAsyncResult,System.Object@)">
+      <summary>When implemented in a derived class, represents the end of the LoadIfChanged phase. The LoadIfChanged phase occurs when state data is loaded into the persistence provider from the persistence store, and the state data in the persistence store has been changed.</summary>
+      <returns>true if the instance out parameter has been set with the latest copy from the persistence store; false if the locally cached state is already up-to-date.</returns>
+      <param name="result">A reference to the result of the operation.</param>
+      <param name="instance">The actual instance state.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.EndUpdate(System.IAsyncResult)">
+      <summary>Represents the end of the Update phase. The Update phase occurs when service state records are updated in the persistence store.</summary>
+      <returns>The instance token corresponding to the state just saved. This can be passed to <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)" /> to determine whether the state in the persistence store differs from the state when Create was called.</returns>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.PersistenceProvider.Id">
+      <summary>Represents the <see cref="T:System.Guid" /> associated with this instance.</summary>
+      <returns>The GUID associated with this instance.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.Load(System.TimeSpan)">
+      <summary>When implemented in a derived class, loads service state information from the persistence store.</summary>
+      <returns>The loaded instance state.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)">
+      <summary>When implemented in a derived class, loads service state information from the persistence store if that data has been changed.</summary>
+      <returns>true if the <paramref name="instance" />out parameter has been set with the latest copy from the persistence store; false if the locally cached state is already up to date.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="instanceToken">The token returned by a previous <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.Create(System.Object,System.TimeSpan)" /> or <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.Update(System.Object,System.TimeSpan)" />, which represents the current state held by the caller.</param>
+      <param name="instance">The actual instance state.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProvider.Update(System.Object,System.TimeSpan)">
+      <summary>When implemented in a derived class, updates service state records in the persistence store.</summary>
+      <returns>The instance token corresponding to the state just saved. This can be passed to <see cref="M:System.ServiceModel.Persistence.PersistenceProvider.LoadIfChanged(System.TimeSpan,System.Object,System.Object@)" /> to determine whether the state in the persistence store differs from the state when Create was called.</returns>
+      <param name="instance">The actual instance state.</param>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.PersistenceProviderFactory">
+      <summary>The abstract class from which all durable service persistence providers must inherit.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProviderFactory.#ctor">
+      <summary>When implemented in a derived class, initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> class.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.PersistenceProviderFactory.CreateProvider(System.Guid)">
+      <summary>When implemented in a derived class, initializes a new <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> instance.</summary>
+      <returns>A <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" /> object.</returns>
+      <param name="id">The unique identifier of the persistence provider being created.</param>
+    </member>
+    <member name="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory">
+      <summary>A system-provided <see cref="T:System.ServiceModel.Persistence.PersistenceProviderFactory" /> implementation used to create a <see cref="T:System.ServiceModel.Persistence.LockingPersistenceProvider" /> instance that uses a SQL database to store persisted service state data.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.#ctor(System.Collections.Specialized.NameValueCollection)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> class, configured with the specified parameter collection.</summary>
+      <param name="parameters">The collection of parameters used by the new persistence provider factory. Valid parameters include lockTimeout, connectionStringName, and serializeAsText.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> class, configured with the specified connection string.</summary>
+      <param name="connectionString">The connection parameters for the new persistence provider instance.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.#ctor(System.String,System.Boolean)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> class, configured with the specified connection string and serializeAsText parameters.</summary>
+      <param name="connectionString">The connection parameters for the new persistence provider instance.</param>
+      <param name="serializeAsText">Specifies whether data is serialized as text rather than binary.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.#ctor(System.String,System.Boolean,System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Persistence.SqlPersistenceProviderFactory" /> class, configured with the specified connection string, serializeAsText, and lockTimeout parameters.</summary>
+      <param name="connectionString">The connection parameters for the new persistence provider factory instance.</param>
+      <param name="serializeAsText">Specifies whether data is serialized as text rather than binary.</param>
+      <param name="lockTimeout">The time-out for lock ownership. Locked instances are automatically unlocked after this time period. A time-out of TimeSpan.Zero specifies that no locking is used.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.ConnectionString">
+      <summary>Gets the connection parameters for persistence provider instances created with this factory.</summary>
+      <returns>The connection parameters for persistence provider instances created with this factory.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.CreateProvider(System.Guid)">
+      <summary>Initializes a new <see cref="T:System.ServiceModel.Persistence.LockingPersistenceProvider" /> instance that uses a SQL database as its persistence store.</summary>
+      <returns>A newly-created <see cref="T:System.ServiceModel.Persistence.PersistenceProvider" />.</returns>
+      <param name="id">The unique identifier of the persistence provider being created.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.DefaultCloseTimeout">
+      <summary>Gets the default time-out value used when persistence providers created with this factory are closed.</summary>
+      <returns>The default time-out value.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.DefaultOpenTimeout">
+      <summary>Gets the default time-out value used when persistence provider is opened.</summary>
+      <returns>The default time-out value.</returns>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.LockTimeout">
+      <summary>The time-out for lock ownership used by persistence provider instances created by this instance. Locked instances are automatically unlocked after this time period. </summary>
+      <returns>The time-out value for lock ownership.</returns>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnAbort">
+      <summary>Represents the Abort phase.</summary>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnBeginClose(System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Represents the beginning of the Close phase.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnBeginClose(System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnBeginOpen(System.TimeSpan,System.AsyncCallback,System.Object)">
+      <summary>Represents the beginning of the Open phase.</summary>
+      <returns>The state of the <see cref="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnBeginOpen(System.TimeSpan,System.AsyncCallback,System.Object)" /> asynchronous method call.</returns>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+      <param name="callback">The method to be called when the operation is completed.</param>
+      <param name="state">A user-provided object that distinguishes this particular asynchronous operation from other operations.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnClose(System.TimeSpan)">
+      <summary>Represents the Close phase.</summary>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnEndClose(System.IAsyncResult)">
+      <summary>Represents the end of the Close phase.</summary>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnEndOpen(System.IAsyncResult)">
+      <summary>Represents the end of the Open phase.</summary>
+      <param name="result">A reference to the result of the operation.</param>
+    </member>
+    <member name="M:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.OnOpen(System.TimeSpan)">
+      <summary>Represents the Open phase.</summary>
+      <param name="timeout">The time period after which the persistence provider aborts this attempt.</param>
+    </member>
+    <member name="P:System.ServiceModel.Persistence.SqlPersistenceProviderFactory.SerializeAsText">
+      <summary>Specifies whether data is serialized as text rather than binary in persistence providers created with this factory.</summary>
+      <returns>true if the service information is serialized as text; otherwise, false.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.ChannelToken">
+      <summary>Used by a <see cref="T:System.Workflow.Activities.SendActivity" /> to associate itself with a client-side channel.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ChannelToken.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.ChannelToken" /> class.</summary>
+    </member>
+    <member name="P:System.Workflow.Activities.ChannelToken.EndpointName">
+      <summary>Gets or sets the custom address used to communicate with a service.</summary>
+      <returns>A string representing the custom address used to communicate with a service.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ChannelToken.Name">
+      <summary>The name of this <see cref="T:System.Workflow.Activities.ChannelToken" /> instance.</summary>
+      <returns>A string representing the name of this instance.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ChannelToken.OwnerActivityName">
+      <summary>The name of the <see cref="T:System.Workflow.ComponentModel.Activity" /> associated with this instance.</summary>
+      <returns>A string representing the name of the activity associated with this instance.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.ContextToken">
+      <summary>Represents a token that can be used to specify the context that should be used to correlate the exchange between a <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity and the client that the activity is communicating with.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ContextToken.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.ContextToken" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ContextToken.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.ContextToken" /> class.</summary>
+      <param name="name">The name of the new instance.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.ContextToken.Name">
+      <summary>Gets or sets the name of this instance.</summary>
+      <returns>A string that represents the name of this instance.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ContextToken.OwnerActivityName">
+      <summary>Gets or sets the name of the <see cref="T:System.Workflow.ComponentModel.Activity" /> associated with this context token.</summary>
+      <returns>A string that represents the name of the activity associated with this context token.</returns>
+    </member>
+    <member name="F:System.Workflow.Activities.ContextToken.RootContextName">
+      <summary>A constant string that represents the root context. The value of this string is "(RootContext)".</summary>
+    </member>
+    <member name="T:System.Workflow.Activities.OperationInfo">
+      <summary>Represents the information for a contract operation defined in a workflow service.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfo.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationInfo" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfo.Clone">
+      <summary>Creates a copy of the object.</summary>
+      <returns>The copy of the <see cref="T:System.Workflow.Activities.OperationInfo" /> object.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfo.ContractName">
+      <summary>Gets or sets the full name of the contract that defines this operation.</summary>
+      <returns>A string that represents the full name of the contract that defines the operation.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfo.Equals(System.Object)">
+      <summary>Determines whether two object instances are equal.</summary>
+      <returns>true to indicate that the current <see cref="T:System.Workflow.Activities.OperationInfo" /> and <paramref name="obj" /> are equal; otherwise, false.</returns>
+      <param name="obj">The object to compare with the current <see cref="T:System.Workflow.Activities.OperationInfo" />.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfo.GetHashCode">
+      <summary>Returns a hash code for the current <see cref="T:System.Workflow.Activities.OperationInfo" />. </summary>
+      <returns>A hash code for this instance.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfo.HasProtectionLevel">
+      <summary>Gets information on whether or not the operation has a defined <see cref="T:System.Net.Security.ProtectionLevel" />. </summary>
+      <returns>A Boolean value indicating whether or not the operation has a <see cref="T:System.Net.Security.ProtectionLevel" /> associated with it.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfo.IsOneWay">
+      <summary>Gets or sets information on the operation to specify that communication between the service and a client is one-way.</summary>
+      <returns>true if the operation supports one-way communication; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfo.Parameters">
+      <summary>Gets a collection of <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> objects that represents the parameter definitions used by the operation.</summary>
+      <returns>A collection of <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> objects that represents the parameter definitions used by the operation when called by a client.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfo.ProtectionLevel">
+      <summary>Gets or sets the <see cref="T:System.Net.Security.ProtectionLevel" /> of an operation.</summary>
+      <returns>A <see cref="T:System.Net.Security.ProtectionLevel" /> object used by the operation.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfo.ToString">
+      <summary>Provides a string that represents this instance.</summary>
+      <returns>A string that represents this instance.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.OperationInfoBase">
+      <summary>The base class used for storing information for a contract operation defined in a workflow service.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.#ctor">
+      <summary>When implemented in a derived class, initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationInfoBase" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.Clone">
+      <summary>When implemented in a derived class, creates a deep copy of the <see cref="T:System.Workflow.Activities.OperationInfoBase" /> instance.</summary>
+      <returns>The copy of the <see cref="T:System.Workflow.Activities.OperationInfoBase" /> object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.Equals(System.Object)">
+      <summary>Determines if the specified <see cref="T:System.object" /> is equal to the current instance.</summary>
+      <returns>True if <paramref name="obj" /> is equal, otherwise False.</returns>
+      <param name="obj">The object to compare with the current instance.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetContractFullName(System.IServiceProvider)">
+      <summary>Returns the full name of the contract that implements this operation. </summary>
+      <returns>A string representing the full name of the contract that implements this operation.</returns>
+      <param name="provider">The service provider associated with this operation.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetContractType(System.IServiceProvider)">
+      <summary>Returns the type of the contract associated with this operation.</summary>
+      <returns>A <see cref="T:System.Type" /> object representing the type of the contract associated with this operation.</returns>
+      <param name="provider">The service provider associated with this operation.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetHashCode">
+      <summary>Generates a number corresponding to the value of the object to support the use of a hash table.</summary>
+      <returns>An <see cref="T:System.Int32" /> representing the hash code value of the object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetIsOneWay(System.IServiceProvider)">
+      <summary>true if this operation is one-way, false if it is two-way.</summary>
+      <returns>true if this operation is one-way, false if it is two-way.</returns>
+      <param name="provider">The service provider associated with this operation.  </param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetMethodInfo(System.IServiceProvider)">
+      <summary>Gets the <see cref="T:System.Reflection.MethodInfo" /> associated with the operation.</summary>
+      <returns>A <see cref="T:System.Reflection.MethodInfo" /> object containing details of the operation.</returns>
+      <param name="provider">The service provider associated with this operation.  </param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationInfoBase.GetParameters(System.IServiceProvider)">
+      <summary>Gets the collection of parameters associated with the operation.</summary>
+      <returns>An <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" /> object containing details about the parameters of the operation.</returns>
+      <param name="provider">The service provider associated with this operation.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfoBase.Name">
+      <summary>When implemented in a derived class, gets or sets the name associated with this instance.</summary>
+      <returns>A string representing the object's name.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfoBase.PrincipalPermissionName">
+      <summary>Gets or sets the user name associated with the security context of the operation.</summary>
+      <returns>A string representing the user name associated with the security context of the operation.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationInfoBase.PrincipalPermissionRole">
+      <summary>Gets or sets the user role (e.g. Administrator) associated with the security context of the operation.</summary>
+      <returns>A string representing the user role associated with the security context of the operation.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Workflow.Activities.OperationParameterInfo">
+      <summary>Contains information about an operation parameter.  </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfo.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfo.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> class.</summary>
+      <param name="parameterName">Represents the parameter name.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.Attributes">
+      <summary>Gets or sets the attributes of the associated operation parameter.</summary>
+      <returns>The <see cref="T:System.Reflection.ParameterAttributes" /> of the associated operation parameter.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Workflow.Activities.OperationParameterInfo.AttributesProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.OperationParameterInfo.Attributes" /> property.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfo.Clone">
+      <summary>Creates a shallow copy of the <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> instance.</summary>
+      <returns>The copy of the object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfo.Equals(System.Object)">
+      <summary>Determines whether two <see cref="T:System.Object" /> instances are equal.</summary>
+      <returns>true if <paramref name="obj" /> is equal, otherwise false.</returns>
+      <param name="obj">The <see cref="T:System.Object" /> to compare with the current object.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfo.GetHashCode">
+      <summary>Generates a number corresponding to the value of the object to support the use of a hash table.</summary>
+      <returns>An <see cref="T:System.Int32" /> representing the hash code value of the object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.IsIn">
+      <summary>true if the associated operation parameter is an In parameter; otherwise false.</summary>
+      <returns>true if the associated operation parameter is an In parameter; otherwise false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.IsLcid">
+      <summary>true if the associated operation parameter is a locale identifier; otherwise false.</summary>
+      <returns>true if the associated operation parameter is a locale identifier; otherwise false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.IsOptional">
+      <summary>true if the associated operation parameter is an optional parameter; otherwise false.</summary>
+      <returns>true if the associated operation parameter is an optional parameter; otherwise false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.IsOut">
+      <summary>true if the associated operation parameter is an Out parameter; otherwise false.</summary>
+      <returns>true if the associated operation parameter is an Out parameter; otherwise false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.IsRetval">
+      <summary>true if the associated operation parameter is the return value for the operation; otherwise false.</summary>
+      <returns>true if the associated operation parameter is the return value for the operation; otherwise false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.Name">
+      <summary>Gets or sets the name of the associated operation parameter.</summary>
+      <returns>A string representing the name of the associated operation parameter.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Workflow.Activities.OperationParameterInfo.NameProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.OperationParameterInfo.Name" /> property.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.ParameterType">
+      <summary>Gets or sets the type of the associated operation parameter.</summary>
+      <returns>A <see cref="T:System.Type" /> object representing the type of the associated operation parameter.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Workflow.Activities.OperationParameterInfo.ParameterTypeProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.OperationParameterInfo.ParameterType" /> property.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfo.Position">
+      <summary>Gets or sets the signature position of the associated operation parameter.</summary>
+      <returns>An <see cref="T:System.Int32" /> representing the signature position of the associated operation parameter.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Workflow.Activities.OperationParameterInfo.PositionProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.OperationParameterInfo.Position" /> property.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Workflow.Activities.OperationParameterInfoCollection">
+      <summary>A collection of <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> objects.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.#ctor(System.Workflow.Activities.OperationInfoBase)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" /> class.</summary>
+      <param name="owner">The <see cref="T:System.Workflow.Activities.OperationInfoBase" /> that uses this collection to define parameter information for the service operation that it represents.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.Add(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Adds an <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to the end of the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <param name="item">The <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to be added.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.Clear">
+      <summary>Removes all elements from the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.Contains(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Determines whether an element is in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <returns>true if <paramref name="item" /> is found in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />, otherwise false.</returns>
+      <param name="item">The item to search for. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.Count">
+      <summary>Gets the number of elements contained in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <returns>An <see cref="T:System.Int32" /> representing the number of elements contained in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.GetEnumerator">
+      <summary>Returns an enumerator that can iterate through the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />. </summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can iterate through the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.IndexOf(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Returns the zero-based index of the first occurrence of an <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> object in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <returns>An <see cref="T:System.Int32" /> representing the zero-based index of the first occurrence of an <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> object in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</returns>
+      <param name="item">The <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to locate in the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.Insert(System.Int32,System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Inserts an <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> into the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" /> at the specified index.</summary>
+      <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+      <param name="item">The <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to insert.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.Item(System.Int32)">
+      <summary>Gets or sets the element at the specified index.  In C#, this property is the indexer for the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" /> class.</summary>
+      <returns>An <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> object representing the element at the specified index.</returns>
+      <param name="index">The array index of the requested element.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.Item(System.String)">
+      <summary>Gets or sets the element with the specified key.</summary>
+      <returns>An <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> object representing the element with the specified key.</returns>
+      <param name="key">The key value of the requested element.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.Remove(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Removes the first occurrence of a specific <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> from the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <returns>true if the item was successfully removed, otherwise false.</returns>
+      <param name="item">The <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to remove.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.RemoveAt(System.Int32)">
+      <summary>Removes the element at the specified index of the <see cref="T:System.Workflow.Activities.OperationParameterInfoCollection" />.</summary>
+      <param name="index">The zero-based index of the <see cref="T:System.Workflow.Activities.OperationParameterInfo" /> to remove.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#Add(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Adds an item to the ICollection&lt;T&gt;.</summary>
+      <param name="item">The object to add to the ICollection&lt;T&gt;.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#Clear">
+      <summary>Removes all items from the ICollection&lt;T&gt;.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#Contains(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Determines whether the ICollection&lt;T&gt; contains a specific value.</summary>
+      <returns>true if <paramref name="item" /> is found in the ICollection&lt;T&gt;; otherwise, false.</returns>
+      <param name="item">The object to locate in the ICollection&lt;T&gt;.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#CopyTo(System.Workflow.Activities.OperationParameterInfo[],System.Int32)">
+      <summary>Copies the elements of the ICollection&lt;T&gt; to an Array, starting at a particular Array index.</summary>
+      <param name="array">The one-dimensional Array that is the destination of the elements copied from ICollection&lt;T&gt;. The Array must have zero-based indexing.</param>
+      <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#Count">
+      <summary>Gets the number of elements contained in the ICollection&lt;T&gt;.</summary>
+      <returns>The number of elements contained in the ICollection&lt;T&gt;.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#IsReadOnly">
+      <summary>Gets a value indicating whether the ICollection&lt;T&gt; is read-only.</summary>
+      <returns>true if the ICollection&lt;T&gt; is read-only; otherwise,  false.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#ICollection{T}#Remove(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Removes the first occurrence of a specific object from the ICollection&lt;T&gt;.</summary>
+      <returns>true if <paramref name="item" /> was successfully removed from the ICollection&lt;T&gt;; otherwise, false. This method also returns false if <paramref name="item" /> is not found in the original ICollection&lt;T&gt;.</returns>
+      <param name="item">The object to remove from the ICollection&lt;T&gt;.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
+      <summary>Returns an enumerator that iterates through the collection.</summary>
+      <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" />that can be used to iterate through the collection.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#IList{T}#IndexOf(System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Determines the index of a specific item in the IList&lt;T&gt;.</summary>
+      <returns>The index of <paramref name="item " />if found in the list; otherwise, -1.</returns>
+      <param name="item">The object to locate in the IList&lt;T&gt;.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#IList{T}#Insert(System.Int32,System.Workflow.Activities.OperationParameterInfo)">
+      <summary>Inserts an item to the IList&lt;T&gt; at the specified index.</summary>
+      <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+      <param name="item">The object to insert into the IList&lt;T&gt;.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#IList{T}#Item(System.Int32)">
+      <summary>Gets or sets the element at the specified index.</summary>
+      <returns>The element at the specified index.</returns>
+      <param name="index">The zero-based index of the element to get or set.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#Generic#IList{T}#RemoveAt(System.Int32)">
+      <summary>Removes the IList&lt;T&gt; item at the specified index.</summary>
+      <param name="index">The zero-based index of the item to remove.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>Copies the elements of the ICollection to an Array, starting at a particular Array index.</summary>
+      <param name="array">The one-dimensional Array that is the destination of the elements copied from ICollection. The Array must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#ICollection#IsSynchronized">
+      <summary>Gets a value indicating whether access to the ICollection is synchronized (thread safe).</summary>
+      <returns>true if access to the ICollection is synchronized (thread safe); otherwise,  false.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#ICollection#SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the ICollection.</summary>
+      <returns>An object that can be used to synchronize access to the ICollection.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IEnumerable#GetEnumerator">
+      <summary>Returns an enumerator that iterates through a collection.</summary>
+      <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Add(System.Object)">
+      <summary>Adds an item to the IList.</summary>
+      <returns>The position into which the new element was inserted, or -1 to indicate that the item was not inserted into the collection.</returns>
+      <param name="value">The object to add to the IList.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Clear">
+      <summary>Removes all items from the IList.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Contains(System.Object)">
+      <summary>Determines whether the IList contains a specific value.</summary>
+      <returns>true if the Object is found in the IList; otherwise,  false.</returns>
+      <param name="value">The object to locate in the IList.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#IndexOf(System.Object)">
+      <summary>Determines the index of a specific item in the IList.</summary>
+      <returns>The index of <paramref name="value" /> if found in the list; otherwise, -1.</returns>
+      <param name="value">The object to locate in the IList.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Insert(System.Int32,System.Object)">
+      <summary>Inserts an item to the IList at the specified index.</summary>
+      <param name="index">The zero-based index at which <paramref name="value" /> should be inserted.</param>
+      <param name="value">The object to insert into the IList.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#IsFixedSize">
+      <summary>Gets a value indicating whether the IList has a fixed size.</summary>
+      <returns>true if the IList has a fixed size; otherwise,  false.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#IsReadOnly">
+      <summary>Gets a value indicating whether the IList is read-only.</summary>
+      <returns>true if the IList is read-only; otherwise,  false.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Item(System.Int32)">
+      <summary>Gets or sets the element at the specified index.</summary>
+      <returns>The element at the specified index.</returns>
+      <param name="index">The zero-based index of the element to get or set.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationParameterInfoCollection.System#Collections#IList#Remove(System.Object)">
+      <summary>Removes the first occurrence of a specific object from the IList.</summary>
+      <param name="value">The object to remove from the IList.</param>
+    </member>
+    <member name="T:System.Workflow.Activities.OperationValidationEventArgs">
+      <summary>Provides data for the <see cref="E:System.Workflow.Activities.ReceiveActivity.OperationValidation" /> event.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.OperationValidationEventArgs.#ctor(System.Collections.ObjectModel.ReadOnlyCollection{System.IdentityModel.Claims.ClaimSet})">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.OperationValidationEventArgs" /> class.</summary>
+      <param name="claimSets">The collection of <see cref="T:System.IdentityModel.Claims.ClaimSet" /> objects that contains the claims that have been added to the operation's authorization context.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationValidationEventArgs.ClaimSets">
+      <summary>The collection of <see cref="T:System.IdentityModel.Claims.ClaimSet" /> objects that contains the claims that have been added to the operation's authorization context.</summary>
+      <returns>The collection of <see cref="T:System.IdentityModel.Claims.ClaimSet" /> objects that contains the claims that have been added to the operation's authorization context.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.OperationValidationEventArgs.IsValid">
+      <summary>true if the operation is valid; false otherwise.</summary>
+      <returns>true if the operation is valid; false otherwise.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.ReceiveActivity">
+      <summary>Service activity that implements an operation defined by a  service contract.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> class, initializing its <see cref="P:System.Workflow.ComponentModel.Activity.Name" /> property.</summary>
+      <param name="name">The name to assign to the activity instance.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.CanCreateInstance">
+      <summary>Gets or sets whether the operation causes a new workflow service instance to be created.</summary>
+      <returns>true if a new workflow instance is created; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.Context">
+      <summary>Gets the context information for this activity.</summary>
+      <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> object that contains context information for this activity.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.ContextToken">
+      <summary>Represents a token that can be used to specify the context that should be used to correlate the exchange between a <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity and the client that the activity is communicating with.</summary>
+      <returns>A <see cref="T:System.Workflow.Activities.ContextToken" /> that can be used for correlation.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.FaultMessage">
+      <summary>The exception that is returned when a receive activity completes execution.</summary>
+      <returns>A <see cref="T:System.ServiceModel.FaultException" /> object that contains the fault message text and details.</returns>
+    </member>
+    <member name="F:System.Workflow.Activities.ReceiveActivity.FaultMessageProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.ReceiveActivity.FaultMessage" /> property.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.GetContext(System.Workflow.ComponentModel.Activity,System.String,System.String)">
+      <summary>Static method that returns context information given an activity instance and context token.</summary>
+      <returns>A dictionary-based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values.</returns>
+      <param name="activity">Activity instance that context information is requested for.</param>
+      <param name="contextName">Name of the context token used by the activity.</param>
+      <param name="ownerActivityName">The name of the owning activity name.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.GetContext(System.Workflow.ComponentModel.Activity,System.Workflow.Activities.ContextToken)">
+      <summary>Static method that returns context information given an activity instance and context token.</summary>
+      <returns>A dictionary based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values.</returns>
+      <param name="activity">Activity instance that context information is requested for.</param>
+      <param name="contextToken">The context token used by the activity.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.GetRootContext(System.Workflow.ComponentModel.Activity)">
+      <summary>Static method that returns context information for the root context associated with a given activity instance. Context information is used for communication between a host application and the workflow service.</summary>
+      <returns>A dictionary-based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values that represent context information for a root context. Barring custom instance creation logic, the message that triggers creation of a new instance is received in the root context.</returns>
+      <param name="activity">The child activity instance.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.GetWorkflowServiceAttributes(System.Object)">
+      <summary>Returns the <see cref="T:System.Workflow.Activities.WorkflowServiceAttributes" /> attributes for the service implemented by the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity. These attributes include items like the <see cref="P:System.Workflow.Activities.WorkflowServiceAttributes.AddressFilterMode" />, the <see cref="P:System.Workflow.Activities.WorkflowServiceAttributes.ConfigurationName" />, the <see cref="P:System.Workflow.Activities.WorkflowServiceAttributes.IncludeExceptionDetailInFaults" />, and whether to include exception details in any faults that are returned from the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity.</summary>
+      <returns>A <see cref="T:System.Object" /> that represents a <see cref="T:System.Workflow.Activities.WorkflowServiceAttributes" /> object that contains service attribute data.</returns>
+      <param name="dependencyObject">The object to retrieve the service attributes from.</param>
+    </member>
+    <member name="E:System.Workflow.Activities.ReceiveActivity.OperationValidation">
+      <summary>Occurs when a message is received for an operation and validation is required.</summary>
+    </member>
+    <member name="F:System.Workflow.Activities.ReceiveActivity.OperationValidationEvent">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="E:System.Workflow.Activities.ReceiveActivity.OperationValidation" /> event.</summary>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.ParameterBindings">
+      <summary>Gets the collection of bindable parameters as found in the service's formal parameter list.</summary>
+      <returns>The <see cref="T:System.Workflow.ComponentModel.WorkflowParameterBindingCollection" /> of parameters to bind to.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.ServiceOperationInfo">
+      <summary>Defines the contract and service operation that the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity implements.</summary>
+      <returns>An <see cref="T:System.Workflow.Activities.OperationInfoBase" /> object that contains the contract name, the contract type, the operation name, (which could be distinct from method name), whether the operation is a one-way operation, and method information including parameters about the operation.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.SetWorkflowServiceAttributes(System.Object,System.Object)">
+      <summary>Sets the attributes for the service implemented by the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity. These attributes include items like the <see cref="P:System.Workflow.Activities.WorkflowServiceAttributes.AddressFilterMode" />, the <see cref="P:System.Workflow.Activities.WorkflowServiceAttributes.ConfigurationName" />, and whether to include exception details in any faults that are returned from the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity.</summary>
+      <param name="dependencyObject">The object to apply the service attributes to.</param>
+      <param name="value">The <see cref="T:System.Workflow.Activities.WorkflowServiceAttributes" /> object that contains the service attribute data to apply.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.ReceiveActivity.System#Workflow#Activities#IEventActivity#QueueName">
+      <summary>Gets the name of the <see cref="T:System.Workflow.Runtime.WorkflowQueue" /> on which the activity is waiting for data to arrive.</summary>
+      <returns>The name of the <see cref="T:System.Workflow.Runtime.WorkflowQueue" /> on which the activity is waiting for data to arrive. </returns>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.System#Workflow#Activities#IEventActivity#Subscribe(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.QueueEventArgs})">
+      <summary>Creates the subscription of the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity to an event.</summary>
+      <param name="parentContext">The <see cref="T:System.Workflow.ComponentModel.ActivityExecutionContext" /> that represents the execution environment of the <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activity.</param>
+      <param name="parentEventHandler">The <see cref="T:System.EventHandler" /> that handles the event. This event handler is owned by the parent activity.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.System#Workflow#Activities#IEventActivity#Unsubscribe(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.QueueEventArgs})">
+      <summary>Cancels the subscription of a <see cref="T:System.Workflow.ComponentModel.Activity" /> to an event.</summary>
+      <param name="parentContext">The <see cref="T:System.Workflow.ComponentModel.ActivityExecutionContext" /> that represents the execution environment of the <see cref="T:System.Workflow.Activities.WebServiceInputActivity" /> activity.</param>
+      <param name="parentEventHandler">The <see cref="T:System.EventHandler" /> that handles the event. This event handler is owned by the parent activity.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.ReceiveActivity.System#Workflow#ComponentModel#IActivityEventListener{T}#OnEvent(System.Object,System.Workflow.ComponentModel.QueueEventArgs)">
+      <summary>Defines the processing procedure when the subscribed-to event occurs.</summary>
+      <param name="sender">The object that raised the event.</param>
+      <param name="e">The previously-typed event arguments.</param>
+    </member>
+    <member name="F:System.Workflow.Activities.ReceiveActivity.WorkflowServiceAttributesProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="P:System.Workflow.Activities.ReceiveActivity.ServiceOperationInfo" /> property.</summary>
+    </member>
+    <member name="T:System.Workflow.Activities.SendActivity">
+      <summary>Client activity that models the synchronous invocation of a  service operation.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.SendActivity" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.SendActivity" /> class with the specified name property.</summary>
+      <param name="name">The value assigned to <see cref="P:System.Workflow.ComponentModel.Activity.Name" /> when the activity is initialized.</param>
+    </member>
+    <member name="E:System.Workflow.Activities.SendActivity.AfterResponse">
+      <summary>Occurs after the response has been received from the service.</summary>
+    </member>
+    <member name="F:System.Workflow.Activities.SendActivity.AfterResponseEvent">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="E:System.Workflow.Activities.SendActivity.AfterResponse" /> event.</summary>
+    </member>
+    <member name="E:System.Workflow.Activities.SendActivity.BeforeSend">
+      <summary>Occurs before the <see cref="T:System.Workflow.Activities.SendActivity" /> activity sends the message to the service.</summary>
+    </member>
+    <member name="F:System.Workflow.Activities.SendActivity.BeforeSendEvent">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> that targets the <see cref="E:System.Workflow.Activities.SendActivity.BeforeSend" /> event.</summary>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivity.ChannelToken">
+      <summary>
+        <see cref="T:System.Workflow.Activities.ChannelToken" /> used by the <see cref="T:System.Workflow.Activities.SendActivity" /> to associate itself with a client channel.</summary>
+      <returns>A <see cref="T:System.Workflow.Activities.ChannelToken" /> defining a client channel that a <see cref="T:System.Workflow.Activities.SendActivity" /> uses to communicate with a service.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivity.Context">
+      <summary>Returns a dictionary that contains the context used for communication between the client and the service it is communicating with, including such things as identification for correlation.</summary>
+      <returns>A dictionary-based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivity.CustomAddress">
+      <summary>Gets or sets the custom address used to communicate with a service.</summary>
+      <returns>String value whose value is the address a service is listening on.</returns>
+    </member>
+    <member name="F:System.Workflow.Activities.SendActivity.CustomAddressProperty">
+      <summary>Represents the <see cref="T:System.Workflow.ComponentModel.DependencyProperty" /> for the <see cref="P:System.Workflow.Activities.SendActivity.CustomAddress" /> property.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.GetContext(System.Workflow.ComponentModel.Activity,System.String,System.String,System.Type)">
+      <summary>Static method that returns context information given an activity instance, an endpoint name used by that activity, the name of the owner activity, and a <see cref="T:System.Type" /> object that represents the type of the contract.</summary>
+      <returns>A dictionary-based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values.</returns>
+      <param name="activity">Activity whose context information is required.</param>
+      <param name="endpointName">Name of the endpoint used for correlation with a service.</param>
+      <param name="ownerActivityName">The name of the owning activity.</param>
+      <param name="contractType">The <see cref="T:System.Type" /> of the contract implemented by a service.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.GetContext(System.Workflow.ComponentModel.Activity,System.Workflow.Activities.ChannelToken,System.Type)">
+      <summary>Gets or sets the context information for a send operation.</summary>
+      <returns>A dictionary-based collection that contains <see cref="T:System.Xml.XmlQualifiedName" /> keys and their associated <see cref="T:System.String" /> values.</returns>
+      <param name="activity">Activity whose context information is required.</param>
+      <param name="endpoint">Endpoint information for correlation with a service.</param>
+      <param name="contractType">The <see cref="T:System.Type" /> of the contract implemented by a service.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivity.ParameterBindings">
+      <summary>Gets the collection of bindable parameters as found in the  service's formal parameter list.</summary>
+      <returns>The <see cref="T:System.Workflow.ComponentModel.WorkflowParameterBindingCollection" /> of parameters to bind to.</returns>
+    </member>
+    <member name="F:System.Workflow.Activities.SendActivity.ReturnValuePropertyName">
+      <summary>Name of the property that is used for the return value sent by the service that the SendActivity activity is communicating with.</summary>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivity.ServiceOperationInfo">
+      <summary>Defines the contract and operation of the service that the SendActivity activity communicates with.</summary>
+      <returns>A <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> object that contains the contract name, the contract type, the operation name, (which may be distinct from the actual method name), whether the operation is a one-way operation, and method information including parameters about the operation.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.SetContext(System.Workflow.ComponentModel.Activity,System.String,System.String,System.Type,System.Collections.Generic.IDictionary{System.String,System.String})">
+      <summary>A static method that sets context information for a <see cref="T:System.Workflow.Activities.SendActivity" /> activity, given an activity instance, an endpoint name used by that activity, the name of the owner activity, a <see cref="T:System.Type" /> object that represents the type of the contract, and the context information itself.</summary>
+      <param name="activity">The Activity instance to associate the context information with.</param>
+      <param name="endpointName">The name of an endpoint used for correlation with a service.</param>
+      <param name="ownerActivityName">The name of the owning activity</param>
+      <param name="contractType">The <see cref="T:System.Type" /> of the contract implemented by a service.</param>
+      <param name="context">The context information to set.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivity.SetContext(System.Workflow.ComponentModel.Activity,System.Workflow.Activities.ChannelToken,System.Type,System.Collections.Generic.IDictionary{System.String,System.String})">
+      <summary>A static method that sets context information for a <see cref="T:System.Workflow.Activities.SendActivity" /> activity, given an activity instance, an endpoint used by that activity, a <see cref="T:System.Type" /> object that represents the type of the contract, and the context information itself.</summary>
+      <param name="activity">The Activity instance to associate the context information with.</param>
+      <param name="endpoint">The endpoint used for correlation with a service.</param>
+      <param name="contractType">The <see cref="T:System.Type" /> of the contract implemented by a service.</param>
+      <param name="context">The context information to set.</param>
+    </member>
+    <member name="T:System.Workflow.Activities.SendActivityEventArgs">
+      <summary>Provides information for the <see cref="E:System.Workflow.Activities.SendActivity.BeforeSend" /> and <see cref="E:System.Workflow.Activities.SendActivity.AfterResponse" /> events.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.SendActivityEventArgs.#ctor(System.Workflow.Activities.SendActivity)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.SendActivityEventArgs" /> class.</summary>
+      <param name="sendActivity">The T:System.Workflow.Activities.SendActivity that threw the event associated with this <see cref="T:System.Workflow.Activities.SendActivityEventArgs" />.</param>
+    </member>
+    <member name="P:System.Workflow.Activities.SendActivityEventArgs.SendActivity">
+      <summary>Gets the <see cref="T:System.Workflow.Activities.SendActivity" /> that threw the event associated with this <see cref="T:System.Workflow.Activities.SendActivityEventArgs" />.</summary>
+      <returns>The <see cref="T:System.Workflow.Activities.SendActivity" /> that threw the event associated with this <see cref="T:System.Workflow.Activities.SendActivityEventArgs" />.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.TypedOperationInfo">
+      <summary>An <see cref="T:System.Workflow.Activities.OperationInfo" /> object that inherits from <see cref="T:System.Workflow.Activities.OperationInfoBase" /> used for the service operation information of the <see cref="T:System.Workflow.Activities.SendActivity" /> and <see cref="T:System.Workflow.Activities.ReceiveActivity" /> activities. Note that this operation information must be based on a CLR type.  </summary>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.#ctor(System.Type,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> class.</summary>
+      <param name="contractType">The type of the associated contract interface.</param>
+      <param name="operationName">The method name of the associated service operation.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.Clone">
+      <summary>Creates a copy of the current object.</summary>
+      <returns>The copy of the object.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.TypedOperationInfo.ContractType">
+      <summary>The type of the associated contract interface.</summary>
+      <returns>A <see cref="T:System.Type" /> object that represents the type of the associated contract interface.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.Equals(System.Object)">
+      <summary>Determines whether two <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> instances are equal.</summary>
+      <returns>true if the instances are equal; otherwise, false.</returns>
+      <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Workflow.Activities.TypedOperationInfo" />.</param>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.GetHashCode">
+      <summary>Generates a number that corresponds to the value of the object to support the use of a hash table.</summary>
+      <returns>An <see cref="T:System.Int32" /> that represents the hash code value of the object.</returns>
+    </member>
+    <member name="M:System.Workflow.Activities.TypedOperationInfo.ToString">
+      <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> object.</summary>
+      <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Workflow.Activities.TypedOperationInfo" /> object.</returns>
+    </member>
+    <member name="T:System.Workflow.Activities.WorkflowServiceAttributes">
+      <summary>Builds the service behavior for the workflow service that it decorates.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.WorkflowServiceAttributes.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.WorkflowServiceAttributes" /> class.</summary>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.AddressFilterMode">
+      <summary>Gets or sets the <see cref="T:System.ServiceModel.AddressFilterMode" /> enumeration that is used by the dispatcher to route incoming messages to the correct endpoint.</summary>
+      <returns>An <see cref="T:System.ServiceModel.AddressFilterMode" /> enumeration value that is used by the dispatcher to route incoming messages to the correct endpoint.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.ConfigurationName">
+      <summary>Gets or sets the value used to locate the service element in an application configuration file.</summary>
+      <returns>The value to locate in the configuration file. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.IgnoreExtensionDataObject">
+      <summary>Gets or sets a value that specifies whether to send unknown serialization data onto the wire.</summary>
+      <returns>true if unknown serialization data is never sent; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.IncludeExceptionDetailInFaults">
+      <summary>Gets or sets a value that specifies that general unhandled execution exceptions are to be converted into a <see cref="T:System.ServiceModel.FaultException" /> of type <see cref="T:System.ServiceModel.ExceptionDetail" /> and sent as a fault message. Set this to true only during development to troubleshoot a service. </summary>
+      <returns>true if unhandled exceptions are to be returned as SOAP faults; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.MaxItemsInObjectGraph">
+      <summary>Gets or sets the maximum number of items allowed in a serialized object. </summary>
+      <returns>The maximum number of items allowed in an object. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.Name">
+      <summary>Gets or sets the value of the name attribute in the service element in Web Services Description Language (WSDL).</summary>
+      <returns>The value of the Name property. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.Namespace">
+      <summary>Gets or sets the value of the target namespace for the service in Web Services Description Language (WSDL). </summary>
+      <returns>The value of the Namespace property.</returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.UseSynchronizationContext">
+      <summary>Gets or sets a value that specifies whether to use the current synchronization context to choose the thread of execution. </summary>
+      <returns>true if all calls to the service must run on the thread specified by the <see cref="T:System.Threading.SynchronizationContext" />; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Workflow.Activities.WorkflowServiceAttributes.ValidateMustUnderstand">
+      <summary>Gets or sets a value that specifies whether the system or the application enforces SOAP MustUnderstand header processing. </summary>
+      <returns>true if the system is to perform SOAP header MustUnderstand processing; otherwise false, which indicates that the application performs this processing. </returns>
+    </member>
+    <member name="T:System.Workflow.Activities.WorkflowServiceAttributesDynamicPropertyValidator">
+      <summary>The property validator used by the <see cref="F:System.Workflow.Activities.ReceiveActivity.WorkflowServiceAttributesProperty" />.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.WorkflowServiceAttributesDynamicPropertyValidator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Activities.WorkflowServiceAttributesDynamicPropertyValidator" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Activities.WorkflowServiceAttributesDynamicPropertyValidator.Validate(System.Workflow.ComponentModel.Compiler.ValidationManager,System.Object)">
+      <summary>Validates the <see cref="F:System.Workflow.Activities.ReceiveActivity.WorkflowServiceAttributesProperty" /> property and returns a collection of <see cref="T:System.Workflow.ComponentModel.Compiler.ValidationError" /> objects.</summary>
+      <returns>A collection of <see cref="T:System.Workflow.ComponentModel.Compiler.ValidationError" /> objects representing the results of the validation.</returns>
+      <param name="manager">The validation manager linked to the validation.</param>
+      <param name="obj">The parameter to validate.</param>
+    </member>
+    <member name="T:System.Workflow.Runtime.Hosting.ChannelManagerService">
+      <summary>Provides functionality for constructing client-side channels, caching channels, and channel factories.</summary>
+    </member>
+    <member name="M:System.Workflow.Runtime.Hosting.ChannelManagerService.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Runtime.Hosting.ChannelManagerService" /> class.</summary>
+    </member>
+    <member name="M:System.Workflow.Runtime.Hosting.ChannelManagerService.#ctor(System.Collections.Generic.IList{System.ServiceModel.Description.ServiceEndpoint})">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Runtime.Hosting.ChannelManagerService" /> class.</summary>
+      <param name="endpoints">A collection of service endpoints.</param>
+    </member>
+    <member name="M:System.Workflow.Runtime.Hosting.ChannelManagerService.#ctor(System.Collections.Specialized.NameValueCollection)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Runtime.Hosting.ChannelManagerService" /> class.</summary>
+      <param name="parameters">Configuration parameters for the service.</param>
+    </member>
+    <member name="M:System.Workflow.Runtime.Hosting.ChannelManagerService.#ctor(System.ServiceModel.Channels.ChannelPoolSettings)">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Runtime.Hosting.ChannelManagerService" /> class.</summary>
+      <param name="settings">Settings for quotas for the pool of channels managed by this service. </param>
+    </member>
+    <member name="M:System.Workflow.Runtime.Hosting.ChannelManagerService.#ctor(System.ServiceModel.Channels.ChannelPoolSettings,System.Collections.Generic.IList{System.ServiceModel.Description.ServiceEndpoint})">
+      <summary>Initializes a new instance of the <see cref="T:System.Workflow.Runtime.Hosting.ChannelManagerService" /> class.</summary>
+      <param name="settings">Settings for quotas for the pool of channels managed by this service.</param>
+      <param name="endpoints">A collection of service endpoints.</param>
+    </member>
+  </members>
+</doc>

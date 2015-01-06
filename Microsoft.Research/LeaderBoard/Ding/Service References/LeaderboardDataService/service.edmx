@@ -1,0 +1,180 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="LeaderboardModel" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="Application">
+        <Key>
+          <PropertyRef Name="appid" />
+        </Key>
+        <Property Name="appid" Type="Edm.Int32" Nullable="false" />
+        <Property Name="appname" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+        <Property Name="appurl" Type="Edm.String" Nullable="true" MaxLength="350" Unicode="false" FixedLength="false" />
+        <Property Name="appowner" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <NavigationProperty Name="features" Relationship="LeaderboardModel.FK_features_Applications" FromRole="Applications" ToRole="features" />
+        <NavigationProperty Name="pods" Relationship="LeaderboardModel.FK_pods_Applications" FromRole="Applications" ToRole="pods" />
+        <NavigationProperty Name="UserAggregations" Relationship="LeaderboardModel.FK_UserAggregation_Applications" FromRole="Applications" ToRole="UserAggregation" />
+        <NavigationProperty Name="UserAggregationPerDays" Relationship="LeaderboardModel.FK_UserAggregationPerDay_Applications" FromRole="Applications" ToRole="UserAggregationPerDay" />
+      </EntityType>
+      <EntityType Name="CostCenter">
+        <Key>
+          <PropertyRef Name="CostCenterName" />
+          <PropertyRef Name="AddTimestamp" />
+        </Key>
+        <Property Name="CostCenterName" Type="Edm.String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+        <Property Name="AddTimestamp" Type="Edm.DateTime" Nullable="false" />
+      </EntityType>
+      <EntityType Name="feature">
+        <Key>
+          <PropertyRef Name="AppId" />
+          <PropertyRef Name="FeatureId" />
+        </Key>
+        <Property Name="AppId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FeatureId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FeatureName" Type="Edm.String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Application" Relationship="LeaderboardModel.FK_features_Applications" FromRole="features" ToRole="Applications" />
+      </EntityType>
+      <EntityType Name="pod">
+        <Key>
+          <PropertyRef Name="userid" />
+          <PropertyRef Name="appid" />
+        </Key>
+        <Property Name="userid" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="appid" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Application" Relationship="LeaderboardModel.FK_pods_Applications" FromRole="pods" ToRole="Applications" />
+      </EntityType>
+      <EntityType Name="point">
+        <Key>
+          <PropertyRef Name="rowid" />
+        </Key>
+        <Property Name="userid" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
+        <Property Name="appid" Type="Edm.Int32" Nullable="true" />
+        <Property Name="featureid" Type="Edm.Int32" Nullable="true" />
+        <Property Name="points" Type="Edm.Int32" Nullable="true" />
+        <Property Name="inserttime" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="updatetime" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="appverhi" Type="Edm.Int32" Nullable="true" />
+        <Property Name="appverlo" Type="Edm.Int32" Nullable="true" />
+        <Property Name="osverhi" Type="Edm.Int32" Nullable="true" />
+        <Property Name="osverlo" Type="Edm.Int32" Nullable="true" />
+        <Property Name="rowid" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+      </EntityType>
+      <EntityType Name="UserAggregation">
+        <Key>
+          <PropertyRef Name="userid" />
+          <PropertyRef Name="appid" />
+          <PropertyRef Name="featureid" />
+        </Key>
+        <Property Name="userid" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="appid" Type="Edm.Int32" Nullable="false" />
+        <Property Name="featureid" Type="Edm.Int32" Nullable="false" />
+        <Property Name="totalpoints" Type="Edm.Int32" Nullable="false" />
+        <Property Name="uses" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Application" Relationship="LeaderboardModel.FK_UserAggregation_Applications" FromRole="UserAggregation" ToRole="Applications" />
+      </EntityType>
+      <EntityType Name="UserAggregationPerDay">
+        <Key>
+          <PropertyRef Name="userid" />
+          <PropertyRef Name="appid" />
+          <PropertyRef Name="featureid" />
+          <PropertyRef Name="eventDate" />
+        </Key>
+        <Property Name="userid" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="appid" Type="Edm.Int32" Nullable="false" />
+        <Property Name="featureid" Type="Edm.Int32" Nullable="false" />
+        <Property Name="eventDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="totalpoints" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Application" Relationship="LeaderboardModel.FK_UserAggregationPerDay_Applications" FromRole="UserAggregationPerDay" ToRole="Applications" />
+      </EntityType>
+      <EntityType Name="User">
+        <Key>
+          <PropertyRef Name="Alias" />
+        </Key>
+        <Property Name="Fullname" Type="Edm.String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+        <Property Name="Alias" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+        <Property Name="CSP" Type="Edm.String" Nullable="true" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="Discipline" Type="Edm.String" Nullable="true" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="CostCenterName" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="true" FixedLength="false" />
+        <Property Name="UpdateTimestamp" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="NonADAccount" Type="Edm.Boolean" Nullable="false" />
+      </EntityType>
+      <Association Name="FK_features_Applications">
+        <End Role="Applications" Type="LeaderboardModel.Application" Multiplicity="1" />
+        <End Role="features" Type="LeaderboardModel.feature" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Applications">
+            <PropertyRef Name="appid" />
+          </Principal>
+          <Dependent Role="features">
+            <PropertyRef Name="AppId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_pods_Applications">
+        <End Role="Applications" Type="LeaderboardModel.Application" Multiplicity="1" />
+        <End Role="pods" Type="LeaderboardModel.pod" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Applications">
+            <PropertyRef Name="appid" />
+          </Principal>
+          <Dependent Role="pods">
+            <PropertyRef Name="appid" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_UserAggregation_Applications">
+        <End Role="Applications" Type="LeaderboardModel.Application" Multiplicity="1" />
+        <End Role="UserAggregation" Type="LeaderboardModel.UserAggregation" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Applications">
+            <PropertyRef Name="appid" />
+          </Principal>
+          <Dependent Role="UserAggregation">
+            <PropertyRef Name="appid" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_UserAggregationPerDay_Applications">
+        <End Role="Applications" Type="LeaderboardModel.Application" Multiplicity="1" />
+        <End Role="UserAggregationPerDay" Type="LeaderboardModel.UserAggregationPerDay" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Applications">
+            <PropertyRef Name="appid" />
+          </Principal>
+          <Dependent Role="UserAggregationPerDay">
+            <PropertyRef Name="appid" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+    </Schema>
+    <Schema Namespace="Leaderboard_Odata_Service" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="LeaderboardEntitySet" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <FunctionImport Name="GetNumUsersByID" ReturnType="Edm.Int32" m:HttpMethod="GET">
+          <Parameter Name="appId" Type="Edm.Int32" Mode="In" />
+        </FunctionImport>
+        <EntitySet Name="Applications" EntityType="LeaderboardModel.Application" />
+        <EntitySet Name="CostCenters" EntityType="LeaderboardModel.CostCenter" />
+        <EntitySet Name="features" EntityType="LeaderboardModel.feature" />
+        <EntitySet Name="pods" EntityType="LeaderboardModel.pod" />
+        <EntitySet Name="points" EntityType="LeaderboardModel.point" />
+        <EntitySet Name="UserAggregations" EntityType="LeaderboardModel.UserAggregation" />
+        <EntitySet Name="UserAggregationPerDays" EntityType="LeaderboardModel.UserAggregationPerDay" />
+        <EntitySet Name="Users" EntityType="LeaderboardModel.User" />
+        <AssociationSet Name="FK_features_Applications" Association="LeaderboardModel.FK_features_Applications">
+          <End Role="Applications" EntitySet="Applications" />
+          <End Role="features" EntitySet="features" />
+        </AssociationSet>
+        <AssociationSet Name="FK_pods_Applications" Association="LeaderboardModel.FK_pods_Applications">
+          <End Role="Applications" EntitySet="Applications" />
+          <End Role="pods" EntitySet="pods" />
+        </AssociationSet>
+        <AssociationSet Name="FK_UserAggregation_Applications" Association="LeaderboardModel.FK_UserAggregation_Applications">
+          <End Role="Applications" EntitySet="Applications" />
+          <End Role="UserAggregation" EntitySet="UserAggregations" />
+        </AssociationSet>
+        <AssociationSet Name="FK_UserAggregationPerDay_Applications" Association="LeaderboardModel.FK_UserAggregationPerDay_Applications">
+          <End Role="Applications" EntitySet="Applications" />
+          <End Role="UserAggregationPerDay" EntitySet="UserAggregationPerDays" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
+
+<!--=====================================================================
+   Defines
+======================================================================-->
+
+<?ifndef var.Version ?>
+ <?define var.Version="1.0.5031" ?>
+<?endif?>
+
+<!--=====================================================================
+   Installer component guid's
+======================================================================-->
+<?define var.UpgradeGuid                    = "933a7602-a5f8-4344-99d0-81f639ff4099" ?>
+<?define var.ProductGuid                    = "6a654480-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.PackageGuid                    = "6a654481-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ITaskManagerCompGuid           = "6a654482-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ContractsTaskCompGuid          = "6a654483-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.TaskManagerCompGuid            = "6a654484-d04e-40f8-8d0f-10d0631e5b89" ?> 
+<?define var.IPropertyPaneCompGuid          = "6a654485-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.PropertyPageCompGuid           = "6a654486-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.ContractsPropertyPaneCompGuid  = "6a654487-d04e-40f8-8d0f-10d0631e5b89" ?>
+<?define var.TaskManagerUICompGuid          = "6a654488-d04e-40f8-8d0f-10d0631e5b89" ?>
+
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Product Name='Microsoft Contracts 1.0' Id='$(var.ProductGuid)'
+    UpgradeCode='$(var.UpgradeGuid)'
+    Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Microsoft Corp.'>
+  
+    <Package Id='$(var.PackageGuid)' Keywords='Installer'
+      Description="Microsoft Contracts 1.0 Installer"
+      Manufacturer='Microsoft Corp.'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' 
+      InstallPrivileges='elevated'
+    />
+
+    <!--=====================================================================
+       Media information
+    ======================================================================-->
+    <Media Id='1' Cabinet='Contracts.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="Microsoft Contracts 1.0 Installation [1]" />
+
+    <!--=====================================================================
+       Useful shorthands
+    ======================================================================-->
+    <!-- Public objects -->
+    <?define var.TaskManagerGuid          ="{da85543e-97ec-4478-90ec-45cbcb4fa5c2}" ?>
+    <?define var.TaskManagerPublicKey     ="0644c261138ab94f" ?>
+    
+    <?define var.PropertyPageGuid         ="{072dd0c6-ae1e-4ed6-a0bf-b99d5b68d29f}" ?>
+    <?define var.PropertyPagePublicKey    ="b35249ee440c39a1" ?>
+
+    <?define var.ContractsPropertyPaneGuid="{a6911a01-8795-4fe7-8e51-2904e8b5f27b}" ?>
+    <?define var.ContractsPropertyPanePublicKey="da8be8918709caaf" ?>
+
+    <!-- Misc. -->
+    <?define var.ContractsPropertyPageID  ="{35a69422-a11a-4ce8-8962-061dfabb02eb}" ?>
+    <?define var.ITaskManagerFactoryGuid  ="{6ef71237-5832-4cd5-a75c-067911af5d14}" ?>
+    <?define var.CSharpProjectGuid        ="{fae04ec0-301f-11d3-bf4b-00c04f79efbc}" ?>
+    <?define var.VsRootKey                ="Software\Microsoft\VisualStudio\9.0" ?>
+    <?define var.WinSDKRootKey            ="Software\Microsoft\Microsoft SDKs\Windows" ?>
+    <?define var.SpecSharpRootKey         ="Software\Microsoft\SpecSharp" ?>
+    
+    <!-- Derived -->
+    <?define var.TaskManagerPackageKey    ="$(var.VsRootKey)\Packages\$(var.TaskManagerGuid)" ?>
+    <?define var.PropertyPagePackageKey   ="$(var.VsRootKey)\Packages\$(var.PropertyPageGuid)" ?>
+    <?define var.AutoLoadOnProjectKey     ="$(var.VsRootKey)\AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}" ?>
+    <?define var.CodeToolsKey             ="$(var.VsRootKey)\CodeTools" ?>
+    <?define var.ITaskManagerFactoryServiceKey="$(var.VsRootKey)\Services\$(var.ITaskManagerFactoryGuid)" ?>
+
+    <!-- C# property page guids -->
+    <?define var.CSharpCommonPropKey      ="$(var.VsRootKey)\Projects\$(var.CSharpProjectGuid)\CommonPropertyPages" ?>
+    <?define var.CReferencePathsGuid      ="{031911C8-6148-4e25-B1B1-44BCA9A0C45C}" ?>
+    <?define var.CBuildEventsPropPg2Guid  ="{1E78F8DB-6C07-4d61-A18F-7514010ABD56}" ?>
+    <?define var.CSharpApplicationPgGuid  ="{5E9A8AC2-4F34-4521-858F-4C248BA31532}" ?>
+    <?define var.CPublishPropPg2Guid      ="{CC4014F5-B18D-439C-9352-F99D984CCA85}" ?>
+    <?define var.CSecurityPropPg2Guid     ="{DF8F7042-0BB1-47D1-8E6D-DEB3D07698BD}" ?>
+    <?define var.CVbSigningPropPgGuid     ="{F8D6553F-F752-4DBF-ACB6-F291B744A792}" ?>
+
+
+    <!--=====================================================================
+       Checks       
+    ======================================================================-->
+    
+    <!-- find the visual studio 9.0 install directory -->
+    <Property Id='VSINSTALLDIR' Secure='yes' >
+      <RegistrySearch Id='VisualStudioReg' Type='raw'
+        Root='HKLM' Key='$(var.VsRootKey)' Name='InstallDir' />
+    </Property>
+    
+    <Condition Message='Sorry, this package can only be installed with Visual Studio 9.0'>
+      VSINSTALLDIR
+    </Condition>
+
+
+    <!-- find the windows SDK install directory -->
+    <Property Id='WINSDKINSTALLDIR' Secure='yes' >
+      <RegistrySearch Id='WinSDKReg' Type='raw'
+        Root='HKLM' Key='$(var.WinSDKRootKey)' Name='CurrentInstallFolder' />
+    </Property>
+    
+    <Condition Message='Sorry, this package needs an installed Windows SDK'>
+      WINSDKINSTALLDIR
+    </Condition>
+
+
+    <!-- find spec# installation dir (note: used by the custom action AddBuildTarget) -->
+    <Property Id='SPECSHARPINSTALLDIR' Secure='yes'>
+      <RegistrySearch Id='SpecSharpReg' Type='raw'
+        Root='HKLM' Key='$(var.SpecSharpRootKey)' Name='InstallDir' />
+    </Property>
+   
+
+    <Condition Message='Unable to find the Spec# compiler. Please install Spec# or specify the "SpecSharpBinPath" environment variable.'>
+      SPECSHARPINSTALLDIR OR %SpecSharpBinPath
+    </Condition>
+
+
+   
+    <!--=====================================================================
+       Install directory: Program Files\Microsoft\Contracts
+    ======================================================================-->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' >
+        <!--=====================================================================
+           Program Files\Microsoft Visual Studio 8\Common7\PublicAssemblies
+        ======================================================================-->
+        <Directory Id='VSINSTALLDIR' Name='VS8' LongName='Microsoft Visual Studio 8'>
+          <Directory Id='VsPublicAssembliesDir' Name='PubAsm' LongName='PublicAssemblies' >
+            <!--=====================================================================
+               ITaskManager interface
+            ======================================================================-->
+            <Component Id='ITaskManager' Guid='$(var.ITaskManagerCompGuid)'>
+              <File Id='ITaskManager.dll' Name='ITaskMgr.dll' LongName='ITaskManager.dll' DiskId='1'
+                    src='ITaskManager.dll' Vital='yes' />
+            </Component>      
+            <!--=====================================================================
+               IPropertyPage component
+            ======================================================================-->
+            <Component Id='IPropertyPane' Guid='$(var.IPropertyPaneCompGuid)'>
+              <File Id='IPropertyPane.dll' Name='IPrpPane.dll' LongName='IPropertyPane.dll' DiskId='1'
+                    src='IPropertyPane.dll' Vital='yes' />
+            </Component>
+          </Directory>
+        </Directory>
+      
+        <!--=====================================================================
+           Program Files\Microsoft\Contracts
+        ======================================================================-->
+        <Directory Id='Microsoft' Name='MSoft' LongName='Microsoft'>
+          <Directory Id='INSTALLDIR' Name='Contrcts' LongName='Contracts'>
+             
+              <!--=====================================================================
+                 TaskManager implementation
+              ======================================================================-->
+              <Component Id='TaskManager' Guid='$(var.TaskManagerCompGuid)'>
+                <File Id='TaskManager.dll' Name='TskMgr.dll' LongName='TaskManager.dll' DiskId='1'
+                      src='TaskManager.dll' Vital='yes' />                
+                <Registry Id="TaskManagerReg0" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)"
+                      Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage, TaskManager, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.TaskManagerPublicKey)" 
+                      Type="string" />
+                <Registry Id="TaskManagerReg1" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="Class"
+                      Value="Microsoft.VisualStudio.CodeTools.TaskManagerPackage" Type="string" />
+                <Registry Id="TaskManagerReg2" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="CodeBase"
+                      Value="[INSTALLDIR]TaskManager.dll" Type="string" />
+                <Registry Id="TaskManagerReg3" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="InprocServer32"
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="TaskManagerReg4" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="ID"
+                      Value="1" Type="integer" />
+                <Registry Id="TaskManagerReg5" Root="HKLM" 
+                      Key="$(var.TaskManagerPackageKey)" Name="MinEdition"
+                      Value="standard" Type="string" />
+                <Registry Id="TaskManagerReg10" Root="HKLM" 
+                      Key="$(var.AutoLoadOnProjectKey)" Name="$(var.TaskManagerGuid)"
+                      Value="0" Type="integer" />   
+                <Registry Id="TaskManagerReg20" Root="HKLM"
+                      Key="$(var.ITaskManagerFactoryServiceKey)" 
+                      Value="$(var.TaskManagerGuid)" Type="string" />
+                <Registry Id="TaskManagerReg21" Root="HKLM"
+                      Key="$(var.ITaskManagerFactoryServiceKey)" Name="Name" 
+                      Value="ITaskManagerFactory Service" Type="string" />
+              </Component>
+              <Directory Id='TaskManagerUI' Name='1033'>
+                <Component Id='TaskManagerUI' Guid='$(var.TaskManagerUICompGuid)'>
+                  <File Id='TaskManagerUI.dll' Name='TskMgrUI.dll' LongName='TaskManagerUI.dll' DiskId='1'
+                        src='1033\TaskManagerUI.dll' Vital='yes' />
+                  <Registry Id="TaskManagerUIReg0" Root="HKLM" 
+                        Key="$(var.TaskManagerPackageKey)\SatelliteDll" Name="DllName"
+                        Value="TaskManagerUI.dll" Type="string" />
+                  <Registry Id="TaskManagerUIReg1" Root="HKLM" 
+                        Key="$(var.TaskManagerPackageKey)\SatelliteDll" Name="Path"
+                        Value="[INSTALLDIR]" Type="string" />
+                </Component>
+              </Directory>
+              <!--=====================================================================
+                 PropertyPage implementation
+              ======================================================================-->
+              <Component Id='PropertyPage' Guid='$(var.PropertyPageCompGuid)'>
+                <File Id='PropertyPage.dll' Name='PropPage.dll' LongName='PropertyPage.dll' DiskId='1'
+                      src='PropertyPage.dll' Vital='yes' />
+                <Registry Id="PropertyPageReg0" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)"
+                      Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage, PropertyPage, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.PropertyPagePublicKey)" 
+                      Type="string" />
+                <Registry Id="PropertyPageReg1" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="Class"
+                      Value="Microsoft.VisualStudio.CodeTools.PropertyPagePackage" Type="string" />
+                <Registry Id="PropertyPageReg2" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="CodeBase"
+                      Value="[INSTALLDIR]PropertyPage.dll" Type="string" />
+                <Registry Id="PropertyPageReg3" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="InprocServer32"
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="PropertyPageReg4" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="ID"
+                      Value="1" Type="integer" />
+                <Registry Id="PropertyPageReg5" Root="HKLM" 
+                      Key="$(var.PropertyPagePackageKey)" Name="MinEdition"
+                      Value="standard" Type="string" />
+                <Registry Id="PropertyPageReg10" Root="HKLM" 
+                      Key="$(var.AutoLoadOnProjectKey)" Name="$(var.PropertyPageGuid)"
+                      Value="0" Type="integer" />
+              </Component>
+              <!--=====================================================================
+                 Contracts propertypane implementation
+              ======================================================================-->
+              <Component Id='ContractsPropertyPane' Guid='$(var.ContractsPropertyPaneCompGuid)'>
+                <File Id='ContractsPropertyPane.dll' Name='CPrpPane.dll' LongName='ContractsPropertyPane.dll' DiskId='1'
+                      src='ContractsPropertyPane.dll' Vital='yes' />
+                <!-- COM registration -->
+                <Registry Id="ContractsPropertyPaneReg0" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)" 
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg1" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\ProgId" 
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg1a" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\Implemented Categories\{62c8fe65-4ebb-45e7-b440-6e39b2cdbf29}" 
+                      Value="Categories" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg2" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" 
+                      Value="mscoree.dll" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg3" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="Assembly"
+                      Value="ContractsPropertyPage, Version=[ProductVersion].0, Culture=neutral, PublicKeyToken=$(var.ContractsPropertyPanePublicKey)" 
+                      Type="string" />
+                <Registry Id="ContractsPropertyPaneReg4" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="Class"
+                      Value="Microsoft.VisualStudio.Contracts.PropertyPane" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg5" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="CodeBase"
+                      Value="[INSTALLDIR]ContractsPropertyPane.dll" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg6" Root="HKCR" 
+                      Key="CLSID\$(var.ContractsPropertyPaneGuid)\InprocServer32" Name="ThreadingModel"
+                      Value="Both" Type="string" />
+                <!-- CodeTools propertypane registration -->
+                <Registry Id="ContractsPropertyPaneReg10" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts\PropertyPages\$(var.ContractsPropertyPageID)" Name="clsid"
+                      Value="$(var.ContractsPropertyPaneGuid)" Type="string" />
+                <!-- C# common property pages -->
+                <Registry Id="ContractsPropertyPaneReg20" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CReferencePathsGuid)" 
+                      Value="CReferencePathsGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg21" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CBuildEventsPropPg2Guid)" 
+                      Value="CBuildEventsPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg22" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CSharpApplicationPgGuid)" 
+                      Value="CSharpApplicationPgGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg23" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CPublishPropPg2Guid)" 
+                      Value="CPublishPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg24" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CSecurityPropPg2Guid)" 
+                      Value="CSecurityPropPg2Guid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg25" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.CVbSigningPropPgGuid)" 
+                      Value="CVbSigningPropPgGuid" Type="string" />
+                <Registry Id="ContractsPropertyPaneReg26" Root="HKLM" 
+                      Key="$(var.CSharpCommonPropKey)\$(var.ContractsPropertyPageID)" 
+                      Value="ContractsPropertyPageID" Type="string" />
+              
+              </Component>
+              <!--=====================================================================
+                 Contracts MSBuild task
+              ======================================================================-->
+              <Component Id='ContractsTask' Guid='$(var.ContractsTaskCompGuid)'>
+                <File Id='Contracts.Targets' Name='Contrcts.tar' LongName='Microsoft.Contracts.targets' DiskId='1'
+                      src='Microsoft.Contracts.targets' Vital='yes' />
+                <!-- This should really be custom action that includes our target in a possibly existing
+                     Custom.After targets file, but for now we just overwrite it 
+                <File Id='After.targets' Name='After.tar' LongName='Custom.After.Microsoft.Common.targets' DiskId='1'
+                      src='Custom.After.Microsoft.Common.targets' Vital='yes' /> 
+                -->
+                <Registry Id="ContractsTaskReg0" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts" Name="DisplayName"
+                      Value="Contracts" Type="string" />
+                <Registry Id="ContractsTaskReg1" Root="HKLM" 
+                      Key="$(var.CodeToolsKey)\Contracts\Tasks\$(var.CSharpProjectGuid)\RunSpecSharp" Name="SpecSharpCompile"
+                      Type="string" />
+              </Component>                            
+          </Directory>
+        </Directory>
+        
+        <!--=====================================================================
+           ProgramFiles\MSBuild
+        ======================================================================-->
+        <Directory Id='MSBUILD' Name='MSBuild'>
+          <Directory Id='MSBUILDDIR' Name='v2.0'>
+          </Directory>
+        </Directory>
+
+      </Directory>
+    </Directory>
+
+    <!--=====================================================================
+       Features
+    ======================================================================-->
+    <Feature Id='Complete' Title='Microsoft Contracts 1.0' Description='The complete package.'
+      TypicalDefault='install' Display='expand' Level='1'
+      ConfigurableDirectory='INSTALLDIR'>
+      <Feature Id='CodeTools' Title='Microsoft CodeTools' Description='Visual Studio CodeTools Extensibility package.' Level='1'>
+        <ComponentRef Id='ITaskManager' />
+        <ComponentRef Id='TaskManager' />
+        <ComponentRef Id='TaskManagerUI' />
+        <ComponentRef Id='IPropertyPane' />
+        <ComponentRef Id='PropertyPage' />
+      </Feature>
+      <Feature Id='Contracts' Title='Microsoft Contracts' Description='Contracts verification package.' Level='1'>
+        <ComponentRef Id='ContractsTask' />
+        <ComponentRef Id='ContractsPropertyPane' />
+      </Feature>
+    </Feature>
+
+      
+    <!--=====================================================================
+       The user interface: link in "UI.wxs" (which is a generic reusable module)
+    ======================================================================-->
+    <FragmentRef Id='FragmentUI' />
+ 
+    <!--=====================================================================
+       Custom action: configure the msbuild targets.
+       To pass information, we need to use the special CustomActionData value 
+       which is set by using the same name as the custom action (AddBuildTargets).
+       We need to do it this way since we need run 'deferred' withoout
+       impersonation, due to UAC restrictions
+    ======================================================================-->
+    <CustomAction Id='AssignCustomActionDataValue' Return='check' Property='AddBuildTargets' 
+       Value='[MSBUILDDIR]Custom.After.Microsoft.Common.targets;[INSTALLDIR]Microsoft.Contracts.targets;[SPECSHARPINSTALLDIR];[REMOVE]' />
+
+    <Binary Id='BinAddBuildTargets' src='AddBuildTargets.dll' />
+    <CustomAction Id='AddBuildTargets' Impersonate='no' Execute='deferred' BinaryKey='BinAddBuildTargets' DllEntry='AddBuildTargets' />
+
+    
+    <!--=====================================================================
+       Custom action: register the libraries in the GAC
+       Again, we need run 'deferred' without impersonation, due to UAC restrictions
+    ======================================================================-->
+    <CustomAction Id='AssignVsPublicAssemblies' Property='VsPublicAssemblies'
+        Value='[VSINSTALLDIR]PublicAssemblies\' />
+
+    <CustomAction Id='AssignGacUtil' Property='GacUtil'
+        Value='[WINSDKINSTALLDIR]bin\gacutil.exe' />
+    
+    <CustomAction Id='GacRegister1' Property='GacUtil' Impersonate='no' Execute='deferred' ExeCommand='/i "[VsPublicAssemblies]ITaskManager.dll" /f' />
+    <CustomAction Id='GacUnRegister1' Property='GacUtil' Impersonate='no' Execute='deferred' ExeCommand='/u ITaskManager' />
+    <CustomAction Id='GacRegister2' Property='GacUtil' Impersonate='no' Execute='deferred' ExeCommand='/i "[VsPublicAssemblies]IPropertyPane.dll" /f' />
+    <CustomAction Id='GacUnRegister2' Property='GacUtil' Impersonate='no' Execute='deferred' ExeCommand='/u IPropertyPane' />
+    
+
+    <!--=====================================================================
+       Execute sequence: make sure we do the condition test not too soon..
+    ======================================================================-->
+    <AdminExecuteSequence />
+
+    <InstallExecuteSequence>
+      <LaunchConditions After='AppSearch' />
+      <RemoveExistingProducts After='InstallFinalize' />
+
+      <Custom Action='AssignCustomActionDataValue' After='InstallFiles'/>
+      <Custom Action='AddBuildTargets' After='InstallFiles' />
+    
+      <Custom Action='AssignVsPublicAssemblies' After='InstallFiles'/>
+      <Custom Action='AssignGacUtil' After='InstallFiles'/>
+      <Custom Action='GacUnRegister1' After='InstallFiles'>Installed AND REMOVE = "ALL"</Custom>
+      <Custom Action='GacRegister1' After='GacUnRegister1'>NOT REMOVE</Custom>
+      <Custom Action='GacUnRegister2' After='InstallFiles'>Installed AND REMOVE = "ALL"</Custom>
+      <Custom Action='GacRegister2' After='GacUnRegister2'>NOT REMOVE</Custom>
+      
+    </InstallExecuteSequence>
+    
+  </Product>
+</Wix>

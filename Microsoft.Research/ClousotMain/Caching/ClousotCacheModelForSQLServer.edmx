@@ -1,0 +1,705 @@
+﻿
+
+<!-- This file has been generated from ClousotCacheModel.edmx with ClousotCacheModelForSQLServer.tt -->
+<!-- Do not modify this file directly since it will be regenerated and your changes will be overwritten -->
+
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Microsoft.Research.CodeAnalysis.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MicrosoftResearchCodeAnalysisStoreContainer">
+          <EntitySet Name="AssemblyBindings" EntityType="Microsoft.Research.CodeAnalysis.Store.AssemblyBindings" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AssemblyInfo" EntityType="Microsoft.Research.CodeAnalysis.Store.AssemblyInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Metadata" EntityType="Microsoft.Research.CodeAnalysis.Store.Metadata" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Methods" EntityType="Microsoft.Research.CodeAnalysis.Store.Methods" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OutcomeContextEdges" EntityType="Microsoft.Research.CodeAnalysis.Store.OutcomeContextEdges" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OutcomeContexts" EntityType="Microsoft.Research.CodeAnalysis.Store.OutcomeContexts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Outcomes" EntityType="Microsoft.Research.CodeAnalysis.Store.Outcomes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SuggestionContextEdges" EntityType="Microsoft.Research.CodeAnalysis.Store.SuggestionContextEdges" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Suggestions" EntityType="Microsoft.Research.CodeAnalysis.Store.Suggestions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VersionResults" EntityType="Microsoft.Research.CodeAnalysis.Store.VersionResults" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_AssemblyBindings" Association="Microsoft.Research.CodeAnalysis.Store.FK_AssemblyBindings">
+            <End Role="Methods" EntitySet="Methods" />
+            <End Role="AssemblyBindings" EntitySet="AssemblyBindings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutcomeContextEdges" Association="Microsoft.Research.CodeAnalysis.Store.FK_OutcomeContextEdges">
+            <End Role="Outcomes" EntitySet="Outcomes" />
+            <End Role="OutcomeContextEdges" EntitySet="OutcomeContextEdges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutcomeContexts" Association="Microsoft.Research.CodeAnalysis.Store.FK_OutcomeContexts">
+            <End Role="Outcomes" EntitySet="Outcomes" />
+            <End Role="OutcomeContexts" EntitySet="OutcomeContexts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outcomes" Association="Microsoft.Research.CodeAnalysis.Store.FK_Outcomes">
+            <End Role="Methods" EntitySet="Methods" />
+            <End Role="Outcomes" EntitySet="Outcomes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SuggestionContextEdges" Association="Microsoft.Research.CodeAnalysis.Store.FK_SuggestionContextEdges">
+            <End Role="Suggestions" EntitySet="Suggestions" />
+            <End Role="SuggestionContextEdges" EntitySet="SuggestionContextEdges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suggestions" Association="Microsoft.Research.CodeAnalysis.Store.FK_Suggestions">
+            <End Role="Methods" EntitySet="Methods" />
+            <End Role="Suggestions" EntitySet="Suggestions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AssemblyBindings">
+          <Key>
+            <PropertyRef Name="AssemblyId" />
+            <PropertyRef Name="MethodId" />
+          </Key>
+          <Property Name="AssemblyId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MethodId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssemblyInfo">
+          <Key>
+            <PropertyRef Name="AssemblyId" />
+          </Key>
+          <Property Name="AssemblyId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="IsBaseLine" Type="bit" />
+          <Property Name="Version" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Metadata">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Value" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Methods">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Hash" Type="binary" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" />
+          <Property Name="PureParametersMask" Type="bigint" Nullable="false" />
+          <Property Name="StatsTop" Type="int" Nullable="false" />
+          <Property Name="StatsBottom" Type="int" Nullable="false" />
+          <Property Name="StatsTrue" Type="int" Nullable="false" />
+          <Property Name="StatsFalse" Type="int" Nullable="false" />
+          <Property Name="SwallowedTop" Type="int" Nullable="false" />
+          <Property Name="SwallowedBottom" Type="int" Nullable="false" />
+          <Property Name="SwallowedTrue" Type="int" Nullable="false" />
+          <Property Name="SwallowedFalse" Type="int" Nullable="false" />
+          <Property Name="Contracts" Type="bigint" Nullable="false" />
+          <Property Name="MethodInstructions" Type="bigint" Nullable="false" />
+          <Property Name="ContractInstructions" Type="bigint" Nullable="false" />
+          <Property Name="Timeout" Type="bit" Nullable="false" />
+          <Property Name="InferredExpr" Type="image" />
+          <Property Name="InferredExprHash" Type="binary" MaxLength="20" />
+          <Property Name="InferredExprString" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="OutcomeContextEdges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OutcomeId" Type="bigint" Nullable="false" />
+          <Property Name="Block1SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="Block1Index" Type="int" Nullable="false" />
+          <Property Name="Block2SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="Block2Index" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutcomeContexts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OutcomeId" Type="bigint" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="AssociatedInfo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Outcomes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MethodId" Type="bigint" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" />
+          <Property Name="Related" Type="bit" Nullable="false" />
+          <Property Name="ProofOutcome" Type="tinyint" Nullable="false" />
+          <Property Name="WarningType" Type="tinyint" Nullable="false" />
+          <Property Name="SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="BlockIndex" Type="int" Nullable="false" />
+          <Property Name="ApcIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SuggestionContextEdges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SuggestionId" Type="bigint" Nullable="false" />
+          <Property Name="Block1SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="Block1Index" Type="int" Nullable="false" />
+          <Property Name="Block2SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="Block2Index" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suggestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MethodId" Type="bigint" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" />
+          <Property Name="SubroutineLocalId" Type="int" Nullable="false" />
+          <Property Name="BlockIndex" Type="int" Nullable="false" />
+          <Property Name="ApcIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VersionResults">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="bigint" Nullable="false" />
+          <Property Name="Methods" Type="bigint" Nullable="false" />
+          <Property Name="ContractInstructions" Type="bigint" Nullable="false" />
+          <Property Name="Contracts" Type="bigint" Nullable="false" />
+          <Property Name="MethodInstructions" Type="bigint" Nullable="false" />
+          <Property Name="Outcomes" Type="bigint" Nullable="false" />
+          <Property Name="StatsBottom" Type="bigint" Nullable="false" />
+          <Property Name="StatsFalse" Type="bigint" Nullable="false" />
+          <Property Name="StatsTop" Type="bigint" Nullable="false" />
+          <Property Name="StatsTrue" Type="bigint" Nullable="false" />
+          <Property Name="Suggestions" Type="bigint" Nullable="false" />
+          <Property Name="SwallowedBottom" Type="bigint" Nullable="false" />
+          <Property Name="SwallowedFalse" Type="bigint" Nullable="false" />
+          <Property Name="SwallowedTop" Type="bigint" Nullable="false" />
+          <Property Name="SwallowedTrue" Type="bigint" Nullable="false" />
+          <Property Name="Timeout" Type="bigint" Nullable="false" />
+          <Property Name="HasWarnings" Type="bigint" Nullable="false" />
+          <Property Name="ZeroTop" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AssemblyBindings">
+          <End Role="Methods" Type="Microsoft.Research.CodeAnalysis.Store.Methods" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssemblyBindings" Type="Microsoft.Research.CodeAnalysis.Store.AssemblyBindings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Methods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssemblyBindings">
+              <PropertyRef Name="MethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutcomeContextEdges">
+          <End Role="Outcomes" Type="Microsoft.Research.CodeAnalysis.Store.Outcomes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OutcomeContextEdges" Type="Microsoft.Research.CodeAnalysis.Store.OutcomeContextEdges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outcomes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutcomeContextEdges">
+              <PropertyRef Name="OutcomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutcomeContexts">
+          <End Role="Outcomes" Type="Microsoft.Research.CodeAnalysis.Store.Outcomes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OutcomeContexts" Type="Microsoft.Research.CodeAnalysis.Store.OutcomeContexts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outcomes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutcomeContexts">
+              <PropertyRef Name="OutcomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outcomes">
+          <End Role="Methods" Type="Microsoft.Research.CodeAnalysis.Store.Methods" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Outcomes" Type="Microsoft.Research.CodeAnalysis.Store.Outcomes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Methods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Outcomes">
+              <PropertyRef Name="MethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SuggestionContextEdges">
+          <End Role="Suggestions" Type="Microsoft.Research.CodeAnalysis.Store.Suggestions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SuggestionContextEdges" Type="Microsoft.Research.CodeAnalysis.Store.SuggestionContextEdges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suggestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SuggestionContextEdges">
+              <PropertyRef Name="SuggestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suggestions">
+          <End Role="Methods" Type="Microsoft.Research.CodeAnalysis.Store.Methods" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Suggestions" Type="Microsoft.Research.CodeAnalysis.Store.Suggestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Methods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Suggestions">
+              <PropertyRef Name="MethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Microsoft.Research.CodeAnalysis" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="ClousotCacheEntities">
+          <EntitySet Name="CachingMetadatas" EntityType="Microsoft.Research.CodeAnalysis.CachingMetadata" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="MethodModels" EntityType="Microsoft.Research.CodeAnalysis.MethodModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="OutcomeContextEdgeModels" EntityType="Microsoft.Research.CodeAnalysis.OutcomeContextEdgeModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="OutcomeModels" EntityType="Microsoft.Research.CodeAnalysis.OutcomeModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="SuggestionContextEdgeModels" EntityType="Microsoft.Research.CodeAnalysis.SuggestionContextEdgeModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="SuggestionModels" EntityType="Microsoft.Research.CodeAnalysis.SuggestionModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <AssociationSet Name="FK__Outcomes__000000000000004A" Association="Microsoft.Research.CodeAnalysis.FK__Outcomes__000000000000004A">
+            <End Role="Methods" EntitySet="MethodModels" />
+            <End Role="Outcomes" EntitySet="OutcomeModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Suggestions__0000000000000082" Association="Microsoft.Research.CodeAnalysis.FK__Suggestions__0000000000000082">
+            <End Role="Methods" EntitySet="MethodModels" />
+            <End Role="Suggestions" EntitySet="SuggestionModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OutcomeContextEdges__0000000000000065" Association="Microsoft.Research.CodeAnalysis.FK__OutcomeContextEdges__0000000000000065">
+            <End Role="Outcomes" EntitySet="OutcomeModels" />
+            <End Role="OutcomeContextEdges" EntitySet="OutcomeContextEdgeModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SuggestionContextEdges__000000000000009D" Association="Microsoft.Research.CodeAnalysis.FK__SuggestionContextEdges__000000000000009D">
+            <End Role="Suggestions" EntitySet="SuggestionModels" />
+            <End Role="SuggestionContextEdges" EntitySet="SuggestionContextEdgeModels" />
+          </AssociationSet>
+          <EntitySet Name="OutcomeContextModels" EntityType="Microsoft.Research.CodeAnalysis.OutcomeContextModel" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <AssociationSet Name="FK__OutcomeContexts__0000000000000287" Association="Microsoft.Research.CodeAnalysis.FK__OutcomeContexts__0000000000000287">
+            <End Role="OutcomeModel" EntitySet="OutcomeModels" />
+            <End Role="OutcomeContext" EntitySet="OutcomeContextModels" />
+          </AssociationSet>
+          <EntitySet Name="VersionResults" EntityType="Microsoft.Research.CodeAnalysis.VersionResult" />
+          <EntitySet Name="AssemblyBindings" EntityType="Microsoft.Research.CodeAnalysis.AssemblyBinding" />
+          <AssociationSet Name="FK_AssemblyBindings" Association="Microsoft.Research.CodeAnalysis.FK_AssemblyBindings">
+            <End Role="MethodModel" EntitySet="MethodModels" />
+            <End Role="AssemblyBinding" EntitySet="AssemblyBindings" />
+          </AssociationSet>
+          <EntitySet Name="AssemblyInfoes" EntityType="Microsoft.Research.CodeAnalysis.AssemblyInfo" />
+        </EntityContainer>
+        <EntityType Name="CachingMetadata" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <Property Name="Value" Type="Binary" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+        </EntityType>
+        <EntityType Name="MethodModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Internal" a:GetterAccess="Public" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Hash" Type="Binary" Nullable="false" MaxLength="20" FixedLength="true" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="Timeout" Type="Boolean" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="StatsTop" Type="Int32" Nullable="false" a:SetterAccess="Private" a:GetterAccess="Internal" />
+          <Property Name="StatsBottom" Type="Int32" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Name="StatsTrue" Type="Int32" Nullable="false" a:SetterAccess="Private" a:GetterAccess="Internal" />
+          <Property Name="StatsFalse" Type="Int32" Nullable="false" a:SetterAccess="Private" a:GetterAccess="Internal" />
+          <NavigationProperty Name="Outcomes" Relationship="Microsoft.Research.CodeAnalysis.FK__Outcomes__000000000000004A" FromRole="Methods" ToRole="Outcomes" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <NavigationProperty Name="Suggestions" Relationship="Microsoft.Research.CodeAnalysis.FK__Suggestions__0000000000000082" FromRole="Methods" ToRole="Suggestions" a:SetterAccess="Internal" a:GetterAccess="Internal" />
+          <Property Type="Int32" Name="SwallowedTop" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int32" Name="SwallowedBottom" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int32" Name="SwallowedTrue" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int32" Name="SwallowedFalse" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int64" Name="Contracts" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int64" Name="MethodInstructions" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int64" Name="ContractInstructions" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Private" />
+          <Property Type="Int64" Name="PureParametersMask" Nullable="false" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <Property Name="InferredExpr" Type="Binary" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="InferredExprHash" Type="Binary" MaxLength="20" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="InferredExprString" Type="String" MaxLength="Max" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <NavigationProperty Name="AssemblyBindings" Relationship="Microsoft.Research.CodeAnalysis.FK_AssemblyBindings" FromRole="MethodModel" ToRole="AssemblyBinding" />
+        </EntityType>
+        <EntityType Name="OutcomeContextEdgeModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:GetterAccess="Private" a:SetterAccess="Internal" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Block1SubroutineLocalId" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="Block1Index" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="Block2SubroutineLocalId" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="Block2Index" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <NavigationProperty Name="Outcome" Relationship="Microsoft.Research.CodeAnalysis.FK__OutcomeContextEdges__0000000000000065" FromRole="OutcomeContextEdges" ToRole="Outcomes" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <Property Type="String" Name="Tag" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Type="Int32" Name="Rank" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+        </EntityType>
+        <EntityType Name="OutcomeModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:GetterAccess="Private" a:SetterAccess="Internal" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="Related" Type="Boolean" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="ProofOutcomeByte" Type="Byte" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="WarningTypeByte" Type="Byte" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="SubroutineLocalId" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="BlockIndex" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="ApcIndex" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <NavigationProperty Name="Method" Relationship="Microsoft.Research.CodeAnalysis.FK__Outcomes__000000000000004A" FromRole="Outcomes" ToRole="Methods" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <NavigationProperty Name="OutcomeContextEdges" Relationship="Microsoft.Research.CodeAnalysis.FK__OutcomeContextEdges__0000000000000065" FromRole="Outcomes" ToRole="OutcomeContextEdges" a:GetterAccess="Public" a:SetterAccess="Private" />
+          <NavigationProperty Name="OutcomeContexts" Relationship="Microsoft.Research.CodeAnalysis.FK__OutcomeContexts__0000000000000287" FromRole="OutcomeModel" ToRole="OutcomeContext" a:GetterAccess="Public" a:SetterAccess="Internal" />
+        </EntityType>
+        <EntityType Name="SuggestionContextEdgeModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:GetterAccess="Private" a:SetterAccess="Internal" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Block1SubroutineLocalId" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="Block1Index" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="Block2SubroutineLocalId" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="Block2Index" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <NavigationProperty Name="Suggestion" Relationship="Microsoft.Research.CodeAnalysis.FK__SuggestionContextEdges__000000000000009D" FromRole="SuggestionContextEdges" ToRole="Suggestions" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <Property Type="String" Name="Tag" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Type="Int32" Name="Rank" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+        </EntityType>
+        <EntityType Name="SuggestionModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Internal" a:GetterAccess="Private" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <Property Name="SubroutineLocalId" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="BlockIndex" Type="Int32" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Name="ApcIndex" Type="Int32" Nullable="false" a:GetterAccess="Public" a:SetterAccess="Public" />
+          <NavigationProperty Name="Method" Relationship="Microsoft.Research.CodeAnalysis.FK__Suggestions__0000000000000082" FromRole="Suggestions" ToRole="Methods" a:GetterAccess="Internal" a:SetterAccess="Internal" />
+          <NavigationProperty Name="SuggestionContextEdges" Relationship="Microsoft.Research.CodeAnalysis.FK__SuggestionContextEdges__000000000000009D" FromRole="Suggestions" ToRole="SuggestionContextEdges" a:SetterAccess="Private" a:GetterAccess="Public" />
+        </EntityType>
+        <Association Name="FK__Outcomes__000000000000004A">
+          <End Role="Methods" Type="Microsoft.Research.CodeAnalysis.MethodModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Outcomes" Type="Microsoft.Research.CodeAnalysis.OutcomeModel" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Suggestions__0000000000000082">
+          <End Role="Methods" Type="Microsoft.Research.CodeAnalysis.MethodModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Suggestions" Type="Microsoft.Research.CodeAnalysis.SuggestionModel" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__OutcomeContextEdges__0000000000000065">
+          <End Role="Outcomes" Type="Microsoft.Research.CodeAnalysis.OutcomeModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OutcomeContextEdges" Type="Microsoft.Research.CodeAnalysis.OutcomeContextEdgeModel" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__SuggestionContextEdges__000000000000009D">
+          <End Role="Suggestions" Type="Microsoft.Research.CodeAnalysis.SuggestionModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SuggestionContextEdges" Type="Microsoft.Research.CodeAnalysis.SuggestionContextEdgeModel" Multiplicity="*" />
+        </Association>
+        <EntityType Name="OutcomeContextModel" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Internal" a:GetterAccess="Private" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Byte" Name="TypeByte" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <Property Type="Int32" Name="AssociatedInfo" Nullable="false" a:SetterAccess="Public" a:GetterAccess="Public" />
+          <NavigationProperty Name="Outcome" Relationship="Microsoft.Research.CodeAnalysis.FK__OutcomeContexts__0000000000000287" FromRole="OutcomeContext" ToRole="OutcomeModel" a:SetterAccess="Internal" a:GetterAccess="Internal" />
+        </EntityType>
+        <Association Name="FK__OutcomeContexts__0000000000000287">
+          <End Type="Microsoft.Research.CodeAnalysis.OutcomeModel" Role="OutcomeModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Microsoft.Research.CodeAnalysis.OutcomeContextModel" Role="OutcomeContext" Multiplicity="*" />
+        </Association>
+        <EntityType Name="VersionResult">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Type="Int64" Name="Version" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="Methods" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="ContractInstructions" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="Contracts" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="MethodInstructions" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="StatsBottom" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="StatsFalse" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="StatsTop" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="StatsTrue" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="Suggestions" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="SwallowedBottom" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="SwallowedFalse" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="SwallowedTop" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="SwallowedTrue" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="Timeout" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="HasWarnings" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="ZeroTop" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Type="Int64" Name="Outcomes" Nullable="false" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+        </EntityType>
+        <EntityType Name="AssemblyBinding">
+          <Key>
+            <PropertyRef Name="AssemblyId" />
+            <PropertyRef Name="MethodId" />
+          </Key>
+          <Property Type="Guid" Name="AssemblyId" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Type="Int64" Name="MethodId" Nullable="false" />
+          <NavigationProperty Name="Method" Relationship="Microsoft.Research.CodeAnalysis.FK_AssemblyBindings" FromRole="AssemblyBinding" ToRole="MethodModel" />
+        </EntityType>
+        <Association Name="FK_AssemblyBindings">
+          <End Type="Microsoft.Research.CodeAnalysis.MethodModel" Role="MethodModel" Multiplicity="1" />
+          <End Type="Microsoft.Research.CodeAnalysis.AssemblyBinding" Role="AssemblyBinding" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssemblyBinding">
+              <PropertyRef Name="MethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssemblyInfo">
+          <Key>
+            <PropertyRef Name="AssemblyId" />
+          </Key>
+          <Property Type="Guid" Name="AssemblyId" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <Property Type="Boolean" Name="IsBaseLine" />
+          <Property Type="Int64" Name="Version" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MicrosoftResearchCodeAnalysisStoreContainer" CdmEntityContainer="ClousotCacheEntities">
+          <EntitySetMapping Name="CachingMetadatas"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.CachingMetadata"><MappingFragment StoreEntitySet="Metadata">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+            <ScalarProperty Name="Value" ColumnName="Value" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MethodModels"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.MethodModel"><MappingFragment StoreEntitySet="Methods">
+            <ScalarProperty Name="PureParametersMask" ColumnName="PureParametersMask" />
+                <ScalarProperty Name="ContractInstructions" ColumnName="ContractInstructions" />
+                <ScalarProperty Name="MethodInstructions" ColumnName="MethodInstructions" />
+                <ScalarProperty Name="Contracts" ColumnName="Contracts" />
+                <ScalarProperty Name="SwallowedFalse" ColumnName="SwallowedFalse" />
+                <ScalarProperty Name="SwallowedTrue" ColumnName="SwallowedTrue" />
+                <ScalarProperty Name="SwallowedBottom" ColumnName="SwallowedBottom" />
+                <ScalarProperty Name="SwallowedTop" ColumnName="SwallowedTop" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Hash" ColumnName="Hash" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+            <ScalarProperty Name="StatsTop" ColumnName="StatsTop" />
+            <ScalarProperty Name="StatsBottom" ColumnName="StatsBottom" />
+            <ScalarProperty Name="StatsTrue" ColumnName="StatsTrue" />
+            <ScalarProperty Name="StatsFalse" ColumnName="StatsFalse" />
+            <ScalarProperty Name="InferredExpr" ColumnName="InferredExpr" />
+            <ScalarProperty Name="InferredExprHash" ColumnName="InferredExprHash" />
+            <ScalarProperty Name="InferredExprString" ColumnName="InferredExprString" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OutcomeContextEdgeModels"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.OutcomeContextEdgeModel"><MappingFragment StoreEntitySet="OutcomeContextEdges">
+            <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Block1SubroutineLocalId" ColumnName="Block1SubroutineLocalId" />
+            <ScalarProperty Name="Block1Index" ColumnName="Block1Index" />
+            <ScalarProperty Name="Block2SubroutineLocalId" ColumnName="Block2SubroutineLocalId" />
+            <ScalarProperty Name="Block2Index" ColumnName="Block2Index" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OutcomeModels"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.OutcomeModel"><MappingFragment StoreEntitySet="Outcomes">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Message" ColumnName="Message" />
+            <ScalarProperty Name="Related" ColumnName="Related" />
+            <ScalarProperty Name="ProofOutcomeByte" ColumnName="ProofOutcome" />
+            <ScalarProperty Name="WarningTypeByte" ColumnName="WarningType" />
+            <ScalarProperty Name="SubroutineLocalId" ColumnName="SubroutineLocalId" />
+            <ScalarProperty Name="BlockIndex" ColumnName="BlockIndex" />
+            <ScalarProperty Name="ApcIndex" ColumnName="ApcIndex" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SuggestionContextEdgeModels"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.SuggestionContextEdgeModel"><MappingFragment StoreEntitySet="SuggestionContextEdges">
+            <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Block1SubroutineLocalId" ColumnName="Block1SubroutineLocalId" />
+            <ScalarProperty Name="Block1Index" ColumnName="Block1Index" />
+            <ScalarProperty Name="Block2SubroutineLocalId" ColumnName="Block2SubroutineLocalId" />
+            <ScalarProperty Name="Block2Index" ColumnName="Block2Index" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SuggestionModels"><EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.SuggestionModel"><MappingFragment StoreEntitySet="Suggestions">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Kind" ColumnName="Kind" />
+            <ScalarProperty Name="Message" ColumnName="Message" />
+            <ScalarProperty Name="SubroutineLocalId" ColumnName="SubroutineLocalId" />
+            <ScalarProperty Name="BlockIndex" ColumnName="BlockIndex" />
+            <ScalarProperty Name="ApcIndex" ColumnName="ApcIndex" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK__Outcomes__000000000000004A" TypeName="Microsoft.Research.CodeAnalysis.FK__Outcomes__000000000000004A" StoreEntitySet="Outcomes">
+            <EndProperty Name="Methods">
+              <ScalarProperty Name="Id" ColumnName="MethodId" />
+            </EndProperty>
+            <EndProperty Name="Outcomes">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Suggestions__0000000000000082" TypeName="Microsoft.Research.CodeAnalysis.FK__Suggestions__0000000000000082" StoreEntitySet="Suggestions">
+            <EndProperty Name="Methods">
+              <ScalarProperty Name="Id" ColumnName="MethodId" />
+            </EndProperty>
+            <EndProperty Name="Suggestions">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__OutcomeContextEdges__0000000000000065" TypeName="Microsoft.Research.CodeAnalysis.FK__OutcomeContextEdges__0000000000000065" StoreEntitySet="OutcomeContextEdges">
+            <EndProperty Name="Outcomes">
+              <ScalarProperty Name="Id" ColumnName="OutcomeId" />
+            </EndProperty>
+            <EndProperty Name="OutcomeContextEdges">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__SuggestionContextEdges__000000000000009D" TypeName="Microsoft.Research.CodeAnalysis.FK__SuggestionContextEdges__000000000000009D" StoreEntitySet="SuggestionContextEdges">
+            <EndProperty Name="Suggestions">
+              <ScalarProperty Name="Id" ColumnName="SuggestionId" />
+            </EndProperty>
+            <EndProperty Name="SuggestionContextEdges">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="OutcomeContextModels">
+            <EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.OutcomeContextModel">
+              <MappingFragment StoreEntitySet="OutcomeContexts">
+                <ScalarProperty Name="AssociatedInfo" ColumnName="AssociatedInfo" />
+                <ScalarProperty Name="TypeByte" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK__OutcomeContexts__0000000000000287" TypeName="Microsoft.Research.CodeAnalysis.FK__OutcomeContexts__0000000000000287" StoreEntitySet="OutcomeContexts">
+            <EndProperty Name="OutcomeContext">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="OutcomeModel">
+              <ScalarProperty Name="Id" ColumnName="OutcomeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="VersionResults">
+            <EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.VersionResult">
+              <MappingFragment StoreEntitySet="VersionResults">
+                <ScalarProperty Name="Outcomes" ColumnName="Outcomes" />
+                <ScalarProperty Name="ZeroTop" ColumnName="ZeroTop" />
+                <ScalarProperty Name="HasWarnings" ColumnName="HasWarnings" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+                <ScalarProperty Name="SwallowedTrue" ColumnName="SwallowedTrue" />
+                <ScalarProperty Name="SwallowedTop" ColumnName="SwallowedTop" />
+                <ScalarProperty Name="SwallowedFalse" ColumnName="SwallowedFalse" />
+                <ScalarProperty Name="SwallowedBottom" ColumnName="SwallowedBottom" />
+                <ScalarProperty Name="Suggestions" ColumnName="Suggestions" />
+                <ScalarProperty Name="StatsTrue" ColumnName="StatsTrue" />
+                <ScalarProperty Name="StatsTop" ColumnName="StatsTop" />
+                <ScalarProperty Name="StatsFalse" ColumnName="StatsFalse" />
+                <ScalarProperty Name="StatsBottom" ColumnName="StatsBottom" />
+                <ScalarProperty Name="MethodInstructions" ColumnName="MethodInstructions" />
+                <ScalarProperty Name="Contracts" ColumnName="Contracts" />
+                <ScalarProperty Name="ContractInstructions" ColumnName="ContractInstructions" />
+                <ScalarProperty Name="Methods" ColumnName="Methods" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssemblyBindings">
+            <EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.AssemblyBinding">
+              <MappingFragment StoreEntitySet="AssemblyBindings">
+                <ScalarProperty Name="MethodId" ColumnName="MethodId" />
+                <ScalarProperty Name="AssemblyId" ColumnName="AssemblyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssemblyInfoes">
+            <EntityTypeMapping TypeName="Microsoft.Research.CodeAnalysis.AssemblyInfo">
+              <MappingFragment StoreEntitySet="AssemblyInfo">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="IsBaseLine" ColumnName="IsBaseLine" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="AssemblyId" ColumnName="AssemblyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="True" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" /></edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <edmx:Diagram Name="ClousotCacheModel">
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.CachingMetadata" Width="2.375" PointX="0.5" PointY="1" Height="1.4033821614583331" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.MethodModel" Width="2.375" PointX="0.5" PointY="2.75" Height="5.4417122395833335" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.OutcomeContextEdgeModel" Width="2.125" PointX="6.5" PointY="4.125" Height="2.5571907552083326" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.OutcomeModel" Width="2.125" PointX="3.625" PointY="3.5" Height="3.1340950520833326" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.SuggestionContextEdgeModel" Width="2.125" PointX="6.5" PointY="6.875" Height="2.5571907552083317" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.SuggestionModel" Width="2.125" PointX="3.625" PointY="6.875" Height="2.5571907552083335" IsExpanded="true" />
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK__Outcomes__000000000000004A" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="2.875" PointY="5.0670475260416659" />
+          <edmx:ConnectorPoint PointX="3.625" PointY="5.0670475260416659" />
+        </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK__Suggestions__0000000000000082" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="2.875" PointY="7.6295068359375" />
+          <edmx:ConnectorPoint PointX="3.625" PointY="7.6295068359375" />
+        </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK__OutcomeContextEdges__0000000000000065" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="5.75" PointY="5.3795475260416659" />
+          <edmx:ConnectorPoint PointX="6.5" PointY="5.3795475260416659" />
+        </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK__SuggestionContextEdges__000000000000009D" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="5.75" PointY="8.1535953776041659" />
+          <edmx:ConnectorPoint PointX="6.5" PointY="8.1535953776041659" />
+        </edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.OutcomeContextModel" Width="2.125" PointX="6.5" PointY="2.125" Height="1.7879850260416674" />
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK__OutcomeContexts__0000000000000287">
+          <edmx:ConnectorPoint PointX="5.75" PointY="3.7064925130208337" />
+          <edmx:ConnectorPoint PointX="6.5" PointY="3.7064925130208337" />
+        </edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.VersionResult" Width="2.5" PointX="9.375" PointY="1" Height="4.2879036458333353" />
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.AssemblyBinding" Width="1.5" PointX="4" PointY="10.75" Height="1.5956835937500031" />
+        <edmx:AssociationConnector Association="Microsoft.Research.CodeAnalysis.FK_AssemblyBindings">
+          <edmx:ConnectorPoint PointX="1.6875" PointY="8.384013671875" />
+          <edmx:ConnectorPoint PointX="1.6875" PointY="11.547841796875002" />
+          <edmx:ConnectorPoint PointX="4" PointY="11.547841796875002" />
+        </edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="Microsoft.Research.CodeAnalysis.AssemblyInfo" Width="1.5" PointX="6.625" PointY="10.75" Height="1.7879850260416674" />
+      </edmx:Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

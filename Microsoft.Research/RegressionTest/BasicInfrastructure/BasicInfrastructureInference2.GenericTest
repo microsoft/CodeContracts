@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="BasicInfrastructureInference2" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basicinfrastructure\basicinfrastructureinference2.generictest" id="72d05efe-9ec9-4193-9575-811392c8799a" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="9fa3c4eb-6c41-4782-9be7-1d387e425f56" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -nonnull:noObl BasicInfrastructure.dll -define inference -infer requires -infer propertyensures -infer methodensures -assemblyMode=standard" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="E:\CCI\TestResults\logozzo_LOGOZZO-XW4600 2009-01-06 13_09_38\In\LOGOZZO-XW4600\9fa3c4eb-6c41-4782-9be7-1d387e425f56" />
+      <EnvironmentVariable name="testlocation" value="e:\cci\microsoft.research\regressiontest\basicinfrastructure" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

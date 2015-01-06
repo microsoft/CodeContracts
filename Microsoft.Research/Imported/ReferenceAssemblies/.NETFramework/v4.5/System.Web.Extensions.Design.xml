@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.Extensions.Design</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter">
+      <summary>Provides a type converter that retrieves a list of control IDs in the current container. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a collection of control IDs from the container in the <see cref="T:System.ComponentModel.Design.IDesignerHost" /> object when provided with a format context.</summary>
+      <returns>An object that holds a set of strings that represent the control IDs of the controls in the current container. If the container has no controls, returns an empty collection. If the context is null or if there is no current container, returns null.</returns>
+      <param name="context">An object that provides a format context that can be used to extract additional information about the environment from which this converter is invoked. This parameter, or properties of this parameter, can be null.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether the collection of standard values that is returned from the <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method is an exclusive list of possible values, by using the specified context.</summary>
+      <returns>true if the <see cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection" /> object that is returned from the <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method provides an exhaustive list of possible values; false if other values are possible. The default is false</returns>
+      <param name="context">An object that provides a format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether this converter supports a standard set of control IDs that can be picked from a list, by using the specified context.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method should be called to find a common set of control IDs that the object supports; otherwise, false. The default is true.</returns>
+      <param name="context">An object that provides a format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter">
+      <summary>Provides a type converter that retrieves a list of events for a control in the current container.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a collection of event names for a control in the container in the <see cref="T:System.ComponentModel.Design.IDesignerHost" /> instance for a specified format context.</summary>
+      <returns>A collection of strings that represent the event names of a control in the current container. If no controls are currently contained, the method returns an empty collection. If the context is null or if there is no current container, the method returns null.</returns>
+      <param name="context">A format context object that can be used for more information about the environment that this converter is invoked from. This parameter or its properties can be null.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether the collection of standard values that is returned from <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> is an exclusive list of possible values for the specified context.</summary>
+      <returns>true if the <see cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection" /> returned from <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> is an exhaustive list of possible values; false if other values are possible. The default implementation returns false.</returns>
+      <param name="context">The format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether this converter supports a standard set of control event names that can be selected from a list.</summary>
+      <returns>true if <see cref="M:System.Web.UI.Design.AsyncPostBackTriggerEventNameConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> should be called to find a common set of control ID values that the object supports; otherwise, false. The default implementation returns true.</returns>
+      <param name="context">The format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.CollectionEditorBase">
+      <summary>Provides a user interface so that users can edit <see cref="T:System.Web.UI.ScriptReferenceCollection" />, <see cref="T:System.Web.UI.ServiceReferenceCollection" />, and <see cref="T:System.Web.UI.UpdatePanelTriggerCollection" /> objects at design time.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.CollectionEditorBase.#ctor(System.Type)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.CollectionEditorBase" /> class by using the specified collection type.</summary>
+      <param name="type">The type of the collection to be edited.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.CollectionEditorBase.CreateCollectionForm">
+      <summary>Creates a new form to display and edit the current collection.</summary>
+      <returns>The object to provide as the user interface for editing the collection.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.ExtenderControlDesigner">
+      <summary>Provides UI support for working with extender controls at design time.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ExtenderControlDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlDesigner.Dispose(System.Boolean)">
+      <summary>Releases the unmanaged resources that are used by the <see cref="T:System.Web.UI.Design.ExtenderControlDesigner" /> and optionally releases the managed resources. </summary>
+      <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlDesigner.GetDesignTimeHtml">
+      <summary>Gets the standard HTML rendering of an extender control at design time, which includes type and ID information.</summary>
+      <returns>The design-time HTML rendering of the control.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the specified component and adds it to the component change service.</summary>
+      <param name="component">A component of type <see cref="T:System.Web.UI.IExtenderControl" /> that implements the <see cref="T:System.ComponentModel.IComponent" /> interface.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlDesigner.PreFilterProperties(System.Collections.IDictionary)">
+      <summary>Adjusts the items listed in the properties grid for the control.</summary>
+      <param name="properties">A dictionary that contains the properties for the control.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.ExtenderControlDesigner.Visible">
+      <summary>Gets a value that indicates whether the current control is displayed on the design surface so it can be selected and its properties can be edited.</summary>
+      <returns>true if the current control is displayed; otherwise, false.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.ExtenderControlToolboxItem">
+      <summary>Provides a way to determine which target controls can be extended by a particular extender control in the toolbox.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlToolboxItem.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ExtenderControlToolboxItem" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlToolboxItem.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ExtenderControlToolboxItem" /> class by using the specified parameters.</summary>
+      <param name="info">An object that provides serialization information.</param>
+      <param name="context">An object that describes the source and destination of the serialized stream.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlToolboxItem.#ctor(System.Type)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ExtenderControlToolboxItem" /> class by using the specified type.</summary>
+      <param name="type">The type of the target control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlToolboxItem.GetTargetControlTypes(System.ComponentModel.Design.IDesignerHost)">
+      <summary>Returns the collection of target types.</summary>
+      <returns>A read-only collection of the target types.</returns>
+      <param name="host">The control host.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ExtenderControlToolboxItem.Initialize(System.Type)">
+      <summary>Pre-fills the target-type cache entry with the specified type.</summary>
+      <param name="type">The type of the target control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.PostBackTriggerControlIDConverter">
+      <summary>Provides a type converter that retrieves a list of control IDs in the current container.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.PostBackTriggerControlIDConverter" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a collection of control IDs from the container in the <see cref="T:System.ComponentModel.Design.IDesignerHost" /> object when provided with a format context.</summary>
+      <returns>A collection of strings that represent the control IDs of the controls in the current container. If no controls are currently contained, the method returns an empty collection. If the context is null or there is no current container, the method returns null.</returns>
+      <param name="context">A format context that can be used to extract additional information about the environment from which this converter is invoked. This parameter or properties of this parameter can be null.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether the collection of standard values that is returned from the <see cref="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method is an exclusive list of possible values, by using the specified context.</summary>
+      <returns>true if the <see cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection" /> object that is returned from the <see cref="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method provides a complete list of possible values; false if other values are possible. The default is false.</returns>
+      <param name="context">The format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether this converter supports a standard set of control IDs that can be selected from a list, by using the specified context.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.PostBackTriggerControlIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> method should be called to find a common set of control IDs the object supports; otherwise, false. The default is true.</returns>
+      <param name="context">The format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.QueryExtenderDesigner">
+      <summary>Provides designer functionality for the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.QueryExtenderDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.QueryExtenderDesigner" /> class.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.QueryExtenderDesigner.GetDesignTimeHtml">
+      <summary>Gets the placeholder HTML for the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control at design time.</summary>
+      <returns>The placeholder HTML for the control at design time.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.ScriptManagerDesigner">
+      <summary>Provides design-time support for the <see cref="T:System.Web.UI.ScriptManager" /> control in a visual designer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ScriptManagerDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetApplicationServices(System.Web.UI.ScriptManager,System.Collections.Generic.IEnumerable{System.Web.UI.ScriptManagerProxy})">
+      <summary>Returns ECMAScript (JavaScript) code that represents the profile service properties defined in a Web page's <see cref="T:System.Web.UI.ScriptManager" /> control and <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls.</summary>
+      <returns>The JavaScript code that defines the profile service properties.</returns>
+      <param name="scriptManager">The <see cref="T:System.Web.UI.ScriptManager" /> control associated with the Web Page.</param>
+      <param name="proxies">The collection of <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls associated with the Web page.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="scriptManager" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetDesignTimeHtml">
+      <summary>Returns the HTML markup that represents the <see cref="T:System.Web.UI.ScriptManager" /> control at design time.</summary>
+      <returns>The markup that is used to render the <see cref="T:System.Web.UI.ScriptManager" /> at design time.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetProxyScript(System.Web.UI.ScriptManager,System.Web.UI.ServiceReference)">
+      <summary>Provides a proxy script from a derived <see cref="T:System.Web.UI.ServiceReference" /> object.</summary>
+      <returns>The proxy script.</returns>
+      <param name="scriptManager">The <see cref="T:System.Web.UI.ScriptManager" /> control on the page.</param>
+      <param name="serviceReference">The <see cref="T:System.Web.UI.ServiceReference" /> control that is used to register a Web service for use in the page.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetProxyUrl(System.Web.UI.ScriptManager,System.Web.UI.ServiceReference)">
+      <summary>Provides a proxy URL from a derived <see cref="T:System.Web.UI.ServiceReference" /> object.</summary>
+      <returns>A proxy URL.</returns>
+      <param name="scriptManager">The <see cref="T:System.Web.UI.ScriptManager" /> control on the page.</param>
+      <param name="serviceReference">The <see cref="T:System.Web.UI.ServiceReference" /> control that is used to register a Web service for use in the page.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetScriptFromWebResource(System.Reflection.Assembly,System.String,System.Globalization.CultureInfo)">
+      <summary>Returns ECMAScript (JavaScript) code that is defined by the <see cref="T:System.Web.UI.ScriptResourceAttribute" /> attribute.</summary>
+      <returns>The JavaScript resource.</returns>
+      <param name="assembly">The assembly that contains the resource.</param>
+      <param name="resourceName">The fully qualified name of the resource in the assembly.</param>
+      <param name="culture">The culture that the resource is specified for.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetScriptReferences(System.Web.UI.ScriptManager,System.Collections.Generic.IEnumerable{System.Web.UI.ScriptManagerProxy})">
+      <summary>Returns a collection of all <see cref="T:System.Web.UI.ScriptReference" /> controls that are defined in a Web page's <see cref="T:System.Web.UI.ScriptManager" /> control and <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls.</summary>
+      <returns>A read-only collection of <see cref="T:System.Web.UI.ScriptReference" /> controls.</returns>
+      <param name="scriptManager">The <see cref="T:System.Web.UI.ScriptManager" /> control that is associated with the Web page.</param>
+      <param name="proxies">The collection of <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls associated with the Web page.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="scriptManager" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.GetServiceReferences(System.Web.UI.ScriptManager,System.Collections.Generic.IEnumerable{System.Web.UI.ScriptManagerProxy})">
+      <summary>Returns a collection of all <see cref="T:System.Web.UI.ServiceReference" /> controls that are defined in a Web page's <see cref="T:System.Web.UI.ScriptManager" /> control and <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls.</summary>
+      <returns>A read-only collection of <see cref="T:System.Web.UI.ServiceReference" /> controls.</returns>
+      <param name="scriptManager">The <see cref="T:System.Web.UI.ScriptManager" /> control that is associated with the Web page.</param>
+      <param name="proxies">The collection of <see cref="T:System.Web.UI.ScriptManagerProxy" /> controls that is associated with the Web page.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="scriptManager" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the specified component.</summary>
+      <param name="component">A <see cref="T:System.Web.UI.ScriptManager" /> component that implements the <see cref="T:System.ComponentModel.IComponent" /> interface.</param>
+    </member>
+    <member name="T:System.Web.UI.Design.ScriptManagerProxyDesigner">
+      <summary>Provides design-time support for the <see cref="T:System.Web.UI.ScriptManagerProxy" /> control in a visual designer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerProxyDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ScriptManagerProxyDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerProxyDesigner.GetDesignTimeHtml">
+      <summary>Returns the HTML markup that represents the <see cref="T:System.Web.UI.ScriptManagerProxy" /> control at design time.</summary>
+      <returns>A string that contains the markup that is used to render the <see cref="T:System.Web.UI.ScriptManagerProxy" /> at design time.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.ScriptManagerProxyDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the specified component.</summary>
+      <param name="component">A <see cref="T:System.Web.UI.ScriptManagerProxy" /> component that implements the <see cref="T:System.ComponentModel.IComponent" /> interface.</param>
+    </member>
+    <member name="T:System.Web.UI.Design.ServiceReferenceCollectionEditor">
+      <summary>Provides a component editor for the service reference collection of the <see cref="T:System.Web.UI.ServiceReference" /> control.</summary>
+    </member>
+    <member name="M:System.Web.UI.Design.ServiceReferenceCollectionEditor.#ctor(System.Type)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.ServiceReferenceCollectionEditor" /> class by using the specified collection type. </summary>
+      <param name="type">The type of the collection to edit.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.ServiceReferenceCollectionEditor.CanSelectMultipleInstances">
+      <summary>Gets a value that indicates whether multiple script reference instances can be selected at the same time.</summary>
+      <returns>true if multiple script reference instances can be selected at the same time; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.ServiceReferenceCollectionEditor.CreateNewItemTypes">
+      <summary>Gets the data types that the collection editor can create.</summary>
+      <returns>The data types that the <see cref="T:System.Web.UI.Design.ServiceReferenceCollectionEditor" /> class can create.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.TimerDesigner">
+      <summary>Provides design-time support for the <see cref="T:System.Web.UI.Timer" /> control in a visual designer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.TimerDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.TimerDesigner" /> class. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.TimerDesigner.GetDesignTimeHtml">
+      <summary>Returns the HTML markup that is used to render the associated <see cref="T:System.Web.UI.Timer" /> control at design time.</summary>
+      <returns>A string that contains the markup used to render the <see cref="T:System.Web.UI.Timer" /> control at design time.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.UpdatePanelDesigner">
+      <summary>Provides design-time support for the <see cref="T:System.Web.UI.UpdatePanel" /> control in a visual designer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.UpdatePanelDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.GetDesignTimeHtml(System.Web.UI.Design.DesignerRegionCollection)">
+      <summary>Returns the HTML markup that is used to display the <see cref="T:System.Web.UI.UpdatePanel" /> control, and populates the collection with the current control designer regions.</summary>
+      <returns>The design-time HTML markup for the associated control, which includes all control designer regions.</returns>
+      <param name="regions">The control designer regions for the associated control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.GetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion)">
+      <summary>Returns the content for an editable region of the design-time view of the <see cref="T:System.Web.UI.UpdatePanel" /> control.</summary>
+      <returns>A serialized copy of the template that is used to render the associated <see cref="T:System.Web.UI.UpdatePanel" /> control at design time.</returns>
+      <param name="region">The region to update.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the specified component.</summary>
+      <param name="component">An <see cref="T:System.Web.UI.UpdatePanel" /> component that implements the <see cref="T:System.ComponentModel.IComponent" /> interface.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.OnComponentChanged(System.Object,System.ComponentModel.Design.ComponentChangedEventArgs)">
+      <summary>Specifies the content for the editable region of the <see cref="T:System.Web.UI.UpdatePanel" /> control at design time.</summary>
+      <param name="sender">The region to update.</param>
+      <param name="ce">A serialized template for the associated control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelDesigner.SetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion,System.String)">
+      <summary>Called when the associated <see cref="T:System.Web.UI.UpdatePanel" /> control changes.</summary>
+      <param name="region">The source of the event.</param>
+      <param name="content">The event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.UpdatePanelDesigner.UsePreviewControl">
+      <summary>Gets a value that indicates whether the designer should use a temporary copy of the <see cref="T:System.Web.UI.UpdatePanel" /> control to generate the design-time markup, instead of using the actual control that is associated with the designer.</summary>
+      <returns>Always true.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor">
+      <summary>Provides a component editor for the <see cref="P:System.Web.UI.UpdatePanel.Triggers" /> collection of <see cref="T:System.Web.UI.UpdatePanel" /> controls.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor.#ctor(System.Type)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor" /> class.</summary>
+      <param name="type">The type of the trigger to edit.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor.CanSelectMultipleInstances">
+      <summary>Gets a value that indicates whether multiple triggers can be selected at the same time.</summary>
+      <returns>Always false.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor.CreateCollectionItemType">
+      <summary>Gets the data type that this collection edits.</summary>
+      <returns>An <see cref="T:System.Web.UI.UpdatePanelTrigger" /> object.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor.CreateNewItemTypes">
+      <summary>Gets the multiple data types that the collection editor can create.</summary>
+      <returns>An array of the data types that the <see cref="T:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor" /> can create.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdatePanelTriggerCollectionEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Edits the value of the specified object by using the specified service provider and context.</summary>
+      <returns>The new value of the object.</returns>
+      <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> object that provides additional context information.</param>
+      <param name="provider">A service provider object that provides editing services.</param>
+      <param name="value">The object whose value will be edited.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter">
+      <summary>Provides a type converter that retrieves a list of control IDs in the current container.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a collection of control IDs from the container inside the <see cref="T:System.ComponentModel.Design.IDesignerHos" />t object for the specified format context.</summary>
+      <returns>A collection of strings that represent the control IDs of the controls in the current container. If no controls are currently in the container, the method returns an empty collection. If the context is null or if there is no current container, the method returns null.</returns>
+      <param name="context">A context that can be used for more information about the environment that this converter is invoked from. This parameter and its properties can be null.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether the collection of standard values that is returned from <see cref="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> is an exclusive list of possible values for the specified context.</summary>
+      <returns>true if the <see cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection" /> returned from <see cref="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> is an exclusive list of possible values; false if other values are possible. The default is false.</returns>
+      <param name="context">The format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Returns a value that indicates whether this converter supports a set of control ID values that can be selected from a list.</summary>
+      <returns>true if <see cref="M:System.Web.UI.Design.UpdateProgressAssociatedUpdatePanelIDConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" /> should be called to find a common set of control ID values the object supports; otherwise, false. The default is true.</returns>
+      <param name="context">The  format context.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.UpdateProgressDesigner">
+      <summary>Provides design-time support for the <see cref="T:System.Web.UI.UpdateProgress" /> control in a visual designer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.UpdateProgressDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressDesigner.GetDesignTimeHtml(System.Web.UI.Design.DesignerRegionCollection)">
+      <summary>Returns the HTML markup to display the <see cref="T:System.Web.UI.UpdateProgress" /> control and populates the collection with the current control designer regions.</summary>
+      <returns>The design-time HTML markup for the associated control, which includes all control designer regions.</returns>
+      <param name="regions">An object that contains control designer regions for the associated control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressDesigner.GetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion)">
+      <summary>Returns the content for an editable region of the design-time view of the <see cref="T:System.Web.UI.UpdateProgress" /> control.</summary>
+      <returns>A serialized copy of the template that is used to render the associated <see cref="T:System.Web.UI.UpdatePanel" /> control at design time.</returns>
+      <param name="region">The <see cref="T:System.Web.UI.Design.EditableDesignerRegion" /> object to fetch content for.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.UpdateProgressDesigner.SetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion,System.String)">
+      <summary>Specifies the content for the editable region of the control at design time.</summary>
+      <param name="region">An object that provides the name of the region to update.</param>
+      <param name="content">A serialized template for the associated control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.UpdateProgressDesigner.UsePreviewControl">
+      <summary>Gets a value that indicates whether the designer should use a temporary copy instead of the actual control associated with the designer to generate the design-time markup.</summary>
+      <returns>Always true.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.DataPagerDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.WebControls.DataPagerDesigner" /> class. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.DataPagerDesigner.ActionLists">
+      <summary>Gets the list of items that are used to create the smart tag panel for the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</summary>
+      <returns>The list of items that are used to create the smart tag panel for the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerDesigner.GetDesignTimeHtml">
+      <summary>Generates the HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control at design time.</summary>
+      <returns>The HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control at design time.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerDesigner.GetEmptyDesignTimeHtml">
+      <summary>Generates the HTML markup that represents a <see cref="T:System.Web.UI.WebControls.DataPager" /> control at design time that has no visual representation at run time.</summary>
+      <returns>The HTML markup that represents an empty <see cref="T:System.Web.UI.WebControls.DataPager" /> control at design time.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the control designer and loads the specified control.</summary>
+      <param name="component">The control being designed.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.DataPagerDesigner.PagedControlID">
+      <summary>Gets or sets a value for the designer version of the <see cref="P:System.Web.UI.WebControls.DataPager.PagedControlID" /> property.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.DataPager.PagedControlID" /> property.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerDesigner.PreFilterProperties(System.Collections.IDictionary)">
+      <summary>Adds or removes properties from the property grid for the <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</summary>
+      <param name="properties">A collection that contains the properties that are exposed in the property grid for the <see cref="T:System.Web.UI.WebControls.DataPager" /> control at design time.</param>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.DataPagerDesigner.TemplateGroups">
+      <summary>Gets a collection of template groups for the templated pager fields of the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</summary>
+      <returns>A collection of template groups for the templated pager fields of the associated <see cref="T:System.Web.UI.WebControls.DataPager" /> control.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.DataPagerDesigner.UsePreviewControl">
+      <summary>Gets a value that indicates whether the designer should use a temporary copy instead of the actual <see cref="T:System.Web.UI.WebControls.DataPager" /> control that is associated with the designer in order to generate the design-time markup.</summary>
+      <returns>true in all cases.</returns>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor">
+      <summary>Provides a visual editor for <see cref="T:System.Web.UI.WebControls.DataPager" /> fields.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor" /> class. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+      <summary>Displays the visual editor by using the style that is indicated by the <see cref="Overload:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor.GetEditStyle" /> method to update the <see cref="P:System.Web.UI.WebControls.DataPager.Fields" /> property.</summary>
+      <returns>The new value of the object.</returns>
+      <param name="context">Context information about the design environment.</param>
+      <param name="provider">A reference to the associated designer.</param>
+      <param name="value">The object to edit.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.DataPagerFieldTypeEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+      <summary>Gets the style that the editor will use.</summary>
+      <returns>One of the enumeration values that indicates the type of style that the editor will use.</returns>
+      <param name="context">Context information about the design environment.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.LinqDataSourceDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.WebControls.LinqDataSourceDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.ActionLists">
+      <summary>Gets a list of items that are used to create an action list menu at design time.</summary>
+      <returns>A collection that contains the action list items.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.CanConfigure">
+      <summary>Gets a value that indicates whether the <see cref="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Configure" /> method can be called by the design host.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Configure" /> method can be called; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.CanRefreshSchema">
+      <summary>Gets a value that indicates whether the <see cref="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.RefreshSchema(System.Boolean)" /> method can be called by the design host.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.RefreshSchema(System.Boolean)" /> method can be called; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Configure">
+      <summary>Launches the data source configuration wizard in the design host.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.ContextTypeName">
+      <summary>Gets or sets the name of the type that contains the property whose value has the data that you want to retrieve.</summary>
+      <returns>The name of the class to retrieve data from.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Delete">
+      <summary>Gets or sets a value for the delete operation.</summary>
+      <returns>null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.EnableDelete">
+      <summary>Gets or sets a value that indicates whether rows can be deleted from the data source at run time.</summary>
+      <returns>true if the delete operation is enabled for users of the associated <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> instance; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.EnableInsert">
+      <summary>Gets or sets a value that indicates whether rows can be inserted into the data source at run time.</summary>
+      <returns>true if the insert operation is enabled for users of the associated <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> instance; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.EnableUpdate">
+      <summary>Gets or sets a value that indicates whether rows in the data source can be updated at run time.</summary>
+      <returns>true if the update operation is enabled for users of the associated <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> instance; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.GetView(System.String)">
+      <summary>Returns a data source view that has the specified name.</summary>
+      <returns>An object whose name is specified by <paramref name="viewName" />; otherwise, null.</returns>
+      <param name="viewName">The name of the view to return.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.GetViewNames">
+      <summary>Gets a list of available views.</summary>
+      <returns>A collection with one element that contains the name "DefaultView".</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.GroupBy">
+      <summary>Gets or sets the value that is used when the Group By clause is being created.</summary>
+      <returns>A string that contains the properties that are used for grouping data.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the control designer and loads the specified component.</summary>
+      <param name="component">The object to initialize.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Insert">
+      <summary>Gets or sets a value for the delete operation.</summary>
+      <returns>null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.OrderBy">
+      <summary>Gets or sets the value that is used when the Order By clause is being created.</summary>
+      <returns>A string that contains the properties that are used for sorting the data.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.OrderGroupsBy">
+      <summary>Gets or sets the value that is used when the Order Groups By clause is being created.</summary>
+      <returns>A string that contains the properties that are used for sorting grouped data.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.PreFilterProperties(System.Collections.IDictionary)">
+      <summary>Used by the designer to add properties or remove properties in the properties grid.</summary>
+      <param name="properties">The properties to be filtered.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.RefreshSchema(System.Boolean)">
+      <summary>Refreshes the schema from the underlying data source.</summary>
+      <param name="preferSilent">true to suppress all data source events until the schema is refreshed.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Select">
+      <summary>Gets or sets the string that contains values for the select operation.</summary>
+      <returns>A string that is used when the Select clause is being created.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.ServiceProvider">
+      <summary>Gets the service provider that is associated with the <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> instance.</summary>
+      <returns>An object that represents the service provider.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.TableName">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.LinqDataSource.TableName" /> property of the <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> instance.</summary>
+      <returns>The name of the class that contains the data.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Update">
+      <summary>Gets the value for the Update operation.</summary>
+      <returns>null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDataSourceDesigner.Where">
+      <summary>Gets or sets the <see cref="P:System.Web.UI.WebControls.LinqDataSource.Where" /> property of the <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control.</summary>
+      <returns>The value of the <see cref="P:System.Web.UI.WebControls.LinqDataSource.Where" /> property.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView">
+      <summary>Provides a design-time view of data for the <see cref="T:System.Web.UI.Design.WebControls.LinqDataSourceDesigner" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.#ctor(System.Web.UI.Design.WebControls.LinqDataSourceDesigner)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView" /> class with the provided data source designer and view name.</summary>
+      <param name="owner">The parent <see cref="T:System.Web.UI.Design.WebControls.LinqDataSourceDesigner" /> object.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.CanDelete">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.LinqDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control supports the <see cref="M:System.Web.UI.DataSourceView.ExecuteDelete(System.Collections.IDictionary,System.Collections.IDictionary)" /> method.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteDelete(System.Collections.IDictionary,System.Collections.IDictionary)" /> method is supported; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.CanInsert">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.LinqDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control supports the <see cref="M:System.Web.UI.DataSourceView.ExecuteInsert(System.Collections.IDictionary)" /> method.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteInsert(System.Collections.IDictionary)" /> method is supported; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.CanPage">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.LinqDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control supports paging through the data that is retrieved by the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteSelect(System.Web.UI.DataSourceSelectArguments)" /> method.</summary>
+      <returns>true if paging through the data that is retrieved by the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteSelect(System.Web.UI.DataSourceSelectArguments)" /> method is supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.CanSort">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.LinqDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control supports a sorted view of the underlying data source.</summary>
+      <returns>true if a sorted view of the underlying data source is supported; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.CanUpdate">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.LinqDataSourceView" /> object that is associated with the current <see cref="T:System.Web.UI.WebControls.LinqDataSource" /> control supports the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteUpdate(System.Collections.IDictionary,System.Collections.IDictionary,System.Collections.IDictionary)" /> method.</summary>
+      <returns>true if the <see cref="M:System.Web.UI.WebControls.LinqDataSourceView.ExecuteUpdate(System.Collections.IDictionary,System.Collections.IDictionary,System.Collections.IDictionary)" /> method is supported; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.GetDesignTimeData(System.Int32,System.Boolean@)">
+      <summary>Gets the design-time data that matches the schema of the associated data source control by using the specified number of rows. Returns a value that indicates whether the data is sample or real data.</summary>
+      <returns>The data to display at design time.</returns>
+      <param name="minimumRows">The minimum number of rows to return.</param>
+      <param name="isSampleData">true to indicate that the returned data is sample data; false to indicate that the returned data is live data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.IsDataContext">
+      <summary>Gets a value that indicates whether the <see cref="P:System.Web.UI.WebControls.LinqDataSourceView.ContextType" /> property contains an object that derives from <see cref="T:System.Data.Linq.DataContext" />.</summary>
+      <returns>true if the object in the <see cref="P:System.Web.UI.WebControls.LinqDataSourceView.ContextType" /> property is derived from <see cref="T:System.Data.Linq.DataContext" />; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.IsTableTypeTable">
+      <summary>Gets a value that indicates whether the <see cref="P:System.Web.UI.WebControls.LinqDataSourceView.TableName" /> property returns a <see cref="T:System.Data.Linq.Table`1" /> type.</summary>
+      <returns>true if the <see cref="P:System.Web.UI.WebControls.LinqDataSourceView.TableName" /> property returns a <see cref="T:System.Data.Linq.Table`1" /> type; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.LinqDesignerDataSourceView.Schema">
+      <summary>Gets the schema that describes the data source view that is represented by the current view object.</summary>
+      <returns>An object that represents the schema.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Web.UI.Design.WebControls.ListViewDesigner">
+      <summary>Provides design-time support in a visual designer for the <see cref="T:System.Web.UI.WebControls.ListView" /> control.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.Design.WebControls.ListViewDesigner" /> class. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.ListViewDesigner.ActionLists">
+      <summary>Gets the list of items that are is used to create a smart tag panel for the <see cref="T:System.Web.UI.WebControls.ListView" /> control.</summary>
+      <returns>The <see cref="T:System.ComponentModel.Design.DesignerActionListCollection" /> object that is associated with this designer.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.GetDesignTimeHtml">
+      <summary>Generates the HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time.</summary>
+      <returns>The HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.GetDesignTimeHtml(System.Web.UI.Design.DesignerRegionCollection)">
+      <summary>Generates the HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time, and populates the specified collection with the currently selected designer region.</summary>
+      <returns>The HTML markup that is used to render the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time.</returns>
+      <param name="regions">A collection of designer regions for the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.GetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion)">
+      <summary>Returns the content for the specified editable region of the design-time view of the associated <see cref="T:System.Web.UI.WebControls.ListView" /> control.</summary>
+      <returns>The HTML markup for the region.</returns>
+      <param name="region">The region to get the content for.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.GetEmptyDesignTimeHtml">
+      <summary>Generates the HTML markup that represents a <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time that has no visual representation at run time.</summary>
+      <returns>The HTML markup that represents a <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>Initializes the control designer and loads the specified control.</summary>
+      <param name="component">The control that is being designed.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.OnComponentChanged(System.Object,System.ComponentModel.Design.ComponentChangedEventArgs)">
+      <summary>Occurs when the associated control changes.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="ce">The event data.</param>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.OnSchemaRefreshed">
+      <summary>Prevents the <see cref="T:System.Web.UI.WebControls.ListView" /> control from updating when the data source schema is refreshed in the HTML designer.</summary>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.ListViewDesigner.SampleRowCount">
+      <summary>Gets the number of records that the <see cref="T:System.Web.UI.WebControls.ListView" /> control displays on the design surface.</summary>
+      <returns>The number of records that the <see cref="T:System.Web.UI.WebControls.ListView" /> control displays on the design surface.</returns>
+    </member>
+    <member name="M:System.Web.UI.Design.WebControls.ListViewDesigner.SetEditableDesignerRegionContent(System.Web.UI.Design.EditableDesignerRegion,System.String)">
+      <summary>Specifies the content for an editable region of the <see cref="T:System.Web.UI.WebControls.ListView" /> control at design time.</summary>
+      <param name="region">An editable design region that is contained in the <see cref="T:System.Web.UI.WebControls.ListView" /> control.</param>
+      <param name="content">The content to assign for the editable design region.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Web.UI.Design.WebControls.ListViewDesigner.UsePreviewControl">
+      <summary>Gets a value that indicates whether the designer should use a temporary copy instead of the actual <see cref="T:System.Web.UI.WebControls.ListView" /> control that is associated with the designer in order to generate the design-time markup.</summary>
+      <returns>true in all cases.</returns>
+    </member>
+  </members>
+</doc>

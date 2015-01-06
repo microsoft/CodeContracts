@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="postconditioncausingoutofmemory" storage="c:\cci\microsoft.research\regressiontest\testmemoryconsumption\postconditioncausingoutofmemory.generictest" id="69cb1c5e-5ce8-46f2-8bf7-368ddfd2c46a" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="c59ca27d-85b2-4ff5-8ba1-13894ef7303b" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression  -bounds    -define outofmem  -show validations -timeout 3600 -show progress  TestMemoryConsumption.dll -show analysisphases" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\CCI\TestResults\logozzo_LOGOZZO3 2010-03-05 14_13_42\In\LOGOZZO3\c59ca27d-85b2-4ff5-8ba1-13894ef7303b" />
+      <EnvironmentVariable name="testlocation" value="c:\cci\microsoft.research\regressiontest\testmemoryconsumption" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

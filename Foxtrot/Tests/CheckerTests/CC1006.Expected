@@ -1,0 +1,1 @@
+ (0,0) : error CC1006: Type 'CC1006+I' has the attribute [ContractClass], but its argument 'CC1006+CI' is not a class.

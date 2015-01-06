@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+<!--=====================================================================
+   WIX Installer file.
+     Download the wix binaries to compile it. (See BuildMSI.bat)
+     Before re-using this for another project, make sure to use all 
+     unique GUID's and don't reuse the ones below.
+
+   Inputs:
+     var.Version
+     var.ReleaseConfig
+     var.ProductGuid
+======================================================================-->
+
+<?ifndef var.Version ?>
+ <?define var.Version="1.1.1.1" ?>
+<?endif?>
+<?ifndef var.ReleaseConfig ?>
+ <?define var.ReleaseConfig="Debug" ?>
+<?endif?>
+<?ifndef var.ProductGuid ?>
+ <?define var.ProductGuid                     = "{DBB20AEF-1AAE-4fa6-A178-9BF282060121}" ?>
+<?endif?>
+
+
+<!--=====================================================================
+   Installer component guid's (random)
+======================================================================-->
+<?define var.UpgradeGuid                      = "{DBB20423-76CC-4a4f-9EDC-038CC04B6C60}" ?>
+
+<?define var.AssemblyInfoCompGuid             = "{DBB20AE1-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS90RegistryCompGuid             = "{DBB2CAF5-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS10RegistryCompGuid             = "{DBB2CAF6-1AAE-4fa6-A178-9BF28206012F}" ?>
+
+
+<!--=====================================================================
+   The following CLSID guid should correspond to the one for the PropertyPane class. 
+======================================================================-->
+<?define var.PropertyPaneCLSID      = "{DAA2FC39-92C8-4e9b-9E3E-4A52D08D1D83}" ?>
+<?define var.PropertyPaneID         = "{EAA2FC39-92C8-4e9b-9E3E-4A52D08D1D83}" ?>
+
+<?define var.PropertyPaneClass      = "AssemblyInfo.PropertyPane" ?>
+<?define var.PropertyPaneAssembly   = "PropertyPane" ?>
+
+
+<!--=====================================================================
+   The following guid is defined by .NET and signifies .NET components
+======================================================================-->
+<?define var.CategoryDotNet         = "{62C8FE65-4EBB-45E7-B440-6E39B2CDBF29}" ?>  
+  
+  
+  <!--=====================================================================
+     Product information
+  ======================================================================-->
+  <Product Name='Assembly Info Sample $(var.ReleaseConfig) $(var.Version)' Id='$(var.ProductGuid)'
+    UpgradeCode='$(var.UpgradeGuid)'
+    Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Microsoft Research'>
+  
+    <Package Keywords='Installer'
+      Description="Assembly Info Sample $(var.ReleaseConfig) $(var.Version) for Visual Studio"
+      Manufacturer='Microsoft Research'
+      InstallerVersion='200' Languages='1033' Compressed='yes' SummaryCodepage='1252' 
+      InstallPrivileges='elevated'  
+    />
+
+    <Media Id='1' DiskPrompt="CD-ROM #1" Cabinet="AssemblyInfo.cab" EmbedCab="yes" />
+    <Property Id='DiskPrompt' Value="AssemblyInfo $(var.ReleaseConfig) $(var.Version) Installation [1]" />
+
+    <!--=====================================================================
+       Useful shorthands
+    ======================================================================-->
+    <?define var.Vs90RootKey              ="Software\Microsoft\VisualStudio\9.0" ?>
+    <?define var.Vs10RootKey              ="Software\Microsoft\VisualStudio\10.0" ?>
+
+    <Property Id="VS90" Secure="yes">
+      <RegistrySearch Id="SearchVS90" Root="HKLM" Key="$(var.Vs90RootKey)" Name="ApplicationID" Type="raw" />
+    </Property>
+
+    <Property Id="VS10" Secure="yes">
+      <RegistrySearch Id="SearchVS10" Root="HKLM" Key="$(var.Vs10RootKey)" Name="ApplicationID"  Type="raw" />
+    </Property>
+
+
+    <!--=====================================================================
+       Install directory: Program Files\AssemblyInfo
+    ======================================================================-->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      
+      <!--====================================================================
+          Include the CodeTools merge module
+      ======================================================================-->
+      <Merge Id="CodeToolsModule" Language="0" SourceFile="CodeTools.msm" DiskId="1" />
+
+      <Directory Id='ProgramFilesFolder' >
+        <!--=====================================================================
+           Program Files\AssemblyInfo
+        ======================================================================-->
+        <Directory Id='INSTALLDIR' Name='AssemblyInfo'>            
+          <Component Id='AssemblyInfoCompId' Guid='$(var.AssemblyInfoCompGuid)'>
+            <!--=====================================================================
+                All our files
+            ======================================================================-->
+            <File Id='AssemblyInfoProgram' Name="AssemblyInfo.exe" Source="AssemblyInfo.exe" Vital='yes' />
+            <File Id='AssemblyInfoTargets' Name="AssemblyInfo.targets" Source="AssemblyInfo.targets" Vital='yes' />
+            <File Id='AssemblyInfoPropPane' Name="$(var.PropertyPaneAssembly).dll" Source="$(var.PropertyPaneAssembly).dll" Vital='yes' />
+
+            <!--=====================================================================
+                COM registration of our property pane
+            ======================================================================-->
+            <RegistryKey Root="HKCR" Key="CLSID\$(var.PropertyPaneCLSID)" Action="createAndRemoveOnUninstall">
+              <RegistryValue Value="$(var.PropertyPaneClass)" Type="string" />
+              <RegistryValue Key="ProgId" Value="$(var.PropertyPaneClass)" Type="string" />
+              <RegistryValue Key="Implemented Categories\$(var.CategoryDotNet)" Value="Categories" Type="string" />
+              <RegistryKey Key="InProcServer32" Action="createAndRemoveOnUninstall">
+                <RegistryValue Value="[SystemFolder]mscoree.dll" Type="string" />
+                <RegistryValue Name="Assembly" Value="$(var.PropertyPaneAssembly), Version=$(var.Version), Culture=neutral" Type="string" />
+                <RegistryValue Name="Class" Value="$(var.PropertyPaneClass)" Type="string" />
+                <RegistryValue Name="CodeBase" Value="[INSTALLDIR]$(var.PropertyPaneAssembly).dll" Type="string" />
+                <RegistryValue Name="ThreadingModel" Value="Both" Type="string" />
+              </RegistryKey>
+            </RegistryKey>
+          </Component>            
+        </Directory> <!-- AssemblyInfo -->
+      </Directory> <!-- program files -->
+    </Directory> <!-- TARGETDIR  -->
+
+
+    <!--=====================================================================
+       Registry entries for the various versions of Visual Studio  
+       The actual entries are defined in the include file "VsRegistryEntries.wxs"
+    ======================================================================-->
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- (VS90) -->
+      <Component Id="VS90RegistryComponent" Guid="$(var.VS90RegistryCompGuid)" Transitive="yes" Win64="no">
+        <Condition>
+          <![CDATA[VS90]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="$(var.Vs90RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- (VS10) -->
+      <Component Id="VS10RegistryComponent" Guid="$(var.VS10RegistryCompGuid)" Transitive="yes" Win64="no">
+        <Condition>
+          <![CDATA[VS10]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="$(var.Vs10RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+
+    <!--=====================================================================
+       Features
+    ======================================================================-->
+    
+    <Feature Id='AssemblyInfo' Title='AssemblyInfo CodeTools Sample $(var.ReleaseConfig) $(var.Version) for Visual Studio' 
+              Description='The complete package.' TypicalDefault='install' Display='expand' Level='1' 
+              ConfigurableDirectory='INSTALLDIR'>
+        <MergeRef Id="CodeToolsModule"/>        
+        <ComponentRef Id='AssemblyInfoCompId' />
+        <ComponentRef Id='VS90RegistryComponent' />
+        <ComponentRef Id='VS10RegistryComponent' />
+    </Feature>
+   
+    <!--=====================================================================
+       The user interface: link in "UI.wxs" (which is a generic reusable module)
+    ======================================================================-->
+    <UIRef Id='FragmentUI' />
+        
+    <!--=====================================================================
+       Execute sequence
+    ======================================================================-->
+
+    <!-- Removing any previous install -->
+    <Upgrade Id="$(var.UpgradeGuid)">
+      <UpgradeVersion 
+        Minimum="0.0.0.0"
+        Maximum="$(var.Version)"
+        Property="OLDVERSIONFOUND" 		
+        IncludeMinimum="yes"
+        IncludeMaximum="yes"  
+        MigrateFeatures="yes" />
+    </Upgrade>
+    
+    <InstallExecuteSequence>      
+      <LaunchConditions After='AppSearch' />
+      
+      <!-- automatically uninstall previous installation -->
+      <RemoveExistingProducts Before="InstallInitialize">
+        <![CDATA[OLDVERSIONFOUND]]>
+      </RemoveExistingProducts>      
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

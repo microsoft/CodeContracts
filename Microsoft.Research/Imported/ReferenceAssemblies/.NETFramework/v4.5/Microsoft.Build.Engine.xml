@@ -1,0 +1,1797 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Build.Engine</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.BuildEngine.BuildItem">
+      <summary>Represents a single item in an MSBuild project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.#ctor(System.String,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> class based on an <see cref="T:Microsoft.Build.Framework.ITaskItem" /> object.</summary>
+      <param name="itemName">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> property of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+      <param name="taskItem">The <see cref="T:Microsoft.Build.Framework.ITaskItem" /> from which to create the <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> class with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> and <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property values.</summary>
+      <param name="itemName">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> property of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+      <param name="itemInclude">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.Clone">
+      <summary>Creates a shallow copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</summary>
+      <returns>A copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.Condition">
+      <summary>Gets or sets the Condition attribute value of the item.</summary>
+      <returns>The Condition attribute value of the item.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.CopyCustomMetadataTo(Microsoft.Build.BuildEngine.BuildItem)">
+      <summary>Copies all item metadata on this <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> to the specified <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</summary>
+      <param name="destinationItem">The <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> to which to copy the item metadata.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.CustomMetadataCount">
+      <summary>Gets the number of custom attributes that are set on this item.</summary>
+      <returns>An integer indicating how many custom attributes are set on this item.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.CustomMetadataNames">
+      <summary>Gets all user-defined or custom attribute names.</summary>
+      <returns>An <see cref="T:System.Collections.ICollection" /> containing string names for all of the user-defined or custom attributes.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.Exclude">
+      <summary>Gets or sets the Exclude attribute value of the item.</summary>
+      <returns>Gets or sets the Exclude attribute value of the item.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.FinalItemSpec">
+      <summary>Gets the final specification of the item after all wildcards and properties have been evaluated.</summary>
+      <returns>The final specification of the item after all wildcards and properties have been evaluated.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.GetEvaluatedMetadata(System.String)">
+      <summary>Returns the value of the specified item metadata after after all item and property references have been evaluated.</summary>
+      <returns>The value of the specified item metadata after after all item and property references have been evaluated.</returns>
+      <param name="metadataName">The item metadata name.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.GetMetadata(System.String)">
+      <summary>Returns the value of the specified item metadata.</summary>
+      <returns>The value of the specified item metadata.</returns>
+      <param name="metadataName">The item metadata name.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.HasMetadata(System.String)">
+      <summary>Indicates whether the item has the specified item metadata.</summary>
+      <returns>true if the item has the specified item metadata; otherwise, false.</returns>
+      <param name="metadataName">The item metadata name.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.Include">
+      <summary>Gets or sets the Include attribute that created the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</summary>
+      <returns>The Include attribute that created the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.IsImported">
+      <summary>Gets a value indicating whether the item was imported into the project.</summary>
+      <returns>true if the item was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.MetadataCount">
+      <summary>Gets the number of metadata set on the item</summary>
+      <returns>An integer representing the number of metadata items.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.MetadataNames">
+      <summary>Gets the names of metadata on the item, including pre-defined or reserved item-spec modifiers.</summary>
+      <returns>An <see cref="T:System.Collections.ICollection" /> containing name strings of all metadata on the item.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItem.Name">
+      <summary>Gets or sets the name of the item collection to which the item belongs.</summary>
+      <returns>The name of the item collection to which the item belongs.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.RemoveMetadata(System.String)">
+      <summary>Removes the specified item metadata.</summary>
+      <param name="metadataName">The item metadata name.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.SetMetadata(System.String,System.String)">
+      <summary>Assigns the specified value to the specified item metadata.</summary>
+      <param name="metadataName">The item metadata name.</param>
+      <param name="metadataValue">The item metadata value.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItem.SetMetadata(System.String,System.String,System.Boolean)">
+      <summary>Assigns the specified value to the specified item metadata, and optionally treats the metadata as a literal value.</summary>
+      <param name="metadataName">The item metadata name.</param>
+      <param name="metadataValue">The item metadata value.</param>
+      <param name="treatMetadataValueAsLiteral">true to treat the metadata as a literal value by escaping all MSBuild special characters; otherwise, false.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildItemGroup">
+      <summary>Represents a collection of <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.AddNewItem(System.String,System.String)">
+      <summary>Adds a new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> and <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property values to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <returns>The new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</returns>
+      <param name="itemName">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+      <param name="itemInclude">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.AddNewItem(System.String,System.String,System.Boolean)">
+      <summary>Adds a new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> and <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property values to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />, allowing you to specify whether the <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property value is treated as a literal.</summary>
+      <returns>The new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</returns>
+      <param name="itemName">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Name" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+      <param name="itemInclude">The <see cref="P:Microsoft.Build.BuildEngine.BuildItem.Include" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildItem" />.</param>
+      <param name="treatItemIncludeAsLiteral">true to treat the <paramref name="itemInclude" /> parameter as a literal value; otherwise, false.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.Clear">
+      <summary>Removes the <see cref="P:Microsoft.Build.BuildEngine.BuildItemGroup.Condition" /> property value and all <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects from the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.Clone(System.Boolean)">
+      <summary>Creates a deep or shallow copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <returns>A copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</returns>
+      <param name="deepClone">true to create a deep copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroup.Condition">
+      <summary>Gets or sets the Condition attribute value of the item group.</summary>
+      <returns>The Condition attribute value of the item group.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroup.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroup.IsImported">
+      <summary>Gets or sets a value indicating whether the item group was imported into the project.</summary>
+      <returns>true if the item group was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroup.Item(System.Int32)">
+      <summary>Gets or sets a <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> object in this <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> object in this <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</returns>
+      <param name="index">The zero-based index of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> object to get or set.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.RemoveItem(Microsoft.Build.BuildEngine.BuildItem)">
+      <summary>Removes the specified <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> from the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</summary>
+      <param name="itemToRemove">The <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.RemoveItemAt(System.Int32)">
+      <summary>Removes the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> at the specified index from the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />. </summary>
+      <param name="index">The zero-based index of the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> object to remove.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroup.ToArray">
+      <summary>Copies the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> to a new array.</summary>
+      <returns>A new array containing the <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> objects copied from the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection">
+      <summary>Represents a collection of <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> objects. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroupCollection.CopyTo(System.Array,System.Int32)">
+      <summary>Copies the collection to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroupCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> objects in the collection.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildItemGroupCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the collection.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroupCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" /> is synchronized (thread safe).</summary>
+      <returns>true if access to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildItemGroupCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" />.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildProperty">
+      <summary>Represents a single property in an MSBuild project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildProperty.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> class with the specified name and value.</summary>
+      <param name="propertyName">The property name.</param>
+      <param name="propertyValue">The property value.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildProperty.Clone(System.Boolean)">
+      <summary>Creates a deep or shallow copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</summary>
+      <returns>A copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</returns>
+      <param name="deepClone">true to create a deep copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildProperty.Condition">
+      <summary>Gets or sets the Condition attribute value of the property.</summary>
+      <returns>Gets or sets the Condition attribute value of the property.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildProperty.FinalValue">
+      <summary>Gets the final value of the property after all property evaluations have been performed.</summary>
+      <returns>The final value of the property after all property evaluations have been performed.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildProperty.IsImported">
+      <summary>Gets or sets a value indicating whether the property was imported into the project.</summary>
+      <returns>true if the property was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildProperty.Name">
+      <summary>Gets the property name.</summary>
+      <returns>The property name.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildProperty.op_Explicit(Microsoft.Build.BuildEngine.BuildProperty)~System.String">
+      <summary>Converts a <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to a String.</summary>
+      <returns>A String, whose contents are the same as the <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> property of the <paramref name="propertyToCast" /> parameter.</returns>
+      <param name="propertyToCast">The <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to convert to a string.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildProperty.ToString">
+      <summary>Returns the string that represents the property <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" />.</summary>
+      <returns>The string that represents the property <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildProperty.Value">
+      <summary>Gets or sets the property value.</summary>
+      <returns>The property value.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildPropertyGroup">
+      <summary>Represents a collection of <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> objects.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.#ctor(Microsoft.Build.BuildEngine.Project)">
+      <summary>Initializes a new PropertyGroup element in the specified project.</summary>
+      <param name="parentProject">The name of the Project in which to add the new PropertyGroup.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.AddNewProperty(System.String,System.String)">
+      <summary>Adds a new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> and <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>The new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</returns>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+      <param name="propertyValue">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.AddNewProperty(System.String,System.String,System.Boolean)">
+      <summary>Adds a new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> and <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>The new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</returns>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+      <param name="propertyValue">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> property value to assign the new <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+      <param name="treatPropertyValueAsLiteral">true to treat the <paramref name="propertyValue" /> parameter as a literal value; otherwise, false.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.Clear">
+      <summary>Removes the <see cref="P:Microsoft.Build.BuildEngine.BuildPropertyGroup.Condition" /> property value and all <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> objects from the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.Clone(System.Boolean)">
+      <summary>Creates a deep or shallow copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>A copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</returns>
+      <param name="deepClone">true to create a deep copy of the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroup.Condition">
+      <summary>Gets or sets the Condition attribute value of the property group.</summary>
+      <returns>The Condition attribute value of the property group.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroup.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroup.IsImported">
+      <summary>Gets or sets a value indicating whether the property group was imported into the project.</summary>
+      <returns>true if the property group was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroup.Item(System.String)">
+      <summary>Gets or sets a <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> object in this <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> object in this <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</returns>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> value of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to get or set.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.RemoveProperty(Microsoft.Build.BuildEngine.BuildProperty)">
+      <summary>Removes the specified <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> from the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <param name="property">The <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.RemoveProperty(System.String)">
+      <summary>Removes the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> from the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" />.</summary>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> value of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.SetImportedPropertyGroupCondition(System.String)">
+      <summary>Sets the condition for imported property groups. Changes are not persisted.</summary>
+      <param name="condition">The condition to add to the imported PropertyGroup.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.SetProperty(System.String,System.String)">
+      <summary>Sets the <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" />.</summary>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> property value of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to set.</param>
+      <param name="propertyValue">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> property value to assign the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroup.SetProperty(System.String,System.String,System.Boolean)">
+      <summary>Sets the <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> with the specified <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" />.</summary>
+      <param name="propertyName">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Name" /> property value of the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" /> to set.</param>
+      <param name="propertyValue">The <see cref="P:Microsoft.Build.BuildEngine.BuildProperty.Value" /> property value to assign the <see cref="T:Microsoft.Build.BuildEngine.BuildProperty" />.</param>
+      <param name="treatPropertyValueAsLiteral">true to treat the <paramref name="propertyValue" /> parameter as a literal value; otherwise, false.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection">
+      <summary>Represents a collection of <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> objects. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection.CopyTo(System.Array,System.Int32)">
+      <summary>Copies the entire collection to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> objects in the collection.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" /> is synchronized (thread safe).</summary>
+      <returns>true if access to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" />.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildSettings">
+      <summary>Specifies the settings for a build. </summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.BuildSettings.None">
+      <summary>Specifies that the build should run normally.</summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.BuildSettings.DoNotResetPreviouslyBuiltTargets">
+      <summary>Specifies that no important external state has changed and no previously built targets should be rebuilt.</summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.BuildTask">
+      <summary>Represents a Task element in a project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.AddOutputItem(System.String,System.String)">
+      <summary>Adds an Output element with the specified TaskParameter and ItemName attributes to the Task element.</summary>
+      <param name="taskParameter">The value of the TaskParameter attribute of the Output element.</param>
+      <param name="itemName">The value of the ItemName attribute of the Output element.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.AddOutputProperty(System.String,System.String)">
+      <summary>Adds an Output element with the specified TaskParameter and PropertyName attributes to the Task element.</summary>
+      <param name="taskParameter">The value of the TaskParameter attribute of the Output element.</param>
+      <param name="propertyName">The value of the PropertyName attribute of the Output element.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildTask.Condition">
+      <summary>Gets or sets the Condition attribute value of the Task element.</summary>
+      <returns>The Condition attribute value of the Task element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildTask.ContinueOnError">
+      <summary>Gets or sets the ContinueOnError attribute value of the Task element.</summary>
+      <returns>The ContinueOnError attribute value of the Task element.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.Execute">
+      <summary>Runs the task represented by this <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> object.</summary>
+      <returns>true if the method was successful; otherwise, false.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.GetParameterNames">
+      <summary>Gets an array containing the parameter names passed to the task.</summary>
+      <returns>An array containing the parameter names passed to the task.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.GetParameterValue(System.String)">
+      <summary>Gets the value of the specified task parameter.</summary>
+      <returns>The value of the specified task parameter.</returns>
+      <param name="attributeName">The parameter name.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildTask.HostObject">
+      <summary>Gets or sets the host object associated with the task.</summary>
+      <returns>The host object associated with the task.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildTask.Name">
+      <summary>Gets the task name.</summary>
+      <returns>The task name.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.SetParameterValue(System.String,System.String)">
+      <summary>Sets the value of the specified task parameter.</summary>
+      <param name="parameterName">The parameter name to set.</param>
+      <param name="parameterValue">The value to assign to <paramref name="parameterName" />.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.BuildTask.SetParameterValue(System.String,System.String,System.Boolean)">
+      <summary>Sets the value of the specified task parameter.</summary>
+      <param name="parameterName">The parameter name to set.</param>
+      <param name="parameterValue">The value to assign to <paramref name="parameterName" />.</param>
+      <param name="treatParameterValueAsLiteral">true to treat <paramref name="parameterValue" /> as a literal value; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.BuildTask.Type">
+      <summary>Gets the <see cref="T:System.Type" /> of the class that implements the task.</summary>
+      <returns>The <see cref="T:System.Type" /> of the class that implements the task.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ColorResetter">
+      <summary>Defines the type of delegate used to reset the console color. </summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ColorSetter">
+      <summary>Defines the type of delegate used to set the console color. </summary>
+      <param name="color">The text color.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger">
+      <summary>Represents the ConfigurableForwardingLogger, a pre-fabricated forwarding logger to be used when building projects on a multi-proc or multi-core system. For more information, see Writing Multi-Processor-Aware Loggers.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.BuildEventRedirector">
+      <summary>Gets or sets whether the build engine allows node loggers to forward messages to the central logger.</summary>
+      <returns>An <see cref="T:Microsoft.Build.Framework.IEventRedirector" /> object to forward the events.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.ForwardToCentralLogger(Microsoft.Build.Framework.BuildEventArgs)">
+      <summary>Forwards the specified event to the central logger.</summary>
+      <param name="e">The event arguments. </param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>Enlists the console logger for all build events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> object to provide the build events.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)">
+      <summary>Enlists the console logger for all build events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> object to provide the build events.</param>
+      <param name="nodeCount">The node ID of the event source.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.NodeId">
+      <summary>Gets or sets the unique identifier (Node ID) to which the logger is attached.</summary>
+      <returns>The unique identifier to the node.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.Parameters">
+      <summary>Gets or sets the parameters for the ConfigurableForwardingLogger.</summary>
+      <returns>A string representing the logger parameters.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.Shutdown">
+      <summary>Closes the configurable forwarding logger.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConfigurableForwardingLogger.Verbosity">
+      <summary>Gets or sets the level of detail to show in the event log.</summary>
+      <returns>a <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> enumeration value.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ConsoleLogger">
+      <summary>Implements the standard console logger that outputs event data to the console window during a build.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.#ctor(Microsoft.Build.Framework.LoggerVerbosity)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" /> class with the specified <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" />.</summary>
+      <param name="verbosity">The <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> to apply to the logger.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.#ctor(Microsoft.Build.Framework.LoggerVerbosity,Microsoft.Build.BuildEngine.WriteHandler,Microsoft.Build.BuildEngine.ColorSetter,Microsoft.Build.BuildEngine.ColorResetter)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" /> class with the specified <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" />, <see cref="T:Microsoft.Build.BuildEngine.ColorSetter" />, and <see cref="T:Microsoft.Build.BuildEngine.ColorResetter" /> values.</summary>
+      <param name="verbosity">The <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> to apply to the logger.</param>
+      <param name="write">The <see cref="T:Microsoft.Build.BuildEngine.WriteHandler" /> for the logger to use.</param>
+      <param name="colorSet">The <see cref="T:Microsoft.Build.BuildEngine.ColorSetter" /> for the logger to use.</param>
+      <param name="colorReset">The <see cref="T:Microsoft.Build.BuildEngine.ColorResetter" /> for the logger to use.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.ApplyParameter(System.String,System.String)">
+      <summary>Adds the specified parameter name and value to the logger.</summary>
+      <param name="parameterName">The parameter name to add to the logger.</param>
+      <param name="parameterValue">The parameter value to assign to the <paramref name="parameterName" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.BuildFinishedHandler(System.Object,Microsoft.Build.Framework.BuildFinishedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.BuildFinished" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.BuildFinishedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.BuildStartedHandler(System.Object,Microsoft.Build.Framework.BuildStartedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.BuildStarted" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.BuildStartedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.CustomEventHandler(System.Object,Microsoft.Build.Framework.CustomBuildEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.CustomEventRaised" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.CustomBuildEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.ErrorHandler(System.Object,Microsoft.Build.Framework.BuildErrorEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.ErrorRaised" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.BuildErrorEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>Registers the logger for the specified events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> to register with the logger.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)">
+      <summary>Registers the logger for the specified events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> to register with the logger.</param>
+      <param name="nodeCount">The number of nodes to initialize.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.MessageHandler(System.Object,Microsoft.Build.Framework.BuildMessageEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.MessageRaised" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.BuildMessageEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConsoleLogger.Parameters">
+      <summary>Gets or sets the parameters passed to the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" />.</summary>
+      <returns>The parameters passed to the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" />.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.ProjectFinishedHandler(System.Object,Microsoft.Build.Framework.ProjectFinishedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.ProjectFinished" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.ProjectFinishedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.ProjectStartedHandler(System.Object,Microsoft.Build.Framework.ProjectStartedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.ProjectStarted" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.ProjectStartedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConsoleLogger.ShowSummary">
+      <summary>Gets or sets a value indicating whether the logger will display a summary of errors and warnings.</summary>
+      <returns>true if the logger will display a summary of errors and warnings; otherwise, false.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.Shutdown">
+      <summary>Stops the logger and releases all resources.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConsoleLogger.SkipProjectStartedText">
+      <summary>Gets or sets a value indicating whether the logger will display messages when new projects are started during the build.</summary>
+      <returns>true to display messages when new projects are started during the build; otherwise, false. The default is true.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.TargetFinishedHandler(System.Object,Microsoft.Build.Framework.TargetFinishedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.TargetFinished" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.TargetFinishedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.TargetStartedHandler(System.Object,Microsoft.Build.Framework.TargetStartedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.TargetStarted" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.TargetStartedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.TaskFinishedHandler(System.Object,Microsoft.Build.Framework.TaskFinishedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.TaskFinished" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.TaskFinishedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.TaskStartedHandler(System.Object,Microsoft.Build.Framework.TaskStartedEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.TaskStarted" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.TaskStartedEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConsoleLogger.Verbosity">
+      <summary>Gets or sets the <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> level of the logger.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> level of the logger.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ConsoleLogger.WarningHandler(System.Object,Microsoft.Build.Framework.BuildWarningEventArgs)">
+      <summary>Handles the <see cref="E:Microsoft.Build.Framework.IEventSource.WarningRaised" /> event.</summary>
+      <param name="sender">The source of the event.</param>
+      <param name="e">A <see cref="T:Microsoft.Build.Framework.BuildWarningEventArgs" /> that contains the event data.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ConsoleLogger.WriteHandler">
+      <summary>Gets or sets to the <see cref="T:Microsoft.Build.BuildEngine.WriteHandler" /> delegate for the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" />.</summary>
+      <returns>The <see cref="T:Microsoft.Build.BuildEngine.WriteHandler" /> delegate for the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.DistributedFileLogger">
+      <summary>Represents a text file that contains the build log for a build node.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.DistributedFileLogger.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.DistributedFileLogger" /> class.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.DistributedFileLogger.BuildEventRedirector">
+      <summary>Set by the build engine to allow a node loggers to forward messages to the central logger.</summary>
+      <returns>An <see cref="T:Microsoft.Build.Framework.IEventRedirector" /> object to forward the events.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.DistributedFileLogger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>Enlists the console logger for all build events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> object that provides the build events.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.DistributedFileLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)">
+      <summary>Enlists the console logger for all build events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> object that provides the build events.</param>
+      <param name="nodeCount">The Node ID of the event source.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.DistributedFileLogger.NodeId">
+      <summary>Gets or sets the unique identifier (Node ID) of the node to which the forwarding logger is attached.</summary>
+      <returns>The unique identifier for the node.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.DistributedFileLogger.Parameters">
+      <summary>Gets or sets the parameters for the DistributedFileLogger.</summary>
+      <returns>A string representing the logger parameters.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.DistributedFileLogger.Shutdown">
+      <summary>Closes the node file logger.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.DistributedFileLogger.Verbosity">
+      <summary>Gets or sets the level of detail (a <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> value) to display in the build event log.</summary>
+      <returns>a <see cref="T:Microsoft.Build.Framework.LoggerVerbosity" /> enumeration value.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Engine">
+      <summary>Represents the MSBuild engine.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor(Microsoft.Build.BuildEngine.BuildPropertyGroup)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class.</summary>
+      <param name="globalProperties">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> that represents properties to be passed to the child engine.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor(Microsoft.Build.BuildEngine.BuildPropertyGroup,Microsoft.Build.BuildEngine.ToolsetDefinitionLocations)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class.</summary>
+      <param name="globalProperties">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> that represents properties to be passed to the child engine.</param>
+      <param name="locations">A <see cref="T:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations" /> enumeration specifies the location of the Toolset definition.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor(Microsoft.Build.BuildEngine.BuildPropertyGroup,Microsoft.Build.BuildEngine.ToolsetDefinitionLocations,System.Int32,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class.</summary>
+      <param name="globalProperties">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> that represents properties to be passed to the child engine.</param>
+      <param name="locations">A <see cref="T:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations" /> enumeration specifies the location of the Toolset definition.</param>
+      <param name="numberOfCpus">An integer that specifies the number of CPUs or cores in the system.</param>
+      <param name="localNodeProviderParameters">A string of parameters that are used to configure the MSBuild engine. You must format the parameters as <paramref name="ParameterName" />=<paramref name="ParameterValue" />. The valid semicolon-separated, optional parameters are as follows:MSBUILDLOCATION Indicates where the build process can find MSBuild.exe. This path enables the MSBuild engine to locate MSBuild.exe and start it as a local node. MSBUILDLOCATION is the only essential parameter for a host. The default value is C:\Windows\Microsoft.Net\Framework\v3.5\.NODEREUSE Indicates whether the child nodes should remain after the build finishes, in case they can be used later by another build. The nodes are discarded automatically after one minute of non-use. The default value is true.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor(Microsoft.Build.BuildEngine.ToolsetDefinitionLocations)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class.</summary>
+      <param name="locations">A <see cref="T:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations" /> enumeration that specifies the location of the Toolset definition.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> class that has the specified <see cref="P:Microsoft.Build.BuildEngine.Engine.BinPath" />.</summary>
+      <param name="binPath">The path to MSBuild.exe.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.BinPath">
+      <summary>Gets or sets the path to MSBuild.exe.</summary>
+      <returns>The path to MSBuild.exe.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.BuildEnabled">
+      <summary>Gets or sets a value that indicates whether the building of targets in the project is enabled.</summary>
+      <returns>true if the building of targets in the project is enabled; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProject(Microsoft.Build.BuildEngine.Project)">
+      <summary>Builds the specified <see cref="T:Microsoft.Build.BuildEngine.Project" />.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProject(Microsoft.Build.BuildEngine.Project,System.String)">
+      <summary>Builds the specified target of the specified <see cref="T:Microsoft.Build.BuildEngine.Project" />.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to build.</param>
+      <param name="targetName">The Name attribute of the Target element to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProject(Microsoft.Build.BuildEngine.Project,System.String[])">
+      <summary>Builds the specified targets of the specified <see cref="T:Microsoft.Build.BuildEngine.Project" />.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProject(Microsoft.Build.BuildEngine.Project,System.String[],System.Collections.IDictionary)">
+      <summary>Builds the specified targets of the specified <see cref="T:Microsoft.Build.BuildEngine.Project" />, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing in Visual Basic) if outputs are not required.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProject(Microsoft.Build.BuildEngine.Project,System.String[],System.Collections.IDictionary,Microsoft.Build.BuildEngine.BuildSettings)">
+      <summary>Builds the specified targets of the specified <see cref="T:Microsoft.Build.BuildEngine.Project" /> with the specified <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" />, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing in Visual Basic) if outputs are not required.</param>
+      <param name="buildFlags">The <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> to apply to the build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String)">
+      <summary>Loads the specified project file and builds the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String)">
+      <summary>Loads the specified project file and builds the specified target of the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+      <param name="targetName">The Name attribute of the Target element to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String[])">
+      <summary>Loads the specified project file and builds the specified targets of the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String[],Microsoft.Build.BuildEngine.BuildPropertyGroup)">
+      <summary>Loads the specified project file and builds the specified targets of the project with the specified <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" />, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+      <param name="globalProperties">The <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" /> to apply to the build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String[],Microsoft.Build.BuildEngine.BuildPropertyGroup,System.Collections.IDictionary)">
+      <summary>Loads the specified project file and builds the specified targets of the project with the specified <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" />, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+      <param name="globalProperties">The <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" /> to apply to the build.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing in Visual Basic) if outputs are not required.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String[],Microsoft.Build.BuildEngine.BuildPropertyGroup,System.Collections.IDictionary,Microsoft.Build.BuildEngine.BuildSettings)">
+      <summary>Loads the specified project file and builds the specified targets of the project with the specified <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> and <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" />, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="projectFile">The project file to load and build.</param>
+      <param name="targetNames">An array that contains the Name attributes of the Target elements to build.</param>
+      <param name="globalProperties">The <see cref="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties" /> to apply to the build.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing in Visual Basic) if outputs are not required.</param>
+      <param name="buildFlags">The <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> to apply to the build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFile(System.String,System.String[],Microsoft.Build.BuildEngine.BuildPropertyGroup,System.Collections.IDictionary,Microsoft.Build.BuildEngine.BuildSettings,System.String)">
+      <summary>Loads a project file from disk and builds the given targets.</summary>
+      <returns>true if the build succeeds; otherwise, false.</returns>
+      <param name="projectFile">The name of the project to build. </param>
+      <param name="targetNames">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> array of targets for each project. Can be null if you want to build the default targets for the project.</param>
+      <param name="globalProperties">An <see cref="T:System.Collections.IDictionary" /> array of properties for each project. Can be null if no global properties are required.</param>
+      <param name="targetOutputs">A <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> array of tables for target outputs. Can be null if outputs are not required.</param>
+      <param name="buildFlags">A string array of additional build flags.</param>
+      <param name="toolsVersion">The ToolsVersion to impose on the project in this build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.BuildProjectFiles(System.String[],System.String[][],Microsoft.Build.BuildEngine.BuildPropertyGroup[],System.Collections.IDictionary[],Microsoft.Build.BuildEngine.BuildSettings,System.String[])">
+      <summary>Loads a set of project files from disk and then builds the given list of targets for each project.</summary>
+      <returns>true if the project built successfully; otherwise, false.</returns>
+      <param name="projectFiles">A string list of project files to build. This value cannot be null.</param>
+      <param name="targetNamesPerProject">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> array of targets for each project.</param>
+      <param name="globalPropertiesPerProject">An <see cref="T:System.Collections.IDictionary" /> array of properties for each project. This value cannot be null.</param>
+      <param name="targetOutputsPerProject">A <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> array of tables for target outputs. This value cannot be null.</param>
+      <param name="buildFlags">A string array of additional build flags.</param>
+      <param name="toolsVersions">The ToolsVersion to impose on the project in this build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.CreateNewProject">
+      <summary>Creates an empty <see cref="T:Microsoft.Build.BuildEngine.Project" /> object that is associated with this <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <returns>The created <see cref="T:Microsoft.Build.BuildEngine.Project" /> object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.DefaultToolsVersion">
+      <summary>The default ToolsVersion of this build engine.</summary>
+      <returns>A string that represents the default ToolsVersion.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.GetLoadedProject(System.String)">
+      <summary>Returns the <see cref="T:Microsoft.Build.BuildEngine.Project" /> object that is associated with the specified project file.</summary>
+      <returns>The <see cref="T:Microsoft.Build.BuildEngine.Project" /> object that associated with the specified project file. If no <see cref="T:Microsoft.Build.BuildEngine.Project" /> object is associated with the specified project file, the method returns a null reference (Nothing in Visual Basic).</returns>
+      <param name="projectFullFileName">The fully qualified file path to the project file of the <see cref="T:Microsoft.Build.BuildEngine.Project" /> object.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.GlobalEngine">
+      <summary>Gets the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> that is global (shared) for this <see cref="T:System.AppDomain" />.</summary>
+      <returns>The <see cref="T:Microsoft.Build.BuildEngine.Engine" /> that is global (shared) for this <see cref="T:System.AppDomain" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.GlobalProperties">
+      <summary>Gets or sets a collection of the global properties for the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> that contains the global properties for the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.IsBuilding">
+      <summary>Gets whether a project is currently being built.</summary>
+      <returns>true if a build is in progress; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.OnlyLogCriticalEvents">
+      <summary>Gets or sets a value that indicates whether to only log critical events, such as warnings and errors, during the build.</summary>
+      <returns>true if only critical events should be logged; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.RegisterDistributedLogger(Microsoft.Build.Framework.ILogger,Microsoft.Build.BuildEngine.LoggerDescription)">
+      <summary>Registers distributed loggers with the build engine.</summary>
+      <param name="centralLogger">An <see cref="T:Microsoft.Build.Framework.ILogger" /> that represents the central logger.</param>
+      <param name="forwardingLogger">A <see cref="T:Microsoft.Build.BuildEngine.LoggerDescription" /> that represents the forwarding logger.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.RegisterLogger(Microsoft.Build.Framework.ILogger)">
+      <summary>Registers the specified logger with the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <param name="logger">The logger to associate with the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.Shutdown">
+      <summary>Called when the host is finished with this build engine. It unregisters loggers and shuts down nodes.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.Toolsets">
+      <summary>Returns the collection of Toolsets that are recognized by this build engine instance.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.UnloadAllProjects">
+      <summary>Removes all references to <see cref="T:Microsoft.Build.BuildEngine.Project" /> objects from the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.UnloadProject(Microsoft.Build.BuildEngine.Project)">
+      <summary>Removes the reference to the specified <see cref="T:Microsoft.Build.BuildEngine.Project" /> from the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <param name="project">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> to remove from the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Engine.UnregisterAllLoggers">
+      <summary>Unregisters all loggers from the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Engine.Version">
+      <summary>Gets the version of the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <returns>The version of the <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.FileLogger">
+      <summary>Extends the <see cref="T:Microsoft.Build.BuildEngine.ConsoleLogger" /> to log messages to a file rather than the console window.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.FileLogger.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.FileLogger" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.FileLogger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>Registers the logger for the specified events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> to register with the logger.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.FileLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)">
+      <summary>Registers the logger for the specified events.</summary>
+      <param name="eventSource">The <see cref="T:Microsoft.Build.Framework.IEventSource" /> to register with the logger.</param>
+      <param name="nodeCount">An integer representing the node ID for the event source.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.FileLogger.Shutdown">
+      <summary>Stops the logger, releases all resources, and closes the file to which the logger was writing.</summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Import">
+      <summary>Represents a single Import element in an MSBuild project.</summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Import.Condition">
+      <summary>Gets the Condition attribute value of the Import element.</summary>
+      <returns>The Condition attribute value of the Import element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Import.EvaluatedProjectPath">
+      <summary>Gets the fully qualified path of the file specified in the Name attribute of the Import element.</summary>
+      <returns>The fullly qualified path of the file specified in the Name attribute of the Import element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Import.IsImported">
+      <summary>Gets a value indicating whether the Import element was imported into the project.</summary>
+      <returns>true if the Import element was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Import.ProjectPath">
+      <summary>Gets or sets the Project attribute value of the Import element.</summary>
+      <returns>The Project attribute value of the Import element.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ImportCollection">
+      <summary>Represents a collection of all Import elements in a project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ImportCollection.AddNewImport(System.String,System.String)">
+      <summary>Allows hosts to programmatically add a new &lt;Import&gt; tag to a project file being manipulated by the host.</summary>
+      <param name="projectFile">A required string representing the name of the project file for the &lt;Import&gt; statement to be added. For example, "myproject.csproj."</param>
+      <param name="condition">An optional string indicating whether the element is processed. If <paramref name="condition" /> is true, then the specified &lt;Import&gt; tag is added, if false, it is not.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ImportCollection.CopyTo(Microsoft.Build.BuildEngine.Import[],System.Int32)">
+      <summary>Copies the entire <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" /> to a compatible one-dimensional <see cref="T:System.Array" /> of <see cref="T:Microsoft.Build.BuildEngine.Import" /> objects, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> of <see cref="T:Microsoft.Build.BuildEngine.Import" /> objects that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ImportCollection.CopyTo(System.Array,System.Int32)">
+      <summary>Copies the entire <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ImportCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.Import" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.Import" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ImportCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ImportCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" /> is synchronized (thread safe).</summary>
+      <returns>true if access to the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ImportCollection.RemoveImport(Microsoft.Build.BuildEngine.Import)">
+      <summary>Allows hosts to programmatically remove &lt;Import&gt; tags that are part of a project file being manipulated by the host.</summary>
+      <param name="importToRemove">A string representing the name of the &lt;Import&gt; tag to remove from the project file.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ImportCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.InternalLoggerException">
+      <summary>This exception is used to wrap an unhandled exception from a logger.  </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InternalLoggerException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InternalLoggerException" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InternalLoggerException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InternalLoggerException" /> class using the specified values.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InternalLoggerException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InternalLoggerException" /> class using the specified values.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The exception that is the cause of the current excpetion. If the <paramref name="innerException" /> parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InternalLoggerException.BuildEventArgs">
+      <summary>Gets the details of the build event, if any, that was being logged.</summary>
+      <returns>The details of the build event that was being logged.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InternalLoggerException.ErrorCode">
+      <summary>Gets the error code associated with this exception's message.</summary>
+      <returns>The text for the error code.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InternalLoggerException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> with information about the exception.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InternalLoggerException.HelpKeyword">
+      <summary>Gets the F1-help keyword associated with this error.</summary>
+      <returns>The F1-help keyword associated with this error.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InternalLoggerException.InitializationException">
+      <summary>Gets whether an exception occurred during logger initialization.</summary>
+      <returns>true if the exception occured during logger initialization, false otherwise.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.InvalidProjectFileException">
+      <summary>This exception is thrown whenever there is a problem with the user's XML project file. The problem might be semantic or syntactical. If the problem is in the syntax, it can typically be caught by XSD validation. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.#ctor">
+      <summary>Initializes a new instance of <see cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException" /> class. </summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.#ctor(System.String)">
+      <summary>Initializes a new instance of <see cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException" /> class using the specified message.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of <see cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException" /> class using the specified error message and inner exception.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The exception that is the cause of the current excpetion. If the <paramref name="innerException" /> parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
+      <summary>Initializes a new instance of <see cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException" /> class using rich error information.</summary>
+      <param name="projectFile">The invalid project file. Can be an empty string.</param>
+      <param name="lineNumber">The invalid line number in the project. Set to zero if not available.</param>
+      <param name="columnNumber">The invalid column number in the project. Set to zero if not available.</param>
+      <param name="endLineNumber">The end of a range of invalid lines in the project. Set to zero if not available.</param>
+      <param name="endColumnNumber">The end of a range of invalid columns in the project. Set to zero if not available.</param>
+      <param name="message">The error message text for the exception.</param>
+      <param name="errorSubcategory">The description of the error. This parameter can be a null reference (Nothing in Visual Basic).</param>
+      <param name="errorCode">The error code. This parameter can be a null reference (Nothing).</param>
+      <param name="helpKeyword">The F1-help keyword for the host IDE. This parameter can be a null reference (Nothing).</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.#ctor(System.Xml.XmlNode,System.String,System.String,System.String,System.String)">
+      <summary>Initializes a new instance of <see cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException" /> class using rich error information.</summary>
+      <param name="xmlNode">The XML node where the error is located. Can be null.</param>
+      <param name="message">The error message text for the exception.</param>
+      <param name="errorSubcategory">A description for the error. This parameter can be a null reference (Nothing in Visual Basic).</param>
+      <param name="errorCode">The error code. This parameter can be a null reference (Nothing).</param>
+      <param name="helpKeyword">The F1-help keyword for the host IDE. Can be null.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.BaseMessage">
+      <summary>Gets the exception message, not including the project file.</summary>
+      <returns>The error message string only.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.ColumnNumber">
+      <summary>Gets the invalid column number, if any, in the project.</summary>
+      <returns>The invalid column number, or zero.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.EndColumnNumber">
+      <summary>Gets the last column number, if any, of a range of invalid columns in the project.</summary>
+      <returns>The last invalid column number, or zero.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.EndLineNumber">
+      <summary>Gets the last line number, if any, of a range of invalid lines in the project.</summary>
+      <returns>The last invalid line number, or zero.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.ErrorCode">
+      <summary>Gets the error code, if any, associated with the exception message.</summary>
+      <returns>Error code string, or a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.ErrorSubcategory">
+      <summary>Gets the error sub-category, if any that describes the type of this error.</summary>
+      <returns>The sub-category string, or null.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidProjectFileException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> with information about the exception.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.HelpKeyword">
+      <summary>Gets the F1-help keyword, if any, associated with this error, for the host IDE.</summary>
+      <returns>The keyword string, or a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.LineNumber">
+      <summary>Gets the invalid line number, if any, in the project.</summary>
+      <returns>The invalid line number, or zero.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.Message">
+      <summary>Gets the exception message, including the affected project file, if any.</summary>
+      <returns>The complete message string.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidProjectFileException.ProjectFile">
+      <summary>Gets the project file, if any, associated with this exception.</summary>
+      <returns>The project file name and path string, or a null reference (Nothing in Visual Basic).</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException">
+      <summary>This exception is thrown whenever there is a problem with the user's custom toolset definition file. The problem might be semantic or syntactical. If the problem is in the syntax, it can typically be caught by XSD validation. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The error code. This parameter can be a null reference (Nothing).</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="errorCode">The error code. This parameter can be a null reference (Nothing).</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.#ctor(System.String,System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException" /> class.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="errorCode">The error code. This parameter can be a null reference (Nothing).</param>
+      <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException" /> parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.ErrorCode">
+      <summary>Gets the exception error code that was thrown.</summary>
+      <returns>A string representing the error code.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> with information about the exception.</summary>
+      <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+      <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.LocalNode">
+      <summary>This class hosts a node class in the child build process. It uses shared memory to communicate with the local node provider. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.LocalNode.StartLocalNodeServer(System.Int32)">
+      <summary>Starts the local node when the process is launched and shuts it down on timeout.</summary>
+      <param name="nodeNumber">The number of nodes to start. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.LoggerDescription">
+      <summary>Contains information about a logger as a collection of values that can be used to instantiate the logger as well as being serialized to pass between different processes. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.LoggerDescription.#ctor(System.String,System.String,System.String,System.String,Microsoft.Build.Framework.LoggerVerbosity)">
+      <summary>Creates a logger description based on the given parameters.</summary>
+      <param name="loggerClassName">The class name for the logger.</param>
+      <param name="loggerAssemblyName">The assembly name for the logger.</param>
+      <param name="loggerAssemblyFile">The assembly file name for the logger.</param>
+      <param name="loggerSwitchParameters">A string of logger parameters, null if there are none. </param>
+      <param name="verbosity">The verbosity switch for the logger.Note   On the command line, all loggers get the same verbosity level.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.LoggerDescription.LoggerSwitchParameters">
+      <summary>Gets the string of logger parameters.</summary>
+      <returns>Returns a string list of the log parameters; null if there are none.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.LoggerDescription.Verbosity">
+      <summary>Gets the verbosity level for the logger.</summary>
+      <returns>A string value representing the logger's verbosity level.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Project">
+      <summary>Represents a project that can be built using MSBuild.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Project" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.#ctor(Microsoft.Build.BuildEngine.Engine)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Project" /> class using the supplied <see cref="T:Microsoft.Build.BuildEngine.Engine" />.</summary>
+      <param name="engine">The <see cref="T:Microsoft.Build.BuildEngine.Engine" /> instance to use for creating the project in memory.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.#ctor(Microsoft.Build.BuildEngine.Engine,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.BuildEngine.Project" /> class using the supplied <see cref="T:Microsoft.Build.BuildEngine.Engine" /> and <see cref="P:Microsoft.Build.BuildEngine.Project.ToolsVersion" />.</summary>
+      <param name="engine">The <see cref="T:Microsoft.Build.BuildEngine.Engine" /> instance to use for creating the project in memory.</param>
+      <param name="toolsVersion">The <see cref="P:Microsoft.Build.BuildEngine.Project.ToolsVersion" /> to use for creating the project in memory.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewImport(System.String,System.String)">
+      <summary>Add an Import element to the end of the project.</summary>
+      <param name="projectFile">The name of the project file to import. Corresponds to the Project attribute of the Import element.</param>
+      <param name="condition">The condition to evaluate before importing the project. Corresponds to the Condition attribute of the Import element.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewItem(System.String,System.String)">
+      <summary>Adds the specified Item element to the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> containing the created item.</returns>
+      <param name="itemName">The name of the item collection to add the item to. Corresponds to the user-defined name of the Item element.</param>
+      <param name="itemInclude">The value of the Include attribute of the item.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewItem(System.String,System.String,System.Boolean)">
+      <summary>Adds the specified Item element to the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItem" /> containing the created item.</returns>
+      <param name="itemName">The name of the item collection to add the item to. Corresponds to the user-defined name of the Item element.</param>
+      <param name="itemInclude">The value of the Include attribute of the item.</param>
+      <param name="treatItemIncludeAsLiteral">true to treat the <paramref name="itemInclude" /> parameter as a literal value; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewItemGroup">
+      <summary>Adds a new ItemGroup element to the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> containing the created item group.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewPropertyGroup(System.Boolean)">
+      <summary>Adds a new PropertyGroup element to the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> containing the created property group.</returns>
+      <param name="insertAtEndOfProject">true to insert the PropertyGroup at the end of the project; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewUsingTaskFromAssemblyFile(System.String,System.String)">
+      <summary>Adds a new UsingTask element with the specified assembly file.</summary>
+      <param name="taskName">The name of the task to reference from the assembly. Corresponds to the TaskName attribute of the UsingTask element.</param>
+      <param name="assemblyFile">The file path to the assembly. Corresponds to the AssemblyFile attribute of the UsingTask element.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.AddNewUsingTaskFromAssemblyName(System.String,System.String)">
+      <summary>Adds a new UsingTask element with the specified assembly name.</summary>
+      <param name="taskName">The name of the task to reference from the assembly. Corresponds to the TaskName attribute of the UsingTask element.</param>
+      <param name="assemblyName">The name of the assembly to load. Corresponds to the AssemblyName attribute of the UsingTask element.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Build">
+      <summary>Builds the default targets of the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Build(System.String)">
+      <summary>Builds the specified target in the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="targetName">The target to build.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Build(System.String[])">
+      <summary>Builds the specified list of targets in the project.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="targetNames">The list of targets to build. This parameter can be a null reference (Nothing in Visual Basic) to build the default targets.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Build(System.String[],System.Collections.IDictionary)">
+      <summary>Builds the specified list of targets in the project, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="targetNames">The list of targets to build. This parameter can be a null reference (Nothing in Visual Basic) to build the default targets.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing) if outputs are not needed.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Build(System.String[],System.Collections.IDictionary,Microsoft.Build.BuildEngine.BuildSettings)">
+      <summary>Builds the specified list of targets in the project using the specified settings, and returns the outputs of the targets.</summary>
+      <returns>true if the build was successful; otherwise, false.</returns>
+      <param name="targetNames">The list of targets to build. This parameter can be a null reference (Nothing in Visual Basic) to build the default targets.</param>
+      <param name="targetOutputs">The outputs of the built targets. This parameter can be a null reference (Nothing) if outputs are not needed.</param>
+      <param name="buildFlags">The <see cref="T:Microsoft.Build.BuildEngine.BuildSettings" /> to apply to the build.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.BuildEnabled">
+      <summary>Gets or sets a value indicating whether the project is enabled for building tasks and targets.</summary>
+      <returns>true if the project is enabled for building tasks and targets; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.DefaultTargets">
+      <summary>Gets or sets the DefaultTargets attribute of the Project element in the MSBuild project.</summary>
+      <returns>A semi-colon (;) delimited list of the targets specified in the DefaultTargets attribute.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.DefaultToolsVersion">
+      <summary>Sets or gets the ToolsVersion XML attribute found on the <see cref="Project" />Project Element (MSBuild) element in the project file.</summary>
+      <returns>A string representing the Tools version.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.Encoding">
+      <summary>Gets the encoding for the project file.</summary>
+      <returns>An <see cref="T:System.Text.Encoding" /> value of the project file.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.EvaluatedItems">
+      <summary>Gets a collection of the items evaluated during the build.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> containing the items evaluated during the build.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.EvaluatedItemsIgnoringCondition">
+      <summary>Gets a collection of all items in a project, even those not used in the build process because a Condition attribute evaluated to false.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> containing all items in a project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.EvaluatedProperties">
+      <summary>Gets a collection of the properties evaluated during the build.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> containing the properties evaluated during the build.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.FullFileName">
+      <summary>Gets or sets the fully qualified path and file name of the project file.</summary>
+      <returns>The full path of the project file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.GetConditionedPropertyValues(System.String)">
+      <summary>Returns a list of possible values for the specified property.</summary>
+      <returns>The list of possible values for the property.</returns>
+      <param name="propertyName">The property to use when generating the list of possible values.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.GetEvaluatedItemsByName(System.String)">
+      <summary>Returns all evaluated items belonging to the specified item collection.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> containing all of the evaluated items belonging to the specified item collection.</returns>
+      <param name="itemName">The name of the item collection.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.GetEvaluatedItemsByNameIgnoringCondition(System.String)">
+      <summary>Returns all items belonging to the specified item collection.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroup" /> containing all items belonging to the specified item collection, even those not used in the build process because a Condition attribute evaluated to false..</returns>
+      <param name="itemName">The name of the specified item collection.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.GetEvaluatedProperty(System.String)">
+      <summary>Returns the value of the specified property.</summary>
+      <returns>The value of the specified property.</returns>
+      <param name="propertyName">The name of the property.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.GetProjectExtensions(System.String)">
+      <summary>Returns a string value of the XML from the specified element in the ProjectExtensions element.</summary>
+      <returns>The string value of the specified element in the ProjectExtensions element of the project.</returns>
+      <param name="id">The name of the element in the ProjectExtensions element to return.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.GlobalProperties">
+      <summary>Gets or sets a collection of the global properties for the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> containing the global properties for the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.HasToolsVersionAttribute">
+      <summary>Gets whether the Project file has the ToolsVersion XML attribute.</summary>
+      <returns>true if the project has the ToolsVersion attribute; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.Imports">
+      <summary>Gets the projects imported into this project.</summary>
+      <returns>An <see cref="T:Microsoft.Build.BuildEngine.ImportCollection" /> of the projects imported into this project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.InitialTargets">
+      <summary>Gets or sets the InitialTargets attribute of the Project element in the MSBuild project.</summary>
+      <returns>A semi-colon (;) delimited list of the targets specified in the InitialTargets attribute.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.IsDirty">
+      <summary>Gets a value indicating whether the project has changed and needs to be saved to a file.</summary>
+      <returns>true if the project has changed and needs to be saved; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.IsValidated">
+      <summary>Gets a value indicating whether the project is to be validated against a schema.</summary>
+      <returns>true if the project is to be validated against a schema; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.ItemGroups">
+      <summary>Gets a collection of the item groups specified with the ItemGroup element in the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildItemGroupCollection" /> containing the item groups specifiied in the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Load(System.IO.TextReader)">
+      <summary>Loads the contents of the specified <see cref="T:System.IO.TextReader" /> into the <see cref="T:Microsoft.Build.BuildEngine.Project" /> object.</summary>
+      <param name="textReader">The <see cref="T:System.IO.TextReader" /> to load.</param>
+      <exception cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException">The file used by the <paramref name="textReader" /><see cref="T:System.IO.TextReader" /> is not a valid project file.</exception>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Load(System.IO.TextReader,Microsoft.Build.BuildEngine.ProjectLoadSettings)">
+      <summary>Reads the contents of this project from a string containing the XML contents.</summary>
+      <param name="textReader">A <see cref="T:System.IO.TextReader" /> object containing the project contents.</param>
+      <param name="projectLoadSettings">A <see cref="T:Microsoft.Build.BuildEngine.ProjectLoadSettings" /> value that specifies the settings for the project being loaded.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Load(System.String)">
+      <summary>Loads the contents of the specified project file into the <see cref="T:Microsoft.Build.BuildEngine.Project" /> object.</summary>
+      <param name="projectFileName">The project file to load.</param>
+      <exception cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException">The file specified by <paramref name="projectFileName" /> is not a valid project file.</exception>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Load(System.String,Microsoft.Build.BuildEngine.ProjectLoadSettings)">
+      <summary>Reads the contents of this project from a project XML file on disk.</summary>
+      <param name="projectFileName">A string representing the name of the file to load.</param>
+      <param name="projectLoadSettings">A <see cref="T:Microsoft.Build.BuildEngine.ProjectLoadSettings" /> value that specifies the settings for the project being loaded.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.LoadXml(System.String)">
+      <summary>Loads the contents of the specified string into the <see cref="T:Microsoft.Build.BuildEngine.Project" /> object.</summary>
+      <param name="projectXml">The string of XML to load.</param>
+      <exception cref="T:Microsoft.Build.BuildEngine.InvalidProjectFileException">The XML contained in <paramref name="projectXML" /> is not a valid project file.</exception>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.LoadXml(System.String,Microsoft.Build.BuildEngine.ProjectLoadSettings)">
+      <summary>Reads the contents of this project from a string containing the XML contents.</summary>
+      <param name="projectXml">A string containing the project contents.</param>
+      <param name="projectLoadSettings">A <see cref="T:Microsoft.Build.BuildEngine.ProjectLoadSettings" /> value that specifies the settings for the project being loaded.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.MarkProjectAsDirty">
+      <summary>Sets the <see cref="P:Microsoft.Build.BuildEngine.Project.IsDirty" /> property of the project to true.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.ParentEngine">
+      <summary>Gets the <see cref="T:Microsoft.Build.BuildEngine.Engine" /> that builds the project.</summary>
+      <returns>The parent <see cref="T:Microsoft.Build.BuildEngine.Engine" /> object.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.PropertyGroups">
+      <summary>Gets a collection of the property groups specified with the PropertyGroup element in the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroupCollection" /> containing the property groups specifiied in the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveAllItemGroups">
+      <summary>Removes all item groups from the project, but does not modify imported projects.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveAllPropertyGroups">
+      <summary>Removes all property groups from the project, but does not modify imported projects.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveImportedPropertyGroup(Microsoft.Build.BuildEngine.BuildPropertyGroup)">
+      <summary>Removes the specified property group from the main project file.</summary>
+      <param name="propertyGroupToRemove">A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> object representing the group to remove.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveItem(Microsoft.Build.BuildEngine.BuildItem)">
+      <summary>Removes the specified item from the project.</summary>
+      <param name="itemToRemove">The item to remove from the project.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveItemGroup(Microsoft.Build.BuildEngine.BuildItemGroup)">
+      <summary>Removes the specified item group from the project.</summary>
+      <param name="itemGroupToRemove">The item group to remove from the project.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveItemGroupsWithMatchingCondition(System.String)">
+      <summary>Removes all item groups with the specified condition from the project, but does not modify imported projects.</summary>
+      <param name="matchCondition">The condition to match when removing item groups.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemoveItemsByName(System.String)">
+      <summary>Removes all items in the specified item collection from the project, but does not modify imported projects.</summary>
+      <param name="itemName">The item collection to remove.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemovePropertyGroup(Microsoft.Build.BuildEngine.BuildPropertyGroup)">
+      <summary>Removes the specified property group from the project.</summary>
+      <param name="propertyGroupToRemove">The property group to remove from the project.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemovePropertyGroupsWithMatchingCondition(System.String)">
+      <summary>Removes all property groups with the specified condition from the project, but does not modify imported projects.</summary>
+      <param name="matchCondition">The condition to match when removing property groups.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.RemovePropertyGroupsWithMatchingCondition(System.String,System.Boolean)">
+      <summary>Removes all &lt;PropertyGroup&gt;'s from the main project file that have a specific "Condition."</summary>
+      <param name="matchCondition">A string representing the condition of the PropertyGroups that you want removed.</param>
+      <param name="includeImportedPropertyGroups">A boolean value indicating whether to include imported property groups in the search.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.ResetBuildStatus">
+      <summary>Resets the status every target in the project so that the next build will build all targets again.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Save(System.IO.TextWriter)">
+      <summary>Saves the project in the specified <see cref="T:System.IO.TextWriter" /> object.</summary>
+      <param name="textWriter">The <see cref="T:System.IO.TextWriter" /> object in which to save the project.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Save(System.String)">
+      <summary>Saves the project to the specified file.</summary>
+      <param name="projectFileName">The name of the file in which to save the project.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.Save(System.String,System.Text.Encoding)">
+      <summary>Saves the project in the specified file with the specified encoding.</summary>
+      <param name="projectFileName">The name of the file in which to save the project.</param>
+      <param name="encoding">The <see cref="T:System.Text.Encoding" /> value with which to save the file.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.SchemaFile">
+      <summary>Gets or sets the XML schema file to use when validating the project.</summary>
+      <returns>The XML schema file to use when validating the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetImportedProperty(System.String,System.String,System.String,Microsoft.Build.BuildEngine.Project)">
+      <summary>Sets the value of a property in the specified imported project.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <param name="importProject">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> that contains the specified property.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetImportedProperty(System.String,System.String,System.String,Microsoft.Build.BuildEngine.Project,Microsoft.Build.BuildEngine.PropertyPosition)">
+      <summary>Sets the value of a property in the specified imported project.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <param name="importedProject">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> that contains the specified property.</param>
+      <param name="position">A <see cref="T:Microsoft.Build.BuildEngine.PropertyPosition" /> value indicating the location to insert the property.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetImportedProperty(System.String,System.String,System.String,Microsoft.Build.BuildEngine.Project,Microsoft.Build.BuildEngine.PropertyPosition,System.Boolean)">
+      <summary>Sets the value of a property in the specified imported project.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <param name="importedProject">The <see cref="T:Microsoft.Build.BuildEngine.Project" /> that contains the specified property.</param>
+      <param name="position">A <see cref="T:Microsoft.Build.BuildEngine.PropertyPosition" /> value indicating the location to insert the property.</param>
+      <param name="treatPropertyValueAsLiteral">true to treat the <paramref name="propertyValue" /> parameter as a literal value; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetProjectExtensions(System.String,System.String)">
+      <summary>Sets the ProjectExtensions element of the project with the specified element name and content.</summary>
+      <param name="id">The name of the XML element to create as a child of the ProjectExtensions element.</param>
+      <param name="content">The text value of the created XML element.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetProperty(System.String,System.String)">
+      <summary>Sets the value of the specified property.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetProperty(System.String,System.String,System.String)">
+      <summary>Sets the value of the specified property.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetProperty(System.String,System.String,System.String,Microsoft.Build.BuildEngine.PropertyPosition)">
+      <summary>Sets the value of the specified property.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <param name="position">A <see cref="T:Microsoft.Build.BuildEngine.PropertyPosition" /> value indicating the location to insert the property.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Project.SetProperty(System.String,System.String,System.String,Microsoft.Build.BuildEngine.PropertyPosition,System.Boolean)">
+      <summary>Sets the value of the specified property.</summary>
+      <param name="propertyName">The name of the property to change.</param>
+      <param name="propertyValue">The value to assign the property.</param>
+      <param name="condition">The condition to use on the property. Corresponds to the Condition attribute of the Property element.</param>
+      <param name="position">A <see cref="T:Microsoft.Build.BuildEngine.PropertyPosition" /> value indicating the location to insert the property.</param>
+      <param name="treatPropertyValueAsLiteral">true to treat the <paramref name="propertyValue" /> parameter as a literal value; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.Targets">
+      <summary>Gets the targets in the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" /> of the targets in the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.TimeOfLastDirty">
+      <summary>Gets a <see cref="T:System.DateTime" /> object indicating the time the project was last changed in a way that required it to be saved to a file.</summary>
+      <returns>A <see cref="T:System.DateTime" /> object indicating the time the project was last changed in a way that required it to be saved to a file.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.ToolsVersion">
+      <summary>Sets or gets the current version of the Toolset being used by the project.</summary>
+      <returns>A string representing the version number of the Toolset.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.UsingTasks">
+      <summary>Gets a collection of the UsingTask elements in the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" /> of the UsingTask elements in the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Project.Xml">
+      <summary>Gets the XML representing the project.</summary>
+      <returns>The full XML representing the project.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ProjectLoadSettings">
+      <summary>Defines how MSBuild loads a project. </summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.ProjectLoadSettings.None">
+      <summary>Load the project  normally. </summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.ProjectLoadSettings.IgnoreMissingImports">
+      <summary>Ignore nonexistent .targets files when loading the project.</summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.PropertyPosition">
+      <summary>Specifies constants that define the location in the project to insert a property. </summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.PropertyPosition.UseExistingOrCreateAfterLastPropertyGroup">
+      <summary>Replace the existing Property element if it exists. Otherwise, if possible, create a new Property element as a child of an existing compatible PropertyGroup element. If necessary, create a new compatible PropertyGroup element immediately following the last PropertyGroup in the project.</summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.PropertyPosition.UseExistingOrCreateAfterLastImport">
+      <summary>Replace the existing Property element if it exists. Otherwise, create the Property after the last Import element in the project.</summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.RemoteErrorException">
+      <summary>Wraps exceptions that occur on a different node. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.RemoteErrorException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>ISerializable method which must be overridden since Exception implements this interface.</summary>
+      <param name="info">A <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object representing information about the remote error exception.</param>
+      <param name="context">A <see cref="T:System.Runtime.Serialization.StreamingContext" /> object representing the context in which the remote error exception occurred.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.SolutionWrapperProject">
+      <summary>This class is used to generate an MSBuild wrapper project for a solution file or standalone VC project.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.SolutionWrapperProject.Generate(System.String,System.String,Microsoft.Build.Framework.BuildEventContext)">
+      <summary>Given the full path to a solution, returns a string containing the v3.5 MSBuild-format wrapper project for that solution.</summary>
+      <returns>A string containing the path to the solution.</returns>
+      <param name="solutionPath">Full path to the solution we are wrapping</param>
+      <param name="toolsVersionOverride">May be null. If non-null, contains the ToolsVersion passed in on the command line</param>
+      <param name="projectBuildEventContext">An event context for logging purposes.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Target">
+      <summary>Represents a single Target element in an MSBuild project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Target.AddNewTask(System.String)">
+      <summary>Adds the specified Task element to the Target element.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> object represents a child Task element of the Target element.</returns>
+      <param name="taskName">The <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> object that represents the Task element to add to the Target element.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.Condition">
+      <summary>Gets the Condition attribute value of the Target element.</summary>
+      <returns>The Condition attribute value of the Target element.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.DependsOnTargets">
+      <summary>Gets the DependsOnTargets attribute value of the Target element.</summary>
+      <returns>The DependsOnTargets attribute value of the Target element.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Target.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.Target" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.Target" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.Inputs">
+      <summary>Gets or sets the items that are to be input into this target.</summary>
+      <returns>A string representing the items.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.IsImported">
+      <summary>Gets a value indicating whether the Target element was imported into the project.</summary>
+      <returns>true if the Target element was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.Name">
+      <summary>Gets the Name attribute value of the Target element.</summary>
+      <returns>The Name attribute value of the Target element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Target.Outputs">
+      <summary>Gets or sets the expected outputs of this target.</summary>
+      <returns>A string representing the outputs.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Target.RemoveTask(Microsoft.Build.BuildEngine.BuildTask)">
+      <summary>Removes the specified Task element from the Target element.</summary>
+      <param name="taskElement">The <see cref="T:Microsoft.Build.BuildEngine.BuildTask" /> object that represents the Task element to remove from the Target element.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.TargetCollection">
+      <summary>Represents a collection of all Target elements in a project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.TargetCollection.AddNewTarget(System.String)">
+      <summary>Adds a new Target element to the end of the project.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.Target" /> object representing the created Target element.</returns>
+      <param name="targetName">The Name attribute of the new Target element.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.TargetCollection.CopyTo(System.Array,System.Int32)">
+      <summary>Copies the entire <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.TargetCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.Target" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.Target" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.TargetCollection.Exists(System.String)">
+      <summary>Determines whether the specified <see cref="T:Microsoft.Build.BuildEngine.Target" /> exists in the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</summary>
+      <returns>true if the Target element exists; otherwise, false.</returns>
+      <param name="targetName">The Name attribute of the Target element to search for.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.TargetCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.TargetCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" /> is synchronized (thread safe).</summary>
+      <returns>true if access to the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.TargetCollection.Item(System.String)">
+      <summary>Gets the specified <see cref="T:Microsoft.Build.BuildEngine.Target" /> object in the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</summary>
+      <returns>The <see cref="T:Microsoft.Build.BuildEngine.Target" /> object that contains the <see cref="P:Microsoft.Build.BuildEngine.Target.Name" /> property value specified by <paramref name="index" />.</returns>
+      <param name="index">The Name attribute of the Target element in the collection.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.TargetCollection.RemoveTarget(Microsoft.Build.BuildEngine.Target)">
+      <summary>Removes the specified Target element from the project.</summary>
+      <param name="targetToRemove">The Name attribute of the Target element to remove.</param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.TargetCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.TargetCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Toolset">
+      <summary>Represents a Toolset in MSBuild. For more information about Toolsets, see Standard and Custom Tool Set Configurations. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Toolset.#ctor(System.String,System.String)">
+      <summary>Creates a <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> object.</summary>
+      <param name="toolsVersion">A string representing the version of the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> currently in use.</param>
+      <param name="toolsPath">A string representing the path to the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> currently in use.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Toolset.#ctor(System.String,System.String,Microsoft.Build.BuildEngine.BuildPropertyGroup)">
+      <summary>Creates a <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> object.</summary>
+      <param name="toolsVersion">A string representing the version of the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> currently in use.</param>
+      <param name="toolsPath">A string representing the path to the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> currently in use.</param>
+      <param name="buildProperties">A string representing the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />-specific custom properties. </param>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Toolset.BuildProperties">
+      <summary>Gets the <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> that is used to set <see cref="T:Microsoft.Build.BuildEngine.Toolset" />-specific custom properties.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.BuildPropertyGroup" /> object.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Toolset.Clone">
+      <summary>Creates a copy of the specified <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> object.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Toolset.ToolsPath">
+      <summary>Gets the path to the specified <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</summary>
+      <returns>A string representing the path to the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.Toolset.ToolsVersion">
+      <summary>Gets the version of the specified <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</summary>
+      <returns>A string representing the version of the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ToolsetCollection">
+      <summary>Represents one or more <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> objects. A Toolset is a combination of a Toolset version (such as "2.0"), a tools path, and an optional set of associated properties.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.Add(Microsoft.Build.BuildEngine.Toolset)">
+      <summary>Adds the specified <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> to this collection.</summary>
+      <param name="item">A <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> object representing the Toolset to add to the collection.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.Clear">
+      <summary>This method is not supported.</summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.Contains(Microsoft.Build.BuildEngine.Toolset)">
+      <summary>Gets whether the collection contains a <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> with the specified <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" /> name.</summary>
+      <returns>true if the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> is contained in the collection; otherwise, false. The default is false.</returns>
+      <param name="item">Required. A string value representing the name of the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.Contains(System.String)">
+      <summary>Gets whether the collection contains a <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> with the specified tools version.</summary>
+      <returns>true if the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> is contained in the collection; otherwise, false. The default is false.</returns>
+      <param name="toolsVersion">Required. A string value representing the tools version associated with the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.CopyTo(Microsoft.Build.BuildEngine.Toolset[],System.Int32)">
+      <summary>Copies the contents of the <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="arrayIndex">The zero-based index in <paramref name="Array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ToolsetCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ToolsetCollection.IsReadOnly">
+      <summary>Gets whether the <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" /> is read-only. <see cref="P:Microsoft.Build.BuildEngine.ToolsetCollection.IsReadOnly" /> always returns false because Toolsets are always writable.</summary>
+      <returns>A boolean value indicating whether the <see cref="T:Microsoft.Build.BuildEngine.ToolsetCollection" /> is read-only.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ToolsetCollection.Item(System.String)">
+      <summary>Gets the <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> associated with the specified tools version.</summary>
+      <returns>A <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> object representing the toolset that matches the specified <paramref name="toolsVersion" />.</returns>
+      <param name="toolsVersion">Required. A string value representing the tools version associated with the desired <see cref="T:Microsoft.Build.BuildEngine.Toolset" />.</param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.Remove(Microsoft.Build.BuildEngine.Toolset)">
+      <summary>This method is not supported.</summary>
+      <returns>Not supported.</returns>
+      <param name="item">Not supported. </param>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.ToolsetCollection.System#Collections#IEnumerable#GetEnumerator">
+      <summary>Non-generic enumerator for the Toolsets in this collection.</summary>
+      <returns>Returns an enumerator for the toolsets.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.ToolsetCollection.ToolsVersions">
+      <summary>Gets the names of the <see cref="T:Microsoft.Build.BuildEngine.Toolset" />s stored in this collection.</summary>
+      <returns>An enumeration whose elements represent individual <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> objects in this collection.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations">
+      <summary>An enumeration whose values control <see cref="T:Microsoft.Build.BuildEngine.Toolset" /> initialization. </summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations.None">
+      <summary>Do not read Toolset information from any external location.</summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations.ConfigurationFile">
+      <summary>Read Toolset information from the .exe configuration file.</summary>
+    </member>
+    <member name="F:Microsoft.Build.BuildEngine.ToolsetDefinitionLocations.Registry">
+      <summary>Read Toolset information from the registry (HKLM\Software\Microsoft\MSBuild\ToolsVersions).</summary>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.UsingTask">
+      <summary>Represents a single UsingTask element in an MSBuild project. </summary>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTask.AssemblyFile">
+      <summary>Gets the AssemblyFile attribute value of the UsingTask element.</summary>
+      <returns>The AssemblyFile attribute value of the UsingTask element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTask.AssemblyName">
+      <summary>Gets the AssemblyName attribute value of the UsingTask element.</summary>
+      <returns>The AssemblyName attribute value of the UsingTask element.</returns>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTask.Condition">
+      <summary>Gets the Condition attribute value of the UsingTask element.</summary>
+      <returns>The Condition attribute value of the UsingTask element.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTask.IsImported">
+      <summary>Gets a value indicating whether the UsingTask element was imported into the project.</summary>
+      <returns>true if the UsingTask element was imported into the project; otherwise, false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTask.TaskName">
+      <summary>Gets the TaskName attribute value of the UsingTask element.</summary>
+      <returns>The TaskName attribute value of the UsingTask element.</returns>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.UsingTaskCollection">
+      <summary>Represents a collection of all UsingTask elements in a project. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.UsingTaskCollection.CopyTo(Microsoft.Build.BuildEngine.UsingTask[],System.Int32)">
+      <summary>Copies the entire <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" /> to a compatible one-dimensional <see cref="T:System.Array" /> of <see cref="T:Microsoft.Build.BuildEngine.UsingTask" /> objects, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> of <see cref="T:Microsoft.Build.BuildEngine.UsingTask" /> objects that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.UsingTaskCollection.CopyTo(System.Array,System.Int32)">
+      <summary>Copies the entire <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" /> to a compatible one-dimensional <see cref="T:System.Array" />, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
+      <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTaskCollection.Count">
+      <summary>Gets a value indicating the number of <see cref="T:Microsoft.Build.BuildEngine.UsingTask" /> objects in the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />.</summary>
+      <returns>An integer value representing the number of <see cref="T:Microsoft.Build.BuildEngine.UsingTask" /> objects in the collection.</returns>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.UsingTaskCollection.GetEnumerator">
+      <summary>Gets an enumerator that iterates through the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> for the entire <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTaskCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" /> is synchronized (thread safe).</summary>
+      <returns>true if access to the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" /> is synchronized (thread safe); otherwise, false. The default is false.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.BuildEngine.UsingTaskCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:Microsoft.Build.BuildEngine.UsingTaskCollection" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.Utilities">
+      <summary>Contains utility methods used by MSBuild. This class cannot be inherited. </summary>
+    </member>
+    <member name="M:Microsoft.Build.BuildEngine.Utilities.Escape(System.String)">
+      <summary>Converts the specified string into a syntax that allows the MSBuild engine to interpret the character literally.</summary>
+      <returns>The converted value of the specified string.</returns>
+      <param name="unescapedExpression">The string to convert.</param>
+    </member>
+    <member name="T:Microsoft.Build.BuildEngine.WriteHandler">
+      <summary>Represents the method that writes strings to a certain location, such as the console window or a window in an integrated development environment. </summary>
+      <param name="message">The string to write.</param>
+    </member>
+  </members>
+</doc>

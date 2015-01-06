@@ -1,0 +1,192 @@
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--==================================================================================
+   Inputs:
+     $(CCNetLabel)     : the version e.g. 1.1.20210.5
+     $(ReleaseConfig)  : one of debug or release
+
+   Outputs:
+     $(ReleaseConfig)\msi\CodeToolsSDK.$(ReleaseConfig).msi
+     $(ReleaseConfig)\cpx\<output from cpx tools>
+
+   ==================================================================================-->
+
+  <!-- cbtools tasks -->
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateGuid" AssemblyFile="Tools\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Wix" AssemblyFile="Tools\CodePlex.Tools.MsBuild.dll" />
+
+  <!--==============================================
+    Figure out features based on configurations
+    ================================================-->
+  <Choose>
+    <When Condition="'$(ReleaseConfig)'=='debug'">
+      <PropertyGroup>
+        <BuildConfig>Debug</BuildConfig>
+        <Flavor>(debug)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt>.debug</ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ReleaseConfig)'=='release'">
+      <PropertyGroup>
+        <BuildConfig>Release</BuildConfig>
+        <Flavor>(release)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <ReleaseConfigExt></ReleaseConfigExt>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <InvalidRelease>true</InvalidRelease>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!--==========================================================
+
+     Common properties used by many targets
+
+   ===========================================================-->
+  <PropertyGroup>
+    <CodeToolsDir>..</CodeToolsDir>
+    <SamplesDir>$(CodeToolsDir)\Samples</SamplesDir>
+    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
+    <MsiDir>$(ReleaseConfig)</MsiDir>         <!-- Used for final product -->
+    <TmpDir>$(ReleaseConfig)\Tmp</TmpDir>  
+    <BinDir>bin\$(BuildConfig)</BinDir>         <!-- Relative. used in source dirs -->
+  </PropertyGroup>
+
+  <Target Name="All"
+   DependsOnTargets="Validate;MakeSamples;MakeMSI"
+  />
+
+  <Target Name="Validate">
+    <Error
+      Condition="'$(CCNetLabel)'==''"
+      Text="Please set CCNetLabel to a proper version using /p:CCNetLabel=x.x.x.x"
+    />
+    <Error
+      Condition="'$(ReleaseConfig)'==''"
+      Text="Please set ReleaseConfig to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Error
+      Condition="'$(InvalidRelease)'=='true'"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Message
+        Importance="high"
+        Text="Building MSI for configuration $(ReleaseConfig)"
+    />
+  </Target>
+
+  <Target Name="MakeDirs"
+          DependsOnTargets="Validate">
+    <MakeDir
+       Condition="!Exists('$(MsiDir)')"
+       Directories="$(MsiDir)"/>
+    <MakeDir
+       Condition="!Exists('$(TmpDir)')"
+       Directories="$(TmpDir)"/>
+  </Target>
+
+
+  <!--==========================================================
+
+     SamplesZip produces the zip file with all the samples
+
+   ===========================================================-->
+  <ItemGroup>
+    <Samples 
+      Include="$(SamplesDir)\**" 
+      Exclude="
+        $(SamplesDir)\**\bin\**;
+        $(SamplesDir)\**\obj\**;
+        $(SamplesDir)\**\refactoring\**;
+        $(SamplesDir)\**\*.suo;
+        $(SamplesDir)\**\*.csproj.old;
+        $(SamplesDir)\**\*.user;
+        $(SamplesDir)\**\*.log;
+        $(SamplesDir)\**\*.aux;
+        $(SamplesDir)\**\*.tex;
+        $(SamplesDir)\**\*.png;
+        $(SamplesDir)\**\*.zip;
+        $(SamplesDir)\**\*.wixobj;
+        $(SamplesDir)\**\*.wixpdb;
+        $(SamplesDir)\**\*.msi;
+        $(SamplesDir)\**\*~;
+        $(SamplesDir)\**\makefile;
+      " />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ZipExe>Tools\zip.exe</ZipExe>
+    <SamplesZip>Samples.zip</SamplesZip>
+  </PropertyGroup>
+
+  <Target Name="MakeSamples">
+    <RemoveDir Directories="$(TmpDir)\Samples" />
+    <Copy SourceFiles="@(Samples)"
+          DestinationFiles="$(TmpDir)\Samples\%(Samples.RecursiveDir)%(Samples.FileName)%(Samples.Extension)" >
+    </Copy>
+
+    <Exec
+      WorkingDirectory="$(TmpDir)\Samples"
+      Command="&quot;..\..\..\$(ZipExe)&quot; -r &quot;$(SamplesZip)&quot; *" />
+    <Copy SourceFiles="$(TmpDir)\Samples\$(SamplesZip)" DestinationFolder="$(MsiDir)" />
+  </Target>
+
+ 
+
+
+
+  <!--==========================================================
+
+       Build the installer
+
+    ==========================================================-->
+
+  <ItemGroup>
+    <WixSources Include="
+      CodeToolsSDK.wxs;
+      UI.wxs;
+    "/>
+    <WixBaseDirs Include="
+      $(TmpDir);
+      $(MsiDir);
+      .\Licenses;
+     "/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MsiOutputFile>$(MsiDir)\CodeToolsSDK$(ReleaseConfigExt).msi</MsiOutputFile>
+  </PropertyGroup>
+  
+  <Target Name="MakeMSI" DependsOnTargets="">
+    <CreateGuid>
+      <Output TaskParameter="Guid" PropertyName="ProductGuid" />
+    </CreateGuid>
+    <Message Text="CCNetLabel: $(CCNetLabel)"/>
+    <Message Text="Assembly File Version: $(AssemblyFileVersion)"/>
+    <Wix
+       Files="@(WixSources)"
+       UseBuiltinExtensions="false"
+       WixDirectory="..\..\Microsoft.Research\ManagedContract.Setup\WixBinaries"
+       Extensions=""
+       OutputFile="$(MsiOutputFile)"
+       BaseDirectories="@(WixBaseDirs)"
+       Variables="
+                  License=$(License);
+                  ProductGuid=$(ProductGuid);
+                  Version=$(AssemblyFileVersion);
+                  Flavor=$(Flavor);
+                  IncludePDBs=$(IncludePDBs);
+                  ReleaseConfigExt=$(ReleaseConfigExt);
+                  ReleaseConfig=$(ReleaseConfig);
+                  Public=yes;
+                  NGen=no;
+                  "
+       />
+  </Target>
+
+</Project>

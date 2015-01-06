@@ -1,0 +1,1 @@
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1005.cs(8,5) : error CC1005: Malformed contract. Found Ensures after assignment in method 'CC1004.M'.

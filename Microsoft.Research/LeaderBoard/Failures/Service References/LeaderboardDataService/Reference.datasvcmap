@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a23a4aca-1e77-40fc-aad9-f99295c7190f" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
+  <MetadataSources>
+    <MetadataSource Address="http://leaderboard/odata/LeaderboardDataService.svc/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="6e3457fd-e41f-4a1a-a24f-f99d9ce94251" SourceId="1" SourceUrl="http://leaderboard/odata/LeaderboardDataService.svc/" />
+  </Metadata>
+  <Extensions />
+</ReferenceGroup>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="TestDisjunctionRefinement" storage="c:\cci\microsoft.research\regressiontest\testbooleanconnectives\testdisjunctionrefinement.generictest" id="14178f3b-5f7b-48f0-a156-ad86ab259026" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="c2068d40-3d80-4088-aa2f-2cfaecafb228" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="TestBooleanConnectivesRefinements.dll -bounds:&quot;diseq=false&quot; -nonnull -wp=false -show progress -sortwarns=false -regression -show validations -define cci1only" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\CCI\TestResults\logozzo_LOGOZZO3 2009-12-10 15_54_41\In\LOGOZZO3\a5ee497b-606d-4aab-bd36-b5f854ceb319" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

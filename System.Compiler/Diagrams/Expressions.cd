@@ -1,0 +1,428 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Comment CommentText="NodeType stores operator kind for things like Unary or Binary.">
+    <Position X="17.035" Y="0.5" Height="0.661" Width="1.7" />
+  </Comment>
+  <Class Name="System.Compiler.Expression">
+    <Position X="12.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.TypeNode" Collapsed="true" HideInheritanceLine="true">
+    <Position X="15" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>2oVlFMRJxVLQi8TAAl/BbbsYEeHxaUQOnG1caLEEORA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ExpressionSnippet">
+    <Position X="26.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.MemberBinding">
+    <Position X="3" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAAQACAAAAAAAAAAAAAAAAAAAAACBAg=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="BoundMember" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.AddressDereference">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAACAAAAAAAAAAg=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.UnaryExpression">
+    <Position X="7.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.PrefixExpression">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACAAIAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.PostfixExpression">
+    <Position X="11.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACAAIAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.BinaryExpression">
+    <Position X="13.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAABAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.TernaryExpression">
+    <Position X="17.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAgAAAAABAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.NaryExpression">
+    <Position X="5.25" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.NamedArgument">
+    <Position X="19.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Literal">
+    <Position X="1.25" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AJAAAAAAAACAAQAEDwAAABAAAAAAAEAAAA4gAAAAAAI=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Base">
+    <Position X="3.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ImplicitThis">
+    <Position X="13.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>CAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.CurrentClosure">
+    <Position X="7.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.SetterValue">
+    <Position X="9.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Identifier">
+    <Position X="23.75" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAiQAAAgAAEAACAEBEICEAQKIAAEAAAIAAAAEAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Prefix" />
+    </ShowAsAssociation>
+    <AssociationLine Name="Prefix" Type="System.Compiler.Identifier" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="25.5" Y="8.813" />
+        <Point X="25.875" Y="8.813" />
+        <Point X="25.875" Y="8.125" />
+        <Point X="25.188" Y="8.125" />
+        <Point X="25.188" Y="8.5" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.QualifiedIdentifier">
+    <Position X="21.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAAECAAAAAAAAAAAAAAAAAAAUAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Identifier" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.ComprehensionBinding">
+    <Position X="18.5" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAEAAIAAAEAAAEAAAQAAAAAABQAAAAAAAgAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Mode" />
+    </ShowAsAssociation>
+    <AssociationLine Name="Mode" Type="System.Compiler.ComprehensionBindingMode">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.188" Y="0.06" Height="0.16" Width="0.575" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.Comprehension">
+    <Position X="16" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAIAIAABBAAAQAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Mode" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.NameBinding">
+    <Position X="11.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>CAAAAAAAAAAEAAgEAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.TemplateInstance">
+    <Position X="0.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ConstructDelegate">
+    <Position X="15.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAIAAAQAgAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ConstructIterator">
+    <Position X="19.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAABAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ConstructTuple">
+    <Position X="17.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Fields" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.CollectionEnumerator">
+    <Position X="23.75" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AACAAAAAAAAARBAAAAACAEAAAAAAAAAAIAAAAAIAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ElementLocal" />
+    </ShowAsAssociation>
+    <AssociationLine Name="ElementLocal" Type="System.Compiler.Local" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23.75" Y="15.375" />
+        <Point X="23.375" Y="15.375" />
+        <Point X="23.375" Y="16.313" />
+        <Point X="23" Y="16.313" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.093" Y="-0.32" Height="0.16" Width="1.003" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="System.Compiler.LRExpression">
+    <Position X="21" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Temporaries" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Compiler.AssignmentExpression">
+    <Position X="24.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.BlockExpression">
+    <Position X="15.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Block" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.AnonymousNestedFunction">
+    <Position X="21.75" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAABAAhAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Variable">
+    <Position X="5.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Composition">
+    <Position X="13.75" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAQAAAAAEAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Composer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Compiler.Member" Collapsed="true" HideInheritanceLine="true">
+    <Position X="3" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAEAAIQJgAAICIBACAACQYEDoUEAIAAEhAICkAICA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Field" Collapsed="true" HideInheritanceLine="true">
+    <Position X="17.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>wAAABAgI4BBAAoIAAACCAAAIEDBIAQAAAUAAIKEApAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Block">
+    <Position X="15.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAACCgQAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Composer">
+    <Position X="13.75" Y="16" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="System.Compiler.Composer.NullComposer">
+        <TypeIdentifier>
+          <NewMemberFileName>Nodes.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+  </Class>
+  <Class Name="System.Compiler.Local" Collapsed="true" HideInheritanceLine="true">
+    <Position X="21" Y="16" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAEAAQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.MethodCall">
+    <Position X="0.75" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>BAAAAAAAAgAAAAAAAAAAAAAAAAAAAAABAACAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Construct">
+    <Position X="3" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ConstructArray">
+    <Position X="5.25" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ConstructFlexArray">
+    <Position X="7.5" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Indexer">
+    <Position X="9.75" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAACBAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAAAACAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.ApplyToAll">
+    <Position X="13.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Compiler.Node">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>EAAiACAABAAAQAAAAABCQAAAAAAAAAAAAAAAAAIAABA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="NodeType" />
+    </ShowAsAssociation>
+    <Members>
+      <Method Name="Clone" Hidden="true" />
+      <Field Name="DebugLabel" Hidden="true" />
+      <Method Name="GetVisitorFor" Hidden="true" />
+      <Field Name="IsErroneous" Hidden="true" />
+      <Property Name="IUniqueKey.UniqueId" Hidden="true" />
+      <Method Name="Node" Hidden="true" />
+      <Field Name="SourceContext" Hidden="true" />
+      <Field Name="uniqueKey" Hidden="true" />
+      <Property Name="UniqueKey" Hidden="true" />
+      <Field Name="uniqueKeyCounter" Hidden="true" />
+      <Field Name="VisitorTypeFor" Hidden="true" />
+    </Members>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="System.Compiler.ComprehensionMode">
+    <Position X="16" Y="16.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.ComprehensionBindingMode">
+    <Position X="18.5" Y="16.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAACA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="System.Compiler.NodeType" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Nodes.cs</FileName>
+      <HashCode>et8e7afT7T76n7dl73r5vbmsarL99/w/++bX2UnfwP8=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

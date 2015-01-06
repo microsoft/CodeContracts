@@ -1,0 +1,31 @@
+﻿Here we define the service interface and the parametes, so that we are sure that the clients and the server use the same parameters, ids, etc.
+
+The service lives in an host, which essentially keeps it alive.
+
+
+** viaWCFService
+This is the client code (all the other projects are for the host).
+There is only one way to do the client, but there are plenty of ways to configure it.
+There is app.Config, and it has the usual problems. We tried to remove it.
+Adding app.Config to resources is complex, we need to extract it from the resources, write to disk, etc. Too messy.
+
+
+
+
+** WCFServiceLibrary
+Contains the main Clousot service (implements IClousotService)
+
+** WCF_ServiceHost 
+It is a library to create hosts, but also an executable.
+It works from the command line.
+This is what we use for the Unit tests
+
+** WindowsService
+The windows version of the host
+
+** ServiceSetup
+In WindowsService we define the installation option, and then we use this project to create the setup
+
+** On using App.Config
+It is very annoying, because it should be included in every project that uses it, so we do it by hand in ClousotServiceHost.cs
+

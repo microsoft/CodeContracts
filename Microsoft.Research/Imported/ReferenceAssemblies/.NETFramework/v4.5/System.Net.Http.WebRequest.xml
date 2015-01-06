@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Net.Http.WebRequest</name>
+  </assembly>
+  <members>
+    <member name="T:System.Net.Http.WebRequestHandler"></member>
+    <member name="M:System.Net.Http.WebRequestHandler.#ctor"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.AllowPipelining"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.AuthenticationLevel"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.CachePolicy"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.ClientCertificates"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.ContinueTimeout"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.ImpersonationLevel"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.MaxResponseHeadersLength"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.ReadWriteTimeout"></member>
+    <member name="P:System.Net.Http.WebRequestHandler.UnsafeAuthenticatedConnectionSharing"></member>
+  </members>
+</doc>

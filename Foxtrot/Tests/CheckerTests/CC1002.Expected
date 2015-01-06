@@ -1,0 +1,2 @@
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1002.cs(8,5) : error CC1002: In method CC1002.M(System.Int32): Detected a call to Result with 'System.Boolean', should be 'System.Int32'.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1002.cs(14,5) : error CC1002: In method CC1002.TestResult(System.Collections.Generic.IEnumerable`1<System.Object>): Detected a call to Result with 'System.Collections.Generic.IEnumerable`1<System.DateTime>', should be 'System.Collections.Generic.IEnumerable`1<System.String>'.

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="weakestpre" storage="d:\cci\microsoft.research\regressiontest\weakestpreconditiontests\weakestpre.generictest" id="65981923-c531-43ed-bcd9-afdb8165a757" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations;unreached -NonNull -bounds WeakestPreconditionTests.dll -define cci1only -show progress" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

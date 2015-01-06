@@ -1,0 +1,142 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleArrayAccesses", "SimpleArrayAccesses\SimpleArrayAccesses.csproj", "{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestKarr", "TestKarr\TestKarr.csproj", "{362840A7-2BBB-4D37-ABC7-3160E8048826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionSimplification", "ExpressionSimplification\ExpressionSimplification.csproj", "{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestIntervals", "TestIntervals\TestIntervals.csproj", "{9585F487-B147-4BBB-BB77-B4C5A629F5BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUnsafe", "TestUnsafe\TestUnsafe.csproj", "{67D057C8-C286-4058-82E6-18345572C2F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTracePartitioning", "TestTracePartitioning\TestTracePartitioning.csproj", "{F3A823E0-E825-41EB-BF01-036A1C94B27F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAprove", "TestAprove\TestAprove.csproj", "{E2559C8B-057D-4807-A156-406B99BEA824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOctagons", "TestOctagons\TestOctagons.csproj", "{007D3066-D5BD-4A9C-8AC5-CE044DD3A0A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Contracts9", "..\..\..\Foxtrot\Contracts\Microsoft.Contracts9.csproj", "{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidoriTests", "MidoriTests\MidoriTests.csproj", "{39055CDB-0233-4706-B7C3-837018B7B234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCollections", "TestCollections\TestCollections.csproj", "{EE98D402-8981-4357-B188-44FEC3587FC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBinarySearch", "TestBinarySearch\TestBinarySearch.csproj", "{667C0DC8-037D-403E-8E30-4EEE8C3747EF}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 13
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ExpressionSimplification\\ExpressionSimplification.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = ExpressionSimplification\\
+		SccProjectUniqueName2 = SimpleArrayAccesses\\SimpleArrayAccesses.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = SimpleArrayAccesses\\
+		SccProjectUniqueName3 = TestIntervals\\TestIntervals.csproj
+		SccLocalPath3 = .
+		SccProjectFilePathRelativizedFromConnection3 = TestIntervals\\
+		SccProjectUniqueName4 = TestKarr\\TestKarr.csproj
+		SccLocalPath4 = .
+		SccProjectFilePathRelativizedFromConnection4 = TestKarr\\
+		SccProjectUniqueName5 = TestUnsafe\\TestUnsafe.csproj
+		SccLocalPath5 = .
+		SccProjectFilePathRelativizedFromConnection5 = TestUnsafe\\
+		SccProjectUniqueName6 = TestTracePartitioning\\TestTracePartitioning.csproj
+		SccProjectName6 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/TestTracePartitioning
+		SccLocalPath6 = TestTracePartitioning
+		SccProjectUniqueName7 = TestAprove\\TestAprove.csproj
+		SccProjectName7 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/TestAprove
+		SccLocalPath7 = TestAprove
+		SccProjectUniqueName8 = ..\\..\\..\\Foxtrot\\Contracts\\Microsoft.Contracts9.csproj
+		SccProjectName8 = //depot/xsharp/cci/Foxtrot/Contracts
+		SccLocalPath8 = ..\\..\\..\\Foxtrot\\Contracts
+		SccProjectUniqueName9 = TestOctagons\\TestOctagons.csproj
+		SccProjectName9 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/TestOctagons
+		SccLocalPath9 = TestOctagons
+		SccProjectUniqueName10 = MidoriTests\\MidoriTests.csproj
+		SccProjectName10 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/MidoriTests
+		SccLocalPath10 = MidoriTests
+		SccProjectUniqueName11 = TestCollections\\TestCollections.csproj
+		SccProjectName11 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/TestCollections
+		SccLocalPath11 = TestCollections
+		SccProjectUniqueName12 = TestBinarySearch\\TestBinarySearch.csproj
+		SccProjectName12 = //depot/xsharp/cci/Microsoft.Research/RegressionTest/Basic/TestBinarySearch
+		SccLocalPath12 = TestBinarySearch
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		FullDebug|Any CPU = FullDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88DDAA53-AD94-4E6A-9ED8-9D266BCE6D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362840A7-2BBB-4D37-ABC7-3160E8048826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B24B82C-CCE8-40CA-B6FA-4F652066AF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9585F487-B147-4BBB-BB77-B4C5A629F5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D057C8-C286-4058-82E6-18345572C2F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A823E0-E825-41EB-BF01-036A1C94B27F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2559C8B-057D-4807-A156-406B99BEA824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007D3066-D5BD-4A9C-8AC5-CE044DD3A0A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007D3066-D5BD-4A9C-8AC5-CE044DD3A0A7}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007D3066-D5BD-4A9C-8AC5-CE044DD3A0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39055CDB-0233-4706-B7C3-837018B7B234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39055CDB-0233-4706-B7C3-837018B7B234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39055CDB-0233-4706-B7C3-837018B7B234}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39055CDB-0233-4706-B7C3-837018B7B234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE98D402-8981-4357-B188-44FEC3587FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE98D402-8981-4357-B188-44FEC3587FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE98D402-8981-4357-B188-44FEC3587FC2}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE98D402-8981-4357-B188-44FEC3587FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE98D402-8981-4357-B188-44FEC3587FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667C0DC8-037D-403E-8E30-4EEE8C3747EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

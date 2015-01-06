@@ -1,0 +1,34 @@
+\documentclass{llncs}
+
+\title{Clousot: Static contract checking with Abstract Interpretation}
+
+\author{Francesco Logozzo \inst{1}}
+\institute{Microsoft Research, Redmond, WA (USA) \\
+\email{logozzo@microsoft.com}
+}
+
+\begin{document}
+\maketitle
+
+A limiting factor to the adoption of formal methods in the everyday programming practice is that tools do not integrate well in the existing programming workflow. 
+The price programmers has to pay to enjoy the benefits of formal methods include the use non-mainstream languages or non-standard compilers. 
+
+The CodeContracts project~\cite{codecontracts} at Microsoft aims at bridging the gap between formal specification and verification and a principle of least interference in the existing programmer’s workflow.  The main insight of CodeContracts is that specifications can be authored as code~\cite{embedded-cc-sac-oops-2010}. 
+Contracts take form of method calls to a standard library.  Therefore CodeContracts enable the programmer to write down specifications as Boolean expressions in their favorite .NET language (C\#, F\#, VB \dots). This has several advantages: semantics of contracts is given by the IL produced by the compiler, no compiler modification is required, contracts are serialized and persisted as code (no need for separate parsing), all the IDE support (e.g. intellisense) the programmer is used to is automatically leveraged.
+
+CodeContracts provide a standard and uniform way to describe contracts which can then be consumed by several tools. At Microsoft Research, we have developed a tool to automatically generate the documentation (ccdoc), to perform runtime checking (ccrewrite) and to perform static checking (cccheck/Clousot).
+
+The static contract checker is based on abstract interpretation. It analyzes every method in isolation. The precondition of the method is turned into an assumption and the postcondition into an assertion. For public methods, the object invariant is assumed at the method entry and asserted at the exit point. For each method call, its precondition is asserted, and the postcondition assumed. The first phase of the analysis process resolves the heap (under some optimistic hypotheses e.g. on parameter aliasing), providing a scalar view of the program. On the top of that several value analyses are run to discover facts (including loop invariants) on the program. Value analyses include a non-null analysis, a numerical analysis~\cite{subpolyhedra}, a pointer usage analysis and a container analysis. 
+The value analyses propagate the initial (abstract) state through the method body performing a fixpoint computation with widening. The inferred facts are used to discharge proof obligations. Proof obligations are either explicit assertions in the code or semantic-induced ones such as non-null dereferences or array indexing. 
+If a proof obligation cannot be discharged then the analysis is refined.
+One refinement is the use of a more expressive (yet expensive) abstract domain.
+If even this fails, then  a backward analysis is performed to have a precise yet on demand handling of disjunctions. If the user turns on the opportune switch, then Clousot uses the inferred information to extract the method postcondition and then to push it to all the callers.  
+
+CodeContracts can be downloaded at:
+
+ \texttt{http://research.microsoft.com/en-us/projects/contracts/}
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

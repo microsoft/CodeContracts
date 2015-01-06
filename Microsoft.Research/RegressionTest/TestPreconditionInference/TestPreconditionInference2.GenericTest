@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="TestPreconditionInference2" storage="e:\cci\microsoft.research\regressiontest\testpreconditioninference\testpreconditioninference2.generictest" id="5ea3ac9e-d9cf-439d-b56d-6ae62a104184" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="c6bf3265-fb36-4be3-97b7-e61220d32a0f" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds &quot;TestPreconditionInference.dll&quot; -infer= -infer requires -infer propertyensures -infer methodensures" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="E:\CCI\TestResults\logozzo_LOGOZZO-XW4600 2009-01-06 13_12_21\In\LOGOZZO-XW4600\c6bf3265-fb36-4be3-97b7-e61220d32a0f" />
+      <EnvironmentVariable name="testlocation" value="e:\cci\microsoft.research\regressiontest\testpreconditioninference" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

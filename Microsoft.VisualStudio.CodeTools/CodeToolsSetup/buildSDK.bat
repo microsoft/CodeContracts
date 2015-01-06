@@ -1,0 +1,1 @@
+msbuild buildSDK.xml /p:CCNetLabel=1.1.1.1 /p:ReleaseConfig=%1 /t:All

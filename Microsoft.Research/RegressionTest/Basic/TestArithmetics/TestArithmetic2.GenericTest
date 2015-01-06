@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="TestArithmetic2" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basic\testarithmetics\testarithmetic2.generictest" id="fddb81e6-f602-4cda-8584-423223ef3066" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="04b89b47-e1e2-4104-88eb-954ff0c0d96c" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations;unreached -arithmetic TestArithmetics.dll -libpaths ..\..\..\..\..\contracts\bin\Debug\v3.5 -bounds:noobl -assemblyMode=standard" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="D:\CCI\TestResults\logozzo_LOGOZZO4 2010-03-04 11_12_57\In\LOGOZZO4\04b89b47-e1e2-4104-88eb-954ff0c0d96c" />
+      <EnvironmentVariable name="testlocation" value="d:\cci\microsoft.research\regressiontest\basic\testarithmetics" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

@@ -1,0 +1,468 @@
+Microsoft (R) .NET Contract Checker Version 1.1.1.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Method 1 : <CrtImplementationDetails>.ModuleLoadException.#ctor(System.String,System.Exception)
+Method 2 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.set_NestedException(System.Exception)
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.set_NestedException(System.Exception)[0x0]: message : Suggested ensures: Contract.Ensures(__set_formal == this.<backing_store>NestedException);
+Method 3 : <CrtImplementationDetails>.ModuleLoadException.#ctor(System.String)
+Method 4 : <CrtImplementationDetails>.ModuleUninitializer.AddHandler(System.EventHandler)
+Method 6 : <CrtImplementationDetails>.ModuleLoadException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+Method 7 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.#ctor(System.String,System.Exception,System.Exception)
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.#ctor(System.String,System.Exception,System.Exception)[0x0]: message : Suggested ensures: Contract.Ensures(nestedException == this.<backing_store>NestedException);
+Method 8 : <Module>.IsEqualGUID(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) _GUID*,optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) _GUID*)
+Method 9 : <Module>.<CrtImplementationDetails>.NativeDll.IsSafeForManagedCode()
+Method 10 : <Module>.==(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) _GUID*,optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) _GUID*)
+Method 12 : <Module>.<CrtImplementationDetails>.NativeDll.IsInDllMain()
+Method 13 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.get_NestedException
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.get_NestedException[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Exception>() == this.<backing_store>NestedException);
+Method 14 : <CrtImplementationDetails>.ModuleUninitializer..cctor()
+Method 15 : <Module>.<CrtImplementationDetails>.ThrowModuleLoadException(System.String)
+<Module>.<CrtImplementationDetails>.ThrowModuleLoadException(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(false);
+Method 16 : <Module>.<CrtImplementationDetails>.ThrowModuleLoadException(System.String,System.Exception)
+<Module>.<CrtImplementationDetails>.ThrowModuleLoadException(System.String,System.Exception)[0x0]: message : Suggested ensures: Contract.Ensures(false);
+Method 17 : <Module>.<CrtImplementationDetails>.NativeDll.IsInProcessDetach()
+Method 18 : <Module>.<CrtImplementationDetails>.RegisterModuleUninitializer(System.EventHandler)
+Method 19 : <Module>.<CrtImplementationDetails>.FromGUID(optional(System.Runtime.CompilerServices.IsImplicitlyDereferenced) optional(IsConst) _GUID*)
+Method 20 : <Module>.__get_default_appdomain(IUnknown**)
+Method 21 : <Module>.__release_appdomain(IUnknown*)
+Method 22 : <Module>.<CrtImplementationDetails>.GetDefaultDomain()
+Method 23 : <Module>.<CrtImplementationDetails>.DoCallBackInDefaultDomain(System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) optional(System.Runtime.CompilerServices.IsLong) System.Int32(System.Void*),System.Void*)
+<Module>.<CrtImplementationDetails>.DoCallBackInDefaultDomain(System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) optional(System.Runtime.CompilerServices.IsLong) System.Int32(System.Void*),System.Void*)[0x2d]: warning : Possibly calling a method on a null reference 'local2'
+<Module>.<CrtImplementationDetails>.DoCallBackInDefaultDomain(System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) optional(System.Runtime.CompilerServices.IsLong) System.Int32(System.Void*),System.Void*)[0x25]: message : Suggested Code fix: This condition should hold: local2 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local2 != null);
+Method 24 : <Module>.<CrtImplementationDetails>.DefaultDomain.DoNothing(System.Void*)
+Method 25 : <Module>.<CrtImplementationDetails>.DefaultDomain.HasPerProcess()
+Method 26 : <Module>.<CrtImplementationDetails>.DefaultDomain.HasNative()
+Method 27 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.ToString()
+Method 28 : <CrtImplementationDetails>.ModuleUninitializer.SingletonDomainUnload(System.Object,System.EventArgs)
+<CrtImplementationDetails>.ModuleUninitializer.SingletonDomainUnload(System.Object,System.EventArgs)[0x8]: warning : Possibly calling a method on a null reference 'local0'
+<CrtImplementationDetails>.ModuleUninitializer.SingletonDomainUnload(System.Object,System.EventArgs)[0x1c]: warning : Possibly calling a method on a null reference 'local0.Current'
+<CrtImplementationDetails>.ModuleUninitializer.SingletonDomainUnload(System.Object,System.EventArgs)[0x1]: message : Suggested Code fix: This condition should hold: local0 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local0 != null);
+<CrtImplementationDetails>.ModuleUninitializer.SingletonDomainUnload(System.Object,System.EventArgs)[0x10]: message : Suggested Code fix: This condition should hold: local0.Current != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local0.Current != null);
+Method 29 : <Module>.<CrtImplementationDetails>.DefaultDomain.Initialize()
+Method 30 : <Module>.?A0x58cc3a43.??__E?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA == 0);
+Method 31 : <Module>.?A0x58cc3a43.??__E?Uninitialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?Uninitialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?Uninitialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA == 0);
+Method 32 : <Module>.?A0x58cc3a43.??__E?IsDefaultDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2_NA@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?IsDefaultDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2_NA@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?IsDefaultDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2_NA == false);
+Method 33 : <Module>.?A0x58cc3a43.??__E?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(0)));
+Method 34 : <Module>.?A0x58cc3a43.??__E?InitializedNative@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?InitializedNative@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedNative@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(0)));
+Method 35 : <Module>.?A0x58cc3a43.??__E?InitializedPerProcess@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?InitializedPerProcess@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerProcess@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(0)));
+Method 36 : <Module>.?A0x58cc3a43.??__E?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()
+<Module>.?A0x58cc3a43.??__E?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A@@YMXXZ()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(0)));
+Method 37 : <Module>.gcroot<System::String ^>.=(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) gcroot<System::String ^>*,System.String)
+Method 38 : <Module>.<CrtImplementationDetails>.ThisModule.Handle()
+<Module>.<CrtImplementationDetails>.ThisModule.Handle()[0xa]: warning : Possibly calling a method on a null reference
+<Module>.<CrtImplementationDetails>.ThisModule.Handle()[0xf]: warning : Possibly calling a method on a null reference
+<Module>.<CrtImplementationDetails>.ThisModule.Handle()[0x5]: message : Suggested Code fix: The value returned by System.Type.GetTypeFromHandle(System.RuntimeTypeHandle) should be non-null. Consider adding a postcondition or an assumption. Fix: <none>
+<Module>.<CrtImplementationDetails>.ThisModule.Handle()[0xa]: message : Suggested Code fix: The value returned by System.Type.get_Module should be non-null. Consider adding a postcondition or an assumption. Fix: <none>
+Method 39 : <Module>.<CrtImplementationDetails>.ThisModule.ResolveMethod<void const * __clrcall(void)>(System.function pointer System.optional(IsConst) Void*())
+Method 40 : <Module>._initterm_m(System.optional(IsConst) function pointer System.optional(IsConst) Void*()*,System.optional(IsConst) function pointer System.optional(IsConst) Void*()*)
+Method 41 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializeVtables(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport.InitializeVtables(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+Method 42 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializeDefaultAppDomain(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+Method 45 : <Module>._initterm_e(System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) System.Int32()*,System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) System.Int32()*)
+Method 46 : <Module>.gcroot<System::String ^>..PE$AAVString@System@@(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) optional(IsConst) gcroot<System::String ^>*)
+Method 47 : <Module>._initterm(System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) System.Void()*,System.function pointer optional(System.Runtime.CompilerServices.CallConvCdecl) System.Void()*)
+Method 48 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializeNative(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport.InitializeNative(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedNative@DefaultDomain@<CrtImplementationDetails>@@2_NA == true);
+Method 49 : <Module>.<CrtImplementationDetails>.AtExitLock._handle()
+<Module>.<CrtImplementationDetails>.AtExitLock._handle()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.ValueType>() != null);
+Method 50 : <Module>.<CrtImplementationDetails>.AtExitLock._lock_Get()
+Method 51 : <Module>.<CrtImplementationDetails>.AtExitLock.IsInitialized()
+Method 52 : <Module>.<CrtImplementationDetails>.AtExitLock._lock_Set(System.Object)
+Method 53 : <Module>.<CrtImplementationDetails>.AtExitLock._lock_Construct(System.Object)
+<Module>.<CrtImplementationDetails>.AtExitLock._lock_Construct(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?_lock@AtExitLock@<CrtImplementationDetails>@@$$Q0PEAXEA == null);
+Method 54 : <Module>.<CrtImplementationDetails>.ThrowNestedModuleLoadException(System.Exception,System.Exception)
+<Module>.<CrtImplementationDetails>.ThrowNestedModuleLoadException(System.Exception,System.Exception)[0x0]: message : Suggested ensures: Contract.Ensures(false);
+Method 55 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)[0x0]: message : Suggested assume: Contract.Assume(info != null);
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)[0x0]: message : Suggested ensures: Contract.Ensures(this.NestedException == this.<backing_store>NestedException);
+Method 56 : <Module>.<CrtImplementationDetails>.NativeDll.IsInProcessAttach()
+Method 57 : <Module>._initatexit_m()
+<Module>._initatexit_m()[0x0]: message : Suggested ensures: Contract.Ensures(0 <= Contract.Result<System.Int32>());
+<Module>._initatexit_m()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 1);
+Method 58 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializePerProcess(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport.InitializePerProcess(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerProcess@DefaultDomain@<CrtImplementationDetails>@@2_NA == true);
+<Module>.<CrtImplementationDetails>.LanguageSupport.InitializePerProcess(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerProcess@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+Method 59 : <Module>._initatexit_app_domain()
+<Module>._initatexit_app_domain()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == 1);
+Method 60 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializePerAppDomain(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport.InitializePerAppDomain(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+Method 61 : <Module>.<CrtImplementationDetails>.LanguageSupport.InitializeUninitializer(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+Method 63 : <Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x5]: warning : Possibly calling a method on a null reference 'System.AppDomain.CurrentDomain'
+<Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+<Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+<Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA == 1);
+<Module>.<CrtImplementationDetails>.LanguageSupport._Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested Code fix: This condition should hold: System.AppDomain.CurrentDomain != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(System.AppDomain.CurrentDomain != null);
+Method 65 : <Module>.<CrtImplementationDetails>.AtExitLock._lock_Destruct()
+<Module>.<CrtImplementationDetails>.AtExitLock._lock_Destruct()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?_lock@AtExitLock@<CrtImplementationDetails>@@$$Q0PEAXEA == null);
+Method 66 : <Module>.<CrtImplementationDetails>.AtExitLock.RemoveRef()
+<Module>.<CrtImplementationDetails>.AtExitLock.RemoveRef()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?_ref_count@AtExitLock@<CrtImplementationDetails>@@$$Q0HA <= 2147483646);
+Method 67 : <Module>.?A0x65cc9423.__dealloc_global_lock()
+<Module>.?A0x65cc9423.__dealloc_global_lock()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?_ref_count@AtExitLock@<CrtImplementationDetails>@@$$Q0HA <= 2147483646);
+Method 68 : <Module>._app_exit_callback()
+Method 69 : <Module>.<CrtImplementationDetails>.LanguageSupport.UninitializeAppDomain()
+Method 70 : <Module>._exit_callback()
+Method 72 : <Module>.<CrtImplementationDetails>.LanguageSupport._UninitializeDefaultDomain(System.Void*)
+<Module>.<CrtImplementationDetails>.LanguageSupport._UninitializeDefaultDomain(System.Void*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedNativeFromCCTOR@DefaultDomain@<CrtImplementationDetails>@@2_NA == false);
+Method 73 : <Module>.<CrtImplementationDetails>.LanguageSupport.UninitializeDefaultDomain()
+<Module>.<CrtImplementationDetails>.LanguageSupport.UninitializeDefaultDomain()[0xc]: warning : Possibly calling a method on a null reference 'System.AppDomain.CurrentDomain'
+<Module>.<CrtImplementationDetails>.LanguageSupport.UninitializeDefaultDomain()[0x7]: message : Suggested Code fix: This condition should hold: System.AppDomain.CurrentDomain != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(System.AppDomain.CurrentDomain != null);
+Method 74 : <Module>.<CrtImplementationDetails>.LanguageSupport.DomainUnload(System.Object,System.EventArgs)
+Method 75 : <Module>.<CrtImplementationDetails>.LanguageSupport.Cleanup(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*,System.Exception)
+Method 76 : <Module>.gcroot<System::String ^>.{ctor}(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) gcroot<System::String ^>*)
+Method 77 : <Module>.<CrtImplementationDetails>.LanguageSupport.{ctor}(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+Method 78 : <Module>.gcroot<System::String ^>.{dtor}(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) gcroot<System::String ^>*)
+Method 79 : <Module>.<CrtImplementationDetails>.LanguageSupport.{dtor}(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+Method 80 : <Module>.<CrtImplementationDetails>.LanguageSupport.Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)
+<Module>.<CrtImplementationDetails>.LanguageSupport.Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA == 1);
+<Module>.<CrtImplementationDetails>.LanguageSupport.Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+<Module>.<CrtImplementationDetails>.LanguageSupport.Initialize(optional(System.Runtime.CompilerServices.IsConst) optional(System.Runtime.CompilerServices.IsConst) <CrtImplementationDetails>.LanguageSupport*)[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+Method 81 : <Module>.___CxxCallUnwindDtor(System.function pointer System.Void(System.Void*),System.Void*)
+Method 82 : <Module>..cctor()
+<Module>..cctor()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA == 1);
+<Module>..cctor()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+<Module>..cctor()[0x0]: message : Suggested ensures: Contract.Ensures(<Module>.?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4State@Progress@2@A == ((<CrtImplementationDetails>.Progress+State)(2)));
+Method 83 : <Module>.<CrtImplementationDetails>.AtExitLock.Enter()
+Method 84 : <Module>.<CrtImplementationDetails>.AtExitLock.Exit()
+Method 85 : <Module>.?A0x65cc9423.__global_lock()
+Method 86 : <Module>.?A0x65cc9423.__global_unlock()
+Method 87 : <Module>._atexit_helper(System.function pointer System.Void(),System.UInt64*,System.function pointer System.Void()**,System.function pointer System.Void()**)
+<Module>._atexit_helper(System.function pointer System.Void(),System.UInt64*,System.function pointer System.Void()**,System.function pointer System.Void()**)[0x0]: message : Suggested ensures: Contract.Ensures(-1 <= Contract.Result<System.Int32>());
+<Module>._atexit_helper(System.function pointer System.Void(),System.UInt64*,System.function pointer System.Void()**,System.function pointer System.Void()**)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 0);
+Method 88 : <Module>._atexit_m(System.function pointer System.Void())
+<Module>._atexit_m(System.function pointer System.Void())[0x0]: message : Suggested ensures: Contract.Ensures(-1 <= Contract.Result<System.Int32>());
+<Module>._atexit_m(System.function pointer System.Void())[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 0);
+Method 89 : <Module>._onexit_m(System.function pointer System.Int32())
+Method 90 : <Module>._atexit_m_appdomain(System.function pointer System.Void())
+<Module>._atexit_m_appdomain(System.function pointer System.Void())[0x0]: message : Suggested ensures: Contract.Ensures(-1 <= Contract.Result<System.Int32>());
+<Module>._atexit_m_appdomain(System.function pointer System.Void())[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 0);
+Method 91 : <Module>._onexit_m_appdomain(System.function pointer System.Int32())
+Method 92 : <Module>.___CxxCallUnwindDelDtor(System.function pointer System.Void(System.Void*),System.Void*)
+Method 93 : <Module>.___CxxCallUnwindVecDtor(System.function pointer System.Void(System.Void*,System.UInt64,System.Int32,System.function pointer System.Void(System.Void*)),System.Void*,System.UInt64,System.Int32,System.function pointer System.Void(System.Void*))
+Method 97 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.#ctor(System.Object)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(pDispExObj == this.m_pDispExObj);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pNameToPropertyMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pNameToMethodMap != null);
+Method 98 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalNativeToManaged(System.IntPtr)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalNativeToManaged(System.IntPtr)[0x24]: warning : Possibly calling a method on a null reference 'local0'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalNativeToManaged(System.IntPtr)[0x29]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalNativeToManaged(System.IntPtr)[0x1d]: message : Suggested Code fix: This condition should hold: local0 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local0 != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalNativeToManaged(System.IntPtr)[0x24]: message : Suggested Code fix: This condition should hold: (local0.GetType()) != null. Add an assume, a postcondition to method System.Object.GetType(), or consider a different initialization. Fix: Add Contract.Assume((local0.GetType()) != null);
+Method 99 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.MarshalManagedToNative(System.Object)
+Method 100 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.CleanUpNativeData(System.IntPtr)
+Method 101 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.CleanUpManagedData(System.Object)
+Method 102 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.GetNativeDataSize()
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -1);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -(1));
+Method 103 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.#ctor(System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshalerType)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.#ctor(System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshalerType)[0x0]: message : Suggested ensures: Contract.Ensures(MarshalerType == this.m_MarshalerType);
+Method 104 : System.Runtime.InteropServices.CustomMarshalers.Resource.GetString(System.String)
+System.Runtime.InteropServices.CustomMarshalers.Resource.GetString(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.String>() != null);
+Method 105 : System.Runtime.InteropServices.CustomMarshalers.Resource.FormatString(System.String)
+System.Runtime.InteropServices.CustomMarshalers.Resource.FormatString(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.String>() != null);
+Method 106 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.GetInstance(System.String)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() != null);
+Method 107 : System.Runtime.InteropServices.CustomMarshalers.ExpandoToDispatchExMarshaler..cctor()
+Method 108 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetDispatchEx()
+Method 109 : <Module>.<CrtImplementationDetails>.DefaultDomain.NeedsInitialization()
+Method 111 : <CrtImplementationDetails>.ModuleLoadExceptionHandlerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)[0x0]: message : Suggested requires: Contract.Requires(info != null);
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)[0x0]: message : Suggested ensures: Contract.Ensures(this.NestedException == this.<backing_store>NestedException);
+Method 112 : <Module>.<CrtImplementationDetails>.DefaultDomain.NeedsUninitialization()
+Method 113 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetGetMethod(System.Reflection.MethodInfo)
+Method 114 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddNativeMember(System.Int32,System.String)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddNativeMember(System.Int32,System.String)[0x41]: warning : Possibly calling a method on a null reference 'this.m_pNameToPropertyMap'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddNativeMember(System.Int32,System.String)[0xad]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap'
+Method 115 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DispID
+Method 116 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DispID
+Method 117 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xa1]: warning : Possibly calling a method on a null reference 'this.m_pNameToPropertyMap'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xac]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xc9]: warning : Possibly calling a method on a null reference 'local6'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xde]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x140]: warning : Possibly calling a method on a null reference 'local5'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x155]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x0]: message : Suggested requires: Contract.Requires(this.m_pNameToPropertyMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x0]: message : Suggested requires: Contract.Requires(this.m_pNameToMethodMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xba]: message : Suggested Code fix: This condition should hold: local6 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local6 != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0xd4]: message : Suggested Code fix: This condition should hold: (local6.Value as System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo) != null. Add an assume, a postcondition to method System.Collections.IDictionaryEnumerator.get_Value, or consider a different initialization. Fix: Add Contract.Assume((local6.Value as System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo) != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x131]: message : Suggested Code fix: This condition should hold: local5 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local5 != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()[0x14b]: message : Suggested Code fix: This condition should hold: (local5.Value as System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo) != null. Add an assume, a postcondition to method System.Collections.IDictionaryEnumerator.get_Value, or consider a different initialization. Fix: Add Contract.Assume((local5.Value as System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo) != null);
+Method 118 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetUnderlyingObject()
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetUnderlyingObject()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object>() == this.m_pDispExObj);
+Method 119 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethod(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Type[],System.Reflection.ParameterModifier[])
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethod(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Type[],System.Reflection.ParameterModifier[])[0x22]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethod(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Type[],System.Reflection.ParameterModifier[])[0x7f]: warning : requires unproven
+Method 120 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethod(System.String,System.Reflection.BindingFlags)
+Method 121 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x14]: warning : The length of the array may be negative
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0xd]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x2b]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap.Values'
+SR366[0x0]: message : Suggested assume: Contract.Assume(this.m_pNameToMethodMap != null);
+SR366[0x0]: message : Suggested assume: Contract.Assume(this.m_pNameToPropertyMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pNameToMethodMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x0]: message : Suggested invariant: Contract.Invariant(this.m_pNameToMethodMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x0]: message : Suggested invariant: Contract.Invariant(this.m_pNameToPropertyMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0xd]: message : Suggested Code fix: This condition should hold: 0 <= this.m_pNameToMethodMap.Count. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(0 <= this.m_pNameToMethodMap.Count);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x1]: message : Suggested Code fix: The value of this.m_pNameToMethodMap may be modified by the invocation to System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView(). Consider adding the attribute [Pure] to System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView() or a postcondition. Fix: Add attribute [Pure] to System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.SynchWithNativeView()
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMethods(System.Reflection.BindingFlags)[0x24]: message : Suggested Code fix: This condition should hold: this.m_pNameToMethodMap.Values != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(this.m_pNameToMethodMap.Values != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(pDispExObj == this.m_pDispExObj);
+Method 122 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetField(System.String,System.Reflection.BindingFlags)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetField(System.String,System.Reflection.BindingFlags)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.FieldInfo>() == null);
+Method 123 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetFields(System.Reflection.BindingFlags)
+Method 124 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperty(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Type,System.Type[],System.Reflection.ParameterModifier[])
+Method 125 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperty(System.String,System.Reflection.BindingFlags)
+Method 126 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)[0x14]: warning : The length of the array may be negative
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)[0x2b]: warning : Possibly calling a method on a null reference 'this.m_pNameToPropertyMap.Values'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)[0x0]: message : Suggested ensures: Contract.Ensures(0 <= this.m_pNameToMethodMap.Count);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)[0xd]: message : Suggested Code fix: This condition should hold: 0 <= this.m_pNameToMethodMap.Count. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(0 <= this.m_pNameToMethodMap.Count);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetProperties(System.Reflection.BindingFlags)[0x24]: message : Suggested Code fix: This condition should hold: this.m_pNameToPropertyMap.Values != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(this.m_pNameToPropertyMap.Values != null);
+Method 127 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMember(System.String,System.Reflection.BindingFlags)
+Method 128 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)[0x22]: warning : The length of the array may be negative
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)[0x39]: warning : Possibly calling a method on a null reference 'this.m_pNameToPropertyMap.Values'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)[0x59]: warning : Possibly calling a method on a null reference 'this.m_pNameToMethodMap.Values'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)[0x32]: message : Suggested Code fix: This condition should hold: this.m_pNameToPropertyMap.Values != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(this.m_pNameToPropertyMap.Values != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetMembers(System.Reflection.BindingFlags)[0x48]: message : Suggested Code fix: This condition should hold: this.m_pNameToMethodMap.Values != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(this.m_pNameToMethodMap.Values != null);
+Method 129 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.InvokeAttrsToDispatchFlags(System.Reflection.BindingFlags)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.InvokeAttrsToDispatchFlags(System.Reflection.BindingFlags)[0x0]: message : Suggested ensures: Contract.Ensures(0 <= Contract.Result<System.Int32>());
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.InvokeAttrsToDispatchFlags(System.Reflection.BindingFlags)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 16396);
+Method 130 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x19f]: warning : Array access might be above the upper bound
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x283]: warning : Array access might be above the upper bound
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x19f]: warning : Possible use of a null array 'aArgs'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x257]: warning : Possible use of a null array 'aArgs'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x0]: message : Suggested Code fix: Consider strengthening the guard. Fix: Add && local7 < aArgs.Length
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.DispExInvoke(System.String,optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.Int32,System.Reflection.Binder,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])[0x0]: message : Suggested Code fix: Consider strengthening the guard. Fix: Add && local5 < aArgs.Length
+Method 131 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.InvokeMember(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])
+Method 132 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.get_UnderlyingSystemType
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.get_UnderlyingSystemType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pNameToMethodMap != null);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.get_UnderlyingSystemType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pNameToPropertyMap != null);
+Method 133 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddField(System.String)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddField(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(false);
+Method 134 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddProperty(System.String)
+Method 135 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddMethod(System.String,System.Delegate)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.AddMethod(System.String,System.Delegate)[0x0]: message : Suggested ensures: Contract.Ensures(false);
+Method 136 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Owner
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Owner[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx>() == this.m_pOwner);
+Method 137 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Owner
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Owner[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx>() == this.m_pOwner);
+Method 138 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x4f]: warning : Possibly calling a method on a null reference 'local5'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x89]: warning : Possibly calling a method on a null reference 'local4'
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x0]: message : Suggested ensures: Contract.Ensures(((System.Reflection.MemberTypes)(8)) <= pMember.MemberType);
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x0]: message : Suggested ensures: Contract.Ensures(pMember.MemberType <= ((System.Reflection.MemberTypes)(16)));
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x0]: message : Suggested Code fix: Consider strengthening the guard. Fix: Add && (pMember as System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo) != null
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.RemoveMember(System.Reflection.MemberInfo)[0x0]: message : Suggested Code fix: Consider strengthening the guard. Fix: Add && (pMember as System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo) != null
+Method 139 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.IsOwnedBy(System.Object)
+Method 140 : System.Runtime.InteropServices.CustomMarshalers.Resource..cctor()
+Method 141 : System.Runtime.InteropServices.CustomMarshalers.Resource.#ctor()
+Method 142 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetCustomAttributes(System.Type,System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetCustomAttributes(System.Type,System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object[]>() == null);
+Method 143 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetCustomAttributes(System.Boolean)
+Method 144 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.IsDefined(System.Type,System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.IsDefined(System.Type,System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Boolean>() == false);
+Method 145 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_MemberType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_MemberType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MemberTypes>() == ((System.Reflection.MemberTypes)(8)));
+Method 146 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Name
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Name[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.String>() == this.m_pstrName);
+Method 147 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DeclaringType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DeclaringType[0x0]: message : Suggested assume: Contract.Assume(this.m_pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DeclaringType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Type>() == this.m_pOwner.UnderlyingSystemType);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DeclaringType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_DeclaringType[0x0]: message : Suggested invariant: Contract.Invariant(this.m_pOwner != null);
+Method 222 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested requires: Contract.Requires(pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(DispID == this.m_DispID);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(pstrName == this.m_pstrName);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(MethType == this.m_MethodType);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.MethodType,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(pOwner == this.m_pOwner);
+Method 148 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReflectedType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReflectedType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Type>() == this.DeclaringType);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReflectedType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 149 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetParameters()
+Method 150 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetMethodImplementationFlags()
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetMethodImplementationFlags()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MethodImplAttributes>() == ((System.Reflection.MethodImplAttributes)(4)));
+Method 151 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Attributes
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Attributes[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MethodAttributes>() == ((System.Reflection.MethodAttributes)(70)));
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_Attributes[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 152 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReturnType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReturnType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 153 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReturnTypeCustomAttributes
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReturnTypeCustomAttributes[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.ICustomAttributeProvider>() == null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_ReturnTypeCustomAttributes[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 154 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_MethodHandle
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.get_MethodHandle[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 155 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetBaseDefinition()
+System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.GetBaseDefinition()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MethodInfo>() == this);
+Method 156 : System.Runtime.InteropServices.CustomMarshalers.DispatchExMethodInfo.Invoke(System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)
+Method 157 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetCustomAttributes(System.Type,System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetCustomAttributes(System.Type,System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object[]>() == null);
+Method 158 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetCustomAttributes(System.Boolean)
+Method 159 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.IsDefined(System.Type,System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.IsDefined(System.Type,System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Boolean>() == false);
+Method 160 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_MemberType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_MemberType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MemberTypes>() == ((System.Reflection.MemberTypes)(16)));
+Method 161 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Name
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Name[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.String>() == this.m_pstrName);
+Method 162 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DeclaringType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DeclaringType[0x0]: message : Suggested assume: Contract.Assume(this.m_pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DeclaringType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Type>() == this.m_pOwner.UnderlyingSystemType);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DeclaringType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_DeclaringType[0x0]: message : Suggested invariant: Contract.Invariant(this.m_pOwner != null);
+Method 220 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested requires: Contract.Requires(pOwner != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(DispID == this.m_DispID);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(pstrName == this.m_pstrName);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.#ctor(optional(System.Runtime.CompilerServices.IsLong) System.Int32,System.String,System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx)[0x0]: message : Suggested ensures: Contract.Ensures(pOwner == this.m_pOwner);
+Method 163 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_ReflectedType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_ReflectedType[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Type>() == this.DeclaringType);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_ReflectedType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 164 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_PropertyType
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_PropertyType[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 165 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetValue(System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetValue(System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pGetMethod != null);
+Method 166 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetValue(System.Object,System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetValue(System.Object,System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pSetMethod != null);
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetValue(System.Object,System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)[0x0]: message : Suggested Code fix: Consider replacing the expression (sv52 (13665) + 1) < aIndex.Length with an equivalent, yet not overflowing expression. Fix: sv52 (13665) < (aIndex.Length - 1)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetValue(System.Object,System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)[0x0]: message : Suggested Code fix: Consider replacing the expression (sv52 (13665) + 1) < aIndex.Length with an equivalent, yet not overflowing expression. Fix: sv52 (13665) < (aIndex.Length - 1)
+Method 167 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetAccessors(System.Boolean)
+Method 168 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetGetMethod(System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetGetMethod(System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MethodInfo>() == this.m_pGetMethod);
+Method 169 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetSetMethod(System.Boolean)
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetSetMethod(System.Boolean)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.MethodInfo>() == this.m_pSetMethod);
+Method 170 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.GetIndexParameters()
+Method 171 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Attributes
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Attributes[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Reflection.PropertyAttributes>() == ((System.Reflection.PropertyAttributes)(0)));
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_Attributes[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 172 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_CanRead
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_CanRead[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 173 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_CanWrite
+System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.get_CanWrite[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pOwner != null);
+Method 174 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.GetUnderlyingObject()
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.GetUnderlyingObject()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object>() == this.m_pMngEnumerator);
+Method 175 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.#ctor(System.Object)
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(this.m_bFetchedLastObj == false);
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(pEnumVariantObj == this.m_pEnumVariantObj);
+Method 176 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalNativeToManaged(System.IntPtr)
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalNativeToManaged(System.IntPtr)[0x2a]: warning : Possibly calling a method on a null reference 'local0'
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalNativeToManaged(System.IntPtr)[0x2f]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalNativeToManaged(System.IntPtr)[0x23]: message : Suggested Code fix: This condition should hold: local0 != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(local0 != null);
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalNativeToManaged(System.IntPtr)[0x2a]: message : Suggested Code fix: This condition should hold: (local0.GetType()) != null. Add an assume, a postcondition to method System.Object.GetType(), or consider a different initialization. Fix: Add Contract.Assume((local0.GetType()) != null);
+Method 177 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.#ctor(System.Object)
+Method 178 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.MarshalManagedToNative(System.Object)
+Method 179 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.CleanUpNativeData(System.IntPtr)
+Method 180 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.CleanUpManagedData(System.Object)
+Method 181 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetNativeDataSize()
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -1);
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -(1));
+Method 182 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.#ctor()
+Method 183 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetInstance(System.String)
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() == System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.m_pMarshaler);
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() != null);
+Method 184 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorToEnumVariantMarshaler..cctor()
+Method 185 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.GetUnderlyingObject()
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.GetUnderlyingObject()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object>() == this.m_pEnumVariantObj);
+Method 186 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.GetEnumVariant()
+Method 187 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.MoveNext()
+Method 188 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.get_Current
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.get_Current[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object>() == this.m_pCurrObj);
+Method 189 : System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.Reset()
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.Reset()[0x0]: message : Suggested ensures: Contract.Ensures(this.m_bFetchedLastObj == false);
+System.Runtime.InteropServices.CustomMarshalers.EnumeratorViewOfEnumVariant.Reset()[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pCurrObj == null);
+Method 190 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.GetInterface(System.Guid@,System.IntPtr@)
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.GetInterface(System.Guid@,System.IntPtr@)[0x0]: message : Suggested ensures: Contract.Ensures(((System.Runtime.InteropServices.CustomQueryInterfaceResult)(1)) <= Contract.Result<System.Runtime.InteropServices.CustomQueryInterfaceResult>());
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.GetInterface(System.Guid@,System.IntPtr@)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.CustomQueryInterfaceResult>() <= ((System.Runtime.InteropServices.CustomQueryInterfaceResult)(2)));
+Method 191 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x2e]: warning : Array access might be above the upper bound
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x1a]: warning : Possibly calling a method on a null reference 'this.m_pMngEnumerator'
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x0]: message : Suggested assume: Contract.Assume(((rgvar == null || 0 >= celt) || this.m_pMngEnumerator != null));
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x0]: message : Suggested ensures: Contract.Ensures(-2147024809 <= Contract.Result<System.Int32>());
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 1);
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Next(System.Int32,System.Object[],System.IntPtr)[0x0]: message : Suggested Code fix: Consider strengthening the guard. Fix: Add && local0 < rgvar.Length
+Method 192 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Skip(System.Int32)
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Skip(System.Int32)[0xc]: warning : Possibly calling a method on a null reference 'this.m_pMngEnumerator'
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Skip(System.Int32)[0x0]: message : Suggested assume: Contract.Assume((0 >= celt || this.m_pMngEnumerator != null));
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Skip(System.Int32)[0x0]: message : Suggested ensures: Contract.Ensures(0 <= Contract.Result<System.Int32>());
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Skip(System.Int32)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() <= 1);
+Method 193 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Reset()
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Reset()[0x0]: message : Suggested assume: Contract.Assume(this.m_pMngEnumerator != null);
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Reset()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == 0);
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Reset()[0x0]: message : Suggested ensures: Contract.Ensures(this.m_pMngEnumerator != null);
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Reset()[0x0]: message : Suggested invariant: Contract.Invariant(this.m_pMngEnumerator != null);
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.#ctor(System.Object)[0x12]: warning : invariant unproven
+Method 194 : System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Clone()
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Clone()[0x10]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Clone()[0x37]: warning : Possibly calling a method on a null reference
+System.Runtime.InteropServices.CustomMarshalers.EnumVariantViewOfEnumerator.Clone()[0x5]: message : Suggested Code fix: The value returned by System.Type.GetTypeFromHandle(System.RuntimeTypeHandle) should be non-null. Consider adding a postcondition or an assumption. Fix: <none>
+Method 195 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.MarshalNativeToManaged(System.IntPtr)
+Method 196 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.MarshalManagedToNative(System.Object)
+Method 197 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.CleanUpNativeData(System.IntPtr)
+Method 198 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.CleanUpManagedData(System.Object)
+Method 199 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetNativeDataSize()
+System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -1);
+System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -(1));
+Method 200 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.#ctor()
+Method 201 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetInstance(System.String)
+System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() == System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.m_pMarshaler);
+System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() != null);
+Method 202 : System.Runtime.InteropServices.CustomMarshalers.TypeToTypeInfoMarshaler..cctor()
+Method 203 : System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.#ctor(System.Object)
+System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.#ctor(System.Object)[0x0]: message : Suggested ensures: Contract.Ensures(pDispObj == this.m_pDispObj);
+Method 204 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.MarshalNativeToManaged(System.IntPtr)
+Method 205 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.MarshalManagedToNative(System.Object)
+Method 206 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.CleanUpNativeData(System.IntPtr)
+Method 207 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.CleanUpManagedData(System.Object)
+Method 208 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetNativeDataSize()
+System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -1);
+System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetNativeDataSize()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Int32>() == -(1));
+Method 209 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.#ctor()
+Method 210 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetInstance(System.String)
+System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() == System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.m_pMarshaler);
+System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler.GetInstance(System.String)[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Runtime.InteropServices.ICustomMarshaler>() != null);
+Method 211 : System.Runtime.InteropServices.CustomMarshalers.EnumerableToDispatchMarshaler..cctor()
+Method 212 : System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetDispatch()
+System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetDispatch()[0x0]: message : Suggested ensures: Contract.Ensures(-9223372036854775808 <= Contract.Result<IDispatch*>());
+System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetDispatch()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<IDispatch*>() <= 9223372036854775807);
+Method 213 : System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetEnumerator()
+Method 214 : System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetUnderlyingObject()
+System.Runtime.InteropServices.CustomMarshalers.EnumerableViewOfDispatch.GetUnderlyingObject()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<System.Object>() == this.m_pDispObj);
+Method 215 : <CrtImplementationDetails>.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+Method 216 : <CrtImplementationDetails>.Exception.#ctor(System.String,System.Exception)
+Method 217 : <CrtImplementationDetails>.Exception.#ctor(System.String)
+Method 218 : System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetUnknown()
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetUnknown()[0x0]: message : Suggested ensures: Contract.Ensures(-9223372036854775808 <= Contract.Result<IUnknown*>());
+System.Runtime.InteropServices.CustomMarshalers.ExpandoViewOfDispatchEx.GetUnknown()[0x0]: message : Suggested ensures: Contract.Ensures(Contract.Result<IUnknown*>() <= 9223372036854775807);
+Method 219 : <Module>.<CrtImplementationDetails>.AtExitLock.AddRef()
+<Module>.<CrtImplementationDetails>.AtExitLock.AddRef()[0x0]: message : Suggested ensures: Contract.Ensures(-2147483647 <= <Module>.?_ref_count@AtExitLock@<CrtImplementationDetails>@@$$Q0HA);
+Method 221 : <Module>.?A0x65cc9423.__alloc_global_lock()
+<Module>.?A0x65cc9423.__alloc_global_lock()[0x0]: message : Suggested ensures: Contract.Ensures(-2147483647 <= <Module>.?_ref_count@AtExitLock@<CrtImplementationDetails>@@$$Q0HA);
+Method 223 : <CrtImplementationDetails>.ModuleUninitializer.#ctor()
+<CrtImplementationDetails>.ModuleUninitializer.#ctor()[0x19]: warning : Possibly calling a method on a null reference 'System.AppDomain.CurrentDomain'
+<CrtImplementationDetails>.ModuleUninitializer.#ctor()[0x13]: message : Suggested Code fix: This condition should hold: System.AppDomain.CurrentDomain != null. Add an assume, a postcondition, or consider a different initialization. Fix: Add Contract.Assume(System.AppDomain.CurrentDomain != null);
+Method 224 : System.Runtime.InteropServices.CustomMarshalers.DispatchExPropertyInfo.SetSetMethod(System.Reflection.MethodInfo)
+Method 226 : <CrtImplementationDetails>.OpenMPWithMultipleAppdomainsException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+Method 227 : <CrtImplementationDetails>.OpenMPWithMultipleAppdomainsException.#ctor()
+Validated: 90.9%
+Contract density: 0.22
+Total methods analyzed 215
+Methods with 0 warnings 194
+Total time 11.028sec. 51ms/method
+Detected 9 assume to suggest
+Methods with necessary preconditions: 4
+Discovered 24 new candidate preconditions in 00:00:00.7530753
+Retained 5 preconditions after filtering
+Inferred 5 object invariants
+Retained 5 object invariants after filtering
+Discovered 143 postconditions to suggest
+Retained 143 postconditions after filtering
+Detected 30 code fixes
+Proof obligations with a code fix: 35
+CustomMarshalers.dll : Checked 474 assertions: 431 correct 41 unknown 2 unreached 

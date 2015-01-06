@@ -1,0 +1,1861 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Build.Utilities.v4.0</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Build.Utilities.AppDomainIsolatedTask">
+      <summary>Provides the same functionality as <see cref="T:Microsoft.Build.Utilities.Task" />, but also derives from <see cref="T:System.MarshalByRefObject" /> so that it can be instantiated in its own app domain.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor(System.Resources.ResourceManager)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" /> class and allows derived <see cref="T:Microsoft.Build.Utilities.Task" /> classes to register their resources.</summary>
+      <param name="taskResources">The task resources.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.AppDomainIsolatedTask" /> class and allows derived <see cref="T:Microsoft.Build.Utilities.Task" /> classes to register their resources, as well as provide a prefix for composing help keywords from string resource names.</summary>
+      <param name="taskResources">The task resources.</param>
+      <param name="helpKeywordPrefix">The Help keyword prefix.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.BuildEngine">
+      <summary>Gets or sets the build engine interface that is available to tasks.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> that is available to tasks.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.Execute">
+      <summary>Runs the task.</summary>
+      <returns>true if successful; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.HelpKeywordPrefix">
+      <summary>Gets or sets the prefix that is used to compose Help keywords from string resource names.</summary>
+      <returns>A <see cref="T:System.String" /> that is used to compose Help keywords. This value can be null.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.HostObject">
+      <summary>Gets or sets a host object instance that is associated with the derived <see cref="T:Microsoft.Build.Utilities.Task" />.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.ITaskHost" /> host object instance that is associated with the derived <see cref="T:Microsoft.Build.Utilities.Task" />. This value can be null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.AppDomainIsolatedTask.InitializeLifetimeService">
+      <summary>When overridden in a derived class, gives tasks infinite lease time.</summary>
+      <returns>null to specify an infinite lifetime.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.Log">
+      <summary>Gets an instance of a task logging helper object that contains task logging methods.</summary>
+      <returns>A <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" /> that contains task logging methods.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.AppDomainIsolatedTask.TaskResources">
+      <summary>Gets or sets culture-specific resources of the derived <see cref="T:Microsoft.Build.Utilities.Task" />.</summary>
+      <returns>A <see cref="T:System.Resources.ResourceManager" /> that is a culture-specific resource of the derived <see cref="T:Microsoft.Build.Utilities.Task" />. This value can be null.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.CanonicalTrackedInputFiles">
+      <summary>This class is the filetracking log interpreter for .read. tracking logs in canonical form or those that have been rooted (^) to make them canonical</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Constructor for a single input source file</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The .read. tlog files to interpret</param>
+      <param name="sourceFile">The primary source file to interpret dependencies for</param>
+      <param name="excludedInputPaths">The set of paths that contain files that are to be ignored during up to date check</param>
+      <param name="outputs">The output files produced by compiling this source</param>
+      <param name="useMinimalRebuildOptimization">WARNING: Minimal rebuild optimization requires 100% accurate computed outputs to be specified!</param>
+      <param name="maintainCompositeRootingMarkers">True to keep composite rooting markers around (many-to-one case) or false to shred them (one-to-one or one-to-many case)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.Boolean,System.Boolean)">
+      <summary>Constructor for multiple input source files</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The .read. tlog files to interpret</param>
+      <param name="sourceFiles">The primary source files to interpret dependencies for</param>
+      <param name="excludedInputPaths">The set of paths that contain files that are to be ignored during up to date check</param>
+      <param name="outputs">The output files produced by compiling this set of sources</param>
+      <param name="useMinimalRebuildOptimization">WARNING: Minimal rebuild optimization requires 100% accurate computed outputs to be specified!</param>
+      <param name="maintainCompositeRootingMarkers">True to keep composite rooting markers around (many-to-one case) or false to shred them (one-to-one or one-to-many case)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Constructor for multiple input source files</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The .read. tlog files to interpret</param>
+      <param name="sourceFiles">The primary source files to interpret dependencies for</param>
+      <param name="excludedInputPaths">The set of paths that contain files that are to be ignored during up to date check</param>
+      <param name="outputs">The output files produced by compiling this set of sources</param>
+      <param name="useMinimalRebuildOptimization">WARNING: Minimal rebuild optimization requires 100% accurate computed outputs to be specified!</param>
+      <param name="maintainCompositeRootingMarkers">True to keep composite rooting markers around (many-to-one case) or false to shred them (one-to-one or one-to-many case)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Constructor for multiple input source files</summary>
+      <param name="tlogFiles">The .read. tlog files to interpret</param>
+      <param name="sourceFiles">The primary source files to interpret dependencies for</param>
+      <param name="excludedInputPaths">The set of paths that contain files that are to be ignored during up to date check</param>
+      <param name="outputs">The output files produced by compiling this set of sources</param>
+      <param name="useMinimalRebuildOptimization">WARNING: Minimal rebuild optimization requires 100% accurate computed outputs to be specified!</param>
+      <param name="maintainCompositeRootingMarkers">True to keep composite rooting markers around (many-to-one case) or false to shred them (one-to-one or one-to-many case)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Utilities.CanonicalTrackedOutputFiles,System.Boolean,System.Boolean)">
+      <summary>Constructor for multiple input source files</summary>
+      <param name="tlogFiles">The .read. tlog files to interpret</param>
+      <param name="sourceFiles">The primary source files to interpret dependencies for</param>
+      <param name="outputs">The output files produced by compiling this set of sources</param>
+      <param name="useMinimalRebuildOptimization">WARNING: Minimal rebuild optimization requires 100% accurate computed outputs to be specified!</param>
+      <param name="maintainCompositeRootingMarkers">True to keep composite rooting markers around (many-to-one case) or false to shred them (one-to-one or one-to-many case)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.ComputeSourcesNeedingCompilation">
+      <summary>This method computes the sources that need to be compiled based on the output files and the full dependency graph of inputs</summary>
+      <returns>Array of files that need to be compiled</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.ComputeSourcesNeedingCompilation(System.Boolean)">
+      <summary>This method computes the sources that need to be compiled based on the output files and the full dependency graph of inputs, optionally searching composite rooting markers for subroots that may contain input files</summary>
+      <returns>Array of files that need to be compiled</returns>
+      <param name="searchForSubRootsInCompositeRootingMarkers">If true, search composite rooting markers for subroots.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.DependencyTable">
+      <summary>Gets the dependency table.</summary>
+      <returns>Returns the dependency table.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.FileIsExcludedFromDependencyCheck(System.String)">
+      <summary>Test to see if the specified file is excluded from tracked dependency checking</summary>
+      <returns>Returns true of the file is excluded.</returns>
+      <param name="fileName">Full path of the file to test</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+      <param name="correspondingOutput">Outputs that correspond ot the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+      <param name="correspondingOutputs">Outputs that correspond ot the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given source and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+      <param name="dependencyToRemove">The dependency to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="sources">Sources that should be removed from the graph</param>
+      <param name="dependencyToRemove">The dependency to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Removes the output graph entries for the given sources and corresponding outputs.</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.RemoveEntryForSourceRoot(System.String)">
+      <summary>Removes the entry in the input dependency graph corresponding to a rooting.</summary>
+      <param name="rootingMarker">The root to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.SaveTlog">
+      <summary>This method will re-write the tlogs from the current output table new entries will be tracked.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedInputFiles.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>This method will re-write the tlogs from the current dependency. As the sources are compiled, new entries willbe tracked.</summary>
+      <param name="includeInTLog">Delegate used to determine whether a particular file should be included in the compacted tlog.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles">
+      <summary>This class is the file tracking log interpreter for .write. tracking logs in canonical form Canoncial .write. logs need to be rooted, since the outputs need to be associated with an input.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Constructor</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Constructor</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+      <param name="constructOutputsFromTLogs">If true, construct outputs from tlog files.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.#ctor(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Constructor</summary>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputForSourceRoot(System.String,System.String)">
+      <summary>This method adds computed outputs for the given source key to the output graph</summary>
+      <param name="sourceKey">The source to add outputs for</param>
+      <param name="computedOutput">The computed outputs for this source key.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputsForSourceRoot(System.String,Microsoft.Build.Framework.ITaskItem[])">
+      <summary>This method adds computed outputs for the given source key to the output graph</summary>
+      <param name="sourceKey">The source to add outputs for</param>
+      <param name="computedOutputs">The computed outputs for this source key.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.AddComputedOutputsForSourceRoot(System.String,System.String[])">
+      <summary>This method adds computed outputs for the given source key to the output graph</summary>
+      <param name="sourceKey">The source to add outputs for</param>
+      <param name="computedOutputs">The computed outputs for this source key</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.DependencyTable">
+      <summary>Gets the dependency table.</summary>
+      <returns>Returns the dependency table.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.OutputsForNonCompositeSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>This method determines the outputs for a source root (as in the contents of a rooting marker)</summary>
+      <returns>Array of outputs for the source</returns>
+      <param name="sources">The sources to find outputs for</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.OutputsForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>This method determines the outputs for a source root (as in the contents of a rooting marker)</summary>
+      <returns>Array of outputs for the source</returns>
+      <param name="sources">The sources to find outputs for</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+      <param name="correspondingOutput">Outputs that correspond to the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependenciesFromEntryIfMissing(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+      <param name="correspondingOutputs">Outputs that correspond to the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given source and corresponding outputs</summary>
+      <param name="source">Source that should be removed from the graph</param>
+      <param name="dependencyToRemove">The dependency to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveDependencyFromEntry(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="sources">Sources that should be removed from the graph</param>
+      <param name="dependencyToRemove">The dependency to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+      <param name="correspondingOutput">Outputs that correspond to the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveEntriesForSource(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Remove the output graph entries for the given sources and corresponding outputs</summary>
+      <param name="source">Sources that should be removed from the graph</param>
+      <param name="correspondingOutputs">Outputs that correspond ot the sources (used for same file processing)</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveOutputForSourceRoot(System.String,System.String)">
+      <summary>Remove the specified output from the dependency graph for the given source file</summary>
+      <returns>Returns true of the output path was removed.</returns>
+      <param name="sourceRoot">The source root.</param>
+      <param name="outputPathToRemove">The output path to be removed</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.RemoveRootsWithSharedOutputs(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Removes any roots that share the same outputs as the rooting from the dependency graph.</summary>
+      <returns>An array of the rooting markers that were removed.</returns>
+      <param name="sources">The set of sources that form the rooting markers to be removed.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.SaveTlog">
+      <summary>This method will re-write the tlogs from the current output table. New entries will be tracked.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CanonicalTrackedOutputFiles.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>This method will re-write the tlogs from the current output table. New entries will be tracked.</summary>
+      <param name="includeInTLog">The dependency filter.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.CommandLineBuilder">
+      <summary>Comprises utility methods for constructing a command line.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.CommandLineBuilder" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.#ctor(System.Boolean)">
+      <summary>Default constructor</summary>
+      <param name="quoteHyphensOnCommandLine">If true, hyphens should be quoted.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendFileNameIfNotNull(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Appends the command line with the file name of the specified <see cref="T:Microsoft.Build.Framework.ITaskItem" /> object.</summary>
+      <param name="fileItem">The task item specification to append to the command line. If it is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendFileNameIfNotNull(System.String)">
+      <summary>Appends the command line with file name represented by the parameter, inserting quotation marks if necessary.</summary>
+      <param name="fileName">The file name to append. If it is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendFileNamesIfNotNull(Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Appends the command line with the list of file names in the specified <see cref="T:Microsoft.Build.Framework.ITaskItem" /> array, separated by the specified delimiter.</summary>
+      <param name="fileItems">The task item specifications to append. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter to put between task item specifications in the command line.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendFileNamesIfNotNull(System.String[],System.String)">
+      <summary>Appends the command line with the list of file names in the specified string array, separated by the specified delimiter.</summary>
+      <param name="fileNames">The file names to append. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter to put between file names in the command line.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendFileNameWithQuoting(System.String)">
+      <summary>Appends the command line with a file name, and surrounds the file name with quotation marks as necessary.</summary>
+      <param name="fileName">The file name to append.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendQuotedTextToBuffer(System.Text.StringBuilder,System.String)">
+      <summary>Appends given text to the buffer after first quoting the text if necessary.</summary>
+      <param name="buffer">The buffer to append to.</param>
+      <param name="unquotedTextToAppend">The text to be quoted.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSpaceIfNotEmpty">
+      <summary>Adds a space to the specified string, given the string is not empty.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitch(System.String)">
+      <summary>Appends the command line with the specified switch.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Appends the command line with a switch that takes a task item specification that acts a single string parameter.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameter">The switch parameter to append to the command line. Quotation marks will be added as necessary. If this value is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Appends the command line with a switch that takes an array of task item specifications that act as string parameters.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will be added as necessary. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchIfNotNull(System.String,System.String)">
+      <summary>Appends the command line with a switch that takes a single string parameter.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameter">The switch parameter to append to the command line. Quotation marks will be added as necessary. If this value is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchIfNotNull(System.String,System.String[],System.String)">
+      <summary>Appends the command line with a switch that takes an array of string parameters.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will be added as necessary. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchUnquotedIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Appends the command line with a switch that takes a task item specification as a single string parameter, without attempting to encapsulate the switch parameter with quotation marks.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameter">The switch parameter to append to the command line. Quotation marks will not be added. If this value is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchUnquotedIfNotNull(System.String,Microsoft.Build.Framework.ITaskItem[],System.String)">
+      <summary>Appends the command line with a switch that takes an array of task item specifications that act as string parameters, without attempting to encapsulate them with quotation marks.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will not be added. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchUnquotedIfNotNull(System.String,System.String)">
+      <summary>Appends the command line with a switch that takes a single string parameter, without attempting to encapsulate the switch parameter with quotation marks.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameter">The switch parameter to append to the command line. Quotation marks will not be added. If this value is null, then this method has no effect.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendSwitchUnquotedIfNotNull(System.String,System.String[],System.String)">
+      <summary>Appends the command line with a switch that takes an array of string parameters, without attempting to encapsulate switch parameters with quotation marks.</summary>
+      <param name="switchName">The name of the switch to append to the command line. This value cannot be null.</param>
+      <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will not be added. If the array is null, then this method has no effect.</param>
+      <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendTextUnquoted(System.String)">
+      <summary>Appends the command line with string, without attempting to encapsulate the string with quotation marks.</summary>
+      <param name="textToAppend">The string to append to the command line.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.AppendTextWithQuoting(System.String)">
+      <summary>Appends the command line with string, and surrounds the string with quotations marks as necessary.</summary>
+      <param name="textToAppend">The string to append to the command line.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CommandLineBuilder.CommandLine">
+      <summary>Gets the <see cref="T:System.Text.StringBuilder" /> instance representing the command line for inheriting classes.</summary>
+      <returns>A <see cref="T:System.Text.StringBuilder" /> for inheriting classes.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.IsQuotingRequired(System.String)">
+      <summary>Determines whether the specified string parameter should be surrounded with quotation marks because it contains white space.</summary>
+      <returns>true, if the switch parameter should be surrounded with quotation marks; otherwise, false.</returns>
+      <param name="parameter">The string to examine for characters that require quotation marks.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.CommandLineBuilder.Length">
+      <summary>Represents the length of the command line.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.ToString">
+      <summary>Returns the command line as a string.</summary>
+      <returns>A <see cref="T:System.String" /> that represents the command line.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.CommandLineBuilder.VerifyThrowNoEmbeddedDoubleQuotes(System.String,System.String)">
+      <summary>Returns an error if the command line parameter contains a double-quote (") character. Because double quotes are illegal in command line parameters, this method helps prevent parameter injection attacks.</summary>
+      <param name="switchName">A string representing the switch name for the error message.</param>
+      <param name="parameter">A string representing the switch parameter to scan for double-quotes.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.DependencyFilter">
+      <summary>Dependency filter delegate. Used during TLog saves in order for tasks to selectively remove dependencies from the written graph.</summary>
+      <returns>If the file should actually be written to the TLog (true) or not (false)</returns>
+      <param name="fullPath">The full path to the dependency file about to be written to the compacted TLog</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.DotNetFrameworkArchitecture">
+      <summary>Used to specify the targeted bitness of the .NET Framework for some methods of ToolLocationHelper</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Current">
+      <summary>Indicates the .NET Framework that is currently being run under.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Bitness32">
+      <summary>Indicates the 32-bit .NET Framework</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.DotNetFrameworkArchitecture.Bitness64">
+      <summary>Indicates the 64-bit .NET Framework</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ExecutableType">
+      <summary>Enumeration to express the type of executable being wrapped by Tracker.exe</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Native32Bit">
+      <summary>32-bit native executable</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Native64Bit">
+      <summary>64-bit native executable</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.ManagedIL">
+      <summary>A managed executable without a specified bitness</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Managed32Bit">
+      <summary>A managed executable specifically marked as 32-bit</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.Managed64Bit">
+      <summary>A managed executable specifically marked as 64-bit</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ExecutableType.SameAsCurrentProcess">
+      <summary>Use the same bitness as the currently running executable.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.FileTracker">
+      <summary>This class contains utility functions to encapsulate launching and logging for the Tracker</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.CreateRootingMarkerResponseFile(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Given a set of source files in the form of ITaskItem, creates a temporary response file containing the rooting marker that corresponds to those sources.</summary>
+      <returns>The response file path.</returns>
+      <param name="sources">The set of source files.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.CreateRootingMarkerResponseFile(System.String)">
+      <summary>Given a rooting marker, creates a temporary response file with that rooting marker in it.</summary>
+      <returns>The response file path.</returns>
+      <param name="rootMarker">The rooting marker to put in the response file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EndTrackingContext">
+      <summary>Stops tracking file accesses.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EnsureFileTrackerOnPath">
+      <summary>Prepends the path to the appropriate FileTracker assembly to the PATH environment variable. Used for inproc tracking.</summary>
+      <returns>The old value of the PATH environment variable.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.EnsureFileTrackerOnPath(System.String)">
+      <summary>Prepends the path to the appropriate FileTracker assembly to the PATH environment variable. Used for inproc tracking, or when the .NET Framework may not be on the PATH.</summary>
+      <returns>The old value of PATH</returns>
+      <param name="rootPath">The root path for FileTracker.dll. Overrides the toolType if specified.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FileIsExcludedFromDependencies(System.String)">
+      <summary>Test to see if the specified file is excluded from tracked dependencies</summary>
+      <returns>Returns true if the file is excluded.</returns>
+      <param name="fileName">Full path of the file to test</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FileIsUnderPath(System.String,System.String)">
+      <summary>Test to see if the specified file is under the specified path</summary>
+      <returns>Returns true if the file is under the path.</returns>
+      <param name="fileName">Full path of the file to test</param>
+      <param name="path">The path that might contain the file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FindTrackerOnPath">
+      <summary>Searches %PATH% for the location of Tracker.exe, and returns the first path that matches.Matching full path to Tracker.exe or null if a matching path is not found.</summary>
+      <returns>Returns the path to Tracker.exe.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ForceOutOfProcTracking(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Determines whether we must track out-of-proc, or whether inproc tracking will work.</summary>
+      <returns>True if we need to track out-of-proc, false if inproc tracking is OK</returns>
+      <param name="toolType">The executable type for the tool being tracked</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ForceOutOfProcTracking(Microsoft.Build.Utilities.ExecutableType,System.String,System.String)">
+      <summary>Determines whether we must track out-of-proc, or whether inproc tracking will work.</summary>
+      <returns>True if we need to track out-of-proc, false if inproc tracking is OK</returns>
+      <param name="toolType">The executable type for the tool being tracked</param>
+      <param name="dllName">The tool being tracked.</param>
+      <param name="cancelEventName">The name of the cancel event tracker should listen for, or null if there isn't one</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Construct a rooting marker string from the ITaskItem array of primary sources.</summary>
+      <returns>Returns the marker string.</returns>
+      <param name="source">The primary sources.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem,Microsoft.Build.Framework.ITaskItem)">
+      <summary>Construct a rooting marker string from the ITaskItem array of primary sources.</summary>
+      <returns>Returns the marker string.</returns>
+      <param name="source">The primary sources.</param>
+      <param name="output">The output files.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Construct a rooting marker string from the ITaskItem array of primary sources.</summary>
+      <returns>Returns the marker string.</returns>
+      <param name="sources">ITaskItem array of primary sources.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.FormatRootingMarker(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Construct a rooting marker string from the ITaskItem array of primary sources.</summary>
+      <returns>Returns the marker string.</returns>
+      <param name="sources">ITaskItem array of primary sources.</param>
+      <param name="outputs">The output files.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetFileTrackerPath(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Given the ExecutableType of the tool being wrapped and information that we know about our current bitness, figures out and returns the path to the correct FileTracker.dll.</summary>
+      <returns>Returns the path of the tool.</returns>
+      <param name="toolType">The ExecutableType of the tool being wrapped.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetFileTrackerPath(Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>Given the ExecutableType of the tool being wrapped and information that we know about our current bitness, figures out and returns the path to the correct FileTracker.dll.</summary>
+      <returns>Returns <see cref="T:System.String" />.</returns>
+      <param name="toolType">The toolType.</param>
+      <param name="rootPath">The root path for FileTracker.dll. Overrides the toolType if specified.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetTrackerPath(Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Given the ExecutableType of the tool being wrapped and information that we know about our current bitness, figures out and returns the path to the correct Tracker.exe.</summary>
+      <returns>Returns the tracker path.</returns>
+      <param name="toolType">The ExecutableType of the tool being wrapped.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.GetTrackerPath(Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>Given the ExecutableType of the tool being wrapped and information that we know about our current bitness, figures out and returns the path to the correct Tracker.exe.</summary>
+      <returns>Returns <see cref="T:System.String" />.</returns>
+      <param name="toolType">The toolType.</param>
+      <param name="rootPath">The root path for Tracker.exe. Overrides the toolType if specified.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.ResumeTracking">
+      <summary>Resume tracking file accesses in the current tracking context.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.SetThreadCount(System.Int32)">
+      <summary>Set the global thread count, and assign that count to the current thread.</summary>
+      <param name="threadCount">The thread count.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType)">
+      <summary>Start the process; tracking the command.</summary>
+      <returns>Returns the process instance.</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="toolType">The type of executable the wrapped tool is</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String)">
+      <summary>Start the process; tracking the command.</summary>
+      <returns>Returns the process instance.</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="toolType">The type of executable the wrapped tool is</param>
+      <param name="rootFiles">Rooting marker</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String)">
+      <summary>Start the process; tracking the command.</summary>
+      <returns>Returns the process instance</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="toolType">The type of executable the wrapped tool is</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String,System.String)">
+      <summary>Start the process; tracking the command.</summary>
+      <returns>Process instance</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="toolType">The type of executable the wrapped tool is</param>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartProcess(System.String,System.String,Microsoft.Build.Utilities.ExecutableType,System.String,System.String,System.String,System.String)">
+      <summary>Start the process; tracking the command.</summary>
+      <returns>Process instance</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="toolType">The type of executable the wrapped tool is</param>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+      <param name="cancelEventName">If Tracker should be listening on a particular event for cancellation, pass its name here</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartTrackingContext(System.String,System.String)">
+      <summary>Starts tracking file accesses.</summary>
+      <param name="intermediateDirectory">The directory into which to write the tracking log files</param>
+      <param name="taskName">The name of the task calling this function, used to determine the names of the tracking log files</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StartTrackingContextWithRoot(System.String,System.String,System.String)">
+      <summary>Starts tracking file accesses, using the rooting marker in the response file provided. To automatically generate a response file given a rooting marker, call FileTracker.CreateRootingMarkerResponseFile.</summary>
+      <param name="intermediateDirectory">The directory into which to write the tracking log files</param>
+      <param name="taskName">The name of the task calling this function, used to determine the names of the tracking log files</param>
+      <param name="rootMarkerResponseFile">The rooting marker in the response file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.StopTrackingAndCleanup">
+      <summary>Stop tracking file accesses and get rid of the current tracking contexts.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.SuspendTracking">
+      <summary>Temporarily suspend tracking of file accesses in the current tracking context.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerArguments(System.String,System.String,System.String,System.String,System.String)">
+      <summary>This method constructs the correct Tracker.exe arguments from its parameters</summary>
+      <returns>The arguments as a string</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerArguments(System.String,System.String,System.String,System.String,System.String,System.String)">
+      <summary>This method constructs the correct Tracker.exe arguments from its parameters</summary>
+      <returns>The arguments as a string</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+      <param name="cancelEventName">If a cancel event has been created that Tracker should be listening for, its name is passed here</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerCommandArguments(System.String,System.String)">
+      <summary>This method constructs the correct Tracker.exe command arguments from its parameters</summary>
+      <returns>The arguments as a string</returns>
+      <param name="command">The command to track</param>
+      <param name="arguments">The command to track's arguments</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerResponseFileArguments(System.String,System.String,System.String)">
+      <summary>This method constructs the correct Tracker.exe response file arguments from its parameters</summary>
+      <returns>The arguments as a string</returns>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.TrackerResponseFileArguments(System.String,System.String,System.String,System.String)">
+      <summary>This method constructs the correct Tracker.exe response file arguments from its parameters</summary>
+      <returns>The arguments as a string</returns>
+      <param name="dllName">The name of the dll that will do the tracking</param>
+      <param name="intermediateDirectory">Intermediate directory where tracking logs will be written</param>
+      <param name="rootFiles">Rooting marker</param>
+      <param name="cancelEventName">If a cancel event has been created that Tracker should be listening for, its name is passed here</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.WriteAllTLogs(System.String,System.String)">
+      <summary>Write tracking logs for all contexts and threads.</summary>
+      <param name="intermediateDirectory">The directory into which to write the tracking log files</param>
+      <param name="taskName">The name of the task calling this function, used to determine the names of the tracking log files</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FileTracker.WriteContextTLogs(System.String,System.String)">
+      <summary>Write tracking logs corresponding to the current tracking context.</summary>
+      <param name="intermediateDirectory">The directory into which to write the tracking log files</param>
+      <param name="taskName">The name of the task calling this function, used to determine the names of the tracking log files</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.FlatTrackingData">
+      <summary>This class is used to track file dependencies during a build.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Constructor</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The tlog files to interpret</param>
+      <param name="skipMissingFiles">Ignore files that do not exist on disk</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITask,Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Constructor</summary>
+      <param name="ownerTask">The task that is using file tracker</param>
+      <param name="tlogFiles">The tlog files to interpret</param>
+      <param name="missingFileTimeUtc">The DateTime that should be recorded for missing file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Constructor</summary>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+      <param name="tlogFilesToIgnore">The TLogs to ignore.</param>
+      <param name="missingFileTimeUtc">The DateTime that should be recorded for missing file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],System.DateTime,System.String[],System.Collections.Generic.IDictionary{System.String,System.DateTime})">
+      <summary>Constructor</summary>
+      <param name="tlogFiles">The .tlog files to interpret</param>
+      <param name="tlogFilesToIgnore">The .tlog files to ignore</param>
+      <param name="missingFileTimeUtc">The date and time that should be recorded for missing file.</param>
+      <param name="excludedInputPaths">The set of paths that contain files to be ignored, including any subdirectories.</param>
+      <param name="sharedLastWriteTimeUtcCache">Cache to be used which can be shared between multiple FlatTrackingData instances.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],System.Boolean)">
+      <summary>Constructor</summary>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+      <param name="skipMissingFiles">Ignore files that do not exist on disk</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.#ctor(Microsoft.Build.Framework.ITaskItem[],System.DateTime)">
+      <summary>Constructor</summary>
+      <param name="tlogFiles">The .write. tlog files to interpret</param>
+      <param name="missingFileTimeUtc">The DateTime that should be recorded for missing file.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.DependencyTable">
+      <summary>Gets the dependency table.</summary>
+      <returns>Returns the dependency table.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.FileIsExcludedFromDependencyCheck(System.String)">
+      <summary>Returns true if the specified file is excluded from tracked dependency checking.</summary>
+      <returns>true if the file is excluded.</returns>
+      <param name="fileName">Name of the file to test.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.FinalizeTLogs(System.Boolean,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Compact and finalize the Tlogs based on the success of the tracked execution. </summary>
+      <param name="trackedOperationsSucceeded">True indicates that tracked operations succeeded.</param>
+      <param name="readTLogNames">TLogs to be read.</param>
+      <param name="writeTLogNames">TLogs to be written.</param>
+      <param name="trackedFilesToRemoveFromTLogs">Tracked files to be removed from TLogs.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.GetLastWriteTimeUtc(System.String)">
+      <summary>Returns cached value for last write time of file. Updates the cache the first            time the file is checked.</summary>
+      <returns>the last write time of the file.</returns>
+      <param name="file">Name of the file</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.IsUpToDate(Microsoft.Build.Utilities.Task,Microsoft.Build.Utilities.UpToDateCheckType,Microsoft.Build.Framework.ITaskItem[],Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Checks to see if the tracking data indicates that everything is up to date according to UpToDateCheckType.</summary>
+      <returns>Returns true if everything is up to date; false otherwise.</returns>
+      <param name="hostTask">The host task.</param>
+      <param name="upToDateCheckType">UpToDateCheckType</param>
+      <param name="readTLogNames">The array of read tlogs</param>
+      <param name="writeTLogNames">The array of write tlogs</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.IsUpToDate(Microsoft.Build.Utilities.TaskLoggingHelper,Microsoft.Build.Utilities.UpToDateCheckType,Microsoft.Build.Utilities.FlatTrackingData,Microsoft.Build.Utilities.FlatTrackingData)">
+      <summary>Simple check of up to date state according to the tracking data and the UpToDateCheckType.</summary>
+      <returns>Returns true if everything is up to date; false otherwise.</returns>
+      <param name="Log">TaskLoggingHelper from the host task</param>
+      <param name="upToDateCheckType">UpToDateCheckType to use</param>
+      <param name="inputs">FlatTrackingData structure containing the inputs</param>
+      <param name="outputs">FlatTrackingData structure containing the outputs</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.MissingFiles">
+      <summary>Gets or sets missing files that have been detected in the TLog</summary>
+      <returns>Returns missing files that have been detected in the TLog</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileName">
+      <summary>Gets or sets the path for the newest file we have seen.</summary>
+      <returns>Returns the path for the newest file we have seen.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileTime">
+      <summary>Gets or sets the time for the newest file we have seen</summary>
+      <returns>Returns the time for the newest file we have seen.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestFileTimeUtc">
+      <summary>Gets or sets the UTC time for the newest file we have seen.</summary>
+      <returns>Returns the UTC time for the newest file we have seen.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogFileName">
+      <summary>Gets or sets the path of the newest TLog file.</summary>
+      <returns>Returns the path of the newest TLog file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogTime">
+      <summary>Gets or sets the time of the newest Tlog.</summary>
+      <returns>Returns the time of the newest Tlog.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.NewestTLogTimeUtc">
+      <summary>Gets or sets the UTC time of the newest Tlog.</summary>
+      <returns>Returns the time of the newest Tlog.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileName">
+      <summary>Gets or sets the path for the oldest file we have seen.</summary>
+      <returns>Returns the path for the oldest file we have seen.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileTime">
+      <summary>Gets or sets the time for the oldest file we have seen.</summary>
+      <returns>Returns the time for the oldest file we have seen.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.OldestFileTimeUtc">
+      <summary>Gets or sets the UTC time for the oldest file we have seen.</summary>
+      <returns>Returns the UTC time for the oldest file we have seen.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.SaveTlog">
+      <summary>This method will re-write the tlogs from the output table</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.SaveTlog(Microsoft.Build.Utilities.DependencyFilter)">
+      <summary>This method will re-write the tlogs from the current table</summary>
+      <param name="includeInTLog">The dependency filter.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.SkipMissingFiles">
+      <summary>Gets or sets a switch that specifies whether files in the TLog, but which no longer exist, be skipped or recorded.</summary>
+      <returns>Returns the switch that specifies whether files in the TLog, but which no longer exist, be skipped or recorded.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TlogFiles">
+      <summary>Gets or sets the TLog files that back this structure.</summary>
+      <returns>Returns the TLog files that back this structure.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TlogsAvailable">
+      <summary>Gets or sets a switch that specifies whether all the TLogs that were passed to us are available on disk.</summary>
+      <returns>Returns a switch that specifies whether all the TLogs that were passed to us are available on disk.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.FlatTrackingData.TreatRootMarkersAsEntries">
+      <summary>Gets or sets a switch that specifies whether root markers in the TLog be treated as file accesses, or only as markers.</summary>
+      <returns>Returns a switch that specifies whether root markers in the TLog be treated as file accesses, or only as markers.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.FlatTrackingData.UpdateFileEntryDetails">
+      <summary>Update the current state of entry details for the dependency table</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.HostObjectInitializationStatus">
+      <summary>Defines the next action for <see cref="T:Microsoft.Build.Utilities.ToolTask" /> after an attempt to initialize the host object.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.UseHostObjectToExecute">
+      <summary>Indicates that an appropriate host object for this task exists, which can support all of the parameters passed in and should be invoked to do the real work of the task.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.UseAlternateToolToExecute">
+      <summary>Indicates that either a host object is not available, or that the host object is not capable of supporting all of the features required for this build. Therefore, <see cref="T:Microsoft.Build.Utilities.ToolTask" /> should fallback to an alternate means of doing the build, such as invoking the command-line tool.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.NoActionReturnSuccess">
+      <summary>Indicates that the host object is up to date, and that no further action is necessary.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.HostObjectInitializationStatus.NoActionReturnFailure">
+      <summary>Indicates that some of the parameters being passed into the task are invalid, and that the task should fail immediately.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.Logger">
+      <summary>When overridden in a derived form, provides functionality for loggers that handle events raised by the MSBuild engine.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Logger" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.FormatErrorEvent(Microsoft.Build.Framework.BuildErrorEventArgs)">
+      <summary>Generates an error message that is in the default format, from a <see cref="T:Microsoft.Build.Framework.BuildErrorEventArgs" /> object.</summary>
+      <returns>A <see cref="T:System.String" /> that represents an error message in canonical format.</returns>
+      <param name="args">The arguments of the error event.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.FormatWarningEvent(Microsoft.Build.Framework.BuildWarningEventArgs)">
+      <summary>Generates a warning message that is in the default format, from a <see cref="T:Microsoft.Build.Framework.BuildWarningEventArgs" /> object.</summary>
+      <returns>A <see cref="T:System.String" /> that represents a warning message in canonical format.</returns>
+      <param name="args">The arguments of the warning event.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.Initialize(Microsoft.Build.Framework.IEventSource)">
+      <summary>When overridden in a derived class, subscribes the logger to specific events.</summary>
+      <param name="eventSource">The available events that a logger can subscribe to.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.IsVerbosityAtLeast(Microsoft.Build.Framework.LoggerVerbosity)">
+      <summary>Determines whether the current <see cref="P:Microsoft.Build.Utilities.Logger.Verbosity" /> setting is at least the value that is passed in.</summary>
+      <returns>true if the current logger verbosity setting is at least the value that is passed in; otherwise, false.</returns>
+      <param name="checkVerbosity">The logger verbosity setting passed in.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Logger.Parameters">
+      <summary>Gets or sets the user-defined parameters of the logger.</summary>
+      <returns>The logger parameters. This value can be null.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Logger.Shutdown">
+      <summary>When overridden in a derived class, releases the resources allocated to the logger at the time of initialization or during the build.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Logger.Verbosity">
+      <summary>Gets or sets the level of detail to show in the event log.</summary>
+      <returns>One of the enumeration values. The default is <see cref="F:Microsoft.Build.Framework.LoggerVerbosity.Normal" />.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ProcessorArchitecture">
+      <summary>Determines the correct tool in the Toolset that MSBuild should use, based on the current system's processor architecture.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.AMD64">
+      <summary>Represents the AMD64 processor.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.ARM">
+      <summary>Represents an ARM processor.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ProcessorArchitecture.CurrentProcessArchitecture">
+      <summary>Gets the current processor architecture of the system.</summary>
+      <returns>A string containing the processor architecture value.</returns>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.IA64">
+      <summary>Represents the IA64 processor.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.MSIL">
+      <summary>Represents MSIL.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.ProcessorArchitecture.X86">
+      <summary>Represents an x86 processor.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion">
+      <summary>Specifies the version of the .NET Framework to use with the methods in <see cref="T:Microsoft.Build.Utilities.ToolLocationHelper" />.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version11">
+      <summary>Specifies .NET Framework version 1.1.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version20">
+      <summary>Specifies .NET Framework version 2.0.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version30">
+      <summary>Specifies .NET Framework version 3.0.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version35">
+      <summary>Specifies .NET Framework version 3.5.</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version40">
+      <summary>version 4.0</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.Version45">
+      <summary>version 4.5</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion.VersionLatest">
+      <summary>Specifies the most recent released version of the .NET Framework.</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.Task">
+      <summary>When overridden in a derived form, provides functionality for tasks.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor(System.Resources.ResourceManager)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class with the specified <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" />.</summary>
+      <param name="taskResources">The task resources.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class with the specified <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" /> and <see cref="P:Microsoft.Build.Utilities.Task.HelpKeywordPrefix" />.</summary>
+      <param name="taskResources">The task resources.</param>
+      <param name="helpKeywordPrefix">The prefix to append to string resources to create Help keywords.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine">
+      <summary>Gets or sets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> object used by the task.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> available to tasks.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine2">
+      <summary>Gets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine2" /> object used by the task.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.IBuildEngine2" /> available to tasks.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.BuildEngine3">
+      <summary>Gets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine3" /> object used by the task.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.IBuildEngine3" /> available to tasks.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.Task.Execute">
+      <summary>When overridden in a derived class, executes the task.</summary>
+      <returns>true if the task successfully executed; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.HelpKeywordPrefix">
+      <summary>Gets or sets the prefix used to compose Help keywords from resource names.</summary>
+      <returns>The prefix used to compose Help keywords from resource names.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.HostObject">
+      <summary>Gets or sets the host object associated with the task.</summary>
+      <returns>The host object associated with the task. This value can be null.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.Log">
+      <summary>Gets an instance of a <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" /> class containing task logging methods.</summary>
+      <returns>The logging helper object.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.Task.TaskResources">
+      <summary>Gets or sets the culture-specific resources associated with the task.</summary>
+      <returns>The culture-specific resources associated with the task. This value can be null.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TaskItem">
+      <summary>Defines a single item of the project as it is passed into a task.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified source <see cref="T:Microsoft.Build.Framework.ITaskItem" />.</summary>
+      <param name="sourceItem">The item to copy.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified item-specification string.</summary>
+      <param name="itemSpec">The item specification.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.#ctor(System.String,System.Collections.IDictionary)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified item-specification string and its metadata.</summary>
+      <param name="itemSpec">The item specification.</param>
+      <param name="itemMetadata">The custom metadata for the item specification.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.CloneCustomMetadata">
+      <summary>Clones the collection of custom metadata for the item specification.</summary>
+      <returns>An <see cref="T:System.Collections.IDictionary" /> that represents a clone of the custom metadata.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.CopyMetadataTo(Microsoft.Build.Framework.ITaskItem)">
+      <summary>Copies the item-specification metadata to the specified destination task item.</summary>
+      <param name="destinationItem">The item that this method will copy metadata to.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.GetMetadata(System.String)">
+      <summary>Retrieves the specified metadata on the item.</summary>
+      <returns>A <see cref="T:System.String" /> that represents the metadata value.</returns>
+      <param name="metadataName">The name of the metadata to retrieve.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.InitializeLifetimeService">
+      <summary>When overridden in a derived class, gives task items infinite lease time.</summary>
+      <returns>null to specify an infinite lifetime.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.ItemSpec">
+      <summary>Gets or sets the item specification.</summary>
+      <returns>A <see cref="T:System.String" /> that represents the item specification.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.MetadataCount">
+      <summary>Gets the number of metadata set on the item.</summary>
+      <returns>An <see cref="T:System.Int32" /> that represents the count of metadata set on the item.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.MetadataNames">
+      <summary>Gets the names of all the metadata on the item.</summary>
+      <returns>An <see cref="T:System.Collections.ICollection" /> of metadata names.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#CloneCustomMetadataEscaped">
+      <summary>
+        <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which returns a clone of the metadata on this object. Values returned are in their original escaped form.</summary>
+      <returns>Returns the cloned metadata, with values' escaping preserved.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#EvaluatedIncludeEscaped">
+      <summary>
+        <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which gets or sets the item include value.  For disk-based items this would be the file path.</summary>
+      <returns>Returns the item include value.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#GetMetadataValueEscaped(System.String)">
+      <summary>
+        <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which allows the values of metadata on the item to be queried.</summary>
+      <returns>Returns the escaped metadata value.</returns>
+      <param name="metadataName">The metadata to be queried</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.Microsoft#Build#Framework#ITaskItem2#SetMetadataValueLiteral(System.String,System.String)">
+      <summary>
+        <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which allows a piece of custom metadata to be set on the item. Assumes that the value passed in is unescaped, and escapes the value as necessary in order to maintain its value.</summary>
+      <param name="metadataName">The metadata name.</param>
+      <param name="metadataValue">The metadata value.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.op_Explicit(Microsoft.Build.Utilities.TaskItem)~System.String">
+      <summary>Allows an explicit type cast from a <see cref="T:Microsoft.Build.Utilities.TaskItem" /> to a <see cref="T:System.String" />, and returns the <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> for that item.</summary>
+      <returns>The <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> for the item.</returns>
+      <param name="taskItemToCast">The item to operate on.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.RemoveMetadata(System.String)">
+      <summary>Removes the specified metadata on the item.</summary>
+      <param name="metadataName">The name of metadata to remove.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.SetMetadata(System.String,System.String)">
+      <summary>Sets or modifies the value of the specified metadata on the item.</summary>
+      <param name="metadataName">The name of metadata to set or modify.</param>
+      <param name="metadataValue">The new value of metadata.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskItem.ToString">
+      <summary>Gets the item specification.</summary>
+      <returns>A <see cref="T:System.String" /> that represents the item specification.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TaskLoggingHelper">
+      <summary>Provides helper logging methods used by tasks.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.#ctor(Microsoft.Build.Framework.IBuildEngine,System.String)">
+      <summary>Public constructor which can be used by task factories to assist them in logging messages.</summary>
+      <param name="buildEngine">The build engine.</param>
+      <param name="taskName">The task name.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.#ctor(Microsoft.Build.Framework.ITask)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" /> class and associates it with the specified task instance.</summary>
+      <param name="taskInstance">The task containing an instance of this task.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.BuildEngine">
+      <summary>Gets the build engine that is associated with the task.</summary>
+      <returns>An <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> that represents the instance of the build engine that is associated with the task.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.ExtractMessageCode(System.String,System.String@)">
+      <summary>Extracts the message code prefix from the given full message string.</summary>
+      <returns>The message code prefix that is extracted from the full message string, or null if there is no message code.</returns>
+      <param name="message">The full message to parse that includes code prefix.</param>
+      <param name="messageWithoutCodePrefix">The message with the code prefix removed.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.FormatResourceString(System.String,System.Object[])">
+      <summary>Loads the specified resource string and optionally formats it using the given arguments.</summary>
+      <returns>The formatted string.</returns>
+      <param name="resourceName">The name of the string resource to load.</param>
+      <param name="args">Optional arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentException">The string resource indicated by <paramref name="resourceName" /> does not exist.</exception>
+      <exception cref="T:System.InvalidOperationException">The <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" /> property of the owner task is not set.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="resourceName" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.FormatString(System.String,System.Object[])">
+      <summary>Formats the given string using the given arguments.</summary>
+      <returns>The formatted string.</returns>
+      <param name="unformatted">The string to format.</param>
+      <param name="args">Arguments for formatting.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="unformatted" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.GetResourceMessage(System.String)">
+      <summary>Gets the message from resource in task library.</summary>
+      <returns>Returns the message from resource in task library.</returns>
+      <param name="resourceName">The resource name.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.HasLoggedErrors">
+      <summary>Gets a value that indicates whether the task has logged any errors through this logging helper object.</summary>
+      <returns>true if the task has logged any errors through this logging helper object; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.HelpKeywordPrefix">
+      <summary>Gets or sets the prefix used to compose Help keywords from resource names.</summary>
+      <returns>The prefix used to compose Help keywords from resource names.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.InitializeLifetimeService">
+      <summary>InitializeLifetimeService is called when the remote object is activated.  This method will determine how long the lifetime for the object will be. Thread safe. However, InitializeLifetimeService and MarkAsInactive should only be called in that order, together or not at all, and no more than once.</summary>
+      <returns>The lease object to control this object's lifetime.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogCommandLine(Microsoft.Build.Framework.MessageImportance,System.String)">
+      <summary>Logs the command line for an underlying tool, executable file, or shell command of a task using the specified importance level.</summary>
+      <param name="importance">One of the values of <see cref="T:Microsoft.Build.Framework.MessageImportance" /> that indicates the importance level of the command line.</param>
+      <param name="commandLine">The command line string.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogCommandLine(System.String)">
+      <summary>Logs the command line for an underlying tool, executable file, or shell command of a task.</summary>
+      <param name="commandLine">The command line string.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogCriticalMessage(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs a critical message using the specified string and other message details. Thread safe.</summary>
+      <param name="subcategory">Description of the warning type (can be null).</param>
+      <param name="code">Message code (can be null).</param>
+      <param name="helpKeyword">The help keyword for the host IDE (can be null).</param>
+      <param name="file">The path to the file causing the message (can be null).</param>
+      <param name="lineNumber">The line in the file causing the message (set to zero if not available).</param>
+      <param name="columnNumber">The column in the file causing the message (set to zero if not available).</param>
+      <param name="endLineNumber">The last line of a range of lines in the file causing the message (set to zero if not available).</param>
+      <param name="endColumnNumber">The last column of a range of columns in the file causing the message (set to zero if not available).</param>
+      <param name="message">The message string.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">Thrown when message is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.Object[])">
+      <summary>Logs an error with the specified message.</summary>
+      <param name="message">The message.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogError(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs an error using the specified message and other error details.</summary>
+      <param name="subcategory">The description of the error type.</param>
+      <param name="errorCode">The error code.</param>
+      <param name="helpKeyword">The Help keyword to associate with the error.</param>
+      <param name="file">The path to the file containing the error.</param>
+      <param name="lineNumber">The line in the file where the error occurs.</param>
+      <param name="columnNumber">The column in the file where the error occurs.</param>
+      <param name="endLineNumber">The end line in the file where the error occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the error occurs.</param>
+      <param name="message">The message.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception)">
+      <summary>Logs an error using the message from the given exception.</summary>
+      <param name="exception">The exception to log.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="e" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception,System.Boolean)">
+      <summary>Logs an error using the message, and optionally the stack trace, from the given exception.</summary>
+      <param name="exception">The exception to log</param>
+      <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="e" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromException(System.Exception,System.Boolean,System.Boolean,System.String)">
+      <summary>Logs an error using the message, and optionally the stack-trace from the given exception and any inner exceptions.</summary>
+      <param name="exception">The exception to log.</param>
+      <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
+      <param name="showDetail">true to log exception types and any inner exceptions; otherwise, false.</param>
+      <param name="file">The name of the file related to the exception, or null if the project file should be logged.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="e" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromResources(System.String,System.Object[])">
+      <summary>Logs an error using the specified resource string.</summary>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorFromResources(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs an error using the specified resource string and other error details.</summary>
+      <param name="subcategoryResourceName">The name of the string resource that describes the error type.</param>
+      <param name="errorCode">The error code.</param>
+      <param name="helpKeyword">The Help keyword to associate with the error.</param>
+      <param name="file">The path to the file containing the error.</param>
+      <param name="lineNumber">The line in the file where the error occurs.</param>
+      <param name="columnNumber">The column in the file where the error occurs.</param>
+      <param name="endLineNumber">The end line in the file where the error occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the error occurs.</param>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorWithCodeFromResources(System.String,System.Object[])">
+      <summary>Logs an error with an error code using the specified resource string.</summary>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogErrorWithCodeFromResources(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs an error using the specified resource string and other error details.</summary>
+      <param name="subcategoryResourceName">The name of the string resource that describes the error type.</param>
+      <param name="file">The path to the file containing the error.</param>
+      <param name="lineNumber">The line in the file where the error occurs.</param>
+      <param name="columnNumber">The column in the file where the error occurs.</param>
+      <param name="endLineNumber">The end line in the file where the error occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the error occurs.</param>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogExternalProjectFinished(System.String,System.String,System.String,System.Boolean)">
+      <summary>Helps log the custom <see cref="T:Microsoft.Build.Framework.ExternalProjectFinishedEventArgs" /> build event.</summary>
+      <param name="message">The text message.</param>
+      <param name="helpKeyword">The help keyword.</param>
+      <param name="projectFile">The name of the project.</param>
+      <param name="succeeded">true to indicate that project was built successfully; otherwise, false.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogExternalProjectStarted(System.String,System.String,System.String,System.String)">
+      <summary>Helps log the custom <see cref="T:Microsoft.Build.Framework.ExternalProjectStartedEventArgs" /> build event.</summary>
+      <param name="message">The text message.</param>
+      <param name="helpKeyword">The help keyword.</param>
+      <param name="projectFile">The name of the project.</param>
+      <param name="targetNames">The targets to build. An empty string indicates default targets.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Logs a message with the specified string and importance.</summary>
+      <param name="importance">One of the enumeration values that specifies the importance of the message.</param>
+      <param name="message">The message.</param>
+      <param name="messageArgs">The arguments for formatting the message.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.Object[])">
+      <summary>Logs a message with the specified string.</summary>
+      <param name="message">The message.</param>
+      <param name="messageArgs">The arguments for formatting the message.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessage(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Logs a message using the specified string and other message details. Thread safe.</summary>
+      <param name="subcategory">Description of the warning type (can be null).</param>
+      <param name="code">Message code (can be null)</param>
+      <param name="helpKeyword">The help keyword for the host IDE (can be null).</param>
+      <param name="file">The path to the file causing the message (can be null).</param>
+      <param name="lineNumber">The line in the file causing the message (set to zero if not available).</param>
+      <param name="columnNumber">The column in the file causing the message (set to zero if not available).</param>
+      <param name="endLineNumber">The last line of a range of lines in the file causing the message (set to zero if not available).</param>
+      <param name="endColumnNumber">The last column of a range of columns in the file causing the message (set to zero if not available).</param>
+      <param name="importance">Importance of the message.</param>
+      <param name="message">The message string.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">Thrown when message is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromResources(Microsoft.Build.Framework.MessageImportance,System.String,System.Object[])">
+      <summary>Logs a message with the specified resource string and importance.</summary>
+      <param name="importance">One of the enumeration values that specifies the importance of the message.</param>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromResources(System.String,System.Object[])">
+      <summary>Logs a message with the specified resource string.</summary>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessageFromText(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Logs an error message or warning from the given line of text.</summary>
+      <returns>true if an error was logged; otherwise, false.</returns>
+      <param name="lineOfText">The line of text to log from.</param>
+      <param name="messageImportance">One of the values of <see cref="T:Microsoft.Build.Framework.MessageImportance" /> that indicates the importance level of the command line.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="lineOfText" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromFile(System.String)">
+      <summary>Logs errors, warnings, and messages for each line of text in the given file.</summary>
+      <returns>true to indicate at least one error was logged; otherwise, false.</returns>
+      <param name="fileName">The name of the file to log messages from.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromFile(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Logs errors, warnings, and messages for each line of text in the given file. Also logs the importance of messages.</summary>
+      <returns>true to indicate at least one error was logged; otherwise, false.</returns>
+      <param name="fileName">The name of the file to log messages from.</param>
+      <param name="messageImportance">One of the enumeration values that specifies the importance of logged messages.</param>
+      <exception cref="T:System.ArgumentNullException">Thrown when filename is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogMessagesFromStream(System.IO.TextReader,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Logs an error message or warning from the given stream.</summary>
+      <returns>true if an error was logged; otherwise, false.</returns>
+      <param name="stream">A <see cref="T:System.IO.TextReader" /> that reads the stream to log from.</param>
+      <param name="messageImportance">One of the values of <see cref="T:Microsoft.Build.Framework.MessageImportance" /> that indicates the importance level of the command line.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="stream" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.Object[])">
+      <summary>Logs a warning with the specified message.</summary>
+      <param name="message">The message.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarning(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs a warning using the specified message and other warning details.</summary>
+      <param name="subcategory">The description of the warning type.</param>
+      <param name="warningCode">The warning code.</param>
+      <param name="helpKeyword">The Help keyword to associate with the warning.</param>
+      <param name="file">The path to the file containing the warning.</param>
+      <param name="lineNumber">The line in the file where the warning occurs.</param>
+      <param name="columnNumber">The column in the file where the warning occurs.</param>
+      <param name="endLineNumber">The end line in the file where the warning occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the warning occurs.</param>
+      <param name="message">The message.</param>
+      <param name="messageArgs">Optional arguments for formatting the message string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="message" /> is null.</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromException(System.Exception)">
+      <summary>Logs a warning using the message from the specified exception.</summary>
+      <param name="exception">The exception to log.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="e" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromException(System.Exception,System.Boolean)">
+      <summary>Logs a warning using the message, and optionally the stack trace, from the given exception.</summary>
+      <param name="exception">The exception to log</param>
+      <param name="showStackTrace">true to include the stack trace in the log; otherwise, false.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="e" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromResources(System.String,System.Object[])">
+      <summary>Logs a warning using the specified resource string.</summary>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningFromResources(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs a warning using the specified resource string and other warning details.</summary>
+      <param name="subcategoryResourceName">The name of the string resource that describes the warning type.</param>
+      <param name="warningCode">The warning code.</param>
+      <param name="helpKeyword">The Help keyword to associate with the warning.</param>
+      <param name="file">The path to the file containing the warning.</param>
+      <param name="lineNumber">The line in the file where the warning occurs.</param>
+      <param name="columnNumber">The column in the file where the warning occurs.</param>
+      <param name="endLineNumber">The end line in the file where the warning occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the warning occurs.</param>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningWithCodeFromResources(System.String,System.Object[])">
+      <summary>Logs a warning with a warning code using the specified resource string.</summary>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.LogWarningWithCodeFromResources(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Object[])">
+      <summary>Logs a warning with a warning code using the specified resource string and other warning details.</summary>
+      <param name="subcategoryResourceName">The name of the string resource that describes the warning type.</param>
+      <param name="file">The path to the file containing the warning.</param>
+      <param name="lineNumber">The line in the file where the warning occurs.</param>
+      <param name="columnNumber">The column in the file where the warning occurs.</param>
+      <param name="endLineNumber">The end line in the file where the warning occurs.</param>
+      <param name="endColumnNumber">The end column in the file where the warning occurs.</param>
+      <param name="messageResourceName">The name of the string resource to load.</param>
+      <param name="messageArgs">The arguments for formatting the loaded string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="messageResourceName" /> is null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TaskLoggingHelper.MarkAsInactive"></member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.TaskName">
+      <summary>Gets the name of the parent task.</summary>
+      <returns>The name of the parent task.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.TaskLoggingHelper.TaskResources">
+      <summary>Gets or sets the culture-specific resources used by the logging methods.</summary>
+      <returns>A <see cref="T:System.Resources.ResourceManager" /> that represents the culture-specific resources used by the logging methods. This value can be null.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ToolLocationHelper">
+      <summary>Provides utility methods for locating .NET Framework and .NET Framework SDK files and directories.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetAssemblyFoldersExDirectoryList(System.String,System.String,System.String,System.String,System.String,System.Reflection.ProcessorArchitecture)">
+      <summary>Get a sorted list of directories which contain 3rd party assemblies registered for use during build and design time. This method will enumerate the AssemblyFoldersEx regisry location and return a list of directories in the same order in which they will be searched during both design and build time for reference assemblies.</summary>
+      <returns>List of directories sorted in the same order used for reference assembly resolution</returns>
+      <param name="registryRoot">The root registry location for the targeted framework. For .NET this is SOFTWARE\MICROSOFT\.NETFramework</param>
+      <param name="targetFrameworkVersion">The targeted framework version (2.0, 3.0, 3.5, 4.0, ect)</param>
+      <param name="registryKeySuffix">The name of the folder (AssemblyFoldersEx) could also be PocketPC\AssemblyFoldersEx, or others</param>
+      <param name="osVersion">Components may declare Min and Max OSVersions in the registry this value can be used filter directories returned based on whether or not the osversion is bounded by the Min and Max versions declared by the component. If this value is blank or null no filtering is done</param>
+      <param name="platform">Components may declare platform guids in the registry this can be used to return only directories which have a certain platform guid. If this value is blank or null no filtering is done</param>
+      <param name="targetProcessorArchitecture">What processor architecture is being targeted. This determines which registry hives are searched and in what order. </param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDisplayNameForTargetFrameworkDirectory(System.String,System.Runtime.Versioning.FrameworkName)">
+      <summary>Creates a display name given the target framework details. </summary>
+      <returns>Returns a display name given the target framework details. </returns>
+      <param name="targetFrameworkDirectory">The target framework directory.</param>
+      <param name="frameworkName">The framework name.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets the full name of the .NET Framework root registry key.</summary>
+      <returns>A string containing the full name of the .NET Framework root registry key.</returns>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkInstallKeyValue(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets the name of the value under the <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" /> that contains the .NET Framework SDK installation path.</summary>
+      <returns>Returns a string containing the name of the registry key value under the <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" /> that contains the .NET Framework SDK installation path.</returns>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkInstallKeyValue(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Name of the value of GetDotNetFrameworkRootRegistryKey that contains the SDK install root path</summary>
+      <returns>Returns <see cref="T:System.String" />.</returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Returns the full name of the .NET Framework SDK root registry key.</summary>
+      <returns>Returns a string representation of the registry key root which indicates where to find the .NETFramework sdk.</returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkSdkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Returns the full name of the .NET Framework SDK root registry key</summary>
+      <returns>Returns <see cref="T:System.String" />.</returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkVersionFolderPrefix(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets the prefix of the .NET Framework folder.</summary>
+      <returns>Returns the prefix of the .NET Framework folder.</returns>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFramework(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets a fully qualified path to the .NET Framework root directory.</summary>
+      <returns>A string containing the fully qualified path to the .NET Framework root directory, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework is not installed.</returns>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFramework(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Gets a fully qualified path to the framework's root directory.</summary>
+      <returns>Returns a fully qualified path to the framework's root directory.</returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="architecture">Desired architecture, or DotNetFrameworkArchitecture.Current for the architecture this process is currently running under.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets a fully qualified path to a file in the .NET Framework directory.</summary>
+      <returns>A string containing the fully qualified path to the specified file, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework is not installed.</returns>
+      <param name="fileName">The file to locate in the .NET Framework directory.</param>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Gets a fully qualified path to a file in the frameworks root directory for the specified architecture.</summary>
+      <returns>Returns a fully qualified path to a file in the frameworks root directory.</returns>
+      <param name="fileName">File name to locate in the .NET Framework directory</param>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="architecture">Desired architecture, or DotNetFrameworkArchitecture.Current for the architecture this process is currently running under.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkReferenceAssemblies(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Returns the path to the reference assemblies location for the given framework version.</summary>
+      <returns>Returns a string containing the fully qualified path to the Reference Assemblies folder, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework is not installed. </returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets the fully qualified path to the \bin directory of the .NET Framework SDK.</summary>
+      <returns>A string containing the fully qualified path to the \bin directory of the .NET Framework SDK, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework SDK is not installed.</returns>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Returns the path to the "bin" directory of the .NET Framework SDK.</summary>
+      <returns>Path string.</returns>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)">
+      <summary>Gets the fully qualified path to a file in the .NET Framework SDK.</summary>
+      <returns>A string containing the fully qualified path to the \bin directory of the .NET Framework SDK, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework SDK is not installed.</returns>
+      <param name="fileName">The file to locate in the .NET Framework SDK.</param>
+      <param name="version">The version of the .NET Framework to target.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Gets a fully qualified path to a file in the .NET Framework SDK.</summary>
+      <returns>Returns a fully qualified path to a file in the .NET Framework SDK. Throws an error if the .NET Framework SDK can't be found.</returns>
+      <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="architecture">The required architecture of the requested file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.</summary>
+      <returns>Path string.</returns>
+      <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToDotNetFrameworkSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.</summary>
+      <returns>Path string.</returns>
+      <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
+      <param name="version">Version of the targeted .NET Framework</param>
+      <param name="architecture">The required architecture of the requested file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.Runtime.Versioning.FrameworkName)">
+      <summary>Gets the paths to the reference assemblies location for the given target framework.</summary>
+      <returns>Returns the paths to the reference assemblies location.</returns>
+      <param name="frameworkName">The framework name.</param>
+      <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.String,System.Runtime.Versioning.FrameworkName)">
+      <summary>Gets the paths to the reference assemblies location for the given framework version relative to a given targetFrameworkRoot.</summary>
+      <returns>Returns the paths to the reference assemblies location.</returns>
+      <param name="targetFrameworkRootPath">Root directory which will be used to calculate the reference assembly path. The references assembies will be generated in the following way TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.</param>
+      <param name="frameworkName">A frameworkName class which represents a TargetFrameworkMoniker. This cannot be null.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToReferenceAssemblies(System.String,System.String,System.String)">
+      <summary>Returns the paths to the reference assemblies location for the given target framework. This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths for the legacy .NET Framework versions. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.</summary>
+      <returns>Collection of reference assembly locations.</returns>
+      <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+      <param name="targetFrameworkVersion">Version being targeted</param>
+      <param name="targetFrameworkProfile">Profile being targeted</param>
+      <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToStandardLibraries(System.String,System.String,System.String)">
+      <summary>Returns the path to the reference assemblies location for the given target framework's standard libraries (i.e. mscorlib). This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths for the legacy .NET Framework versions. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.</summary>
+      <returns>Collection of reference assembly locations.</returns>
+      <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+      <param name="targetFrameworkVersion">Version being targeted</param>
+      <param name="targetFrameworkProfile">Profile being targeted</param>
+      <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToStandardLibraries(System.String,System.String,System.String,System.String)">
+      <summary>Returns the path to mscorlib and system.dll</summary>
+      <returns>Collection of reference assembly locations.</returns>
+      <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+      <param name="targetFrameworkVersion">Version being targeted</param>
+      <param name="targetFrameworkProfile">Profile being targeted</param>
+      <param name="platformTarget">This is used to determine where we should look for the standard libraries. Note, this parameter is only used for .net frameworks less than 4.0</param>
+      <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToSystemFile(System.String)">
+      <summary>Gets a fully qualified path to a file in the system directory.</summary>
+      <returns>A string containing the fully qualified path to the the file in the system directory.</returns>
+      <param name="fileName">The file to locate in the System folder.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdk(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Returns the path to the Windows SDK for the desired .NET Framework and Visual Studio version. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+      <returns>Path to the appropriate Windows SDK location</returns>
+      <param name="version">Target .NET Framework version</param>
+      <param name="visualStudioVersion">Version of Visual Studio associated with the SDK.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion)">
+      <summary>Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+      <returns>Path to the appropriate Windows SDK file</returns>
+      <param name="fileName">The name of the file being requested.</param>
+      <param name="version">Target .NET Framework version.</param>
+      <param name="visualStudioVersion">Version of Visual Studio associated with the SDK.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPathToWindowsSdkFile(System.String,Microsoft.Build.Utilities.TargetDotNetFrameworkVersion,Microsoft.Build.Utilities.VisualStudioVersion,Microsoft.Build.Utilities.DotNetFrameworkArchitecture)">
+      <summary>Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version and the desired architecture. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+      <returns>Path to the appropriate Windows SDK file</returns>
+      <param name="fileName">The name of the file being requested.</param>
+      <param name="version">Target .NET Framework version.</param>
+      <param name="architecture">Desired architecture of the resultant file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.String)">
+      <summary>Given an SDK moniker and the targeted platform get the path to the SDK root if it exists.</summary>
+      <returns>A full path to the sdk root if the sdk exists in the targeted platform or an empty string if it does not exist.</returns>
+      <param name="sdkMoniker">Moniker for the sdk</param>
+      <param name="targetPlatformIdentifier">Identifier for the platform</param>
+      <param name="targetPlatformVersion">Version of the platform</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.String,System.String,System.String)">
+      <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name. The format of the sdk moniker is SDKName, Version=X.X</summary>
+      <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
+      <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
+      <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+      <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+      <param name="diskRoots">List of disk roots to search for sdks within</param>
+      <param name="registryRoot">Registry root to look for sdks within</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.Version)">
+      <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name. The format of the sdk moniker is SDKName, Version=X.X</summary>
+      <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
+      <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
+      <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+      <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocation(System.String,System.String,System.Version,System.String[],System.String)">
+      <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name. The format of the sdk moniker is SDKName, Version=X.X</summary>
+      <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
+      <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
+      <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+      <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+      <param name="diskRoots">List of disk roots to search for sdks within</param>
+      <param name="registryRoot">Registry root to look for sdks within</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocations(System.String,System.Version)">
+      <summary>Get a list of SDK's installed on the machine for a given target platform</summary>
+      <returns>IDictionary of installed SDKS and their location. K:SDKName V:SDK installation location</returns>
+      <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+      <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetPlatformExtensionSDKLocations(System.String[],System.String,System.String,System.Version)">
+      <summary>Get a list of SDK's installed on the machine for a given target platform</summary>
+      <returns>IDictionary of installed SDKS and their location. K:SDKName V:SDK installation location</returns>
+      <param name="diskRoots">Array of disk locations to search for sdks</param>
+      <param name="registryRoot">Root registry location to look for sdks</param>
+      <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+      <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetProgramFilesReferenceAssemblyRoot">
+      <summary>Gets the root location for the reference assembly directory under the program files directory.</summary>
+      <returns>Returns the root location for the reference assembly directory.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetSupportedTargetFrameworks">
+      <summary>Gets a IList of supported target framework monikers.</summary>
+      <returns>list of supported target framework monikers</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetTargetPlatformSdks">
+      <summary>Get a list of target platform sdks on the machine.</summary>
+      <returns>List of Target Platform SDKs, Item1: TargetPlatformName Item2: Version of SDK Item3: Path to sdk root</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.GetWindowsMetadataFoldersExDirectoryList(System.String,System.String,System.Reflection.ProcessorArchitecture)">
+      <summary>Get a sorted list of directories which contain 3rd party assemblies registered for use during build and design time. This method will enumerate the ExtensionSDKs registry location and return a list of directories in the same order in which they will be searched during both design and build time for reference assemblies.</summary>
+      <returns>List of directories sorted in the same order used for reference assembly resolution</returns>
+      <param name="registryRoot">The root registry location for the targeted platform. For windows this is SOFTWARE\MICROSOFT\Windows SDKs\Windows Kits</param>
+      <param name="targetPlatformVersion">The targeted framework version (7.0, 8.0)</param>
+      <param name="targetProcessorArchitecture">What processor architecture is being targeted. This determines which registry hives are searched in what order. </param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolLocationHelper.HighestVersionOfTargetFrameworkIdentifier(System.String,System.String)">
+      <summary>Gets the highest version of a target framework moniker based on the identifier. </summary>
+      <returns>Returns the highest version of a target framework moniker based on the identifier. This method will only find full frameworks; no profiles will be returned.</returns>
+      <param name="targetFrameworkRootDirectory">Target framework root directory.</param>
+      <param name="frameworkIdentifier">Framework identifier.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolLocationHelper.PathToSystem">
+      <summary>Gets the fully qualified path of the system directory.</summary>
+      <returns>A string containing a directory path to the system directory.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.ToolTask">
+      <summary>When overridden in a derived form, provides functionality for a task that wraps a command line tool.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.ToolTask" /> class.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor(System.Resources.ResourceManager)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.ToolTask" /> class with the specified <see cref="T:System.Resources.ResourceManager" />.</summary>
+      <param name="taskResources">The <see cref="T:System.Resources.ResourceManager" /> for task resources.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.#ctor(System.Resources.ResourceManager,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.ToolTask" /> class with the specified <see cref="T:System.Resources.ResourceManager" /> and Help keyword prefix.</summary>
+      <param name="taskResources">The <see cref="T:System.Resources.ResourceManager" /> for task resources.</param>
+      <param name="helpKeywordPrefix">The Help keyword to use for messages raised by the task.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.CallHostObjectToExecute">
+      <summary>Calls the host object to perform the work of the task.</summary>
+      <returns>true if the method was successfule; otherwise, false.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.Cancel">
+      <summary>Cancels the process executing the task by asking it to close nicely, then after a short period, forcing termination.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.DeleteTempFile(System.String)">
+      <summary>Deletes the specified temporary file.</summary>
+      <param name="fileName">The name of the temporary file to delete.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EchoOff">
+      <summary>Indicates that command line echoing is turned off.</summary>
+      <returns>True when command line echo is off.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EnvironmentOverride">
+      <summary>Gets a set of environment variable name-value pairs. Designed to be overridden in a custom task class (derived from ToolTask) to return a set of new or altered environment variables to create the execution context of the associated tool. </summary>
+      <returns>Returns a set of environment variables. Each dictionary key is the name of the environment variable to override and the dictionary value is the value to set for that environment variable. The default implementation of EnvironmentOverride returns null.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.EnvironmentVariables">
+      <summary>Array of equals-separated pairs of environment variables that should be passed to the spawned executable, in addition to (or selectively overriding) the regular environment block.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.Execute">
+      <summary>Runs the exectuable file with the specified task parameters.</summary>
+      <returns>true if the task runs successfully; otherwise, false.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.ExecuteTool(System.String,System.String,System.String)">
+      <summary>Creates a temporoary response (.rsp) file and runs the executable file.</summary>
+      <returns>The returned exit code of the executable file. If the task logged errors, but the executable returned an exit code of 0, this method returns -1.</returns>
+      <param name="pathToTool">The path to the executable file.</param>
+      <param name="responseFileCommands">The command line arguments to place in the .rsp file.</param>
+      <param name="commandLineCommands">The command line arguments to pass directly to the executable file.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ExitCode">
+      <summary>Gets the returned exit code of the executable file.</summary>
+      <returns>The returned exit code of the executable file. If the task logged errors, but the executable returned an exit code of 0, this method returns -1.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateCommandLineCommands">
+      <summary>Returns a string value containing the command line arguments to pass directly to the executable file.</summary>
+      <returns>A string value containing the command line arguments to pass directly to the executable file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateFullPathToTool">
+      <summary>Returns the fully qualified path to the executable file.</summary>
+      <returns>The fully qualified path to the executable file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GenerateResponseFileCommands">
+      <summary>Returns a string value containing the command line arguments to add to the response (.rsp) file before running the executable file.</summary>
+      <returns>a string value containing the command line arguments to add to the response (.rsp) file before running the executable file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetProcessStartInfo(System.String,System.String,System.String)">
+      <summary>Initializes the information required to spawn the process executing the tool.</summary>
+      <returns>The information required to start the process.</returns>
+      <param name="pathToTool">The path to the tool.</param>
+      <param name="commandLineCommands">The command line commands.</param>
+      <param name="responseFileSwitch">The response file switch.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetResponseFileSwitch(System.String)">
+      <summary>Returns the command line switch used by the executable file to specifiy a response (.rsp) file.</summary>
+      <returns>The command line switch used by the executable file to specifiy a response (.rsp) file.</returns>
+      <param name="responseFilePath">The full path to the temporary .rsp file.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.GetWorkingDirectory">
+      <summary>Returns the directory in which to run the executable file.</summary>
+      <returns>The directory in which to run the executable file, or a null reference (Nothing in Visual Basic) if the executable file should be run in the current directory.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.HandleTaskExecutionErrors">
+      <summary>Handles execution errors raised by the executable file.</summary>
+      <returns>true if the method runs successfully; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.HasLoggedErrors">
+      <summary>Whether this ToolTask has logged any errors</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.InitializeHostObject">
+      <summary>Initializes the host object of the task.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Utilities.HostObjectInitializationStatus" /> of the host object.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogEventsFromTextOutput(System.String,Microsoft.Build.Framework.MessageImportance)">
+      <summary>Parses a single line of text to identify any errors or warnings in canonical format.</summary>
+      <param name="singleLine">A single line of text for the method to parse.</param>
+      <param name="messageImportance">A value of <see cref="T:Microsoft.Build.Framework.MessageImportance" /> that indicates the importance level with which to log the message.</param>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogPathToTool(System.String,System.String)">
+      <summary>Logs the tool name and path to all registered loggers.</summary>
+      <param name="toolName">The executable file name.</param>
+      <param name="pathToTool">The path to the executable file.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.LogStandardErrorAsError">
+      <summary>Should ALL messages received on the standard error stream be logged as errors.</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.LogToolCommand(System.String)">
+      <summary>Logs the starting point of the run to all registered loggers.</summary>
+      <param name="message">A descriptive message to provide loggers, usually the command line and switches.</param>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ResponseFileEncoding">
+      <summary>Gets the <see cref="T:System.Text.Encoding" /> of the response file.</summary>
+      <returns>The <see cref="T:System.Text.Encoding" /> of the response file.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.SkipTaskExecution">
+      <summary>Indicates whether task execution should be skipped.</summary>
+      <returns>true to skip task execution; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardErrorEncoding">
+      <summary>Gets the <see cref="T:System.Text.Encoding" /> of the standard error stream of the task.</summary>
+      <returns>The <see cref="T:System.Text.Encoding" /> of the response file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardErrorImportance">
+      <summary>Task Parameter: Importance with which to log text from the standard error stream.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardErrorImportanceToUse">
+      <summary>Gets the actual importance at which standard error messages will be logged.</summary>
+      <returns>Returns the actual importance at which standard error messages will be logged.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardErrorLoggingImportance">
+      <summary>Gets the <see cref="T:Microsoft.Build.Framework.MessageImportance" /> with which to log errors.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.MessageImportance" /> with which to log errors.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardOutputEncoding">
+      <summary>Gets the <see cref="T:System.Text.Encoding" /> of the standard output stream of the task.</summary>
+      <returns>The <see cref="T:System.Text.Encoding" /> of the response file.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardOutputImportance">
+      <summary>Task Parameter: Importance with which to log text from the standard out stream.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardOutputImportanceToUse">
+      <summary>Gets the actual importance at which standard out messages will be logged.</summary>
+      <returns>Returns the actual importance at which standard out messages will be logged.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.StandardOutputLoggingImportance">
+      <summary>Gets the <see cref="T:Microsoft.Build.Framework.MessageImportance" /> with which to log errors.</summary>
+      <returns>The <see cref="T:Microsoft.Build.Framework.MessageImportance" /> with which to log errors.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.TaskProcessTerminationTimeout">
+      <summary>A timeout to wait for a task to terminate before killing it. In milliseconds.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.Timeout">
+      <summary>Gets or sets the amount of time after which the task executable is terminated.</summary>
+      <returns>The time-out length, in milliseconds.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolCanceled">
+      <summary>Used to signal when a tool has been cancelled.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolExe">
+      <summary>Projects may set this to override a task's ToolName. Tasks may override this to prevent that.</summary>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolName">
+      <summary>Gets the name of the executable file to run.</summary>
+      <returns>The name of the executable file to run.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.ToolPath">
+      <summary>Gets or sets the path of the executable file to run.</summary>
+      <returns>The path of the file to run.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.UseCommandProcessor">
+      <summary>Gets or sets a switch that specifies whether the tool task will create a batch file for the command-line and execute that using the command-processor, rather than executing the command directly.</summary>
+      <returns>If true, the tool task will create a batch file for the command-line and execute that using the command-processor. If false the tool task will execute the command directly.</returns>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.ToolTask.ValidateParameters">
+      <summary>Indicates whether all task paratmeters are valid.</summary>
+      <returns>true if all task parameters are valid; otherwise, false.</returns>
+    </member>
+    <member name="P:Microsoft.Build.Utilities.ToolTask.YieldDuringToolExecution">
+      <summary>Indicates if the task will yield the node during tool execution.</summary>
+      <returns>True when the task will yield the node during tool execution.</returns>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.TrackedDependencies">
+      <summary>This class contains utility functions to assist with tracking dependencies</summary>
+    </member>
+    <member name="M:Microsoft.Build.Utilities.TrackedDependencies.ExpandWildcards(Microsoft.Build.Framework.ITaskItem[])">
+      <summary>Expand wildcards in the item list.</summary>
+      <returns>Array of items expanded</returns>
+      <param name="expand">Array of items to be expanded.</param>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.UpToDateCheckType">
+      <summary>The possible types of up to date check that we can support</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputNewerThanOutput">
+      <summary>Input newer than output</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputOrOutputNewerThanTracking">
+      <summary>Input or output newer than tracking</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.UpToDateCheckType.InputNewerThanTracking">
+      <summary>Input newer than tracking</summary>
+    </member>
+    <member name="T:Microsoft.Build.Utilities.VisualStudioVersion">
+      <summary>Used to specify the version of Visual Studio from which to select associated tools for some methods of ToolLocationHelper</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.Version100">
+      <summary>Visual Studio 2010 and SP1</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.Version110">
+      <summary>Visual Studio Dev11</summary>
+    </member>
+    <member name="F:Microsoft.Build.Utilities.VisualStudioVersion.VersionLatest">
+      <summary>The latest version available at the time of release</summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.RegularExpressions</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.RegularExpressions.AspCodeRegex">
+      <summary>Provides a regular expression to parse an ASP.NET code block.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspCodeRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspCodeRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspCodeRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspCodeRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.AspEncodedExprRegex">
+      <summary>Provides a regular expression to parse an encoded ASP.NET expression block.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspEncodedExprRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspEncodedExprRegex" /> class.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspEncodedExprRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspEncodedExprRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.AspExprRegex">
+      <summary>Provides a regular expression to parse an ASP.NET expression block.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspExprRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspExprRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.AspExprRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.AspExprRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.CommentRegex">
+      <summary>Provides a regular expression to parse an ASP.NET comment block.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.CommentRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.CommentRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.CommentRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.CommentRegex" /> class with the specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.DatabindExprRegex">
+      <summary>Provides a regular expression to parse an ASP.NET data-binding expression.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DatabindExprRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DatabindExprRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DatabindExprRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DatabindExprRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.DataBindRegex">
+      <summary>Provides a regular expression to parse an ASP.NET data binding expression.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DataBindRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DataBindRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DataBindRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DataBindRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.DirectiveRegex">
+      <summary>Provides a regular expression to parse an ASP.NET directive.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DirectiveRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DirectiveRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.DirectiveRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.DirectiveRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.EndTagRegex">
+      <summary>Provides a regular expression to parse an end tag of an HTML element, an XML element, or an ASP.NET web server control tag.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.EndTagRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.EndTagRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.EndTagRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.EndTagRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.GTRegex">
+      <summary>Provides a regular expression to match a greater than (&gt;) character in an ASP.NET web page.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.GTRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.GTRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.GTRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.GTRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.IncludeRegex">
+      <summary>Provides a regular expression to parse an ASP.NET #include directive.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.IncludeRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.IncludeRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.IncludeRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.IncludeRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.LTRegex">
+      <summary>Provides a regular expression to look for a less than (&lt;) character in an ASP.NET web page.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.LTRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.LTRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.LTRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.LTRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.RunatServerRegex">
+      <summary>Provides a regular expression to parse an ASP.NET runat attribute.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.RunatServerRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.RunatServerRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.RunatServerRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.RunatServerRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.ServerTagsRegex">
+      <summary>Provides a regular expression to parse ASP.NET server tags.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.ServerTagsRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.ServerTagsRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.ServerTagsRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.ServerTagsRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.SimpleDirectiveRegex">
+      <summary>Provides a regular expression to parse an ASP.NET data directive.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.SimpleDirectiveRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.SimpleDirectiveRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.SimpleDirectiveRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.SimpleDirectiveRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.TagRegex">
+      <summary>Provides a regular expression to parse the opening tag of an HTML element, an XML element, or an ASP.NET Web server control tag.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TagRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TagRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TagRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TagRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.TagRegex35">
+      <summary>Provides a regular expression to parse the opening tag of an HTML element, an XML element, or an ASP.NET Web server control tag, for applications that target the .NET Framework 3.5 SP1 and earlier versions.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TagRegex35.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TagRegex35" /> class.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TagRegex35.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TagRegex35" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+    <member name="T:System.Web.RegularExpressions.TextRegex">
+      <summary>Provides a regular expression to match all characters until the next less than (&lt;) character.</summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TextRegex.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TextRegex" /> class. </summary>
+    </member>
+    <member name="M:System.Web.RegularExpressions.TextRegex.#ctor(System.TimeSpan)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.RegularExpressions.TextRegex" /> class with a specified time-out value.</summary>
+      <param name="A_1">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if matching operations should not time out.</param>
+    </member>
+  </members>
+</doc>

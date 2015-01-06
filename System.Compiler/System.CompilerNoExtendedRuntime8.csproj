@@ -1,0 +1,251 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</ProjectGuid>
+    <SccProjectName>//depot/xsharp/cci</SccProjectName>
+    <SccLocalPath>..</SccLocalPath>
+    <SccProvider>MSSCCI:Source Depot</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>System.Compiler</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>System.Compiler</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>0</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer</DefineConstants>
+    <DocumentationFile>System.Compiler.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <IncrementalBuild>false</IncrementalBuild>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>1591;1699</NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>0</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer</DefineConstants>
+    <DocumentationFile>System.Compiler.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <IncrementalBuild>false</IncrementalBuild>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>1591;1699</NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'DebugCommandLine'">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>0</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer</DefineConstants>
+    <DocumentationFile>System.Compiler.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <IncrementalBuild>false</IncrementalBuild>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>1591;1699</NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'NoExtendedRuntime' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\NoExtendedRuntime\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer</DefineConstants>
+    <BaseAddress>0</BaseAddress>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>System.Compiler.xml</DocumentationFile>
+    <NoWarn>1591;1699;1701;1702</NoWarn>
+    <DebugType>full</DebugType>
+    <LangVersion>
+    </LangVersion>
+    <ErrorReport>
+    </ErrorReport>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <FileAlignment>4096</FileAlignment>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <FxCopInputAssembly>
+    </FxCopInputAssembly>
+    <FxCopLogFile>
+    </FxCopLogFile>
+    <FxCopModuleSuppressionsFile>
+    </FxCopModuleSuppressionsFile>
+    <FxCopRuleAssemblies>
+    </FxCopRuleAssemblies>
+    <FxCopRules>
+    </FxCopRules>
+    <FxCopSpellCheckLanguages>
+    </FxCopSpellCheckLanguages>
+    <FxCopUseTypeNameInSuppression>false</FxCopUseTypeNameInSuppression>
+    <RunFxCop>false</RunFxCop>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+      <HintPath>..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\Include\version.cs">
+      <Link>version.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Comparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DoubleVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Duplicator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExceptionStrings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FastFileIO.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILGenerator.cs" />
+    <Compile Include="ListTemplate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MemoryMappedFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Nodes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpCode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Reader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Specializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StandardIds.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StandardVisitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SystemTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unstacker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Updater.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Writer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ExceptionStrings.resx">
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrams\Assembly Cache.cd" />
+    <None Include="Diagrams\Expressions.cd" />
+    <None Include="Diagrams\Fast File IO.cd" />
+    <None Include="Diagrams\IL Reader.cd" />
+    <None Include="Diagrams\Memory File.cd" />
+    <None Include="Diagrams\Metadata Reader.cd" />
+    <None Include="Diagrams\Modules and Compilations.cd" />
+    <None Include="Diagrams\Node Source Context.cd" />
+    <None Include="Diagrams\Statements.cd" />
+    <None Include="Diagrams\Types and Members.cd" />
+    <None Include="Diagrams\Utility Nodes.cd" />
+    <None Include="Diagrams\Visitors.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Diagrams\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <SccAuxPath>
+    </SccAuxPath>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

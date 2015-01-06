@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ISymWrapper</name>
+  </assembly>
+  <members>
+    <member name="T:System.Diagnostics.SymbolStore.SymBinder">
+      <summary>Represents a symbol binder for managed code.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymBinder" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymBinder" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymBinder.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymBinder.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymBinder" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.Finalize">
+      <summary>Releases the resources held by the current instance.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.GetReader(System.Int32,System.String,System.String)">
+      <summary>Gets the interface of the symbol reader for the current file, using the specified 32-bit integer pointer to a metadata interface, the specified file name, and the specified search path.</summary>
+      <returns>The interface that reads the debugging symbols.</returns>
+      <param name="importer">A 32-bit integer that points to the metadata import interface. </param>
+      <param name="filename">The name of the file for which the reader interface is required. </param>
+      <param name="searchPath">The search path used to locate the symbol file. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinder.GetReader(System.IntPtr,System.String,System.String)">
+      <summary>Gets the interface of the symbol reader for the current file, using the specified pointer to a metadata interface, the specified file name, and the specified search path.</summary>
+      <returns>The interface that reads the debugging symbols.</returns>
+      <param name="importer">A structure that points to the metadata import interface. </param>
+      <param name="filename">The name of the file for which the reader interface is required. </param>
+      <param name="searchPath">The search path used to locate the symbol file. </param>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymBinderBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymBinder" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinderBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymBinderBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymBinderBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymDocument">
+      <summary>Represents a document referenced by a symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedDocument*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocument" /> class using the specified pointer to an unmanaged ISymUnmanagedDocument object.</summary>
+      <param name="pDocument">A pointer to the ISymUnmanagedDocument object.</param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.CheckSumAlgorithmId">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>A <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocument" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymDocument.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymDocument.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocument" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.DocumentType">
+      <summary>Gets the type of the current document.</summary>
+      <returns>The type of the current document.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymReader" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.FindClosestLine(System.Int32)">
+      <summary>Returns the line number of the closest line that is a sequence point, given a line in the current document that might or might not be a sequence point.</summary>
+      <returns>The line number of the closest sequence point to the specified line.</returns>
+      <param name="line">The specified line in the document. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.GetCheckSum">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>A <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.GetSourceRange(System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>A <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <param name="startLine">This parameter is not used.</param>
+      <param name="startColumn">This parameter is not used. </param>
+      <param name="endLine">This parameter is not used. </param>
+      <param name="endColumn">This parameter is not used. </param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocument.GetUnmanaged">
+      <summary>Gets a pointer to the unmanaged ISymUnmanagedDocument interface for this <see cref="T:System.Diagnostics.SymbolStore.SymDocument" /> instance.</summary>
+      <returns>A pointer to the unmanaged ISymUnmanagedDocument interface for this <see cref="T:System.Diagnostics.SymbolStore.SymDocument" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.HasEmbeddedSource">
+      <summary>Indicates whether the source for the current document is stored in the symbol store.</summary>
+      <returns>true if the source for the current document is stored in the symbol store; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.Language">
+      <summary>Gets the language of the current document.</summary>
+      <returns>A <see cref="T:System.Guid" /> representing the language of the current document.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.LanguageVendor">
+      <summary>Gets the language vendor of the current document.</summary>
+      <returns>A <see cref="T:System.Guid" /> representing the language vendor of the current document.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.SourceLength">
+      <summary>Gets the length, in bytes, of the embedded source.</summary>
+      <returns>The source length of the current document.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymDocument.URL">
+      <summary>Gets the URL of the current document.</summary>
+      <returns>The URL of the current document.</returns>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymDocumentBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymDocument" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymDocumentWriter">
+      <summary>Provides methods for writing to a document referenced by a symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedDocumentWriter*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriter" /> class. </summary>
+      <param name="pDocumentWriter">A pointer to the unmanaged document writer.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriter" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymDocumentWriter.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymDocumentWriter.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymBinder" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriter" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.GetUnmanaged">
+      <summary>Gets the unmanaged document writer for the current instance.</summary>
+      <returns>The unmanaged document writer for the current <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriter" /> instance.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.SetCheckSum(System.Guid,System.Byte[])">
+      <summary>Throws a <see cref="T:System.NotImplementedException" /> in all cases.</summary>
+      <param name="algorithmId">This parameter is not used.</param>
+      <param name="source">This parameter is not used.</param>
+      <exception cref="T:System.NotImplementedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriter.SetSource(System.Byte[])">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <param name="source">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymDocumentWriterBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriter" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriterBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymDocumentWriterBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymDocumentWriterBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymMethod">
+      <summary>Represents a method within a symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedMethod*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymMethod" /> class from a raw pointer to the unmanaged ISymUnmanagedMethod interface. </summary>
+      <param name="pMethod">A raw pointer to the unmanaged COM ISymUnmanagedMethod object.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymMethod" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymMethod.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymMethod.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymMethod" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymMethod" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetNamespace">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetOffset(System.Diagnostics.SymbolStore.ISymbolDocument,System.Int32,System.Int32)">
+      <summary>Gets the Microsoft intermediate language (MSIL) offset within the method that corresponds to the specified position.</summary>
+      <returns>The IL offset within the current method of the specified location in the document.</returns>
+      <param name="document">The document for which the offset is requested. </param>
+      <param name="line">The document line for which the offset is requested. </param>
+      <param name="column">The document column for which the offset is requested. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetParameters">
+      <summary>Gets the parameters for the current method.</summary>
+      <returns>The array of parameters for the current method.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetRanges(System.Diagnostics.SymbolStore.ISymbolDocument,System.Int32,System.Int32)">
+      <summary>Gets an array of start and end offset pairs that correspond to the ranges of Microsoft intermediate language (MSIL) offsets that a given position covers within this method.</summary>
+      <returns>An array of start and end IL offset pairs.</returns>
+      <param name="document">The document for which the IL offset ranges are requested. </param>
+      <param name="line">The document line for which the IL offset ranges are requested. </param>
+      <param name="column">The document column for which the IL offset ranges are requested. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetScope(System.Int32)">
+      <summary>Returns the most enclosing lexical scope corresponding to an offset within a method.</summary>
+      <returns>The most enclosing lexical scope for the given IL offset within the method.</returns>
+      <param name="offset">The IL offset within the method to look up. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetSequencePoints(System.Int32[],System.Diagnostics.SymbolStore.ISymbolDocument[],System.Int32[],System.Int32[],System.Int32[],System.Int32[])">
+      <summary>Gets the sequence points for the current method and stores the information in the specified arrays.</summary>
+      <param name="offsets">An array in which to store the IL offsets from the beginning of the method for the sequence points. </param>
+      <param name="documents">An array in which to store the  documents in which the sequence points are located. </param>
+      <param name="lines">An array in which to store the lines in the documents at which the sequence points are located. </param>
+      <param name="columns">An array in which to store the columns in the documents at which the sequence points are located. </param>
+      <param name="endLines">The array of lines in the documents at which the sequence points end. </param>
+      <param name="endColumns">The array of columns in the documents at which the sequence points end. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.GetSourceStartEnd(System.Diagnostics.SymbolStore.ISymbolDocument[],System.Int32[],System.Int32[])">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <param name="docs">This parameter is not used.</param>
+      <param name="lines">This parameter is not used. </param>
+      <param name="columns">This parameter is not used. </param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymMethod.RootScope">
+      <summary>Gets the root lexical scope for the current method. This scope encloses the entire method.</summary>
+      <returns>The root lexical scope that encloses the entire method.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethod.RootScopeInternal">
+      <summary>Gets the root lexical scope for the current method. This scope encloses the entire method.</summary>
+      <returns>The root lexical scope that encloses the entire method.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymMethod.SequencePointCount">
+      <summary>Gets a count of the sequence points in the method.</summary>
+      <returns>The count of the sequence points in the method.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymMethod.Token">
+      <summary>Gets the <see cref="T:System.Diagnostics.SymbolStore.SymbolToken" /> containing the metadata for the current method.</summary>
+      <returns>The metadata token for the current method.</returns>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymMethodBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymMethod" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethodBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymMethodBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymMethodBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymReader">
+      <summary>Provides access to documents, methods, and variables within a symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedReader*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymReader" /> class by using the specified pointer to an unmanaged ISymUnmanagedReader object. </summary>
+      <param name="pReader">A pointer to an unmanaged ISymUnmanagedReader object.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymReader" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.Dispose(System.Boolean)"></member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymReader" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetDocument(System.String,System.Guid,System.Guid,System.Guid)">
+      <summary>Gets a document specified by the URL for the document and optionally the language, language vendor, and type.</summary>
+      <returns>The document with the specified URL if found in the symbol store, or null if the document does not exist.</returns>
+      <param name="url">The URL that identifies the document. </param>
+      <param name="language">The document language. You can specify this parameter as <see cref="F:System.Guid.Empty" />. to indicate any language. </param>
+      <param name="languageVendor">The identity of the vendor for the document language. You can specify this parameter as <see cref="F:System.Guid.Empty" /> to indicate any language vendor.</param>
+      <param name="documentType">The type of the document. You can specify this parameter as <see cref="F:System.Guid.Empty" /> to indicate any document type.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetDocuments">
+      <summary>Gets an array of all documents defined in the symbol store.</summary>
+      <returns>An array of all documents defined in the symbol store.</returns>
+      <exception cref="T:System.OutOfMemoryException">There is insufficient memory to satisfy the request.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetGlobalVariables">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetMethod(System.Diagnostics.SymbolStore.SymbolToken)">
+      <summary>Gets a symbol reader method object when given the identifier of a method.</summary>
+      <returns>The symbol reader method object for the specified method identifier.</returns>
+      <param name="method">The metadata token of the method. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetMethod(System.Diagnostics.SymbolStore.SymbolToken,System.Int32)">
+      <summary>Gets a symbol reader method object when given the identifier of a method and its edit and continue version.</summary>
+      <returns>The symbol reader method object for the specified method identifier and version.</returns>
+      <param name="method">The metadata token of the method. </param>
+      <param name="version">The edit and continue version of the method. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetMethodFromDocumentPosition(System.Diagnostics.SymbolStore.ISymbolDocument,System.Int32,System.Int32)">
+      <summary>Gets a symbol reader method object that contains a specified position in a document.</summary>
+      <returns>The symbol reader method object for the specified position in the document.</returns>
+      <param name="document">The document in which the method is located. </param>
+      <param name="line">The position of the line within the document. The lines are numbered, beginning with 1. </param>
+      <param name="column">The position of column within the document. The columns are numbered, beginning with 1. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetNamespaces">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetSymAttribute(System.Diagnostics.SymbolStore.SymbolToken,System.String)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <param name="parent">This parameter is not used.</param>
+      <param name="name">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.GetVariables(System.Diagnostics.SymbolStore.SymbolToken)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+      <param name="parent">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.ReplaceSymbolStore(System.String,System.IntPtr)">
+      <summary>Replaces the existing symbol store with a delta symbol store. </summary>
+      <param name="fileName">The name of the file containing the symbol store, or null if using an in-memory store.</param>
+      <param name="stream">The pointer to the input stream for the symbol store, or <see cref="F:System.IntPtr.Zero" /> if using an on-disk store.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReader.UpdateSymbolStore(System.String,System.IntPtr)">
+      <summary>Updates the existing symbol store with a delta symbol store. </summary>
+      <param name="fileName">The name of the file containing the symbol store, or null if using an in-memory store.</param>
+      <param name="stream">The pointer to the input stream for the symbol store, or <see cref="F:System.IntPtr.Zero" /> if using an on-disk store.</param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymReader.UserEntryPoint">
+      <summary>Gets the metadata token for the method that was specified as the user entry point for the module, if any.</summary>
+      <returns>The metadata token for the method that is the user entry point for the module.</returns>
+      <exception cref="T:System.Runtime.InteropServices.COMException">An entry point was not found.</exception>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymReaderBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymReader" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReaderBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymReaderBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymReaderBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymScope">
+      <summary>Represents a lexical scope within <see cref="T:System.Diagnostics.SymbolStore.SymMethod" />, providing access to the start and end offsets of the scope, as well as its child and parent scopes.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedScope*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymScope" /> class using the specified pointer to an unmanaged ISymUnmanagedScope object.</summary>
+      <param name="pScope">A pointer to an unmanaged ISymUnmanagedScope object.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymScope" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymScope.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymScope.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymScope" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymScope.EndOffset">
+      <summary>Gets the end offset of the current lexical scope.</summary>
+      <returns>The ending Microsoft intermediate language (MSIL) offset. The offset is from the beginning of the method of the current lexical scope.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymScope" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.GetChildren">
+      <summary>Gets the child lexical scopes of the current lexical scope.</summary>
+      <returns>The lexical scopes enclosed by the current lexical scope.</returns>
+      <exception cref="T:System.OutOfMemoryException">There is insufficient memory to satisfy the request.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.GetLocals">
+      <summary>Gets the local variables within the current lexical scope.</summary>
+      <returns>The local variables within the current lexical scope.</returns>
+      <exception cref="T:System.OutOfMemoryException">There is insufficient memory to satisfy the request.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScope.GetNamespaces">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <returns>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymScope.Method">
+      <summary>Gets the method that contains the current lexical scope.</summary>
+      <returns>The method that contains the current lexical scope.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymScope.Parent">
+      <summary>Gets the parent lexical scope of the current scope.</summary>
+      <returns>The enclosing lexical scope of the current scope.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymScope.StartOffset">
+      <summary>Gets the start offset of the current lexical scope.</summary>
+      <returns>The starting Microsoft intermediate language (MSIL) offset. The offset is from the beginning of the method of the current lexical scope.</returns>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymScopeBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymScope" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScopeBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymScopeBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymScopeBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymVariable">
+      <summary>Represents a variable within a symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariable.#ctor(System.Diagnostics.SymbolStore.Private.ISymUnmanagedVariable*)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymVariable" /> class using the specified pointer to an unmanaged ISymUnmanagedVariable object. </summary>
+      <param name="pVariable">A pointer to the unmanaged ISymUnmanagedVariable object.</param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.AddressField1">
+      <summary>Gets the first address of a variable.</summary>
+      <returns>The first address of the variable.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.AddressField2">
+      <summary>Gets the second address of a variable.</summary>
+      <returns>The second address of the variable.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.AddressField3">
+      <summary>Gets the third address of a variable.</summary>
+      <returns>The third address of the variable.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.AddressKind">
+      <summary>Gets the <see cref="T:System.Diagnostics.SymbolStore.SymAddressKind" /> value describing the type of the address.</summary>
+      <returns>The type of the address. One of the <see cref="T:System.Diagnostics.SymbolStore.SymAddressKind" /> values.</returns>
+      <exception cref="T:System.ArgumentException">Unknown <see cref="T:System.Diagnostics.SymbolStore.SymAddressKind" />.</exception>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.Attributes">
+      <summary>Gets the attributes of the variable.</summary>
+      <returns>The variable attributes.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariable.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymVariable" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariable.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymVariable.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymVariable.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymVariable" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.EndOffset">
+      <summary>Gets the end offset of a variable within the scope of the variable.</summary>
+      <returns>The end offset of the variable.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariable.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymVariable" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariable.GetSignature">
+      <summary>Gets the variable signature.</summary>
+      <returns>The variable signature as an opaque blob.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.Name">
+      <summary>Gets the name of the variable.</summary>
+      <returns>The name of the variable.</returns>
+    </member>
+    <member name="P:System.Diagnostics.SymbolStore.SymVariable.StartOffset">
+      <summary>Gets the start offset of the variable within the scope of the variable.</summary>
+      <returns>The start offset of the variable.</returns>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymVariableBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymVariable" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariableBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymVariableBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymVariableBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymWriter">
+      <summary>Represents a symbol writer for managed code.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.#ctor(System.Boolean)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> class, specifying whether to create an underlying symbol writer.</summary>
+      <param name="noUnderlyingWriter">true if an underlying symbol writer will be provided by calling the <see cref="M:System.Diagnostics.SymbolStore.SymWriter.SetUnderlyingWriter(System.IntPtr)" /> method; false if a default underlying symbol writer should be created instead.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.Close">
+      <summary>Closes the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> and commits the symbols to the symbol store.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.CloseMethod">
+      <summary>Closes the current method.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.CloseNamespace">
+      <summary>Closes the most recent namespace. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.CloseScope(System.Int32)">
+      <summary>Closes the current lexical scope.</summary>
+      <param name="endOffset">The IL offset just past the last instruction in the scope.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineDocument(System.String,System.Guid,System.Guid,System.Guid)">
+      <summary>Defines a source document.</summary>
+      <returns>The <see cref="T:System.Diagnostics.SymbolStore.ISymbolDocumentWriter" /> object that represents the document.</returns>
+      <param name="url">The URL that identifies the document. </param>
+      <param name="language">The document language. This parameter can be <see cref="F:System.Guid.Empty" />. </param>
+      <param name="languageVendor">The identity of the vendor for the document language. This parameter can be <see cref="F:System.Guid.Empty" />.</param>
+      <param name="documentType">The type of the document. This parameter can be <see cref="F:System.Guid.Empty" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineField(System.Diagnostics.SymbolStore.SymbolToken,System.String,System.Reflection.FieldAttributes,System.Byte[],System.Diagnostics.SymbolStore.SymAddressKind,System.Int32,System.Int32,System.Int32)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <param name="parent">This parameter is not used.</param>
+      <param name="name">This parameter is not used.</param>
+      <param name="attributes">This parameter is not used.</param>
+      <param name="signature">This parameter is not used.</param>
+      <param name="addrKind">This parameter is not used.</param>
+      <param name="addr1">This parameter is not used.</param>
+      <param name="addr2">This parameter is not used.</param>
+      <param name="addr3">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineGlobalVariable(System.String,System.Reflection.FieldAttributes,System.Byte[],System.Diagnostics.SymbolStore.SymAddressKind,System.Int32,System.Int32,System.Int32)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <param name="name">This parameter is not used.</param>
+      <param name="attributes">This parameter is not used.</param>
+      <param name="signature">This parameter is not used.</param>
+      <param name="addrKind">This parameter is not used.</param>
+      <param name="addr1">This parameter is not used.</param>
+      <param name="addr2">This parameter is not used.</param>
+      <param name="addr3">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineLocalVariable(System.String,System.Reflection.FieldAttributes,System.Byte[],System.Diagnostics.SymbolStore.SymAddressKind,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>Defines a single variable in the current lexical scope.</summary>
+      <param name="name">The local variable name. </param>
+      <param name="attributes">The local variable attributes specified using the <see cref="T:System.Reflection.FieldAttributes" /> enumerator. </param>
+      <param name="signature">The local variable signature. </param>
+      <param name="addrKind">The address types for <paramref name="addr1" />, <paramref name="addr2" />, and <paramref name="addr3" /> using <see cref="T:System.Diagnostics.SymbolStore.SymAddressKind" />. </param>
+      <param name="addr1">The first address for the local variable specification. </param>
+      <param name="addr2">The second address for the local variable specification. </param>
+      <param name="addr3">The third address for the local variable specification. </param>
+      <param name="startOffset">The start offset for the variable. If zero, this parameter is ignored and the variable is defined throughout the entire scope. If nonzero, it falls within the offsets of the current scope. </param>
+      <param name="endOffset">The end offset for the variable. If zero, this parameter is ignored and the variable is defined throughout the entire scope. If nonzero, it falls within the offsets of the current scope. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineParameter(System.String,System.Reflection.ParameterAttributes,System.Int32,System.Diagnostics.SymbolStore.SymAddressKind,System.Int32,System.Int32,System.Int32)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <param name="name">This parameter is not used.</param>
+      <param name="attributes">This parameter is not used.</param>
+      <param name="sequence">This parameter is not used.</param>
+      <param name="addrKind">This parameter is not used.</param>
+      <param name="addr1">This parameter is not used.</param>
+      <param name="addr2">This parameter is not used.</param>
+      <param name="addr3">This parameter is not used.</param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.DefineSequencePoints(System.Diagnostics.SymbolStore.ISymbolDocumentWriter,System.Int32[],System.Int32[],System.Int32[],System.Int32[],System.Int32[])">
+      <summary>Defines a group of sequence points within the current method.</summary>
+      <param name="document">The document object for which the sequence points are being defined. </param>
+      <param name="offsets">The IL offset of the sequence points measured from the beginning of the method.</param>
+      <param name="lines">The starting line numbers of the sequence points. </param>
+      <param name="columns">The starting column numbers of the sequence points. </param>
+      <param name="endLines">The ending line numbers of the sequence points. </param>
+      <param name="endColumns">The ending column numbers of the sequence points. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.Dispose">
+      <summary>Releases the resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.Dispose(System.Boolean)">
+      <summary>Called by the <see cref="M:System.Diagnostics.SymbolStore.SymWriter.Dispose" /> and <see cref="M:System.Diagnostics.SymbolStore.SymWriter.Finalize" /> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> class. </summary>
+      <param name="disposing">true to release managed and unmanaged resources; false to release only unmanaged resources. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.Finalize">
+      <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.GetWriter">
+      <summary>Gets the underlying unmanaged symbol writer.</summary>
+      <returns>A raw pointer to the underlying unmanaged symbol writer.</returns>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.Initialize(System.IntPtr,System.String,System.Boolean)">
+      <summary>Sets the metadata emitter interface to associate with this writer.</summary>
+      <param name="emitter">The metadata emitter interface. </param>
+      <param name="filename">The file name for which the debugging symbols are written. Some writers require a file name, while others do not. If a file name is specified for a writer that does not use file names, this parameter is ignored. </param>
+      <param name="fFullBuild">true indicates that this is a full rebuild; false indicates an incremental compilation. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.InitWriter(System.Boolean)">
+      <summary>Initializes the symbol writer. This method should not be called directly; it is called by the constructor.</summary>
+      <param name="noUnderlyingWriter">true if an underlying symbol writer will be provided by calling the <see cref="M:System.Diagnostics.SymbolStore.SymWriter.SetUnderlyingWriter(System.IntPtr)" /> method; false if a default underlying symbol writer should be created instead.</param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.OpenMethod(System.Diagnostics.SymbolStore.SymbolToken)">
+      <summary>Opens a method in which to place symbol information.</summary>
+      <param name="method">The metadata token for the method to be opened. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.OpenNamespace(System.String)">
+      <summary>Opens a new namespace.</summary>
+      <param name="name">The name of the new namespace. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.OpenScope(System.Int32)">
+      <summary>Opens a new lexical scope in the current method.</summary>
+      <returns>An opaque scope identifier that can be used with <see cref="M:System.Diagnostics.SymbolStore.SymWriter.SetScopeRange(System.Int32,System.Int32,System.Int32)" /> to define the start and end offsets of a scope at a later time. In this case, the offsets passed to <see cref="M:System.Diagnostics.SymbolStore.SymWriter.OpenScope(System.Int32)" /> and <see cref="M:System.Diagnostics.SymbolStore.SymWriter.CloseScope(System.Int32)" /> are ignored. A scope identifier is valid only in the current method.</returns>
+      <param name="startOffset">The IL offset in bytes from the beginning of the method to the first instruction in the lexical scope. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.SetMethodSourceRange(System.Diagnostics.SymbolStore.ISymbolDocumentWriter,System.Int32,System.Int32,System.Diagnostics.SymbolStore.ISymbolDocumentWriter,System.Int32,System.Int32)">
+      <summary>Throws a <see cref="T:System.NotSupportedException" /> in all cases.</summary>
+      <param name="startDoc">This parameter is not used.</param>
+      <param name="startLine">This parameter is not used. </param>
+      <param name="startColumn">This parameter is not used. </param>
+      <param name="endDoc">This parameter is not used. </param>
+      <param name="endLine">This parameter is not used.</param>
+      <param name="endColumn">This parameter is not used. </param>
+      <exception cref="T:System.NotSupportedException">In all cases.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.SetScopeRange(System.Int32,System.Int32,System.Int32)">
+      <summary>Defines the offset range for the specified lexical scope.</summary>
+      <param name="scopeID">The identifier of the lexical scope returned by the <see cref="M:System.Diagnostics.SymbolStore.SymWriter.OpenScope(System.Int32)" /> method.</param>
+      <param name="startOffset">The IL offset of the beginning of the lexical scope. </param>
+      <param name="endOffset">The IL offset of the end of the lexical scope. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.SetSymAttribute(System.Diagnostics.SymbolStore.SymbolToken,System.String,System.Byte[])">
+      <summary>Defines an attribute when given the attribute name and the attribute value.</summary>
+      <param name="parent">The metadata token for which the attribute is being defined. </param>
+      <param name="name">The attribute name. </param>
+      <param name="data">The attribute value. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.SetUnderlyingWriter(System.IntPtr)">
+      <summary>Sets the underlying ISymUnmanagedWriter Interface (the corresponding unmanaged API) that a managed <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> uses to emit symbols.</summary>
+      <param name="underlyingWriter">An <see cref="T:System.IntPtr" /> type pointer to code that is the underlying writer. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.SetUserEntryPoint(System.Diagnostics.SymbolStore.SymbolToken)">
+      <summary>Identifies the user-defined method as the entry point for the current module.</summary>
+      <param name="entryMethod">The metadata token for the method that is the user entry point. </param>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriter.UsingNamespace(System.String)">
+      <summary>Specifies that the given, fully qualified namespace name is used within the open lexical scope.</summary>
+      <param name="fullName">The fully qualified name of the namespace. </param>
+    </member>
+    <member name="T:System.Diagnostics.SymbolStore.SymWriterBase">
+      <summary>Defines the core behavior of the <see cref="T:System.Diagnostics.SymbolStore.SymWriter" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriterBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.SymbolStore.SymWriterBase" /> class. </summary>
+    </member>
+    <member name="M:System.Diagnostics.SymbolStore.SymWriterBase.{dtor}">
+      <summary>Releases the resources held by the current instance. </summary>
+    </member>
+  </members>
+</doc>

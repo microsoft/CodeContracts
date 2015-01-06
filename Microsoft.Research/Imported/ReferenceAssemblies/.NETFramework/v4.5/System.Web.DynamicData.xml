@@ -1,0 +1,2275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Web.DynamicData</name>
+  </assembly>
+  <members>
+    <member name="T:System.Web.DynamicData.ContainerType">
+      <summary>Specifies the data-control container type. </summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ContainerType.List">
+      <summary>Indicates a list container that implements the <see cref="T:System.Web.UI.WebControls.IDataBoundListControl" /> interface, such as a <see cref="T:System.Web.UI.WebControls.ListView" /> control, a <see cref="T:System.Web.UI.WebControls.GridView" /> control, or a <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ContainerType.Item">
+      <summary>Indicates an item container that implements the <see cref="T:System.Web.UI.WebControls.IDataBoundItemControl" /> interface, such as a <see cref="T:System.Web.UI.WebControls.DetailsView" /> control or a <see cref="T:System.Web.UI.WebControls.FormView" /> control.</summary>
+    </member>
+    <member name="T:System.Web.DynamicData.ContextConfiguration">
+      <summary>Provides information for a data-context instance in order to allow customization.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ContextConfiguration.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.ContextConfiguration" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.ContextConfiguration.MetadataProviderFactory">
+      <summary>Gets or sets the metadata provider. </summary>
+      <returns>The type of the metadata provider. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ContextConfiguration.ScaffoldAllTables">
+      <summary>Gets or sets a value that indicates whether scaffolding is enabled.</summary>
+      <returns>true if scaffolding is enabled; otherwise, false. The default is false.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.ControlFilterExpression">
+      <summary>Modifies a database query by using the data key of the item that is selected in a data-bound control. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.ControlFilterExpression" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.ControlFilterExpression.Column">
+      <summary>Gets or sets the name of the column that the query is based on.</summary>
+      <returns>The name of the column that the query is based on.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ControlFilterExpression.ControlID">
+      <summary>Gets or sets the ID of the source data-bound control. </summary>
+      <returns>The ID of the source data-bound control. </returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the data source query to modify. </summary>
+      <returns>The object that represents the data source query that is modified by this <see cref="T:System.Web.DynamicData.ControlFilterExpression" /> instance.</returns>
+      <param name="source">The data source query to modify.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.LoadViewState(System.Object)">
+      <summary>Restores the previously saved view state. </summary>
+      <param name="savedState">The state to restore.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.SaveViewState">
+      <summary>Saves the changes to view state since the time the page was posted to the server.</summary>
+      <returns>The object that contains the changes to view state. If there is no view state associated with the object, this method returns null.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.SetContext(System.Web.UI.Control,System.Web.HttpContext,System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Initializes the filter expression with data source information.</summary>
+      <param name="owner">The control in which the <see cref="T:System.Web.DynamicData.ControlFilterExpression" /> instance is contained, such as the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control.</param>
+      <param name="context">The application's current <see cref="T:System.Web.HttpContext" /> object. </param>
+      <param name="dataSource">The target data source for the <see cref="T:System.Web.DynamicData.ControlFilterExpression" /> instance. If the <see cref="T:System.Web.DynamicData.DynamicFilterExpression" /> instance is contained in the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control, this parameter is the data source that the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control refers to </param>
+    </member>
+    <member name="M:System.Web.DynamicData.ControlFilterExpression.TrackViewState">
+      <summary>Causes the <see cref="T:System.Web.DynamicData.ControlFilterExpression" /> object to track changes to its view state so they can be stored in the control's view state object and to be persisted across requests for the same page.</summary>
+    </member>
+    <member name="T:System.Web.DynamicData.DataControlReference">
+      <summary>Enables the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> to declaratively define data controls that it manages.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReference.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DataControlReference" /> class. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DataControlReference.ControlID">
+      <summary>Gets the ID of the data-bound control that is managed by the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+      <returns>The ID of the data-bound control that is managed by the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DataControlReference.Owner">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control that contains the data control.</summary>
+      <returns>The <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control that contains the data control.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReference.ToString">
+      <summary>Gets the literal string DataControl:  that has the value of the <see cref="P:System.Web.DynamicData.DataControlReference.ControlID" /> control appended to it.</summary>
+      <returns>The literal string DataControl:  that has the value of the <see cref="P:System.Web.DynamicData.DataControlReference.ControlID" /> property appended to it.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DataControlReferenceCollection">
+      <summary>Represents a collection of <see cref="T:System.Web.UI.WebControls.MenuItemBinding" /> objects.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReferenceCollection.#ctor(System.Web.DynamicData.DynamicDataManager)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DataControlReferenceCollection" /> class.</summary>
+      <param name="owner">The container object.</param>
+      <exception cref="T:System.ArgumentNullException">The <paramref name="owner" /> parameter is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReferenceCollection.InsertItem(System.Int32,System.Web.DynamicData.DataControlReference)">
+      <summary>Inserts a data-control reference into the data-control reference collection.</summary>
+      <param name="index">The index that indicates where to insert the data control.</param>
+      <param name="item">The data control to insert.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DataControlReferenceCollection.Owner">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control that contains the data control. </summary>
+      <returns>The <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control that contains the data control. </returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReferenceCollection.RemoveItem(System.Int32)">
+      <summary>Removes a data-control reference from the collection.</summary>
+      <param name="index">The index of the data-control reference to remove.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DataControlReferenceCollection.SetItem(System.Int32,System.Web.DynamicData.DataControlReference)">
+      <summary>Sets the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control that contains the data-control reference.</summary>
+      <param name="index">The index of the data-control reference to set.</param>
+      <param name="item">The data control.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DefaultAutoFieldGenerator">
+      <summary>Generates dynamic data fields (columns) for data-bound controls automatically. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DefaultAutoFieldGenerator.#ctor(System.Web.DynamicData.MetaTable)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DefaultAutoFieldGenerator" /> class.</summary>
+      <param name="table">The metadata for the table to generate dynamic fields for.</param>
+      <exception cref="T:System.ArgumentNullException">The table is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DefaultAutoFieldGenerator.CreateField(System.Web.DynamicData.MetaColumn,System.Web.DynamicData.ContainerType,System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Generates a dynamic data field. </summary>
+      <returns>The dynamic field to create.</returns>
+      <param name="column">The metadata for the column to create the dynamic field for.</param>
+      <param name="containerType">The data-bound control that contains the dynamic field.</param>
+      <param name="mode">The access mode for the dynamic field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DefaultAutoFieldGenerator.GenerateFields(System.Web.UI.Control)">
+      <summary>Generates <see cref="T:System.Web.DynamicData.DynamicField" /> objects based on metadata information for the table.</summary>
+      <returns>A collection of <see cref="T:System.Web.DynamicData.DynamicField" /> objects.</returns>
+      <param name="control">The data-bound control that contains the dynamic data field.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicControl">
+      <summary>Displays the content that is defined for the field in templated data-bound controls, using ASP.NET Dynamic Data features.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicControl" /> class. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.#ctor(System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicControl" /> class with the specified mode. </summary>
+      <param name="mode">One of the enumeration values that specifies the mode of the control.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.ApplyFormatInEditMode">
+      <summary>Gets or sets a value that indicates whether the formatting string specified by the <see cref="P:System.Web.DynamicData.DynamicControl.DataFormatString" /> property is applied to field values when the field is in edit mode.</summary>
+      <returns>true if the formatting string is applied; otherwise, false. The default is false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.Column">
+      <summary>Gets or sets the column object that is associated with the control.</summary>
+      <returns>The column object that is associated with the control.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.ConvertEmptyStringToNull">
+      <summary>Gets or sets a value that indicates whether empty string values ("") are automatically converted to null values when the data field is updated in the data source.</summary>
+      <returns>true if empty string values are automatically converted to null values; otherwise, false. The default is false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.CssClass">
+      <summary>Gets or sets the Cascading Style Sheet (CSS) class that specifies the display styles for the <see cref="T:System.Web.DynamicData.DynamicControl" /> control content.</summary>
+      <returns>The name of the CSS class.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.DataField">
+      <summary>Gets or sets the name of the data field that the <see cref="T:System.Web.DynamicData.DynamicControl" /> control is bound to.</summary>
+      <returns>The name of the data field to bind the <see cref="T:System.Web.DynamicData.DynamicControl" /> control to. The default is an empty string (""), which indicates that this property is not set.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.DataFormatString">
+      <summary>Gets or sets a string that specifies the display format for the value of the field.</summary>
+      <returns>A formatting string that specifies the display format for the value of the field. The default is an empty string (""), which indicates that no special formatting is applied to the field value.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.FieldTemplate">
+      <summary>Gets the field template that is created for the <see cref="T:System.Web.DynamicData.DynamicControl" /> control. </summary>
+      <returns>The field template that is created for the <see cref="T:System.Web.DynamicData.DynamicControl" /> control.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.GetAttribute(System.String)">
+      <summary>Retrieves the attribute value by using the specified key.</summary>
+      <returns>The value of the attribute.</returns>
+      <param name="key">The name of the attribute.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.HtmlEncode">
+      <summary>Gets or sets a value that indicates whether the data for the control is HTML-encoded before rendering.</summary>
+      <returns>true if the data for the control is HTML-encoded before rendering; otherwise, false. The default is true.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.Mode">
+      <summary>Gets or sets the rendering mode.</summary>
+      <returns>One of the enumeration values that specifies the rendering mode for the control. The default is <see cref="F:System.Web.UI.WebControls.DataBoundControlMode.ReadOnly" />.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.NullDisplayText">
+      <summary>Gets or sets the caption that is displayed for a data field when the field value is null.</summary>
+      <returns>The caption that is displayed for a data field when the field value is null. The default is an empty string (""), which indicates that this property is not set.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.OnInit(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Init" /> event.</summary>
+      <param name="e">The event data.</param>
+      <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Web.DynamicData.DynamicControl.DataField" /> property is not set.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>Renders the <see cref="T:System.Web.DynamicData.DynamicControl" /> control content to the client's browser by using the specified <see cref="T:System.Web.UI.HtmlTextWriter" /> object.</summary>
+      <param name="writer">The object that is used to render the <see cref="T:System.Web.DynamicData.DynamicControl" /> control content on the client's browser.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControl.SetAttribute(System.String,System.String)">
+      <summary>Sets the specified attribute to the specified value. </summary>
+      <param name="key">The name of the attribute to set.</param>
+      <param name="value">The value to assign to the attribute.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.System#Web#DynamicData#IFieldTemplateHost#FormattingOptions">
+      <summary>For a description of this member, see <see cref="P:System.Web.DynamicData.IFieldTemplateHost.FormattingOptions" />.</summary>
+      <returns>The formatting options to be applied to the field template.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.Table">
+      <summary>Gets the table object that is associated with the control.</summary>
+      <returns>The table object that is associated with the control.</returns>
+      <exception cref="T:System.Exception">The <see cref="T:System.Web.DynamicData.DynamicControl" /> control is inside a data-bound control that is not bound to a data source control that implements the <see cref="T:System.Web.DynamicData.IDynamicDataSource" /> interface.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.UIHint">
+      <summary>Gets or sets the name of the field template that is used to render the data field.</summary>
+      <returns>The name of the field template that is used to render the data field. The default is an empty string (""), which indicates that the field template will be rendered based on the data field type or on metadata information applied to the data model.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControl.ValidationGroup">
+      <summary>Gets or sets the validation group name for the control.</summary>
+      <returns>The validation group name for the control.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicControlParameter">
+      <summary>Represents a parameter that is used for master-detail filters in which a data source gets information from another data control.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControlParameter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControlParameter.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="System.Web.DynamicData.DynamicControlParameter" /> class, bound to the specified control.</summary>
+      <param name="controlId">The ID of the control whose values the parameter represents.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicControlParameter.ControlId">
+      <summary>Gets or sets the unique identifier of the control that the <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> object binds to.</summary>
+      <returns>The unique identifier of the control from which the <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> object gets its data.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControlParameter.Evaluate(System.Web.HttpContext,System.Web.UI.Control)">
+      <summary>Throws an <see cref="T:System.InvalidOperationException" /> exception to indicate that the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control is missing.</summary>
+      <returns>A <see cref="T:System.InvalidOperationException" /> object that indicates the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control is missing.</returns>
+      <param name="context">The HTTP context.</param>
+      <param name="control">The dynamic control parameter. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicControlParameter.GetWhereParameters(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Returns the collection of parameters that are used to create a Where clause for when the data source is queried.</summary>
+      <returns>A collection of <see cref="T:System.Web.UI.WebControls.Parameter" /> objects that represent the query parameters for the specified <see cref="T:System.Web.DynamicData.IDynamicDataSource" /> instance.</returns>
+      <param name="dataSource">The <see cref="T:System.Web.DynamicData.IDynamicDataSource" /> instance to get the parameters from.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicDataExtensions">
+      <summary>Provides extension methods that are used by ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.ConvertEditedValue(System.Web.DynamicData.IFieldFormattingOptions,System.String)">
+      <summary>Returns the value provided by a user for a control that is being validated.</summary>
+      <returns>null if <paramref name="value" /> is null or an empty string and the <see cref="P:System.Web.DynamicData.IFieldFormattingOptions.ConvertEmptyStringToNull" /> property of <paramref name="formattingOptions" /> is true; null if <paramref name="value" /> is not null or an empty string and matches the <see cref="P:System.Web.DynamicData.IFieldFormattingOptions.NullDisplayText" /> property of <paramref name="formattingOptions" />; otherwise, the unchanged value of <paramref name="value" />.</returns>
+      <param name="formattingOptions">The formatting options object, as defined by the <see cref="T:System.Web.DynamicData.IFieldFormattingOptions" /> object.</param>
+      <param name="value">The input value to be converted.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.EnablePersistedSelection(System.Web.UI.WebControls.BaseDataBoundControl)">
+      <summary>Enables selection to be persisted in data controls that support selection and paging.</summary>
+      <param name="dataBoundControl">The data bound control.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.ExpandDynamicWhereParameters(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Expands dynamic filters into Where parameters that are usable by the data source.</summary>
+      <param name="dataSource">The data source object.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)">
+      <summary>Returns the data source that is associated with the data control for the specified control.</summary>
+      <returns>The data source that is associated with the data control for the specified control.</returns>
+      <param name="current">A control inside the hierarchy of a data-bound control whose containing control you want to find.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)">
+      <summary>Returns the field template for the specified column in the specified control's naming container.</summary>
+      <returns>The field template for the specified column in the specified control's naming container.</returns>
+      <param name="control">The containing control.</param>
+      <param name="columnName">The name of the column.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)">
+      <summary>Returns the metatable object for the containing data control.</summary>
+      <returns>The metatable object for the containing data control.</returns>
+      <param name="current">The current control.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.FormatEditValue(System.Web.DynamicData.IFieldFormattingOptions,System.Object)">
+      <summary>Formats the specified field value by using the specified formatting options.</summary>
+      <returns>The field value that has been formatted by using the specified formatting options.</returns>
+      <param name="formattingOptions">The <see cref="T:System.Web.DynamicData.IFieldFormattingOptions" /> instance to use.</param>
+      <param name="fieldValue">The field value to format.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.FormatValue(System.Web.DynamicData.IFieldFormattingOptions,System.Object)">
+      <summary>Formats the specified field value by using the specified formatting options.</summary>
+      <returns>The field value that has been formatted by using the specified formatting options.</returns>
+      <param name="formattingOptions">The <see cref="T:System.Web.DynamicData.IFieldFormattingOptions" /> instance to use.</param>
+      <param name="fieldValue">The field value to format.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.IDataSource)">
+      <summary>Gets the collection of the default values for the specified data source.</summary>
+      <returns>The collection of default values that are associated with the <see cref="T:System.Web.UI.IDataSource" /> object.</returns>
+      <param name="dataSource">The data source for which to get the default values.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.INamingContainer)">
+      <summary>Gets the collection of the default values for the specified data control.</summary>
+      <returns>The collection of default values that are associated with the <see cref="T:System.Web.UI.INamingContainer" /> object.</returns>
+      <param name="control">The data control for which to get the default values.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetEnumType(System.Web.DynamicData.MetaColumn)">
+      <summary>Gets the type of the enumeration that represents the column.</summary>
+      <returns>The type of the enumeration that represents the column if the underlying type is an enumeration; otherwise, null.</returns>
+      <param name="column">The column to get the enumeration type for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.IDataSource)">
+      <summary>Gets the metadata for a table in the specified data source object.</summary>
+      <returns>The table metadata associated with the <see cref="T:System.Web.UI.IDataSource" /> object.</returns>
+      <param name="dataSource">The data source object for which to get the table metadata. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.INamingContainer)">
+      <summary>Gets the table metadata for the specified data control.</summary>
+      <returns>The table metadata that is associated with the <see cref="T:System.Web.UI.INamingContainer" /> object.</returns>
+      <param name="control">The data control for which to get the table metadata. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.GetTable(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Returns the <see cref="T:System.Web.DynamicData.MetaTable" /> object that is associated with the specified data source control.</summary>
+      <returns>The table that is associated with the specified data source control.</returns>
+      <param name="dataSource">The data source control.</param>
+      <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Web.DynamicData.IDynamicDataSource.EntitySetName" /> property of <paramref name="dataSource" /> is null.-or-The <see cref="P:System.Web.DynamicData.IDynamicDataSource.ContextType" /> property of <paramref name="dataSource" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.LoadWith``1(System.Web.UI.WebControls.LinqDataSource)">
+      <summary>Sets the <see cref="T:System.Data.Linq.DataLoadOptions" /> value of a LINQ-to-SQL data source to force all the foreign-key entities to be loaded.</summary>
+      <param name="dataSource">The LINQ data source to load the foreign keys from.</param>
+      <typeparam name="TEntity">The type of the entities that are returned by the data source.</typeparam>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.LoadWithForeignKeys(System.Web.UI.WebControls.LinqDataSource,System.Type)">
+      <summary>Sets the <see cref="T:System.Data.Linq.DataLoadOptions" /> value of a LINQ-to-SQL data source to force all the foreign-key entities to be loaded.</summary>
+      <param name="dataSource">The LINQ data source to load the foreign keys from.</param>
+      <param name="rowType">The type of the entities that are returned by the data source.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable)">
+      <summary>Sets the table metadata for the specified data control.</summary>
+      <param name="control">The <see cref="T:System.Web.UI.INamingContainer" /> object that contains the table.</param>
+      <param name="table">The table metadata.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Collections.Generic.IDictionary{System.String,System.Object})">
+      <summary>Sets the table metadata and default value mapping for the specified data control.</summary>
+      <param name="control">The <see cref="T:System.Web.UI.INamingContainer" /> object that contains the table.</param>
+      <param name="table">The table metadata.</param>
+      <param name="defaultValues">The default value mapping.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Object)">
+      <summary>Sets the table metadata and default value mapping for the specified data control.</summary>
+      <param name="control">The <see cref="T:System.Web.UI.INamingContainer" /> object that contains the table.</param>
+      <param name="table">The table metadata.</param>
+      <param name="defaultValues">The default value mapping.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.IDataSource,System.Web.DynamicData.MetaTable@)">
+      <summary>Determines whether table metadata is available.</summary>
+      <returns>true if table metadata is available; otherwise, false.</returns>
+      <param name="dataSource">The data source that contains the table.</param>
+      <param name="table">When this method returns, contains the table metadata. This parameter is passed uninitialized. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable@)">
+      <summary>Determines whether table metadata is available.</summary>
+      <returns>true if table metadata is available; otherwise, false.</returns>
+      <param name="control">The <see cref="T:System.Web.UI.INamingContainer" /> object that contains the table. </param>
+      <param name="table">When this method returns, contains the table metadata. This parameter is passed uninitialized.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicDataManager">
+      <summary>Enables dynamic behavior for ASP.NET Web controls that support ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataManager.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataManager.AutoLoadForeignKeys">
+      <summary>Gets or sets a value that indicates whether foreign keys are automatically loaded for a LINQ-to-SQL data context.</summary>
+      <returns>true if foreign keys are automatically loaded; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataManager.ClientID">
+      <summary>Gets the <see cref="P:System.Web.UI.Control.ClientID" /> property that is generated by ASP.NET. </summary>
+      <returns>The <see cref="P:System.Web.UI.Control.ClientID" /> property that is generated by ASP.NET. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataManager.ClientIDMode">
+      <summary>Gets the algorithm that is used to generate the value in the <see cref="P:System.Web.UI.Control.ClientID" /> property.</summary>
+      <returns>A value that indicates how the <see cref="P:System.Web.UI.Control.ClientID" /> property is generated. This property cannot be set.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataManager.DataControls">
+      <summary>Gets the list of data-control references in the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+      <returns>The list of data-control references in the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataManager.OnInit(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Init" /> event.</summary>
+      <param name="e">The event data. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataManager.OnLoad(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Load" /> event. </summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataManager.RegisterControl(System.Web.UI.Control)">
+      <summary>Registers a control with the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+      <param name="control">The data control to register.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataManager.RegisterControl(System.Web.UI.Control,System.Boolean)">
+      <summary>Registers a control with the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control.</summary>
+      <param name="control">The data control to register.</param>
+      <param name="setSelectionFromUrl">true to use the primary key to set the selected item; otherwise, the selected item is not set.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataManager.Visible">
+      <summary>Gets a value that indicates whether the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> control is visible. </summary>
+      <returns>true if the <see cref="T:System.Web.DynamicData.DynamicDataManager" /> is visible; otherwise false.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicDataRoute">
+      <summary>Represents a route that is used by ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRoute.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicDataRoute" /> class by using the specified URL pattern.</summary>
+      <param name="url">The pattern for the URL.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRoute.Action">
+      <summary>Gets or sets the name of an action for a route.</summary>
+      <returns>The action name for a route.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRoute.GetActionFromRouteData(System.Web.Routing.RouteData)">
+      <summary>Returns the action from the <see cref="T:System.Web.Routing.RouteData" /> object for the current Dynamic Data Web request.</summary>
+      <returns>The action. For a list of possible values, see <see cref="T:System.Web.DynamicData.PageAction" />.</returns>
+      <param name="routeData">The route data that pertains to the current request. For more information, see <see cref="M:System.Web.DynamicData.DynamicDataRoute.GetRouteData(System.Web.HttpContextBase)" />.</param>
+      <exception cref="T:System.InvalidOperationException">The action was not found in the Web request routing information.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRoute.GetRouteData(System.Web.HttpContextBase)">
+      <summary>Returns routing information for a specific Web request.</summary>
+      <returns>The routing information for the Web request.</returns>
+      <param name="httpContext">Contains information about the Web request. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRoute.GetTableFromRouteData(System.Web.Routing.RouteData)">
+      <summary>Identifies the table that is associated with a Dynamic Data Web page request.</summary>
+      <returns>The metadata that describes a table that is displayed by Dynamic Data.</returns>
+      <param name="routeData">The route data that pertains to the current request. For more information, see <see cref="M:System.Web.DynamicData.DynamicDataRoute.GetRouteData(System.Web.HttpContextBase)" />.</param>
+      <exception cref="T:System.InvalidOperationException">The table was not found in the Web request routing information.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRoute.GetVirtualPath(System.Web.Routing.RequestContext,System.Web.Routing.RouteValueDictionary)">
+      <summary>Returns the virtual path of a route.</summary>
+      <returns>The virtual path.</returns>
+      <param name="requestContext">Contains information about the Web request.</param>
+      <param name="values">The collection of route objects for the current application.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRoute.Model">
+      <summary>Gets or sets the data model to which the route applies.</summary>
+      <returns>The data-model metadata that the route applies to. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRoute.RouteHandler">
+      <summary>Gets or sets the object that processes requests for the route.</summary>
+      <returns>The handler that is used to process requests for the route.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRoute.Table">
+      <summary>Gets or sets the name of the table for the route.</summary>
+      <returns>The name of the table that is associated with the route.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRoute.ViewName">
+      <summary>Gets or sets the name of the .aspx page that is associated with a route.</summary>
+      <returns>The name of the .aspx page that is associated with the route. If no page is specified for the route, the property returns the value of the <see cref="P:System.Web.DynamicData.DynamicDataRoute.Action" /> property with ".aspx" appended to it.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicDataRouteHandler">
+      <summary>Processes ASP.NET Dynamic Data route patterns.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicDataRouteHandler" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.CreateHandler(System.Web.DynamicData.DynamicDataRoute,System.Web.DynamicData.MetaTable,System.String)">
+      <summary>Creates a handler to process a request.</summary>
+      <returns>The handler that can process a request.</returns>
+      <param name="route">The matched route.</param>
+      <param name="table">The metadata table that is contained in the route.</param>
+      <param name="action">The action that is contained in the route.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.GetCustomPageVirtualPath(System.Web.DynamicData.MetaTable,System.String)">
+      <summary>Creates the virtual path of a custom page.</summary>
+      <returns>The virtual path of the custom page.</returns>
+      <param name="table">The data-model metadata table that the page is for.</param>
+      <param name="viewName">The name of the view action, which is the page name without the ".aspx" file-name extension.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.GetRequestContext(System.Web.HttpContext)">
+      <summary>Returns the <see cref="T:System.Web.Routing.RequestContext" /> instance for the current Web request.</summary>
+      <returns>The request context for the Web request.</returns>
+      <param name="httpContext">The context information that is associated with the Web request.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="httpContext" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.GetRequestMetaTable(System.Web.HttpContext)">
+      <summary>Returns a <see cref="T:System.Web.DynamicData.MetaTable" /> object from the <see cref="T:System.Web.HttpContext" /> object.</summary>
+      <returns>The data-model metadata table that is associated with the current Web request, or null if the request is not a Dynamic Data request</returns>
+      <param name="httpContext">The context information that is associated with the Web request.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="httpContext" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.GetScaffoldPageVirtualPath(System.Web.DynamicData.MetaTable,System.String)">
+      <summary>Returns the virtual path of a page that is enabled for Dynamic Data.</summary>
+      <returns>The virtual path of the page.</returns>
+      <param name="table">The metadata table that the page is for.</param>
+      <param name="viewName">The name of the view action, which is the page name without the ".aspx" file-name extension.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicDataRouteHandler.Model">
+      <summary>Gets or sets the <see cref="T:System.Web.DynamicData.MetaModel" /> object that the <see cref="T:System.Web.DynamicData.DynamicDataRouteHandler" /> class is associated with.</summary>
+      <returns>The data model that the <see cref="T:System.Web.DynamicData.DynamicDataRouteHandler" /> class is associated with.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.SetRequestMetaTable(System.Web.HttpContext,System.Web.DynamicData.MetaTable)">
+      <summary>Sets the <see cref="T:System.Web.DynamicData.MetaTable" /> object that is associated with the current <see cref="T:System.Web.HttpRequest" /> object. </summary>
+      <param name="httpContext">The context information that is associated with the Web request.</param>
+      <param name="table">The metatable that is associated with the current request.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicDataRouteHandler.System#Web#Routing#IRouteHandler#GetHttpHandler(System.Web.Routing.RequestContext)">
+      <summary>Returns the handler that processes ASP.NET Dynamic Data route patterns.</summary>
+      <returns>The handler that processes ASP.NET Dynamic Data route patterns.</returns>
+      <param name="requestContext">The context information that is associated with the Web request.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicEntity">
+      <summary>Provides an ASP.NET control that represents an entity for use by ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicEntity.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicEntity" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicEntity.Mode">
+      <summary>Gets or sets the <see cref="T:System.Web.UI.WebControls.DataBoundControlMode" /> value for the <see cref="T:System.Web.DynamicData.DynamicEntity" /> control. </summary>
+      <returns>The mode.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicEntity.OnLoad(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Load" /> event.</summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicEntity.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>Sends server control content to a specified <see cref="T:System.Web.UI.HtmlTextWriter" /> object, which renders the content.</summary>
+      <param name="writer">The <see cref="T:System.Web.UI.HtmlTextWriter" /> object that receives the server control content. </param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicEntity.UIHint">
+      <summary>Gets or sets the <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> attribute for the entity.</summary>
+      <returns>The <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> attribute for the entity.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicEntity.ValidationGroup">
+      <summary>Gets or sets the validation group for the <see cref="T:System.Web.DynamicData.DynamicEntity" /> control.</summary>
+      <returns>The validation group.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicField">
+      <summary>Represents a data field that is displayed in a data-bound control that uses ASP.NET Dynamic Data features.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicField" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.ApplyFormatInEditMode">
+      <summary>Gets or sets a value that indicates whether the formatted string that is specified by the <see cref="P:System.Web.DynamicData.DynamicField.DataFormatString" /> property is applied to field value when the data field is in edit mode.</summary>
+      <returns>true if the <see cref="T:System.Web.DynamicData.DynamicField" /> applies formatting in edit mode; otherwise, false. The default is false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.Column">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaColumn" /> object that this <see cref="T:System.Web.DynamicData.DynamicField" /> object is associated with.</summary>
+      <returns>The meta column.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.ConfigureDynamicControl(System.Web.DynamicData.DynamicControl)">
+      <summary>Provides a mechanism to modify a <see cref="T:System.Web.DynamicData.DynamicControl" /> object that was created by the <see cref="M:System.Web.DynamicData.DynamicField.InitializeCell(System.Web.UI.WebControls.DataControlFieldCell,System.Web.UI.WebControls.DataControlCellType,System.Web.UI.WebControls.DataControlRowState,System.Int32)" /> method.</summary>
+      <param name="control">The control to modify.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.ConvertEmptyStringToNull">
+      <summary>Gets or sets a value that indicates whether empty string values ("") are automatically converted to null values when the data field is updated in the data source.</summary>
+      <returns>true to automatically convert empty string values to null values; otherwise, false. The default is false.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.CopyProperties(System.Web.UI.WebControls.DataControlField)">
+      <summary>Copies the properties of the current <see cref="T:System.Web.DynamicData.DynamicField" /> object to the specified <see cref="T:System.Web.UI.WebControls.DataControlField" /> object.</summary>
+      <param name="newField">The <see cref="T:System.Web.UI.WebControls.DataControlField" /> to copy the properties of the current <see cref="T:System.Web.DynamicData.DynamicField" /> to.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.CreateDynamicControl">
+      <summary>Provides a mechanism for classes that derive from <see cref="T:System.Web.DynamicData.DynamicField" /> to override how a <see cref="T:System.Web.DynamicData.DynamicControl" /> object is created.</summary>
+      <returns>A new dynamic control.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.CreateField">
+      <summary>Creates and returns a new instance of the <see cref="T:System.Web.DynamicData.DynamicField" /> class.</summary>
+      <returns>A new instance of the <see cref="T:System.Web.DynamicData.DynamicField" /> class.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.DataField">
+      <summary>Gets or sets the name of the data field to bind the <see cref="T:System.Web.DynamicData.DynamicField" /> object to.</summary>
+      <returns>The name of the data field that the <see cref="T:System.Web.DynamicData.DynamicField" /> object is bound to.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.DataFormatString">
+      <summary>Gets or sets the string that specifies the display format for the value of the data field.</summary>
+      <returns>A formatting string that specifies the display format for the value of the data field. The default is an empty string (""), which indicates that no special formatting is applied to the value.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.ExtractValuesFromCell(System.Collections.Specialized.IOrderedDictionary,System.Web.UI.WebControls.DataControlFieldCell,System.Web.UI.WebControls.DataControlRowState,System.Boolean)">
+      <summary>Extracts the value of the data field from the current table cell and adds the value to the specified dictionary.</summary>
+      <param name="dictionary">The dictionary that will hold the cell values.</param>
+      <param name="cell">The cell that contains the text or controls of the <see cref="T:System.Web.DynamicData.DynamicField" /> object.</param>
+      <param name="rowState">One of the enumeration values that specifies the row state.</param>
+      <param name="includeReadOnly">true to include the values of read-only fields in <paramref name="dictionary" />; otherwise, false.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.GetAttribute(System.String)">
+      <summary>Retrieves the specified attribute value.</summary>
+      <returns>The value of the attribute.</returns>
+      <param name="key">The key of the attribute to get.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.HeaderText">
+      <summary>Gets or sets the text that is displayed in the header of the data-bound control that contains the <see cref="T:System.Web.DynamicData.DynamicField" /> object.</summary>
+      <returns>The text that is displayed in the header of the data-bound control that contains the <see cref="T:System.Web.DynamicData.DynamicField" /> object. </returns>
+      <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Web.DynamicData.DynamicField" /> object is inside a data-bound control that is not bound to a data source control that implements the <see cref="T:System.Web.DynamicData.IDynamicDataSource" /> interface.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.HtmlEncode">
+      <summary>Gets or sets a value that indicates whether data field values are HTML-encoded before they are displayed in a <see cref="T:System.Web.DynamicData.DynamicField" /> object.</summary>
+      <returns>true if field values are HTML-encoded before they are displayed; otherwise, false. The default is true.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.InitializeCell(System.Web.UI.WebControls.DataControlFieldCell,System.Web.UI.WebControls.DataControlCellType,System.Web.UI.WebControls.DataControlRowState,System.Int32)">
+      <summary>Adds text or controls to the specified cell.</summary>
+      <param name="cell">The object that contains the text or controls of the <see cref="T:System.Web.DynamicData.DynamicField" /> object.</param>
+      <param name="cellType">One of the enumeration values that specifies the function of the <paramref name="cell" /> object.</param>
+      <param name="rowState">One of the enumeration values that specifies the row state.</param>
+      <param name="rowIndex">The index of the row that the <paramref name="cell" /> object is contained in.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.NullDisplayText">
+      <summary>Gets or sets the caption that is displayed for a data field when the field value is null.</summary>
+      <returns>The caption that is displayed for a data field when the field value is null. The default is an empty string (""), which indicates that this property is not set.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.ReadOnly">
+      <summary>Gets the read-only state of the dynamic field.</summary>
+      <returns>The read-only state of the dynamic field.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicField.SetAttribute(System.String,System.String)">
+      <summary>Sets an attribute that is associated with the <see cref="T:System.Web.DynamicData.DynamicField" /> object.</summary>
+      <param name="key">The name of the attribute to be set.</param>
+      <param name="value">The attribute value.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.SortExpression">
+      <summary>Gets or sets the sort expression that is used when the data field is used to sort the data source by.</summary>
+      <returns>The sort expression that is used when the data field is used to sort the data source by. </returns>
+      <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Web.DynamicData.DynamicField" /> object is inside a data-bound control that is not bound to a data source control that implements the <see cref="T:System.Web.DynamicData.IDynamicDataSource" /> interface.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.UIHint">
+      <summary>Gets or sets the field template to use for displaying the data field.</summary>
+      <returns>The name of the field template to use for displaying the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicField.ValidationGroup">
+      <summary>Gets the <see cref="P:System.Web.DynamicData.DynamicControl.ValidationGroup" /> object that this <see cref="T:System.Web.DynamicData.DynamicField" /> object is associated with.</summary>
+      <returns>The name of the validation group to which this validation control belongs. The default is an empty string (""), which indicates that this property is not set.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicFilter">
+      <summary>Displays the UI for filtering table rows using a specified column.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicFilter" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicFilter.Column">
+      <summary>Gets or sets the table column to use for filtering.</summary>
+      <returns>The table column to use for filtering.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicFilter.DataField">
+      <summary>Gets or sets the name of the column to use for table row filtering.</summary>
+      <returns>The name of the column used for table row filtering.</returns>
+    </member>
+    <member name="E:System.Web.DynamicData.DynamicFilter.FilterChanged">
+      <summary>Occurs when the user select a value for the foreign key.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicFilter.FilterTemplate">
+      <summary>Gets the filter template that is associated with the current instance of this control.</summary>
+      <returns>The filter template that is associated with the current instance of this control.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicFilter.FilterUIHint">
+      <summary>Gets or sets the name of the filter template that is used to create the UI.</summary>
+      <returns>The name of the filter template.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilter.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>Sends server control content to the specified <see cref="T:System.Web.UI.HtmlTextWriter" /> object.</summary>
+      <param name="writer">The object that receives the server control content.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilter.System#Web#DynamicData#IFilterExpressionProvider#GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the modified query using the current filter value. </summary>
+      <returns>The filter.</returns>
+      <param name="source">The data source query.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilter.System#Web#DynamicData#IFilterExpressionProvider#Initialize(System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicFilter" /> class.</summary>
+      <param name="dataSource">The data source.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicFilterExpression">
+      <summary>Modifies a database query by using a value from specified filter control.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilterExpression.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicFilterExpression" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicFilterExpression.ControlID">
+      <summary>Gets or sets the filter control identifier.</summary>
+      <returns>The filter control identifier.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilterExpression.GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the modified query using the current filter value.</summary>
+      <returns>The data source query that is modified by using the current value that is contained in the <see cref="T:System.Web.DynamicData.DynamicFilterExpression" /> instance.</returns>
+      <param name="source">The data source query to modify.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicFilterExpression.SetContext(System.Web.UI.Control,System.Web.HttpContext,System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Initializes the expression with data source information.</summary>
+      <param name="owner">The control that contains the <see cref="T:System.Web.DynamicData.DynamicFilterExpression" /> instance, such as the <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control.</param>
+      <param name="context">The current <see cref="T:System.Web.HttpContext" /> object. </param>
+      <param name="dataSource">The target data source for the <see cref="T:System.Web.DynamicData.DynamicFilterExpression" /> instance. </param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicHyperLink">
+      <summary>Displays links to table actions such as edit, delete, and insert.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicHyperLink.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicHyperLink" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicHyperLink.Action">
+      <summary>Gets or sets the action that is associated with the link.</summary>
+      <returns>The action that is associated with the link.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicHyperLink.ContextTypeName">
+      <summary>Gets or sets the data context for the data model that the link applies to.</summary>
+      <returns>The data context that applies to the link.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicHyperLink.DataField">
+      <summary>Gets or sets the link display text.</summary>
+      <returns>The link display text.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicHyperLink.OnDataBinding(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.DataBinding" /> event.</summary>
+      <param name="e">The event data.</param>
+      <exception cref="T:System.InvalidOperationException">An attempt was made to set the table and data context during data binding. -or-An attempt has been made to bind to a null data field. </exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicHyperLink.OnPreRender(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.PreRender" /> event.</summary>
+      <param name="e">The event data.</param>
+      <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Web.DynamicData.DynamicHyperLink" /> object cannot determine the data table to link to. </exception>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicHyperLink.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)">
+      <summary>Retrieves the value of the specified attribute that is applied to the <see cref="T:System.Web.DynamicData.DynamicHyperLink" /> control.</summary>
+      <returns>The specified attribute that is applied to the link.</returns>
+      <param name="key">The name of the attribute to retrieve.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicHyperLink.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)">
+      <summary>Defines an attribute and its value to apply to the <see cref="T:System.Web.DynamicData.DynamicHyperLink" /> control.</summary>
+      <param name="key">The name of the attribute. </param>
+      <param name="value">The value that is assigned to the attribute. </param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicHyperLink.TableName">
+      <summary>Gets or sets the table for the link action.</summary>
+      <returns>The name of the table for the link action.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicQueryStringParameter">
+      <summary>Automatically generates a collection of parameters that is used to create the Where clause for the data source control by retrieving query string values.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicQueryStringParameter.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicQueryStringParameter" /> class. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicQueryStringParameter.Evaluate(System.Web.HttpContext,System.Web.UI.Control)">
+      <summary>Throws an <see cref="T:System.InvalidOperationException" /> exception in all cases.</summary>
+      <returns>Throws an <see cref="T:System.InvalidOperationException" /> exception in all cases.</returns>
+      <param name="context">Information about the HTTP request.</param>
+      <param name="control">The control the parameter is bound to.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicQueryStringParameter.GetWhereParameters(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Returns a collection of <see cref="T:System.Web.UI.WebControls.Parameter" /> objects that are automatically generated for the columns of a table by retrieving query string values.</summary>
+      <returns>A collection of parameters that are automatically generated for the columns of a table by retrieving query string values</returns>
+      <param name="dataSource">The data source object.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicRouteExpression">
+      <summary>Gets the primary key from the routing information in order to perform data filtering.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicRouteExpression.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicRouteExpression" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicRouteExpression.ColumnName">
+      <summary>Gets or sets the name of a column that contains a foreign key that is used to query the data source.</summary>
+      <returns>The name of the foreign-key column.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicRouteExpression.GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the query from the data source..</summary>
+      <returns>An instance of the modified query.</returns>
+      <param name="source">The query to modify.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicRouteExpression.SetContext(System.Web.UI.Control,System.Web.HttpContext,System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Sets the HTTP context of the <see cref="T:System.Web.DynamicData.DynamicRouteExpression" /> object.</summary>
+      <param name="owner">The control that contains the <see cref="T:System.Web.DynamicData.DynamicRouteExpression" /> instance. This is a <see cref="T:System.Web.UI.WebControls.QueryExtender" /> control. </param>
+      <param name="context">The Web request context.</param>
+      <param name="dataSource">The target data source for the <see cref="T:System.Web.DynamicData.DynamicRouteExpression" /> instance.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.DynamicValidator">
+      <summary>Enforces and catches exceptions that are thrown in a data model and displays the error.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicValidator.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.DynamicValidator" /> class. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicValidator.Column">
+      <summary>Gets or sets the column to validate.</summary>
+      <returns>The column to validate, or null if a data entity is validated.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicValidator.ColumnName">
+      <summary>Gets the name of the column to validate.</summary>
+      <returns>The name of the column to validate, or null if a data entity is validated.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicValidator.ControlPropertiesValid">
+      <summary>Indicates whether the properties of the specified <see cref="T:System.Web.DynamicData.DynamicValidator" /> control are valid.</summary>
+      <returns>true, if the properties of the specified validation control are valid; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicValidator.EvaluateIsValid">
+      <summary>Determines whether the value in the input control to validate is valid. </summary>
+      <returns>true if the validation control that is evaluated is valid; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicValidator.OnInit(System.EventArgs)">
+      <summary>Raises the Init event to initialize the <see cref="T:System.Web.DynamicData.DynamicValidator" /> control.</summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.DynamicValidator.ValidateException(System.Exception)">
+      <summary>Sets up a validation exception if an exception occurs in the data model. </summary>
+      <param name="exception">The exception that is thrown.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.DynamicValidator.ValidationException">
+      <summary>Gets or sets validation exception that occurs during validation.</summary>
+      <returns>The validation exception that is thrown. </returns>
+    </member>
+    <member name="T:System.Web.DynamicData.EntityTemplate">
+      <summary>Displays the content that is defined for the entity in entity-template data-bound controls by using ASP.NET Dynamic Data features.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplate.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.EntityTemplate" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.EntityTemplate.ItemTemplate">
+      <summary>Gets or sets the custom content for the data item in a <see cref="T:System.Web.DynamicData.EntityTemplate" /> control.</summary>
+      <returns>The custom content for the data item in a <see cref="T:System.Web.DynamicData.EntityTemplate" /> control.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.EntityTemplateFactory">
+      <summary>Creates an entity template.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplateFactory.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.EntityTemplateFactory" /> class. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplateFactory.BuildEntityTemplateVirtualPath(System.String,System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Builds the path of the entity template for the specified table.</summary>
+      <returns>The path of the entity template for the specified table.</returns>
+      <param name="templateName">The name of the entity template for which to build the path.</param>
+      <param name="mode">The display mode of the entity template.</param>
+      <exception cref="T:System.ArgumentNullException">The <paramref name="templateName" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplateFactory.CreateEntityTemplate(System.Web.DynamicData.MetaTable,System.Web.UI.WebControls.DataBoundControlMode,System.String)">
+      <summary>Creates an instance of the entity template for the specified table.</summary>
+      <returns>An instance of the <see cref="T:System.Web.DynamicData.EntityTemplateUserControl" /> class.</returns>
+      <param name="table">The metadata for the table to which the entity template applies. </param>
+      <param name="mode">The display mode of the entity template.</param>
+      <param name="uiHint">The name of the template to use.</param>
+      <exception cref="T:System.ArgumentNullException">The table is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplateFactory.GetEntityTemplateVirtualPath(System.Web.DynamicData.MetaTable,System.Web.UI.WebControls.DataBoundControlMode,System.String)">
+      <summary>Gets the virtual path of the entity template for the specified table.</summary>
+      <returns>The virtual path of the entity template for the specified table.</returns>
+      <param name="table">The metadata for the table to which the entity template applies.</param>
+      <param name="mode">The display mode of the entity template.</param>
+      <param name="uiHint">The name of the template to use.</param>
+      <exception cref="T:System.ArgumentNullException">The table is null.</exception>
+    </member>
+    <member name="T:System.Web.DynamicData.EntityTemplateUserControl">
+      <summary>Defines the base class for entity templates.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.EntityTemplateUserControl.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.EntityTemplateUserControl" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.EntityTemplateUserControl.ContainerType">
+      <summary>Gets the type of the data-bound control that contains this entity template.</summary>
+      <returns>The type that contains the template.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.EntityTemplateUserControl.Mode">
+      <summary>Gets the data-rendering mode for the entity. </summary>
+      <returns>The data-rendering mode for the entity.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.EntityTemplateUserControl.Table">
+      <summary>Gets the table that the entity template applies to.</summary>
+      <returns>The table that the entity template applies to.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.EntityTemplateUserControl.ValidationGroup">
+      <summary>Gets the validation to apply to the entity control group.</summary>
+      <returns>The validation to apply to the entity control group.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.FieldTemplateFactory">
+      <summary>Creates a field template.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.#ctor">
+      <summary>Initializes an instance of the <see cref="T:System.Web.DynamicData.FieldTemplateFactory" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.BuildVirtualPath(System.String,System.Web.DynamicData.MetaColumn,System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Builds the virtual path to a field template based on the field template name and the mode.</summary>
+      <returns>The virtual path to the field template.</returns>
+      <param name="templateName">The name of the template to use.</param>
+      <param name="column">Specifies the data column which the field template applies to.</param>
+      <param name="mode">Specifies the display mode of the field template.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="templateName" /> is null. </exception>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.CreateFieldTemplate(System.Web.DynamicData.MetaColumn,System.Web.UI.WebControls.DataBoundControlMode,System.String)">
+      <summary>Creates an instance of a field template using the <see cref="T:System.Web.DynamicData.MetaColumn" /> class, the <see cref="T:System.Web.UI.WebControls.DataBoundControlMode" /> class and <see cref="P:System.Web.DynamicData.MetaColumn.UIHint" /> property.</summary>
+      <returns>An instance of the interface that the <see cref="T:System.Web.DynamicData.FieldTemplateFactory" /> class implements.</returns>
+      <param name="column">Specifies the data column which the field template applies to.</param>
+      <param name="mode">Specifies the display mode of the field template.</param>
+      <param name="uiHint">Specifies the field template to use.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.GetFieldTemplateVirtualPath(System.Web.DynamicData.MetaColumn,System.Web.UI.WebControls.DataBoundControlMode,System.String)">
+      <summary>Determines the virtual path of a field template. </summary>
+      <returns>The virtual path of the field template. </returns>
+      <param name="column">Specifies the data column which the field template applies to.</param>
+      <param name="mode">Specifies the display mode of the field template-Read Only, Edit, or Insert.</param>
+      <param name="uiHint">Specifies the field template to use. This parameter affects the field template look up.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.Initialize(System.Web.DynamicData.MetaModel)">
+      <summary>Associates a <see cref="T:System.Web.DynamicData.MetaModel" /> with a <see cref="T:System.Web.DynamicData.FieldTemplateFactory" />. </summary>
+      <param name="model">Specifies the data model to associate with the <see cref="T:System.Web.DynamicData.FieldTemplateFactory" />.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateFactory.Model">
+      <summary>Gets or sets the <see cref="T:System.Web.DynamicData.MetaModel" /> that is associated with the <see cref="T:System.Web.DynamicData.FieldTemplateFactory" /> class </summary>
+      <returns>The model that is associated with the <see cref="T:System.Web.DynamicData.FieldTemplateFactory" />.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateFactory.PreprocessMode(System.Web.DynamicData.MetaColumn,System.Web.UI.WebControls.DataBoundControlMode)">
+      <summary>Changes the mode of the data column.</summary>
+      <returns>The mode that a column renders.</returns>
+      <param name="column">The column for which the field template is needed.</param>
+      <param name="mode">The mode (Read Only, Edit, or Insert) to change to.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateFactory.TemplateFolderVirtualPath">
+      <summary>Gets or sets the folder in which to create a field template. </summary>
+      <returns> The path to the folder that contains the field templates.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.FieldTemplateUserControl">
+      <summary>Represents the base class for all field template controls. </summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.FieldTemplateUserControl" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.BuildChildrenPath(System.String)">
+      <summary>Gets the URL that links to the page that displays the list of children entities and allows the path to be overridden.</summary>
+      <returns>The URL that links the displayed page to the children page. </returns>
+      <param name="path">The path to override.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.BuildForeignKeyPath(System.String)">
+      <summary>Get the URL that links the current page to the page that displays the details of the foreign key entity and allows the path to be overridden.</summary>
+      <returns>The URL that links to the page that displays the details of the foreign key page.</returns>
+      <param name="path">The path to override.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.ChildrenColumn">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaChildrenColumn" /> object associated with a field template. </summary>
+      <returns>A column that represents a one-to-many relationship.</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <see cref="P:System.Web.DynamicData.FieldTemplateUserControl.ChildrenColumn" /> is null.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.ChildrenPath">
+      <summary>Gets the URL that links to a page that displays a list of children entities. </summary>
+      <returns>The URL that links the displayed page to the children entities. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.Column">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaColumn" /> associated with a field template. </summary>
+      <returns>An object that represents a database column. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.ContainerType">
+      <summary>Gets the type of the data-bound control that contains the <see cref="T:System.Web.DynamicData.FieldTemplateUserControl" /> class.</summary>
+      <returns>The container control type.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.ConvertEditedValue(System.String)">
+      <summary>Gets either an input value or null based on <see cref="P:System.Web.DynamicData.MetaColumn.ConvertEmptyStringToNull" /> and <see cref="P:System.Web.DynamicData.DynamicField.NullDisplayText" />. </summary>
+      <returns>The converted value.</returns>
+      <param name="value">The input value.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.DataControl">
+      <summary>Gets the data control that handles the data field in a field template.</summary>
+      <returns>A data control that handles the data field in a field template.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.ExtractForeignKey(System.Collections.IDictionary,System.String)">
+      <summary>Saves the value of foreign keys. </summary>
+      <param name="dictionary">The dictionary that contains all the new values.</param>
+      <param name="selectedValue">The value to save. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.ExtractValues(System.Collections.Specialized.IOrderedDictionary)">
+      <summary>Provides dictionary access to all data in the current row. </summary>
+      <param name="dictionary">The dictionary that contains all the new values.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.FieldValue">
+      <summary>Gets or sets the value of a column in a current row.</summary>
+      <returns>An object that represents the value of the column in the current row.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.FieldValueEditString">
+      <summary>Gets the string representation of the value of a column in the current row when the row is in edit mode. </summary>
+      <returns>The value of the column in the row that is edited. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.FieldValueString">
+      <summary>Gets the formatted string representation of the value of a column in the current row.</summary>
+      <returns>The formatted value of the column in the current row.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.FindOtherFieldTemplate(System.String)">
+      <summary>Determines the field template that is used to render a specified data column. </summary>
+      <returns>The field template that is used to render a specified data column.</returns>
+      <param name="columnName">The data column the field template renders.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.ForeignKeyColumn">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaForeignKeyColumn" /> that is associated with a foreign key column. </summary>
+      <returns>A column that represents a many-to-one relationship.</returns>
+      <exception cref="T:System.Exception">If the <see cref="T:System.Web.DynamicData.MetaForeignKeyColumn" /> is not a foreign key column.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.ForeignKeyPath">
+      <summary>Get the URL that links the current page to the page that displays the details of the foreign key entity. </summary>
+      <returns>The URL that links to the details of the foreign key data.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.FormatFieldValue(System.Object)">
+      <summary>Applies HTML encoding and formatting to a string that will be displayed.</summary>
+      <returns>The formatted value.</returns>
+      <param name="fieldValue">The value from the data field to format. </param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.FormattingOptions">
+      <summary>Gets or sets the HTML encoding and formatting options to apply to a field template. </summary>
+      <returns>The interface that exposes the HTML encoding and formatting options to apply to a field template.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.GetColumnValue(System.Web.DynamicData.MetaColumn)">
+      <summary>Gets the value of a specified column in the current row.</summary>
+      <returns>An object that represents the value of a specified column in the current row.</returns>
+      <param name="column">The column to get the value from.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.GetSelectedValueString">
+      <summary>Returns the string representation of the column's value.</summary>
+      <returns>If the column's current value is a foreign-key column or an enumeration column, a string representation of the selected value; otherwise, null.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.Host">
+      <summary>Gets or sets the host that provides context to this <see cref="T:System.Web.DynamicData.FieldTemplateUserControl" /> class. </summary>
+      <returns>The object that provides context to this field template class.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.IgnoreModelValidationAttribute(System.Type)">
+      <summary>Allows a <see cref="T:System.Web.DynamicData.DynamicValidator" /> to ignore a specific type of model validation attribute.</summary>
+      <param name="attributeType">The attribute to ignore.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.MetadataAttributes">
+      <summary>Gets the collection of metadata attributes that apply to the current column.</summary>
+      <returns>The collection of metadata attributes that apply to the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.Mode">
+      <summary>Gets the mode a field template uses.  </summary>
+      <returns>The current mode of the field template. </returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.PopulateListControl(System.Web.UI.WebControls.ListControl)">
+      <summary>Populates a list control with all the values from a parent table. </summary>
+      <param name="listControl">The list control to populate.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.Row">
+      <summary>Gets the current data row object.</summary>
+      <returns>The current data row object.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.SetUpValidator(System.Web.UI.WebControls.BaseValidator)">
+      <summary>Sets up a <see cref="P:System.Web.DynamicData.IFieldTemplateHost.ValidationGroup" /> on all validation controls.</summary>
+      <param name="validator">The validation control to set up. </param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.SetUpValidator(System.Web.UI.WebControls.BaseValidator,System.Web.DynamicData.MetaColumn)">
+      <summary>Sets up a <see cref="T:System.Web.DynamicData.DynamicValidator" /> using the type of validator and the column to validate.</summary>
+      <param name="validator">The type of validator to set up.</param>
+      <param name="column">The column for which to validator is set.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.System#Web#DynamicData#IFieldTemplate#SetHost(System.Web.DynamicData.IFieldTemplateHost)">
+      <summary>Associates a field template with the object that controls how the field template is used. </summary>
+      <param name="host">The object that hosts the field template class. Controls the use of the field template.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FieldTemplateUserControl.System#Web#UI#IBindableControl#ExtractValues(System.Collections.Specialized.IOrderedDictionary)">
+      <summary>Retrieves a set of name/value pairs to implement two-way data-binding in field template controls.</summary>
+      <param name="dictionary">The dictionary that contains name/values pairs.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FieldTemplateUserControl.Table">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaTable" /> that a column of a field template belongs to.</summary>
+      <returns>The table that the column that is associated with the field template belongs to. </returns>
+    </member>
+    <member name="T:System.Web.DynamicData.FilterFactory">
+      <summary>Creates a filter template.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterFactory.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.FilterFactory" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterFactory.CreateFilterControl(System.Web.DynamicData.MetaColumn,System.String)">
+      <summary>Creates an instance of the filter template.</summary>
+      <returns>An instance of the <see cref="T:System.Web.DynamicData.QueryableFilterUserControl" /> class.</returns>
+      <param name="column">The data column to which the filter template applies.</param>
+      <param name="filterUIHint">The name of the filter template to use.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="column" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterFactory.GetFilterVirtualPath(System.Web.DynamicData.MetaColumn,System.String)">
+      <summary>Gets the virtual path of the filter template.</summary>
+      <returns>The virtual path of the filter template.</returns>
+      <param name="column">The data column to which the filter template applies.</param>
+      <param name="filterUIHint">The filter template to use.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="column" /> is null.</exception>
+    </member>
+    <member name="T:System.Web.DynamicData.FilterRepeater">
+      <summary>Represents a control that enumerates table columns that can be filtered.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.FilterRepeater" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterRepeater.ContextTypeName">
+      <summary>Gets or sets the name of the data-source object to use to retrieve the data. </summary>
+      <returns>The name of the data source object to use to retrieve the data.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.DataBind">
+      <summary>Binds the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control to the data that is retrieved from a data source.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterRepeater.DynamicFilterContainerId">
+      <summary>Gets or sets the ID of the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control in an <see cref="P:System.Web.UI.WebControls.TemplateColumn.ItemTemplate" /> instance.</summary>
+      <returns>The ID of the control used to display the filter UI in the <see cref="P:System.Web.UI.WebControls.TemplateColumn.ItemTemplate" /> instance, if an ID is specified; otherwise, "DynamicFilter".</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.GetFilteredColumns">
+      <summary>Returns an enumeration of the sortable columns that belong to the table that is associated with the current <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</summary>
+      <returns>An enumeration of the sortable columns that belong to the table that is associated with the current <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.GetWhereParameters(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Gets the list of Where parameters to add to the Where parameter collection of the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</summary>
+      <returns>A list of Where parameters.</returns>
+      <param name="dataSource">The data source of the Where parameters.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.OnFilterItemCreated(System.Web.UI.WebControls.RepeaterItem)">
+      <summary>Called for every item and alternating item template that is being instantiated by this <see cref="T:System.Web.DynamicData.FilterRepeater" /> control during data binding.</summary>
+      <param name="item">The contents of the item template.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.OnInit(System.EventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.Control.Init" /> event to initialize the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterRepeater.OnItemCreated(System.Web.UI.WebControls.RepeaterItemEventArgs)">
+      <summary>Raises the <see cref="E:System.Web.UI.WebControls.Repeater.ItemCreated" /> event.</summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterRepeater.Table">
+      <summary>Gets the table that is associated with the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</summary>
+      <returns>The table that is associated with the <see cref="T:System.Web.DynamicData.FilterRepeater" /> control.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterRepeater.TableName">
+      <summary>Gets the name of the table to filter.</summary>
+      <returns>The name of the table to filter.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterRepeater.Visible">
+      <summary>Gets or sets a value that specifies whether the control is displayed.</summary>
+      <returns>true if the control is displayed; otherwise false.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.FilterUserControlBase">
+      <summary>Provides the base class for user controls that are used to filter data in a data table. This class is used to display filter selectors.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterUserControlBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.FilterUserControlBase" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.Column">
+      <summary>Gets the column a filter applies to.</summary>
+      <returns>The column a filter applies to.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.ContextTypeName">
+      <summary>Gets or sets the type of context that a table or data column is part of.</summary>
+      <returns>The name of the data source object to use to retrieve the data.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.DataField">
+      <summary>Gets or sets the name of the column to filter.</summary>
+      <returns>The name of the column to filter.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.InitialValue">
+      <summary>Gets the initial value of the filter when the filter is populated.</summary>
+      <returns>The initial value of the filter.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterUserControlBase.PopulateListControl(System.Web.UI.WebControls.ListControl)">
+      <summary>Populates a <see cref="T:System.Web.UI.WebControls.ListControl" /> object with all the items in a data table that are related to the current table through a foreign key.</summary>
+      <param name="listControl">The control to populate.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.SelectedDataKey">
+      <summary>Gets the data key for the selected item.</summary>
+      <returns>The key of the selected item.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.SelectedValue">
+      <summary>Gets the selected value in a drop-down list box control.</summary>
+      <returns>The currently selected value in a drop-down list box control.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.System#Web#DynamicData#IControlParameterTarget#FilteredColumn">
+      <summary>Gets the data column that is filtered.</summary>
+      <returns>The data column that is filtered.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.FilterUserControlBase.System#Web#DynamicData#IControlParameterTarget#GetPropertyNameExpression(System.String)">
+      <summary>Gets the name of the column that is filtered.</summary>
+      <returns>The column that is filtered.</returns>
+      <param name="columnName">The column that is filtered.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.System#Web#DynamicData#IControlParameterTarget#Table">
+      <summary>Gets the table that is filtered.</summary>
+      <returns>The table that was filtered.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.FilterUserControlBase.TableName">
+      <summary>Gets or sets the name of the data table that is used by the filter.</summary>
+      <returns>The name of the data table that is used by the filter.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.IControlParameterTarget">
+      <summary>Defines members that a class must implement in order to provide data to for an instance of the <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.IControlParameterTarget.FilteredColumn">
+      <summary>Gets the column to which the parameter is being applied, if available.</summary>
+      <returns>The column to which the parameter is being applied, if available.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.IControlParameterTarget.GetPropertyNameExpression(System.String)">
+      <summary>Get an expression that can be used as a control parameter's property name.</summary>
+      <returns>An expression that can be used as a control parameter's property name.</returns>
+      <param name="columnName">The name of the column.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.IControlParameterTarget.Table">
+      <summary>Gets the type of the data that is being served by this provider.</summary>
+      <returns>The type of the data that is being served by this provider.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.IFieldFormattingOptions">
+      <summary>Defines an interface for common formatting-option properties to be applied to field template user controls. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldFormattingOptions.ApplyFormatInEditMode">
+      <summary>Gets a value that indicates whether the formatting string that is specified by the <see cref="P:System.Web.DynamicData.IFieldFormattingOptions.DataFormatString" /> property is applied to field values when the field is in edit mode.</summary>
+      <returns>true if the formatting string is applied in edit mode; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldFormattingOptions.ConvertEmptyStringToNull">
+      <summary>Gets a value that indicates whether empty string values ("") are automatically converted to null values when the data field is updated in the data source.</summary>
+      <returns>true if empty string values are automatically converted to null values; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldFormattingOptions.DataFormatString">
+      <summary>Gets a string that specifies the display format for the value of the field.</summary>
+      <returns>A formatting string that specifies the display format for the value of the field. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldFormattingOptions.HtmlEncode">
+      <summary>Gets a value that indicates whether the data for the control is HTML-encoded before it is rendered.</summary>
+      <returns>true if the data for the control is HTML-encoded before it is rendered; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldFormattingOptions.NullDisplayText">
+      <summary>Gets the caption that is displayed for a field when the field value is null.</summary>
+      <returns>The caption that is displayed for a field when the field value is null.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.IFieldTemplate">
+      <summary>Defines members that a class must implement in order to be recognized as a field template.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.IFieldTemplate.SetHost(System.Web.DynamicData.IFieldTemplateHost)">
+      <summary>Associates the field template with the object that controls its use. </summary>
+      <param name="host">The object that controls the use of the field template.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.IFieldTemplateFactory">
+      <summary>Defines an interface implemented by objects that create field templates.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.IFieldTemplateFactory.CreateFieldTemplate(System.Web.DynamicData.MetaColumn,System.Web.UI.WebControls.DataBoundControlMode,System.String)">
+      <summary>Creates an instance of a field template using the <see cref="T:System.Web.DynamicData.MetaColumn" /> class, the <see cref="T:System.Web.UI.WebControls.DataBoundControlMode" /> class and <see cref="P:System.Web.DynamicData.MetaColumn.UIHint" /> property.  </summary>
+      <returns>An instance of a <see cref="FieldTemplateFactory" /> object when implemented in a class.</returns>
+      <param name="column">Specifies the data column to use to display the field template.</param>
+      <param name="mode">Specifies the display mode of the field template.</param>
+      <param name="uiHint">Specifies the field template to use.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.IFieldTemplateFactory.Initialize(System.Web.DynamicData.MetaModel)">
+      <summary>Initializes a <see cref="T:System.Web.DynamicData.FieldTemplateFactory" /> using the specified data model. </summary>
+      <param name="model">Specifies the data model that the field template uses. </param>
+    </member>
+    <member name="T:System.Web.DynamicData.IFieldTemplateHost">
+      <summary>Defines members that must be implemented by a class that manages the use of field-template user controls.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldTemplateHost.Column">
+      <summary>Gets the column that the field template is associated with.</summary>
+      <returns>The column that the field template is associated with.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldTemplateHost.FormattingOptions">
+      <summary>Gets the formatting options that will be applied to the field template.</summary>
+      <returns>The formatting options that will be applied to the field template.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldTemplateHost.Mode">
+      <summary>Gets the rendering mode for the field template.</summary>
+      <returns>One of the enumeration values that specifies the rendering mode for the field template.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.IFieldTemplateHost.ValidationGroup">
+      <summary>Gets the validation group name for the field template. </summary>
+      <returns>The validation group name for the field template.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.IFilterExpressionProvider">
+      <summary>Provides an interface to create filter repeaters.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.IFilterExpressionProvider.GetQueryable(System.Linq.IQueryable)">
+      <summary>Returns the filter repeater.</summary>
+      <returns>The filter.</returns>
+      <param name="source">The data source query.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.IFilterExpressionProvider.Initialize(System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Initializes the data source.</summary>
+      <param name="dataSource">The data source.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.IWhereParametersProvider">
+      <summary>Implemented by parameter classes that provide one or many Where parameters.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.IWhereParametersProvider.GetWhereParameters(System.Web.DynamicData.IDynamicDataSource)">
+      <summary>Gets the list of Where parameters that should be added to the Where parameter collection.</summary>
+      <returns>A list of parameters.</returns>
+      <param name="dataSource">The source of the parameter.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.MetaChildrenColumn">
+      <summary>Represents a database field that indicates a one-to-many relationship.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaChildrenColumn.#ctor(System.Web.DynamicData.MetaTable,System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.MetaChildrenColumn" /> class.</summary>
+      <param name="table">The meta table.</param>
+      <param name="entityMember">The column provider.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaChildrenColumn.ChildTable">
+      <summary>Gets an object that represents the child table of the one-to-many relationship.</summary>
+      <returns>An object that represents the child table of the one-to-many relationship.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaChildrenColumn.ColumnInOtherTable">
+      <summary>Gets an object that represents the foreign-key field in the child table.</summary>
+      <returns>An object that represents the foreign-key field in the child table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaChildrenColumn.GetChildrenListPath(System.Object)">
+      <summary>Gets the path of the list-action page for the child table.</summary>
+      <returns>The path of the list-action page for the child table.</returns>
+      <param name="row">The row that contains the foreign-key field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaChildrenColumn.GetChildrenPath(System.String,System.Object)">
+      <summary>Gets the path of the specified action page of the child table.</summary>
+      <returns>The path of the specified action page of the child table.</returns>
+      <param name="action">The target action.</param>
+      <param name="row">The row that contains the foreign-key field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaChildrenColumn.GetChildrenPath(System.String,System.Object,System.String)">
+      <summary>Gets the path for the specified action page of the child table.</summary>
+      <returns>The path of the specified action page of the child table.</returns>
+      <param name="action">The target action. </param>
+      <param name="row">The row that contains the foreign-key field.</param>
+      <param name="path">The target page.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaChildrenColumn.Initialize">
+      <summary>Initializes data that might not be available when the constructor is called.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaChildrenColumn.IsManyToMany">
+      <summary>Gets a value that indicates the many-to-many relationship status of the column.</summary>
+      <returns>true if the column relationship is many-to-many; otherwise, false.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.MetaColumn">
+      <summary>Represents a database column that is used by Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaColumn.#ctor(System.Web.DynamicData.MetaTable,System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.MetaColumn" /> class.</summary>
+      <param name="table">The meta table that contains the column.</param>
+      <param name="columnProvider">The column provider.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.AllowInitialValue">
+      <summary>Gets or sets a value that specifies whether a column enables a value to be inserted.</summary>
+      <returns>true if the column enables a value to be inserted; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.ApplyFormatInEditMode">
+      <summary>Gets a value that indicates whether the formatting string specified by the <see cref="P:System.Web.DynamicData.MetaColumn.DataFormatString" /> property is applied to field values when the data-bound control that contains the data field that is represented by the <see cref="T:System.Web.DynamicData.MetaColumn" /> object is in edit mode.</summary>
+      <returns>true if the formatting string specified by the <see cref="P:System.Web.DynamicData.MetaColumn.DataFormatString" /> property is applied to field values when the data-bound control that contains the data field that is represented by the <see cref="T:System.Web.DynamicData.MetaColumn" /> object is in edit mode; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Attributes">
+      <summary>Gets the collection of metadata attributes that apply to the data field represented by the <see cref="T:System.Web.DynamicData.MetaColumn" /> object.</summary>
+      <returns>The collection of metadata attributes that apply to the data field represented by the <see cref="T:System.Web.DynamicData.MetaColumn" /> object.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaColumn.BuildAttributeCollection">
+      <summary>Gets the attribute collection.</summary>
+      <returns>The attribute collection.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.ColumnType">
+      <summary>Gets the data field type.</summary>
+      <returns>The data field type.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.ConvertEmptyStringToNull">
+      <summary>Gets a value that indicates whether empty string values ("") are automatically converted to null values when the data field is updated in the data source.</summary>
+      <returns>true if empty string values are automatically converted to null values when the data field is updated in the data source; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.DataFormatString">
+      <summary>Gets the string that specifies the display format for the field value.</summary>
+      <returns>The string that specifies the display format for the field value.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.DataTypeAttribute">
+      <summary>Gets the <see cref="T:System.ComponentModel.DataAnnotations.DataTypeAttribute" /> attribute that is applied to the data field.</summary>
+      <returns>The <see cref="T:System.ComponentModel.DataAnnotations.DataTypeAttribute" /> attribute that is applied to the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.DefaultValue">
+      <summary>Gets the default value for the data field.</summary>
+      <returns>The default value for the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Description">
+      <summary>Gets the description for the data field.</summary>
+      <returns>The description for the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.DisplayName">
+      <summary>Gets the display name for the data field.</summary>
+      <returns>The display name for the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.EntityTypeProperty">
+      <summary>Gets an object that contains attributes of the property that represents the data field in the entity type.</summary>
+      <returns>An object that contains attributes of the property that represents the data field in the entity type.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.FilterUIHint">
+      <summary>Gets the <see cref="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint" /> value that is used for the column.</summary>
+      <returns>The <see cref="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint" /> value that is used for the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.HtmlEncode">
+      <summary>Gets a value that indicates whether field values are HTML-encoded before they are displayed in a data-bound control.</summary>
+      <returns>true in all cases.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaColumn.Initialize">
+      <summary>Initializes data that might not be available when the constructor is called.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsBinaryData">
+      <summary>Gets a value that indicates whether the data field contains binary data.</summary>
+      <returns>true if the data field contains binary data; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsCustomProperty">
+      <summary>Gets a value that indicates whether the data field exists in the database.</summary>
+      <returns>true if the data field does not exist in the database; otherwise, false. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsFloatingPoint">
+      <summary>Gets a value that indicates whether the data field is a floating-point type.</summary>
+      <returns>true if the data field is a floating-point type; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsForeignKeyComponent">
+      <summary>Gets a value that indicates whether the data field is part of a foreign key.</summary>
+      <returns>true if the data field is part of a foreign key; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsGenerated">
+      <summary>Gets a value that indicates whether the data field value is automatically generated in the database.</summary>
+      <returns>true if the data field value is automatically generated in the database; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsInteger">
+      <summary>Gets a value that indicates whether the data field type is an integer type.</summary>
+      <returns>true if the data field type is an integer type; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsLongString">
+      <summary>Gets a value that indicates whether the data field type can contain long strings.</summary>
+      <returns>true if the data field type can contain long strings; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsPrimaryKey">
+      <summary>Gets a value that indicates whether the data field is part of the table's primary key.</summary>
+      <returns>true if the data field is part of the table's primary key; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsReadOnly">
+      <summary>Gets a value that indicates whether the data field is read-only.</summary>
+      <returns>true if the data field is read-only; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsRequired">
+      <summary>Gets a value that indicates whether the data field requires a value.</summary>
+      <returns>true if the data field requires a value; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.IsString">
+      <summary>Gets a value that indicates whether the data field type is a string type.</summary>
+      <returns>true if the data field type is a string type; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.MaxLength">
+      <summary>Gets a value that indicates the maximum length of data that can be stored in the data field.</summary>
+      <returns>The maximum length of data that can be stored in the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Model">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaModel" /> object that represents the data model that this data field belongs to.</summary>
+      <returns>An object that represents the data model that this data field belongs to.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Name">
+      <summary>Gets the name of the data field.</summary>
+      <returns>The name of the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.NullDisplayText">
+      <summary>Gets the caption that is displayed for a field when the field's value is null.</summary>
+      <returns>The caption that is displayed for a field when the field's value is null.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Prompt">
+      <summary>Gets a value that can be used as a watermark in the UI that is bound to data in the column.</summary>
+      <returns>A value that can be used as a watermark in the UI that is bound to data in the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Provider">
+      <summary>Gets the abstraction provider object that is used to generate the <see cref="T:System.Web.DynamicData.MetaColumn" /> object.</summary>
+      <returns>The abstraction provider object that is used to generate the <see cref="T:System.Web.DynamicData.MetaColumn" /> object.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.RequiredErrorMessage">
+      <summary>Gets the error message that is displayed when the data field requires a value but its value is empty.</summary>
+      <returns>The error message that is displayed when the data field requires a value but its value is empty.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaColumn.ResetMetadata">
+      <summary>Clears cached column metadata.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Scaffold">
+      <summary>Gets a value that indicates whether the data field should be displayed.</summary>
+      <returns>true if the data field should be displayed; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.ShortDisplayName">
+      <summary>Gets the short name for the column.</summary>
+      <returns>The short name for the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.SortExpression">
+      <summary>Gets the expression that is used to determine the sort order for the data field.</summary>
+      <returns>The expression that is used to determine the sort order for the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.Table">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaTable" /> object that represents the table that the data field belongs to.</summary>
+      <returns>An object that represents the table that the data field belongs to.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaColumn.ToString">
+      <summary>Gets the data field name.</summary>
+      <returns>The data field name, which is the string representation of the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.TypeCode">
+      <summary>Gets the type of the data field.</summary>
+      <returns>The type of the data field.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaColumn.UIHint">
+      <summary>Gets the name of the field template specified for the data field.</summary>
+      <returns>The name of the field template specified for the data field.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.MetaForeignKeyColumn">
+      <summary>Represents a database foreign-key field that is used by ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.#ctor(System.Web.DynamicData.MetaTable,System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.MetaForeignKeyColumn" /> class.</summary>
+      <param name="table">The entity meta table.</param>
+      <param name="entityMember">The entity column provider.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.ExtractForeignKey(System.Collections.IDictionary,System.String)">
+      <summary>Saves the value of a foreign key in the specified dictionary.</summary>
+      <param name="dictionary">A dictionary object that contains the new values for a data field.</param>
+      <param name="value">The value of the foreign key.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaForeignKeyColumn.ForeignKeyNames">
+      <summary>Gets a collection that contains the names of the foreign keys in the association that represents a database relationship.</summary>
+      <returns>A collection that contains the names of the foreign keys.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetFilterExpression(System.String)">
+      <summary>Returns the alternate name that is mapped to a foreign key.</summary>
+      <returns>The alternate name that is mapped to the foreign key.</returns>
+      <param name="foreignKeyName">The name of the foreign key.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetForeignKeyDetailsPath(System.Object)">
+      <summary>Gets the path for the details action page of the parent table of the specified foreign-key field.</summary>
+      <returns>The path for the details action page of the parent table of the specified foreign-key field.</returns>
+      <param name="row">The row that contains the foreign-key field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetForeignKeyPath(System.String,System.Object)">
+      <summary>Gets the path for the specified action page of the parent table of the specified foreign-key field.</summary>
+      <returns>The path for the specified action page of the parent table of the specified foreign-key field.</returns>
+      <param name="action">The target action.</param>
+      <param name="row">The row that contains the foreign-key field.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetForeignKeyPath(System.String,System.Object,System.String)">
+      <summary>Gets the path for the specified action page of the parent table of the specified foreign-key field.</summary>
+      <returns>The path for the specified action page of the parent table of the specified foreign-key field.</returns>
+      <param name="action">The target action. </param>
+      <param name="row">The row that contains the foreign-key field.</param>
+      <param name="path">The target page.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetForeignKeyString(System.Object)">
+      <summary>Retrieves a comma-separated list of values that represent the foreign-key for the specified row.</summary>
+      <returns>A comma-separated list of values that represent the foreign key for the specified row.</returns>
+      <param name="row">The row to retrieve the foreign-key values for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.GetForeignKeyValues(System.Object)">
+      <summary>Retrieves a collection of values that represent the foreign keys for the specified row.</summary>
+      <returns>A collection of values that represent the foreign keys for the specified row.</returns>
+      <param name="row">The row to retrieve the foreign-key values for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaForeignKeyColumn.Initialize">
+      <summary>Initializes data that may not be available when the constructor is called.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaForeignKeyColumn.IsPrimaryKeyInThisTable">
+      <summary>Gets a value that indicates whether the foreign-key field is part of the primary key of the table.</summary>
+      <returns>true if the foreign-key field is part of the primary key of the table; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaForeignKeyColumn.ParentTable">
+      <summary>Gets the parent table of the foreign-key field.</summary>
+      <returns>The parent table of the foreign-key field.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.MetaModel">
+      <summary>Represents one or multiple databases that are used by ASP.NET Dynamic Data. </summary>
+      <exception cref="T:System.InvalidOperationException">Can be thrown by any method if there has been a data context registration error.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.#ctor">
+      <summary>Instantiates a new instance of the <see cref="T:System.Web.DynamicData.MetaModel" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.#ctor(System.Boolean)">
+      <summary>Instantiates a new instance of the <see cref="T:System.Web.DynamicData.MetaModel" /> class.</summary>
+      <param name="registerGlobally">true to indicate that the model is registered globally; otherwise false. The default is true.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.CreateTable(System.Web.DynamicData.ModelProviders.TableProvider)">
+      <summary>Instantiates a <see cref="T:System.Web.DynamicData.MetaTable" /> object. </summary>
+      <returns>A new instance of the table.</returns>
+      <param name="provider">The provider for the table.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.Default">
+      <summary>Gets the first instance of a data model that is created by the application.</summary>
+      <returns>The data-model instance. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.DynamicDataFolderVirtualPath">
+      <summary>Gets or sets the virtual path of the DynamicData folder in the Web site.</summary>
+      <returns>The virtual path of the DynamicData folder.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.EntityTemplateFactory">
+      <summary>Gets or sets the <see cref="T:System.Web.DynamicData.EntityTemplateFactory" /> object that is associated with the model.</summary>
+      <returns>An instance of the <see cref="T:System.Web.DynamicData.EntityTemplateFactory" /> object that is associated with the model.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.FieldTemplateFactory">
+      <summary>Gets or sets a custom <see cref="T:System.Web.DynamicData.IFieldTemplateFactory" /> interface.</summary>
+      <returns>The <see cref="T:System.Web.DynamicData.IFieldTemplateFactory" /> interface.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.FilterFactory">
+      <summary>Gets or sets the <see cref="T:System.Web.DynamicData.FilterFactory" /> object that is associated with the model.</summary>
+      <returns>An instance of the <see cref="T:System.Web.DynamicData.FilterFactory" /> object that is associated with the model.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.GetActionPath(System.String,System.String,System.Object)">
+      <summary>Returns the action path that is associated with a specific table. </summary>
+      <returns>The URL that is associated with the route.</returns>
+      <param name="tableName">The name of the table that the action applies to.</param>
+      <param name="action">The action to apply to the table.</param>
+      <param name="row">An object that represents a single row of data in a table. <paramref name="row" /> is used to provide values for query-string parameters.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.GetModel(System.Type)">
+      <summary>Returns the data-model instance for the specified context.</summary>
+      <returns>The data model that is associated with the specified context type.</returns>
+      <param name="contextType">The type of the data context as defined in the data model.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.GetTable(System.String)">
+      <summary>Returns the metadata that is associated with the specified table.</summary>
+      <returns>The metadata that describes the specified table.</returns>
+      <param name="uniqueTableName">The name that identifies the table in the data model.</param>
+      <exception cref="T:System.ArgumentException">The name was not found in the data model.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.GetTable(System.String,System.Type)">
+      <summary>Returns the metadata that describes the specified table.</summary>
+      <returns>The metadata that describes the specified table.</returns>
+      <param name="tableName">The name of the table.</param>
+      <param name="contextType">The data context to search for the table.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="tablename" /> or <paramref name="contextType" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The context is not registered or the table does not exist in the data context.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.GetTable(System.Type)">
+      <summary>Returns the metadata that describes the specified table.</summary>
+      <returns>The metadata that describes the specified table.</returns>
+      <param name="entityType">The type that identifies the table in the data model.</param>
+      <exception cref="T:System.ArgumentNullException">The type was not found in the data model.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Func{System.Object})">
+      <summary>Registers the data context that is specified by a context factory.</summary>
+      <param name="contextFactory">The factory for instantiating the data context.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Func{System.Object},System.Web.DynamicData.ContextConfiguration)">
+      <summary>Registers a data-context instance by using the specified context configuration and by enabling a custom constructor. </summary>
+      <param name="contextFactory">A delegate that is used to instantiate the data model context.</param>
+      <param name="configuration">Context information as defined by the <see cref="T:System.Web.DynamicData.ContextConfiguration" /> class.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="contextFactory" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The <paramref name="contextType" /> that is instantiated by <paramref name="contextFactory" /> is not valid.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Type)">
+      <summary>Registers a data-context instance. </summary>
+      <param name="contextType">The type of the data context as defined in the data model.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Type,System.Web.DynamicData.ContextConfiguration)">
+      <summary>Registers a data-context instance by using the specified context configuration. </summary>
+      <param name="contextType">The type of the data context as defined in the data model.</param>
+      <param name="configuration">Configuration information for the context, as defined by the <see cref="T:System.Web.DynamicData.ContextConfiguration" /> class.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="contextType" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Web.DynamicData.ModelProviders.DataModelProvider)">
+      <summary>Registers a data context instance by using a data-model provider</summary>
+      <param name="dataModelProvider">A provider for the data model.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.RegisterContext(System.Web.DynamicData.ModelProviders.DataModelProvider,System.Web.DynamicData.ContextConfiguration)">
+      <summary>Registers a data-context instance by using the specified context configuration and by enabling a data-model provider. </summary>
+      <param name="dataModelProvider">A provider for the data model.</param>
+      <param name="configuration">Context information as defined by the <see cref="T:System.Web.DynamicData.ContextConfiguration" /> class.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="dataModelProvider" /> or <paramref name="configuration" /> is null.</exception>
+      <exception cref="T:System.InvalidOperationException">
+        <paramref name="contextType" /> is already registered.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.ResetRegistrationException">
+      <summary>Resets any previous context registration error that might have occurred. </summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.Tables">
+      <summary>Gets a collection of all the tables that are part of the data model.</summary>
+      <returns>A collection that contains the tables that belong to the data model.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.TryGetTable(System.String,System.Web.DynamicData.MetaTable@)">
+      <summary>Attempts to get the metadata that is associated with the specified table.</summary>
+      <returns>true if the table metadata is found; otherwise false.</returns>
+      <param name="uniqueTableName">The name that uniquely identifies the table.</param>
+      <param name="table">When this method returns, and if it has found the requested table, contains the metadata for that table. This parameter is passed uninitialized.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="uniqueTableName" /> is null.</exception>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaModel.TryGetTable(System.Type,System.Web.DynamicData.MetaTable@)">
+      <summary>Attempts to get the metadata that is associated with the specified table.</summary>
+      <returns>true if the table metadata is found; otherwise, false.</returns>
+      <param name="entityType">The table type.</param>
+      <param name="table">When this method returns, and if the requested table has been found, contains the metadata for the specified table. This parameter is passed uninitialized.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="entityType" /> is null.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaModel.VisibleTables">
+      <summary>Gets a collection of the visible tables in the data model.</summary>
+      <returns>A visible table refers to a table that has scaffolding enabled. This means that it is a table for which a List.aspx page exists.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.MetaTable">
+      <summary>Represents the metadata that describes a table for use by Dynamic Data pages.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.#ctor(System.Web.DynamicData.MetaModel,System.Web.DynamicData.ModelProviders.TableProvider)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.MetaTable" /> class.</summary>
+      <param name="metaModel">The entity meta model.</param>
+      <param name="tableProvider">The entity model provider.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Attributes">
+      <summary>Gets the attributes that are associated with the table.</summary>
+      <returns>A collection that contains the attributes of the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.BuildAttributeCollection">
+      <summary>Creates the attribute collection.</summary>
+      <returns>The attribute collection.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CanDelete(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the specified user is allowed to perform delete operations.</summary>
+      <returns>true if the user is allowed to perform delete operations; otherwise, false.</returns>
+      <param name="principal">The user's security context.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CanInsert(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the specified user is allowed to perform insert operations.</summary>
+      <returns>true if the user is allowed to perform insert operations; otherwise, false.</returns>
+      <param name="principal">The user's security context.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CanRead(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the specified user is allowed to perform read operations.</summary>
+      <returns>true if the user is allowed to perform read operations; otherwise, false.</returns>
+      <param name="principal">The user's security context.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CanUpdate(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the specified user is allowed to perform update operations.</summary>
+      <returns>true if the user is allowed to perform update operations; otherwise, false.</returns>
+      <param name="principal">The user's security context.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Columns">
+      <summary>Gets the column collection for the table.</summary>
+      <returns>A collection that contains the columns for the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateChildrenColumn(System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Creates a new <see cref="T:System.Web.DynamicData.MetaChildrenColumn" /> object.</summary>
+      <returns>The new child metacolumn object.</returns>
+      <param name="columnProvider">The column provider.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateColumn(System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Creates a <see cref="T:System.Web.DynamicData.MetaColumn" /> object.</summary>
+      <returns>The new metacolumn object.</returns>
+      <param name="columnProvider">The column provider.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateContext">
+      <summary>Returns the data context for the table.</summary>
+      <returns>The data context for the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateForeignKeyColumn(System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Creates an object that contains foreign-key metadata.</summary>
+      <returns>An object that contains foreign-key metadata.</returns>
+      <param name="columnProvider">The column provider.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateTable(System.ComponentModel.ICustomTypeDescriptor)">
+      <summary>Creates the metadata for the specified table.</summary>
+      <returns>An object that contains the table metadata.</returns>
+      <param name="typeDescriptor">Information about the table type.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.CreateTable(System.Type)">
+      <summary>Creates the metadata for the specified table.</summary>
+      <returns>An object that contains the table metadata.</returns>
+      <param name="entityType">The table type for which to generate metadata.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.DataContextPropertyName">
+      <summary>Gets the name of the table.</summary>
+      <returns>The name of the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.DataContextType">
+      <summary>Gets the type of the data context that is associated with the table.</summary>
+      <returns>The type of the data context. </returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.DisplayColumn">
+      <summary>Gets the column that is used to display values when entries in this table are used as parents in foreign-key relationships.</summary>
+      <returns>The column that is used to display values when entries in this table are used as parents in foreign-key relationships.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.DisplayName">
+      <summary>Gets the name of the table in a user-friendly format.</summary>
+      <returns>The string that represents the user-friendly name of the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.EntityType">
+      <summary>Gets the entity type that represents the table.</summary>
+      <returns>The type that represents the entity.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.ForeignKeyColumnsNames">
+      <summary>Gets a comma-separated list of foreign-key names.</summary>
+      <returns>A comma-separated list of foreign-key names.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String)">
+      <summary>Returns the action path for the current table and the specified action.</summary>
+      <returns>The action path for the specified action.</returns>
+      <param name="action">The name of the action.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Collections.Generic.IList{System.Object})">
+      <summary>Returns the action path for the current table, specified action, and specified primary key.</summary>
+      <returns>The action path for the specified action and primary key.</returns>
+      <param name="action">The name of the action.</param>
+      <param name="primaryKeyValues">The list of column values that make up the primary key.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Collections.Generic.IList{System.Object},System.String)">
+      <summary>Appends query strings to the action path, based on the specified primary key and virtual path.</summary>
+      <returns>The action path for the specified primary key and virtual path, with query-string values appended to it.</returns>
+      <param name="action">The name of the action.</param>
+      <param name="primaryKeyValues">The list of column values that make up the primary key.</param>
+      <param name="path">The virtual path of the action.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Object)">
+      <summary>Returns the action path for the specified row by using the name of the action.</summary>
+      <returns>The action path for the specified row.</returns>
+      <param name="action">The name of the action.</param>
+      <param name="row">The row to get the action path for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Object,System.String)">
+      <summary>Returns the action path for the specified row by using the name of the action and the virtual path of the action.</summary>
+      <returns>The action path for the specified row.</returns>
+      <param name="action">The name of the action.</param>
+      <param name="row">An object that contains the row for the action path.</param>
+      <param name="path">The virtual path of the action.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Web.Routing.RouteValueDictionary)">
+      <summary>Returns the action path for the current table and for the specified action and routes.</summary>
+      <returns>The action path for the specified action and routes.</returns>
+      <param name="action">The name of the action.</param>
+      <param name="routeValues">The list of routes for the action.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetColumn(System.String)">
+      <summary>Returns the metadata for the specified column.</summary>
+      <returns>The column metadata. </returns>
+      <param name="columnName">The name of the column to get metadata for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetColumnValuesFromRoute(System.Web.HttpContext)">
+      <summary>Gets the collection of column values.</summary>
+      <returns>The collection of column values.</returns>
+      <param name="context">The context for the specified Web request.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetDataKeyFromRoute">
+      <summary>Retrieves the primary key of the entity from the route values.</summary>
+      <returns>The primary-key values of the entities, if they are found; otherwise, null.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetDisplayString(System.Object)">
+      <summary>Returns the value to use as the display string for an instance of a row when the row is used in foreign-key relationships.</summary>
+      <returns>The display name for an instance of a row.</returns>
+      <param name="row">The row to get the display string for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetFilteredColumns">
+      <summary>Retrieves a list of columns that are filterable.</summary>
+      <returns>A list of columns that are filterable.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetPrimaryKeyDictionary(System.Object)">
+      <summary>Retrieves a dictionary of primary-key names and values for the specified row.</summary>
+      <returns>A dictionary of primary-key names and values.</returns>
+      <param name="row">A row.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetPrimaryKeyString(System.Collections.Generic.IList{System.Object})">
+      <summary>Returns a comma-separated list of column values that represent the primary key for the specified row.</summary>
+      <returns>A comma-separated list of column values. If the list is empty, an empty string is returned.</returns>
+      <param name="primaryKeyValues">The list of column values that make up the primary key.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetPrimaryKeyString(System.Object)">
+      <summary>Returns a comma-separated list of column values that represent the primary key for the specified row.</summary>
+      <returns>A comma-separated list of column values that represent the primary key for the row.</returns>
+      <param name="row">The row to get the primary key for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetPrimaryKeyValues(System.Object)">
+      <summary>Returns a collection of column values that represent the primary key for the specified row.</summary>
+      <returns>A collection of column values that represent the primary key for the row.</returns>
+      <param name="row">The row to get the primary key for.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetQuery">
+      <summary>Returns the <see cref="T:System.Linq.IQueryable" /> instance for the entity type that represents the table.</summary>
+      <returns>The <see cref="T:System.Linq.IQueryable" /> instance for the entity type.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetQuery(System.Object)">
+      <summary>Returns the <see cref="T:System.Linq.IQueryable" /> instance for the entity type that represents the table by using the data context.</summary>
+      <returns>The <see cref="T:System.Linq.IQueryable" /> instance for the entity type that represents the table in the data context.</returns>
+      <param name="context">The context of the <see cref="T:System.Web.DynamicData.MetaTable" /> object.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetScaffoldColumns(System.Web.UI.WebControls.DataBoundControlMode,System.Web.DynamicData.ContainerType)">
+      <summary>Returns a list of columns to display by using scaffolding.</summary>
+      <returns>A list of columns to display by using scaffolding.</returns>
+      <param name="mode">The data-bound control mode.</param>
+      <param name="containerType">A value that indicates whether the table is displayed as an individual entity or as part of a list of entities.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.GetTable(System.Type)">
+      <summary>Retrieves the metatable that is associated with the specified type.</summary>
+      <returns>The metatable that is associated with the specified type.</returns>
+      <param name="entityType">The type of the entity.</param>
+      <exception cref="T:System.InvalidOperationException">The <see cref="M:System.Web.DynamicData.MetaTable.TryGetTable(System.Type,System.Web.DynamicData.MetaTable@)" /> method that was called by this method returned false.</exception>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.HasPrimaryKey">
+      <summary>Gets a value that indicates whether the table has a primary key.</summary>
+      <returns>true if the table has a primary key; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.Initialize">
+      <summary>Initializes data that may not be available when the constructor is called.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.IsReadOnly">
+      <summary>Gets a value that indicates whether the table is read-only.</summary>
+      <returns>true if the table is read-only; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.ListActionPath">
+      <summary>Gets the action path of the list action for the table.</summary>
+      <returns>The action path of the list action for the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Model">
+      <summary>Gets the meta model that the table belongs to.</summary>
+      <returns>The meta model that the table belongs to.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Name">
+      <summary>Gets the unique name of the table.</summary>
+      <returns>The unique name of the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.PrimaryKeyColumns">
+      <summary>Gets the collection of columns that define the primary key.</summary>
+      <returns>A collection that contains the primary-key columns.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Provider">
+      <summary>Gets the provider for the table.</summary>
+      <returns>The provider for the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.ResetMetadata">
+      <summary>Resets the cached metadata for the table.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.RootEntityType">
+      <summary>Gets the root type of the entity's inheritance hierarchy.</summary>
+      <returns>The root type of the entity's inheritance hierarchy.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.Scaffold">
+      <summary>Gets or sets a value that indicates whether the table should be displayed.</summary>
+      <returns>true if the table should be displayed; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.SortColumn">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.MetaColumn" /> value that the table is sorted by.</summary>
+      <returns>The column that the table is sorted by.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.MetaTable.SortDescending">
+      <summary>Gets a value that indicates whether entries are sorted in descending order when they are used as parents in a foreign-key relationship.</summary>
+      <returns>true if entries are sorted in descending order; otherwise, false.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.ToString">
+      <summary>Returns the name of the table.</summary>
+      <returns>The name of the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.TryGetColumn(System.String,System.Web.DynamicData.MetaColumn@)">
+      <summary>Returns a value that indicates whether a specified column can be found.</summary>
+      <returns>true if the specified column can be found; otherwise, false.</returns>
+      <param name="columnName">The name of the column to find.</param>
+      <param name="column">When this method returns, contains the MetaColumn object for <paramref name="columnName" />. This parameter is passed uninitialized.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.MetaTable.TryGetTable(System.Type,System.Web.DynamicData.MetaTable@)">
+      <summary>Retrieves the metatable that is associated with the specified type and table.</summary>
+      <returns>The metatable that is associated with the given specified and table.</returns>
+      <param name="entityType">The type of the entity.</param>
+      <param name="table">When this method returns, contains the metatable that is associated with the specified type. This parameter is passed uninitialized.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="entityType" /> is null.</exception>
+    </member>
+    <member name="T:System.Web.DynamicData.PageAction">
+      <summary>Specifies default action values that are used by the routing mechanism in ASP.NET Dynamic Data applications.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.PageAction.Details">
+      <summary>Gets the action name for a page that shows details of a data item.</summary>
+      <returns>The literal value "Details".</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.PageAction.Edit">
+      <summary>Gets the action name for a page that edits a data item.</summary>
+      <returns>The literal value "Edit".</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.PageAction.Insert">
+      <summary>Gets the action name for a page that inserts a data item.</summary>
+      <returns>The literal value "Insert".</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.PageAction.List">
+      <summary>Gets the action name for a page that displays data from a table.</summary>
+      <returns>The literal value "List".</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.QueryableFilterRepeater">
+      <summary>Provides a templated control that automatically generates the UI to filter table rows for supported column types.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterRepeater.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.QueryableFilterRepeater" /> class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterRepeater.DynamicFilterContainerId">
+      <summary>Gets or sets the ID of a <see cref="T:System.Web.DynamicData.DynamicFilter" /> control inside the template that is configured to be a filter for a column.</summary>
+      <returns>The ID of a <see cref="T:System.Web.DynamicData.DynamicFilter" /> control inside the template that is configured to be a filter for a column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterRepeater.ItemTemplate">
+      <summary>Gets or sets the controls that populate the <see cref="T:System.Web.DynamicData.QueryableFilterRepeater" /> class.</summary>
+      <returns>An object that defines how items in the <see cref="T:System.Web.DynamicData.QueryableFilterRepeater" /> control are displayed.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterRepeater.OnPreRender(System.EventArgs)">
+      <summary>Verifies whether the control contains data field filters.</summary>
+      <param name="e">The event data.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterRepeater.System#Web#DynamicData#IFilterExpressionProvider#GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the modified query using the current filter value.</summary>
+      <returns>The filter.</returns>
+      <param name="source">The data source query.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterRepeater.System#Web#DynamicData#IFilterExpressionProvider#Initialize(System.Web.UI.WebControls.IQueryableDataSource)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.QueryableFilterRepeater" /> class. </summary>
+      <param name="dataSource">The data source.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.QueryableFilterUserControl">
+      <summary>Provides a base class for filter controls.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterUserControl.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.QueryableFilterUserControl" /> class.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterUserControl.ApplyEqualityFilter(System.Linq.IQueryable,System.String,System.Object)">
+      <summary>Gets the transformed <see cref="T:System.Linq.IQueryable" /> object from the source <see cref="T:System.Linq.IQueryable" /> object.</summary>
+      <returns>The transformed <see cref="T:System.Linq.IQueryable" /> object from the source <see cref="T:System.Linq.IQueryable" /> object.</returns>
+      <param name="source">The source <see cref="T:System.Linq.IQueryable" /> object.</param>
+      <param name="propertyName">The name of the property.</param>
+      <param name="value">The value for the <paramref name="propertyName" /> parameter.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterUserControl.Column">
+      <summary>Gets the column to use for filtering.</summary>
+      <returns>The column to use for filtering.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterUserControl.DefaultValue">
+      <summary>Gets the default values that are mapped for the table.</summary>
+      <returns>The default values that are mapped for the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterUserControl.DefaultValues">
+      <summary>Gets the default values that are mapped for the table.</summary>
+      <returns>The default values that are mapped for the table.</returns>
+    </member>
+    <member name="E:System.Web.DynamicData.QueryableFilterUserControl.FilterChanged">
+      <summary>Occurs when the <see cref="M:System.Web.DynamicData.QueryableFilterUserControl.OnFilterChanged" /> method is called.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.QueryableFilterUserControl.FilterControl">
+      <summary>Gets the data control that handles the filter inside the filter template.</summary>
+      <returns>The data control that handles the filter.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterUserControl.GetQueryable(System.Linq.IQueryable)">
+      <summary>Gets the transformed <see cref="T:System.Linq.IQueryable" /> object from the source <see cref="T:System.Linq.IQueryable" /> object.</summary>
+      <returns>The transformed <see cref="T:System.Linq.IQueryable" /> object from the source <see cref="T:System.Linq.IQueryable" /> object.</returns>
+      <param name="source">The source <see cref="T:System.Linq.IQueryable" /> object.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterUserControl.OnFilterChanged">
+      <summary>Raises the <see cref="E:System.Web.DynamicData.QueryableFilterUserControl.FilterChanged" /> event.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.QueryableFilterUserControl.PopulateListControl(System.Web.UI.WebControls.ListControl)">
+      <summary>Populates a list control with all the foreign-key elements or Boolean elements in the table.</summary>
+      <param name="listControl">A list control.</param>
+    </member>
+    <member name="T:System.Web.DynamicData.TableNameAttribute">
+      <summary>Provides an attribute to change the displayed name for a table.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.TableNameAttribute.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.TableNameAttribute" /> class with the specified name for the table.</summary>
+      <param name="name">The name that the table will display.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.TableNameAttribute.Name">
+      <summary>Gets or sets the name of the table.</summary>
+      <returns>The name that is associated with a table.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.ModelProviders.AssociationDirection">
+      <summary>Indicates the relationship between two entities.</summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ModelProviders.AssociationDirection.OneToOne">
+      <summary>Indicates a one-to-one relationship.</summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ModelProviders.AssociationDirection.OneToMany">
+      <summary>Indicates a one-to-many relationship.</summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ModelProviders.AssociationDirection.ManyToOne">
+      <summary>Indicates a many-to-one relationship.</summary>
+    </member>
+    <member name="F:System.Web.DynamicData.ModelProviders.AssociationDirection.ManyToMany">
+      <summary>Indicates a many-to-many relationship.</summary>
+    </member>
+    <member name="T:System.Web.DynamicData.ModelProviders.AssociationProvider">
+      <summary>Provides the base class for column-association providers.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.AssociationProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.ModelProviders.AssociationProvider" /> class for use by an inherited class instance. This constructor can only be called by an inherited class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.Direction">
+      <summary>Gets or sets the type of the association.</summary>
+      <returns>The type of the association.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.ForeignKeyNames">
+      <summary>Gets or sets the names of the foreign keys that make up this association.</summary>
+      <returns>The names of the foreign keys that make up this association.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.FromColumn">
+      <summary>Gets or sets the source column of the association.</summary>
+      <returns>The source column of the association.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.AssociationProvider.GetSortExpression(System.Web.DynamicData.ModelProviders.ColumnProvider)">
+      <summary>Returns the sort expression for the column that is represented by the association. </summary>
+      <returns>If <see cref="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsSortable" /> returns true, the sort expression for the column that is represented by the association; otherwise, null.</returns>
+      <param name="sortColumn">The column to sort the entity by.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.IsPrimaryKeyInThisTable">
+      <summary>Gets or sets a value that indicates whether the From column part of the primary key is in the table.</summary>
+      <returns>true if the From column part of the primary key is in the table; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.ToColumn">
+      <summary>Gets or sets the destination column of the association.</summary>
+      <returns>The destination column of the association.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.AssociationProvider.ToTable">
+      <summary>Gets the destination table of the association.</summary>
+      <returns>The destination table of the association.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.ModelProviders.ColumnProvider">
+      <summary>Provides a base class for column providers.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.ColumnProvider.#ctor(System.Web.DynamicData.ModelProviders.TableProvider)">
+      <summary>Initializes the class for use by an inherited class instance. This constructor can only be called by an inherited class.</summary>
+      <param name="table">The table that contains the column.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.ColumnProvider.AddDefaultAttributes(System.Web.DynamicData.ModelProviders.ColumnProvider,System.ComponentModel.AttributeCollection)">
+      <summary>Adds default attributes.</summary>
+      <returns>The attribute collection.</returns>
+      <param name="columnProvider">The column provider.</param>
+      <param name="attributes">The attribute collection.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Association">
+      <summary>Gets the provider for the table that a column represents.</summary>
+      <returns>The provider for a table that a column represents, if one exists; otherwise, null.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Attributes">
+      <summary>Gets the attributes that are defined for the column that is represented by this provider.</summary>
+      <returns>The attribute collection.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.ColumnType">
+      <summary>Gets or sets the type of the column.</summary>
+      <returns>The type of the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.EntityTypeProperty">
+      <summary>Gets or sets the <see cref="T:System.Reflection.PropertyInfo" /> value of the property that represents the column in the entity type.</summary>
+      <returns>The <see cref="T:System.Reflection.PropertyInfo" /> value of the property that represents the column in the entity type.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsCustomProperty">
+      <summary>Gets or sets a value that indicates whether the column is an additional property that is not in the model's data context.</summary>
+      <returns>true if the column is an additional property that is not in the model's data context; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsForeignKeyComponent">
+      <summary>Gets or sets a value that indicates whether the column is part of a foreign key.</summary>
+      <returns>true if the column is part of a foreign key; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsGenerated">
+      <summary>Gets or sets a value that indicates whether the column value is automatically generated by the database.</summary>
+      <returns>true if the column value is automatically generated by the database; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsPrimaryKey">
+      <summary>Gets or sets a value that indicates whether the column is part of the primary key for the table.</summary>
+      <returns>true if the column is part of the primary key for the table; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsReadOnly">
+      <summary>Gets a value that indicates whether the column is read-only.</summary>
+      <returns>true if column is read-only; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.IsSortable">
+      <summary>When overridden in a derived class, gets or sets a value that indicates whether the data model supports sorting the table by this column. </summary>
+      <returns>true if the data model supports sorting the table by this column; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.MaxLength">
+      <summary>Gets or sets the maximum length that is allowed for this column.</summary>
+      <returns>The maximum length that is allowed for this column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Name">
+      <summary>Gets or sets the name of the column.</summary>
+      <returns>The name of the column.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Nullable">
+      <summary>Gets or sets a value that indicates whether the column accepts null values.</summary>
+      <returns>true if the column accepts null values; otherwise, false.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Table">
+      <summary>Gets or sets the table that the column belongs to.</summary>
+      <returns>The table that the column belongs to.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.ColumnProvider.ToString">
+      <summary>Returns the <see cref="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Name" /> property.</summary>
+      <returns>The <see cref="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Name" /> property, or the string representation of the object if the <see cref="P:System.Web.DynamicData.ModelProviders.ColumnProvider.Name" /> property is null.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.ModelProviders.DataModelProvider">
+      <summary>Provides a base class for Dynamic Data model providers.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.DataModelProvider.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.ModelProviders.DataModelProvider" /> class for use by an inherited class instance. This constructor can only be called by an inherited class.</summary>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.DataModelProvider.ContextType">
+      <summary>Gets the type of the data context.</summary>
+      <returns>The type of the data context.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.DataModelProvider.CreateContext">
+      <summary>When overridden in a derived class, creates an instance of the data context.</summary>
+      <returns>An instance of the data context.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.DataModelProvider.Tables">
+      <summary>When overridden in a derived class, gets the list of tables that are exposed by the data model.</summary>
+      <returns>The list of tables that are exposed by the data model.</returns>
+    </member>
+    <member name="T:System.Web.DynamicData.ModelProviders.TableProvider">
+      <summary>Provides the base class for Dynamic Data table providers.</summary>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.#ctor(System.Web.DynamicData.ModelProviders.DataModelProvider)">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.DynamicData.ModelProviders.TableProvider" /> class for use by an inherited class instance. This constructor can only be called by an inherited class.</summary>
+      <param name="model">The model that the table belongs to.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.Attributes">
+      <summary>Gets the attributes that are defined for the table that is represented by this provider.</summary>
+      <returns>The attribute collection.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.CanDelete(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the user is allowed to delete items from the table.</summary>
+      <returns>true if the user is allowed to delete items from the table; otherwise, false.</returns>
+      <param name="principal">The user.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.CanInsert(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the user is allowed to insert items into the table.</summary>
+      <returns>true if the user is allowed to insert items into the table; otherwise, false.</returns>
+      <param name="principal">The user.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.CanRead(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the user is allowed to read items in the table.</summary>
+      <returns>true if the user is allowed to read items in the table; otherwise, false.</returns>
+      <param name="principal">The user.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.CanUpdate(System.Security.Principal.IPrincipal)">
+      <summary>Gets a value that indicates whether the user is allowed to update items in the table.</summary>
+      <returns>true if the user is allowed to update items in the table; otherwise, false.</returns>
+      <param name="principal">The user.</param>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.Columns">
+      <summary>When overridden in a derived class, gets the collection of columns in this table.</summary>
+      <returns>The collection of columns in this table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.DataContextPropertyName">
+      <summary>Gets the name of the table from the data context.</summary>
+      <returns>The name of the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.DataModel">
+      <summary>Gets the <see cref="T:System.Web.DynamicData.ModelProviders.DataModelProvider" /> object.</summary>
+      <returns>The <see cref="T:System.Web.DynamicData.ModelProviders.DataModelProvider" /> object.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.EntityType">
+      <summary>Gets or sets the type that represents the table.</summary>
+      <returns>The type that represents the table.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.EvaluateForeignKey(System.Object,System.String)">
+      <summary>Returns the value of a foreign key for the specified row.</summary>
+      <returns>The foreign key.</returns>
+      <param name="row">The row to get the foreign-key value for.</param>
+      <param name="foreignKeyName">The name of the foreign-key column.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.GetQuery(System.Object)">
+      <summary>When overridden in a derived class, returns the <see cref="T:System.Linq.IQueryable" /> object that in turn returns the elements of the table.</summary>
+      <returns>An <see cref="T:System.Linq.IQueryable" /> object that returns the elements of the table.</returns>
+      <param name="context">The data context for the table.</param>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.GetTypeDescriptor">
+      <summary>Gets the type descriptor for the table.</summary>
+      <returns>The type descriptor for the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.Name">
+      <summary>Gets the name of the table.</summary>
+      <returns>The name of the table.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.ParentEntityType">
+      <summary>Gets the parent type.</summary>
+      <returns>The parent type if the entity has a parent; otherwise, an instance of the <see cref="T:System.Data.Metadata.Edm.EntityType" /> class.</returns>
+    </member>
+    <member name="P:System.Web.DynamicData.ModelProviders.TableProvider.RootEntityType">
+      <summary>Gets the root type for this entity.</summary>
+      <returns>The root type for this entity if the entity has a parent; otherwise, an instance of the <see cref="T:System.Data.Metadata.Edm.EntityType" /> class.</returns>
+    </member>
+    <member name="M:System.Web.DynamicData.ModelProviders.TableProvider.ToString">
+      <summary>Returns the <see cref="P:System.Web.DynamicData.ModelProviders.TableProvider.Name" /> property of the <see cref="T:System.Web.DynamicData.ModelProviders.TableProvider" /> instance.</summary>
+      <returns>The name of the <see cref="T:System.Web.DynamicData.ModelProviders.TableProvider" /> instance. If the <see cref="P:System.Web.DynamicData.ModelProviders.TableProvider.Name" /> property is null, the base class Name property is returned. </returns>
+    </member>
+    <member name="T:System.Web.UI.DataControlExtensions">
+      <summary>Provides extension methods that are used by ASP.NET Dynamic Data.</summary>
+    </member>
+    <member name="M:System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type)">
+      <summary>Enables Dynamic Data behavior for the specified data control.</summary>
+      <param name="control">The data control to enable Dynamic Data behavior for.</param>
+      <param name="entityType">The type to use for metadata.</param>
+    </member>
+    <member name="M:System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+      <summary>Enables Dynamic Data behavior for the specified data control.</summary>
+      <param name="control">The data control to enable Dynamic Data behavior for.</param>
+      <param name="entityType">The type to use for metadata.</param>
+      <param name="defaultValues">The default values to use with the <see cref="T:System.Web.UI.INamingContainer" /> object.</param>
+    </member>
+    <member name="M:System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Object)">
+      <summary>Enables Dynamic Data behavior for the specified data control.</summary>
+      <param name="control">The data control to enable Dynamic Data behavior for.</param>
+      <param name="entityType">The type that represents the table to display.</param>
+      <param name="defaults">The default values to use with the <see cref="T:System.Web.UI.INamingContainer" /> object.</param>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,962 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>PresentationCore</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>bin\Debug\</OutputPath>
+    <ProjectGuid>{1926417C-C3E4-4137-B06A-90192A3AB682}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <DocumentationFile>bin\Debug\PresentationCore.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.5\Profile\Client\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.Windows.Markup.IUriContext.cs" />
+    <Compile Include="Sources\System.Windows.Media.Composition.DUCE.cs" />
+    <Compile Include="Sources\System.Windows.Media.Composition.DUCE.IResource.cs" />
+    <Compile Include="Sources\MS.Internal.IAppDomainShutdownListener.cs" />
+    <Compile Include="Sources\MS.Internal.IVisual3DContainer.cs" />
+    <Compile Include="Sources\System.Windows.Ink.DrawingAttributeIds.cs" />
+    <Compile Include="Sources\System.Windows.Ink.DrawingAttributes.cs" />
+    <Compile Include="Sources\System.Windows.Ink.DrawingAttributesReplacedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.EllipseStylusShape.cs" />
+    <Compile Include="Sources\System.Windows.Ink.GestureRecognitionResult.cs" />
+    <Compile Include="Sources\System.Windows.Ink.GestureRecognizer.cs" />
+    <Compile Include="Sources\System.Windows.Ink.IncrementalHitTester.cs" />
+    <Compile Include="Sources\System.Windows.Ink.IncrementalLassoHitTester.cs" />
+    <Compile Include="Sources\System.Windows.Ink.IncrementalStrokeHitTester.cs" />
+    <Compile Include="Sources\System.Windows.Ink.LassoSelectionChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.PropertyDataChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.RectangleStylusShape.cs" />
+    <Compile Include="Sources\System.Windows.Ink.Stroke.cs" />
+    <Compile Include="Sources\System.Windows.Ink.StrokeCollection.cs" />
+    <Compile Include="Sources\System.Windows.Ink.StrokeCollectionChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.StrokeHitEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.StylusPointsReplacedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Ink.StylusShape.cs" />
+    <Compile Include="Sources\System.Windows.Ink.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.BaseIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.BoolIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.BrushValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.CacheModeValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.CharIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.DoubleCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.DoubleIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.GeometryValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.Int32CollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.PathFigureCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.PointCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.PointIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.TransformValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.UShortIListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Converters.VectorCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.AutoResizedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Clipboard.cs" />
+    <Compile Include="Sources\System.Windows.ContentElement.cs" />
+    <Compile Include="Sources\System.Windows.ContentOperations.cs" />
+    <Compile Include="Sources\System.Windows.CultureInfoIetfLanguageTagConverter.cs" />
+    <Compile Include="Sources\System.Windows.DataFormat.cs" />
+    <Compile Include="Sources\System.Windows.DataFormats.cs" />
+    <Compile Include="Sources\System.Windows.DataObject.cs" />
+    <Compile Include="Sources\System.Windows.DataObjectCopyingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.DataObjectEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.DataObjectPastingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.DataObjectSettingDataEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.DragDrop.cs" />
+    <Compile Include="Sources\System.Windows.DragEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Duration.cs" />
+    <Compile Include="Sources\System.Windows.DurationConverter.cs" />
+    <Compile Include="Sources\System.Windows.FreezableCollection.Enumerator_1.cs" />
+    <Compile Include="Sources\System.Windows.TextDecorationCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.EventManager.cs" />
+    <Compile Include="Sources\System.Windows.EventPrivateKey.cs" />
+    <Compile Include="Sources\System.Windows.EventRoute.cs" />
+    <Compile Include="Sources\System.Windows.FontStretch.cs" />
+    <Compile Include="Sources\System.Windows.FontStretchConverter.cs" />
+    <Compile Include="Sources\System.Windows.FontStretches.cs" />
+    <Compile Include="Sources\System.Windows.FontStyle.cs" />
+    <Compile Include="Sources\System.Windows.FontStyleConverter.cs" />
+    <Compile Include="Sources\System.Windows.FontStyles.cs" />
+    <Compile Include="Sources\System.Windows.FontWeight.cs" />
+    <Compile Include="Sources\System.Windows.FontWeightConverter.cs" />
+    <Compile Include="Sources\System.Windows.FontWeights.cs" />
+    <Compile Include="Sources\System.Windows.FreezableCollection_1.cs" />
+    <Compile Include="Sources\System.Windows.GiveFeedbackEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.IContentHost.cs" />
+    <Compile Include="Sources\System.Windows.IDataObject.cs" />
+    <Compile Include="Sources\System.Windows.IInputElement.cs" />
+    <Compile Include="Sources\System.Windows.KeySplineConverter.cs" />
+    <Compile Include="Sources\System.Windows.KeyTimeConverter.cs" />
+    <Compile Include="Sources\System.Windows.LocalizabilityAttribute.cs" />
+    <Compile Include="Sources\System.Windows.PresentationSource.cs" />
+    <Compile Include="Sources\System.Windows.QueryContinueDragEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.RoutedEvent.cs" />
+    <Compile Include="Sources\System.Windows.RoutedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.RoutedEventHandlerInfo.cs" />
+    <Compile Include="Sources\System.Windows.SizeChangedInfo.cs" />
+    <Compile Include="Sources\System.Windows.SourceChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.StrokeCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.TextDecoration.cs" />
+    <Compile Include="Sources\System.Windows.TextDecorationCollection.cs" />
+    <Compile Include="Sources\System.Windows.TextDecorationCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.TextDecorations.cs" />
+    <Compile Include="Sources\System.Windows.UIElement.cs" />
+    <Compile Include="Sources\System.Windows.UIElement3D.cs" />
+    <Compile Include="Sources\System.Windows.UIPropertyMetadata.cs" />
+    <Compile Include="Sources\System.Windows.cs" />
+    <Compile Include="Sources\MS.Internal.Shaping.IOpenTypeFont.cs" />
+    <Compile Include="Sources\MS.Internal.FontFace.IDeviceFont.cs" />
+    <Compile Include="Sources\MS.Internal.FontFace.IFontFamily.cs" />
+    <Compile Include="Sources\MS.Internal.FontFace.ITypefaceMetrics.cs" />
+    <Compile Include="Sources\System.Windows.Media.ArcSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.BezierSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.BitmapCache.cs" />
+    <Compile Include="Sources\System.Windows.Media.BitmapCacheBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.Brush.cs" />
+    <Compile Include="Sources\System.Windows.Media.BrushConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Brushes.cs" />
+    <Compile Include="Sources\System.Windows.Media.CacheMode.cs" />
+    <Compile Include="Sources\System.Windows.Media.CacheModeConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.CharacterMetrics.cs" />
+    <Compile Include="Sources\System.Windows.Media.CharacterMetricsDictionary.cs" />
+    <Compile Include="Sources\System.Windows.Media.Color.cs" />
+    <Compile Include="Sources\System.Windows.Media.ColorContext.cs" />
+    <Compile Include="Sources\System.Windows.Media.ColorConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Colors.cs" />
+    <Compile Include="Sources\System.Windows.Media.CombinedGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.CompositionTarget.cs" />
+    <Compile Include="Sources\System.Windows.Media.ContainerVisual.cs" />
+    <Compile Include="Sources\System.Windows.Media.DashStyle.cs" />
+    <Compile Include="Sources\System.Windows.Media.DashStyles.cs" />
+    <Compile Include="Sources\System.Windows.Media.DoubleCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.DoubleCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Drawing.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingContext.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingImage.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingVisual.cs" />
+    <Compile Include="Sources\System.Windows.Media.EllipseGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathSegmentCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.GradientStopCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathFigureCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextEffectCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.TransformCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.VectorCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeneralTransformCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.PointCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.DoubleCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Int32Collection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.DrawingCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.VisualCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.ExceptionEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Media.FamilyTypeface.cs" />
+    <Compile Include="Sources\System.Windows.Media.FamilyTypefaceCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontEmbeddingManager.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontFamily.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontFamilyConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontFamilyMap.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontFamilyMapCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.FontFamilyValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Fonts.cs" />
+    <Compile Include="Sources\System.Windows.Media.FormattedText.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeneralTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeneralTransformCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeneralTransformGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Geometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryDrawing.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryHitTestParameters.cs" />
+    <Compile Include="Sources\System.Windows.Media.GeometryHitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.GlyphRun.cs" />
+    <Compile Include="Sources\System.Windows.Media.GlyphRunDrawing.cs" />
+    <Compile Include="Sources\System.Windows.Media.GlyphTypeface.cs" />
+    <Compile Include="Sources\System.Windows.Media.GradientBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.GradientStop.cs" />
+    <Compile Include="Sources\System.Windows.Media.GradientStopCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.GuidelineSet.cs" />
+    <Compile Include="Sources\System.Windows.Media.HitTestParameters.cs" />
+    <Compile Include="Sources\System.Windows.Media.HitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.HostVisual.cs" />
+    <Compile Include="Sources\System.Windows.Media.ICompositionTarget.cs" />
+    <Compile Include="Sources\System.Windows.Media.ICyclicBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.IDrawingContent.cs" />
+    <Compile Include="Sources\System.Windows.Media.IFreezeFreezables.cs" />
+    <Compile Include="Sources\System.Windows.Media.IInvokable.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageDrawing.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageMetadata.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageSource.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageSourceConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.ImageSourceValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Int32Collection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Int32CollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.InvalidWmpVersionException.cs" />
+    <Compile Include="Sources\System.Windows.Media.LanguageSpecificStringDictionary.cs" />
+    <Compile Include="Sources\System.Windows.Media.LinearGradientBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.LineGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.LineSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.MatrixTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.MediaClock.cs" />
+    <Compile Include="Sources\System.Windows.Media.MediaPlayer.cs" />
+    <Compile Include="Sources\System.Windows.Media.MediaScriptCommandEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Media.MediaTimeline.cs" />
+    <Compile Include="Sources\System.Windows.Media.NumberSubstitution.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathFigure.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathFigureCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathFigureCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.PathSegmentCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Pen.cs" />
+    <Compile Include="Sources\System.Windows.Media.PixelFormat.cs" />
+    <Compile Include="Sources\System.Windows.Media.PixelFormatChannelMask.cs" />
+    <Compile Include="Sources\System.Windows.Media.PixelFormatConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.PixelFormats.cs" />
+    <Compile Include="Sources\System.Windows.Media.PointCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.PointCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.PointHitTestParameters.cs" />
+    <Compile Include="Sources\System.Windows.Media.PointHitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.PolyBezierSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.PolyLineSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.PolyQuadraticBezierSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.QuadraticBezierSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.RadialGradientBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.RectangleGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.RenderCapability.cs" />
+    <Compile Include="Sources\System.Windows.Media.RenderingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Media.RenderOptions.cs" />
+    <Compile Include="Sources\System.Windows.Media.RequestCachePolicyConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.RotateTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.ScaleTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.SkewTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.SolidColorBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.StreamGeometry.cs" />
+    <Compile Include="Sources\System.Windows.Media.StreamGeometryContext.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextEffectCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.TileBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.Transform.cs" />
+    <Compile Include="Sources\System.Windows.Media.TransformCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.TransformConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.TransformGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.TranslateTransform.cs" />
+    <Compile Include="Sources\System.Windows.Media.Typeface.cs" />
+    <Compile Include="Sources\System.Windows.Media.VectorCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.VectorCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.VideoDrawing.cs" />
+    <Compile Include="Sources\System.Windows.Media.Visual.cs" />
+    <Compile Include="Sources\System.Windows.Media.VisualBrush.cs" />
+    <Compile Include="Sources\System.Windows.Media.VisualCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.VisualTarget.cs" />
+    <Compile Include="Sources\System.Windows.Media.VisualTreeHelper.cs" />
+    <Compile Include="Sources\System.Windows.Media.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Animatable.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.AnimationClock.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.AnimationException.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.AnimationTimeline.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BackEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BooleanAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BooleanKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BooleanKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BounceEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ByteAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ByteAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ByteAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ByteKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ByteKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CharAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CharAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CharKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CharKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CircleEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Clock.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ClockCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ClockController.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ClockGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ColorAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ColorAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ColorAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ColorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ColorKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.CubicEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DecimalAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DecimalAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DecimalKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DecimalKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteBooleanKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteByteKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteCharKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteColorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteDecimalKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteDoubleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteInt16KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteInt32KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteInt64KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteMatrixKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteObjectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscretePoint3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscretePointKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteQuaternionKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteRectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteRotation3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteSingleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteSizeKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteStringKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteVector3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteVectorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleAnimationUsingPath.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DoubleKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingByteKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingColorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingDecimalKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingDoubleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingFunctionBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingInt16KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingInt32KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingInt64KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingPoint3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingPointKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingQuaternionKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingRectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingRotation3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingSingleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingSizeKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingVector3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingVectorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ElasticEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.TimelineCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ExponentialEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.IAnimatable.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.IClock.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.IEasingFunction.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.IKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.IKeyFrameAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int16Animation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int16AnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int16AnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int16KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int16KeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int32Animation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int32AnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int32AnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int32KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int32KeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int64Animation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int64AnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int64AnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int64KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Int64KeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.KeySpline.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.KeyTime.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearByteKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearColorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearDecimalKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearDoubleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearInt16KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearInt32KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearInt64KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearPoint3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearPointKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearQuaternionKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearRectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearRotation3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearSingleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearSizeKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearVector3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearVectorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.MatrixAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.MatrixAnimationUsingPath.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.MatrixKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.MatrixKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ObjectAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ObjectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ObjectKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ParallelTimeline.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Point3DAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Point3DAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Point3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Point3DKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointAnimationUsingPath.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PointKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PowerEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuadraticEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuarticEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuaternionAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuaternionAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuaternionKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuaternionKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.QuinticEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RectAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RectAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RectAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RectKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RepeatBehavior.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RepeatBehaviorConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Rotation3DAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Rotation3DAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Rotation3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Rotation3DKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SineEase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SingleAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SingleAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SingleAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SingleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SingleKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SizeAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SizeAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SizeAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SizeKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SizeKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineByteKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineColorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineDecimalKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineDoubleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineInt16KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineInt32KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineInt64KeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplinePoint3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplinePointKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineQuaternionKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineRectKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineRotation3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineSingleKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineSizeKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineVector3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineVectorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.StringAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.StringAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.StringKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.StringKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Timeline.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.TimelineCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.TimelineGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Vector3DAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Vector3DAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Vector3DKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Vector3DKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.VectorAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.VectorAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.VectorAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.VectorKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.VectorKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.AffineTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.AmbientLight.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.AxisAngleRotation3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Camera.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.ContainerUIElement3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.DiffuseMaterial.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.DirectionalLight.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.EmissiveMaterial.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MaterialCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Transform3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Visual3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Vector3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Model3DCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform2DTo3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform3DCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform3DGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeneralTransform3DTo2D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Geometry3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.GeometryModel3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.HitTestParameters3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Light.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Material.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MaterialCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MaterialGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Matrix3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Matrix3DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MatrixCamera.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MatrixTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.MeshGeometry3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Model3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Model3DCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Model3DGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.ModelUIElement3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.ModelVisual3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.OrthographicCamera.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.PerspectiveCamera.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point3DCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point3DCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point3DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point4D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Point4DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.PointLight.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.PointLightBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.ProjectionCamera.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Quaternion.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.QuaternionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.QuaternionRotation3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.RayHitTestParameters.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.RayHitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.RayMeshGeometry3DHitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Rect3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Rect3DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.RotateTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Rotation3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.ScaleTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Size3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Size3DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.SpecularMaterial.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.SpotLight.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Transform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Transform3DCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Transform3DGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.TranslateTransform3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Vector3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Vector3DCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Vector3DCollectionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Vector3DConverter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Viewport2DVisual3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Viewport3DVisual.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Visual3D.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Visual3DCollection.cs" />
+    <Compile Include="Sources\MS.Internal.TextFormatting.IShapeableTextCollector.cs" />
+    <Compile Include="Sources\MS.Internal.TextFormatting.ITextMetrics.cs" />
+    <Compile Include="Sources\MS.Internal.TextFormatting.ITextSymbols.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.CharacterBufferRange.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.CharacterBufferReference.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.CharacterHit.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.CultureSpecificCharacterBufferRange.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.IndexedGlyphRun.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.MinMaxParagraphWidth.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextBounds.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextCharacters.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextCollapsedRange.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextCollapsingProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextEmbeddedObject.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextEmbeddedObjectMetrics.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextEndOfLine.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextEndOfParagraph.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextEndOfSegment.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextFormatter.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextHidden.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextLine.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextLineBreak.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextMarkerProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextModifier.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextParagraphProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextRun.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextRunBounds.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextRunCache.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextRunProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextRunTypographyProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextSimpleMarkerProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextSource.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextSpan_1.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextTabProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextTrailingCharacterEllipsis.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.TextTrailingWordEllipsis.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextFormatting.cs" />
+    <Compile Include="Sources\System.IO.Packaging.PackageStore.cs" />
+    <Compile Include="Sources\System.IO.Packaging.PackWebRequest.cs" />
+    <Compile Include="Sources\System.IO.Packaging.PackWebRequestFactory.cs" />
+    <Compile Include="Sources\System.IO.Packaging.PackWebResponse.cs" />
+    <Compile Include="Sources\System.Windows.Automation.AutomationProperties.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.AutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ContentElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GenericRootAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.HostedWindowWrapper.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.UIElement3DAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.UIElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ContentPosition.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentPage.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentPaginator.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DynamicDocumentPaginator.cs" />
+    <Compile Include="Sources\System.Windows.Documents.GetPageCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.GetPageNumberCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.IDocumentPaginatorSource.cs" />
+    <Compile Include="Sources\System.Windows.Documents.PagesChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.PaginationProgressEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.cs" />
+    <Compile Include="Sources\System.Windows.Input.AccessKeyEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.AccessKeyManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.AccessKeyPressedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ApplicationCommands.cs" />
+    <Compile Include="Sources\System.Windows.Input.CanExecuteRoutedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.CommandBinding.cs" />
+    <Compile Include="Sources\System.Windows.Input.CommandBindingCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.CommandManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.ComponentCommands.cs" />
+    <Compile Include="Sources\System.Windows.Input.Cursor.cs" />
+    <Compile Include="Sources\System.Windows.Input.CursorConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.Cursors.cs" />
+    <Compile Include="Sources\System.Windows.Input.ExecutedRoutedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.FocusManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.ICommand.cs" />
+    <Compile Include="Sources\System.Windows.Input.ICommandSource.cs" />
+    <Compile Include="Sources\System.Windows.Input.IInputLanguageSource.cs" />
+    <Compile Include="Sources\System.Windows.Input.IInputProvider.cs" />
+    <Compile Include="Sources\System.Windows.Input.IKeyboardInputProvider.cs" />
+    <Compile Include="Sources\System.Windows.Input.IManipulator.cs" />
+    <Compile Include="Sources\System.Windows.Input.IMouseInputProvider.cs" />
+    <Compile Include="Sources\System.Windows.Input.InertiaExpansionBehavior.cs" />
+    <Compile Include="Sources\System.Windows.Input.InertiaRotationBehavior.cs" />
+    <Compile Include="Sources\System.Windows.Input.InertiaTranslationBehavior.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputBinding.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputBindingCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputGesture.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputGestureCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputLanguageChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputLanguageChangingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputLanguageEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputLanguageManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputMethod.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputMethodStateChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputScope.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputScopeConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputScopeName.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputScopeNameConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.InputScopePhrase.cs" />
+    <Compile Include="Sources\System.Windows.Input.ISecureCommand.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyBinding.cs" />
+    <Compile Include="Sources\System.Windows.Input.Keyboard.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyboardDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyboardEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyboardFocusChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyboardInputProviderAcquireFocusEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyGesture.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyGestureConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyGestureValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Input.Manipulation.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationBoundaryFeedbackEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationDelta.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationDeltaEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationInertiaStartingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationPivot.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationStartedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationStartingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ManipulationVelocities.cs" />
+    <Compile Include="Sources\System.Windows.Input.MediaCommands.cs" />
+    <Compile Include="Sources\System.Windows.Input.Mouse.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseActionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseActionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseBinding.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseButtonEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseGesture.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseGestureConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseGestureValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Input.MouseWheelEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.NavigationCommands.cs" />
+    <Compile Include="Sources\System.Windows.Input.NotifyInputEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.PreProcessInputEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.ProcessInputEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.QueryCursorEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.RoutedCommand.cs" />
+    <Compile Include="Sources\System.Windows.Input.RoutedUICommand.cs" />
+    <Compile Include="Sources\System.Windows.Input.StagingAreaInputItem.cs" />
+    <Compile Include="Sources\System.Windows.Input.Stylus.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusButton.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusButtonCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusButtonEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusDeviceCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusDownEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPoint.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPointCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPointDescription.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPointProperties.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPointProperty.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPointPropertyInfo.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusSystemGestureEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.Tablet.cs" />
+    <Compile Include="Sources\System.Windows.Input.TabletDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.TabletDeviceCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.TextComposition.cs" />
+    <Compile Include="Sources\System.Windows.Input.TextCompositionEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.TextCompositionManager.cs" />
+    <Compile Include="Sources\System.Windows.Input.Touch.cs" />
+    <Compile Include="Sources\System.Windows.Input.TouchDevice.cs" />
+    <Compile Include="Sources\System.Windows.Input.TouchEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.TouchFrameEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Input.TouchPoint.cs" />
+    <Compile Include="Sources\System.Windows.Input.TouchPointCollection.cs" />
+    <Compile Include="Sources\System.Windows.Input.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IAddChild.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IAddChildInternal.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IProvidePropertyFallback.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XmlLanguage.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XmlLanguageConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPlugIns.DynamicRenderer.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPlugIns.RawStylusInput.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPlugIns.StylusPlugIn.cs" />
+    <Compile Include="Sources\System.Windows.Input.StylusPlugIns.StylusPlugInCollection.cs" />
+    <Compile Include="Sources\MS.Win32.Penimc.IPimcContext.cs" />
+    <Compile Include="Sources\MS.Win32.Penimc.IPimcManager.cs" />
+    <Compile Include="Sources\MS.Win32.Penimc.IPimcTablet.cs" />
+    <Compile Include="Sources\System.Windows.Interop.CursorInteropHelper.cs" />
+    <Compile Include="Sources\System.Windows.Interop.D3DImage.cs" />
+    <Compile Include="Sources\System.Windows.Interop.HwndSource.cs" />
+    <Compile Include="Sources\System.Windows.Interop.HwndSourceParameters.cs" />
+    <Compile Include="Sources\System.Windows.Interop.HwndTarget.cs" />
+    <Compile Include="Sources\System.Windows.Interop.Imaging.cs" />
+    <Compile Include="Sources\System.Windows.Interop.InteropBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Interop.IWin32Window.cs" />
+    <Compile Include="Sources\System.Windows.Interop.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BevelBitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BitmapEffectCollection.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BitmapEffectGroup.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BitmapEffectInput.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BlurBitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BlurEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.DropShadowBitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.DropShadowEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.Effect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.EmbossBitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.BitmapEffectCollection.Enumerator.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.OuterGlowBitmapEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.PixelShader.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.ShaderEffect.cs" />
+    <Compile Include="Sources\System.Windows.Media.Effects.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapCodecInfo.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapImage.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapMetadata.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapMetadataBlob.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapPalette.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapPalettes.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapSizeOptions.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapSource.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BmpBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BmpBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.CachedBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.ColorConvertedBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.CroppedBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.DownloadProgressEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.FormatConvertedBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.GifBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.GifBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.IconBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapMetadata.IEnumUnknown.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.InPlaceBitmapMetadataWriter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapSource.IWICBitmapSource.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockReader.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockWriter.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.JpegBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.JpegBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.LateBoundBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.PngBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.PngBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.RenderTargetBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.TiffBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.TiffBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.TransformedBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.WmpBitmapDecoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.WmpBitmapEncoder.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.WriteableBitmap.cs" />
+    <Compile Include="Sources\System.Windows.Media.Imaging.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Matrix3DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Point3DCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Point3DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Point4DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.QuaternionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Rect3DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Size3DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Vector3DCollectionValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Media.Media3D.Converters.Vector3DValueSerializer.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.BaseUriHelper.cs" />
+    <Compile Include="Sources\System.Windows.Resources.AssemblyAssociatedContentFileAttribute.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.IClassification.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.IFontSource.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.IFontSourceCollection.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.IFontSourceCollectionFactory.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.IFontSourceFactory.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.Interfaces.IDWriteFontCollectionLoaderMirror.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.Interfaces.IDWriteFontFileEnumeratorMirror.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.Interfaces.IDWriteFontFileLoaderMirror.cs" />
+    <Compile Include="Sources\MS.Internal.Text.TextInterface.Interfaces.IDWriteFontFileStreamMirror.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="Accessibility" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="SMDiagnostics" />
+    <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="System.Windows.Input.Manipulations" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

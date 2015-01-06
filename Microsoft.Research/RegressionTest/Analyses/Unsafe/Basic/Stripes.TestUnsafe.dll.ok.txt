@@ -1,0 +1,43 @@
+Microsoft Clousot, 2007
+Method 1 : TestUnsafe.SimpleUnsafe.Write0(System.Int32*)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(10,7): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(10,7): Unsafe memory access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 2 : TestUnsafe.SimpleUnsafe.Write1(System.Int32*)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(16,7): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(16,7): Unsafe memory access might be above the upper bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(17,7): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(17,7): Unsafe memory access might be above the upper bound
+Checked 4 assertions: 4 unknown 
+Validated: 0%
+Method 3 : TestUnsafe.SimpleUnsafe.Write2(System.Int32*)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(24,7): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(24,7): Unsafe memory access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 4 : TestUnsafe.SimpleUnsafe.Fixed
+Ok!
+Method 5 : TestUnsafe.SimpleUnsafe.InitToZero0(System.Byte*,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(44,9): Unsafe memory access might be below the lower bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 6 : TestUnsafe.SimpleUnsafe.InitToZero1(System.Int64*,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(55,9): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(55,9): Unsafe memory access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 7 : TestUnsafe.SimpleUnsafe.InitToZero2(System.Int64*,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(66,9): Unsafe memory access might be below the lower bound
+Checked 2 assertions: 1 correct 1 unknown 
+Validated: 50%
+Method 8 : TestUnsafe.SimpleUnsafe.InitToZero3(System.Int64*,System.Int32,System.Int32)
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(78,9): Unsafe memory access might be below the lower bound
+C:\cci\Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs(78,9): Unsafe memory access might be above the upper bound
+Checked 2 assertions: 2 unknown 
+Validated: 0%
+Method 9 : TestUnsafe.SimpleUnsafe.#ctor
+Ok!
+Total uncheckable unsafe accesses: 0
+Checked 16 assertions: 2 correct 14 unknown 
+Validated: 12.5%

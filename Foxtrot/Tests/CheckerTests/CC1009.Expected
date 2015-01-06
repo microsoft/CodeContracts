@@ -1,0 +1,1 @@
+ (0,0) : error CC1009: Class 'CC1009+Bad' is annotated as being the contract for the abstract class 'CC1009+Abstract' but doesn't extend the class.

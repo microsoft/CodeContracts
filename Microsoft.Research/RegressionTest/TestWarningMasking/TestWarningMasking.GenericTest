@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="testwarningmasking" storage="c:\cci\microsoft.research\regressiontest\testwarningmasking\testwarningmasking.generictest" id="d4a0d9ff-1efb-4434-8c40-02ea1cdf4a99" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="d880044d-046a-45f4-987e-dba255c95767" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -bounds -nonnull -wp=false  TestWarningMasking.dll" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

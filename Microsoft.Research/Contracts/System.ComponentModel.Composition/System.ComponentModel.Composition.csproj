@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>System.ComponentModel.Composition</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <ProjectGuid>{23B4C62D-6128-4619-92CB-C0CDE3271541}</ProjectGuid>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.ComponentModel.Composition.XML</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ComponentModel.Composition.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ComponentModel.Composition.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\System.ComponentModel.Composition.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ComposablePart.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ComposablePartCatalog.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ComposablePartDefinition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ComposablePartException.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ContractBasedImportDefinition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.Export.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ExportDefinition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ExportedDelegate.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ICompositionElement.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.ImportDefinition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Primitives.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.AttributedModelServices.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ChangeRejectedException.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.CompositionContractMismatchException.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.CompositionError.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.CompositionException.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ExportAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ExportMetadataAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.IAttributedImport.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ICompositionError.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ICompositionService.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ImportAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ImportCardinalityMismatchException.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ImportingConstructorAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ImportManyAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.InheritedExportAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.IPartImportsSatisfiedNotification.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.MetadataAttributeAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.PartCreationPolicyAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.PartMetadataAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.PartNotDiscoverableAttribute.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.AggregateCatalog.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.AggregateExportProvider.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.AssemblyCatalog.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.AtomicComposition.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.CatalogExportProvider.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.ComposablePartCatalogChangeEventArgs.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.ComposablePartExportProvider.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.CompositionBatch.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.CompositionConstants.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.CompositionContainer.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.DirectoryCatalog.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.ExportProvider.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.ExportsChangeEventArgs.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.ImportEngine.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.INotifyComposablePartCatalogChanged.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.Hosting.TypeCatalog.cs" />
+    <Compile Include="Sources\System.Lazy_2.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ReflectionModel.IReflectionPartCreationInfo.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ReflectionModel.LazyMemberInfo.cs" />
+    <Compile Include="Sources\System.ComponentModel.Composition.ReflectionModel.ReflectionModelServices.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

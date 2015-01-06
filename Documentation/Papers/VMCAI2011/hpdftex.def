@@ -1,0 +1,1855 @@
+%%
+%% This is file `hpdftex.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% hyperref.dtx  (with options: `pdftex,pdfform,outlines')
+%% 
+%% File: hyperref.dtx Copyright 1995-2001 Sebastian Rahtz,
+%% with portions written by David Carlisle and Heiko Oberdiek,
+%% 2001-2010 Heiko Oberdiek.
+%%
+%% This file is part of the `Hyperref Bundle'.
+%% -------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%%
+%% The Current Maintainer of this work is Heiko Oberdiek.
+%%
+%% The list of all files belonging to the `Hyperref Bundle' is
+%% given in the file `manifest.txt'.
+%%
+\ProvidesFile{hpdftex.def}
+  [2010/06/18 v6.81g
+  Hyperref driver for pdfTeX]
+\let\Hy@PutCatalog\pdfcatalog
+\ifHy@pagelabels
+  \def\HyPL@StorePageLabel#1{%
+    \toks@\expandafter{\HyPL@Labels}%
+    \xdef\HyPL@Labels{%
+      \the\toks@
+      \the\Hy@abspage<<#1>>%
+    }%
+  }%
+  \RequirePackage{atveryend}[2009/12/07]%
+  \AtVeryEndDocument{%
+    \HyPL@SetPageLabels
+  }%
+\fi
+\RequirePackage{pdftexcmds}[2009/04/10]
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname pdf@escapestring\endcsname\relax
+  \begingroup
+    \catcode`\|=0 %
+    \@makeother\\%
+  |@firstofone{|endgroup
+    |def|Hy@pstringdef#1#2{%
+      |begingroup
+        |edef~{|string~}%
+        |xdef|Hy@gtemp{#2}%
+      |endgroup
+      |let#1|Hy@gtemp
+      |@onelevel@sanitize#1%
+      |edef#1{|expandafter|Hy@ExchangeBackslash#1\|@nil}%
+      |edef#1{|expandafter|Hy@ExchangeLeftParenthesis#1(|@nil}%
+      |edef#1{|expandafter|Hy@ExchangeRightParenthesis#1)|@nil}%
+    }%
+    |def|Hy@ExchangeBackslash#1\#2|@nil{%
+      #1%
+      |ifx|\#2|\%%
+      |else
+        \\%
+        |Hy@ReturnAfterFi{%
+          |Hy@ExchangeBackslash#2|@nil
+        }%
+      |fi
+    }%
+  }%
+  \def\Hy@ExchangeLeftParenthesis#1(#2\@nil{%
+    #1%
+    \ifx\\#2\\%
+    \else
+      \@backslashchar(%
+      \Hy@ReturnAfterFi{%
+        \Hy@ExchangeLeftParenthesis#2\@nil
+      }%
+    \fi
+  }%
+  \def\Hy@ExchangeRightParenthesis#1)#2\@nil{%
+    #1%
+    \ifx\\#2\\%
+    \else
+      \@backslashchar)%
+      \Hy@ReturnAfterFi{%
+        \Hy@ExchangeRightParenthesis#2\@nil
+      }%
+    \fi
+  }%
+\else
+  \def\Hy@pstringdef#1#2{%
+    \begingroup
+      \edef~{\string~}%
+      \xdef\Hy@gtemp{\pdf@escapestring{#2}}%
+    \endgroup
+    \let#1\Hy@gtemp
+  }%
+\fi
+\providecommand*{\XR@ext}{pdf}
+\Hy@setbreaklinks{true}
+\let\Hy@pdfminorversion\relax
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname pdfminorversion\endcsname\relax
+  \begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname pdfoptionpdfminorversion\endcsname\relax
+  \else
+    \def\Hy@pdfminorversion{\pdfoptionpdfminorversion}%
+  \fi
+\else
+  \def\Hy@pdfminorversion{\pdfminorversion}%
+\fi
+\@ifundefined{Hy@pdfminorversion}{%
+  \PackageInfo{hyperref}{%
+    PDF version is not set, because pdfTeX is too old (<1.10a)%
+  }%
+}{%
+  \ifHy@ocgcolorlinks
+    \ifnum\Hy@pdfminorversion<5 %
+      \kvsetkeys{Hyp}{pdfversion=1.5}%
+    \fi
+  \fi
+  \ifHy@setpdfversion
+    \ifnum\Hy@pdfminorversion=\Hy@pdfversion\relax
+    \else
+      \Hy@pdfminorversion=\Hy@pdfversion\relax
+    \fi
+    \PackageInfo{hyperref}{%
+      \expandafter\string\Hy@pdfminorversion
+      :=\number\Hy@pdfversion\space
+    }%
+  \fi
+  \edef\Hy@pdfversion{\number\Hy@pdfminorversion}%
+}
+\Hy@DisableOption{pdfversion}%
+\ifHy@ocgcolorlinks
+  \immediate\pdfobj{%
+    <<%
+      /Type/OCG%
+      /Name(View)%
+      /Usage<<%
+        /Print<<%
+          /PrintState/OFF%
+        >>%
+        /View<<%
+          /ViewState/ON%
+        >>%
+      >>%
+    >>%
+  }%
+  \edef\OBJ@OCG@view{\the\pdflastobj\space 0 R}%
+  \immediate\pdfobj{%
+    <<%
+      /Type/OCG%
+      /Name(Print)%
+      /Usage<<%
+        /Print<<%
+          /PrintState/ON%
+        >>%
+        /View<<%
+          /ViewState/OFF%
+        >>%
+      >>%
+    >>%
+  }%
+  \edef\OBJ@OCG@print{\the\pdflastobj\space 0 R}%
+  \immediate\pdfobj{%
+    [%
+      \OBJ@OCG@view\space\OBJ@OCG@print
+    ]%
+  }%
+  \edef\OBJ@OCGs{\the\pdflastobj\space 0 R}%
+  \pdfcatalog{%
+    /OCProperties<<%
+      /OCGs \OBJ@OCGs
+      /D<<%
+        /OFF[\OBJ@OCG@print]%
+        /AS[%
+          <<%
+            /Event/View%
+            /OCGs \OBJ@OCGs
+            /Category[/View]%
+          >>%
+          <<%
+            /Event/Print%
+            /OCGs \OBJ@OCGs
+            /Category[/Print]%
+          >>%
+          <<%
+            /Event/Export%
+            /OCGs \OBJ@OCGs
+            /Category[/Print]%
+          >>%
+        ]%
+      >>%
+    >>%
+  }%
+  \begingroup
+    \edef\x{\endgroup
+      \pdfpageresources{%
+        /Properties<<%
+          /OCView \OBJ@OCG@view
+          /OCPrint \OBJ@OCG@print
+        >>%
+      }%
+    }%
+  \x
+  \Hy@AtBeginDocument{%
+    \def\Hy@colorlink#1{%
+      \begingroup
+        \ifHy@ocgcolorlinks
+          \def\Hy@ocgcolor{#1}%
+          \setbox0=\color@hbox
+        \else
+          \HyColor@UseColor#1%
+        \fi
+    }%
+    \def\Hy@endcolorlink{%
+      \ifHy@ocgcolorlinks
+        \color@endbox
+        \mbox{%
+          \pdfliteral page{/OC/OCPrint BDC}%
+          \rlap{\copy0}%
+          \pdfliteral page{EMC/OC/OCView BDC}%
+          \begingroup
+            \expandafter\HyColor@UseColor\Hy@ocgcolor
+            \box0 %
+          \endgroup
+          \pdfliteral page{EMC}%
+        }%
+      \fi
+      \endgroup
+    }%
+  }%
+\else
+  \Hy@DisableOption{ocgcolorlinks}%
+\fi
+\def\setpdflinkmargin#1{\pdflinkmargin#1}
+\ifx\pdfstartlink\@undefined% less than version 14
+  \let\pdfstartlink\pdfannotlink
+  \let\pdflinkmargin\@tempdima
+  \let\pdfxform\pdfform
+  \let\pdflastxform\pdflastform
+  \let\pdfrefxform\pdfrefform
+\else
+  \pdflinkmargin1pt %
+\fi
+\providecommand*\@pdfview{XYZ}
+\def\new@pdflink#1{%
+  \Hy@SaveLastskip
+  \Hy@VerboseAnchor{#1}%
+  \Hy@pstringdef\Hy@pstringDest{\HyperDestNameFilter{#1}}%
+  \Hy@DestName\Hy@pstringDest\@pdfview
+  \Hy@RestoreLastskip
+}
+\let\pdf@endanchor\@empty
+\def\Hy@DestName#1#2{%
+  \pdfdest name{#1}#2\relax
+}
+\providecommand*\@pdfborder{0 0 1}
+\providecommand*\@pdfborderstyle{}
+\def\Hy@undefinedname{UNDEFINED}
+\def\find@pdflink#1#2{%
+  \leavevmode
+  \protected@edef\Hy@testname{#2}%
+  \ifx\Hy@testname\@empty
+    \Hy@Warning{%
+      Empty destination name,\MessageBreak
+      using `\Hy@undefinedname'%
+    }%
+    \let\Hy@testname\Hy@undefinedname
+  \else
+    \Hy@pstringdef\Hy@testname{%
+      \expandafter\HyperDestNameFilter\expandafter{\Hy@testname}%
+    }%
+  \fi
+  \Hy@StartlinkName{%
+    \ifHy@pdfa /F 4\fi
+    \Hy@setpdfborder
+    \ifx\@pdfhighlight\@empty
+    \else
+      /H\@pdfhighlight
+    \fi
+    \ifx\CurrentBorderColor\relax
+    \else
+      /C[\CurrentBorderColor]%
+    \fi
+  }\Hy@testname
+  \expandafter\Hy@colorlink\csname @#1color\endcsname
+}
+\def\Hy@StartlinkName#1#2{%
+  \pdfstartlink attr{#1}goto name{#2}\relax
+}
+\def\close@pdflink{%
+  \Hy@endcolorlink
+  \Hy@VerboseLinkStop
+  \pdfendlink
+}
+\def\hyper@anchor#1{%
+  \new@pdflink{#1}\anchor@spot\pdf@endanchor
+}
+\def\hyper@anchorstart#1{%
+  \new@pdflink{#1}%
+  \Hy@activeanchortrue
+}
+\def\hyper@anchorend{%
+  \pdf@endanchor
+  \Hy@activeanchorfalse
+}
+\def\hyper@linkstart#1#2{%
+  \Hy@VerboseLinkStart{#1}{#2}%
+  \ltx@IfUndefined{@#1bordercolor}{%
+    \let\CurrentBorderColor\relax
+  }{%
+    \edef\CurrentBorderColor{\csname @#1bordercolor\endcsname}%
+  }%
+  \find@pdflink{#1}{#2}%
+}
+\def\hyper@linkend{\close@pdflink}
+\def\hyper@link#1#2#3{%
+  \Hy@VerboseLinkStart{#1}{#2}%
+  \ltx@IfUndefined{@#1bordercolor}{%
+    \let\CurrentBorderColor\relax
+  }{%
+    \edef\CurrentBorderColor{\csname @#1bordercolor\endcsname}%
+  }%
+  \find@pdflink{#1}{#2}#3%
+  \close@pdflink
+}
+\let\CurrentBorderColor\@linkbordercolor
+\def\hyper@linkurl#1#2{%
+  \begingroup
+    \Hy@pstringdef\Hy@pstringURI{#2}%
+    \hyper@chars
+    \leavevmode
+    \pdfstartlink
+      attr{%
+        \Hy@setpdfborder
+        \ifx\@pdfhightlight\@empty
+        \else
+          /H\@pdfhighlight
+        \fi
+        \ifx\@urlbordercolor\relax
+        \else
+          /C[\@urlbordercolor]%
+        \fi
+      }%
+      user{%
+       /Subtype/Link%
+       \ifHy@pdfa /F 4\fi
+       /A<<%
+         /Type/Action%
+         /S/URI%
+         /URI(\Hy@pstringURI)%
+       >>%
+      }%
+      \relax
+    \Hy@colorlink\@urlcolor#1%
+    \close@pdflink
+  \endgroup
+}
+\def\hyper@linkfile#1#2#3{% anchor text, filename, linkname
+  \begingroup
+    \Hy@pstringdef\Hy@pstringF{#2}%
+    \Hy@pstringdef\Hy@pstringD{#3}%
+    \leavevmode
+    \pdfstartlink
+      attr{%
+        \Hy@setpdfborder
+        \ifx\@pdfhighlight\@empty
+        \else
+          /H\@pdfhighlight
+        \fi
+        \ifx\@filebordercolor\relax
+        \else
+          /C[\@filebordercolor]%
+        \fi
+      }%
+      user {%
+        /Subtype/Link%
+        \ifHy@pdfa /F 4\fi
+        /A<<%
+          /F(\Hy@pstringF)%
+          /S/GoToR%
+          \Hy@SetNewWindow
+          \ifx\\#3\\%
+            /D[0 \@pdfstartview]%
+          \else
+            /D(\Hy@pstringD)%
+          \fi
+        >>%
+      }%
+      \relax
+    \Hy@colorlink\@filecolor#1%
+    \close@pdflink
+  \endgroup
+}
+\def\@hyper@launch run:#1\\#2#3{% filename, anchor text linkname
+  \begingroup
+    \Hy@pstringdef\Hy@pstringF{#1}%
+    \Hy@pstringdef\Hy@pstringP{#3}%
+    \leavevmode
+    \pdfstartlink
+      attr{%
+        \Hy@setpdfborder
+        \ifx\@pdfhighlight\@empty
+        \else
+          /H\@pdfhighlight
+        \fi
+        \ifx\@runbordercolor\relax
+        \else
+          /C[\@runbordercolor]%
+        \fi
+      }%
+      user {%
+        /Subtype/Link%
+        \ifHy@pdfa /F 4\fi
+        /A<<%
+          /F(\Hy@pstringF)%
+          /S/Launch%
+          \Hy@SetNewWindow
+          \ifx\\#3\\%
+          \else
+            /Win<</P(\Hy@pstringP)/F(\Hy@pstringF)>>%
+          \fi
+        >>%
+      }%
+      \relax
+    \Hy@colorlink\@runcolor#2%
+    \close@pdflink
+  \endgroup
+}
+\ifx\@pdfproducer\relax
+  \begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname luatexversion\endcsname\relax
+    \def\@pdfproducer{pdfTeX}%
+    \ifx\eTeXversion\@undefined
+    \else
+      \ifx\eTeXversion\relax
+      \else
+        \ifnum\eTeXversion>0 %
+          \def\@pdfproducer{pdfeTeX}%
+        \fi
+      \fi
+    \fi
+    \ifx\pdftexversion\@undefined
+    \else
+      \ifnum\pdftexversion<100 %
+        \edef\@pdfproducer{%
+          \@pdfproducer
+          \the\pdftexversion.\pdftexrevision
+        }%
+      \else
+        \ifnum\pdftexversion<130 %
+          \edef\@pdfproducer{%
+            \@pdfproducer-%
+            \expandafter\@car\the\pdftexversion\@empty\@nil.%
+            \expandafter\@cdr\the\pdftexversion\@empty\@nil
+            \pdftexrevision
+          }%
+        \else
+          \ifnum\pdftexversion<140 %
+          \else
+            \def\@pdfproducer{pdfTeX}%
+          \fi
+          \edef\@pdfproducer{%
+            \@pdfproducer-%
+            \expandafter\@car\the\pdftexversion\@empty\@nil.%
+            \expandafter\@cdr\the\pdftexversion\@empty\@nil.%
+            \pdftexrevision
+          }%
+        \fi
+      \fi
+    \fi
+  \else
+    \begingroup
+      \count@=\luatexversion
+      \divide\count@ by 100 %
+      \edef\x{\the\count@}%
+      \count@=-\x\relax
+      \multiply\count@ by 100 %
+      \advance\count@ by \luatexversion
+      \edef\x{\endgroup
+        \def\noexpand\@pdfproducer{%
+          LuaTeX-\x.\the\count@.\luatexrevision
+        }%
+      }%
+    \x
+  \fi
+\fi
+\def\PDF@SetupDoc{%
+  \ifx\@pdfpagescrop\@empty
+  \else
+    \edef\process@me{%
+      \pdfpagesattr={%
+        /CropBox[\@pdfpagescrop]%
+        \expandafter\ifx\expandafter\\\the\pdfpagesattr\\%
+        \else
+          ^^J\the\pdfpagesattr
+        \fi
+      }%
+    }%
+    \process@me
+  \fi
+  \Hy@pstringdef\Hy@pstringB{\@baseurl}%
+  \pdfcatalog{%
+    /PageMode/\@pdfpagemode
+    \ifx\@baseurl\@empty
+    \else
+      /URI<</Base(\Hy@pstringB)>>%
+    \fi
+  }%
+  \ifx\@pdfstartpage\@empty
+  \else
+    \ifx\@pdfstartview\@empty
+    \else
+      openaction goto page\@pdfstartpage{\@pdfstartview}%
+    \fi
+  \fi
+  \edef\Hy@temp{%
+    \ifHy@toolbar\else /HideToolbar true\fi
+    \ifHy@menubar\else /HideMenubar true\fi
+    \ifHy@windowui\else /HideWindowUI true\fi
+    \ifHy@fitwindow /FitWindow true\fi
+    \ifHy@centerwindow /CenterWindow true\fi
+    \ifHy@displaydoctitle /DisplayDocTitle true\fi
+    \Hy@UseNameKey{NonFullScreenPageMode}\@pdfnonfullscreenpagemode
+    \Hy@UseNameKey{Direction}\@pdfdirection
+    \Hy@UseNameKey{ViewArea}\@pdfviewarea
+    \Hy@UseNameKey{ViewClip}\@pdfviewclip
+    \Hy@UseNameKey{PrintArea}\@pdfprintarea
+    \Hy@UseNameKey{PrintClip}\@pdfprintclip
+    \Hy@UseNameKey{PrintScaling}\@pdfprintscaling
+    \Hy@UseNameKey{Duplex}\@pdfduplex
+    \ifx\@pdfpicktraybypdfsize\@empty
+    \else
+      /PickTrayByPDFSize \@pdfpicktraybypdfsize
+    \fi
+    \ifx\@pdfprintpagerange\@empty
+    \else
+      /PrintPageRange[\@pdfprintpagerange]%
+    \fi
+    \ifx\@pdfnumcopies\@empty
+    \else
+      /NumCopies \@pdfnumcopies
+    \fi
+  }%
+  \pdfcatalog{%
+    \ifx\Hy@temp\@empty
+    \else
+      /ViewerPreferences<<\Hy@temp>>%
+    \fi
+    \Hy@UseNameKey{PageLayout}\@pdfpagelayout
+    \ifx\@pdflang\@empty
+    \else
+      /Lang(\@pdflang)%
+    \fi
+  }%
+}
+\def\PDF@FinishDoc{%
+  \Hy@UseMaketitleInfos
+  \HyInfo@GenerateAddons
+  \pdfinfo{%
+    /Author(\@pdfauthor)%
+    /Title(\@pdftitle)%
+    /Subject(\@pdfsubject)%
+    /Creator(\@pdfcreator)%
+    \ifx\@pdfcreationdate\@empty
+    \else
+      /CreationDate(\@pdfcreationdate)%
+    \fi
+    \ifx\@pdfmoddate\@empty
+    \else
+      /ModDate(\@pdfmoddate)%
+    \fi
+    \ifx\@pdfproducer\relax
+    \else
+      /Producer(\@pdfproducer)%
+    \fi
+    /Keywords(\@pdfkeywords)%
+    \ifx\@pdftrapped\@empty
+    \else
+      /Trapped/\@pdftrapped
+    \fi
+    \HyInfo@Addons
+  }%
+  \Hy@DisableOption{pdfauthor}%
+  \Hy@DisableOption{pdftitle}%
+  \Hy@DisableOption{pdfsubject}%
+  \Hy@DisableOption{pdfcreator}%
+  \Hy@DisableOption{pdfcreationdate}%
+  \Hy@DisableOption{pdfmoddate}%
+  \Hy@DisableOption{pdfproducer}%
+  \Hy@DisableOption{pdfkeywords}%
+  \Hy@DisableOption{pdftrapped}%
+  \Hy@DisableOption{pdfinfo}%
+}
+\def\hyper@pagetransition{%
+  \ifx\@pdfpagetransition\relax
+  \else
+    \expandafter\Hy@RemoveTransPageAttr
+    \the\pdfpageattr^^J/Trans{}>>\END
+    \ifx\@pdfpagetransition\@empty
+    \else
+      \edef\@processme{%
+        \global\pdfpageattr{%
+          \the\pdfpageattr
+          ^^J/Trans << /S /\@pdfpagetransition\space >>%
+        }%
+      }%
+      \@processme
+    \fi
+  \fi
+}
+\gdef\Hy@RemoveTransPageAttr#1^^J/Trans#2#3>>#4\END{%
+  \ifx\\#2\\%
+    \global\pdfpageattr{#1}%
+  \else
+    \Hy@RemoveTransPageAttr#1#4\END
+  \fi
+}
+\def\hyper@pageduration{%
+  \ifx\@pdfpageduration\relax
+  \else
+    \expandafter
+    \Hy@RemoveDurPageAttr\the\pdfpageattr^^J/Dur{} \END
+    \ifx\@pdfpageduration\@empty
+    \else
+      \edef\@processme{%
+        \global\pdfpageattr{%
+          \the\pdfpageattr
+          ^^J/Dur \@pdfpageduration\space
+        }%
+      }%
+      \@processme
+    \fi
+  \fi
+}
+\gdef\Hy@RemoveDurPageAttr#1^^J/Dur#2#3 #4\END{%
+  \ifx\\#2\\%
+    \global\pdfpageattr{#1}%
+  \else
+    \Hy@RemoveDurPageAttr#1#4\END
+  \fi
+}
+\def\hyper@pagehidden{%
+  \ifHy@useHidKey
+    \expandafter
+    \Hy@RemoveHidPageAttr\the\pdfpageattr^^J/Hid{} \END
+    \ifHy@pdfpagehidden
+      \edef\@processme{%
+        \global\pdfpageattr{%
+          \the\pdfpageattr
+          ^^J/Hid true % SPACE
+        }%
+      }%
+      \@processme
+    \fi
+  \fi
+}
+\gdef\Hy@RemoveHidPageAttr#1^^J/Hid#2#3 #4\END{%
+  \ifx\\#2\\%
+    \global\pdfpageattr{#1}%
+  \else
+    \Hy@RemoveHidPageAttr#1#4\END
+  \fi
+}
+\g@addto@macro\Hy@EveryPageHook{%
+  \hyper@pagetransition
+  \hyper@pageduration
+  \hyper@pagehidden
+}
+\Hy@AtBeginDocument{%
+  \ifHy@setpagesize
+    \expandafter\@firstofone
+  \else
+    \expandafter\@gobble
+  \fi
+  {%
+    \@ifclassloaded{seminar}{%
+      \setlength{\pdfhorigin}{1truein}%
+      \setlength{\pdfvorigin}{1truein}%
+      \ifportrait
+        \ifdim\paperwidth=\z@
+        \else
+          \setlength{\pdfpagewidth}{\strip@pt\paperwidth truept}%
+        \fi
+        \ifdim\paperheight=\z@
+        \else
+          \setlength{\pdfpageheight}{\strip@pt\paperheight truept}%
+        \fi
+      \else
+        \ifdim\paperheight=\z@
+        \else
+          \setlength{\pdfpagewidth}{\strip@pt\paperheight truept}%
+        \fi
+        \ifdim\paperwidth=\z@
+        \else
+          \setlength{\pdfpageheight}{\strip@pt\paperwidth truept}%
+        \fi
+      \fi
+    }{%
+      \ltx@IfUndefined{stockwidth}{%
+        \ifdim\paperwidth>\z@
+          \setlength{\pdfpagewidth}{\paperwidth}%
+        \fi
+        \ifdim\paperheight>\z@
+          \setlength{\pdfpageheight}{\paperheight}%
+        \fi
+      }{%
+        \ifdim\stockwidth>\z@
+          \setlength{\pdfpagewidth}{\stockwidth}%
+        \fi
+        \ifdim\stockheight>\z@
+          \setlength{\pdfpageheight}{\stockheight}%
+        \fi
+      }%
+    }%
+  }%
+  \Hy@DisableOption{setpagesize}%
+}
+\def\Acrobatmenu#1#2{%
+  \Hy@Acrobatmenu{#1}{#2}{%
+    \pdfstartlink
+      attr{%
+        \Hy@setpdfborder
+        \ifx\@pdfhighlight\@empty
+        \else
+          /H\@pdfhighlight
+        \fi
+        \ifx\@menubordercolor\relax
+        \else
+          /C[\@menubordercolor]%
+        \fi
+      }%
+      user{%
+        /Subtype/Link%
+        \ifHy@pdfa /F 4\fi
+        /A<<%
+          /S/Named/N/#1%
+        >>%
+      }%
+      \relax
+    \Hy@colorlink\@menucolor#2%
+    \close@pdflink
+  }%
+}
+\def\Hy@FixNotFirstPage{%
+  \gdef\Hy@FixNotFirstPage{%
+    \setbox\AtBeginShipoutBox=\hbox{%
+      \copy\AtBeginShipoutBox
+    }%
+  }%
+}
+\AtBeginShipout{\Hy@FixNotFirstPage}
+\def\@Gauge[#1]#2#3#4{% parameters, label, minimum, maximum
+  \typeout{Sorry, pdftex does not support FORM gauges}%
+}
+\def\MakeFieldObject#1#2{\sbox0{#1}%
+  \immediate\pdfxform0 %
+  \expandafter\edef\csname #2Object\endcsname{%
+    \the\pdflastxform\space 0 R%
+  }%
+}%
+\def\HyField@afields{}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname pdflastlink\endcsname\relax
+  \let\HyField@AddToFields\relax
+  \PackageInfo{hyperref}{%
+    You need pdfTeX 1.40.0 for setting the /Fields entry.%
+    \MessageBreak
+    Adobe Reader/Acrobat accepts an empty /Field array,%
+    \MessageBreak
+    but other PDF viewers might complain%
+  }%
+\else
+  \def\HyField@AuxAddToFields#1{}%
+  \def\HyField@AfterAuxOpen{\Hy@AtBeginDocument}%
+  \Hy@AtBeginDocument{%
+    \if@filesw
+      \immediate\write\@mainaux{%
+        \string\providecommand\string\HyField@AuxAddToFields[1]{}%
+      }%
+    \fi
+    \let\HyField@AfterAuxOpen\@firstofone
+    \def\HyField@AuxAddToFields#1{%
+      \xdef\HyField@afields{%
+        \ifx\HyField@afields\@empty
+        \else
+          \HyField@afields
+          \space
+        \fi
+        #1 0 R%
+      }%
+    }%
+  }%
+  \def\HyField@AddToFields{%
+    \expandafter\HyField@@AddToFields\expandafter{%
+      \the\pdflastlink
+    }%
+  }%
+  \def\HyField@@AddToFields#1{%
+    \HyField@AfterAuxOpen{%
+      \if@filesw
+        \write\@mainaux{%
+          \string\HyField@AuxAddToFields{#1}%
+        }%
+      \fi
+    }%
+  }%
+\fi
+\def\@Form[#1]{%
+  \@ifundefined{textcolor}{\let\textcolor\@gobble}{}%
+  \kvsetkeys{Form}{#1}%
+  \Hy@FormObjects
+  \ifnum\pdftexversion>13 %
+    \pdfrefobj\OBJ@pdfdocencoding
+    \pdfrefobj\OBJ@ZaDb
+    \pdfrefobj\OBJ@Helv
+  \fi
+  \AtVeryEndDocument{%
+    \immediate\pdfobj{%
+      <<%
+        /Fields[\HyField@afields]%
+        /DR<<%
+          /Font<<%
+            /ZaDb \OBJ@ZaDb\space 0 R%
+            /Helv \OBJ@Helv\space 0 R%
+          >>%
+        >>%
+        /DA(/Helv 10 Tf 0 g)%
+        \ifHy@pdfa
+        \else
+          /NeedAppearances true%
+        \fi
+      >>%
+    }%
+    \edef\OBJ@acroform{\the\pdflastobj}%
+    \pdfcatalog{/AcroForm \OBJ@acroform\space 0 R}%
+  }%
+  \MakeFieldObject{%
+    \begingroup
+      \fontfamily{pzd}%
+      \fontencoding{U}%
+      \fontseries{m}%
+      \fontshape{n}%
+      \selectfont
+      \char123 %
+    \endgroup
+  }{Ding}%
+  \MakeFieldObject{%
+    \fbox{\textcolor{yellow}{\textsf{Submit}}}%
+  }{Submit}%
+  \MakeFieldObject{%
+    \fbox{\textcolor{yellow}{\textsf{SubmitP}}}%
+  }{SubmitP}%
+}
+\def\@endForm{}
+\def\@TextField[#1]#2{% parameters, label
+  \def\Fld@name{#2}%
+  \def\Fld@default{}%
+  \let\Fld@value\@empty
+  \def\Fld@width{\DefaultWidthofText}%
+  \def\Fld@height{%
+    \ifFld@multiline
+      \DefaultHeightofTextMultiline
+    \else
+      \DefaultHeightofText
+    \fi
+  }%
+  \begingroup
+    \Field@toks={ }%
+    \expandafter\HyField@SetKeys\expandafter{%
+      \DefaultOptionsofText,#1%
+    }%
+    \PDFForm@Name
+    \HyField@FlagsText
+    \ifFld@hidden\def\Fld@width{1sp}\fi
+    \ifx\Fld@value\@empty\def\Fld@value{\Fld@default}\fi
+    \LayoutTextField{#2}{%
+      \Hy@escapeform\PDFForm@Text
+      \pdfstartlink user {\PDFForm@Text}\relax
+      \MakeTextField{\Fld@width}{\Fld@height}\pdfendlink
+      \HyField@AddToFields
+    }%
+  \endgroup
+}
+\def\@ChoiceMenu[#1]#2#3{% parameters, label, choices
+  \def\Fld@name{#2}%
+  \let\Fld@default\relax
+  \let\Fld@value\relax
+  \def\Fld@width{\DefaultWidthofChoiceMenu}%
+  \def\Fld@height{\DefaultHeightofChoiceMenu}%
+  \begingroup
+    \Fld@menulength=0 %
+    \@tempdima\z@
+    \@for\@curropt:=#3\do{%
+      \expandafter\Fld@checkequals\@curropt==\\%
+      \Hy@StepCount\Fld@menulength
+      \settowidth{\@tempdimb}{\@currDisplay}%
+      \ifdim\@tempdimb>\@tempdima\@tempdima\@tempdimb\fi
+    }%
+    \advance\@tempdima by 15\p@
+    \Field@toks={ }%
+    \begingroup
+      \HyField@SetKeys{#1}%
+    \edef\x{\endgroup
+      \noexpand\expandafter
+      \noexpand\HyField@SetKeys
+      \noexpand\expandafter{%
+        \expandafter\noexpand\csname DefaultOptionsof%
+          \ifFld@radio
+            Radio%
+          \else
+            \ifFld@combo
+              \ifFld@popdown
+                PopdownBox%
+              \else
+                ComboBox%
+              \fi
+            \else
+              ListBox%
+            \fi
+          \fi
+        \endcsname
+      }%
+    }\x
+    \HyField@SetKeys{#1}%
+    \PDFForm@Name
+    \ifFld@hidden\def\Fld@width{1sp}\fi
+    \ifx\Fld@value\relax
+      \let\Fld@value\Fld@default
+    \fi
+    \LayoutChoiceField{#2}{%
+      \ifFld@radio
+        \HyField@FlagsRadioButton
+        \@@Radio{#3}%
+      \else
+        \begingroup
+          \HyField@FlagsChoice
+          \ifdim\Fld@width<\@tempdima
+            \ifdim\@tempdima<1cm\@tempdima1cm\fi
+            \edef\Fld@width{\the\@tempdima}%
+          \fi
+          \ifFld@combo
+          \else
+            \@tempdima=\the\Fld@menulength\Fld@charsize
+            \advance\@tempdima by \Fld@borderwidth bp %
+            \advance\@tempdima by \Fld@borderwidth bp %
+            \edef\Fld@height{\the\@tempdima}%
+          \fi
+          \@@Listbox{#3}%
+        \endgroup
+      \fi
+    }%
+  \endgroup
+}
+\def\@@Radio#1{%
+  \Fld@listcount=0 %
+  \@for\@curropt:=#1\do{%
+    \expandafter\Fld@checkequals\@curropt==\\%
+    \Hy@StepCount\Fld@listcount
+    \@currDisplay\space
+    \leavevmode
+    \Hy@escapeform\PDFForm@Radio
+    \pdfstartlink user {%
+      \PDFForm@Radio
+      /AP<<%
+        /N<<%
+          /\@currValue\space \DingObject
+        >>%
+      >>%
+    }%
+    \relax
+    \MakeRadioField{\Fld@width}{\Fld@height}\pdfendlink
+    \ifnum\Fld@listcount=1 %
+      \HyField@AddToFields
+    \fi
+    \space % deliberate space between radio buttons
+  }%
+}
+\newcount\Fld@listcount
+\def\@@Listbox#1{%
+  \HyField@PDFChoices{#1}%
+  \leavevmode
+  \Hy@escapeform\PDFForm@List
+  \pdfstartlink user {\PDFForm@List}\relax
+  \MakeChoiceField{\Fld@width}{\Fld@height}%
+  \pdfendlink
+  \HyField@AddToFields
+}
+\def\@PushButton[#1]#2{% parameters, label
+  \def\Fld@name{#2}%
+  \begingroup
+    \Field@toks={ }%
+    \expandafter\HyField@SetKeys\expandafter{%
+      \DefaultOptionsofPushButton,#1%
+    }%
+    \PDFForm@Name
+    \ifHy@pdfa
+      \PackageError{hyperref}{%
+        PDF/A: Push button with JavaScript is prohibited%
+      }\@ehc
+      \LayoutPushButtonField{%
+        \leavevmode
+        \MakeButtonField{#2}%
+      }%
+    \else
+      \HyField@FlagsPushButton
+      \ifFld@hidden\def\Fld@width{1sp}\fi
+      \LayoutPushButtonField{%
+        \leavevmode
+        \Hy@escapeform\PDFForm@Push
+        \pdfstartlink user {\PDFForm@Push}\relax
+        \MakeButtonField{#2}%
+        \pdfendlink
+        \HyField@AddToFields
+      }%
+    \fi
+  \endgroup
+}
+\def\@Submit[#1]#2{%
+  \Field@toks={ }%
+  \def\Fld@width{\DefaultWidthofSubmit}%
+  \def\Fld@height{\DefaultHeightofSubmit}%
+  \begingroup
+    \expandafter\HyField@SetKeys\expandafter{%
+      \DefaultOptionsofSubmit,#1%
+    }%
+    \HyField@FlagsPushButton
+    \HyField@FlagsSubmit
+    \ifFld@hidden\def\Fld@width{1sp}\fi
+    \leavevmode
+    \Hy@escapeform\PDFForm@Submit
+    \pdfstartlink user {%
+      \PDFForm@Submit
+      /AP<</N \SubmitObject/D \SubmitPObject>>%
+    }%
+    \relax
+    \MakeButtonField{#2}%
+    \pdfendlink
+    \HyField@AddToFields
+  \endgroup
+}
+\def\@Reset[#1]#2{%
+  \Field@toks={ }%
+  \def\Fld@width{\DefaultWidthofReset}%
+  \def\Fld@height{\DefaultHeightofReset}%
+  \begingroup
+    \expandafter\HyField@SetKeys\expandafter{%
+      \DefaultOptionsofReset,#1%
+    }%
+    \leavevmode
+    \ifHy@pdfa
+      \PackageError{hyperref}{%
+        PDF/A: Reset action is prohibited%
+      }\@ehc
+      \MakeButtonField{#2}%
+    \else
+      \HyField@FlagsPushButton
+      \ifFld@hidden\def\Fld@width{1sp}\fi
+      \Hy@escapeform\PDFForm@Reset
+      \pdfstartlink user {\PDFForm@Reset}\relax
+      \MakeButtonField{#2}%
+      \pdfendlink
+      \HyField@AddToFields
+    \fi
+  \endgroup
+}
+\def\@CheckBox[#1]#2{% parameters, label
+  \def\Fld@name{#2}%
+  \def\Fld@default{0}%
+  \begingroup
+    \def\Fld@width{\DefaultWidthofCheckBox}%
+    \def\Fld@height{\DefaultHeightofCheckBox}%
+    \Field@toks={ }%
+    \expandafter\HyField@SetKeys\expandafter{%
+      \DefaultOptionsofCheckBox,#1%
+    }%
+    \PDFForm@Name
+    \HyField@FlagsCheckBox
+    \ifFld@hidden\def\Fld@width{1sp}\fi
+    \LayoutCheckField{#2}{%
+      \Hy@escapeform\PDFForm@Check
+      \pdfstartlink user {\PDFForm@Check}\relax
+      \MakeCheckField{\Fld@width}{\Fld@height}%
+      \pdfendlink
+      \HyField@AddToFields
+    }%
+  \endgroup
+}
+\def\Hy@FormObjects{%
+  \pdfobj {%
+    <<%
+      /Type/Encoding%
+      /Differences[%
+        24/breve/caron/circumflex/dotaccent/hungarumlaut/ogonek%
+          /ring/tilde %
+        39/quotesingle %
+        96/grave %
+        128/bullet/dagger/daggerdbl/ellipsis/emdash/endash/florin%
+           /fraction/guilsinglleft/guilsinglright/minus/perthousand%
+           /quotedblbase/quotedblleft/quotedblright/quoteleft%
+           /quoteright/quotesinglbase/trademark/fi/fl/Lslash/OE%
+           /Scaron/Ydieresis/Zcaron/dotlessi/lslash/oe/scaron/zcaron %
+        164/currency %
+        166/brokenbar %
+        168/dieresis/copyright/ordfeminine %
+        172/logicalnot/.notdef/registered/macron/degree/plusminus%
+           /twosuperior/threesuperior/acute/mu %
+        183/periodcentered/cedilla/onesuperior/ordmasculine %
+        188/onequarter/onehalf/threequarters %
+        192/Agrave/Aacute/Acircumflex/Atilde/Adieresis/Aring/AE%
+           /Ccedilla/Egrave/Eacute/Ecircumflex/Edieresis/Igrave%
+           /Iacute/Icircumflex/Idieresis/Eth/Ntilde/Ograve/Oacute%
+           /Ocircumflex/Otilde/Odieresis/multiply/Oslash/Ugrave%
+           /Uacute/Ucircumflex/Udieresis/Yacute/Thorn/germandbls%
+           /agrave/aacute/acircumflex/atilde/adieresis/aring/ae%
+           /ccedilla/egrave/eacute/ecircumflex/edieresis/igrave%
+           /iacute/icircumflex/idieresis/eth/ntilde/ograve/oacute%
+           /ocircumflex/otilde/odieresis/divide/oslash/ugrave%
+           /uacute/ucircumflex/udieresis/yacute/thorn/ydieresis%
+      ]%
+    >>%
+  }%
+  \xdef\OBJ@pdfdocencoding{\the\pdflastobj}%
+  \pdfobj{%
+    <<%
+      /Type/Font%
+      /Subtype/Type1%
+      /Name/ZaDb%
+      /BaseFont/ZapfDingbats%
+    >>%
+  }%
+  \xdef\OBJ@ZaDb{\the\pdflastobj}%
+  \pdfobj{%
+    <<%
+      /Type/Font%
+      /Subtype/Type1%
+      /Name/Helv%
+      /BaseFont/Helvetica%
+      /Encoding \OBJ@pdfdocencoding\space 0 R%
+    >>%
+  }%
+  \xdef\OBJ@Helv{\the\pdflastobj}%
+  \global\let\Hy@FormObjects\relax
+}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname pdfescapestring\endcsname\relax
+  \let\Hy@escapestring\@firstofone
+  \def\Hy@escapeform#1{%
+    \ifHy@escapeform
+      \def\Hy@escapestring##1{%
+        \noexpand\Hy@escapestring{\noexpand##1}%
+      }%
+      \edef\Hy@temp{#1}%
+      \expandafter\Hy@@escapeform\Hy@temp\Hy@escapestring{}\@nil
+      \def\Hy@escapestring##1{%
+        \@ifundefined{Hy@esc@\string##1}{%
+          ##1%
+          \ThisShouldNotHappen
+        }{%
+          \csname Hy@esc@\string##1\endcsname
+        }%
+      }%
+    \else
+      \let\Hy@escapestring\@firstofone
+    \fi
+  }%
+  \def\Hy@@escapeform#1\Hy@escapestring#2#3\@nil{%
+    \ifx\\#3\\%
+    \else
+      \expandafter
+      \Hy@pstringdef\csname Hy@esc@\string#2\endcsname{#2}%
+      \Hy@ReturnAfterFi{%
+        \Hy@@escapeform#3\@nil
+      }%
+    \fi
+  }%
+\else
+  \def\Hy@escapeform#1{%
+    \ifHy@escapeform
+      \let\Hy@escapestring\pdfescapestring
+    \else
+      \let\Hy@escapestring\@firstofone
+    \fi
+  }%
+  \Hy@escapeform{}%
+\fi
+\def\PDFForm@Name{%
+  \begingroup
+    \ifnum\Hy@pdfversion<5 % implementation note 117, PDF spec 1.7
+      \ifHy@unicode
+        \Hy@unicodefalse
+      \fi
+    \fi
+    \HyPsd@XeTeXBigCharstrue
+    \pdfstringdef\Hy@gtemp\Fld@name
+  \endgroup
+  \let\Fld@name\Hy@gtemp
+}
+\def\PDFForm@Check{%
+  /Subtype/Widget%
+  \Fld@annotflags
+  /T(\Fld@name)%
+  /FT/Btn%
+  \Fld@flags
+  /Q \Fld@align
+  /BS<</W \Fld@borderwidth /S/\Fld@borderstyle>>%
+  /MK<<%
+    \ifnum\Fld@rotation=\z@
+    \else
+      /R \Fld@rotation
+    \fi
+    \ifx\Fld@bordercolor\relax
+    \else
+      /BC[\Fld@bordercolor]%
+    \fi
+    \ifx\Fld@bcolor\relax
+    \else
+      /BG[\Fld@bcolor]%
+    \fi
+    /CA(\Hy@escapestring{\Fld@cbsymbol})%
+  >>%
+  /DA(/ZaDb \strip@pt\Fld@charsize\space Tf%
+      \ifx\Fld@color\@empty\else\space\Fld@color\fi)%
+  /H/P%
+  \ifFld@checked /V/Yes\else /V/Off\fi
+}
+\ifHy@pdfa
+\else
+  \def\PDFForm@Push{%
+    /Subtype/Widget%
+    \Fld@annotflags
+    /T(\Fld@name)%
+    /FT/Btn%
+    \Fld@flags
+    /H/P%
+    /BS<</W \Fld@borderwidth/S/\Fld@borderstyle>>%
+    \ifcase0\ifnum\Fld@rotation=\z@   \else 1\fi
+            \ifx\Fld@bordercolor\relax\else 1\fi
+            \space
+    \else
+      /MK<<%
+        \ifnum\Fld@rotation=\z@
+        \else
+          /R \Fld@rotation
+        \fi
+        \ifx\Fld@bordercolor\relax
+        \else
+          /BC[\Fld@bordercolor]%
+        \fi
+      >>%
+    \fi
+    /A<</S/JavaScript/JS(\Hy@escapestring{\Fld@onclick@code})>>%
+  }%
+\fi
+\def\Fld@@additionalactions{%
+  \ifx\Fld@keystroke@code\@empty
+  \else
+    /K<</S/JavaScript/JS(\Hy@escapestring{\Fld@keystroke@code})>>%
+  \fi
+  \ifx\Fld@format@code\@empty
+  \else
+    /F<</S/JavaScript/JS(\Hy@escapestring{\Fld@format@code})>>%
+  \fi
+  \ifx\Fld@validate@code\@empty
+  \else
+    /V<</S/JavaScript/JS(\Hy@escapestring{\Fld@validate@code})>>%
+  \fi
+  \ifx\Fld@calculate@code\@empty
+  \else
+    /C<</S/JavaScript/JS(\Hy@escapestring{\Fld@calculate@code})>>%
+  \fi
+  \ifx\Fld@onfocus@code\@empty
+  \else
+    /Fo<</S/JavaScript/JS(\Hy@escapestring{\Fld@onfocus@code})>>%
+  \fi
+  \ifx\Fld@onblur@code\@empty
+  \else
+    /Bl<</S/JavaScript/JS(\Hy@escapestring{\Fld@onblur@code})>>%
+  \fi
+  \ifx\Fld@onmousedown@code\@empty
+  \else
+    /D<</S/JavaScript/JS(\Hy@escapestring{\Fld@onmousedown@code})>>%
+  \fi
+  \ifx\Fld@onmouseup@code\@empty
+  \else
+    /U<</S/JavaScript/JS(\Hy@escapestring{\Fld@onmouseup@code})>>%
+  \fi
+  \ifx\Fld@onenter@code\@empty
+  \else
+    /E<</S/JavaScript/JS(\Hy@escapestring{\Fld@onenter@code})>>%
+  \fi
+  \ifx\Fld@onexit@code\@empty
+  \else
+    /X<</S/JavaScript/JS(\Hy@escapestring{\Fld@onexit@code})>>%
+  \fi
+}
+\def\Fld@additionalactions{%
+  \if-\Fld@@additionalactions-%
+  \else
+    \ifHy@pdfa
+    \else
+      /AA<<\Fld@@additionalactions>>%
+    \fi
+  \fi
+}
+\def\PDFForm@List{%
+  /Subtype/Widget%
+  \Fld@annotflags
+  /T(\Fld@name)%
+  /FT/Ch%
+  \Fld@flags
+  /Q \Fld@align
+  /BS<</W \Fld@borderwidth/S/\Fld@borderstyle>>%
+  \ifcase0\ifnum\Fld@rotation=\z@   \else 1\fi
+          \ifx\Fld@bordercolor\relax\else 1\fi
+          \ifx\fld@bcolor\relax     \else 1\fi
+          \space
+  \else
+    /MK<<%
+      \ifnum\Fld@rotation=\z@
+      \else
+        /R \Fld@rotation
+      \fi
+      \ifx\Fld@bordercolor\relax
+      \else
+        /BC[\Fld@bordercolor]%
+      \fi
+      \ifx\Fld@bcolor\relax
+      \else
+        /BG[\Fld@bcolor]%
+      \fi
+    >>%
+  \fi
+  /DA(/Helv \strip@pt\Fld@charsize\space Tf%
+      \ifx\Fld@color\@empty\else\space\Fld@color\fi)%
+  \Fld@choices
+  \Fld@additionalactions
+}
+\def\PDFForm@Radio{%
+  /Subtype/Widget%
+  \Fld@annotflags
+  /T(\Fld@name)%
+  /FT/Btn%
+  \Fld@flags
+  /H/P%
+  /BS<</W \Fld@borderwidth/S/\Fld@borderstyle>>%
+  /MK<<%
+    \ifnum\Fld@rotation=\z@
+    \else
+      /R \Fld@rotation
+    \fi
+    \ifx\Fld@bordercolor\relax
+    \else
+      /BC[\Fld@bordercolor]%
+    \fi
+    \ifx\Fld@bcolor\relax
+    \else
+      /BG[\Fld@bcolor]%
+    \fi
+    /CA(\Fld@radiosymbol)%
+  >>%
+  /DA(/ZaDb \strip@pt\Fld@charsize\space Tf%
+      \ifx\Fld@color\@empty\else\space\Fld@color\fi)%
+  \ifx\@currValue\Fld@default
+    /V/\Fld@default
+  \else
+    /V/Off%
+  \fi
+  \Fld@additionalactions
+}
+\def\PDFForm@Text{%
+  /Subtype/Widget%
+  \Fld@annotflags
+  /T(\Fld@name)%
+  /FT/Tx%
+  \Fld@flags
+  /Q \Fld@align
+  /BS<</W \Fld@borderwidth\space /S /\Fld@borderstyle>>%
+  \ifcase0\ifnum\Fld@rotation=\z@   \else 1\fi
+          \ifx\Fld@bordercolor\relax\else 1\fi
+          \ifx\Fld@bcolor\relax     \else 1\fi
+          \space
+  \else
+    /MK<<%
+      \ifnum\Fld@rotation=\z@
+      \else
+        /R \Fld@rotation
+      \fi
+      \ifx\Fld@bordercolor\relax
+      \else
+        /BC[\Fld@bordercolor]%
+      \fi
+      \ifx\Fld@bcolor\relax
+      \else
+        /BG[\Fld@bcolor]%
+      \fi
+    >>%
+  \fi
+  /DA(/Helv \strip@pt\Fld@charsize\space Tf%
+      \ifx\Fld@color\@empty\else\space\Fld@color\fi)%
+  /DV(\Hy@escapestring{\Fld@default})%
+  /V(\Hy@escapestring{\Fld@value})%
+  \Fld@additionalactions
+  \ifnum\Fld@maxlen>\z@/MaxLen \Fld@maxlen \fi
+}
+\def\PDFForm@Submit{%
+  /Subtype/Widget%
+  \Fld@annotflags
+  /T(\Fld@name)%
+  /FT/Btn%
+  \Fld@flags
+  /H/P%
+  /BS<</W \Fld@borderwidth/S/\Fld@borderstyle>>%
+  \ifcase0\ifnum\Fld@rotation=\z@   \else 1\fi
+          \ifx\Fld@bordercolor\relax\else 1\fi
+          \space
+  \else
+    /MK<<%
+      \ifnum\Fld@rotation=\z@
+      \else
+        /R \Fld@rotation
+      \fi
+      \ifx\Fld@bordercolor\relax
+      \else
+        /BC[\Fld@bordercolor]%
+      \fi
+    >>%
+  \fi
+  /A<<%
+    /S/SubmitForm%
+    /F<<%
+      /FS/URL%
+      /F(\Hy@escapestring{\Form@action})%
+    >>%
+    \Fld@submitflags
+  >>%
+}
+\ifHy@pdfa
+\else
+  \def\PDFForm@Reset{%
+    /Subtype/Widget%
+    \Fld@annotflags
+    /T(\Fld@name)%
+    /FT/Btn%
+    \Fld@flags
+    /H/P%
+    /DA(/Helv \strip@pt\Fld@charsize\space Tf 0 0 1 rg)%
+    \ifcase0\ifnum\Fld@rotation=\z@   \else 1\fi
+            \ifx\Fld@bordercolor\relax\else 1\fi
+            \space
+    \else
+      /MK<<%
+        \ifnum\Fld@rotation=\z@
+        \else
+          /R \Fld@rotation
+        \fi
+        \ifx\Fld@bordercolor\relax
+        \else
+          /BC[\Fld@bordercolor]%
+        \fi
+      >>%
+    \fi
+    /BS<</W \Fld@borderwidth/S/\Fld@borderstyle>>%
+    /A<</S/ResetForm>>%
+  }%
+\fi
+\def\Hy@writebookmark#1#2#3#4#5{%
+    % section number, text, label, level, file
+  \ifx\WriteBookmarks\relax%
+  \else
+    \ifnum#4>\Hy@bookmarksdepth\relax
+    \else
+      \@@writetorep{#1}{#2}{#3}{#4}{#5}%
+    \fi
+  \fi
+}
+\def\Hy@currentbookmarklevel{0}
+\def\Hy@numberline#1{#1 }
+\def\@@writetorep#1#2#3#4#5{%
+  \begingroup
+    \edef\Hy@tempa{#5}%
+    \ifx\Hy@tempa\Hy@bookmarkstype
+      \edef\Hy@level{#4}%
+      \ifx\Hy@levelcheck Y%
+        \@tempcnta\Hy@level\relax
+        \advance\@tempcnta by -1 %
+        \ifnum\Hy@currentbookmarklevel<\@tempcnta
+          \advance\@tempcnta by -\Hy@currentbookmarklevel\relax
+          \advance\@tempcnta by 1 %
+          \Hy@Warning{%
+            Difference (\the\@tempcnta) between bookmark levels is %
+            greater \MessageBreak than one, level fixed%
+          }%
+          \@tempcnta\Hy@currentbookmarklevel
+          \advance\@tempcnta by 1 %
+          \edef\Hy@level{\the\@tempcnta}%
+        \fi
+      \else
+        \global\let\Hy@levelcheck Y%
+      \fi
+      \global\let\Hy@currentbookmarklevel\Hy@level
+      \@tempcnta\Hy@level\relax
+      \expandafter\xdef\csname Parent\Hy@level\endcsname{#3}%
+      \advance\@tempcnta by -1 %
+      \edef\Hy@tempa{#3}%
+      \edef\Hy@tempb{\csname Parent\the\@tempcnta\endcsname}%
+      \ifx\Hy@tempa\Hy@tempb
+        \Hy@Warning{%
+          The anchor of a bookmark and its parent's must not%
+          \MessageBreak be the same. Added a new anchor%
+        }%
+        \phantomsection
+      \fi
+      \ifHy@bookmarksnumbered
+        \let\numberline\Hy@numberline
+        \let\booknumberline\Hy@numberline
+        \let\partnumberline\Hy@numberline
+        \let\chapternumberline\Hy@numberline
+      \else
+        \let\numberline\@gobble
+        \let\booknumberline\@gobble
+        \let\partnumberline\@gobble
+        \let\chapternumberline\@gobble
+      \fi
+      \HyPsd@XeTeXBigCharstrue
+      \pdfstringdef\Hy@tempa{#2}%
+      \HyPsd@SanitizeForOutFile\Hy@tempa
+      \if@filesw
+        \stepcounter{bookmark@seq@number}%
+        \@ifundefined{@outlinefile}{%
+        }{%
+          \protected@write\@outlinefile{}{%
+            \protect\BOOKMARK
+              [\Hy@level][\@bookmarkopenstatus{\Hy@level}]{#3}%
+              {\Hy@tempa}{\Hy@tempb}%
+              \@percentchar\space\thebookmark@seq@number
+          }%
+        }%
+      \fi
+    \fi
+  \endgroup
+}
+\newcounter{bookmark@seq@number}
+\begingroup
+  \lccode`(=`{%
+  \lccode`)=`}%
+  \lccode`1=\z@
+  \lccode`2=\z@
+  \lccode`3=\z@
+  \lccode`5=\z@
+  \lccode`7=\z@
+  \lccode`\#=\z@
+  \lccode`\`=\z@
+  \lccode`\{=\z@
+  \lccode`\}=\z@
+\lowercase{%
+  \endgroup
+  \def\HyPsd@SanitizeForOutFile#1{%
+    \@onelevel@sanitize\Hy@tempa
+    \escapechar`\\%
+    \edef\Hy@tempa{%
+      \expandafter\HyPsd@SanitizeOut@BraceLeft\Hy@tempa(\@nil
+    }%
+    \edef\Hy@tempa{%
+      \expandafter\HyPsd@SanitizeOut@BraceRight\Hy@tempa)\@nil
+    }%
+  }%
+  \def\HyPsd@SanitizeOut@BraceLeft#1(#2\@nil{%
+    #1%
+    \ifx\\#2\\%
+      \expandafter\ltx@gobble
+    \else
+      \expandafter\ltx@firstofone
+    \fi
+    {%
+      \string\173%
+      \HyPsd@SanitizeOut@BraceLeft#2\@nil
+    }%
+  }%
+  \def\HyPsd@SanitizeOut@BraceRight#1)#2\@nil{%
+    #1%
+    \ifx\\#2\\%
+      \expandafter\ltx@gobble
+    \else
+      \expandafter\ltx@firstofone
+    \fi
+    {%
+      \string\175%
+      \HyPsd@SanitizeOut@BraceRight#2\@nil
+    }%
+  }%
+}
+\newcommand{\currentpdfbookmark}{%
+  \pdfbookmark[\Hy@currentbookmarklevel]%
+}
+\newcommand{\subpdfbookmark}{%
+  \@tempcnta\Hy@currentbookmarklevel
+  \Hy@StepCount\@tempcnta
+  \expandafter\pdfbookmark\expandafter[\the\@tempcnta]%
+}
+\newcommand{\belowpdfbookmark}[2]{%
+  \@tempcnta\Hy@currentbookmarklevel
+  \Hy@StepCount\@tempcnta
+  \expandafter\pdfbookmark\expandafter[\the\@tempcnta]{#1}{#2}%
+  \advance\@tempcnta by -1 %
+  \xdef\Hy@currentbookmarklevel{\the\@tempcnta}%
+}
+\renewcommand\pdfbookmark[3][0]{%
+  \Hy@writebookmark{}{#2}{#3.#1}{#1}{toc}%
+  \hyper@anchorstart{#3.#1}\hyper@anchorend
+}
+\def\BOOKMARK{%
+  \@ifnextchar[{\@BOOKMARK}{\@@BOOKMARK[1][-]}%
+}
+\def\@BOOKMARK[#1]{%
+  \@ifnextchar[{\@@BOOKMARK[{#1}]}{\@@BOOKMARK[{#1}][-]}%
+}
+\RequirePackage{rerunfilecheck}[2009/12/10]
+\def\Hy@OutlineRerunCheck{%
+  \RerunFileCheck{\jobname.out}{%
+    \immediate\closeout\@outlinefile
+  }{%
+    Rerun to get outlines right\MessageBreak
+    or use package `bookmark'%
+  }%
+}
+\def\ReadBookmarks{%
+  \begingroup
+    \def\do##1{%
+      \ifnum\catcode`##1=\active
+        \@makeother##1%
+      \else
+        \ifnum\catcode`##1=6 %
+          \@makeother##1%
+        \fi
+      \fi
+    }%
+    \dospecials
+    \Hy@safe@activestrue
+    \escapechar=`\\%
+    \def\@@BOOKMARK[##1][##2]##3##4##5{%
+      \calc@bm@number{##5}%
+    }%
+    \InputIfFileExists{\jobname.out}{}{}%
+    \ifx\WriteBookmarks\relax
+      \global\let\WriteBookmarks\relax
+    \fi
+    \def\@@BOOKMARK[##1][##2]##3##4##5{%
+      \def\Hy@temp{##4}%
+      \Hy@pstringdef\Hy@pstringName{\HyperDestNameFilter{##3}}%
+      \Hy@OutlineName{}\Hy@pstringName{%
+        ##2\check@bm@number{##3}%
+      }{%
+        \expandafter\strip@prefix\meaning\Hy@temp
+      }%
+   }%
+   {%
+     \def\WriteBookmarks{0}%
+     \InputIfFileExists{\jobname.out}{}{}%
+   }%
+   %{\escapechar\m@ne\InputIfFileExists{\jobname.out}{}{}}%
+   \ifx\WriteBookmarks\relax
+   \else
+     \if@filesw
+       \newwrite\@outlinefile
+       \Hy@OutlineRerunCheck
+       \immediate\openout\@outlinefile=\jobname.out\relax
+       \ifHy@typexml
+         \immediate\write\@outlinefile{<relaxxml>\relax}%
+       \fi
+     \fi
+   \fi
+   \endgroup
+}
+\def\Hy@OutlineName#1#2#3#4{%
+  \pdfoutline goto name{#2}count#3{#4}%
+}
+\def\check@bm@number#1{%
+  \expandafter\ifx\csname B_#1\endcsname\relax
+    0%
+  \else
+    \csname B_#1\endcsname
+  \fi
+}
+\def\calc@bm@number#1{%
+  \@tempcnta=\check@bm@number{#1}\relax
+  \advance\@tempcnta by 1 %
+  \expandafter\xdef\csname B_#1\endcsname{\the\@tempcnta}%
+}
+\ifHy@implicit
+\else
+  \expandafter\endinput
+\fi
+\newlength\Hy@SectionHShift
+\def\Hy@SectionAnchorHref#1{%
+  \ifx\protect\@typeset@protect
+    \Hy@@SectionAnchor{#1}%
+  \fi
+}
+\DeclareRobustCommand*{\Hy@@SectionAnchor}[1]{%
+  \leavevmode
+  \hbox to 0pt{%
+    \kern-\Hy@SectionHShift
+    \Hy@raisedlink{%
+      \hyper@anchorstart{#1}\hyper@anchorend
+    }%
+    \hss
+  }%
+}
+\let\H@old@ssect\@ssect
+\def\@ssect#1#2#3#4#5{%
+  \Hy@MakeCurrentHrefAuto{section*}%
+  \setlength{\Hy@SectionHShift}{#1}%
+  \begingroup
+    \toks@{\H@old@ssect{#1}{#2}{#3}{#4}}%
+    \toks\tw@\expandafter{%
+      \expandafter\Hy@SectionAnchorHref\expandafter{\@currentHref}%
+      #5%
+    }%
+  \edef\x{\endgroup
+    \the\toks@{\the\toks\tw@}%
+  }\x
+}
+\let\H@old@schapter\@schapter
+\def\@schapter#1{%
+  \begingroup
+    \let\@mkboth\@gobbletwo
+    \Hy@MakeCurrentHrefAuto{\Hy@chapapp*}%
+    \Hy@raisedlink{%
+      \hyper@anchorstart{\@currentHref}\hyper@anchorend
+    }%
+  \endgroup
+  \H@old@schapter{#1}%
+}
+\ltx@IfUndefined{@chapter}{}{%
+  \let\Hy@org@chapter\@chapter
+  \def\@chapter{%
+    \def\Hy@next{%
+      \Hy@MakeCurrentHrefAuto{\Hy@chapapp*}%
+      \Hy@raisedlink{%
+        \hyper@anchorstart{\@currentHref}\hyper@anchorend
+      }%
+    }%
+    \ifnum\c@secnumdepth>\m@ne
+      \ltx@IfUndefined{if@mainmatter}%
+      \iftrue{\csname if@mainmatter\endcsname}%
+        \let\Hy@next\relax
+      \fi
+    \fi
+    \Hy@next
+    \Hy@org@chapter
+  }%
+}
+\let\H@old@part\@part
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname chapter\endcsname\relax
+  \let\Hy@secnum@part\z@
+\else
+  \let\Hy@secnum@part\m@ne
+\fi
+\def\@part{%
+  \ifnum\Hy@secnum@part>\c@secnumdepth
+    \phantomsection
+  \fi
+  \H@old@part
+}
+\let\H@old@spart\@spart
+\def\@spart#1{%
+  \Hy@MakeCurrentHrefAuto{part*}%
+  \Hy@raisedlink{%
+    \hyper@anchorstart{\@currentHref}\hyper@anchorend
+  }%
+  \H@old@spart{#1}%
+}
+\let\H@old@sect\@sect
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi
+  {%
+    \Hy@MakeCurrentHrefAuto{section*}%
+    \setlength{\Hy@SectionHShift}{#3}%
+    \begingroup
+      \toks@{\H@old@sect{#1}{#2}{#3}{#4}{#5}{#6}[{#7}]}%
+      \toks\tw@\expandafter{%
+        \expandafter\Hy@SectionAnchorHref\expandafter{\@currentHref}%
+        #8%
+      }%
+    \edef\x{\endgroup
+      \the\toks@{\the\toks\tw@}%
+    }\x
+  }{%
+    \H@old@sect{#1}{#2}{#3}{#4}{#5}{#6}[{#7}]{#8}%
+  }%
+}
+\expandafter\def\csname Parent-4\endcsname{}
+\expandafter\def\csname Parent-3\endcsname{}
+\expandafter\def\csname Parent-2\endcsname{}
+\expandafter\def\csname Parent-1\endcsname{}
+\expandafter\def\csname Parent0\endcsname{}
+\expandafter\def\csname Parent1\endcsname{}
+\expandafter\def\csname Parent2\endcsname{}
+\expandafter\def\csname Parent3\endcsname{}
+\expandafter\def\csname Parent4\endcsname{}
+\def\Hy@tempa{%
+  \def\@addchap[##1]##2{%
+    \typeout{##2}%
+    \if@twoside
+      \@mkboth{##1}{}%
+    \else
+      \@mkboth{}{##1}%
+    \fi
+    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+    \Hy@MakeCurrentHrefAuto{\Hy@chapapp*}%
+    \Hy@raisedlink{%
+      \hyper@anchorstart{\@currentHref}\hyper@anchorend
+    }%
+    \if@twocolumn
+       \@topnewpage[\@makeschapterhead{##2}]%
+    \else
+       \@makeschapterhead{##2}%
+       \@afterheading
+    \fi
+    \addcontentsline{toc}{chapter}{##1}%
+  }%
+}
+\@ifclassloaded{scrbook}{%
+  \@ifclasslater{scrbook}{2001/01/01}{%
+    \let\Hy@tempa\@empty
+  }{}%
+}{%
+  \@ifclassloaded{scrreprt}{%
+    \@ifclasslater{scrreprt}{2001/01/01}{%
+      \let\Hy@tempa\@empty
+    }{}%
+  }{%
+    \let\Hy@tempa\@empty
+  }%
+}%
+\Hy@tempa
+\endinput
+%%
+%% End of file `hpdftex.def'.

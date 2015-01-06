@@ -1,0 +1,952 @@
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--==================================================================================
+   Re-usable file to build a particular release config msi.
+
+   Inputs:
+     $(CCNetLabel)     : the version e.g. 1.1.20210.5
+     $(ReleaseConfig)  : one of devlab9, msr9, msft9
+
+   Outputs:
+     $(ReleaseConfig)\msi\Contracts.$(ReleaseConfig).msi
+     $(ReleaseConfig)\cpx\<output from cpx tools>
+
+   ==================================================================================-->
+
+  <!-- cbtools tasks -->
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateGuid" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateRelease" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.DeleteReleases" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateWixComponent" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Email" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.MsiExec" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepot" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotEdit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSubmit" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.SourceDepotSync" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WikiDump" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Wix" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteProgressToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.WriteToFile" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CreateAssemblyInfo" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.Policheck" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.PatchProjectReferences" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="CodePlex.Tools.MsBuild.CodeSign" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+
+  <!--==============================================
+    Figure out features based on configurations
+
+    Properties set
+      $(BuildConfig)
+      $(Feature_VSTSCheck)
+      $(Feature_Unsafe)
+      $(Feature_Pex)
+      $(ClousotVersion)
+      $(CheckCpx)
+      $(Flavor)            : displayed in installer
+      $(IncludePDBs)
+      $(Feature_CCCheck)
+    ================================================-->
+  <Choose>
+    <When Condition="'$(ReleaseConfig)'=='devlab9ts'">
+      <PropertyGroup>
+        <BuildConfig>Devlab9</BuildConfig>
+        <Feature_VSTSCheck>false</Feature_VSTSCheck>
+        <Feature_Unsafe>false</Feature_Unsafe>
+        <Feature_Pex>false</Feature_Pex>
+        <Feature_Leaderboard>false</Feature_Leaderboard>
+        <ClousotVersion>1</ClousotVersion>
+        <CheckCpx>false</CheckCpx>
+        <Flavor>(devlabs_TS)</Flavor>
+        <IncludePDBs>false</IncludePDBs>
+        <Feature_CCCheck>true</Feature_CCCheck>
+        <SignVSIX>true</SignVSIX>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ReleaseConfig)'=='msft9'">
+      <PropertyGroup>
+        <BuildConfig>Internal9</BuildConfig>
+        <Feature_VSTSCheck>false</Feature_VSTSCheck>
+        <Feature_Unsafe>true</Feature_Unsafe>
+        <Feature_Pex>false</Feature_Pex>
+        <Feature_Leaderboard>true</Feature_Leaderboard>
+        <Feature_LeaderboardXML>true</Feature_LeaderboardXML>
+        <ClousotVersion>1</ClousotVersion>
+        <CheckCpx>false</CheckCpx>
+        <Flavor>(internal)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <Feature_CCCheck>true</Feature_CCCheck>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ReleaseConfig)'=='debug'">
+      <PropertyGroup>
+        <BuildConfig>Debug</BuildConfig>
+        <Feature_VSTSCheck>false</Feature_VSTSCheck>
+        <Feature_Unsafe>true</Feature_Unsafe>
+        <Feature_Pex>false</Feature_Pex>
+        <Feature_Leaderboard>false</Feature_Leaderboard>
+        <ClousotVersion>1</ClousotVersion>
+        <CheckCpx>false</CheckCpx>
+        <Flavor>(debug)</Flavor>
+        <IncludePDBs>true</IncludePDBs>
+        <Feature_CCCheck>true</Feature_CCCheck>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <InvalidRelease>true</InvalidRelease>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!--==========================================================
+
+     Common properties used by many targets
+
+   ===========================================================-->
+  <Choose>
+    <When Condition="'$(ProgramFiles(x86))' == ''">
+      <PropertyGroup>
+          <ProgramFilesX86>$(ProgramFiles)</ProgramFilesX86>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+          <ProgramFilesX86>$(ProgramFiles) (x86)</ProgramFilesX86>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <PropertyGroup>
+    <MsiDir>$(ReleaseConfig)\msi</MsiDir>
+    <MsiSignedDir>$(ReleaseConfig)\msisigned</MsiSignedDir>
+    <!-- Used for final product -->
+    <CpxDir>$(ReleaseConfig)\cpx</CpxDir>
+    <!-- CPX output -->
+    <TmpDir>$(ReleaseConfig)\tmp</TmpDir>
+    <!-- Used for intermediate product -->
+    <BinDir>bin\$(BuildConfig)</BinDir>
+    <!-- Relative. used in source dirs -->
+    <SamplesDir>..\..\Foxtrot\Samples</SamplesDir>
+
+    <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
+
+    <License>Licenses\$(ReleaseConfig).rtf</License>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CodeSignApprovers>logozzo;mbarnett</CodeSignApprovers>
+    <CodeSignKeywords>Code Contracts</CodeSignKeywords>
+    <CodeSignDescription>Code Contracts</CodeSignDescription>
+    <CodeSignOutputPath>$(MsiSignedDir)</CodeSignOutputPath>
+    <CodeSignCodeContractsUrl>http://research.microsoft.com/contracts</CodeSignCodeContractsUrl>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Samples 
+      Include="$(SamplesDir)\**" 
+      Exclude="
+        $(SamplesDir)\ArrayList\**;
+        $(SamplesDir)\**\bin\**;
+        $(SamplesDir)\**\obj\**;
+        $(SamplesDir)\**\refactoring\**;
+        $(SamplesDir)\**\*.suo;
+        $(SamplesDir)\**\*.csproj.old;
+        $(SamplesDir)\**\*.user;
+        $(SamplesDir)\**\*.log;
+        $(SamplesDir)\**\*.aux;
+        $(SamplesDir)\**\*.tex;
+        $(SamplesDir)\**\*.png;
+        $(SamplesDir)\**\*.zip;
+        $(SamplesDir)\**\*~;
+        $(SamplesDir)\**\makefile;
+      " />
+  </ItemGroup>
+
+  <Target Name="All"
+   DependsOnTargets="Validate;BuildSolutionConfig;BuildExtras;MergeExes;MakeMSI;RunCPXTools"
+  />
+
+  <Target Name="Validate">
+    <Error
+      Condition="'$(CCNetLabel)'==''"
+      Text="Please set CCNetLabel to a proper version using /p:CCNetLabel=x.x.x.x"
+    />
+    <Error
+      Condition="'$(ReleaseConfig)'==''"
+      Text="Please set ReleaseConfig to one of devlab9ts, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Error
+      Condition="'$(InvalidRelease)'=='true'"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of devlab9ts, msft9 using /p:ReleaseConfig=xxx"
+    />
+    <Message
+        Importance="high"
+        Text="Building MSI for configuration $(ReleaseConfig)"
+    />
+  </Target>
+
+  <Target Name="MakeDirs"
+          DependsOnTargets="Validate">
+    <!-- remove Cpx to avoid accumulating APIScan runs -->
+    <RemoveDir Directories="$(CpxDir);$(MsiDir);$(TmpDir);$(MsiSignedDir)"/>
+    <MakeDir
+       Condition="!Exists('$(MsiDir)')"
+       Directories="$(MsiDir)"/>
+    <MakeDir
+       Condition="!Exists('$(CpxDir)')"
+       Directories="$(CpxDir)"/>
+    <MakeDir
+       Condition="!Exists('$(TmpDir)')"
+       Directories="$(TmpDir)"/>
+  </Target>
+
+  <Target Name="UpdateVSIXVersions"
+          DependsOnTargets="Validate">
+    <Message Text="Updating Version Number in VSIX manifest"/>
+    <Exec
+      WorkingDirectory="..\ContractAdornments"
+      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2010\source.extension.vsixmanifest" />
+    <Exec
+      WorkingDirectory="..\ContractAdornments"
+      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2012\source.extension.vsixmanifest" />
+    <Exec
+      WorkingDirectory="."
+      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS10.extension.vsixmanifest" />
+    <Exec
+      WorkingDirectory="."
+      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS11.extension.vsixmanifest" />
+    <Exec
+      WorkingDirectory="."
+      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS12.extension.vsixmanifest" />
+  </Target>
+
+  <!--==========================================================
+
+     Common properties for building the solution configuration
+
+   ===========================================================-->
+  <PropertyGroup>
+    <SolutionDir>..\..\</SolutionDir>
+    <SolutionName>CodeContracts.sln</SolutionName>
+    <Platform>Any CPU</Platform>
+  </PropertyGroup>
+
+  <Target Name="BuildSolutionConfig"
+    DependsOnTargets="Validate;CreateVersionFile;UpdateVSIXVersions">
+    <MsBuild
+      Projects="$(SolutionDir)$(SolutionName)"
+      Properties='Configuration=$(BuildConfig);Platform=$(Platform)'
+      Targets="Clean;Rebuild"
+      />
+  </Target>
+
+  <!--==========================================================
+
+     Common properties for version file creation
+
+   ===========================================================-->
+
+  <ItemGroup>
+    <VersionFile Include="..\common\include\Version.cs"/>
+  </ItemGroup>
+
+  <Target Name="CreateVersionFile">
+    <!-- create version number (checkout version file first) 
+    <SourceDepotEdit
+      Condition = "$(CCNetLabel) != ''"
+      ContinueOnError="true"
+      WorkingDirectory="..\Common\Include\"
+      Files="@(VersionFile)"
+     /> -->
+    <CreateAssemblyInfo
+       Condition = "$(CCNetLabel) != ''"
+       CreateVersionFile="true"
+       VersionFileNames="@(VersionFile)"
+       Version="$(CCNetLabel)"
+       Company="Microsoft Corporation"
+       Copyright="(c) Microsoft Corporation.  All rights reserved."
+       ForceReadOnly="true"
+       >
+       <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
+    </CreateAssemblyInfo>
+  </Target>
+
+  <!--==========================================================
+
+     Extra deliverables not built by the solution
+
+   ===========================================================-->
+
+  <Target Name="BuildExtras"
+     DependsOnTargets="MakeSamples;MakeSandcastleZip"
+  />
+
+
+  <!--==========================================================
+
+     SamplesZip produces the zip file with all the samples
+
+   ===========================================================-->
+
+  <PropertyGroup>
+    <ZipExe>..\ImportedPex\dotnetzip\zipit.exe</ZipExe>
+    <UnzipExe>..\ImportedPex\dotnetzip\unzip.exe</UnzipExe>
+    <SamplesZip>$(TmpDir)\Samples.zip</SamplesZip>
+    <Adornment2012VSIXFile>..\ContractAdornments\VS2012\$(BinDir)\CodeContractsHelper11.vsix</Adornment2012VSIXFile>
+    <Adornment2010VSIXFile>..\ContractAdornments\VS2010\$(BinDir)\CodeContractsHelper.vsix</Adornment2010VSIXFile>
+    <Adornment2012UnpackDir>$(TmpDir)\Adornment2012</Adornment2012UnpackDir>
+    <Adornment2010UnpackDir>$(TmpDir)\Adornment2010</Adornment2010UnpackDir>
+  </PropertyGroup>
+
+
+  <Target Name="MakeSamples"
+          DependsOnTargets="MakeDirs"
+          >
+    <RemoveDir Directories="$(TmpDir)\Samples" />
+    <Copy
+       SourceFiles="@(Samples)"
+       DestinationFiles="$(TmpDir)\Samples\%(Samples.RecursiveDir)%(Samples.FileName)%(Samples.Extension)"
+       >
+      <Output TaskParameter="DestinationFiles" ItemName="PatchedSamples"/>
+    </Copy>
+    <!--
+    <CreateItem
+    	Include="..\..\Foxtrot\Contracts\$(BinDir)\Microsoft.Contracts.dll"
+      Exclude=""
+    >
+      <Output TaskParameter="Include" ItemName="AssemblyFiles" />
+    </CreateItem>
+     -->
+    <CreateItem
+    	Include="$(TmpDir)\Samples\**\*.sln"
+      Exclude=""
+    >
+      <Output TaskParameter="Include" ItemName="SampleSolutions" />
+    </CreateItem>
+    <!--
+    <CreateItem
+       Include="$(TmpDir)\Samples\**\*.csproj;$(TmpDir)\Samples\**\*.vbproj"
+       >
+      <Output TaskParameter="Include" ItemName="SampleProjects" />
+    </CreateItem>
+    -->
+    <ItemGroup>
+      <SampleDirectories Include="@(SampleSolutions->'%(RecursiveDir)')"/>
+    </ItemGroup>
+<!--    <PatchProjectReferences
+      Projects="@(SampleProjects)"
+      HintPath="c:\Program Files\Microsoft\Contracts\Public"
+      ReferencePath="..\..\Contracts\$(BinDir)"
+      AssemblyFiles="@(AssemblyFiles)"
+      RemovePrePostBuildEvents="true"
+      /> -->
+    <Delete Files="$(SamplesZip)" />
+    <Message Text="@(SampleDirectories)"/>
+    <Exec
+      WorkingDirectory="$(TmpDir)\Samples"
+      Command="&quot;..\..\..\$(ZipExe)&quot; &quot;..\Samples.zip&quot; Readme.pdf @(SampleDirectories, ' ')" />
+  </Target>
+
+  <!--==========================================================
+
+     Create a zip file for the Sandcastle style patches
+
+   ===========================================================-->
+  <Target Name="MakeSandcastleZip">
+    <Delete Files="..\ccdoc\Sandcastle\Sandcastle.zip" />
+    <Exec
+      WorkingDirectory="..\ccdoc\Sandcastle"
+      Command="&quot;..\$(ZipExe)&quot; &quot;Sandcastle.zip&quot; msi source Readme.txt" />
+    <Copy
+       SourceFiles="..\ccdoc\Sandcastle\Sandcastle.zip"
+       DestinationFolder="$(TmpDir)"
+       >
+    </Copy>
+
+  </Target>
+  
+  <!--==========================================================
+
+    Merge final executables to reduce surface
+
+    ==========================================================-->
+  <Target Name="MergeExes"
+    DependsOnTargets="ILMergeFoxtrot;ILMergeAsmMeta;ILMergeClousot;ILMergeCCDoc"/>
+
+  <PropertyGroup>
+    <FoxtrotDir>..\..\Foxtrot\Driver\$(BinDir)</FoxtrotDir>
+    <CCRefGenAttributesDir>CCRefGenAttributes\$(BinDir)</CCRefGenAttributesDir>
+    <CCDocGenAttributesDir>CCDocGenAttributes\$(BinDir)</CCDocGenAttributesDir>
+    <CCI2Dir>..\ImportedCCI2</CCI2Dir>
+    <Clousot1Dir>..\Clousot\bin\$(BuildConfig)</Clousot1Dir>
+    <Clousot2Dir>..\Clousot2\bin\$(BuildConfig)</Clousot2Dir>
+    <CCDocDir>..\CCDoc\bin\$(BuildConfig)</CCDocDir>
+    <CCRewriteBinary>$(TmpDir)\ccrewrite.exe</CCRewriteBinary>
+    <CCRefgenBinary>$(TmpDir)\ccrefgen.exe</CCRefgenBinary>
+    <CCDocgenBinary>$(TmpDir)\ccdocgen.exe</CCDocgenBinary>
+    <CCCheckBinary>$(TmpDir)\cccheck.exe</CCCheckBinary>
+    <AdornmentBinary>AdornmentManager.dll</AdornmentBinary>
+
+    <CCRewriteConfig>$(FoxtrotDir)\foxtrot.exe.config</CCRewriteConfig>
+    <CCRefgenConfig>$(CCI2Dir)\asmmeta.exe.config</CCRefgenConfig>
+    <CCDocgenConfig>$(CCI2Dir)\ccdoc.exe.config</CCDocgenConfig>
+    <CCCheckConfig>$(Clousot1Dir)\clousot.exe.config</CCCheckConfig>
+
+    <ILMergeExeV40>..\ImportedILMerge\ilmerge.exe "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
+    <ILMergeExeV45>..\ImportedILMerge\ilmerge.exe "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FoxtrotMergeBinaries Include="
+      $(FoxtrotDir)\foxtrot.exe;
+      $(FoxtrotDir)\Foxtrot.Extractor.dll;
+      $(FoxtrotDir)\System.Compiler.dll;
+      $(FoxtrotDir)\DataStructures.dll
+    "/>
+    <FoxtrotMergeBinaries
+       Condition="Exists('$(FoxtrotDir)\Microsoft.Contracts.dll')"
+       Include="
+      $(FoxtrotDir)\Microsoft.Contracts.dll
+    "/>
+    <FoxtrotMergeBinaries 
+       Condition="'$(Feature_Leaderboard)'=='true'"
+       Include="
+    "/>
+    <FoxtrotMergeBinaries 
+       Condition="'$(Feature_LeaderboardXML)'=='true'"
+       Include="
+    "/>
+    <AsmmetaMergeBinaries Include="
+      $(CCI2Dir)\asmmeta.exe;
+      $(CCI2Dir)\Microsoft.Cci.CodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.CodeModelToIL.dll;
+      $(CCI2Dir)\Microsoft.Cci.ILGenerator.dll;
+      $(CCI2Dir)\Microsoft.Cci.MetadataHelper.dll;
+      $(CCI2Dir)\Microsoft.Cci.MetadataModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.MutableCodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.MutableMetadataModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.PdbReader.dll;
+      $(CCI2Dir)\Microsoft.Cci.PdbWriter.dll;
+      $(CCI2Dir)\Microsoft.Cci.PeReader.dll;
+      $(CCI2Dir)\Microsoft.Cci.PeWriter.dll;
+      $(CCI2Dir)\Microsoft.Cci.SourceModel.dll;
+    "/>
+    <AsmmetaMergeBinaries 
+       Condition="Exists('$(CCI2Dir)\Microsoft.Contracts.dll')"
+       Include="
+      $(CCI2Dir)\Microsoft.Contracts.dll
+    "/>
+    <CCDocMergeBinaries Include="
+      $(CCI2Dir)\ccdoc.exe;
+      $(CCI2Dir)\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll;
+      $(CCI2Dir)\Microsoft.Cci.AstsProjectedAsCodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.CodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.CodeModelToIL.dll;
+      $(CCI2Dir)\Microsoft.Cci.ContractExtractor.dll;
+      $(CCI2Dir)\Microsoft.Cci.CSharpSourceEmitter.dll;
+      $(CCI2Dir)\Microsoft.Cci.ILGenerator.dll;
+      $(CCI2Dir)\Microsoft.Cci.MetadataHelper.dll;
+      $(CCI2Dir)\Microsoft.Cci.MetadataModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.MutableCodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.MutableMetadataModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.NewILToCodeModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.PdbReader.dll;
+      $(CCI2Dir)\Microsoft.Cci.PeReader.dll;
+      $(CCI2Dir)\Microsoft.Cci.SourceModel.dll;
+      $(CCI2Dir)\Microsoft.Cci.VBSourceEmitter.dll;
+    "/>
+    <Clousot1MergeBinaries Include="
+      $(Clousot1Dir)\Clousot.exe;
+      $(Clousot1Dir)\CCI1CodeProvider.dll;
+      $(Clousot1Dir)\System.Compiler.dll;
+      $(Clousot1Dir)\ClousotMain.dll;
+      $(Clousot1Dir)\Foxtrot.Extractor.dll;
+      $(Clousot1Dir)\AbstractDomains.dll;
+      $(Clousot1Dir)\Analyzers.dll;
+      $(Clousot1Dir)\CodeAnalysis.dll;
+      $(Clousot1Dir)\ControlFlow.dll;
+      $(Clousot1Dir)\DataStructures.dll;
+      $(Clousot1Dir)\Graphs.dll;
+      $(Clousot1Dir)\RevisedSimplexMethod.dll;
+      $(Clousot1Dir)\AnalysisTypes.dll;
+      $(Clousot1Dir)\Clousot.Cache.dll;
+      $(Clousot1Dir)\EntityFramework.dll;
+    "/>
+    <Clousot1MergeBinaries
+       Condition="Exists('$(Clousot1Dir)\Microsoft.Contracts.dll')"
+       Include="
+      $(Clousot1Dir)\Microsoft.Contracts.dll
+    "/>
+    <Clousot1MergeBinaries 
+       Condition="'$(Feature_Leaderboard)'=='true'"
+       Include="
+    "/>
+    <Clousot1MergeBinaries 
+       Condition="'$(Feature_LeaderboardXML)'=='true'"
+       Include="
+    "/>
+    <!--
+    <Clousot1MergeBinaries 
+       Condition="'$(ReleaseConfig)'=='debug'"
+       Include="
+      $(Clousot1Dir)\RegressionTestUtils.dll;
+    "/>
+    -->
+    <Clousot2MergeBinaries Include="
+      $(Clousot2Dir)\Clousot2.exe;
+      $(Clousot2Dir)\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll;
+      $(Clousot2Dir)\CCI2.CodeProvider.dll;
+      $(Clousot2Dir)\ClousotMain.dll;
+      $(Clousot2Dir)\Microsoft.Cci.SourceModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.NewIlToCodeModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.CodeModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.CodeModelToIL.dll;
+      $(Clousot2Dir)\Microsoft.Cci.MetadataHelper.dll;
+      $(Clousot2Dir)\Microsoft.Cci.MetadataModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.MutableCodeModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.MutableMetadataModel.dll;
+      $(Clousot2Dir)\Microsoft.Cci.PdbReader.dll;
+      $(Clousot2Dir)\Microsoft.Cci.PEReader.dll;
+      $(Clousot2Dir)\AnalysisTypes.dll;
+      $(Clousot2Dir)\Clousot.Cache.dll;
+      $(Clousot2Dir)\EntityFramework.dll;
+    "/>
+    <ContractsKeyRel Include="..\common\Contracts.snk"/>
+
+    <Adornments2012MergeBinaries Include="
+      CodeContractsHelper11.dll;
+      Microsoft.Cci.MetadataModel.dll;
+      Microsoft.Cci.CodeModel.dll;
+      Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll;
+      AdornmentManager.dll;
+      Utilities.dll;
+      Microsoft.Cci.CodeModelToIL.dll;
+      Microsoft.Cci.ContractExtractor.dll;
+      Microsoft.Cci.CSharpSourceEmitter.dll;
+      Microsoft.Cci.ILGenerator.dll;
+      Microsoft.Cci.MetadataHelper.dll;
+      Microsoft.Cci.SourceModel.dll;
+      Microsoft.Cci.MutableCodeModel.dll;
+      Microsoft.Cci.MutableMetadataModel.dll;
+      Microsoft.Cci.NewIlToCodeModel.dll;
+      Microsoft.Cci.PdbReader.dll;
+      Microsoft.Cci.PEReader.dll;
+      "/>
+
+    <Adornments2010MergeBinaries Include="
+      CodeContractsHelper.dll;
+      Microsoft.Cci.MetadataModel.dll;
+      Microsoft.Cci.CodeModel.dll;
+      Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll;
+      AdornmentManager.dll;
+      Utilities.dll;
+      Microsoft.Cci.CodeModelToIL.dll;
+      Microsoft.Cci.ContractExtractor.dll;
+      Microsoft.Cci.CSharpSourceEmitter.dll;
+      Microsoft.Cci.ILGenerator.dll;
+      Microsoft.Cci.MetadataHelper.dll;
+      Microsoft.Cci.SourceModel.dll;
+      Microsoft.Cci.MutableCodeModel.dll;
+      Microsoft.Cci.MutableMetadataModel.dll;
+      Microsoft.Cci.NewIlToCodeModel.dll;
+      Microsoft.Cci.PdbReader.dll;
+      Microsoft.Cci.PEReader.dll;
+      "/>
+  </ItemGroup>
+
+  <Target Name="ILMergeFoxtrot"
+    DependsOnTargets="MakeDirs"
+    Inputs="@(FoxtrotMergeBinaries);$(CCRewriteConfig)"
+    Outputs="$(CCRewriteBinary);$(CCRewriteBinary).config"
+  >
+    <Message Text="ILmerge ccrewrite"/>
+    <Exec
+     Command="$(ILMergeExeV40) /keyfile:%(ContractsKeyRel.FullPath) /internalize /closed /out:$(CCRewriteBinary) @(FoxtrotMergeBinaries, ' ')"
+     WorkingDirectory="."/>
+    <Copy
+       SourceFiles="$(CCRewriteConfig)"
+       DestinationFiles="$(CCRewriteBinary).config"
+       />
+    <Touch Files="$(CCRewriteBinary).config"/>
+  </Target>
+
+  <Target Name="ILMergeAsmMeta"
+    DependsOnTargets="MakeDirs"
+    Inputs="@(AsmmetaMergeBinaries);$(CCRefGenAttributesDir)\CCRefGenAttributes.dll;$(CCRefgenConfig)"
+    Outputs="$(CCRefgenBinary);$(CCRefgenBinary).config">
+    <Message Text="ILmerge ccrefgen"/>
+    <!-- Use foxtrot assembly to grab current build number. -->
+    <Exec
+       Command="$(ILMergeExeV40) /attr:$(CCRefGenAttributesDir)\CCRefGenAttributes.dll /internalize /keyfile:%(ContractsKeyRel.FullPath) /closed /out:$(CCRefgenBinary) @(AsmmetaMergeBinaries, ' ')"
+       WorkingDirectory="."
+    />
+    <Copy
+       SourceFiles="$(CCRefgenConfig)"
+       DestinationFiles="$(CCRefgenBinary).config"
+       />
+    <Touch Files="$(CCRefgenBinary).config"/>
+  </Target>
+
+  <Target Name="ILMergeCCDoc"
+    DependsOnTargets="MakeDirs"
+    Inputs="@(CCDocMergeBinaries);$(CCDocGenAttributesDir)\CCDocGenAttributes.dll;$(CCDocgenConfig)"
+    Outputs="$(CCDocgenBinary);$(CCDocgenBinary).config">
+    <Message Text="ILmerge ccdocgen"/>
+    <Exec
+       Command="$(ILMergeExeV40) /attr:$(CCDocGenAttributesDir)\CCDocGenAttributes.dll /internalize /keyfile:%(ContractsKeyRel.FullPath) /closed /out:$(CCDocgenBinary) @(CCDocMergeBinaries, ' ')"
+       WorkingDirectory="."
+    />
+    <Copy
+       SourceFiles="$(CCDocgenConfig)"
+       DestinationFiles="$(CCDocgenBinary).config"
+       />
+    <Touch Files="$(CCDocgenBinary).config"/>
+  </Target>
+
+  <Target Name="SignAdornments2010">
+    <RemoveDir Directories="$(Adornment2010UnpackDir)" />
+    <Exec
+      WorkingDirectory="."
+      Command="&quot;$(UnzipExe)&quot; $(Adornment2010VSIXFile) $(Adornment2010UnpackDir)" />
+
+    <CallTarget Targets="ILMergeAdornments2010"/>
+
+    <CodeSign
+      Condition="'$(ContinuousBuild)' == 'true' and '$(SignVSIX)' == 'true'"
+      Approvers="$(CodeSignApprovers)"
+      Description="$(CodeSignDescription) Adornments10 v$(AssemblyFileVersion)"
+      DisplayUrl="$(CodeSignCodeContractsUrl)"
+      Keywords="$(CodeSignKeywords)"
+      Files="$(Adornment2010UnpackDir)\$(AdornmentBinary)"
+      OutputPath="$(Adornment2010UnpackDir)"
+      Authenticode="true"
+    />
+
+    <!-- Now build a new package -->
+    <ItemGroup>
+      <AdornmentFilesToDelete10
+          Include="$(TmpDir)\ContractAdornments10.*;$(Adornment2010UnpackDir)\Microsoft.Cci.*.dll;$(Adornment2010UnpackDir)\Utilities.dll;$(Adornment2010UnpackDir)\CodeContractsHelper.dll;$(Adornment2010UnpackDir)\CodeContractsHelper.pdb"/>
+
+    </ItemGroup>
+    <Delete Files="@(AdornmentFilestoDelete10)"/>
+    <Copy
+        SourceFiles="$(Adornment2010UnpackDir)\CodeContractsHelper.pkgdef"
+        DestinationFiles="$(Adornment2010UnpackDir)\AdornmentManager.pkgdef"
+        />
+    <Delete Files="$(Adornment2010UnpackDir)\CodeContractsHelper.pkgdef"/>
+    <Exec 
+        Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper AdornmentManager AdornmentManager.pkgdef"
+        WorkingDirectory="$(Adornment2010UnpackDir)"/>
+    <Exec 
+        Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper AdornmentManager extension.vsixmanifest"
+        WorkingDirectory="$(Adornment2010UnpackDir)"/>
+
+    <ItemGroup>
+      <VSIX2010Content Include="$(Adornment2010UnpackDir)\*"/>
+    </ItemGroup>
+
+    <Exec
+      WorkingDirectory="$(Adornment2010UnpackDir)"
+      Command="&quot;..\..\..\$(ZipExe)&quot; &quot;..\ContractAdornments10.zip&quot; @(VSIX2010Content->'%(Filename)%(Extension)', ' ') License" />
+    <Copy
+        SourceFiles="$(TmpDir)\ContractAdornments10.zip"
+        DestinationFiles="$(MsiDir)\ContractAdornments10.vsix"
+        />
+    <CodeSign
+      Condition="'$(ContinuousBuild)' == 'true' and '$(SignVSIX)' == 'true'"
+      Approvers="$(CodeSignApprovers)"
+      Description="$(CodeSignDescription) Adornments10 v$(AssemblyFileVersion)"
+      DisplayUrl="$(CodeSignCodeContractsUrl)"
+      Keywords="$(CodeSignKeywords)"
+      Files="$(MsiDir)\ContractAdornments10.vsix"
+      OutputPath="$(MsiSignedDir)"
+      AuthenticodeVSIX="true"
+    />
+  </Target>
+
+  <Target Name="ILMergeAdornments2010"
+    Inputs="@(Adornments2010MergeBinaries)"
+    Outputs="$(AdornmentBinary)">
+    <Message Text="ILmerge Adornments VS2010"/>
+    <Exec
+       Command="..\..\..\$(ILMergeExeV40) -lib:&quot;$(ProgramFilesX86)\Common Files\Microsoft Shared\MSEnv\PublicAssemblies&quot; /keyfile:%(ContractsKeyRel.FullPath) /out:$(AdornmentBinary) -wildcards @(Adornments2010MergeBinaries, ' ')"
+       WorkingDirectory="$(Adornment2010UnpackDir)"
+    />
+
+  </Target>
+
+  <Target Name="SignAdornments2012">
+    <RemoveDir Directories="$(Adornment2012UnpackDir)" />
+    <Exec
+      WorkingDirectory="."
+      Command="&quot;$(UnzipExe)&quot; $(Adornment2012VSIXFile) $(Adornment2012UnpackDir)" />
+
+    <CallTarget Targets="ILMergeAdornments2012"/>
+
+    <CodeSign
+      Condition="'$(ContinuousBuild)' == 'true' and '$(SignVSIX)' == 'true'"
+      Approvers="$(CodeSignApprovers)"
+      Description="$(CodeSignDescription) Adornments11 v$(AssemblyFileVersion)"
+      DisplayUrl="$(CodeSignCodeContractsUrl)"
+      Keywords="$(CodeSignKeywords)"
+      Files="$(Adornment2012UnpackDir)\$(AdornmentBinary)"
+      OutputPath="$(Adornment2012UnpackDir)"
+      Authenticode="true"
+    />
+
+    <!-- Now build a new package -->
+    <ItemGroup>
+      <AdornmentFilesToDelete
+          Include="$(TmpDir)\ContractAdornments11.*;$(Adornment2012UnpackDir)\Microsoft.Cci.*.dll;$(Adornment2012UnpackDir)\Utilities.dll;$(Adornment2012UnpackDir)\CodeContractsHelper11.dll;$(Adornment2012UnpackDir)\CodeContractsHelper11.pdb"/>
+
+    </ItemGroup>
+    <Delete Files="@(AdornmentFilestoDelete)"/>
+    <Copy
+        SourceFiles="$(Adornment2012UnpackDir)\CodeContractsHelper11.pkgdef"
+        DestinationFiles="$(Adornment2012UnpackDir)\AdornmentManager.pkgdef"
+        />
+    <Delete Files="$(Adornment2012UnpackDir)\CodeContractsHelper11.pkgdef"/>
+    <Exec 
+        Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper11 AdornmentManager AdornmentManager.pkgdef"
+        WorkingDirectory="$(Adornment2012UnpackDir)"/>
+    <Exec 
+        Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper11 AdornmentManager extension.vsixmanifest"
+        WorkingDirectory="$(Adornment2012UnpackDir)"/>
+
+    <ItemGroup>
+      <VSIX2012Content Include="$(Adornment2012UnpackDir)\*"/>
+    </ItemGroup>
+
+    <Exec
+      WorkingDirectory="$(Adornment2012UnpackDir)"
+      Command="&quot;..\..\..\$(ZipExe)&quot; &quot;..\ContractAdornments11.zip&quot; @(VSIX2012Content->'%(Filename)%(Extension)', ' ') License" />
+    <Copy
+        SourceFiles="$(TmpDir)\ContractAdornments11.zip"
+        DestinationFiles="$(MsiDir)\ContractAdornments11.vsix"
+        />
+    <CodeSign
+      Condition="'$(ContinuousBuild)' == 'true' and '$(SignVSIX)' == 'true'"
+      Approvers="$(CodeSignApprovers)"
+      Description="$(CodeSignDescription) Adornments11 v$(AssemblyFileVersion)"
+      DisplayUrl="$(CodeSignCodeContractsUrl)"
+      Keywords="$(CodeSignKeywords)"
+      Files="$(MsiDir)\ContractAdornments11.vsix"
+      OutputPath="$(MsiSignedDir)"
+      AuthenticodeVSIX="true"
+    />
+  </Target>
+
+  <Target Name="ILMergeAdornments2012"
+    Inputs="@(Adornments2012MergeBinaries)"
+    Outputs="$(AdornmentBinary)">
+    <Message Text="ILmerge Adornments VS2012"/>
+    <Exec
+       Command="..\..\..\$(ILMergeExeV45) -lib:&quot;$(ProgramFilesX86)\Common Files\Microsoft Shared\MSEnv\PublicAssemblies&quot; /keyfile:%(ContractsKeyRel.FullPath) /out:$(AdornmentBinary) -wildcards @(Adornments2012MergeBinaries, ' ')"
+       WorkingDirectory="$(Adornment2012UnpackDir)"
+    />
+
+  </Target>
+
+  <Target Name="ILMergeClousot"
+    DependsOnTargets="ILMergeClousot1;ILMergeClousot2"
+  />
+
+  <Target Name="ILMergeClousot1"
+    DependsOnTargets="MakeDirs"
+    Condition="'$(ClousotVersion)'=='1'"
+    Inputs="@(Clousot1MergeBinaries);$(CCCheckConfig)"
+    Outputs="$(CCCheckBinary);$(CCCheckBinary).config">
+    <Message Text="ILmerge cccheck Clousot1"/>
+
+    <Exec
+       Command="$(ILMergeExeV45) -allowDup /copyattrs /allowMultiple /keepFirst /keyfile:%(ContractsKeyRel.FullPath) /internalize:ClousotILMerge.internexceptions /closed /out:$(CCCheckBinary) @(Clousot1MergeBinaries, ' ')"
+       WorkingDirectory="."
+    />
+    <Copy
+       SourceFiles="$(CCCheckConfig)"
+       DestinationFiles="$(CCCheckBinary).config"
+       />
+    <Touch Files="$(CCCheckBinary).config"/>
+  </Target>
+
+  <Target Name="ILMergeClousot2"
+    DependsOnTargets="MakeDirs"
+    Condition="'$(ClousotVersion)'=='2'"
+    Inputs="@(Clousot2MergeBinaries)"
+    Outputs="$(CCCheckBinary)">
+    <Message Text="ILmerge cccheck Clousot2"/>
+
+    <Exec
+       Command="$(ILMergeExeV40) -allowDup /copyattrs /allowMultiple /keepFirst /keyfile:%(ContractsKeyRel.FullPath) /internalize:ClousotILMerge.internexceptions /closed /out:$(CCCheckBinary) @(Clousot2MergeBinaries, ' ')"
+       WorkingDirectory="."
+    />
+  </Target>
+
+  <!--==========================================================
+
+       Test built configuration
+
+    ==========================================================-->
+
+  <PropertyGroup>
+    <MSTestCommand>$(ProgramFiles)\Microsoft Visual Studio 9.0\Common7\IDE\mstest.exe</MSTestCommand>
+    <ClousotTestMetadata>AnalysisInfrastructure9.vsmdi</ClousotTestMetadata>
+  </PropertyGroup>
+
+  <Target Name="Test">
+    <Exec
+      Command="&quot;$(MSTestCommand)&quot; /testmetadata:$(ClousotTestMetadata) /testlist:$(ReleaseConfig)"
+      WorkingDirectory="..\.."
+      IgnoreExitCode="false"
+      />
+  </Target>
+
+  <!--==========================================================
+
+       Build the installer
+
+    ==========================================================-->
+
+  <PropertyGroup>
+    <CLOUSOT Condition="'$(ClousotVersion)'=='1'">..\Clousot\$(BinDir)</CLOUSOT>
+    <CLOUSOT
+    Condition="'$(ClousotVersion)'=='2'">..\Clousot2\$(BinDir)</CLOUSOT>
+    <FOXTROTBASE>..\..\Foxtrot</FOXTROTBASE>
+    <FOXTROT>$(FOXTROTBASE)\Driver\$(BinDir)</FOXTROT>
+    <SAMPLES>..\..\Foxtrot\Samples</SAMPLES>
+    <CONTRACTSBASE>..\Contracts</CONTRACTSBASE>
+  </PropertyGroup>
+  <ItemGroup>
+    <WixSources Include="
+      ManagedContracts.wxs;
+      dev10.wxs;
+      dev12.wxs;
+      UI.wxs;
+    "/>
+    <WixBaseDirs Include="
+      .\$(TmpDir);
+      .\VSIX;
+      ..\ManagedContractsVSPropertyPane\$(BinDir);
+      ..\MsBuildCodeContracts\$(BinDir);
+      $(CLOUSOT);
+      $(FOXTROT);
+      $(FOXTROTBASE)\Contracts;
+      $(CONTRACTSBASE)\$(BinDir)\v3.5;
+      $(SAMPLES);
+      ..\ImportedCodeTools;
+      Licenses;
+     "/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MsiOutputFile>$(MsiDir)\Contracts.$(ReleaseConfig).msi</MsiOutputFile>
+    <ContractReferenceAssemblyRoot>..\Contracts\$(BinDir)</ContractReferenceAssemblyRoot>
+  </PropertyGroup>
+  
+  <Target Name="MakeMSI" 
+    DependsOnTargets="BuildExtras;MergeExes">
+    <CreateGuid>
+      <Output TaskParameter="Guid" PropertyName="ProductGuid" />
+    </CreateGuid>
+    <Message Text="CCNetLabel: $(CCNetLabel)"/>
+    <Message Text="Assembly File Version: $(AssemblyFileVersion)"/>
+    <Wix
+       Files="@(WixSources)"
+       UseBuiltinExtensions="false"
+       WixDirectory=".\WixBinaries"
+       Extensions="WixNetFxExtension;WixVSExtension;WixUtilExtension"
+       OutputFile="$(MsiOutputFile)"
+       BaseDirectories="@(WixBaseDirs);.\WixBinaries"
+       Variables="
+                  License=$(License);
+                  Feature_VSTSCheck=$(Feature_VSTSCheck);
+                  Feature_Unsafe=$(Feature_Unsafe);
+                  Feature_Pex=$(Feature_Pex);
+                  Feature_CCCheck=$(Feature_CCCheck);
+                  Feature_Leaderboard=$(Feature_Leaderboard);
+                  ProductGuid=$(ProductGuid);
+                  Version=$(AssemblyFileVersion);
+                  ContractReferenceAssemblyRoot=$(ContractReferenceAssemblyRoot);
+                  Flavor=$(Flavor);
+                  ReleaseConfig=$(ReleaseConfig);
+                  IncludePDBs=$(IncludePDBs);
+                  Public=yes;
+                  NGen=no;
+                  "
+       />
+    <Message Text="Finished with Wix. ContinuousBuild: $(ContinuousBuild)$"/>
+    <MakeDir 
+      Condition="'$(ContinuousBuild)' == 'true'"
+      Directories="$(CodeSignOutputPath)"/>
+    <CodeSign
+      Condition="'$(ContinuousBuild)' == 'true'"
+      Approvers="$(CodeSignApprovers)"
+      Description="$(CodeSignDescription) v$(AssemblyFileVersion)"
+      DisplayUrl="$(CodeSignCodeContractsUrl)"
+      Keywords="$(CodeSignKeywords)"
+      Files="$(MsiOutputFile)"
+      OutputPath="$(CodeSignOutputPath)"
+      Authenticode="true"
+    />
+  </Target>
+
+  <!--==========================================================
+
+       Run the CPX tools
+
+    ==========================================================-->
+
+  <Target Name="ApiScan"
+    DependsOnTargets="MakeDirs">
+    <!-- copy binaries for inspection-->
+    <PropertyGroup>
+      <ApiScanDirectory>$(ReleaseConfig)\ApiScanTmp</ApiScanDirectory>
+      <ApiScanExe>..\ImportedCPXTools\ApiScan\ApiScanCmd.exe</ApiScanExe>
+      <ApiScanParameters>-batch $(ReleaseConfig).apiscan.xml</ApiScanParameters>
+      <ApiScanReportDir>$(CpxDir)</ApiScanReportDir>
+    </PropertyGroup>
+    <RemoveDir
+       Directories="$(ApiScanDirectory)"/>
+    <MakeDir
+       Directories="$(ApiScanDirectory)" />
+    <CreateItem
+      Include="
+        $(MsiOutputFile);$(Adornment2012VSIXFile)
+      "
+      Exclude="
+        ">
+      <Output TaskParameter="Include" ItemName="ApiScanAssemblies" />
+    </CreateItem>
+    <Copy SourceFiles="@(ApiScanAssemblies)" DestinationFolder="$(ApiScanDirectory)" />
+
+    <!-- call apiscan -->
+    <Exec Command="&quot;$(ApiScanExe)&quot; $(ApiScanParameters)"/> 
+  </Target>
+
+  <PropertyGroup>
+    <BinSearchExe>..\ImportedCPXTools\BinSearch.exe</BinSearchExe>
+    <BinSearchParameters>-f -o -p$(MsiDir) -x$(CpxDir)</BinSearchParameters>
+  </PropertyGroup>
+
+  <Target Name="BinSearch">
+    <!-- creates debug.xml -->
+    <Exec Command="&quot;$(BinSearchExe)&quot; $(BinSearchParameters)" />
+  </Target>
+
+  <PropertyGroup>
+    <PolicheckExe>..\ImportedCPXTools\PoliCheck\PoliCheck.exe</PolicheckExe>
+  </PropertyGroup>
+
+  <Target Name="Policheck">
+    <Policheck
+      ToolPath="$(PolicheckExe)"
+      RulesDBPath="rule.mdb"
+      Files="$(Adornment2012VSIXFile);$(MsiOutputFile)"
+      OutputDirectory="$(CpxDir)"/>
+    <!-- TODO: copy to cpx directory -->
+  </Target>
+
+  <Target Name="RunCPXTools"
+    Condition="'$(CheckCpx)'=='true' and '$(IgnoreCpx)'!='true'"
+    DependsOnTargets="ApiScan;Policheck;BinSearch"/>
+
+</Project>

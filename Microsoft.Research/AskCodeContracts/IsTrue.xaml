@@ -1,0 +1,52 @@
+﻿<Window x:Class="Microsoft.Research.AskCodeContracts.IsTrue"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ask Clousot" Topmost="True" WindowStartupLocation="CenterOwner" WindowStyle="SingleBorderWindow" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="321" Width="698" ForceCursor="True">
+    <Grid>
+        <TabControl Height="264" HorizontalAlignment="Left" Margin="12,12,0,0" Name="tabControl1" VerticalAlignment="Top" Width="654">
+            <TabItem Header="Code questions" Name="AskQueriesTab">
+                <Grid Height="250" Width="654">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16*" />
+                        <ColumnDefinition Width="609*" />
+                    </Grid.ColumnDefinitions>
+                    <ListBox Height="100" HorizontalAlignment="Left" Margin="121,46,0,0" Name="Assumptions" VerticalAlignment="Top" Width="422" Grid.Column="1" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="7,17,0,0" Name="NewAssumptionText" Text="Code Assumption:" VerticalAlignment="Top" Width="110" Grid.Column="1" />
+                    <TextBox Height="23" HorizontalAlignment="Right" Margin="0,17,94,0" Name="Assumption" Text="" VerticalAlignment="Top" Width="422" Grid.Column="1" />
+                    <Button Content="Add" Height="23" HorizontalAlignment="Right" IsDefault="True" Margin="0,16,13,0" Name="AddAssumption" VerticalAlignment="Top" Width="75" Click="AddAssumption_Click" Grid.Column="1" />
+                    <Button Content="Clear" Height="23" HorizontalAlignment="Right" Margin="0,46,13,0" Name="ClearAssumptions" VerticalAlignment="Top" Width="75" Click="ClearAssumptions_Click" Grid.Column="1" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="7,156,0,0" Name="QueryText" Text="Query:" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="121,156,0,0" Name="InputQuery" VerticalAlignment="Top" Width="422" AcceptsReturn="True" AcceptsTab="True" IsReadOnlyCaretVisible="True" IsManipulationEnabled="True" Grid.Column="1" />
+                    <Button Content="Ask" Height="24" HorizontalAlignment="Right" Margin="0,155,13,0" Name="IsTrueButton" VerticalAlignment="Top" Width="75" Click="IsTrueButton_Click" IsDefault="True" Grid.Column="1" />
+                    <TextBlock Height="20" HorizontalAlignment="Left" Margin="8,185,0,0" Name="AssumptionsText" Text="Answer:" VerticalAlignment="Top" Width="110" Grid.Column="1" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="121,185,0,0" Name="AnswerText" Text="" VerticalAlignment="Top" Width="422" Grid.Column="1" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,50,0,0" Name="textBlock1" Text="Current assumptions:" VerticalAlignment="Top" Width="110" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Value inspector" Name="AbstractStateTab">
+                <Grid>
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="18,15,0,0" Name="InvariantTextLabel" Text="Clousot state:" VerticalAlignment="Top" Width="97" />
+                    <TextBox Height="172" HorizontalAlignment="Left" Margin="121,15,0,0" Name="InvariantText" Text="" VerticalAlignment="Top" Width="504" TextWrapping="Wrap" IsReadOnly="True" />
+                    <Button Content="Get Invariant" Height="23" HorizontalAlignment="Right" Margin="0,203,281,0" Name="GetInvariantButton" VerticalAlignment="Top" Width="91" Click="GetInvariantButton_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Search" Name="SearchTab">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45*" />
+                        <ColumnDefinition Width="599*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="18,18,0,0" Name="textBlock2" Text="Find callers verifying:" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" />
+                    <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="99,18,0,0" Name="requiresSearchConditionTextBox" VerticalAlignment="Top" Width="482" />
+                    <Button Content="Find" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="241,203,0,0" Name="requiresSearchBox" VerticalAlignment="Top" Width="90" Click="requiresSearchBox_Click" />
+                    <ListBox Height="42" HorizontalAlignment="Left" Margin="99,47,0,0" Name="searchResultsTrueListBox" VerticalAlignment="Top" Width="482" Grid.Column="1" />
+                    <TextBlock Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Margin="18,47,0,0" Name="textBlock3" Text="Always" VerticalAlignment="Top" Width="128" />
+                    <ListBox Grid.Column="1" Height="45" HorizontalAlignment="Left" Margin="99,95,0,0" Name="searchResultsTopListBox" VerticalAlignment="Top" Width="482" />
+                    <TextBlock Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Margin="18,0,0,114" Name="textBlock4" Text="Maybe" VerticalAlignment="Bottom" Width="128" />
+                    <ListBox Grid.Column="1" Height="45" HorizontalAlignment="Left" Margin="99,146,0,0" Name="searchResultsFalseListBox" VerticalAlignment="Top" Width="482" />
+                    <TextBlock Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Margin="18,0,0,63" Name="textBlock5" Text="Never" VerticalAlignment="Bottom" Width="128" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

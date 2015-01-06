@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GenericTest name="vbtests" storage="c:\users\maf\cci1\microsoft.research\regressiontest\visualbasictestdriver\vbtests.generictest" id="c2607cec-3bee-46c1-a611-0fd43136fdc9" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="64d35c34-4d03-415c-8d79-f044c14472d8" />
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-bounds -nonnull  -show validations VisualBasicTests.exe -show progress -regression -maxpathsize=25 -libpaths ..\..\..\..\Contracts\bin\debug\v3.5 -assemblyMode=standard -define cci1only" workingDirectory="%testlocation%\bin\debug">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testoutputdirectory" value="C:\Users\maf\CCI1\TestResults\maf_MAF1 2009-06-05 16_40_47\In\MAF1\a61a6d83-19aa-461e-bb28-8648c732b97f" />
+      <EnvironmentVariable name="testlocation" value="c:\users\maf\cci1\microsoft.research\regressiontest\visualbasictestdriver" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

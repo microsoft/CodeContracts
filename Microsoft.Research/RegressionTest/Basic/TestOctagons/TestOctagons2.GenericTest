@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="TestOctagons2" storage="e:\cci\microsoft.research\regressiontest\basic\testoctagons\testoctagons2.generictest" id="06428d17-235c-4d34-9040-6632c9497635" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds:type=Octagons TestOctagons.dll -wp=false" workingDirectory="%testlocation%/bin/debug/" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

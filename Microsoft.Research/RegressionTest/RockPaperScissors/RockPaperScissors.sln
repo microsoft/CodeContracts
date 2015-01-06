@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockPaperScissors", "RockPaperScissors\RockPaperScissors.csproj", "{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockPaperScissorsConsole", "RockPaperScissorsConsole\RockPaperScissorsConsole.csproj", "{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockPaperScissorsForm", "RockPaperScissorsForm\RockPaperScissorsForm.csproj", "{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Contracts9", "..\..\..\Foxtrot\Contracts\Microsoft.Contracts9.csproj", "{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = ..\\..\\..\\Foxtrot\\Contracts\\Microsoft.Contracts9.csproj
+		SccProjectName0 = //depot/xsharp/cci/Foxtrot/Contracts
+		SccLocalPath0 = ..\\..\\..\\Foxtrot\\Contracts
+		SccProvider0 = MSSCCI:Source\u0020Depot
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		FullDebug|Any CPU = FullDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F67A6F9D-4AD5-4B32-89B1-4D1D9FD008DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA6EF26-5F81-40A7-84A6-45A16328DFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0528E996-E3FE-41F3-B9A0-C1DA7661A4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

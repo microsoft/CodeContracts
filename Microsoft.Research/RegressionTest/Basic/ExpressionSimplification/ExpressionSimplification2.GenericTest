@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="expressionsimplification2" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basic\expressionsimplification\expressionsimplification2.generictest" id="5f3c58a2-8dab-47fb-a110-a6a024529423" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Execution id="5980347a-19c8-4003-aae3-18afc50b6df7" />
+  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -bounds -nonnull ExpressionSimplification.dll" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="CCDocTest" storage="d:\projects\cci1\microsoft.research\regressiontest\ccdoc\ccdoctest.generictest" id="7c3c7476-6a3c-4c18-9d74-735a4f4fde36" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <DeploymentItems>
+    <DeploymentItem filename="Microsoft.Research\CCDoc\bin\Debug\CCDoc.exe" />
+    <DeploymentItem filename="Microsoft.Research\RegressionTest\CCDoc\good.xml" />
+    <DeploymentItem filename="Microsoft.Research\RegressionTest\CCDoc\CCDocTest.bat" />
+    <DeploymentItem filename="Microsoft.Research\RegressionTest\CCDoc\bin\Debug\CCDocTests.XML" />
+    <DeploymentItem filename="Microsoft.Research\RegressionTest\CCDoc\bin\Debug\CCDocTests.Contracts.dll" />
+  </DeploymentItems>
+  <Execution id="ad0ad657-b6a4-46ac-a95d-206062763057" />
+  <Command filename="%testlocation%\CCDocTest.bat" arguments="..\..\..\out" workingDirectory="%testoutputdirectory%">
+    <EnvironmentVariables>
+      <EnvironmentVariable name="testlocation" value="" />
+      <EnvironmentVariable name="ccdoc" value="bin\debug" />
+    </EnvironmentVariables>
+  </Command>
+  <SummaryXmlFile path="%TestOutputDirectory%\testsummary" />
+</GenericTest>

@@ -1,0 +1,238 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--=====================================================================
+      Begin Microsoft Code Contracts Analysis 
+  ======================================================================-->
+
+
+  <!--=====================================================================
+        Add post build step for static contract checker
+    ======================================================================-->
+  <PropertyGroup>
+    <PrepareForRunDependsOn>$(PrepareForRunDependsOn);CodeContractsPerformCodeAnalysis</PrepareForRunDependsOn>
+    <CodeContractsCodeAnalysisOutput>$(IntermediateOutputPath)CodeContractAnalysisRun.log</CodeContractsCodeAnalysisOutput>
+  </PropertyGroup>
+
+  <!--=====================================================================
+        Define tool options
+    ======================================================================-->
+
+  <PropertyGroup>
+    <CodeContractRunCodeAnalysisCommand>$(CodeContractsInstallDir)Bin\cccheck.exe</CodeContractRunCodeAnalysisCommand>
+  </PropertyGroup>
+
+  <!--=====================================================================
+        Running Static Code Analysis
+    ======================================================================-->
+
+  <Target
+    Name="CodeContractsPerformCodeAnalysis"
+    Condition="'$(CodeContractsRunCodeAnalysis)' == 'true'"
+    DependsOnTargets="CodeContractsComputeCodeAnalysisDependencies;CodeContractsRunCodeAnalysis">
+  </Target>
+
+  <Target
+    Name="CodeContractsComputeCodeAnalysisDependencies"
+    DependsOnTargets="ContractDeclarativeAssembly">
+
+    <ItemGroup>
+      <CodeContractsCodeAnalysisInput
+        Include="@(ReferencePath)"/>
+      <CodeContractsCodeAnalysisInput
+        Include="@(ContractDeclarativeAssemblies)"/>
+    </ItemGroup>
+
+  </Target>
+
+  <Target
+    Name="CodeContractsRunCodeAnalysis"
+    Condition="'$(CodeContractsRunCodeAnalysis)' == 'true'"
+    Inputs="@(CodeContractsCodeAnalysisInput)"
+    Outputs="$(CodeContractsCodeAnalysisOutput)"
+    >
+    <CallTarget Targets="CodeContractsRunCodeAnalysisInternal"/>
+    <Touch
+      Files="$(CodeContractsCodeAnalysisOutput)"
+      AlwaysCreate="true"
+      ForceTouch="true"/>
+    <ItemGroup>
+      <FileWrites
+        Include="$(CodeContractsCodeAnalysisOutput)"/>
+    </ItemGroup>
+  </Target>
+
+  <!-- The code contracts task -->
+  <UsingTask TaskName="Microsoft.Research.CodeContractsAnalysis" AssemblyFile="$(CodeContractsInstallDir)Bin\MsBuildCodeContracts.dll" />
+
+  <!-- Get the warning level -->
+  <Choose>
+    <When Condition="'$(CodeContractsAnalysisWarningLevel)'==''">
+      <PropertyGroup>
+        <CodeContractsAnalysisWarning>low</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='0'">
+      <PropertyGroup>
+        <CodeContractsAnalysisWarning>low</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='1'">
+      <PropertyGroup>
+        <CodeContractsAnalysisWarning>mediumlow</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='2'">
+      <PropertyGroup>
+        <CodeContractsAnalysisWarning>medium</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </When>
+	 <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='3'">
+      <PropertyGroup>
+        <CodeContractsAnalysisWarning>full</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+	<CodeContractsAnalysisWarning>low</CodeContractsAnalysisWarning>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+
+  <!-- Get Bounds obligations -->
+  <Choose>
+    <When Condition="'$(CodeContractsBoundsObligations)'!='true'">
+      <PropertyGroup>
+        <CodeContractsBounds>noObl</CodeContractsBounds>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(CodeContractsBoundsObligations)'=='true'">
+      <PropertyGroup>
+        <CodeContractsBounds></CodeContractsBounds>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+  <Target
+    Name="CodeContractsRunCodeAnalysisInternal"
+    DependsOnTargets="CodeContractsComputeAllLibPaths;EnsureContractReferenceAssemblyOfDependeeProjects"
+    >
+    <Message Text="Run Contract Code Analysis" Importance="Low"/>
+
+    <PropertyGroup>
+      <DeclarativeAssemblyDir>@(ContractDeclarativeAssembly->'%(RootDir)')@(ContractDeclarativeAssembly->'%(Directory)')</DeclarativeAssemblyDir>
+      <DeclarativeAssemblyPath>@(ContractDeclarativeAssembly->'%(FullPath)')</DeclarativeAssemblyPath>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsPlatformPath)' != ''">-platform "$(CodeContractsPlatformPath)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsClassLibrary)' != ''">$(CodeContractCodeAnalysisOptions) -cclib "$(CodeContractsClassLibrary)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsAssemblyMode)' == '1'">$(CodeContractCodeAnalysisOptions) -assemblyMode=standard</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions>$(CodeContractCodeAnalysisOptions) -maxwarnings 350</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsNonNullObligations)' != 'true'">$(CodeContractCodeAnalysisOptions) -nonnull:noObl</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsNonNullObligations)' == 'true'">$(CodeContractCodeAnalysisOptions) -nonnull</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions>$(CodeContractCodeAnalysisOptions) -bounds:$(CodeContractsBounds) -arrays -wp=true -bounds:type=subpolyhedra,reduction=simplex,diseq=false </CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsPointerObligations)' == 'true'">$(CodeContractCodeAnalysisOptions) -buffers:type=subpolyhedra,fastcheck=false</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions>$(CodeContractCodeAnalysisOptions) -arrays -adaptive</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsArithmeticObligations)' == 'true'">$(CodeContractCodeAnalysisOptions) -arithmetic</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsEnumObligations)' == 'true'">$(CodeContractCodeAnalysisOptions) -enum</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsRedundantAssumptions)' == 'true'">$(CodeContractCodeAnalysisOptions) -check assumptions</CodeContractCodeAnalysisOptions>        
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsRedundantTests)' == 'true'">$(CodeContractCodeAnalysisOptions) -check conditionsvalidity</CodeContractCodeAnalysisOptions>        		
+	<CodeContractCodeAnalysisOptions
+	    Condition="'$(CodeContractsMissingPublicRequiresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicRequiresAreErrors</CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+	    Condition="'$(CodeContractsMissingPublicEnsuresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicEnsuresAreErrors</CodeContractCodeAnalysisOptions>
+     <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsAssertsToContractsCheckBox)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest asserttocontracts</CodeContractCodeAnalysisOptions>        
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestAssumptions)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest assumes</CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestAssumptionsForCallees)' == 'true'">$(CodeContractCodeAnalysisOptions)  -suggest calleeassumes</CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestRequires)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest requires</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestEnsures)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest methodensures -suggest propertyensures</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsNecessaryEnsures)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest necessaryensures</CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestObjectInvariants)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest objectinvariants</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsInferRequires)' == 'true'">$(CodeContractCodeAnalysisOptions) -infer requires</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsInferEnsures)' == 'true'">$(CodeContractCodeAnalysisOptions) -infer methodensures</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsInferEnsuresAutoProperties)' == 'true'">$(CodeContractCodeAnalysisOptions) -infer autopropertiesensures</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsInferObjectInvariants)' == 'true'">$(CodeContractCodeAnalysisOptions) -infer objectinvariants</CodeContractCodeAnalysisOptions>     
+    <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSuggestReadonly)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest readonlyfields </CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsCacheAnalysisResults)' == 'true'">$(CodeContractCodeAnalysisOptions) -cache</CodeContractCodeAnalysisOptions>
+	<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSkipAnalysisIfCannotConnectToCache)' == 'true'">$(CodeContractCodeAnalysisOptions) -forcecacheserver=true</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsFailBuildOnWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -failOnWarnings</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsCacheDirectory)' != ''">$(CodeContractCodeAnalysisOptions) -cacheFileDirectory "$(CodeContractsCacheDirectory)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsCacheVersion)' != ''">$(CodeContractCodeAnalysisOptions) -cacheVersion "$(CodeContractsCacheVersion)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsCacheMaxSize)' != ''">$(CodeContractCodeAnalysisOptions) -cacheMaxSize "$(CodeContractsCacheMaxSize)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsTargetMember)' != ''">$(CodeContractCodeAnalysisOptions) -memberNameSelect:$(CodeContractsTargetMember)</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsTargetType)' != ''">$(CodeContractCodeAnalysisOptions) -typeNameSelect:$(CodeContractsTargetType)</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsBeingOptimisticOnExternal)' == 'false'">$(CodeContractCodeAnalysisOptions)  -lowScoreForExternal=false</CodeContractCodeAnalysisOptions>
+		<CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsTargetNamespace)' != ''">$(CodeContractCodeAnalysisOptions) -namespaceSelect:$(CodeContractsTargetNamespace)</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsUseBaseLine)' == 'true' and '$(CodeContractsBaseLineFile)' != ''">$(CodeContractCodeAnalysisOptions) -baseline "$(CodeContractsBaseLineFile)"</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsSQLServerOption)' != ''">$(CodeContractCodeAnalysisOptions) -cacheserver:$(CodeContractsSQLServerOption)</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions>$(CodeContractCodeAnalysisOptions) $(CodeContractsExtraAnalysisOptions)</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisHideMarkers Condition="'$(CodeContractsShowSquigglies)' == 'true'">false</CodeContractCodeAnalysisHideMarkers>
+      <CodeContractCodeAnalysisHideMarkers Condition="'$(CodeContractsShowSquigglies)' != 'true'">true</CodeContractCodeAnalysisHideMarkers>
+      <CodeContractCodeAnalysisRunInBackground Condition="'$(CodeContractsRunInBackground)' != 'false'">true</CodeContractCodeAnalysisRunInBackground>
+      <CodeContractCodeAnalysisRunInBackground Condition="'$(CodeContractsRunInBackground)' == 'false'">false</CodeContractCodeAnalysisRunInBackground>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_CodeContractsCCCheckArguments>-nobox -nologo -nopex -remote  -suggest=!! -premode combined -suggest codefixes -framework:$(TargetFrameworkVersion) -warninglevel $(CodeContractsAnalysisWarning) $(CodeContractCodeAnalysisOptions) "-resolvedPaths:@(ReferencePath)" "-libPaths:@(CodeContractsAllLibPaths) " "$(DeclarativeAssemblyPath)"</_CodeContractsCCCheckArguments>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_CodeContractsCCCheckArgumentLines
+         Include="$(_CodeContractsCCCheckArguments)"
+         />
+    </ItemGroup>
+
+    <WriteLinesToFile
+      File="$(DeclarativeAssemblyDir)$(ProjectName)cccheck.rsp"
+      Lines="@(_CodeContractsCCCheckArgumentLines, ';')"
+      Overwrite="true"
+      />
+
+    <CodeContractsAnalysis
+      Verbose="false"
+      RunInBackground="$(CodeContractCodeAnalysisRunInBackground)"
+      WorkingDirectory="$(DeclarativeAssemblyDir)"
+      ProjectName="$(ProjectName)"
+      HideMarkers="$(CodeContractCodeAnalysisHideMarkers)"
+      MultiLineMarkers="false"
+      HideOutput="false"
+      KeepErrors="$(CodeContractsFailBuildOnWarnings)"
+      OutputPrefix="CodeContracts: "
+      Command='$(CodeContractRunCodeAnalysisCommand)'
+      CommandOptions='"@$(ProjectName)cccheck.rsp"'
+      />
+  </Target>
+
+  <!-- End Microsoft Code Contract Analysis -->
+</Project>

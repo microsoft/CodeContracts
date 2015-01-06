@@ -1,0 +1,883 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>PresentationFramework</AssemblyName>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <ProjectGuid>{29106CFE-A683-4012-91E2-310552BE6258}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\..\common\Contracts.snk</AssemblyOriginatorKeyFile>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
+    <NoWarn>0824 1591</NoWarn>
+    <DocumentationFile>bin\Debug\PresentationFramework.XML</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsPointerObligations>False</CodeContractsPointerObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Internal9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Internal9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0824 1591</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationFramework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Academic9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Academic9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0824 1591</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationFramework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Devlab9\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0824 1591</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PresentationFramework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\System.Windows.Application.cs" />
+    <Compile Include="Sources\System.Windows.AttachedPropertyBrowsableForChildrenAttribute.cs" />
+    <Compile Include="Sources\System.Windows.ColorConvertedBitmapExtension.cs" />
+    <Compile Include="Sources\System.Windows.ComponentResourceKey.cs" />
+    <Compile Include="Sources\System.Windows.Condition.cs" />
+    <Compile Include="Sources\System.Windows.ConditionCollection.cs" />
+    <Compile Include="Sources\System.Windows.Control.IStackMeasure.cs" />
+    <Compile Include="Sources\System.Windows.CornerRadius.cs" />
+    <Compile Include="Sources\System.Windows.CornerRadiusConverter.cs" />
+    <Compile Include="Sources\System.Windows.DataTemplate.cs" />
+    <Compile Include="Sources\System.Windows.DataTemplateKey.cs" />
+    <Compile Include="Sources\System.Windows.DataTrigger.cs" />
+    <Compile Include="Sources\System.Windows.DeferrableContent.cs" />
+    <Compile Include="Sources\System.Windows.DeferrableContentConverter.cs" />
+    <Compile Include="Sources\System.Windows.DependencyPropertyHelper.cs" />
+    <Compile Include="Sources\System.Windows.DialogResultConverter.cs" />
+    <Compile Include="Sources\System.Windows.DynamicResourceExtension.cs" />
+    <Compile Include="Sources\System.Windows.DynamicResourceExtensionConverter.cs" />
+    <Compile Include="Sources\System.Windows.EventSetter.cs" />
+    <Compile Include="Sources\System.Windows.EventTrigger.cs" />
+    <Compile Include="Sources\System.Windows.ExceptionRoutedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.ExitEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.FigureLength.cs" />
+    <Compile Include="Sources\System.Windows.FigureLengthConverter.cs" />
+    <Compile Include="Sources\System.Windows.FontSizeConverter.cs" />
+    <Compile Include="Sources\System.Windows.FrameworkContentElement.cs" />
+    <Compile Include="Sources\System.Windows.FrameworkElement.cs" />
+    <Compile Include="Sources\System.Windows.FrameworkElementFactory.cs" />
+    <Compile Include="Sources\System.Windows.FrameworkPropertyMetadata.cs" />
+    <Compile Include="Sources\System.Windows.FrameworkTemplate.cs" />
+    <Compile Include="Sources\System.Windows.GridLength.cs" />
+    <Compile Include="Sources\System.Windows.GridLengthConverter.cs" />
+    <Compile Include="Sources\System.Windows.HierarchicalDataTemplate.cs" />
+    <Compile Include="Sources\System.Windows.IFrameworkInputElement.cs" />
+    <Compile Include="Sources\System.Windows.IWindowService.cs" />
+    <Compile Include="Sources\System.Windows.LengthConverter.cs" />
+    <Compile Include="Sources\System.Windows.Localization.cs" />
+    <Compile Include="Sources\System.Windows.LogicalTreeHelper.cs" />
+    <Compile Include="Sources\System.Windows.LostFocusEventManager.cs" />
+    <Compile Include="Sources\System.Windows.MediaScriptCommandRoutedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.MessageBox.cs" />
+    <Compile Include="Sources\System.Windows.MultiDataTrigger.cs" />
+    <Compile Include="Sources\System.Windows.MultiTrigger.cs" />
+    <Compile Include="Sources\System.Windows.NullableBoolConverter.cs" />
+    <Compile Include="Sources\System.Windows.PropertyPath.cs" />
+    <Compile Include="Sources\System.Windows.PropertyPathConverter.cs" />
+    <Compile Include="Sources\System.Windows.RequestBringIntoViewEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.ResourceDictionary.cs" />
+    <Compile Include="Sources\System.Windows.ResourceKey.cs" />
+    <Compile Include="Sources\System.Windows.ResourceReferenceKeyNotFoundException.cs" />
+    <Compile Include="Sources\System.Windows.RoutedPropertyChangedEventArgs_1.cs" />
+    <Compile Include="Sources\System.Windows.SessionEndingCancelEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Setter.cs" />
+    <Compile Include="Sources\System.Windows.SetterBase.cs" />
+    <Compile Include="Sources\System.Windows.SetterBaseCollection.cs" />
+    <Compile Include="Sources\System.Windows.SizeChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.StartupEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.StaticResourceExtension.cs" />
+    <Compile Include="Sources\System.Windows.Style.cs" />
+    <Compile Include="Sources\System.Windows.StyleTypedPropertyAttribute.cs" />
+    <Compile Include="Sources\System.Windows.SystemColors.cs" />
+    <Compile Include="Sources\System.Windows.SystemFonts.cs" />
+    <Compile Include="Sources\System.Windows.SystemParameters.cs" />
+    <Compile Include="Sources\System.Windows.TemplateBindingExpression.cs" />
+    <Compile Include="Sources\System.Windows.TemplateBindingExpressionConverter.cs" />
+    <Compile Include="Sources\System.Windows.TemplateBindingExtension.cs" />
+    <Compile Include="Sources\System.Windows.TemplateBindingExtensionConverter.cs" />
+    <Compile Include="Sources\System.Windows.TemplateContent.cs" />
+    <Compile Include="Sources\System.Windows.TemplateContentLoader.cs" />
+    <Compile Include="Sources\System.Windows.TemplateKey.cs" />
+    <Compile Include="Sources\System.Windows.TemplatePartAttribute.cs" />
+    <Compile Include="Sources\System.Windows.TemplateVisualStateAttribute.cs" />
+    <Compile Include="Sources\System.Windows.ThemeDictionaryExtension.cs" />
+    <Compile Include="Sources\System.Windows.ThemeInfoAttribute.cs" />
+    <Compile Include="Sources\System.Windows.Thickness.cs" />
+    <Compile Include="Sources\System.Windows.ThicknessConverter.cs" />
+    <Compile Include="Sources\System.Windows.Trigger.cs" />
+    <Compile Include="Sources\System.Windows.TriggerAction.cs" />
+    <Compile Include="Sources\System.Windows.TriggerActionCollection.cs" />
+    <Compile Include="Sources\System.Windows.TriggerBase.cs" />
+    <Compile Include="Sources\System.Windows.TriggerCollection.cs" />
+    <Compile Include="Sources\System.Windows.ValueSource.cs" />
+    <Compile Include="Sources\System.Windows.VisualState.cs" />
+    <Compile Include="Sources\System.Windows.VisualStateChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.VisualStateGroup.cs" />
+    <Compile Include="Sources\System.Windows.VisualStateManager.cs" />
+    <Compile Include="Sources\System.Windows.VisualTransition.cs" />
+    <Compile Include="Sources\System.Windows.Window.cs" />
+    <Compile Include="Sources\System.Windows.WindowCollection.cs" />
+    <Compile Include="Sources\System.Windows.cs" />
+    <Compile Include="Sources\System.Windows.Markup.ComponentResourceKeyConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.DependencyPropertyConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.EventSetterHandlerConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IBamlDictionaryKey.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IHaveResources.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IOptimizedMarkupExtension.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IParserHelper.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IStreamInfo.cs" />
+    <Compile Include="Sources\System.Windows.Markup.IStyleConnector.cs" />
+    <Compile Include="Sources\System.Windows.Markup.NamespaceMapEntry.cs" />
+    <Compile Include="Sources\System.Windows.Markup.ParserContext.cs" />
+    <Compile Include="Sources\System.Windows.Markup.ResourceReferenceExpressionConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.RoutedEventConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.SetterTriggerConditionValueConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.TemplateKeyConverter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlDesignerSerializationManager.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlInstanceCreator.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlParseException.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlReader.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlTypeMapper.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XamlWriter.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XmlAttributeProperties.cs" />
+    <Compile Include="Sources\System.Windows.Markup.XmlnsDictionary.cs" />
+    <Compile Include="Sources\System.Windows.Markup.cs" />
+    <Compile Include="Sources\System.Windows.Data.Binding.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingBase.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingExpression.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingExpressionBase.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingGroup.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingListCollectionView.cs" />
+    <Compile Include="Sources\System.Windows.Data.BindingOperations.cs" />
+    <Compile Include="Sources\System.Windows.Data.CollectionContainer.cs" />
+    <Compile Include="Sources\System.Windows.Data.CollectionView.cs" />
+    <Compile Include="Sources\System.Windows.Data.CollectionViewGroup.cs" />
+    <Compile Include="Sources\System.Windows.Data.CollectionViewSource.cs" />
+    <Compile Include="Sources\System.Windows.Data.CompositeCollection.cs" />
+    <Compile Include="Sources\System.Windows.Data.DataChangedEventManager.cs" />
+    <Compile Include="Sources\System.Windows.Data.DataTransferEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Data.FilterEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Data.IMultiValueConverter.cs" />
+    <Compile Include="Sources\System.Windows.Data.IValueConverter.cs" />
+    <Compile Include="Sources\System.Windows.Data.ListCollectionView.cs" />
+    <Compile Include="Sources\System.Windows.Data.MultiBinding.cs" />
+    <Compile Include="Sources\System.Windows.Data.MultiBindingExpression.cs" />
+    <Compile Include="Sources\System.Windows.Data.ObjectDataProvider.cs" />
+    <Compile Include="Sources\System.Windows.Data.PriorityBinding.cs" />
+    <Compile Include="Sources\System.Windows.Data.PriorityBindingExpression.cs" />
+    <Compile Include="Sources\System.Windows.Data.PropertyGroupDescription.cs" />
+    <Compile Include="Sources\System.Windows.Data.RelativeSource.cs" />
+    <Compile Include="Sources\System.Windows.Data.ValueConversionAttribute.cs" />
+    <Compile Include="Sources\System.Windows.Data.ValueUnavailableException.cs" />
+    <Compile Include="Sources\System.Windows.Data.XmlDataProvider.cs" />
+    <Compile Include="Sources\System.Windows.Data.XmlNamespaceMapping.cs" />
+    <Compile Include="Sources\System.Windows.Data.XmlNamespaceMappingCollection.cs" />
+    <Compile Include="Sources\System.Windows.Data.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Adorner.cs" />
+    <Compile Include="Sources\System.Windows.Documents.AdornerDecorator.cs" />
+    <Compile Include="Sources\System.Windows.Documents.AdornerLayer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.AnchoredBlock.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Block.cs" />
+    <Compile Include="Sources\System.Windows.Documents.BlockCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.BlockUIContainer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Bold.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentReference.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentReferenceCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.EditingCommands.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Figure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FixedDocument.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FixedDocumentSequence.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FixedPage.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Floater.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FlowDocument.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FrameworkRichTextComposition.cs" />
+    <Compile Include="Sources\System.Windows.Documents.FrameworkTextComposition.cs" />
+    <Compile Include="Sources\System.Windows.Documents.GetPageRootCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Glyphs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Hyperlink.cs" />
+    <Compile Include="Sources\System.Windows.Documents.IFixedNavigate.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.ILexicon.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Inline.cs" />
+    <Compile Include="Sources\System.Windows.Documents.InlineCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.InlineUIContainer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.IProcessingOptions.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.ISentence.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Italic.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.ITextChunk.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ITextContainer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.ITextContext.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ITextPointer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ITextRange.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.ITextSegment.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ITextSelection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ITextView.cs" />
+    <Compile Include="Sources\System.Windows.Documents.IXamlAttributes.cs" />
+    <Compile Include="Sources\System.Windows.Documents.IXamlContentHandler.cs" />
+    <Compile Include="Sources\System.Windows.Documents.IXamlErrorHandler.cs" />
+    <Compile Include="Sources\System.Windows.Documents.LineBreak.cs" />
+    <Compile Include="Sources\System.Windows.Documents.LinkTarget.cs" />
+    <Compile Include="Sources\System.Windows.Documents.LinkTargetCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.List.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ListItem.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ListItemCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.PageContent.cs" />
+    <Compile Include="Sources\System.Windows.Documents.PageContentCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Paragraph.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Run.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Section.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Span.cs" />
+    <Compile Include="Sources\System.Windows.Documents.SpellerInterop.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Table.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableCell.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableCellCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableColumn.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableColumnCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableRow.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableRowCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableRowGroup.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TableRowGroupCollection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextEffectResolver.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextEffectTarget.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextElement.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextElementCollection_1.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextElementEditingBehaviorAttribute.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextPointer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextRange.cs" />
+    <Compile Include="Sources\System.Windows.Documents.TextSelection.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Typography.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Underline.cs" />
+    <Compile Include="Sources\System.Windows.Documents.ZoomPercentageConverter.cs" />
+    <Compile Include="Sources\System.Windows.Documents.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.Annotation.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationAuthorChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationDocumentPaginator.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationHelper.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationResource.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationResourceChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.AnnotationService.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.ContentLocator.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.ContentLocatorBase.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.ContentLocatorGroup.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.ContentLocatorPart.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.IAnchorInfo.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.TextAnchor.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.Storage.AnnotationStore.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.Storage.StoreContentChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.Storage.XmlStreamStore.cs" />
+    <Compile Include="Sources\System.Windows.Annotations.Storage.cs" />
+    <Compile Include="Sources\System.Windows.Controls.AccessText.cs" />
+    <Compile Include="Sources\System.Windows.Controls.AdornedElementPlaceholder.cs" />
+    <Compile Include="Sources\System.Windows.Controls.AlternationConverter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.BooleanToVisibilityConverter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Border.cs" />
+    <Compile Include="Sources\System.Windows.Controls.BorderGapMaskConverter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Button.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Calendar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CalendarBlackoutDatesCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CalendarDateChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CalendarDateRange.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CalendarModeChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Canvas.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CheckBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.CleanUpVirtualizedItemEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ColumnDefinition.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ColumnDefinitionCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ComboBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ComboBoxItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ContentControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ContentPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ContextMenu.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ContextMenuEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ContextMenuService.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Control.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ControlTemplate.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataErrorValidationRule.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGrid.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridAutoGeneratingColumnEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridBeginningEditEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridBoundColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCell.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCellClipboardEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCellEditEndingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCellInfo.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCellsPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridCheckBoxColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridClipboardCellContent.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridColumnEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridColumnReorderingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridComboBoxColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridHyperlinkColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridLength.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridLengthConverter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridPreparingCellForEditEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridRow.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridRowClipboardEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridRowDetailsEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridRowEditEndingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridRowEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridSortingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridTemplateColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataGridTextColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DataTemplateSelector.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DatePicker.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DatePickerDateValidationErrorEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Decorator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DefinitionBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DockPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.DocumentViewer.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ExceptionValidationRule.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Expander.cs" />
+    <Compile Include="Sources\System.Windows.Controls.FlowDocumentPageViewer.cs" />
+    <Compile Include="Sources\System.Windows.Controls.FlowDocumentReader.cs" />
+    <Compile Include="Sources\System.Windows.Controls.FlowDocumentScrollViewer.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Frame.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Grid.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridSplitter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridView.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridViewColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridViewColumnCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridViewColumnHeader.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridViewHeaderRowPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GridViewRowPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GroupBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GroupItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.GroupStyle.cs" />
+    <Compile Include="Sources\System.Windows.Controls.HeaderedContentControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.HeaderedItemsControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Image.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InitializingNewItemEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvas.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasGestureEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasSelectionChangingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasSelectionEditingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasStrokeCollectedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasStrokeErasingEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkCanvasStrokesReplacedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.InkPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.IProvideDataGridColumn.cs" />
+    <Compile Include="Sources\System.Windows.Controls.VirtualizingStackPanel.IProvideStackingSize.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ItemCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ItemContainerGenerator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ItemsControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ItemsPanelTemplate.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ItemsPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ITextBoxViewHost.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Label.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ListBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ListBoxItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ListView.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ListViewItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.MediaElement.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Menu.cs" />
+    <Compile Include="Sources\System.Windows.Controls.MenuItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.MenuScrollingVisibilityConverter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Page.cs" />
+    <Compile Include="Sources\System.Windows.Controls.PageRange.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Panel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.PasswordBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.PrintDialog.cs" />
+    <Compile Include="Sources\System.Windows.Controls.PrintDialogException.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ProgressBar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.RadioButton.cs" />
+    <Compile Include="Sources\System.Windows.Controls.RichTextBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.RowDefinition.cs" />
+    <Compile Include="Sources\System.Windows.Controls.RowDefinitionCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ScrollChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ScrollContentPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ScrollViewer.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SelectedCellsChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SelectedDatesCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SelectionChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Separator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Slider.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SoundPlayerAction.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SpellCheck.cs" />
+    <Compile Include="Sources\System.Windows.Controls.SpellingError.cs" />
+    <Compile Include="Sources\System.Windows.Controls.StackPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.StickyNoteControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.StyleSelector.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TabControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TabItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TextBlock.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TextBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TextChange.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TextChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TextSearch.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ToolBar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ToolBarTray.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ToolTip.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ToolTipEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ToolTipService.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TreeView.cs" />
+    <Compile Include="Sources\System.Windows.Controls.TreeViewItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.UIElementCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.UserControl.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Validation.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ValidationError.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ValidationErrorEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ValidationResult.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ValidationRule.cs" />
+    <Compile Include="Sources\System.Windows.Controls.ViewBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Viewbox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Viewport3D.cs" />
+    <Compile Include="Sources\System.Windows.Controls.VirtualizingPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.VirtualizingStackPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.WebBrowser.cs" />
+    <Compile Include="Sources\System.Windows.Controls.WrapPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.BeginStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ControllableStoryboardAction.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.DiscreteThicknessKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.EasingThicknessKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.LinearThicknessKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.PauseStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.RemoveStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ResumeStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SeekStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SetStoryboardSpeedRatio.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SkipStoryboardToFill.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.SplineThicknessKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.StopStoryboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.Storyboard.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ThicknessAnimation.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ThicknessAnimationBase.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ThicknessKeyFrame.cs" />
+    <Compile Include="Sources\System.Windows.Media.Animation.ThicknessKeyFrameCollection.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.BulletDecorator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ButtonBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.CalendarButton.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.CalendarDayButton.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.CalendarItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.CustomPopupPlacement.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridCellsPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridColumnHeader.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridColumnHeadersPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridDetailsPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridRowHeader.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DataGridRowsPresenter.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DatePickerTextBox.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DocumentPageView.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DocumentViewerBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DragCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DragDeltaEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.DragStartedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.GeneratorPosition.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.GridViewRowPresenterBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.IItemContainerGenerator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.IRecyclingItemContainerGenerator.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.IScrollInfo.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ItemsChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.LayoutInformation.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.MenuBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.MultiSelector.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.Popup.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.RangeBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.RepeatButton.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ResizeGrip.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ScrollBar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ScrollEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.SelectiveScrollingGrid.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.Selector.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.StatusBar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.StatusBarItem.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.TabPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.TextBoxBase.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.Thumb.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.TickBar.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ToggleButton.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ToolBarOverflowPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.ToolBarPanel.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.Track.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.UniformGrid.cs" />
+    <Compile Include="Sources\System.Windows.Controls.Primitives.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Primitives.MarkupWriter.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.CustomContentState.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.FragmentNavigationEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.IProvideCustomContentState.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.JournalEntry.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.JournalEntryListConverter.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.JournalEntryUnifiedViewConverter.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigatingCancelEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigationEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigationFailedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigationProgressEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigationService.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.NavigationWindow.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.PageFunction_1.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.PageFunctionBase.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.RequestNavigateEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.ReturnEventArgs_1.cs" />
+    <Compile Include="Sources\System.Windows.Navigation.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ButtonAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ButtonBaseAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.CalendarAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.CalendarButtonAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.CheckBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ComboBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ContentTextAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ContextMenuAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridCellAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridCellItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridColumnHeaderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridColumnHeaderItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridColumnHeadersPresenterAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridDetailsPresenterAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridRowAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DataGridRowHeaderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DatePickerAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DateTimeAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DocumentAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DocumentPageViewAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DocumentViewerAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.DocumentViewerBaseAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ExpanderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FixedPageAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FlowDocumentPageViewerAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FlowDocumentReaderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FlowDocumentScrollViewerAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FrameAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FrameworkContentElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.FrameworkElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridSplitterAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridViewAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridViewCellAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridViewHeaderRowPresenterAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GridViewItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GroupBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.GroupItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.HyperlinkAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ImageAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.InkCanvasAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.InkPresenterAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ItemsControlAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.IViewAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.LabelAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ListBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ListBoxItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ListBoxItemWrapperAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ListViewAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.MediaElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.MenuAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.MenuItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.NavigationWindowAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.PasswordBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ProgressBarAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.RadioButtonAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.RangeBaseAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.RepeatButtonAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.RichTextBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ScrollBarAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ScrollViewerAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.SelectorAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.SelectorItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.SeparatorAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.SliderAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.StatusBarAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.StatusBarItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TabControlAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TabItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TabItemWrapperAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TableAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TableCellAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TextAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TextBlockAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TextBoxAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TextElementAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ThumbAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ToggleButtonAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ToolBarAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.ToolTipAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TreeViewAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TreeViewDataItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.TreeViewItemAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.UserControlAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.Viewport3DAutomationPeer.cs" />
+    <Compile Include="Sources\System.Windows.Automation.Peers.WindowAutomationPeer.cs" />
+    <Compile Include="Sources\Microsoft.Win32.CommonDialog.cs" />
+    <Compile Include="Sources\Microsoft.Win32.FileDialog.cs" />
+    <Compile Include="Sources\Microsoft.Win32.FileDialogCustomPlace.cs" />
+    <Compile Include="Sources\Microsoft.Win32.FileDialogCustomPlaces.cs" />
+    <Compile Include="Sources\Microsoft.Win32.OpenFileDialog.cs" />
+    <Compile Include="Sources\Microsoft.Win32.SaveFileDialog.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizabilityResolver.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizableResource.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizableResourceKey.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizationDictionary.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizationDictionaryEnumerator.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizer.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.BamlLocalizerErrorNotifyEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.ElementLocalizability.cs" />
+    <Compile Include="Sources\System.Windows.Markup.Localizer.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.ISerializerFactory.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.SerializerDescriptor.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.SerializerProvider.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.SerializerWriter.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.SerializerWriterCollator.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.WritingCancelledEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.WritingCompletedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.WritingPrintTicketRequiredEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.WritingProgressChangedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Documents.Serialization.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpItem.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpItemsRejectedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpItemsRemovedEventArgs.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpList.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpPath.cs" />
+    <Compile Include="Sources\System.Windows.Shell.JumpTask.cs" />
+    <Compile Include="Sources\System.Windows.Shell.TaskbarItemInfo.cs" />
+    <Compile Include="Sources\System.Windows.Shell.ThumbButtonInfo.cs" />
+    <Compile Include="Sources\System.Windows.Shell.ThumbButtonInfoCollection.cs" />
+    <Compile Include="Sources\System.Windows.Shell.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IApplicationDestinations.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IApplicationDocumentLists.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IBrowserCallbackServices.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IBrowserHostServices.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IContentContainer.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.ICustomDestinationList.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IDownloader.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IEnumIDList.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IFileDialog.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IFileDialogEvents.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IFileOpenDialog.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IFileSaveDialog.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IHostBrowser.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IHostBrowser2.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IHostService.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IJournalNavigationScopeHost.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IJournalState.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IModalWindow.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.INativeProgressPage.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.INavigator.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.INavigatorBase.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.INavigatorImpl.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IObjectArray.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IObjectCollection.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IObjectWithAppUserModelId.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IObjectWithProgId.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IProgressPage2.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IPropertyStore.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IShellFolder.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IShellItem.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IShellItem2.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IShellItemArray.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.IShellLinkW.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.ITaskbarList.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.ITaskbarList2.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.ITaskbarList3.cs" />
+    <Compile Include="Sources\MS.Internal.AppModel.ITaskbarList4.cs" />
+    <Compile Include="Sources\MS.Internal.Annotations.IAttachedAnnotation.cs" />
+    <Compile Include="Sources\MS.Internal.Annotations.INotifyPropertyChanged2.cs" />
+    <Compile Include="Sources\MS.Internal.Annotations.IOwnedObject.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Ellipse.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Line.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Path.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Polygon.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Polyline.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Rectangle.cs" />
+    <Compile Include="Sources\System.Windows.Shapes.Shape.cs" />
+    <Compile Include="Sources\MS.Internal.Annotations.Component.IAnnotationComponent.cs" />
+    <Compile Include="Sources\MS.Internal.Annotations.Component.IHighlightRange.cs" />
+    <Compile Include="Sources\System.Windows.Interop.ActiveXHost.cs" />
+    <Compile Include="Sources\System.Windows.Interop.BrowserInteropHelper.cs" />
+    <Compile Include="Sources\System.Windows.Interop.DocObjHost.cs" />
+    <Compile Include="Sources\System.Windows.Interop.DynamicScriptObject.cs" />
+    <Compile Include="Sources\System.Windows.Interop.HwndHost.cs" />
+    <Compile Include="Sources\System.Windows.Interop.IErrorPage.cs" />
+    <Compile Include="Sources\System.Windows.Interop.IProgressPage.cs" />
+    <Compile Include="Sources\System.Windows.Interop.DocObjHost.SecuritySuppressedIStream.cs" />
+    <Compile Include="Sources\System.Windows.Interop.WindowInteropHelper.cs" />
+    <Compile Include="Sources\MS.Internal.Controls.IGeneratorHost.cs" />
+    <Compile Include="Sources\MS.Internal.Data.IAsyncDataDispatcher.cs" />
+    <Compile Include="Sources\MS.Internal.Data.IDataBindEngineClient.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IAcceptInsertion.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IDocumentScrollInfo.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IFlowDocumentFormatter.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IFlowDocumentViewer.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IIndexedChild_1.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IParentUndoUnit.cs" />
+    <Compile Include="Sources\MS.Internal.Documents.IUndoUnit.cs" />
+    <Compile Include="Sources\MS.Internal.Globalization.ILocalizabilityInheritable.cs" />
+    <Compile Include="Sources\MS.Internal.Ink.IStylusEditing.cs" />
+    <Compile Include="Sources\MS.Internal.IO.Packaging.ByteStream.cs" />
+    <Compile Include="Sources\MS.Internal.IO.Packaging.IManagedFilter.cs" />
+    <Compile Include="Sources\MS.Internal.IO.Packaging.ByteStream.SecuritySuppressedIStream.cs" />
+    <Compile Include="Sources\MS.Internal.Interop.IFilter.cs" />
+    <Compile Include="Sources\MS.Internal.Interop.IPersistFile.cs" />
+    <Compile Include="Sources\MS.Internal.Interop.IPersistStream.cs" />
+    <Compile Include="Sources\MS.Internal.Interop.IPersistStreamWithArrays.cs" />
+    <Compile Include="Sources\MS.Internal.Interop.IStream.cs" />
+    <Compile Include="Sources\MS.Internal.Progressivity.IByteRangeDownloaderService.cs" />
+    <Compile Include="Sources\MS.Internal.PtsHost.ISegment.cs" />
+    <Compile Include="Sources\System.ComponentModel.DesignerProperties.cs" />
+    <Compile Include="Sources\System.Windows.Media.AdornerHitTestResult.cs" />
+    <Compile Include="Sources\System.Windows.Media.TextOptions.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.BlockElement.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.FigureStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.ListItemStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.ListStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.NamedElement.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.ParagraphStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.SectionStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.SemanticBasicElement.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.StoryBreak.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.StoryFragment.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.StoryFragments.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.TableCellStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.TableRowGroupStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.TableRowStructure.cs" />
+    <Compile Include="Sources\System.Windows.Documents.DocumentStructures.TableStructure.cs" />
+    <Compile Include="Sources\System.Windows.Input.CommandConverter.cs" />
+    <Compile Include="Sources\System.Windows.Input.KeyboardNavigation.cs" />
+    <Compile Include="Sources\System.Windows.Input.cs" />
+    <Compile Include="Sources\System.Windows.Resources.ContentTypes.cs" />
+    <Compile Include="Sources\System.Windows.Resources.StreamResourceInfo.cs" />
+    <Compile Include="Sources\System.Windows.Baml2006.Baml2006Reader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Security" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="Accessibility" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="SMDiagnostics" />
+    <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="System.Windows.Input.Manipulations" />
+    <Reference Include="PresentationUI" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System.Printing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
+  </PropertyGroup>
+  <Import Project="..\Multitarget.targets" />
+</Project>

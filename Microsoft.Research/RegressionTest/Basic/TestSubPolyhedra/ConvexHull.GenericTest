@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GenericTest name="ConvexHull" storage="c:\cci\microsoft.research\regressiontest\basic\testsubpolyhedra\convexhull.generictest" id="f3ae30ec-dfcf-4575-bf08-dc447764ef8d" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex  TestSubPolyhedra.dll -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -timeout 100" workingDirectory="%testlocation%\bin\debug" />
+  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
+</GenericTest>

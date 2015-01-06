@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- avoid multiple inclusiong -->
+  <PropertyGroup>
+    <CodeBoxToolsTargets>true</CodeBoxToolsTargets>
+  </PropertyGroup>
+
+  <!-- defines the location of things -->
+  <PropertyGroup>
+    <CodeBoxBinPath>.</CodeBoxBinPath>
+  </PropertyGroup>
+
+  <!-- tasks related properties -->
+  <PropertyGroup>
+    <CodeBoxTasksTasks>$(CodeBoxBinPath)\CodePlex.Tools.MsBuild.tasks</CodeBoxTasksTasks>
+    <CodeBoxTasksAssembly>$(CodeBoxBinPath)\CodePlex.Tools.MsBuild.dll</CodeBoxTasksAssembly>
+    <BuildTaskSchema>$(CodeBoxBinPath)\CodePlex.Tools.MsBuild.xsd</BuildTaskSchema>
+  </PropertyGroup>
+
+  <!-- misc properties -->
+
+  <!-- msbuild executable -->
+  <PropertyGroup>
+    <MSBuildCommand>&quot;$(MSBuildBinPath)\msbuild.exe&quot;</MSBuildCommand>
+  </PropertyGroup>
+
+  <!-- source depot executable -->
+  <PropertyGroup>
+    <SourceDepot>c:\SDPack\bin\sd.exe</SourceDepot>
+  </PropertyGroup>
+
+  <!-- wix executables -->
+  <PropertyGroup>
+    <WixDirectory>$(ProgramFiles)\Windows Installer XML v3\bin</WixDirectory>
+    <WixCandle>$(WixDirectory)\candle.exe</WixCandle>
+    <WixLight>$(WixDirectory)\light.exe</WixLight>
+    <WixExtensions>-ext WixUIExtension -ext WixNetFxExtension -ext WixVSExtension -ext WixUtilExtension</WixExtensions>
+  </PropertyGroup>
+
+  <!-- import buildy's tasks -->
+  <Import Project="$(CodeBoxTasksTasks)"/>
+</Project>
