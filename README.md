@@ -15,6 +15,7 @@ Static Checking. Our static checker can decide if there are any contract violati
 Documentation Generation. Our documentation generator augments existing XML doc files with contract information. There are also new style sheets that can be used with Sandcastle so that the generated documentation pages have contract sections. 
 
 
-==== How to Build the tools
+How to Build the tools
+==
 Open CodeContracts.sln
 Build
