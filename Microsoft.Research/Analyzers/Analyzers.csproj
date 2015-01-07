@@ -47,8 +47,9 @@
     <DefineConstants>TRACE;DEBUG;INCLUDE_UNSAFE_ANALYSIS;INCLUDE_Z3;NO_VERBOSEOUTPUT;CONTRACTS_EXPERIMENTAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\buddycci1\Microsoft.Research\CodeContracts.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
     <OutputPath>bin\Devlab9\</OutputPath>
