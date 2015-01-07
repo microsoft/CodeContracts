@@ -24,5 +24,12 @@ Documentation Generation. Our documentation generator augments existing XML doc 
 
 How to Build the tools
 ==
-Open CodeContracts.sln
-Build
+Open CodeContracts.sln and Build
+
+To create the installer and the nuget package, just run buildCC <version>
+For instance  buildCC 1.8.10107.10
+
+We use the convention: 
+CC major version = 1.8.1
+CC minor version = <month><day>.<buildInTheDay>
+
