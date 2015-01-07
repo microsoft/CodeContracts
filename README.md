@@ -11,6 +11,7 @@ Runtime Checking. Our binary rewriter modifies a program by injecting the contra
 Automatic testing tools, such as Pex, take advantage of contracts to generate more meaningful unit tests by filtering out meaningless test arguments that don't satisfy the pre-conditions. 
 
 Static Checking. Our static checker can decide if there are any contract violations without even running the program! It checks for implicit contracts, such as null dereferences and array bounds, as well as the explicit contracts. 
+
 Documentation Generation. Our documentation generator augments existing XML doc files with contract information. There are also new style sheets that can be used with Sandcastle so that the generated documentation pages have contract sections. 
 
 
