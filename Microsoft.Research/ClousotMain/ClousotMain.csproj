@@ -282,7 +282,7 @@
       <Name>Analyzers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Clousot.Cache\Clousot.Cache.csproj">
-      <Project>{B3C2E776-3A69-4F9A-9434-C8BEE3CD6A40}</Project>
+      <Project>{b3c2e776-3a69-4f9a-9434-c8bee3cd6a40}</Project>
       <Name>Clousot.Cache</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj">

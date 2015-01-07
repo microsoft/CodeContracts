@@ -3,7 +3,7 @@
   <Identifier Id="ContractAdornments.MicrosoftResearch.1fb66ab7-53ec-479b-bd35-e9dd5be0426b">
     <Name>Code Contracts Editor Extensions VS2010</Name>
     <Author>Microsoft Research</Author>
-    <Version>1.7.11210.11</Version>
+    <Version>1.8.10107.10</Version>
     <Description xml:space="preserve">Displays Code Contracts (when editing C#) in code, Intellisense, and in metadata files.
 
 Inheritance:

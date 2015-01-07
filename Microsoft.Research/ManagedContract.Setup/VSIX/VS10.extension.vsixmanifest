@@ -3,7 +3,7 @@
   <Identifier Id="CodeContractsVSIX.MicrosoftResearch.990ACB05-1AAE-4fa6-A178-9BF28206012F">
     <Name>Code Contracts Tools</Name>
     <Author>Microsoft Research</Author>
-    <Version>1.7.11210.11</Version>
+    <Version>1.8.10107.10</Version>
     <Description xml:space="preserve">Tools to instrument and statically analyze .NET code with CodeContracts</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>http://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970</MoreInfoUrl>

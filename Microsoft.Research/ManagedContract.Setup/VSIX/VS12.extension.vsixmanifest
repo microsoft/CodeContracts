@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Version="1.7.11210.11"
+        <Identity Version="1.8.10107.10"
                   Id="CodeContractsVSIX.MicrosoftResearch.990ACB05-1AAE-4fa6-A178-9BF28206012F"
                   Language="en"
                   Publisher="Microsoft Research" />
