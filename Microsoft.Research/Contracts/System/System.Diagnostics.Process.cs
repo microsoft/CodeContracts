@@ -59,11 +59,7 @@ namespace System.Diagnostics
 
     public ProcessModule MainModule
     {
-      get
-      {
-        Contract.Ensures(Contract.Result<ProcessModule>() != null);
-        return default(ProcessModule);
-      }
+      get;
     }
 
 #if false
