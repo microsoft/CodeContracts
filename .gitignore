@@ -1,4 +1,5 @@
 
+
 # CodeContracts installer
 Microsoft.Research/ManagedContract.Setup/devlab9ts/
 Microsoft.Research/ManagedContract.Setup/msft9/
@@ -34,6 +35,11 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+
+#exception to the .gitignore
+
+!Common/bin
+
 
 # Roslyn cache directories
 *.ide/
