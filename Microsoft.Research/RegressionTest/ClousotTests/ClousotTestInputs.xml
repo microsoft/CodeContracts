@@ -1476,7 +1476,7 @@
      ContractReferenceAssemblies="true"
     />
   <TestRun
-    Name ="C:\cci\Microsoft.Research\RegressionTest\Basic\SuggestionsAsWarnings\SuggestionsAsWarns.cs"
+    Name ="Microsoft.Research\RegressionTest\Basic\SuggestionsAsWarnings\SuggestionsAsWarns.cs"
      CompilerOptions="/optimize"
      LibPaths=""
      References="System.Core.dll"
