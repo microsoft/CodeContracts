@@ -59,7 +59,10 @@ namespace System.Diagnostics
 
     public ProcessModule MainModule
     {
-      get;
+      get
+      {
+        return default(ProcessModule);
+      }
     }
 
 #if false
