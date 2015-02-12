@@ -166,6 +166,28 @@ namespace Bounds_Test
       bool[] b = new bool[l];     // here must be correct
       b[l - 1] = true;
     }
+
+    // Two errors
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"The length of the array may be negative (dimension 0)", PrimaryILOffset = 2, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"The length of the array may be negative (dimension 1)", PrimaryILOffset = 2, MethodILOffset = 0)]
+    bool[,] NewArray3(int n, int m)
+    {
+      bool[,] b = new bool[n, m];
+      return b;
+    }
+
+    // Two errors
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"Cannot create an array of negative length (dimension 0)", PrimaryILOffset = 18, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"Cannot create an array of negative length (dimension 1)", PrimaryILOffset = 18, MethodILOffset = 0)]
+    bool[,] NewArray4(int n, int m)
+    {
+      Contract.Requires(n < 0 && m < 0);
+
+      bool[,] b = new bool[n, m];
+      return b;
+    }
  }
 
   class DirectArrayAccessesWithUInts

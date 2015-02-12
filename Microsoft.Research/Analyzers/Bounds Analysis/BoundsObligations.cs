@@ -83,7 +83,7 @@ namespace Microsoft.Research.CodeAnalysis
           get { return "Bounds"; }
         }
 
-        private void HandleAllocations(APC pc, Variable dest, Variable len)
+        private void HandleAllocations(APC pc, Variable dest, Variable len, int dim, bool isMultidimensional)
         {
           if (!this.IgnoreProofObligationAtPC(pc))
           {
@@ -91,7 +91,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (lenAsExp != null)
             {
-              this.Add(new ArrayCreation(lenAsExp, this.DecoderForExpressions, pc, this.mdriver));
+              this.Add(new ArrayCreation(lenAsExp, dim, isMultidimensional, this.DecoderForExpressions, pc, this.mdriver));
             }
           }
         }
@@ -142,13 +142,9 @@ namespace Microsoft.Research.CodeAnalysis
 
         public override bool Newarray<ArgList>(APC pc, Type type, Variable dest, ArgList lengths, bool data)
         {
-          if (lengths.Count == 1)
+          for (int i = 0; i < lengths.Count; i++)
           {
-            HandleAllocations(pc, dest, lengths[0]);
-          }
-          else
-          {
-            // TODO multidimensional
+            HandleAllocations(pc, dest, lengths[i], i, 1 < lengths.Count);
           }
           return data;
         }
@@ -183,11 +179,13 @@ namespace Microsoft.Research.CodeAnalysis
         #region State
 
         readonly BoxedExpression size;
+        readonly int dimension;
+        readonly bool isMultidimensional;
 
         #endregion
 
         #region Constructor
-        public ArrayCreation(BoxedExpression size, BoxedExpressionDecoder<Variable> decoder, APC pc,
+        public ArrayCreation(BoxedExpression size, int dimension, bool isMultidimensional, BoxedExpressionDecoder<Variable> decoder, APC pc,
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver
         )
           : base(pc, decoder, mdriver, null)
@@ -196,6 +194,8 @@ namespace Microsoft.Research.CodeAnalysis
           Contract.Requires(mdriver != null);
 
           this.size = size;
+          this.dimension = dimension;
+          this.isMultidimensional = isMultidimensional;
         }
         #endregion
 
@@ -219,7 +219,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public override void EmitOutcome(ProofOutcome outcome, IOutputResults output)
         {
-          output.EmitOutcome(GetWitness(outcome), AddHintsForTheUser(outcome, "{0}"), fixedMessages[(int)outcome]);
+          var dim = isMultidimensional ? string.Format(" (dimension {0})", dimension) : string.Empty;
+          output.EmitOutcome(GetWitness(outcome), AddHintsForTheUser(outcome, "{0}{1}"), fixedMessages[(int)outcome], dim);
         }
 
         protected override void PopulateWarningContextInternal(ProofOutcome outcome)
