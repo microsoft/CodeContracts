@@ -951,6 +951,8 @@ namespace UserRepro
    {
      [ClousotRegressionTest]
      [RegressionOutcome("Contract.Requires(((a % b) == 0 || a != 0));")]
+     [RegressionOutcome("Contract.Requires((a != Int32.MinValue || b != -1));")]
+     [RegressionOutcome("Contract.Requires(((a % b) == 0 || (b != Int32.MinValue || a != -1)));")]
      private static bool AreBothWaysDivisibleBy2(int a, int b)
      {
        Contract.Requires(b != 0);

@@ -1917,6 +1917,8 @@ namespace TestFrameworkOOB.Properties
         [RegressionOutcome(Outcome=ProofOutcome.Top,Message="assert unproven",PrimaryILOffset=163,MethodILOffset=0)]
         [RegressionOutcome(Outcome=ProofOutcome.Top,Message="assert unproven",PrimaryILOffset=184,MethodILOffset=0)]
         [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"No overflow (caused by a negative array size)",PrimaryILOffset=3,MethodILOffset=0)]
+        [RegressionOutcome(Outcome=ProofOutcome.True,Message="Array creation : ok (dimension 0)",PrimaryILOffset=108,MethodILOffset=0)]
+        [RegressionOutcome(Outcome=ProofOutcome.True,Message="Array creation : ok (dimension 1)",PrimaryILOffset=108,MethodILOffset=0)]
         static PropertyState()
         {
             s_allStates = new[]

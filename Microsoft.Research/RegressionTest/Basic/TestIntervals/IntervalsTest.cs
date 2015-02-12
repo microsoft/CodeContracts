@@ -115,6 +115,7 @@ namespace TestIntervals
     [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"ensures unproven: Contract.Result<int>() >= 0. The static checker determined that the condition '((i - 1) / 2) >= 0' should hold on entry. Nevertheless, the condition may be too strong for the callers. If you think it is ok, add a precondition to document it: Contract.Requires(((i - 1) / 2) >= 0);", PrimaryILOffset = 11, MethodILOffset = 30)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 23, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 29, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 18, MethodILOffset = 0)]
     public int Rem_Wrong(int i)
     {
       Contract.Ensures(Contract.Result<int>() >= 0);
@@ -133,6 +134,7 @@ namespace TestIntervals
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 23, MethodILOffset = 42)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 35, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 41, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 30, MethodILOffset = 0)]
     public int Rem_Ok(int i)
     {
       Contract.Requires(i >= 0);
@@ -147,6 +149,7 @@ namespace TestIntervals
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 33, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"ensures unproven: Contract.Result<int>() > 0. Is it an off-by-one? The static checker can prove ((value % divisor)) > (0 - 1) instead", PrimaryILOffset = 26, MethodILOffset = 34)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 33, MethodILOffset = 0)]
     public int Rem_PosPos_Wrong(int value, int divisor)
     {
       Contract.Requires(value > 0);
@@ -160,6 +163,7 @@ namespace TestIntervals
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 36, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 29, MethodILOffset = 37)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 36, MethodILOffset = 0)]
     public int Rem_PosPos_Ok(int value, int divisor)
     {
       Contract.Requires(value > 0);
@@ -173,6 +177,7 @@ namespace TestIntervals
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 33, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"ensures unproven: Contract.Result<int>() < 0", PrimaryILOffset = 26, MethodILOffset = 34)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 33, MethodILOffset = 0)]
     public int Rem_NegPos_Wrong(int value, int divisor)
     {
       Contract.Requires(value < 0);
@@ -186,6 +191,7 @@ namespace TestIntervals
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 36, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 29, MethodILOffset = 37)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 36, MethodILOffset = 0)]
     public int Rem_NegPos_Ok(int value, int divisor)
     {
       Contract.Requires(value < 0);
@@ -816,6 +822,7 @@ namespace Multiplication
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 38, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 51, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 51, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 38, MethodILOffset = 0)]
     public static long Exp_Reflector(long x, long y)
     {
       Contract.Requires(y >= 0L);
@@ -848,6 +855,7 @@ namespace Multiplication
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 38, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 51, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 51, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 38, MethodILOffset = 0)]
     public static long Exp(long x, long y)
     {
       Contract.Requires(y >= 0);
@@ -882,7 +890,9 @@ namespace Rational
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 47, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 26, MethodILOffset = 44)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 26, MethodILOffset = 54)]
-     private static int GCD(int x, int y)
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 47, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 37, MethodILOffset = 0)]
+    private static int GCD(int x, int y)
     {
       Contract.Requires(x > 0);
       Contract.Requires(y > 0);
@@ -1283,6 +1293,7 @@ namespace BugFromCloudDev
 	[ClousotRegressionTest]
 	[RegressionOutcome(Outcome=ProofOutcome.True,Message="Division by zero ok",PrimaryILOffset=12,MethodILOffset=0)]
 	[RegressionOutcome(Outcome=ProofOutcome.False,Message="assert is false",PrimaryILOffset=18,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"No overflow",PrimaryILOffset=12,MethodILOffset=0)]
     public void UnreachedWithLongRem()
     {
       if ((m_totalMessages % 10000) == 0)
