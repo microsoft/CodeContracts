@@ -169,6 +169,7 @@ namespace BugRepro
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 36, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 20, MethodILOffset = 0)]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 36, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 11, MethodILOffset = 0)]
     private static int GetDefaultChunkSize<TSource>()
     {      
       // This test is here because it was a bug in the SimpleDisequalities AD

@@ -105,8 +105,9 @@ namespace Microsoft.Research.CodeAnalysis
               }
             }
           }
-
-          if (this.myOptions.DivOverflowObligations && op == BinaryOperator.Div)
+          
+          if (this.myOptions.DivOverflowObligations
+              && (op == BinaryOperator.Div || op == BinaryOperator.Rem))
           {
             var type = valueContext.GetType(methodContext.CFG.Post(pc), s1);
             if (type.IsNormal && mdDecoder.IsIntegerType(type.Value))

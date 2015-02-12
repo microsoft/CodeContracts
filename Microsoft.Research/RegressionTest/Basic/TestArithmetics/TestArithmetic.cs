@@ -121,6 +121,7 @@ namespace TestArithmetics
 
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "Possible division by zero", PrimaryILOffset = 3, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"Possible overflow in division (MinValue / -1)", PrimaryILOffset = 3, MethodILOffset = 0)]
     public int Rem_Wrong(int a, int b)
     {
       return a % b;
@@ -128,6 +129,7 @@ namespace TestArithmetics
 
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 16, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"Possible overflow in division (MinValue / -1)", PrimaryILOffset = 16, MethodILOffset = 0)]
     public int Rem_OK(int a, int b)
     {
       Contract.Requires(b != 0);
@@ -685,6 +687,41 @@ namespace TestArithmetics
       Contract.Requires(!(x == Int32.MinValue && y == -1));
       return x /y; 
     }    
+  }
+
+  public class TestModOverflow
+  {
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 16, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"Possible overflow in division (MinValue / -1)", PrimaryILOffset = 16, MethodILOffset = 0)]
+    public static int Mod(int x, int y)
+    {
+      Contract.Requires(y != 0);
+
+      return x % y;
+    }
+
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 46, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Division by zero ok", PrimaryILOffset = 46, MethodILOffset = 0)]
+    public static int ModWithContracts(int x, int y)
+    {
+      Contract.Requires(x != Int32.MinValue);
+      Contract.Requires(y != -1);
+      Contract.Requires(y != 0);
+
+      return x % y;
+    }
+
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"Division by zero ok",PrimaryILOffset=40,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"No overflow",PrimaryILOffset=40,MethodILOffset=0)]
+    public static int ModWithWeakerContract(int x, int y)
+    {
+      Contract.Requires(y != 0);
+      Contract.Requires(!(x == Int32.MinValue && y == -1));
+      return x % y;
+    }
   }
 }
 
