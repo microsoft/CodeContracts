@@ -1,1 +1,1 @@
-c:\Users\maf\BuddyCCI1\Foxtrot\Tests\CheckerTests\CC1004.cs(8,5) : error CC1004: Malformed contract. Found Requires after assignment in method 'CC1004.M'.
+c:\Users\maf\BuddyCCI1\Foxtrot\Tests\CheckerTests\CC1004.cs(22,5) : error CC1004: Malformed contract. Found Requires after assignment in method 'CC1004.M'.

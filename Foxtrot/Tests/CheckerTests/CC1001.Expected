@@ -1,1 +1,1 @@
-c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1001.cs(6,5) : error CC1001: In method CC1001.M(System.Int32): Cannot refer to Result in an exceptional postcondition.
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1001.cs(20,5) : error CC1001: In method CC1001.M(System.Int32): Cannot refer to Result in an exceptional postcondition.
