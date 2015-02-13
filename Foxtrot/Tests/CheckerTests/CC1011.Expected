@@ -1,1 +1,1 @@
-c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1011.cs(8,5) : error CC1011: This/Me cannot be used in Requires of a constructor
+c:\Users\maf\cci1\Foxtrot\Tests\CheckerTests\CC1011.cs(22,5) : error CC1011: This/Me cannot be used in Requires of a constructor
