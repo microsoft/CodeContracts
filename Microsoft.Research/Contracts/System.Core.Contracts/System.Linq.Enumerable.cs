@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
@@ -159,7 +159,7 @@ namespace System.Linq
     [Pure]
     public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
     {
-      Contract.Requires(source != null);      
+      Contract.Requires(source != null);
       return default(bool);
     }
     //
@@ -252,6 +252,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IEnumerable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<TSource>>().Any());
       return default(IEnumerable<TSource>);
     }
 
@@ -279,6 +280,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IEnumerable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<TSource>>().Any());
       return default(IEnumerable<TSource>);
     }
     //
@@ -587,7 +589,7 @@ namespace System.Linq
     [Pure]
     public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source) {
       Contract.Requires(source != null);
-      
+
       return default(TSource);
     }
 
@@ -1272,7 +1274,7 @@ namespace System.Linq
     public static TSource Last<TSource>(this IEnumerable<TSource> source) {
       Contract.Requires(source != null);
       Contract.Requires(Count(source) > 0);
-      
+
       return default(TSource);
     }
     //
@@ -1332,7 +1334,7 @@ namespace System.Linq
     [Pure]
     public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source) {
       Contract.Requires(source != null);
-      
+
       return default(TSource);
     }
     //
@@ -1561,7 +1563,7 @@ namespace System.Linq
     //   System.InvalidOperationException:
     //     source contains no elements.
     [Pure]
-    public static float Max(this IEnumerable<float> source) 
+    public static float Max(this IEnumerable<float> source)
     {
       Contract.Requires(source != null);
 
@@ -1585,7 +1587,7 @@ namespace System.Linq
     //   System.ArgumentNullException:
     //     source is null.
     [Pure]
-    public static int? Max(this IEnumerable<int?> source) 
+    public static int? Max(this IEnumerable<int?> source)
     {
       Contract.Requires(source != null);
 
@@ -1660,7 +1662,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
 
-      return default(long); 
+      return default(long);
     }
     //
     // Summary:
@@ -1685,7 +1687,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
 
-      return default(TSource); 
+      return default(TSource);
     }
     //
     // Summary:
@@ -1901,7 +1903,7 @@ namespace System.Linq
       Contract.Requires(source != null);
       Contract.Requires(selector != null);
 
-      return null; 
+      return null;
     }
     //
     // Summary:
@@ -1934,7 +1936,7 @@ namespace System.Linq
       Contract.Requires(source != null);
       Contract.Requires(selector != null);
 
-      return default(int); 
+      return default(int);
     }
     //
     // Summary:
@@ -1966,7 +1968,7 @@ namespace System.Linq
       Contract.Requires(selector != null);
 
 
-      return null; 
+      return null;
     }
     //
     // Summary:
@@ -1999,7 +2001,7 @@ namespace System.Linq
       Contract.Requires(source != null);
       Contract.Requires(selector != null);
 
-      return default(long); 
+      return default(long);
     }
     //
     // Summary:
@@ -2031,8 +2033,8 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Requires(selector != null);
-  
-      return default(TResult); 
+
+      return default(TResult);
     }
     //
     // Summary:
@@ -2054,8 +2056,8 @@ namespace System.Linq
     public static decimal? Min(this IEnumerable<decimal?> source)
     {
       Contract.Requires(source != null);
-     
-      return null; 
+
+      return null;
     }
     //
     // Summary:
@@ -2348,10 +2350,10 @@ namespace System.Linq
     //     source contains no elements.
     [Pure]
     public static decimal Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
-    { 
+    {
       Contract.Requires(source != null);
       Contract.Requires(selector != null);
-      return default(decimal); 
+      return default(decimal);
     }
     //
     // Summary:
@@ -4099,7 +4101,7 @@ namespace System.Linq
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<TSource[]>() != null);
       Contract.Ensures(Contract.Result<TSource[]>().Length == source.Count());
-      
+
       return default(TSource[]);
     }
     //

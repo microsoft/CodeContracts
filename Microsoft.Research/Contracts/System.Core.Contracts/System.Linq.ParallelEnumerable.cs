@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // File System.Linq.ParallelEnumerable.cs
@@ -44,9 +44,9 @@ namespace System.Linq
     #region Methods and constructors
     [Pure]
     public static TResult Aggregate<TSource, TAccumulate, TResult>(
-      ParallelQuery<TSource> source, 
-      TAccumulate seed, 
-      Func<TAccumulate, TSource, TAccumulate> func, 
+      ParallelQuery<TSource> source,
+      TAccumulate seed,
+      Func<TAccumulate, TSource, TAccumulate> func,
       Func<TAccumulate, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -57,10 +57,10 @@ namespace System.Linq
 
     [Pure]
     public static TResult Aggregate<TSource, TAccumulate, TResult>(
-      ParallelQuery<TSource> source, 
-      TAccumulate seed, 
-      Func<TAccumulate, TSource, TAccumulate> updateAccumulatorFunc, 
-      Func<TAccumulate, TAccumulate, TAccumulate> combineAccumulatorsFunc, 
+      ParallelQuery<TSource> source,
+      TAccumulate seed,
+      Func<TAccumulate, TSource, TAccumulate> updateAccumulatorFunc,
+      Func<TAccumulate, TAccumulate, TAccumulate> combineAccumulatorsFunc,
       Func<TAccumulate, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -71,10 +71,10 @@ namespace System.Linq
 
     [Pure]
     public static TResult Aggregate<TSource, TAccumulate, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TAccumulate> seedFactory, 
-      Func<TAccumulate, TSource, TAccumulate> updateAccumulatorFunc, 
-      Func<TAccumulate, TAccumulate, TAccumulate> combineAccumulatorsFunc, 
+      ParallelQuery<TSource> source,
+      Func<TAccumulate> seedFactory,
+      Func<TAccumulate, TSource, TAccumulate> updateAccumulatorFunc,
+      Func<TAccumulate, TAccumulate, TAccumulate> combineAccumulatorsFunc,
       Func<TAccumulate, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -95,8 +95,8 @@ namespace System.Linq
 
     [Pure]
     public static TAccumulate Aggregate<TSource, TAccumulate>(
-      ParallelQuery<TSource> source, 
-      TAccumulate seed, 
+      ParallelQuery<TSource> source,
+      TAccumulate seed,
       Func<TAccumulate, TSource, TAccumulate> func)
     {
       Contract.Requires(source != null);
@@ -284,7 +284,7 @@ namespace System.Linq
 
     [Pure]
     public static Nullable<double> Average<TSource>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, Nullable<double>> selector)
     {
       Contract.Requires(source != null);
@@ -294,7 +294,7 @@ namespace System.Linq
 
     [Pure]
     public static Decimal Average<TSource>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, Decimal> selector)
     {
       Contract.Requires(source != null);
@@ -303,7 +303,7 @@ namespace System.Linq
 
     [Pure]
     public static Nullable<Decimal> Average<TSource>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, Nullable<Decimal>> selector)
     {
       Contract.Requires(source != null);
@@ -313,7 +313,7 @@ namespace System.Linq
 
     [Pure]
     public static double Average<TSource>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, int> selector)
     {
       Contract.Requires(source != null);
@@ -323,7 +323,7 @@ namespace System.Linq
 
     [Pure]
     public static Nullable<double> Average<TSource>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, Nullable<long>> selector)
     {
       Contract.Requires(source != null);
@@ -406,6 +406,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>() != null);
+      Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>().Any());
 
       return default(ParallelQuery<TSource>);
     }
@@ -415,6 +416,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>() != null);
+      Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>().Any());
 
       return default(ParallelQuery<TSource>);
     }
@@ -534,10 +536,10 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupBy<TSource, TKey, TElement, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TSource, TElement> elementSelector, 
-      Func<TKey, IEnumerable<TElement>, TResult> resultSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TSource, TElement> elementSelector,
+      Func<TKey, IEnumerable<TElement>, TResult> resultSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -551,7 +553,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
@@ -563,8 +565,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -576,8 +578,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       Func<TSource, TElement> elementSelector)
     {
       Contract.Requires(source != null);
@@ -590,8 +592,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupBy<TSource, TKey, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -604,9 +606,9 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupBy<TSource, TKey, TElement, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TSource, TElement> elementSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TSource, TElement> elementSelector,
       Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -620,9 +622,9 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TSource, TElement> elementSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TSource, TElement> elementSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -635,9 +637,9 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupBy<TSource, TKey, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TKey, IEnumerable<TSource>, TResult> resultSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TKey, IEnumerable<TSource>, TResult> resultSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -650,10 +652,10 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      ParallelQuery<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
+      ParallelQuery<TOuter> outer,
+      ParallelQuery<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
       Func<TOuter, IEnumerable<TInner>, TResult> resultSelector)
     {
       Contract.Requires(outer != null);
@@ -668,10 +670,10 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      IEnumerable<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
+      ParallelQuery<TOuter> outer,
+      IEnumerable<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
       Func<TOuter, IEnumerable<TInner>, TResult> resultSelector)
     {
       Contract.Ensures(false);
@@ -681,11 +683,11 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      ParallelQuery<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
-      Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, 
+      ParallelQuery<TOuter> outer,
+      ParallelQuery<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
+      Func<TOuter, IEnumerable<TInner>, TResult> resultSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(outer != null);
@@ -700,11 +702,11 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      IEnumerable<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
-      Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, 
+      ParallelQuery<TOuter> outer,
+      IEnumerable<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
+      Func<TOuter, IEnumerable<TInner>, TResult> resultSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Ensures(false);
@@ -714,7 +716,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TSource> Intersect<TSource>(
-      ParallelQuery<TSource> first, 
+      ParallelQuery<TSource> first,
       ParallelQuery<TSource> second)
     {
       Contract.Requires(first != null);
@@ -726,7 +728,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TSource> Intersect<TSource>(
-      ParallelQuery<TSource> first, 
+      ParallelQuery<TSource> first,
       IEnumerable<TSource> second)
     {
       Contract.Requires(first != null);
@@ -738,8 +740,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TSource> Intersect<TSource>(
-      ParallelQuery<TSource> first, 
-      IEnumerable<TSource> second, 
+      ParallelQuery<TSource> first,
+      IEnumerable<TSource> second,
       IEqualityComparer<TSource> comparer)
     {
       Contract.Requires(first != null);
@@ -751,8 +753,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TSource> Intersect<TSource>(
-      ParallelQuery<TSource> first, 
-      ParallelQuery<TSource> second, 
+      ParallelQuery<TSource> first,
+      ParallelQuery<TSource> second,
       IEqualityComparer<TSource> comparer)
     {
       Contract.Requires(first != null);
@@ -764,11 +766,11 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> Join<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      ParallelQuery<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
-      Func<TOuter, TInner, TResult> resultSelector, 
+      ParallelQuery<TOuter> outer,
+      ParallelQuery<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
+      Func<TOuter, TInner, TResult> resultSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(outer != null);
@@ -782,8 +784,8 @@ namespace System.Linq
     }
 
     public static ParallelQuery<TResult> Join<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      IEnumerable<TInner> inner, 
+      ParallelQuery<TOuter> outer,
+      IEnumerable<TInner> inner,
       Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
     {
       Contract.Ensures(false);
@@ -800,10 +802,10 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> Join<TOuter, TInner, TKey, TResult>(
-      ParallelQuery<TOuter> outer, 
-      ParallelQuery<TInner> inner, 
-      Func<TOuter, TKey> outerKeySelector, 
-      Func<TInner, TKey> innerKeySelector, 
+      ParallelQuery<TOuter> outer,
+      ParallelQuery<TInner> inner,
+      Func<TOuter, TKey> outerKeySelector,
+      Func<TInner, TKey> innerKeySelector,
       Func<TOuter, TInner, TResult> resultSelector)
     {
       Contract.Requires(outer != null);
@@ -1204,8 +1206,8 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> OrderBy<TSource, TKey>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       IComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1217,7 +1219,7 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> OrderBy<TSource, TKey>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
@@ -1229,8 +1231,8 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> OrderByDescending<TSource, TKey>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       IComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1242,7 +1244,7 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> OrderByDescending<TSource, TKey>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
@@ -1281,7 +1283,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> Select<TSource, TResult>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TResult> selector)
     {
       Contract.Requires(source != null);
@@ -1293,7 +1295,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> Select<TSource, TResult>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, int, TResult> selector)
     {
       Contract.Requires(source != null);
@@ -1305,7 +1307,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> SelectMany<TSource, TResult>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, IEnumerable<TResult>> selector)
     {
       Contract.Requires(source != null);
@@ -1317,8 +1319,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> SelectMany<TSource, TCollection, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, int, IEnumerable<TCollection>> collectionSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, int, IEnumerable<TCollection>> collectionSelector,
       Func<TSource, TCollection, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -1331,7 +1333,7 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> SelectMany<TSource, TResult>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, int, IEnumerable<TResult>> selector)
     {
       Contract.Requires(source != null);
@@ -1343,8 +1345,8 @@ namespace System.Linq
 
     [Pure]
     public static ParallelQuery<TResult> SelectMany<TSource, TCollection, TResult>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, IEnumerable<TCollection>> collectionSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, IEnumerable<TCollection>> collectionSelector,
       Func<TSource, TCollection, TResult> resultSelector)
     {
       Contract.Requires(source != null);
@@ -1365,8 +1367,8 @@ namespace System.Linq
 
     [Pure]
     public static bool SequenceEqual<TSource>(
-      ParallelQuery<TSource> first, 
-      IEnumerable<TSource> second, 
+      ParallelQuery<TSource> first,
+      IEnumerable<TSource> second,
       IEqualityComparer<TSource> comparer)
     {
       Contract.Ensures(false);
@@ -1623,7 +1625,7 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> ThenBy<TSource, TKey>(
-      OrderedParallelQuery<TSource> source, 
+      OrderedParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1635,7 +1637,7 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> ThenBy<TSource, TKey>(
-      OrderedParallelQuery<TSource> source, 
+      OrderedParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
@@ -1647,7 +1649,7 @@ namespace System.Linq
 
     [Pure]
     public static OrderedParallelQuery<TSource> ThenByDescending<TSource, TKey>(
-      OrderedParallelQuery<TSource> source, 
+      OrderedParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1677,7 +1679,7 @@ namespace System.Linq
 
     [Pure]
     public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
@@ -1689,8 +1691,8 @@ namespace System.Linq
 
     [Pure]
     public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1702,8 +1704,8 @@ namespace System.Linq
 
     [Pure]
     public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       Func<TSource, TElement> elementSelector)
     {
       Contract.Requires(source != null);
@@ -1716,9 +1718,9 @@ namespace System.Linq
 
     [Pure]
     public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TSource, TElement> elementSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TSource, TElement> elementSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1740,9 +1742,9 @@ namespace System.Linq
 
     [Pure]
     public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
-      Func<TSource, TElement> elementSelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
+      Func<TSource, TElement> elementSelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1755,8 +1757,8 @@ namespace System.Linq
 
     [Pure]
     public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       Func<TSource, TElement> elementSelector)
     {
       Contract.Requires(source != null);
@@ -1769,8 +1771,8 @@ namespace System.Linq
 
     [Pure]
     public static ILookup<TKey, TSource> ToLookup<TSource, TKey>(
-      ParallelQuery<TSource> source, 
-      Func<TSource, TKey> keySelector, 
+      ParallelQuery<TSource> source,
+      Func<TSource, TKey> keySelector,
       IEqualityComparer<TKey> comparer)
     {
       Contract.Requires(source != null);
@@ -1782,7 +1784,7 @@ namespace System.Linq
 
     [Pure]
     public static ILookup<TKey, TSource> ToLookup<TSource, TKey>(
-      ParallelQuery<TSource> source, 
+      ParallelQuery<TSource> source,
       Func<TSource, TKey> keySelector)
     {
       Contract.Requires(source != null);
