@@ -386,7 +386,6 @@ namespace System.ComponentModel
         {
             get
             {
-                Contract.Ensures(Contract.Result<ReadOnlyObservableCollection<object>>() != null);
                 throw new NotImplementedException();
             }
         }
