@@ -54,9 +54,32 @@ namespace System.Windows
     {
     }
 
+    /// <summary> 
+    /// ArrangeOverride allows for the customization of the positioning of children. 
+    /// </summary>
+    /// <param name="finalSize">The final size that element should use to arrange itself and its children.</param> 
+    /// <returns>The size that element actually is going to use for rendering. If this size is not the same as finalSize
+    /// input parameter, the AlignmentX/AlignmentY properties will position the ink rect of the element 
+    /// appropriately.</returns> 
     protected virtual Size ArrangeOverride(Size finalSize)
     {
-      Contract.Requires(!finalSize.IsEmpty);
+      // Only a positive number is allowed here for width and height, since this will be used as the size of a physical Rect.
+      // See also comments or implementation of UIElement.Arrange()
+      Contract.Requires(!finalSize.IsEmpty 
+        && !double.IsNaN(finalSize.Width) && !double.IsNaN(finalSize.Height)
+        && !double.IsPositiveInfinity(finalSize.Width) && !double.IsPositiveInfinity(finalSize.Height));
+
+      /* The function must return a physical size, i.e. positive numbers for Width and Height, so this would be the correct result contract: 
+       * 
+       * Contract.Ensures(!Contract.Result<Size>().IsEmpty
+       * && !double.IsNaN(Contract.Result<Size>().Width) && !double.IsNaN(Contract.Result<Size>().Height)
+       * && !double.IsInfinity(Contract.Result<Size>().Width) && !double.IsInfinity(Contract.Result<Size>().Height));
+       * 
+       * However in practice this is unusable; the analyzer can't infer all double operations in the method, 
+       * because there are usually complex calculations, and we would end up with always the same huge Contract.Assume at the end, just 
+       * to make the analyzer happy.
+       */
+
       return default(Size);
     }
 
@@ -139,9 +162,29 @@ namespace System.Windows
       return default(Size);
     }
 
+    /// <summary> 
+    /// Measurement override. Implement your size-to-content logic here.
+    /// </summary> 
+    /// <param name="availableSize">Available size that parent can give to the child. May be infinity (when parent wants to 
+    /// measure to content). This is soft constraint. Child can return bigger size to indicate that it wants bigger space and hope 
+    /// that parent can throw in scrolling...</param>
+    /// <returns>Desired Size of the control, given available size passed as parameter.</returns> 
     protected virtual Size MeasureOverride(Size availableSize)
     {
-      Contract.Requires(!availableSize.IsEmpty);
+      // Only positive number or positive infinity is allowed here for width and height, see also comments on UIElement.Measure.
+      Contract.Requires(!availableSize.IsEmpty && !double.IsNaN(availableSize.Width) && !double.IsNaN(availableSize.Height));
+
+      /* The function must return a physical size, i.e. positive numbers for Width and Height, so this would be the correct result contract: 
+       * 
+       * Contract.Ensures(!Contract.Result<Size>().IsEmpty
+       * && !double.IsNaN(Contract.Result<Size>().Width) && !double.IsNaN(Contract.Result<Size>().Height)
+       * && !double.IsInfinity(Contract.Result<Size>().Width) && !double.IsInfinity(Contract.Result<Size>().Height));
+       * 
+       * However in practice this is unusable; the analyzer can't infer all double operations in the method, 
+       * because there are usually complex calculations, and we would end up with always the same huge Contract.Assume at the end, just 
+       * to make the analyzer happy.
+       */
+
       return default(Size);
     }
 
