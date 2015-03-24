@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System.Diagnostics.Contracts;
@@ -144,12 +144,12 @@ namespace System.Collections.Generic
   [ContractClassFor(typeof(IDictionary<,>))]
   abstract class IDictionaryContract<TKey, TValue> : IDictionary<TKey,TValue>
   {
-
     #region IDictionary<TKey,TValue> Members
 
     ICollection<TKey> IDictionary<TKey, TValue>.Keys
     {
-      get {
+      get
+      {
         Contract.Ensures(Contract.Result<ICollection<TKey>>() != null);
         throw new NotImplementedException();
       }
@@ -157,7 +157,8 @@ namespace System.Collections.Generic
 
     ICollection<TValue> IDictionary<TKey, TValue>.Values
     {
-      get {
+      get
+      {
         Contract.Ensures(Contract.Result<ICollection<TValue>>() != null);
         throw new NotImplementedException();
       }
@@ -167,12 +168,14 @@ namespace System.Collections.Generic
     {
       get
       {
-        // Contract.Requires(ContainsKey(key));
+        Contract.Requires(!ReferenceEquals(key, null));
+        Contract.Requires(ContainsKey(key));
         throw new NotImplementedException();
       }
       set
       {
-        // Contract.Ensures(ContainsKey(key));
+        Contract.Requires(!ReferenceEquals(key, null));
+        Contract.Ensures(ContainsKey(key));
         //Contract.Ensures(old(ContainsKey(key)) ==> Count == old(Count));
         //Contract.Ensures(!old(ContainsKey(key)) ==> Count == old(Count) + 1);
         throw new NotImplementedException();
@@ -181,29 +184,32 @@ namespace System.Collections.Generic
 
     void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
     {
+      Contract.Requires(!ReferenceEquals(key, null));
+      //  - correct, but probably too anoying to proof always. If you can't assume that key does not exist, you would call "this[key] = value".
       // Contract.Requires(!ContainsKey(key));
       //modifies this.*;
-      //Contract.Ensures(ContainsKey(key));
+      Contract.Ensures(ContainsKey(key));
     }
 
-    bool IDictionary<TKey, TValue>.ContainsKey(TKey key)
+    public bool ContainsKey(TKey key)
     {
-      var @this = (IDictionary<TKey, TValue>)this;
-      Contract.Ensures(!Contract.Result<bool>() || @this.Count > 0);
+      Contract.Requires(!ReferenceEquals(key, null));
+      Contract.Ensures(!Contract.Result<bool>() || (Count > 0));
 
       throw new NotImplementedException();
     }
 
     bool IDictionary<TKey, TValue>.Remove(TKey key)
     {
-      // Contract.Ensures(!Contract.Result<bool>() || Contract.OldValue(ContainsKey(key)) && !ContainsKey(key));
+      Contract.Requires(!ReferenceEquals(key, null));
+      Contract.Ensures(!Contract.Result<bool>() || Contract.OldValue(ContainsKey(key)) && !ContainsKey(key));
       throw new NotImplementedException();
     }
 
     bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
     {
-      var @this = (IDictionary<TKey, TValue>)this;
-      Contract.Ensures(Contract.Result<bool>() == @this.ContainsKey(key));
+      Contract.Requires(!ReferenceEquals(key, null));
+      Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));
       throw new NotImplementedException();
     }
 
@@ -211,7 +217,7 @@ namespace System.Collections.Generic
 
     #region ICollection<KeyValuePair<TKey,TValue>> Members
 
-    int ICollection<KeyValuePair<TKey, TValue>>.Count
+    public int Count
     {
       get { throw new NotImplementedException(); }
     }

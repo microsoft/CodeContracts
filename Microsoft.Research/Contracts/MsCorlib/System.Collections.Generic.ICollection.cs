@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
@@ -126,58 +126,61 @@ namespace System.Collections.Generic {
 
     public int Count
     {
-      get {
+      get
+      {
         Contract.Ensures(Contract.Result<int>() >= 0);
 
-        throw new global::System.NotImplementedException();
+        throw new NotImplementedException();
       }
     }
 
     bool ICollection<T>.IsReadOnly
     {
-      get { throw new global::System.NotImplementedException(); }
+      get { throw new NotImplementedException(); }
     }
 
     public void Add(T item)
     {
       //Contract.Requires(!@this.IsReadOnly);
       // The Ensures below is tricky for wrappers. Needs quantified invariant in wrapper to prove wrapper correct
-      //   Forall(value => !m_backing.Contains(value) || this.Contains(value) ) 
-      //Contract.Ensures(this.Contains(item)); 
-      Contract.Ensures(this.Count >= Contract.OldValue(this.Count));
-      throw new global::System.NotImplementedException();
+      //   Forall(value => !m_backing.Contains(value) || this.Contains(value) )
+      //Contract.Ensures(this.Contains(item));
+      Contract.Ensures(Count >= Contract.OldValue(Count));
+
+      throw new NotImplementedException();
     }
 
     public void Clear()
     {
       //Contract.Requires(!@this.IsReadOnly);
-      Contract.Ensures(this.Count == 0);
+      Contract.Ensures(Count == 0);
 
-      throw new global::System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public bool Contains(T item)
     {
-      Contract.Ensures(!Contract.Result<bool>() || this.Count > 0);
+      Contract.Ensures(!Contract.Result<bool>() || Count > 0);
 
-      throw new global::System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public void CopyTo(T[] array, int arrayIndex)
     {
       Contract.Requires(array != null);
       Contract.Requires(arrayIndex >= 0);
-      Contract.Requires(arrayIndex <= array.Length - this.Count);
+      Contract.Requires(arrayIndex <= array.Length - Count);
 
-      throw new global::System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public bool Remove(T item)
     {
       //Contract.Requires(!@this.IsReadOnly);
-      Contract.Ensures(this.Count <= Contract.OldValue(this.Count));
-      Contract.Ensures(!Contract.Result<bool>() || this.Count >= Contract.OldValue(this.Count - 1));
-      throw new global::System.NotImplementedException();
+      Contract.Ensures(Count <= Contract.OldValue(Count));
+      Contract.Ensures(!Contract.Result<bool>() || Count >= Contract.OldValue(Count - 1));
+
+      throw new NotImplementedException();
     }
 
     #endregion
@@ -186,7 +189,7 @@ namespace System.Collections.Generic {
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
-      throw new global::System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     #endregion
@@ -195,7 +198,7 @@ namespace System.Collections.Generic {
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-      throw new global::System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     #endregion
