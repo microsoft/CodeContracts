@@ -169,13 +169,13 @@ namespace System.Collections.Generic
       get
       {
         Contract.Requires(!ReferenceEquals(key, null));
-        Contract.Requires(ContainsKey(key));
+        // Contract.Requires(ContainsKey(key)); ==> can't require, it's impossible to get rid of "requires unproven: ContainsKey(key)"
         throw new NotImplementedException();
       }
       set
       {
         Contract.Requires(!ReferenceEquals(key, null));
-        Contract.Ensures(ContainsKey(key));
+        //Contract.Ensures(ContainsKey(key)); ==> is of no use, CC would not use this.
         //Contract.Ensures(old(ContainsKey(key)) ==> Count == old(Count));
         //Contract.Ensures(!old(ContainsKey(key)) ==> Count == old(Count) + 1);
         throw new NotImplementedException();
@@ -188,7 +188,7 @@ namespace System.Collections.Generic
       //  - correct, but probably too anoying to proof always. If you can't assume that key does not exist, you would call "this[key] = value".
       // Contract.Requires(!ContainsKey(key));
       //modifies this.*;
-      Contract.Ensures(ContainsKey(key));
+      // Contract.Ensures(ContainsKey(key)); ==> is of no use, CC would not use this.
     }
 
     public bool ContainsKey(TKey key)
@@ -202,14 +202,14 @@ namespace System.Collections.Generic
     bool IDictionary<TKey, TValue>.Remove(TKey key)
     {
       Contract.Requires(!ReferenceEquals(key, null));
-      Contract.Ensures(!Contract.Result<bool>() || Contract.OldValue(ContainsKey(key)) && !ContainsKey(key));
+      // Contract.Ensures(!Contract.Result<bool>() || Contract.OldValue(ContainsKey(key)) && !ContainsKey(key));  ==> is of no use, CC would not use this.
       throw new NotImplementedException();
     }
 
     bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
     {
       Contract.Requires(!ReferenceEquals(key, null));
-      Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));
+      // Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));  ==> is of no use, CC would not use this.
       throw new NotImplementedException();
     }
 
