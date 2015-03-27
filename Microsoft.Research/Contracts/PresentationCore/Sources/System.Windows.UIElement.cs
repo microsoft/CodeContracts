@@ -778,6 +778,7 @@ namespace System.Windows
     {
       get
       {
+        Contract.Ensures(!Contract.Result<Size>().IsEmpty);
         return default(Size);
       }
     }

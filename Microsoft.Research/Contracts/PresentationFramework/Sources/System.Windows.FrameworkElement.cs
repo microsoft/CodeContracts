@@ -309,7 +309,7 @@ namespace System.Windows
     {
       get
       {
-        Contract.Ensures(Contract.Result<double>() == this.RenderSize.Height);
+        Contract.Ensures(Contract.Result<double>() >= 0.0);
 
         return default(double);
       }
@@ -319,7 +319,7 @@ namespace System.Windows
     {
       get
       {
-        Contract.Ensures(Contract.Result<double>() == this.RenderSize.Width);
+        Contract.Ensures(Contract.Result<double>() >= 0.0);
 
         return default(double);
       }
