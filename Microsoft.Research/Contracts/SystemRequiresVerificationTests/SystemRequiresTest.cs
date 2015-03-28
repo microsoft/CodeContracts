@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
