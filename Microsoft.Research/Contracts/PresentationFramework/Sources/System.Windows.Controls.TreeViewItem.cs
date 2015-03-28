@@ -52,19 +52,23 @@ namespace System.Windows.Controls
 
     protected virtual new void OnCollapsed(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnExpanded(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
 
     protected virtual new void OnSelected(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnUnselected(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
 

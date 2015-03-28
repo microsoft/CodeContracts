@@ -74,6 +74,7 @@ namespace System.Windows.Data
 
     protected virtual new bool ReceiveWeakEvent(Type managerType, Object sender, EventArgs e)
     {
+      Contract.Requires(e != null);
       return default(bool);
     }
 

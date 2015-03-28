@@ -62,6 +62,7 @@ namespace System.Windows.Markup.Localizer
 
     protected virtual new void OnErrorNotify(BamlLocalizerErrorNotifyEventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     public void UpdateBaml(Stream target, BamlLocalizationDictionary updates)

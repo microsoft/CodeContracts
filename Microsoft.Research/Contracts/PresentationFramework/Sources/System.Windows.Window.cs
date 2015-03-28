@@ -75,14 +75,17 @@ namespace System.Windows
 
     protected virtual new void OnActivated(EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnClosed(EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnContentChanged(Object oldContent, Object newContent)
@@ -91,6 +94,7 @@ namespace System.Windows
 
     protected virtual new void OnContentRendered(EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
@@ -100,10 +104,12 @@ namespace System.Windows
 
     protected virtual new void OnDeactivated(EventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     protected virtual new void OnLocationChanged(EventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     protected override void OnManipulationBoundaryFeedback(System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
@@ -112,10 +118,12 @@ namespace System.Windows
 
     protected virtual new void OnSourceInitialized(EventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     protected virtual new void OnStateChanged(EventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     protected sealed override void OnVisualParentChanged(DependencyObject oldParent)

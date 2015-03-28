@@ -86,6 +86,7 @@ namespace System.Web.Security
 
     protected virtual new void OnValidatingPassword(ValidatePasswordEventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     public abstract string ResetPassword(string username, string answer);
