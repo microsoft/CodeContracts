@@ -16,6 +16,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Linq;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.CodeAnalysis.Caching.Models;
@@ -28,7 +31,7 @@ using Microsoft.Research.CodeAnalysis;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Infrastructure;
 // Entityframework v5:
-#if EF5 
+#if EF5
 using System.Data.Objects;
 #else
 // Entity Framework v6
@@ -92,7 +95,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       Contract.Invariant(cachename != null);
     }
 
-    
+
     private bool isFresh;
     private int nbWaitingChanges = 0;
     const int MaxWaitingChanges = 500;
@@ -173,7 +176,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       try
       {
         var query = base.Methods.Where(m => m.Hash.Equals(hash));
-        
+
         return query.FirstOrDefault();
       }
       catch (Exception e)
@@ -338,7 +341,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
     {
       get
       {
-        try {
+        try
+        {
           return base.Database != null
             && base.Database.Connection != null
             && base.Database.Connection.State != System.Data.ConnectionState.Broken;
@@ -411,7 +415,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       RemoveDuplicateAdds<Method>(objContext, method => this.MethodByHash(method.Hash));
     }
 
-    private void RemoveDuplicateAdds<T>(ObjectContext objContext, Func<T,T> getStored) where T:class
+    private void RemoveDuplicateAdds<T>(ObjectContext objContext, Func<T, T> getStored) where T : class
     {
       Contract.Requires(objContext != null);
       Contract.Requires(getStored != null);
@@ -425,7 +429,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       foreach (var p in pendingAssemblyInfo)
       {
         Contract.Assume(p != null);
-        if (getStored(p.Entity) != null) {
+        if (getStored(p.Entity) != null)
+        {
           objContext.Detach(p.Entity);
         }
       }
@@ -476,7 +481,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 
     public void AddOrUpdate(Method methodModel)
     {
-      if (!ValidMethodModel(methodModel, warn:true)) return;
+      if (!ValidMethodModel(methodModel, warn: true)) return;
       try
       {
         // don't use Migrations.AddOrUpdate method. It is really slow. Assume we can update (no cache hit)
@@ -510,23 +515,23 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 
     public void AddOrUpdate(Method method, AssemblyInfo assemblyInfo)
     {
-        if (!ValidMethodModel(method)) return;
-        try
+      if (!ValidMethodModel(method)) return;
+      try
+      {
+        if (!method.Assemblies.AssumeNotNull()
+          .Where(a => a.AssemblyId == assemblyInfo.AssemblyId).AssumeNotNull()
+          .Any())
         {
-            if (!method.Assemblies.AssumeNotNull()
-              .Where(a => a.AssemblyId == assemblyInfo.AssemblyId).AssumeNotNull()
-              .Any())
-            {
-                method.Assemblies.Add(assemblyInfo);
-            }
+          method.Assemblies.Add(assemblyInfo);
         }
-        catch (Exception e)
+      }
+      catch (Exception e)
+      {
+        if (this.trace)
         {
-            if (this.trace)
-            {
-                Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate method assembly binding failed: {0}", e.Message);
-            }
+          Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate method assembly binding failed: {0}", e.Message);
         }
+      }
     }
 
     public void AddOrUpdate(BaselineMethod baseline)
@@ -550,13 +555,40 @@ namespace Microsoft.Research.CodeAnalysis.Caching
           Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate baseline binding failed: {0}", e.Message);
         }
       }
-      
-    }
 
+    }
 
     public string CacheName
     {
       get { return this.cachename; }
+    }
+
+    protected static void DetachDeletedDb(string connection)
+    {
+      // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 
+      // If this is the case, we can't create a new database and the user is stuck unless he knows the tricky internals of LocalDB and how to get rid of the registration.
+      // => If we use LocalDB and the file does not exist, we try to detach it. 
+      try
+      {
+        var connectionString = new DbConnectionStringBuilder { ConnectionString = connection };
+        var fileName = (string)connectionString["AttachDbFileName"];
+        if (File.Exists(fileName)) 
+          return;
+
+        var catalog = (string)connectionString["Initial Catalog"];
+        var dataSource = (string)connectionString["Data Source"];
+
+        using (var master = new DataContext(string.Format(CultureInfo.InvariantCulture, @"Data Source={0};Initial Catalog=master;Integrated Security=True", dataSource)))
+        {
+          master.ExecuteCommand(@"exec sp_detach_db {0}", catalog);
+        }
+      }
+      catch
+      {
+        // Ignore any errors here, could be 
+        // - not using LocalDB at all (any of the connection string parameters did not exist)
+        // - file was never registered (first time used) or already detached.
+      }
     }
   }
 
@@ -567,8 +599,10 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       Database.SetInitializer<SqlCacheModelNoCreate>(null);
     }
 
-    public SqlCacheModelNoCreate(string connection, string cacheName, bool trace) : base(connection, cacheName, trace) {
-      Contract.Requires(cacheName != null);    
+    public SqlCacheModelNoCreate(string connection, string cacheName, bool trace)
+      : base(connection, cacheName, trace)
+    {
+      Contract.Requires(cacheName != null);
     }
   }
 
@@ -583,7 +617,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       }
     }
 
-    static SqlCacheModelUseExisting() {
+    static SqlCacheModelUseExisting()
+    {
       Database.SetInitializer<SqlCacheModelUseExisting>(new Policy());
     }
 
@@ -614,6 +649,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       : base(connection, cachename, trace)
     {
       Contract.Requires(cachename != null);
+
+      DetachDeletedDb(connection);
     }
   }
 
@@ -637,6 +674,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       : base(connection, cachename, trace)
     {
       Contract.Requires(cachename != null);
+
+      DetachDeletedDb(connection);
     }
   }
 

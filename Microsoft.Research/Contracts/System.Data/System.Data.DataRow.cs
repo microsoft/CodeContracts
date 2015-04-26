@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
@@ -77,6 +77,7 @@ namespace System.Data
         Contract.Requires(value != null);
       }
     }
+
     //
     // Summary:
     //     Gets or sets the custom error description for a row.
@@ -84,6 +85,7 @@ namespace System.Data
     // Returns:
     //     The text describing an error.
     //public string RowError { get; set; }
+
     //
     // Summary:
     //     Gets the current state of the row with regard to its relationship to the
@@ -92,13 +94,21 @@ namespace System.Data
     // Returns:
     //     One of the System.Data.DataRowState values.
     //public DataRowState RowState { get; }
+
     //
     // Summary:
     //     Gets the System.Data.DataTable for which this row has a schema.
     //
     // Returns:
     //     The System.Data.DataTable to which this row belongs.
-    //public DataTable Table { get; }
+    public DataTable Table
+    {
+        get
+        {
+            Contract.Ensures(Contract.Result<DataTable>() != null);
+            return null;
+        }
+    }
 
     // Summary:
     //     Gets or sets the data stored in the specified System.Data.DataColumn.
@@ -123,6 +133,7 @@ namespace System.Data
     //   System.InvalidCastException:
     //     The data types of the value and the column do not match.
     //public object this//[DataColumn column] { get; set; }
+
     //
     // Summary:
     //     Gets or sets the data stored in the column specified by index.
@@ -146,6 +157,7 @@ namespace System.Data
     //     System.Data.DataColumn.DataType.
     //public object this//[int columnIndex] { get; set; }
     //
+
     // Summary:
     //     Gets or sets the data stored in the column specified by name.
     //
@@ -166,6 +178,7 @@ namespace System.Data
     //   System.InvalidCastException:
     //     Occurs when you set a value and its System.Type does not match System.Data.DataColumn.DataType.
     //public object this//[string columnName] { get; set; }
+
     //
     // Summary:
     //     Gets the specified version of data stored in the specified System.Data.DataColumn.
@@ -191,6 +204,7 @@ namespace System.Data
     //   System.Data.VersionNotFoundException:
     //     The row does not have this version of data.
     //public object this//[DataColumn column, DataRowVersion version] { get; }
+
     //
     // Summary:
     //     Gets the data stored in the column, specified by index and version of the
@@ -446,7 +460,7 @@ namespace System.Data
     // Returns:
     //     The text of the error description.
     public string GetColumnError(DataColumn column)
-    {     
+    {
       Contract.Ensures(Contract.Result<string>() != null);
 
       return default(string);
@@ -466,7 +480,7 @@ namespace System.Data
     //   System.IndexOutOfRangeException:
     //     The columnIndex argument is out of range.
     public string GetColumnError(int columnIndex)
-          {     
+    {
       Contract.Ensures(Contract.Result<string>() != null);
 
       return default(string);
@@ -482,7 +496,7 @@ namespace System.Data
     // Returns:
     //     The text of the error description.
     public string GetColumnError(string columnName)
-          {     
+    {
       Contract.Ensures(Contract.Result<string>() != null);
 
       return default(string);
@@ -494,7 +508,7 @@ namespace System.Data
     // Returns:
     //     An array of System.Data.DataColumn objects that contain errors.
     public DataColumn[] GetColumnsInError()
-          {     
+    {
       Contract.Ensures(Contract.Result<DataColumn[]>() != null);
 
       return default(DataColumn[]);
