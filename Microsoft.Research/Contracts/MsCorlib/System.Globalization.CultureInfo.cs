@@ -18,7 +18,20 @@ using System.Diagnostics.Contracts;
 
 namespace System.Globalization
 {
-
+#if !SILVERLIGHT
+  public enum CultureTypes
+  {
+    NeutralCultures = 1,
+    SpecificCultures = 2,
+    InstalledWin32Cultures = 4,
+    AllCultures = InstalledWin32Cultures | SpecificCultures | NeutralCultures,
+    UserCustomCulture = 8,
+    ReplacementCultures = 16,
+    WindowsOnlyCultures = 32,
+    FrameworkCultures = 64,
+  }
+#endif
+    
   public abstract class CultureInfo
   {
 
@@ -226,14 +239,14 @@ namespace System.Globalization
 
     public abstract object GetFormat(Type formatType);
 
-#if false
+#if !SILVERLIGHT
+
     public static CultureInfo[] GetCultures(CultureTypes types)
     {
+      Contract.Ensures(Contract.Result<CultureInfo[]>() != null);
       return default(CultureInfo[]);
     }
-#endif
 
-#if !SILVERLIGHT
     public static CultureInfo CreateSpecificCulture(string name)
     {
       Contract.Ensures(Contract.Result<CultureInfo>() != null);
