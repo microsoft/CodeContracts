@@ -289,7 +289,7 @@
          PropertyName="CodeContractsSdkPath" />
     </GetFrameworkSdkPath>
     <PropertyGroup>
-      <CodeContractsSnExe>"$(CodeContractsSdkPath)Bin\NETFX 4.5.1 Tools\sn.exe"</CodeContractsSnExe>
+      <CodeContractsSnExe>"$(CodeContractsSdkPath)Bin\NETFX 4.6 Tools\sn.exe"</CodeContractsSnExe>
     </PropertyGroup>
     <Exec
        Condition="'$(KeyOriginatorFile)' != ''"   
