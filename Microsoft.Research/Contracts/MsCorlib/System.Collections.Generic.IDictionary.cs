@@ -175,7 +175,7 @@ namespace System.Collections.Generic
       set
       {
         Contract.Requires(!ReferenceEquals(key, null));
-        //Contract.Ensures(ContainsKey(key)); ==> is of no use, CC would not use this.
+        //Contract.Ensures(ContainsKey(key)); 
         //Contract.Ensures(old(ContainsKey(key)) ==> Count == old(Count));
         //Contract.Ensures(!old(ContainsKey(key)) ==> Count == old(Count) + 1);
         throw new NotImplementedException();
@@ -209,7 +209,7 @@ namespace System.Collections.Generic
     bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
     {
       Contract.Requires(!ReferenceEquals(key, null));
-      // Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));  ==> is of no use, CC would not use this.
+      Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));
       throw new NotImplementedException();
     }
 
