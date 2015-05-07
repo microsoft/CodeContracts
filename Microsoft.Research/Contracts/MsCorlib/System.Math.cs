@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // File System.Math.cs
@@ -93,29 +93,40 @@ namespace System
     [Pure]
     public static float Abs(float value)
     {
+      Contract.Ensures((Contract.Result<float>() >= 0.0) || float.IsNaN(Contract.Result<float>()) || float.IsPositiveInfinity(Contract.Result<float>()));
+
+      // 2015-03-26: tom-englert
+      // Disabled, since this was too complex for the checker to understand.
+      // e.g. new Rect(0, 0, Math.Abs(a), Math.Abs(b)) raised a warning that with and height are unproven to be positive values.
+
       // !NaN ==>  >= 0
-      Contract.Ensures(float.IsNaN(value) || Contract.Result<float>() >= 0.0);
+      // Contract.Ensures(float.IsNaN(value) || Contract.Result<float>() >= 0.0);
 
       // NaN ==> NaN
-      Contract.Ensures(!float.IsNaN(value) || float.IsNaN(Contract.Result<float>()));
+      // Contract.Ensures(!float.IsNaN(value) || float.IsNaN(Contract.Result<float>()));
 
       // Infty ==> +Infty
-      Contract.Ensures(!float.IsInfinity(value) || float.IsPositiveInfinity(Contract.Result<float>()));
+      // Contract.Ensures(!float.IsInfinity(value) || float.IsPositiveInfinity(Contract.Result<float>()));
 
       return default(float);
     }
 
     [Pure]
     public static double Abs(double value)
-    {      
+    {
+      Contract.Ensures((Contract.Result<double>() >= 0.0) || double.IsNaN(Contract.Result<double>()) || double.IsPositiveInfinity(Contract.Result<double>()));
+
+      // 2015-03-26: tom-englert
+      // Disabled, since this was too complex for the checker to understand.
+      // e.g. new Rect(0, 0, Math.Abs(a), Math.Abs(b)) raised a warning that with and height are unproven to be positive values.
+
       // !NaN ==>  >= 0
-      Contract.Ensures(double.IsNaN(value) || Contract.Result<double>() >= 0.0);
+      // Contract.Ensures(double.IsNaN(value) || Contract.Result<double>() >= 0.0);
 
       // NaN ==> NaN
-      Contract.Ensures(!double.IsNaN(value) || double.IsNaN(Contract.Result<double>()));
-
+      // Contract.Ensures(!double.IsNaN(value) || double.IsNaN(Contract.Result<double>()));
       // Infty ==> +Infty
-      Contract.Ensures(!double.IsInfinity(value) || double.IsPositiveInfinity(Contract.Result<double>()));
+      // Contract.Ensures(!double.IsInfinity(value) || double.IsPositiveInfinity(Contract.Result<double>()));
 
       return default(double);
     }
@@ -129,7 +140,7 @@ namespace System
 
       // d < -1 || d > 1 ==> NaN
       Contract.Ensures(!(d < -1 || d > 1) || Double.IsNaN(Contract.Result<double>()));
-      
+
       // d == NaN ==> NaN
       Contract.Ensures(!Double.IsNaN(d) || Double.IsNaN(Contract.Result<double>()));
 
@@ -310,7 +321,7 @@ namespace System
 
       // 0 < d < 1 ==> < 0
       Contract.Ensures(!(0.0 < d && d < 1.0) || Contract.Result<double>() < 0);
-     
+
       // d == 1 ==> 1
       Contract.Ensures(d != 1.0 || Contract.Result<double>() == 0.0);
 
@@ -526,7 +537,7 @@ namespace System
     {
       // x == NaN or y == NaN ==> NaN
       Contract.Ensures(!(Double.IsNaN(x) || Double.IsNaN(y)) || Double.IsNaN(Contract.Result<Double>()));
- 
+
       // y == 0 ==> 1
       Contract.Ensures(!(!Double.IsNaN(x) && y == 0) || Contract.Result<Double>() == 1.0);
 
@@ -584,7 +595,7 @@ namespace System
       return default(double);
     }
 
-    
+
     [Pure]
     public static Decimal Round(Decimal d)
     {

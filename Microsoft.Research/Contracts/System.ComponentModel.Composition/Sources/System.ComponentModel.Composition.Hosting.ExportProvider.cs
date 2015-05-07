@@ -148,10 +148,12 @@ namespace System.ComponentModel.Composition.Hosting
 
     protected virtual new void OnExportsChanged(ExportsChangeEventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     protected virtual new void OnExportsChanging(ExportsChangeEventArgs e)
     {
+        Contract.Requires(e != null);
     }
 
     public bool TryGetExports(System.ComponentModel.Composition.Primitives.ImportDefinition definition, AtomicComposition atomicComposition, out IEnumerable<System.ComponentModel.Composition.Primitives.Export> exports)

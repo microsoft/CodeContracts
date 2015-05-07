@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeProviders", "CodeProviders", "{76F9B10B-70B6-40FF-B5A7-3562734BF8E4}"
 EndProject
@@ -316,6 +316,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseStats", "Microsoft.Research\CCTools\ParseStats\ParseStats.csproj", "{9A6A7CB1-138C-4342-B630-93C04FF48317}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisedSimplexMethod", "Microsoft.Research\RevisedSimplexMethod\RevisedSimplexMethod\RevisedSimplexMethod.csproj", "{52B1843A-04C6-48A8-A8F7-C11392C44E7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemRequiresVerificationTests", "Microsoft.Research\Contracts\SystemRequiresVerificationTests\SystemRequiresVerificationTests.csproj", "{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2333,6 +2335,30 @@ Global
 		{52B1843A-04C6-48A8-A8F7-C11392C44E7F}.Release|Mixed Platforms.Build.0 = Devlab64|Any CPU
 		{52B1843A-04C6-48A8-A8F7-C11392C44E7F}.Release|Win32.ActiveCfg = Devlab64|Any CPU
 		{52B1843A-04C6-48A8-A8F7-C11392C44E7F}.Release|x86.ActiveCfg = Devlab64|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|Any CPU.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|Any CPU.Build.0 = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|Mixed Platforms.Build.0 = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|Win32.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Devlab9|x86.ActiveCfg = Debug|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|Any CPU.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|Any CPU.Build.0 = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|Mixed Platforms.Build.0 = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|Win32.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Internal9|x86.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|Win32.ActiveCfg = Release|Any CPU
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2434,6 +2460,7 @@ Global
 		{4CDCA734-7AA6-4283-B915-F9EB13A23D7F} = {8C9BFE1D-90BD-4F88-B58E-89FF1DA325B8}
 		{9A6A7CB1-138C-4342-B630-93C04FF48317} = {8C9BFE1D-90BD-4F88-B58E-89FF1DA325B8}
 		{52B1843A-04C6-48A8-A8F7-C11392C44E7F} = {C6F8F507-B843-4D08-8E4B-FF4AF23FC864}
+		{34BEDC68-AC8A-44F9-BF92-01ECAE6A28CC} = {5C718DA9-A4F2-4F73-B095-B2E180033C15}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CodeContracts10.vsmdi

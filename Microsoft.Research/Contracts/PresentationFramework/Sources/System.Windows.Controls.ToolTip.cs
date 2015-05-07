@@ -43,6 +43,7 @@ namespace System.Windows.Controls
     #region Methods and constructors
     protected virtual new void OnClosed(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
@@ -52,6 +53,7 @@ namespace System.Windows.Controls
 
     protected virtual new void OnOpened(System.Windows.RoutedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnVisualParentChanged(System.Windows.DependencyObject oldParent)

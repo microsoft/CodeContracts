@@ -39,8 +39,8 @@ namespace System.Windows
     //     The initial height of the instance of System.Windows.Size.
     public Size(double width, double height)
     {
-      Contract.Requires(width >= 0.0);
-      Contract.Requires(height >= 0.0);
+      Contract.Requires((width >= 0.0) || double.IsNaN(width) || double.IsPositiveInfinity(width));
+      Contract.Requires((height >= 0.0) || double.IsNaN(height) || double.IsPositiveInfinity(height));
 
       Contract.Ensures(Contract.ValueAtReturn(out this).Width == width);
       Contract.Ensures(Contract.ValueAtReturn(out this).Height == height);
@@ -140,7 +140,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => see comment in Rect
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Height == value || Double.IsNaN(value));
@@ -179,7 +179,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => see comment in Rect
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Width == value || Double.IsNaN(value));
