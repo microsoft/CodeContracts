@@ -39,6 +39,7 @@ bld/
 #exception to the .gitignore
 
 !Common/bin
+!Microsoft.Research/common/bin
 
 
 # Roslyn cache directories
