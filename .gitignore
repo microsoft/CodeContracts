@@ -83,6 +83,10 @@ dlldata.c
 *.svclog
 *.scc
 
+# Exclude reference assemblies
+!References/**/*
+
+
 # Chutzpah Test files
 _Chutzpah*
 
