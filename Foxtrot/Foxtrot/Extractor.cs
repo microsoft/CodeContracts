@@ -2504,7 +2504,7 @@ namespace Microsoft.Contracts.Foxtrot {
     ///       - assignment to state
     ///       - unconditional branch
     ///       
-    /// Wrinkle: in Rosly, the initial async state is also 0, not -1.
+    /// Wrinkle: in Roslyn, the initial async state is also -1.
     /// The context uses the linker version to determine if this assembly was Roslyn generated.
     /// 
     /// Another wrinkle is async methods that are not really async and C# still emits a closure etc, but
@@ -2830,7 +2830,7 @@ namespace Microsoft.Contracts.Foxtrot {
             return Pair.For(0, EvalKind.IsDisposingTest);
           }
           if (name.Contains("<>") && name.Contains("__state")) {
-            var initialState = isAsync && !isRoslyn ? -1 : 0;
+            var initialState = isAsync ? -1 : 0;
             return Pair.For(initialState, EvalKind.IsStateValue);
           }
         }
