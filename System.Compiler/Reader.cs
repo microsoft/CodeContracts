@@ -1924,6 +1924,10 @@ namespace System.Compiler.Metadata{
     private TypeNodeList GetTypeParametersFor(int parentIndex, Member parent){
       GenericParamRow[] genericParameters = this.tables.GenericParamTable;
       TypeNodeList types = new TypeNodeList();
+      TypeNodeList savedTypes = this.currentTypeParameters;
+      this.currentTypeParameters = types;
+      try
+      {
       int i = 0, n = genericParameters.Length, j = n-1;
       bool sorted = (this.sortedTablesMask >> (int)TableIndices.GenericParam) % 2 == 1;
       if (sorted){
@@ -1942,7 +1946,12 @@ namespace System.Compiler.Metadata{
         else if (sorted)
           break;
       if (types.Count == 0) return null;
-      return types;
+        return types;
+      }
+      finally
+      {
+        this.currentTypeParameters = savedTypes;
+      }
     }
     private TypeNode GetGenericParameter(int index, int parameterListIndex, Member parent){
       GenericParamRow[] genericParameters = this.tables.GenericParamTable;
