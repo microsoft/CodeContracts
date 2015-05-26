@@ -646,7 +646,7 @@
       Include Code Analysis target if present
     ======================================================================-->
   <PropertyGroup>
-    <CodeContractAnalysisTargets>$(CodeContractsInstallDir)MsBuild\v4.0\Microsoft.CodeContractAnalysis.targets</CodeContractAnalysisTargets>
+    <CodeContractAnalysisTargets>$(CodeContractsInstallDir)MsBuild\v14.0\Microsoft.CodeContractAnalysis.targets</CodeContractAnalysisTargets>
   </PropertyGroup>
   <Import Project="$(CodeContractAnalysisTargets)" Condition="Exists('$(CodeContractAnalysisTargets)')"/>
 
