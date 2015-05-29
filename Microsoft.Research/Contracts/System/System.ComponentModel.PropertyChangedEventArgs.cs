@@ -11,7 +11,11 @@ namespace System.ComponentModel
            Contract.Ensures(this.PropertyName == propertyName);
        }
 
+#if SILVERLIGHT
+       public string PropertyName
+#else
        public virtual string PropertyName
+#endif
        {
            get
            {
