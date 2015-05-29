@@ -83,6 +83,7 @@ namespace System.Windows.Media
     {
       get
       {
+        Contract.Ensures(Contract.Result<Transform>() != null);
         return default(System.Windows.Media.Transform);
       }
     }
