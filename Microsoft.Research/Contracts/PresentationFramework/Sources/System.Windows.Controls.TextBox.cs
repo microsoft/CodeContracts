@@ -282,6 +282,8 @@ namespace System.Windows.Controls
     {
       get
       {
+        // => TextBox.CoerceText will ensure value is never null.
+        Contract.Ensures(Contract.Result<string>() != null);
         return default(string);
       }
       set
