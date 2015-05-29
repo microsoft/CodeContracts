@@ -39,6 +39,7 @@ bld/
 #exception to the .gitignore
 
 !Common/bin
+!Microsoft.Research/common/bin
 
 
 # Roslyn cache directories
@@ -81,6 +82,10 @@ dlldata.c
 *.pidb
 *.svclog
 *.scc
+
+# Exclude reference assemblies
+!References/**/*
+
 
 # Chutzpah Test files
 _Chutzpah*

@@ -66,6 +66,7 @@
 <?define var.VS10RegistryCompGuid             = "{DAA2CAF6-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS11RegistryCompGuid             = "{DAA2CAF7-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS12RegistryCompGuid             = "{DAA2CAF8-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS14RegistryCompGuid             = "{DAA2CAF9-1AAE-4fa6-A178-9BF28206012F}" ?>
 
   <!--=====================================================================
      Product information
@@ -90,6 +91,7 @@
     <?define var.Vs10RootKey              ="Software\Microsoft\VisualStudio\10.0" ?>
     <?define var.Vs11RootKey              ="Software\Microsoft\VisualStudio\11.0" ?>
     <?define var.Vs12RootKey              ="Software\Microsoft\VisualStudio\12.0" ?>
+    <?define var.Vs14RootKey              ="Software\Microsoft\VisualStudio\14.0" ?>
     
     <!-- Derived -->
     <?define var.TaskManagerPackageKey    ="Packages\$(var.TaskManagerGuid)" ?>
@@ -295,6 +297,20 @@
         </Condition>
         -->
         <RegistryKey Root="HKLM" Key="$(var.Vs12RootKey)" Action="none">
+          <?include VsRegistryKeys.wxs?>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 14.0 hive (VS14) -->
+      <Component Id="VS14RegistryComponent" Guid="$(var.VS14RegistryCompGuid)" Transitive="yes" Win64="no">
+        <!--
+        <Condition>
+          <![CDATA[VS14]]>
+        </Condition>
+        -->
+        <RegistryKey Root="HKLM" Key="$(var.Vs14RootKey)" Action="none">
           <?include VsRegistryKeys.wxs?>
         </RegistryKey>
       </Component>

@@ -313,9 +313,6 @@ namespace System.Net.Sockets
     public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, object optionValue)
     {
       Contract.Requires(optionValue != null);
-      Contract.Requires((int)optionLevel == 41);
-      Contract.Requires((int)optionName == 12 || (int)optionName == 13);
-
     }
     public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, Byte[] optionValue)
     {

@@ -564,6 +564,8 @@
     <Compile Include="System.Collections.ObjectModel.ObservableCollection.cs" />
     <Compile Include="System.Collections.Specialized.INotifyCollectionChanged.cs" />
     <Compile Include="System.ComponentModel.INotifyPropertyChanged.cs" />
+    <Compile Include="System.ComponentModel.PropertyChangedEventHandler.cs" />
+    <Compile Include="System.ComponentModel.PropertyChangedEventArgs.cs" />
     <Compile Include="System.ComponentModel.Win32Exception.cs" />
     <Compile Include="System.Diagnostics.Stopwatch.cs" />
     <Compile Include="System.Net.Sockets.SocketException.cs" />
@@ -668,7 +670,6 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
