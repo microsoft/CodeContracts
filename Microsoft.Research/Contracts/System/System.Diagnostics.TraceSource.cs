@@ -1,21 +1,22 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if !SILVERLIGHT
 using System;
 using System.Runtime;
 using System.Diagnostics.Contracts;
+using System.Collections.Specialized;
 
 namespace System.Diagnostics
 {
@@ -35,7 +36,7 @@ namespace System.Diagnostics
 
     }
 
-    /*
+
     public StringDictionary Attributes
     {
       get
@@ -45,7 +46,7 @@ namespace System.Diagnostics
         return null;
       }
     }
-    
+
     public TraceListenerCollection Listeners
     {
       get
@@ -55,10 +56,10 @@ namespace System.Diagnostics
         return null;
       }
     }
-    */
+
 
     public string Name { get { Contract.Ensures(Contract.Result<string>() != null); return null; } }
-    
+
     public SourceSwitch Switch
     {
       get
@@ -80,14 +81,14 @@ namespace System.Diagnostics
     }
 
     // public void TraceData(TraceEventType eventType, int id, object data);
-    
+
     //public void TraceData(TraceEventType eventType, int id, params object[] data);
-    
+
     // public void TraceEvent(TraceEventType eventType, int id);
 
     // public void TraceEvent(TraceEventType eventType, int id, string message);
 //    public void TraceEvent(TraceEventType eventType, int id, string format, params object[] args);
-  
+
     // public void TraceInformation(string message);
     //
     public void TraceInformation(string format, params object[] args)

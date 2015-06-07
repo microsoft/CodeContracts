@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
@@ -162,6 +162,28 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
+
+#if NETFRAMEWORK_4_0 || NETFRAMEWORK_4_5
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Concat(IEnumerable<string> args)
+    {
+
+        Contract.Ensures(Contract.Result<String>() != null);
+        return default(String);
+    }
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Concat<T>(IEnumerable<T> args)
+    {
+
+        Contract.Ensures(Contract.Result<String>() != null);
+        return default(String);
+    }
+#endif
+
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Copy(String str)
@@ -189,7 +211,7 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
-    
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Format(String format, object arg0, object arg1, object arg2)
@@ -199,7 +221,7 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
-    
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Format(String format, object arg0, object arg1)
@@ -209,7 +231,7 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
-    
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Format(String format, object arg0)
@@ -245,7 +267,7 @@ namespace System
 
       return default(String);
     }
-    
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Owned)]
     public String Replace(String oldValue, String newValue)
@@ -262,7 +284,7 @@ namespace System
     public String Replace(char oldChar, char newChar)
     {
       Contract.Ensures(Contract.Result<String>() != null);
-     
+
       return default(String);
     }
 
@@ -294,7 +316,7 @@ namespace System
     [Reads(ReadsAttribute.Reads.Owned)]
     public String ToUpper(System.Globalization.CultureInfo culture) {
       Contract.Requires(culture != null);
-      
+
       Contract.Ensures(Contract.Result<String>() != null);
       Contract.Ensures(Contract.Result<string>().Length == this.Length, "Are there languages for which this isn't true?!?");
 
@@ -392,7 +414,7 @@ namespace System
 
       Contract.Ensures(Contract.Result<string>().Length == totalWidth);
       Contract.Ensures(Contract.Result<String>() != null);
-      
+
       return default(String);
     }
 
@@ -413,7 +435,7 @@ namespace System
     public String PadLeft(int totalWidth, char paddingChar)
     {
       Contract.Requires(totalWidth >= 0);
-      
+
       Contract.Ensures(Contract.Result<string>().Length == totalWidth);
       Contract.Ensures(Contract.Result<String>() != null);
 
@@ -428,7 +450,7 @@ namespace System
 
       Contract.Ensures(Contract.Result<string>().Length == totalWidth);
       Contract.Ensures(Contract.Result<String>() != null);
-    
+
       return default(String);
     }
 
@@ -460,7 +482,7 @@ namespace System
     {
       Contract.Requires(this == Empty || startIndex >= 0);
       Contract.Requires(this == Empty || startIndex < this.Length);
-      
+
       Contract.Ensures(-1 <= Contract.Result<int>());
       Contract.Ensures(Contract.Result<int>() < this.Length);
 
@@ -635,7 +657,7 @@ namespace System
       Contract.Requires(startIndex <= Length);
 
       Contract.Ensures(-1 <= Contract.Result<int>());
-      Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex); 
+      Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex);
 
       Contract.Ensures(Contract.Result<int>() < this.Length);
 
@@ -696,7 +718,7 @@ namespace System
 
       Contract.Ensures(-1 <= Contract.Result<int>());
       Contract.Ensures(value == String.Empty || Contract.Result<int>() < startIndex + count);
-      
+
       Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex);
 
       Contract.Ensures(value != String.Empty || Contract.Result<int>() == startIndex);
@@ -757,10 +779,10 @@ namespace System
     public int IndexOfAny(char[] anyOf, int startIndex)
     {
       Contract.Requires(anyOf != null);
-     
+
       Contract.Requires(startIndex >= 0);
       Contract.Requires(startIndex < Length);
-      
+
       Contract.Ensures(-1 <= Contract.Result<int>());
       Contract.Ensures(Contract.Result<int>() < this.Length);
 
@@ -772,10 +794,10 @@ namespace System
     public int IndexOfAny(char[] anyOf, int startIndex, int count)
     {
       Contract.Requires(anyOf != null);
-     
+
       Contract.Requires(startIndex >= 0);
       Contract.Requires(count >= 0);
-      
+
       Contract.Requires(startIndex + count < Length);
 
       Contract.Ensures(-1 <= Contract.Result<int>());
@@ -783,7 +805,7 @@ namespace System
 
       return default(int);
     }
-     
+
 
     public static readonly string/*!*/ Empty;
 
@@ -879,7 +901,7 @@ namespace System
       return default(int);
     }
     [Pure]
-    public static int Compare(string strA, int indexA, string strB, int indexB, int length, StringComparison comparisonType) 
+    public static int Compare(string strA, int indexA, string strB, int indexB, int length, StringComparison comparisonType)
     {
       Contract.Requires(indexA >= 0);
       Contract.Requires(indexB >= 0);
@@ -888,7 +910,7 @@ namespace System
       Contract.Requires(indexB <= strB.Length);
       Contract.Requires((strA != null && strB != null) || length == 0);
       Contract.Requires(Enum.IsDefined(typeof(StringComparison), comparisonType));
-      
+
       return default(int);
     }
 
@@ -1072,7 +1094,7 @@ namespace System
     {
       Contract.Ensures(Contract.Result<string[]>() != null);
       Contract.Ensures(Contract.ForAll(0, Contract.Result<string[]>().Length, i => Contract.Result<string[]>()[i] != null));
-      
+
       return default(string[]);
     }
 #if !SILVERLIGHT
@@ -1198,6 +1220,17 @@ namespace System
     }
 
 #if NETFRAMEWORK_4_0 || NETFRAMEWORK_4_5
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Join(String separator, Object[] value)
+    {
+        Contract.Requires(value != null);
+        Contract.Ensures(Contract.Result<string>() != null);
+
+        return default(String);
+    }
+
     [Pure]
     public static string Join(string separator, IEnumerable<string> values)
     {

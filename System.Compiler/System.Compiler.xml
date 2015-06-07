@@ -399,16 +399,16 @@
             A node in an Abstract Syntax Tree.
             </summary>
         </member>
+        <member name="F:System.Compiler.Node.SourceContext">
+            <summary>
+            The region in the source code that contains the concrete syntax corresponding to this node in the Abstract Syntax Tree.
+            </summary>
+        </member>
         <member name="M:System.Compiler.Node.Clone">
             <summary>
             Makes a shallow copy of the node.
             </summary>
             <returns>A shallow copy of the node</returns>
-        </member>
-        <member name="P:System.Compiler.Node.SourceContext">
-            <summary>
-            The region in the source code that contains the concrete syntax corresponding to this node in the Abstract Syntax Tree.
-            </summary>
         </member>
         <member name="P:System.Compiler.Node.NodeType">
             <summary>

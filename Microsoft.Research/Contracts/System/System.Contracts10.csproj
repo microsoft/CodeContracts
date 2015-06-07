@@ -561,6 +561,11 @@
     <Compile Include="..\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="System.Collections.ObjectModel.ObservableCollection.cs" />
+    <Compile Include="System.Collections.Specialized.INotifyCollectionChanged.cs" />
+    <Compile Include="System.ComponentModel.INotifyPropertyChanged.cs" />
+    <Compile Include="System.ComponentModel.PropertyChangedEventHandler.cs" />
+    <Compile Include="System.ComponentModel.PropertyChangedEventArgs.cs" />
     <Compile Include="System.ComponentModel.Win32Exception.cs" />
     <Compile Include="System.Diagnostics.Stopwatch.cs" />
     <Compile Include="System.Net.Sockets.SocketException.cs" />
@@ -705,6 +710,9 @@
       <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
       <Name>PreContractsBuildDummy</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="System.Diagnostics.FileVersionInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>

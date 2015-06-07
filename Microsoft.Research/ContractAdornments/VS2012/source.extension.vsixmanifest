@@ -5,7 +5,7 @@
               Id="ContractAdornments.MicrosoftResearch.2fb66ab7-53ec-479b-bd35-e9dd5be0426b"
               Language="en"
               Publisher="Microsoft Research" />
-    <DisplayName>Code Contracts Editor Extensions VS2012</DisplayName>
+    <DisplayName>Code Contracts Editor Extensions VS2012 and VS2013</DisplayName>
     <Description xml:space="preserve">Displays Code Contracts (when editing C#) in code, Intellisense, and in metadata files.
 
 Inheritance:
