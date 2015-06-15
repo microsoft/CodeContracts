@@ -7798,10 +7798,12 @@ namespace System.Compiler{
         base.DeclaringType = value;
       }
     }
+
+    private bool isTypeArgument;
+
     /// <summary>
     /// Gets a value that indicates whether the current type node is a type argument of a generic member or type.
     /// </summary>
-    private bool isTypeArgument;
     public bool IsTypeArgument
     { 
         get
