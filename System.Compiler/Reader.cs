@@ -1924,17 +1924,21 @@ namespace System.Compiler.Metadata{
     private TypeNodeList GetTypeParametersFor(int parentIndex, Member parent){
       GenericParamRow[] genericParameters = this.tables.GenericParamTable;
       TypeNodeList types = new TypeNodeList();
-      int i = 0, n = genericParameters.Length, j = n-1;
-      bool sorted = (this.sortedTablesMask >> (int)TableIndices.GenericParam) % 2 == 1;
-      if (sorted){
-        while (i < j){
-          int k = (i+j) / 2;
-          if (genericParameters[k].Owner < parentIndex)
-            i = k+1;
-          else
-            j = k;
-        }
-        while (i > 0 && genericParameters[i-1].Owner == parentIndex) i--;
+      TypeNodeList savedTypes = this.currentTypeParameters;
+      this.currentTypeParameters = types;
+      try
+      {
+        int i = 0, n = genericParameters.Length, j = n-1;
+        bool sorted = (this.sortedTablesMask >> (int)TableIndices.GenericParam) % 2 == 1;
+        if (sorted){
+          while (i < j){
+            int k = (i+j) / 2;
+            if (genericParameters[k].Owner < parentIndex)
+              i = k+1;
+            else
+              j = k;
+          }
+          while (i > 0 && genericParameters[i-1].Owner == parentIndex) i--;
       }
       for (int index = 0; i < n; i++, index++)
         if (genericParameters[i].Owner == parentIndex)
@@ -1942,7 +1946,12 @@ namespace System.Compiler.Metadata{
         else if (sorted)
           break;
       if (types.Count == 0) return null;
-      return types;
+        return types;
+      }
+      finally
+      {
+        this.currentTypeParameters = savedTypes;
+      }
     }
     private TypeNode GetGenericParameter(int index, int parameterListIndex, Member parent){
       GenericParamRow[] genericParameters = this.tables.GenericParamTable;
