@@ -381,18 +381,18 @@
   </Target>
   
   <Target Name="PrepareILMerge">
-	  <Message Text="Preparing IL Merge"/>
-	  <XmlPeek
-		  XmlInputPath="$(SolutionDir)packages.config"
-		  Query="//package[@id='ILMerge']/@version">
-		  <Output TaskParameter="Result" ItemName="ILMergeVersion" />
-	  </XmlPeek>
-	  <PropertyGroup>
-	    <ILMergeExePath>$(SolutionDir)packages\ILMerge.@(ILMergeVersion)\tools\ilmerge.exe</ILMergeExePath>
+    <Message Text="Preparing IL Merge"/>
+    <XmlPeek
+      XmlInputPath="$(SolutionDir)packages.config"
+      Query="//package[@id='ILMerge']/@version">
+      <Output TaskParameter="Result" ItemName="ILMergeVersion" />
+    </XmlPeek>
+    <PropertyGroup>
+      <ILMergeExePath>$(SolutionDir)packages\ILMerge.@(ILMergeVersion)\tools\ilmerge.exe</ILMergeExePath>
         <ILMergeExeV40>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
         <ILMergeExeV45>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
-	  </PropertyGroup>
-	  <Message Text="Using ILMerge in version: @(ILMergeVersion)"/>
+    </PropertyGroup>
+    <Message Text="Using ILMerge in version: @(ILMergeVersion)"/>
   </Target>	
 	
   <Target Name="ExecuteMerges"
