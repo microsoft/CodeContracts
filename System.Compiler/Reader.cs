@@ -1928,17 +1928,17 @@ namespace System.Compiler.Metadata{
       this.currentTypeParameters = types;
       try
       {
-      int i = 0, n = genericParameters.Length, j = n-1;
-      bool sorted = (this.sortedTablesMask >> (int)TableIndices.GenericParam) % 2 == 1;
-      if (sorted){
-        while (i < j){
-          int k = (i+j) / 2;
-          if (genericParameters[k].Owner < parentIndex)
-            i = k+1;
-          else
-            j = k;
-        }
-        while (i > 0 && genericParameters[i-1].Owner == parentIndex) i--;
+        int i = 0, n = genericParameters.Length, j = n-1;
+        bool sorted = (this.sortedTablesMask >> (int)TableIndices.GenericParam) % 2 == 1;
+        if (sorted){
+          while (i < j){
+            int k = (i+j) / 2;
+            if (genericParameters[k].Owner < parentIndex)
+              i = k+1;
+            else
+              j = k;
+          }
+          while (i > 0 && genericParameters[i-1].Owner == parentIndex) i--;
       }
       for (int index = 0; i < n; i++, index++)
         if (genericParameters[i].Owner == parentIndex)
