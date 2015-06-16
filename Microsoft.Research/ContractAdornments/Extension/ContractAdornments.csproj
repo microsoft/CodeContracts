@@ -4,48 +4,27 @@
   <PropertyGroup>
     <RootFolder>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),Common.CodeContracts.props))</RootFolder>
   </PropertyGroup>
-<!--  <Import Project="$(RootFolder)\Common.CodeContracts.props" /> -->
-
+  <!--  <Import Project="$(RootFolder)\Common.CodeContracts.props" /> -->
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{5982130C-B0DD-4E10-82F7-A23F40A16315}</ProjectGuid>
+    <ProjectGuid>{D3F9BE8B-BA9F-4919-87CE-EE1878EDA40C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ContractAdornments</RootNamespace>
-    <AssemblyName>CodeContractsHelper11</AssemblyName>
-    <UseCodeBase>true</UseCodeBase>
-    <GeneratePkgDefFile>true</GeneratePkgDefFile>
-    <!--    <VSSDKTargetPlatformRegRootSuffix>Exp</VSSDKTargetPlatformRegRootSuffix> -->
-    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-    <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>CodeContractsHelper</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <TargetFrameworkProfile />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,8 +38,8 @@
     </DocumentationFile>
     <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
     <CopyVsixExtensionLocation>C:\Users\a-darylz\Documents\CCI\Microsoft.Research\ContractAdornments</CopyVsixExtensionLocation>
-    <DeployExtension>True</DeployExtension>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DeployExtension>False</DeployExtension>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,8 +48,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,7 +61,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Academic9|AnyCPU' ">
@@ -97,8 +73,6 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Internal9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,7 +86,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9ro|AnyCPU' ">
@@ -125,8 +98,6 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -152,8 +123,7 @@
     <Reference Include="Microsoft.Cci.ContractExtractor">
       <HintPath>..\..\ImportedCCI2\Microsoft.Cci.ContractExtractor.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.CSharpSourceEmitter, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Cci.CSharpSourceEmitter">
       <HintPath>..\..\ImportedCCI2\Microsoft.Cci.CSharpSourceEmitter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.ILGenerator, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
@@ -184,42 +154,58 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ImportedCCI2\Microsoft.Cci.PdbReader.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Cci.PdbWriter, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ImportedCCI2\Microsoft.Cci.PdbWriter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Cci.PEReader, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ImportedCCI2\Microsoft.Cci.PEReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Cci.PeWriter, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ImportedCCI2\Microsoft.Cci.PeWriter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.SourceModel, Version=0.0.0.2, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ImportedCCI2\Microsoft.Cci.SourceModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.CSharp.Services.Language, Version=11.0.0.0">
+    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CSharp.Services.Language, Version=10.0.0.0">
       <HintPath>References\Microsoft.VisualStudio.CSharp.Services.Language.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.CSharp.Services.Language.Interop, Version=11.0.0.0">
-      <HintPath>References\Microsoft.VisualStudio.CSharp.Services.Language.Interop.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.Editor, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Editor, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
-    <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
-    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -244,82 +230,34 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\License\AdornmentsEULA.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>License\AdornmentsEULA.docx</Link>
-    </Content>
-    <Content Include="..\License\AdornmentsEULA.rtf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>AdornmentsEULA.rtf</Link>
-    </Content>
-    <None Include="..\Sources\Inheritance\PropertyCollector.cs">
-      <Link>Inheritance\PropertyCollector.cs</Link>
-    </None>
-    <None Include="..\Sources\Inheritance\MethodCollector.cs">
-      <Link>Inheritance\MethodCollector.cs</Link>
-    </None>
-    <None Include="..\Sources\Inheritance\InheritanceTracker.cs">
-      <Link>Inheritance\InheritanceTracker.cs</Link>
-    </None>
-    <Compile Include="..\Sources\Contracts\CSharpToCCIHelper.cs">
-      <Link>Contracts\CSharpToCCIHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Intellisense\IntellisenseContractsHelper.cs">
-      <Link>Intellisense\IntellisenseContractsHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Intellisense\SignatureHelp.cs">
-      <Link>Intellisense\SignatureHelp.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Intellisense\SignatureHelpProvider.cs">
-      <Link>Intellisense\SignatureHelpProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\LineTransformer.cs">
-    </Compile>
-    <Compile Include="..\Sources\Extensions.cs">
-    </Compile>
-    <Compile Include="..\Sources\Metadata\MetadataTracker.cs">
-      <Link>Metadata\MetadataTracker.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Intellisense\QuickInfo.cs">
-      <Link>Intellisense\QuickInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Intellisense\QuickInfoProvider.cs">
-      <Link>Intellisense\QuickInfoProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\TextView\TextViewTracker.cs">
-      <Link>TextView\TextViewTracker.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\TextView\TextViewProvider.cs">
-      <Link>TextView\TextViewProvider.cs</Link>
-    </Compile>
     <Compile Include="..\..\common\include\version.cs">
       <Link>Version\version.cs</Link>
     </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\GlobalSuppressions.cs">
-      <Link>VSServiceProvider\GlobalSuppressions.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\Guids.cs">
-      <Link>VSServiceProvider\Guids.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\Contracts\ContractsProvider.cs">
-      <Link>Contracts\ContractsProvider.cs</Link>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs">
-    </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\NonlockingHost.cs">
-      <Link>VSServiceProvider\NonLockingHost.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\OptionsPage\OptionsPage.cs">
-      <Link>VSServiceProvider\OptionsPage\OptionsPage.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\ProjectTracker.cs">
-      <Link>VSServiceProvider\ProjectTracker.cs</Link>
-    </Compile>
-    <Compile Include="..\Sources\VSServiceProvider\VSServiceProvider.cs">
-      <Link>VSServiceProvider\VSServiceProvider.cs</Link>
-    </Compile>
+    <None Include="AdornmentSource.cs" />
+    <Compile Include="Contracts\ContractsProvider.cs" />
+    <Compile Include="Contracts\CSharpToCCIHelper.cs" />
+    <None Include="Delegates.cs" />
+    <Compile Include="Extensions.cs" />
+    <None Include="Inheritance\InheritanceTracker.cs" />
+    <None Include="Inheritance\MethodCollector.cs" />
+    <None Include="Inheritance\PropertyCollector.cs" />
+    <Compile Include="Intellisense\IntellisenseContractsHelper.cs" />
+    <Compile Include="Intellisense\QuickInfo.cs" />
+    <Compile Include="Intellisense\QuickInfoProvider.cs" />
+    <Compile Include="Intellisense\SignatureHelp.cs" />
+    <Compile Include="Intellisense\SignatureHelpProvider.cs" />
+    <Compile Include="LineTransformer.cs" />
+    <Compile Include="Metadata\MetadataTracker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextView\TextViewProvider.cs" />
+    <Compile Include="TextView\TextViewTracker.cs" />
+    <Compile Include="VSServiceProvider\GlobalSuppressions.cs" />
+    <Compile Include="VSServiceProvider\Guids.cs" />
+    <Compile Include="VSServiceProvider\NonlockingHost.cs" />
+    <Compile Include="VSServiceProvider\OptionsPage\OptionsPage.cs" />
+    <Compile Include="VSServiceProvider\OptionsPage\OptionsResources.Designer.cs" />
+    <Compile Include="VSServiceProvider\ProjectTracker.cs" />
+    <Compile Include="VSServiceProvider\VSServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -344,48 +282,29 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <Link>QuickInfo_Large.png</Link>
     </Content>
+    <Content Include="..\License\AdornmentsEULA.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <Link>License\AdornmentsEULA.docx</Link>
+    </Content>
+    <Content Include="..\License\AdornmentsEULA.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <Link>AdornmentsEULA.rtf</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Sources\VSServiceProvider\OptionsPage\OptionsResources.resx">
-      <Link>VSServiceProvider\OptionsPage\OptionsResources.resx</Link>
-    </EmbeddedResource>
+    <EmbeddedResource Include="VSServiceProvider\OptionsPage\OptionsResources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VSAdornments\VS2012\Adornments11.csproj">
-      <Project>{235196bb-603a-470a-af8e-ef6c8d01c4dc}</Project>
-      <Name>Adornments11</Name>
+    <ProjectReference Include="..\..\VSAdornments\Adornments.csproj">
+      <Project>{784aa6a9-013e-4d8e-82d6-934571cf1357}</Project>
+      <Name>Adornments</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{E47A869B-4B78-41B3-AF6E-1D51B2D1AD3B}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <PropertyGroup>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
-    <StartArguments>/rootsuffix Exp</StartArguments>
-  </PropertyGroup>
-  <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <PropertyGroup>
     <!--
@@ -411,8 +330,6 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal64|AnyCPU'">
     <OutputPath>bin\Internal64\</OutputPath>
@@ -427,8 +344,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -445,8 +360,6 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
