@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using ContractAdornments.Interfaces;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableContracts;
 
@@ -23,7 +24,7 @@ namespace ContractAdornments {
   /// <summary>
   /// A custom host enviornment that makes sure all openned resources can be disposed. This is needed so that this host doesn't interfere with VS's build process.
   /// </summary>
-  public class NonlockingHost : CodeContractAwareHostEnvironment {
+  public class NonlockingHost : CodeContractAwareHostEnvironment, INonlockingHost {
     readonly Dictionary<string, AssemblyIdentity> _locationsToAssemblyReferences;
     private string[] _originalLibpaths;
 

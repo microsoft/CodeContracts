@@ -13,19 +13,16 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Globalization;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using MSVSIP = Microsoft.VisualStudio.Shell;
-using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
+using ContractAdornments.Interfaces;
+using MSVSIP = Microsoft.VisualStudio.Shell;
 
 namespace ContractAdornments.OptionsPage {
   [Guid(GuidList.guidOptionsPageGeneralString)]
   [System.ComponentModel.DesignerCategoryAttribute("code")]
-  public class ContractOptionsPage : MSVSIP.DialogPage
+  public class ContractOptionsPage : MSVSIP.DialogPage, IContractOptionsPage
   {
 #if false
     [Category("Contracts")]

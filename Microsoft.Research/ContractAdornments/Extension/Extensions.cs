@@ -13,17 +13,15 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using Microsoft.VisualStudio.Text;
-using Microsoft.RestrictedUsage.CSharp.Core;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
 using System.Diagnostics.Contracts;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Adornments;
-using ContractAdornments.OptionsPage;
+using ContractAdornments.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace ContractAdornments {
   static class HelperExtensions {
@@ -45,36 +43,6 @@ namespace ContractAdornments {
       return null;
     }
 
-    public static SnapshotSpan Convert(this CSharpSpan span, ITextSnapshot snapshot) {
-      Contract.Requires(snapshot != null);
-      var startIndex = snapshot.GetPositionFromLineColumn(span.Start.Line, span.Start.Character);
-      var endIndex = snapshot.GetPositionFromLineColumn(span.End.Line, span.End.Character);
-      // still need to do range check: have seen this be too long
-      var len = endIndex - startIndex;
-      var maxLen = snapshot.Length - startIndex;
-      var usableLength = len > maxLen ? maxLen : len; // min(len,maxLen)
-      return new SnapshotSpan(snapshot, startIndex, usableLength);
-    }
-    
-    public static Position Convert(this ITrackingPoint point, ITextSnapshot snapshot) {
-      Contract.Requires(point != null);
-      
-      var snapshotPoint = point.GetPoint(snapshot);
-      var line = snapshotPoint.GetContainingLine();
-      if (line == null) return default(Position);
-      int lineIndex = line.LineNumber;
-      int charIndex = snapshotPoint.Position - line.Start.Position;
-      return new Position(lineIndex, charIndex);
-    }
-
-    public static int GetPositionFromLineColumn(this ITextSnapshot snapshot, int line, int column) {
-      Contract.Requires(snapshot != null);
-
-      var textline = snapshot.GetLineFromLineNumber(line);
-      if (textline == null) return 0;
-      return textline.Start.Position + column;
-    }
-
     public static void RefreshLineTransformer(this ITextView textView) {
       Contract.Requires(textView != null);
 
@@ -83,49 +51,9 @@ namespace ContractAdornments {
       if (line == null) return;
       textView.DisplayTextLineContainingBufferPosition(line.Start, line.Top - textView.ViewportTop, ViewRelativePosition.Top);
     }
-
-    public static string GetName(this PropertyDeclarationNode @this, ITextSnapshot snapshot) {
-      Contract.Requires(@this != null);
-      Contract.Requires(snapshot != null);
-
-      var nameNode = @this.MemberName;
-      if (nameNode != null)
-      {
-        var nameNodeSpan = nameNode.GetSpan();
-        return nameNodeSpan.Convert(snapshot).GetText();
-      }
-
-      return null;
-    }
-    public static string GetName(this MethodDeclarationNode @this, ITextSnapshot snapshot) {
-      Contract.Requires(@this != null);
-      Contract.Requires(snapshot != null);
-
-      var nameNode = @this.MemberName;
-      if (nameNode != null)
-      {
-        var nameNodeSpan = nameNode.GetSpan();
-        return nameNodeSpan.Convert(snapshot).GetText();
-      }
-
-      return null;
-    }
-    public static string GetName(this TypeBaseNode @this, ITextSnapshot snapshot)
-    {
-      Contract.Requires(snapshot != null);
-
-      var span = @this.GetSpan();
-      var nSpan = span.Convert(snapshot);
-      var text = nSpan.GetText();
-      if (text != null)
-      {
-        return text;
-      }
-      return null;
-    }
   }
   public static class AdornmentOptionsHelper {
-    public static AdornmentOptions GetAdornmentOptions(ContractOptionsPage options) {
+    public static AdornmentOptions GetAdornmentOptions(IContractOptionsPage options) {
       var result = AdornmentOptions.None;
 
       if (options == null)

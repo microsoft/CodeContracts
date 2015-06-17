@@ -14,25 +14,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using ContractAdornments.Interfaces;
+using ContractAdornments.OptionsPage;
 using EnvDTE;
-using EnvDTE80;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
-using Microsoft.RestrictedUsage.CSharp.Compiler.IDE;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using UtilitiesNamespace;
 using VSLangProj;
-using System.Timers;
-using ContractAdornments.OptionsPage;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace ContractAdornments {
 
@@ -46,7 +42,7 @@ namespace ContractAdornments {
   [Guid(GuidList.guidVSServiceProviderString)]
   [ProvideAutoLoad("ADFC4E64-0397-11D1-9F4E-00A0C911004F")]
   #endregion
-  public sealed class VSServiceProvider : Package, IVsSolutionEvents, IVsUpdateSolutionEvents2, IOleComponent
+  public sealed class VSServiceProvider : Package, IContractsPackage, IVsSolutionEvents, IVsUpdateSolutionEvents2, IOleComponent
   {
     public const string InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate = "The snapshot is out of date";
     public const string COMExceptionMessage_BindingFailed = "Binding failed because IntelliSense for source file";
@@ -54,12 +50,11 @@ namespace ContractAdornments {
     public const int LeaderBoardMask = LeaderBoardToolId << 12;
     const string CrashMailRecepients = "ccixfb@microsoft.com";
 
-    private static VSServiceProvider current;
     public static VSServiceProvider Current
     {
       get {
         Contract.Ensures(Contract.Result<VSServiceProvider>() != null); 
-        return current;
+        return (VSServiceProvider)ContractsPackageAccessor.Current;
       }
     }
     public readonly Logger logger;
@@ -74,7 +69,7 @@ namespace ContractAdornments {
     }
 
     public bool InBuild { get; private set; }
-    IDECompilerHost _compilerHost;
+    ICompilerHost _compilerHost;
     DTE _dte;
     uint _componentID;
     bool _solutionLoaded = false;
@@ -114,7 +109,15 @@ namespace ContractAdornments {
       }
     }
 
-    public event Action<Compilation> NewCompilation;
+    IContractOptionsPage IContractsPackage.VSOptionsPage
+    {
+        get
+        {
+            return VSOptionsPage;
+        }
+    }
+
+    public event Action<object> NewCompilation;
     public event Action BuildDone;
     public event Action<string> BuildBegin;
     public event Action ExtensionFailed;
@@ -133,7 +136,7 @@ namespace ContractAdornments {
     /// Sets VSSeriviceProvider.Current.
     /// </summary>
     public VSServiceProvider() {
-      current = this;
+      ContractsPackageAccessor.Current = this;
       _startTime = DateTime.Now;
 
 #if false
@@ -260,6 +263,13 @@ namespace ContractAdornments {
       if (result != null)
         return result;
       return null;
+    }
+
+    public IVersionedServicesFactory GetVersionedServicesFactory() {
+      int vsMajorVersion = typeof(ErrorHandler).Assembly.GetName().Version.Major;
+      string assemblyName = "ContractAdornments.CSharp." + vsMajorVersion;
+      Assembly assembly = Assembly.Load(assemblyName);
+      return (IVersionedServicesFactory)assembly.GetType("ContractAdornments.CSharp.VersionedServicesFactory");
     }
 
     NonlockingHost CreateHost(Version version) {
@@ -534,7 +544,7 @@ namespace ContractAdornments {
     void SolutionOpened() {
       Logger.PublicEntry(() => {
         try {
-          this._compilerHost = new IDECompilerHost();
+          this._compilerHost = GetVersionedServicesFactory().CreateCompilerHost();
         } catch {
           this._compilerHost = null;
         }
@@ -703,30 +713,6 @@ namespace ContractAdornments {
         PublicEntryException(exn, "FDoIdle");
       }
       return 0;
-    }
-
-    static public bool IsModelReady(ParseTree parseTree) {
-      Contract.Requires(parseTree != null);
-
-      try {
-        if (parseTree == null)
-          return false;
-
-        var rootNode = parseTree.RootNode;
-
-      } catch (InvalidOperationException e) {
-        if (e.Message.Contains(InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
-          return false;
-        else
-          throw e;
-      } catch (COMException e) {
-        if (e.Message.Contains(COMExceptionMessage_BindingFailed))
-          return false;
-        else
-          throw e;
-      }
-
-      return true;
     }
 
 #if false

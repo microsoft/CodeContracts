@@ -12,21 +12,16 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Linq;
+using Adornments;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text.Formatting;
 using Microsoft.VisualStudio.Text.Outlining;
 using Microsoft.VisualStudio.Utilities;
-using Adornments;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics.Contracts;
-using System.Diagnostics;
-using System.Windows.Media;
 
 namespace ContractAdornments {
   [Export(typeof(IWpfTextViewCreationListener))]
@@ -119,7 +114,7 @@ namespace ContractAdornments {
         #endregion
         if (IsEditableCodeFile) {
           textView.GotAggregateFocus += NewFocus;
-          var textViewTracker = TextViewTracker.GetOrCreateTextViewTracker(textView, projectTracker, vsTextProperties);
+          var textViewTracker = TextViewTrackerAccessor.GetOrCreateTextViewTracker(textView, projectTracker, vsTextProperties);
           //if (VSServiceProvider.Current.VSOptionsPage != null && (VSServiceProvider.Current.VSOptionsPage.InheritanceOnMethods || VSServiceProvider.Current.VSOptionsPage.InheritanceOnProperties)) {
           //  //var inheritanceAdornmentManager = AdornmentManager.GetOrCreateAdornmentManager(textView, "InheritanceAdornments", outliningManager, VSServiceProvider.Current.Logger);
           //  //var inheritanceTracker = InheritanceTracker.GetOrCreateAdornmentTracker(textViewTracker);

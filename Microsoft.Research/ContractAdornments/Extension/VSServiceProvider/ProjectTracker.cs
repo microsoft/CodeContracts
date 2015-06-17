@@ -16,23 +16,24 @@ using System;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.InteropServices;
+using ContractAdornments.Interfaces;
 using Microsoft.Cci;
 using VSLangProj;
 
 namespace ContractAdornments {
-  public class ProjectTracker {
+  public class ProjectTracker : IProjectTracker {
     public const string COMExceptionMessage_ProjectUnavailable = "Project unavailable.";
 
     readonly VSLangProj.VSProject VS_Project;
     readonly EnvDTE.Project EnvDTE_Project;
 
-    private readonly ContractsProvider _contractsProvider;
+    private readonly IContractsProvider _contractsProvider;
 
-    public ContractsProvider ContractsProvider
+    public IContractsProvider ContractsProvider
     {
       get
       {
-        Contract.Ensures(Contract.Result<ContractsProvider>() != null);
+        Contract.Ensures(Contract.Result<IContractsProvider>() != null);
         return this._contractsProvider;
       }
     }
@@ -52,12 +53,20 @@ namespace ContractAdornments {
         return this._host;
       }
     }
+    INonlockingHost IProjectTracker.Host
+    {
+        get
+        {
+            return Host;
+        }
+    }
+
     public AssemblyIdentity AssemblyIdentity { get; private set; }
     int _assemblyIdentityRevaluations = 0;
     const int _maxAssemblyIdentityRevaluations = 5;
 
     public readonly string UniqueProjectName;
-    public readonly string ProjectName;
+    public string ProjectName { get; private set; }
 
     public event Action BuildBegin;
     public event Action BuildDone;
@@ -134,7 +143,7 @@ namespace ContractAdornments {
       AssemblyIdentity = GetAssemblyIdentity(EnvDTE_Project, Host);
 
       //Set the contracts provider
-      _contractsProvider = new ContractsProvider(this);
+      _contractsProvider = VSServiceProvider.Current.GetVersionedServicesFactory().CreateContractsProvider(this);
     }
 
     public void OnProjectConfigChange()

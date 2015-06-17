@@ -371,7 +371,7 @@ namespace ContractAdornments {
     private static string SmartFormat(string result)
     {
         if (string.IsNullOrEmpty(result)) return result;
-        if (VSServiceProvider.Current.VSOptionsPage != null && VSServiceProvider.Current.VSOptionsPage.SmartFormatting)
+        if (ContractsPackageAccessor.Current.VSOptionsPage != null && ContractsPackageAccessor.Current.VSOptionsPage.SmartFormatting)
         {
             var startTime = DateTime.Now;
 
@@ -391,15 +391,15 @@ namespace ContractAdornments {
             catch (Exception)
             {
                 trySmartReplace = null;
-                VSServiceProvider.Current.Logger.WriteToLog("Error: Smart formatting failed!");
-                VSServiceProvider.Current.Logger.WriteToLog(result);
+                ContractsPackageAccessor.Current.Logger.WriteToLog("Error: Smart formatting failed!");
+                ContractsPackageAccessor.Current.Logger.WriteToLog(result);
             }
 
             if (trySmartReplace != null)
                 result = trySmartReplace;
 
             var elapsedTime = DateTime.Now - startTime;
-            VSServiceProvider.Current.Logger.WriteToLog("\t(Smart formatting took " + elapsedTime.Milliseconds + "ms)");
+            ContractsPackageAccessor.Current.Logger.WriteToLog("\t(Smart formatting took " + elapsedTime.Milliseconds + "ms)");
         }
         return result;
     }

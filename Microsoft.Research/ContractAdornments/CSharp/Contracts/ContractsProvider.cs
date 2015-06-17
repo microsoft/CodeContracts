@@ -27,11 +27,12 @@ using Microsoft.Cci.Contracts;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Cci.MutableContracts;
+using ContractAdornments.Interfaces;
 
 namespace ContractAdornments {
-  public class ContractsProvider {
-    readonly ProjectTracker _projectTracker;
-    CodeContractAwareHostEnvironment Host {
+  public class ContractsProvider : IContractsProvider {
+    readonly IProjectTracker _projectTracker;
+    INonlockingHost Host {
       get {
         Contract.Requires(_projectTracker.Host != null);
         Contract.Ensures(Contract.Result<CodeContractAwareHostEnvironment>() != null);
@@ -55,7 +56,7 @@ namespace ContractAdornments {
       Contract.Invariant(Host != null);
     }
 
-    public ContractsProvider(ProjectTracker projectTracker) {
+    public ContractsProvider(IProjectTracker projectTracker) {
       Contract.Requires(projectTracker != null);
 
       //Grab a pointer back to our project tracker
@@ -70,7 +71,7 @@ namespace ContractAdornments {
 
     public void Clear() {
       //host = null;
-      VSServiceProvider.Current.Logger.WriteToLog("Clearing all caches in ContractsProvider.");
+      ContractsPackageAccessor.Current.Logger.WriteToLog("Clearing all caches in ContractsProvider.");
 
       //Clear caches
       _semanticAssemblysToCCIAssemblys.Clear();
@@ -91,7 +92,7 @@ namespace ContractAdornments {
       }
       #endregion
       #region Check cache
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         if (_semanticAssemblysToCCIAssemblys.TryGetValue(semanticAssembly, out cciAssembly))
           return cciAssembly != Dummy.AssemblyReference && cciAssembly != null;
       #endregion
@@ -125,7 +126,7 @@ namespace ContractAdornments {
           goto ReturnTrue;
         }
       } else
-        VSServiceProvider.Current.Logger.WriteToLog("Assembly identity for the project: " + _projectTracker.ProjectName + " was null.");
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Assembly identity for the project: " + _projectTracker.ProjectName + " was null.");
       #endregion
       #region Build assembly reference
       if (semanticAssembly.Name == null || string.IsNullOrWhiteSpace(semanticAssembly.Name.Text)) goto ReturnFalseNoOutput; // because we have no name.
@@ -162,16 +163,16 @@ namespace ContractAdornments {
       #endregion
       #region ReturnTrue:
     ReturnTrue:
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticAssemblysToCCIAssemblys[semanticAssembly] = cciAssembly;
       EnsureAssemblyIsLoaded(semanticAssembly, ref cciAssembly);
       return true;
       #endregion
       #region ReturnFalse:
     ReturnFalse:
-      VSServiceProvider.Current.Logger.WriteToLog("Failed to build assembly reference for: " + semanticAssembly.Name.Text);
+      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build assembly reference for: " + semanticAssembly.Name.Text);
     ReturnFalseNoOutput:
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticAssemblysToCCIAssemblys[semanticAssembly] = Dummy.AssemblyReference;
       return false;
       #endregion
@@ -223,13 +224,13 @@ namespace ContractAdornments {
           return true;
         } else {
           //No need, detailed logs are written at all code paths in "TryGetMethodContract"
-          //VSServiceProvider.Current.Logger.WriteToLog("Failed to get method contracts for: " + cciMethod.Name);
+          //ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to get method contracts for: " + cciMethod.Name);
         }
       } else {
         methodContract = null;
         if (semanticMethod.Name != null)
         {
-          VSServiceProvider.Current.Logger.WriteToLog("Failed to get CCI reference for: " + semanticMethod.Name.Text);
+          ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to get CCI reference for: " + semanticMethod.Name.Text);
         }
       }
       return false;
@@ -253,20 +254,20 @@ namespace ContractAdornments {
           methodContract = ContractHelper.GetMethodContractForIncludingInheritedContracts(Host, resolvedMethod);
           if (methodContract == null) {
             methodContract = ContractDummy.MethodContract;
-            VSServiceProvider.Current.Logger.WriteToLog(String.Format("Did not find any method contract(s) for '{0}'", method.Name));
+            ContractsPackageAccessor.Current.Logger.WriteToLog(String.Format("Did not find any method contract(s) for '{0}'", method.Name));
           } else {
-            VSServiceProvider.Current.Logger.WriteToLog(
+            ContractsPackageAccessor.Current.Logger.WriteToLog(
               String.Format("Got method contract(s) for '{0}': {1} preconditions, {2} postconditions",
                 method.Name,
                 Microsoft.Cci.IteratorHelper.EnumerableCount(methodContract.Preconditions),
                 Microsoft.Cci.IteratorHelper.EnumerableCount(methodContract.Postconditions)));
           }
         } else {
-          VSServiceProvider.Current.Logger.WriteToLog(String.Format("Method '{0}' resolved to dummy", method.Name));
+          ContractsPackageAccessor.Current.Logger.WriteToLog(String.Format("Method '{0}' resolved to dummy", method.Name));
         }
       } catch (NullReferenceException) {
         methodContract = null;
-        VSServiceProvider.Current.Logger.WriteToLog(String.Format("NullReferenceException thrown when getting contracts for '{0}'", method.Name));
+        ContractsPackageAccessor.Current.Logger.WriteToLog(String.Format("NullReferenceException thrown when getting contracts for '{0}'", method.Name));
       }
       return methodContract != null;
     }
@@ -293,12 +294,12 @@ namespace ContractAdornments {
       catch (IllFormedSemanticModelException) {
         return false;
       } catch (InvalidOperationException e) {
-        if (!e.Message.Contains(VSServiceProvider.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
+        if (!e.Message.Contains(ContractsPackageAccessor.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
           throw e;
         else
           return false;
       } catch (System.Runtime.InteropServices.COMException e) {
-        if (!e.Message.Contains(VSServiceProvider.COMExceptionMessage_BindingFailed))
+        if (!e.Message.Contains(ContractsPackageAccessor.COMExceptionMessage_BindingFailed))
           throw e;
         else
           return false;
@@ -319,7 +320,7 @@ namespace ContractAdornments {
       }
       #endregion
       #region Check cache
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         if (_semanticMembersToCCIMethods.TryGetValue(semanticMethod, out cciMethod))
           return (!(cciMethod is Dummy)) && cciMethod != null;
       #endregion
@@ -375,7 +376,7 @@ namespace ContractAdornments {
       #region ReturnFalse:
     ReturnFalse:
       cciMethod = Dummy.MethodReference;
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticMembersToCCIMethods[semanticMethod] = cciMethod;
       return false;
       #endregion
@@ -397,7 +398,7 @@ namespace ContractAdornments {
           goto ReturnTrue;
         }
       } catch (InvalidOperationException e) { //For some reason, an InvalidOperationException may get thrown.
-        if (e.Message.Contains(VSServiceProvider.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
+        if (e.Message.Contains(ContractsPackageAccessor.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
           goto ReturnFalse;
         else
           throw e;
@@ -490,7 +491,7 @@ namespace ContractAdornments {
     ReturnFalse:
       if (semanticParameter.Name != null)
       {
-        VSServiceProvider.Current.Logger.WriteToLog("Failed to build parameter reference for: " + semanticParameter.Name.Text);
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build parameter reference for: " + semanticParameter.Name.Text);
       }
       return false;
       #endregion
@@ -595,7 +596,7 @@ namespace ContractAdornments {
     ReturnFalse:
       if (semanticProperty.Name != null)
       {
-        VSServiceProvider.Current.Logger.WriteToLog("Failed to build accessor references for: " + semanticProperty.Name.Text);
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build accessor references for: " + semanticProperty.Name.Text);
       }
       _semanticPropertiesToCCIAccessorMethods[semanticProperty] = new Tuple<IMethodReference, IMethodReference>(Dummy.MethodReference, Dummy.MethodReference);
       return false;
@@ -612,7 +613,7 @@ namespace ContractAdornments {
       }
       #endregion
       #region Check cache
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         if (_semanticTypesToCCITypes.TryGetValue(semanticType, out cciType))
           return cciType != null && cciType != Dummy.TypeReference;
       #endregion
@@ -730,14 +731,14 @@ namespace ContractAdornments {
       #endregion
       #region ReturnTrue:
     ReturnTrue:
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticTypesToCCITypes[semanticType] = cciType;
       return true;
       #endregion
       #region ReturnFalse:
     ReturnFalse:
-      VSServiceProvider.Current.Logger.WriteToLog("Failed to build type reference for: " + (semanticType.Name != null ? semanticType.Name.Text : semanticType.ToString()));
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build type reference for: " + (semanticType.Name != null ? semanticType.Name.Text : semanticType.ToString()));
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticTypesToCCITypes[semanticType] = Dummy.TypeReference;
       return false;
       #endregion
@@ -753,7 +754,7 @@ namespace ContractAdornments {
       }
       #endregion
       #region Check cache
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         if (_semanticTypesToCCITypes.TryGetValue(semanticType, out cciType))
           return cciType != null && cciType != Dummy.TypeReference;
       #endregion
@@ -765,7 +766,7 @@ namespace ContractAdornments {
       return TryGetTypeReference(semanticType, cciAssembly, out cciType);
       #region ReturnFalse:
     ReturnFalse:
-      if (VSServiceProvider.Current.VSOptionsPage.Caching)
+      if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticTypesToCCITypes[semanticType] = Dummy.TypeReference;
       return false;
       #endregion
@@ -786,23 +787,23 @@ namespace ContractAdornments {
         if (assembly == Dummy.Assembly) {
           var location = assemblyReference.AssemblyIdentity.Location;
           if (File.Exists(location)) {
-            VSServiceProvider.Current.Logger.WriteToLog(String.Format("Calling LoadUnitFrom on assembly '{0}' for future resolution.", location));
-            VSServiceProvider.Current.Logger.WriteToLog(String.Format("core assembly: '{0}'", Host.CoreAssemblySymbolicIdentity.ToString()));
+            ContractsPackageAccessor.Current.Logger.WriteToLog(String.Format("Calling LoadUnitFrom on assembly '{0}' for future resolution.", location));
+            ContractsPackageAccessor.Current.Logger.WriteToLog(String.Format("core assembly: '{0}'", Host.CoreAssemblySymbolicIdentity.ToString()));
             assembly = Host.LoadUnitFrom(location) as IAssembly;
             if (assembly != null){
               assemblyReference = assembly;
-              if(VSServiceProvider.Current.VSOptionsPage.Caching)
+              if(ContractsPackageAccessor.Current.VSOptionsPage.Caching)
                 _semanticAssemblysToCCIAssemblys[semanticAssembly] = assembly;
             }
             else{
-              VSServiceProvider.Current.Logger.WriteToLog("Warning: Found a unit at '" + location + "', but it wasn't an assembly!");
+              ContractsPackageAccessor.Current.Logger.WriteToLog("Warning: Found a unit at '" + location + "', but it wasn't an assembly!");
             }
           } else{
-            VSServiceProvider.Current.Logger.WriteToLog("Assembly not found at: '" + location + "'. This could be because the assembly hasn't been built yet.");
+            ContractsPackageAccessor.Current.Logger.WriteToLog("Assembly not found at: '" + location + "'. This could be because the assembly hasn't been built yet.");
           }
         } else {
           assemblyReference = assembly;
-          if(VSServiceProvider.Current.VSOptionsPage.Caching)
+          if(ContractsPackageAccessor.Current.VSOptionsPage.Caching)
             _semanticAssemblysToCCIAssemblys[semanticAssembly] = assembly;
         }
       }

@@ -2,35 +2,24 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <RootFolder>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),Common.CodeContracts.props))</RootFolder>
-  </PropertyGroup>
-  <!--  <Import Project="$(RootFolder)\Common.CodeContracts.props" /> -->
-  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{D3F9BE8B-BA9F-4919-87CE-EE1878EDA40C}</ProjectGuid>
+    <ProjectGuid>{9C55B970-24B3-4623-9BA2-2D0F070E31A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContractAdornments</RootNamespace>
-    <AssemblyName>CodeContractsHelper</AssemblyName>
+    <RootNamespace>ContractAdornments.CSharp</RootNamespace>
+    <AssemblyName>CodeContractsHelper.CSharp.12</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <GeneratePkgDefFile>true</GeneratePkgDefFile>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
+    <BaseIntermediateOutputPath>obj\2013\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\2013\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,14 +33,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\2013\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Devlab9\</OutputPath>
+    <OutputPath>bin\2013\Devlab9\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <DebugType>full</DebugType>
@@ -65,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Academic9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Academic9\</OutputPath>
+    <OutputPath>bin\2013\Academic9\</OutputPath>
     <Optimize>true</Optimize>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,7 +65,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Internal9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Internal9\</OutputPath>
+    <OutputPath>bin\2013\Internal9\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <DebugType>full</DebugType>
@@ -90,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9ro|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Devlab9ro\</OutputPath>
+    <OutputPath>bin\2013\Devlab9ro\</OutputPath>
     <Optimize>true</Optimize>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -98,6 +87,52 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2013\Debug64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\2013\Debug\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal64|AnyCPU'">
+    <OutputPath>bin\2013\Internal64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\2013\Release\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2013\Devlab64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\2013\Debug\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -174,6 +209,10 @@
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>True</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.CSharp.Services.Language, Version=10.0.0.0">
+      <HintPath>References\Microsoft.VisualStudio.CSharp.Services.Language.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Editor, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>True</SpecificVersion>
     </Reference>
@@ -229,83 +268,24 @@
     <Compile Include="..\..\common\include\version.cs">
       <Link>Version\version.cs</Link>
     </Compile>
-    <None Include="AdornmentSource.cs" />
+    <Compile Include="Contracts\ContractsProvider.cs" />
+    <Compile Include="Contracts\CSharpToCCIHelper.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Intellisense\QuickInfoProvider.cs" />
-    <Compile Include="Intellisense\SignatureHelpProvider.cs" />
-    <Compile Include="LineTransformer.cs" />
-    <Compile Include="Metadata\MetadataTracker.cs" />
+    <Compile Include="VersionedServicesFactory.cs" />
+    <None Include="Inheritance\InheritanceTracker.cs" />
+    <None Include="Inheritance\MethodCollector.cs" />
+    <None Include="Inheritance\PropertyCollector.cs" />
+    <Compile Include="Intellisense\IntellisenseContractsHelper.cs" />
+    <Compile Include="Intellisense\QuickInfo.cs" />
+    <Compile Include="Intellisense\SignatureHelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextView\TextViewProvider.cs" />
-    <Compile Include="VSServiceProvider\GlobalSuppressions.cs" />
-    <Compile Include="VSServiceProvider\Guids.cs" />
-    <Compile Include="VSServiceProvider\NonlockingHost.cs" />
-    <Compile Include="VSServiceProvider\OptionsPage\OptionsPage.cs" />
-    <Compile Include="VSServiceProvider\OptionsPage\OptionsResources.Designer.cs" />
-    <Compile Include="VSServiceProvider\ProjectTracker.cs" />
-    <Compile Include="VSServiceProvider\VSServiceProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source.extension.vsixmanifest">
-      <!--<SubType>Designer</SubType>-->
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\Images\ContractAdornments_Large.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Link>Images\ContractAdornments_Large.png</Link>
-    </Content>
-    <Content Include="..\Images\ContractAdornments_Small.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Link>Images\ContractAdornments_Small.png</Link>
-    </Content>
-    <Content Include="..\Images\Inheritance_Small.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Link>Images\Inheritance_Small.png</Link>
-    </Content>
-    <Content Include="..\Images\QuickInfo_Large.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>QuickInfo_Large.png</Link>
-    </Content>
-    <Content Include="..\License\AdornmentsEULA.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>License\AdornmentsEULA.docx</Link>
-    </Content>
-    <Content Include="..\License\AdornmentsEULA.rtf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>AdornmentsEULA.rtf</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="VSServiceProvider\OptionsPage\OptionsResources.resx" />
+    <Compile Include="TextView\TextViewTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\VSAdornments\Adornments.csproj">
       <Project>{784aa6a9-013e-4d8e-82d6-934571cf1357}</Project>
       <Name>Adornments</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CSharp\ContractAdornments.CSharp.10.csproj">
-      <Project>{233b4116-291e-446e-9c44-04b7fbc514ff}</Project>
-      <Name>ContractAdornments.CSharp.10</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\CSharp\ContractAdornments.CSharp.11.csproj">
-      <Project>{a73f8aeb-7d31-4d67-9d94-853d1bb597a6}</Project>
-      <Name>ContractAdornments.CSharp.11</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\CSharp\ContractAdornments.CSharp.12.csproj">
-      <Project>{9c55b970-24b3-4623-9ba2-2d0f070e31a0}</Project>
-      <Name>ContractAdornments.CSharp.12</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\CSharp\ContractAdornments.CSharp.14.csproj">
-      <Project>{7fb60d9a-cf16-46c0-8154-696d85f8d451}</Project>
-      <Name>ContractAdornments.CSharp.14</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\ContractAdornments.Interfaces.csproj">
       <Project>{b0c91c82-c1d8-4697-b07e-18e17d11eb41}</Project>
@@ -316,68 +296,7 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <PropertyGroup>
-    <!--
-    To specify a different registry root to register your package, uncomment the TargetRegistryRoot
-    tag and specify a registry root in it.
-    <TargetRegistryRoot></TargetRegistryRoot>
-    -->
-    <RegisterOutputPackage>true</RegisterOutputPackage>
-    <RegisterWithCodebase>true</RegisterWithCodebase>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug64\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal64|AnyCPU'">
-    <OutputPath>bin\Internal64\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab64|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Devlab64\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\CodeContractsHelper.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

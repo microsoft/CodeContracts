@@ -27,6 +27,7 @@ using Microsoft.RestrictedUsage.CSharp.Syntax;
 using Microsoft.RestrictedUsage.CSharp.Compiler;
 using Microsoft.Cci.Contracts;
 using Microsoft.Cci;
+using ContractAdornments.Interfaces;
 
 namespace ContractAdornments {
   class QuickInfoSource : IQuickInfoSource {
@@ -39,12 +40,12 @@ namespace ContractAdornments {
       Contract.Invariant(_textViewTracker != null);
     }
 
-    public QuickInfoSource(ITextBuffer textBuffer, TextViewTracker textViewTracker) {
+    public QuickInfoSource(ITextBuffer textBuffer, ITextViewTracker textViewTracker) {
       Contract.Requires(textBuffer != null);
       Contract.Requires(textViewTracker != null);
 
       _textBuffer = textBuffer;
-      _textViewTracker = textViewTracker;
+      _textViewTracker = (TextViewTracker)textViewTracker;
     }
 
     public void AugmentQuickInfoSession(IQuickInfoSession session, IList<object> quickInfoContent, out ITrackingSpan applicableToSpan) {
@@ -59,7 +60,7 @@ namespace ContractAdornments {
       if (quickInfoContent == null) return;
 
       //Wrap our method body in a safty net that checks for exceptions
-      VSServiceProvider.Current.Logger.PublicEntry(() => {
+      ContractsPackageAccessor.Current.Logger.PublicEntry(() => {
 
         //Record our start time for preformance considerations
         var startTime = DateTime.Now;
@@ -94,13 +95,13 @@ namespace ContractAdornments {
           return;
 
         //Is the model ready?
-        if (!VSServiceProvider.IsModelReady(parseTree) || _textViewTracker.IsLatestCompilationStale || _textViewTracker.IsLatestSourceFileStale) {
+        if (!parseTree.IsModelReady() || _textViewTracker.IsLatestCompilationStale || _textViewTracker.IsLatestSourceFileStale) {
 
           //Ask for a new model
-          VSServiceProvider.Current.AskForNewVSModel();
+          ContractsPackageAccessor.Current.AskForNewVSModel();
 
           //Return a message saying we aren't ready yet
-          VSServiceProvider.Current.Logger.WriteToLog("The VS model is out of date! Aborting contract lookup.");
+          ContractsPackageAccessor.Current.Logger.WriteToLog("The VS model is out of date! Aborting contract lookup.");
           return;//"(VS isn't ready for possible contract lookup yet. Please try again in a few seconds.)";
         }
 
@@ -131,7 +132,7 @@ namespace ContractAdornments {
         } catch (IllFormedSemanticModelException) {
           return;
         } catch (InvalidOperationException e) {
-            if (!e.Message.Contains(VSServiceProvider.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
+            if (!e.Message.Contains(ContractsPackageAccessor.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
                 throw e;
             else
             {
@@ -153,7 +154,7 @@ namespace ContractAdornments {
         quickInfoContent.Add(formattedContracts);
         //Print our elapsed time for preformance considerations
         var elapseTime = DateTime.Now - startTime;
-        VSServiceProvider.Current.Logger.WriteToLog("Time to compute quickinfo: " + elapseTime.Milliseconds + "ms");
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Time to compute quickinfo: " + elapseTime.Milliseconds + "ms");
       }, "AugmentQuickInfoSession");
 
       if (span != null) { applicableToSpan = span; }
@@ -167,7 +168,7 @@ namespace ContractAdornments {
         if (semanticMember.IsProperty || semanticMember.IsIndexer)
         {
             IMethodContract setter, getter;
-            if (!_textViewTracker.ProjectTracker.ContractsProvider.TryGetPropertyContract(semanticMember, out getter, out setter))
+            if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetPropertyContract(semanticMember, out getter, out setter))
             {
                 return null;
             }
@@ -176,7 +177,7 @@ namespace ContractAdornments {
 
         //Can we get our contracts?
         IMethodContract methodContracts;
-        if (!_textViewTracker.ProjectTracker.ContractsProvider.TryGetMethodContract(semanticMember, out methodContracts))
+        if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetMethodContract(semanticMember, out methodContracts))
             return null;
 
         //Can we get our formatted contracts?

@@ -50,14 +50,14 @@ namespace ContractAdornments {
         {
             //We can't get a proper tag from this (likely ill-formed) method, so we'll skip it for now.
             var name = node.GetName(_snapshot);
-            VSServiceProvider.Current.Logger.WriteToLog("Can't form a proper tag (likely ill-formed), ignoring member '" + name == null ? "" : name + "' for now...");
+            ContractsPackageAccessor.Current.Logger.WriteToLog("Can't form a proper tag (likely ill-formed), ignoring member '" + name == null ? "" : name + "' for now...");
             return;
         }
         if (_methods.ContainsKey(key))
         {
             //For some reason, we have two methods with the same signature. There is 
             //nothing we can do in this case so we just throw out the second method.
-            VSServiceProvider.Current.Logger.WriteToLog("Two methods where found to have the exact same signature, ignoring second method for now...");
+            ContractsPackageAccessor.Current.Logger.WriteToLog("Two methods where found to have the exact same signature, ignoring second method for now...");
             return;
         }
         _methods.Add(key, node);

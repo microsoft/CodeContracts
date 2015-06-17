@@ -24,20 +24,21 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using Adornments;
 using System.Timers;
+using ContractAdornments.Interfaces;
 
 namespace ContractAdornments {
-  internal sealed class TextViewTracker {
-    public const string TextViewTrackerKey = "TextViewTracker";
+  internal sealed class TextViewTracker : ITextViewTracker {
+    public static readonly object TextViewTrackerKey = TextViewTrackerAccessor.TextViewTrackerKey;
     public const double DelayOnTextViewOpened = 2000d;
     public const double DelayOnTextViewChanged = 5000d;
 
     public readonly IWpfTextView TextView;
-    readonly ProjectTracker _projectTracker;
-    public ProjectTracker ProjectTracker
+    readonly IProjectTracker _projectTracker;
+    public IProjectTracker ProjectTracker
     {
       get
       {
-        Contract.Ensures(Contract.Result<ProjectTracker>() != null);
+        Contract.Ensures(Contract.Result<IProjectTracker>() != null);
         return this._projectTracker;
       }
     }
@@ -60,30 +61,12 @@ namespace ContractAdornments {
       Contract.Invariant(_textBufferChangedTimer != null);
     }
 
-    #region Static getters
-    [ContractVerification(false)]
-    public static TextViewTracker GetOrCreateTextViewTracker(IWpfTextView textView, ProjectTracker projectTracker, VSTextProperties vsTextProperties) {
-      Contract.Requires(textView != null);
-      Contract.Requires(projectTracker != null);
-      Contract.Ensures(Contract.Result<TextViewTracker>() != null);
-      return textView.TextBuffer.Properties.GetOrCreateSingletonProperty<TextViewTracker>(TextViewTrackerKey, delegate { return new TextViewTracker(textView, projectTracker, vsTextProperties); });
-    }
-    public static bool TryGetTextViewTracker(ITextBuffer textBuffer, out TextViewTracker textViewTracker) {
-      Contract.Requires(textBuffer != null);
-      if (textBuffer.Properties == null) {
-        textViewTracker = null;
-        return false;
-      }
-      return textBuffer.Properties.TryGetProperty(TextViewTrackerKey, out textViewTracker);
-    }
-    #endregion
-
-    private TextViewTracker(IWpfTextView textView, ProjectTracker projectTracker, VSTextProperties vsTextProperties)
+    internal TextViewTracker(IWpfTextView textView, IProjectTracker projectTracker, VSTextProperties vsTextProperties)
       : base() {
       Contract.Requires(textView != null);
       Contract.Requires(projectTracker != null);
 
-      VSServiceProvider.Current.ExtensionFailed += OnFailed;
+      ContractsPackageAccessor.Current.ExtensionFailed += OnFailed;
       this.TextView = textView;
       if (textView.TextBuffer != null)
       {
@@ -92,8 +75,8 @@ namespace ContractAdornments {
       TextView.Closed += OnClosed;
       this._projectTracker = projectTracker;
       projectTracker.BuildDone += OnBuildDone;
-//      VSServiceProvider.Current.NewSourceFile += OnNewSourceFile;
-      VSServiceProvider.Current.NewCompilation += OnNewComilation;
+//      ContractsPackageAccessor.Current.NewSourceFile += OnNewSourceFile;
+      ContractsPackageAccessor.Current.NewCompilation += OnNewComilation;
       
       //Timer
       _textBufferChangedTimer = new System.Timers.Timer();
@@ -104,7 +87,7 @@ namespace ContractAdornments {
 
       //Set the text properties
       VSTextProperties = vsTextProperties;
-      VSServiceProvider.Current.QueueWorkItem((() => { VSTextProperties.LineHeight = TextView.LineHeight; }));
+      ContractsPackageAccessor.Current.QueueWorkItem((() => { VSTextProperties.LineHeight = TextView.LineHeight; }));
 
       //Set the file name
       var fn = TextView.GetFileName();
@@ -129,17 +112,17 @@ namespace ContractAdornments {
       {
         TextView.TextBuffer.Changed -= OnTextBufferChanged;
       }
-      VSServiceProvider.Current.NewCompilation -= OnNewComilation;
-//      VSServiceProvider.Current.NewSourceFile -= OnNewSourceFile;
-      VSServiceProvider.Current.ExtensionFailed -= OnFailed;
-      VSServiceProvider.Current.Logger.WriteToLog("TextViewTracker for '" + FileName.Value + "' unsubscribed from all events.");
+      ContractsPackageAccessor.Current.NewCompilation -= OnNewComilation;
+//      ContractsPackageAccessor.Current.NewSourceFile -= OnNewSourceFile;
+      ContractsPackageAccessor.Current.ExtensionFailed -= OnFailed;
+      ContractsPackageAccessor.Current.Logger.WriteToLog("TextViewTracker for '" + FileName.Value + "' unsubscribed from all events.");
     }
 
     void OnBuildDone() {
         
       IsLatestSourceFileStale = true;
       IsLatestCompilationStale = true;
-      VSServiceProvider.Current.AskForNewVSModel();
+      ContractsPackageAccessor.Current.AskForNewVSModel();
     }
 
     void OnTextBufferChanged(object sender, TextContentChangedEventArgs e) {
@@ -151,16 +134,16 @@ namespace ContractAdornments {
         this._textBufferChangedTimer.Enabled = true;
         #endregion
       } catch (Exception exn) {
-        VSServiceProvider.Current.Logger.PublicEntryException(exn, "OnTextBufferChanged");
+        ContractsPackageAccessor.Current.Logger.PublicEntryException(exn, "OnTextBufferChanged");
       }
     }
     void OnTextViewSettled(object sender, System.Timers.ElapsedEventArgs e) {
 
-      VSServiceProvider.Current.Logger.PublicEntry(() => {
+      ContractsPackageAccessor.Current.Logger.PublicEntry(() => {
 
-        VSServiceProvider.Current.Logger.WriteToLog("Timer elapsed. Waiting for new syntactic info.");
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Timer elapsed. Waiting for new syntactic info.");
 
-        VSServiceProvider.Current.AskForNewVSModel();
+        ContractsPackageAccessor.Current.AskForNewVSModel();
 
         IsLatestCompilationStale = true;
         IsLatestSourceFileStale = true;
@@ -189,9 +172,9 @@ namespace ContractAdornments {
           LatestSourceFileChanged(this, new LatestSourceFileChangedEventArgs(wasLatestSourceFileStale, IsLatestSourceFileStale, LatestSourceFile));
       }
     }
-    void OnNewComilation(Compilation comp) {
-        
-      Contract.Requires(comp != null);
+    void OnNewComilation(object compilationObject) {
+      Contract.Requires(compilationObject != null);
+      Compilation comp = (Compilation)compilationObject;
 
       //Is this compilation relevant to us?
       SourceFile sourceFile;

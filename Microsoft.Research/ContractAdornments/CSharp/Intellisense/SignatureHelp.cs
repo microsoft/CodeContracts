@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using Microsoft.Cci.Contracts;
 using Microsoft.VisualStudio.TextManager.Interop;
+using ContractAdornments.Interfaces;
 
 namespace ContractAdornments {
   class SignatureHelpSource : ISignatureHelpSource {
@@ -35,16 +36,16 @@ namespace ContractAdornments {
       Contract.Invariant(_textViewTracker != null);
     }
 
-    public SignatureHelpSource(ITextBuffer textBuffer, TextViewTracker textViewTracker) {
+    public SignatureHelpSource(ITextBuffer textBuffer, ITextViewTracker textViewTracker) {
       Contract.Requires(textBuffer != null);
       Contract.Requires(textViewTracker != null);
 
       _textBuffer = textBuffer;
-      _textViewTracker = textViewTracker;
+      _textViewTracker = (TextViewTracker)textViewTracker;
     }
 
     public void AugmentSignatureHelpSession(ISignatureHelpSession session, IList<ISignature> signatures) {
-      VSServiceProvider.Current.Logger.PublicEntry(() => {
+      ContractsPackageAccessor.Current.Logger.PublicEntry(() => {
 
         //Record our start time for preformance considerations
         var startTime = DateTime.Now;
@@ -83,13 +84,13 @@ namespace ContractAdornments {
           return;
 
         //Is the model ready?
-        if (!VSServiceProvider.IsModelReady(parseTree) || _textViewTracker.IsLatestCompilationStale || _textViewTracker.IsLatestSourceFileStale) {
+        if (!parseTree.IsModelReady() || _textViewTracker.IsLatestCompilationStale || _textViewTracker.IsLatestSourceFileStale) {
 
           //Ask for a new model
-          VSServiceProvider.Current.AskForNewVSModel();
+          ContractsPackageAccessor.Current.AskForNewVSModel();
 
           //Return a message saying we aren't ready yet
-          VSServiceProvider.Current.Logger.WriteToLog("The VS model is out of date! Aborting contract lookup.");
+          ContractsPackageAccessor.Current.Logger.WriteToLog("The VS model is out of date! Aborting contract lookup.");
           return;//"(VS isn't ready for possible contract lookup yet. Please try again in a few seconds.)";
         }
 
@@ -125,7 +126,7 @@ namespace ContractAdornments {
         }
         catch (InvalidOperationException e)
         {
-            if (!e.Message.Contains(VSServiceProvider.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
+            if (!e.Message.Contains(ContractsPackageAccessor.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
                 throw e;
             else
             {
@@ -154,7 +155,7 @@ namespace ContractAdornments {
 
         //Print our elapsed time for preformance considerations
         var elapseTime = DateTime.Now - startTime;
-        VSServiceProvider.Current.Logger.WriteToLog("Time to compute quickinfo: " + elapseTime.Milliseconds + "ms");
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Time to compute quickinfo: " + elapseTime.Milliseconds + "ms");
       
       }, "AugmentSignatureHelpSession");
     }
@@ -175,7 +176,7 @@ namespace ContractAdornments {
             if (mem.IsConstructor || mem.IsMethod)
             {
                 IMethodContract methodContracts;
-                if (!_textViewTracker.ProjectTracker.ContractsProvider.TryGetMethodContract(mem, out methodContracts))
+                if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetMethodContract(mem, out methodContracts))
                     continue;
 
                 result[i] = IntellisenseContractsHelper.FormatContracts(methodContracts);
@@ -184,7 +185,7 @@ namespace ContractAdornments {
             {
                 IMethodContract getter, setter;
 
-                if (!_textViewTracker.ProjectTracker.ContractsProvider.TryGetPropertyContract(mem, out getter, out setter))
+                if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetPropertyContract(mem, out getter, out setter))
                     continue;
 
                 result[i] = IntellisenseContractsHelper.FormatPropertyContracts(getter, setter);
@@ -259,7 +260,7 @@ namespace ContractAdornments {
     /// <param name="session"></param>
     /// <returns></returns>
     public ISignature GetBestMatch(ISignatureHelpSession session) {
-      return VSServiceProvider.Current.Logger.PublicEntry<ISignature>(() => {
+      return ContractsPackageAccessor.Current.Logger.PublicEntry<ISignature>(() => {
         IVsMethodData methodData = null;
         IVsMethodTipWindow3 tipWindow;
         int hr;
@@ -436,7 +437,7 @@ namespace ContractAdornments {
 
 #if false
     void OnTextBufferChanged(object sender, TextContentChangedEventArgs e) {
-      VSServiceProvider.Current.Logger.PublicEntry(() => {
+      ContractsPackageAccessor.Current.Logger.PublicEntry(() => {
         CalculateCurrentParameter();
       }, "OnTextBufferChanged");
     }
