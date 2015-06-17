@@ -202,21 +202,46 @@
   <Target Name="UpdateVSIXVersions"
           DependsOnTargets="Validate">
     <Message Text="Updating Version Number in VSIX manifest"/>
-    <Exec
-      WorkingDirectory="..\ContractAdornments"
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2010\source.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="..\ContractAdornments"
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2012\source.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS10.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS11.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS12.extension.vsixmanifest" />
+	
+    <PropertyGroup>
+      <Vsix10Namespace>
+        &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2010' /&gt;
+      </Vsix10Namespace>
+      <Vsix20Namespace>
+        &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' /&gt;
+      </Vsix20Namespace>
+    </PropertyGroup>
+
+    <XmlPoke
+       Namespaces="$(Vsix10Namespace)"
+       Query="//vsx:Identifier/vsx:Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="..\ContractAdornments\VS2010\source.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="..\ContractAdornments\VS2012\source.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix10Namespace)"
+       Query="//vsx:Identifier/vsx:Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS10.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS11.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS12.extension.vsixmanifest" />
+	   
   </Target>
 
   <!--==========================================================
