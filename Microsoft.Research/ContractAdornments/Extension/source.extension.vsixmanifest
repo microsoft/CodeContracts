@@ -36,7 +36,7 @@ Displays contracts in Signature Help tool tips.</Description>
         <Edition>VST_All</Edition>
       </VisualStudio>
     </SupportedProducts>
-    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="5.0" />
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" />
   </Identifier>
   <References />
   <Content>
