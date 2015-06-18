@@ -279,6 +279,7 @@
     <Compile Include="VSServiceProvider\OptionsPage\OptionsPage.cs" />
     <Compile Include="VSServiceProvider\OptionsPage\OptionsResources.Designer.cs" />
     <Compile Include="VSServiceProvider\ProjectTracker.cs" />
+    <Compile Include="VSServiceProvider\ProvideBindingPathAttribute.cs" />
     <Compile Include="VSServiceProvider\VSServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>

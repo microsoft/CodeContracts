@@ -17,6 +17,7 @@ using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
+using ContractAdornments;
 
 [assembly: AssemblyTitle("CodeContractsEditorExtensions")]
 [assembly: AssemblyDescription("")]
@@ -33,3 +34,6 @@ using System.Runtime.InteropServices;
 //[assembly: AssemblyFileVersion("1.0.0812.6")]
 
 //[assembly:ContractVerification(false)]
+
+[assembly: Guid("E9F4EE90-7314-4A63-B4F5-432E039D6A19")]
+[assembly: ProvideBindingPath]
