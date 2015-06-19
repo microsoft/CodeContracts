@@ -14,7 +14,7 @@
     <AssemblyName>Microsoft.VisualBasic</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
-    <MyType>Windows</MyType>
+    <MyType>Empty</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>

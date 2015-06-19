@@ -1,15 +1,15 @@
 // CodeContracts
-// 
+//
 // Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
+//
+// All rights reserved.
+//
 // MIT License
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if !SILVERLIGHT
@@ -202,7 +202,7 @@ namespace System.Net.Sockets
 
       return default(Socket);
     }
-    
+
     public IAsyncResult BeginAccept(AsyncCallback callback, object state)
     {
       return default(IAsyncResult);
@@ -246,7 +246,7 @@ namespace System.Net.Sockets
 
       return default(int);
     }
-    public IAsyncResult BeginSendTo(Byte[] buffer, int offset, int size, SocketFlags socketFlags, 
+    public IAsyncResult BeginSendTo(Byte[] buffer, int offset, int size, SocketFlags socketFlags,
       System.Net.EndPoint remoteEP, AsyncCallback callback, object state)
     {
       Contract.Requires(buffer != null);
@@ -285,7 +285,7 @@ namespace System.Net.Sockets
 
       return default(IAsyncResult);
     }
-    public static void Select(System.Collections.IList checkRead, System.Collections.IList checkWrite, 
+    public static void Select(System.Collections.IList checkRead, System.Collections.IList checkWrite,
       System.Collections.IList checkError, int microSeconds)
     {
       Contract.Requires(checkError != null);
@@ -313,9 +313,6 @@ namespace System.Net.Sockets
     public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, object optionValue)
     {
       Contract.Requires(optionValue != null);
-      Contract.Requires((int)optionLevel == 41);
-      Contract.Requires((int)optionName == 12 || (int)optionName == 13);
-
     }
     public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, Byte[] optionValue)
     {
