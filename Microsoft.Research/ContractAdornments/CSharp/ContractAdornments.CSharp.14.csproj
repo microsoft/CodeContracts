@@ -331,7 +331,6 @@
     </Compile>
     <None Include="Contracts\ContractsProvider.cs" />
     <None Include="Contracts\CSharpToCCIHelper.cs" />
-    <None Include="Delegates.cs" />
     <None Include="Extensions.cs" />
     <Compile Include="VersionedServicesFactory.cs" />
     <None Include="Inheritance\InheritanceTracker.cs" />

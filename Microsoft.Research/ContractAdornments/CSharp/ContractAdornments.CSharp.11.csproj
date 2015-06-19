@@ -349,7 +349,6 @@
     </Compile>
     <Compile Include="Contracts\ContractsProvider.cs" />
     <Compile Include="Contracts\CSharpToCCIHelper.cs" />
-    <Compile Include="Delegates.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="VersionedServicesFactory.cs" />
     <None Include="Inheritance\InheritanceTracker.cs" />
