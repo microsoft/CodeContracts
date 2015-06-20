@@ -67,12 +67,16 @@ namespace System.ComponentModel.Composition.Hosting
 
     public T GetExportedValue<T>(string contractName)
     {
+      Contract.Ensures(Contract.Result<T>() != null); 
+      // because of ImportCardinality.ExactlyOne =>
+      // return this.GetExportedValueCore<T>(contractName, ImportCardinality.ExactlyOne);
       return default(T);
     }
 
     public T GetExportedValue<T>()
     {
-      return default(T);
+        Contract.Ensures(Contract.Result<T>() != null);
+        return this.GetExportedValue<T>((string)null);
     }
 
     public T GetExportedValueOrDefault<T>()
