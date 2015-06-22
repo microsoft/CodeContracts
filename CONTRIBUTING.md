@@ -23,6 +23,7 @@ This project uses many labels for categorizing issues and pull requests.
 
 | Label | Meaning on Issue | Meaning on Pull Request |
 | --- | --- | --- |
+|contract issue| The issue concerns an incorrect or missing contract in the reference source code. | n/a |
 | bug | The issue concerns a bug in the code | The issue concerns a bug in the code |
 | enhancement | The issue is an improvement to the code | The pull request is an improvement to the code |
 | up for grabs | The issue is not assigned to a particular person. If you want to work on it, just add a comment saying so and it's yours! | Normally not applicable (see comments if observed on a pull request) |
