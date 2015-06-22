@@ -3,8 +3,8 @@
 ## Open Discussion
 
 The most important part of an open source project is *open discussion*. If a developer, user, or other contributor has
-a question, comment, suggestion, or concern about any part of this project, **please speak up**: create an issue or add
-a comment to an existing issue or pull request.
+a question, comment, suggestion, or concern about any part of this project, **please speak up**: create an issue, add
+a comment to an existing issue or pull request or ask a question at jabber chat room at https://jabbr.net/#/rooms/CodeContracts.
 
 This policy especially affects the emoji described below. Any user or contributor may freely use these symbols to
 clarify intent during discussions. Questions and concerns from first-time contributors matter just as much as questions
