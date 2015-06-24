@@ -1,7 +1,4 @@
-#CCRewrite Test folder
-Foxtrot/Tests/Sources/bin/
-Foxtrot/Tests/QuickGraph/QuickGraphBinaries/
-Foxtrot/Tests/RewriteExistingBinaries/
+
 
 # CodeContracts installer
 Microsoft.Research/ManagedContract.Setup/devlab9ts/
