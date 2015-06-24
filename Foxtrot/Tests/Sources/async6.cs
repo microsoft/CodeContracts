@@ -34,6 +34,7 @@ namespace Tests.Sources
 
             var x = values.Length;
             if (x == 4) throw new ArgumentException();
+            await Task.Delay(42);
             return x;
         }
   }

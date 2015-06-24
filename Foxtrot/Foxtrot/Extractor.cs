@@ -2326,6 +2326,7 @@ namespace Microsoft.Contracts.Foxtrot {
         return result;
       }
     }
+
     /// <summary>
     /// Use the same assumption as the extractor for a non-iterator method: the preambles are
     /// in the first block. 
@@ -2350,14 +2351,14 @@ namespace Microsoft.Contracts.Foxtrot {
       {
         linkerVersion = iteratorMethod.DeclaringType.DeclaringModule.LinkerMajorVersion;
       }
-      var isRoslyn = linkerVersion == 48;
-      var initialState = moveNext.IsAsync && !isRoslyn ? -1 : 0;
+
+      var initialState = moveNext.IsAsync ? -1 : 0;
       moveNext.MoveNextStartState = initialState;
       originalContractPosition = null;
       int statementIndex;
       Contract.Assume(moveNext.Body != null);
       Contract.Assume(moveNext.Body.Statements != null);
-      int blockIndex = ContractStartInMoveNext(this.contractNodes, moveNext, out statementIndex, iteratorMethod, isRoslyn);
+      int blockIndex = ContractStartInMoveNext(this.contractNodes, moveNext, out statementIndex, iteratorMethod);
       Contract.Assert(statementIndex >= 0, "should follow from the postcondiiton");
       if (blockIndex < 0) {
         // Couldn't find state 0 in MoveNext method
@@ -2504,15 +2505,12 @@ namespace Microsoft.Contracts.Foxtrot {
     ///       - assignment to state
     ///       - unconditional branch
     ///       
-    /// Wrinkle: in Rosly, the initial async state is also 0, not -1.
-    /// The context uses the linker version to determine if this assembly was Roslyn generated.
-    /// 
-    /// Another wrinkle is async methods that are not really async and C# still emits a closure etc, but
+    /// Wrinkle is async methods that are not really async and C# still emits a closure etc, but
     /// the method does not test the async state at all.
     /// </summary>
     [ContractVerification(true)]
     [Pure]
-    static int ContractStartInMoveNext(ContractNodes contractNodes, Method moveNext, out int statementIndex, Method origMethod, bool isRoslyn)
+    static int ContractStartInMoveNext(ContractNodes contractNodes, Method moveNext, out int statementIndex, Method origMethod)
     {
       Contract.Requires(contractNodes != null);
       Contract.Requires(moveNext != null);
@@ -2565,7 +2563,7 @@ namespace Microsoft.Contracts.Foxtrot {
               lastBranchNonConditional = true;
               goto OuterLoop;
             }
-            var value = EvaluateExpression(branch.Condition, env, seenFinalCompare, isAsync, isRoslyn);
+            var value = EvaluateExpression(branch.Condition, env, seenFinalCompare, isAsync);
             if (value.Two == EvalKind.IsDisposingTest)
             {
               if (value.One != 0)
@@ -2619,7 +2617,7 @@ namespace Microsoft.Contracts.Foxtrot {
               statementIndex = i;
               return currentBlockIndex;
             }
-            var value = EvaluateExpression(swtch.Expression, env, seenFinalCompare, isAsync, isRoslyn);
+            var value = EvaluateExpression(swtch.Expression, env, seenFinalCompare, isAsync);
             if (value.One < 0 || swtch.Targets == null || value.One >= swtch.Targets.Count)
             {
               // fall through
@@ -2649,7 +2647,7 @@ namespace Microsoft.Contracts.Foxtrot {
                   statementIndex = i;
                   return currentBlockIndex;
               }
-            var value = EvaluateExpression(assign.Source, env, seenFinalCompare, isAsync, isRoslyn);
+            var value = EvaluateExpression(assign.Source, env, seenFinalCompare, isAsync);
             if (IsThisDotState(assign.Target))
             {
               // end of trace
@@ -2702,7 +2700,7 @@ namespace Microsoft.Contracts.Foxtrot {
               break;
 
             default:
-              Contract.Assume(false);
+              Contract.Assume(false, string.Format("Unexpected node type '{0}'", stmt.NodeType));
               return -1;
           }
         }
@@ -2748,15 +2746,15 @@ namespace Microsoft.Contracts.Foxtrot {
     }
 
     [ContractVerification(true)]
-    static private Pair<int, EvalKind> EvaluateExpression(Expression expression, Dictionary<Variable, Pair<int, EvalKind>> env, bool ignoreUnknown, bool isAsync, bool isRoslyn)
+    static private Pair<int, EvalKind> EvaluateExpression(Expression expression, Dictionary<Variable, Pair<int, EvalKind>> env, bool ignoreUnknown, bool isAsync)
     {
       Contract.Requires(env != null);
 
       var binary = expression as BinaryExpression;
       if (binary != null)
       {
-        var op1 = EvaluateExpression(binary.Operand1, env, ignoreUnknown, isAsync, isRoslyn);
-        var op2 = EvaluateExpression(binary.Operand2, env, ignoreUnknown, isAsync, isRoslyn);
+        var op1 = EvaluateExpression(binary.Operand1, env, ignoreUnknown, isAsync);
+        var op2 = EvaluateExpression(binary.Operand2, env, ignoreUnknown, isAsync);
         var resultKind = CombineEvalKind(ref op1, ref op2);
         switch (binary.NodeType)
         {
@@ -2791,7 +2789,7 @@ namespace Microsoft.Contracts.Foxtrot {
       var unary = expression as UnaryExpression;
       if (unary != null)
       {
-        var op = EvaluateExpression(unary.Operand, env, ignoreUnknown, isAsync, isRoslyn);
+        var op = EvaluateExpression(unary.Operand, env, ignoreUnknown, isAsync);
         var resultKind = EvalKind.None;
         if (op.Two == EvalKind.IsDisposingTest)
         {
@@ -2830,7 +2828,7 @@ namespace Microsoft.Contracts.Foxtrot {
             return Pair.For(0, EvalKind.IsDisposingTest);
           }
           if (name.Contains("<>") && name.Contains("__state")) {
-            var initialState = isAsync && !isRoslyn ? -1 : 0;
+            var initialState = isAsync ? -1 : 0;
             return Pair.For(initialState, EvalKind.IsStateValue);
           }
         }
