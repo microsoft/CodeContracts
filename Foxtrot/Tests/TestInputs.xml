@@ -370,7 +370,7 @@
      Compiler="CS"
      />
   <TestFile
-     Name="Foxtrot\Tests\Sources\Async12.cs"
+     Name="Foxtrot\Tests\Sources\Async_EnsuresWithCapturedForAll.cs"
      CompilerOptions=""
      FoxtrotOptions=""
      References="AsyncCtpLibrary.dll"

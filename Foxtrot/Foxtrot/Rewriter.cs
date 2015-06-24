@@ -3537,12 +3537,12 @@ namespace Microsoft.Contracts.Foxtrot {
                 this.forwarder.VisitTypeParameterList(this.closureClass.TemplateParameters);
 
                 taskType = this.forwarder.VisitTypeReference(taskType);
-
             }
             else
             {
                 this.closureClassInstance = this.closureClass;
             }
+
             var taskTemplate = HelperMethods.Unspecialize(taskType);
             var continueWithCandidates = taskTemplate.GetMembersNamed(Identifier.For("ContinueWith"));
             Method continueWithMethod = null;
@@ -3554,13 +3554,16 @@ namespace Microsoft.Contracts.Foxtrot {
                 {
                     if (cand.IsGeneric) continue;
                     if (cand.ParameterCount != 1) continue;
+
                     var p = cand.Parameters[0];
                     var ptype = p.Type;
                     var ptypeTemplate = ptype;
+
                     while (ptypeTemplate.Template != null)
                     {
                         ptypeTemplate = ptypeTemplate.Template;
                     }
+
                     if (ptypeTemplate.Name.Name != "Action`1") continue;
 
                     continueWithMethod = cand;
@@ -3587,6 +3590,7 @@ namespace Microsoft.Contracts.Foxtrot {
                     break;
                 }
             }
+
             if (continueWithMethod != null)
             {
                 this.continuewithMethod = continueWithMethod;
@@ -3610,16 +3614,19 @@ namespace Microsoft.Contracts.Foxtrot {
                 var consArgs = new TypeNodeList();
                 var args = new TypeNodeList();
                 var parentCount = this.closureClass.DeclaringType.ConsolidatedTemplateParameters == null ? 0 : this.closureClass.DeclaringType.ConsolidatedTemplateParameters.Count;
+                
                 for (int i = 0; i < parentCount; i++)
                 {
                     consArgs.Add(this.closureClass.DeclaringType.ConsolidatedTemplateParameters[i]);
                 }
+                
                 var methodCount = from.TemplateParameters == null ? 0: from.TemplateParameters.Count;
                 for (int i = 0; i < methodCount; i++)
                 {
                     consArgs.Add(from.TemplateParameters[i]);
                     args.Add(from.TemplateParameters[i]);
                 }
+
                 this.closureClassInstance = (Class)this.closureClass.GetConsolidatedTemplateInstance(this.parent.assemblyBeingRewritten, closureClass.DeclaringType, closureClass.DeclaringType, args, consArgs);
             }
 
@@ -3628,7 +3635,6 @@ namespace Microsoft.Contracts.Foxtrot {
             this.ClosureInitializer = new Block(new StatementList());
 
             this.ClosureInitializer.Statements.Add(new AssignmentStatement(this.ClosureLocal, new Construct(new MemberBinding(null, this.Ctor), new ExpressionList())));
-
         }
 
         private void EmitCheckMethod(TypeNode taskType, bool hasResult)
@@ -3991,7 +3997,10 @@ namespace Microsoft.Contracts.Foxtrot {
                 MemberBinding mb;
                 if (!closureLocals.TryGetValue(local, out mb))
                 {
-                    var closureField = new Field(this.closureClass, null, FieldFlags.Public, local.Name, this.forwarder.VisitTypeReference(local.Type), null);
+                    // Forwarder would be null, if enclosing method with async closure is not generic
+                    var localType = forwarder != null ? forwarder.VisitTypeReference(local.Type) : local.Type;
+
+                    var closureField = new Field(this.closureClass, null, FieldFlags.Public, local.Name, localType, null);
                     this.closureClass.Members.Add(closureField);
                     mb = new MemberBinding(this.checkMethod.ThisParameter, closureField);
                     closureLocals.Add(local, mb);

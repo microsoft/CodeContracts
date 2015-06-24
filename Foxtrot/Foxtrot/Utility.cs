@@ -2392,6 +2392,8 @@ namespace Microsoft.Contracts.Foxtrot {
         this.sourceMethod = sourceMethod;
         this.targetMethod = targetMethod;
 
+        this.RemoveNameForLocals = true;
+
         Duplicator dup = this;
 
         if (mapParameters) {
@@ -2428,8 +2430,12 @@ namespace Microsoft.Contracts.Foxtrot {
           //dup.DuplicateFor[contractType.UniqueKey] = originalType;
         }
         #endregion
-
       }
+
+      /// <summary>
+      /// If true, all names for duplicated local variables would be removed.
+      /// </summary>
+      public bool RemoveNameForLocals { get; set; }
 
       public TypeNode PossiblyRemapContractClassToInterface(TypeNode candidate)
       {
@@ -2455,7 +2461,7 @@ namespace Microsoft.Contracts.Foxtrot {
       {
         var result = base.VisitLocal(local);
         var asLoc = result as Local;
-        if (asLoc != null)
+        if (asLoc != null && RemoveNameForLocals)
         {
           asLoc.Name = null; // Don't clash with original local name
         }
@@ -2727,6 +2733,18 @@ namespace Microsoft.Contracts.Foxtrot {
       Module targetModule = targetMethod.DeclaringType.DeclaringModule;
 
       var dup = new DuplicatorForContractsAndClosures(targetModule, sourceMethod, targetMethod, contractNodes);
+      
+      if (sourceMethod.Contract.AsyncEnsuresCount != 0)
+      {
+          // Removing the name lead to NRE for async method that uses Contract.Ensures(Contract.ForAll)
+          // with a capturing lambda.
+          // To preserve as much of backward compatible behavior as possible the fix will affect
+          // only method contracts with async closures. It still possible that this fix will break existing code
+          // and it is possible that there is no any issues by preserving name of the locals.
+          // This fix could be enhanced in the future when this issue would be clear.
+          dup.RemoveNameForLocals = false;
+      }
+
       return DuplicateContractAndClosureParts(dup, targetMethod, sourceMethod, contractNodes, copyValidations);
     }
     internal static MethodContract DuplicateContractAndClosureParts(
