@@ -70,7 +70,6 @@ namespace Tests {
     [AssemblyInitialize]
     public static void AssembyInitialize(TestContext context)
     {
-
         //
         // VERY IMPORTANT!! Do NOT do anything that caused any type from CodeUnderTest.dll to be loaded
         // before the assembly is rewritten!!!
@@ -86,8 +85,9 @@ namespace Tests {
         var deploymentDir = Directory.GetCurrentDirectory();
 
         var testResultPosition = deploymentDir.IndexOf(@"TestResults");
-
-        Assert.IsTrue(testResultPosition != -1, "Can't find the TestResults directory!!!");
+        
+        Assert.IsTrue(testResultPosition != -1, 
+            string.Format("Can't find the TestResults directory!!! Current deployment directory is '{0}'", deploymentDir));
 
         var testDirRoot = deploymentDir.Substring(0, testResultPosition);
 
