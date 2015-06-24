@@ -199,30 +199,12 @@ namespace Tests
     [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
     [TestMethod]
     [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("V4.5")]
-    [Ignore()] // Old Roslyn bits are not compatible with CCRewrite. Test (and old binaries) should be removed in the next iteration.
     public void BuildRewriteRunFromSourcesRoslynV45()
     {
       var options = new Options(this.TestContext);
-      options.IsLegacyRoslyn = true;
+      options.IsRoslyn = true;
       options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
       options.BuildFramework = @"Roslyn\v4.5";
-      options.ReferencesFramework = @".NetFramework\v4.5";
-      options.ContractFramework = @".NETFramework\v4.0";
-      options.UseTestHarness = true;
-      TestDriver.BuildRewriteRun(options);
-    }
-      
-    [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
-    [TestMethod]
-    [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
-    public void BuildRewriteRunFromSourcesRoslynVS14RC()
-    {
-      var options = new Options(this.TestContext);
-      // For VS14RC+ version compiler name is the same Csc.exe, and behavior from async/iterator perspective is similar
-      // to old compiler as well. That's why IsLegacyRoslyn should be false in this test case.
-      options.IsLegacyRoslyn = false;
-      options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
-      options.BuildFramework = @"Roslyn\VS14RC";
       options.ReferencesFramework = @".NetFramework\v4.5";
       options.ContractFramework = @".NETFramework\v4.0";
       options.UseTestHarness = true;

@@ -2317,14 +2317,7 @@ namespace Microsoft.Contracts.Foxtrot {
               } else
               {
                 //Console.WriteLine("Not atomic closure part: {0}", m.FullName);
-                  var declaringTypeName = m.DeclaringType.Name.Name;
-                  var name = m.Name.Name;
-                  string message =
-                      string.Format(
-                          "DeclaringName should contain 'DisplayClass' or Name should not have '__'. \r\nDeclaringTypeName: {0}, Name: {1}",
-                          declaringTypeName, name);
-
-                Debug.Assert(declaringTypeName.Contains("DisplayClass") || !name.Contains("__"), message);
+                Debug.Assert(m.DeclaringType.Name.Name.Contains("DisplayClass") || !m.Name.Name.Contains("__"));
               }
             }
           }
