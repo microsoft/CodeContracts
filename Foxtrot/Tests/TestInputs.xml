@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TestInputs>
   <TestFile
+     Name="Foxtrot\Tests\Sources\RequiresForAll.cs"
+     CompilerOptions=""
+     FoxtrotOptions="-assemblyMode standard"
+     References="System.Core.dll"
+     ContractReferenceAssemblies="true"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <TestFile
      Name="Foxtrot\Tests\Sources\PostAmbleDeletion.cs"
      CompilerOptions=""
      FoxtrotOptions="-assemblyMode standard"
