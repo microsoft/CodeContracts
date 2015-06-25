@@ -82,13 +82,13 @@ namespace Tests {
         int x;
         const string AsmMetaExe = @"Microsoft.Research\ImportedCCI2\AsmMeta.exe";
 
-        var deploymentDir = Directory.GetCurrentDirectory();
+        var deploymentDir = context.TestDeploymentDir;
 
         var testResultPosition = deploymentDir.IndexOf(@"TestResults");
         
         Assert.IsTrue(testResultPosition != -1, 
             string.Format("Can't find the TestResults directory!!! Current deployment directory is '{0}'", deploymentDir));
-
+        
         var testDirRoot = deploymentDir.Substring(0, testResultPosition);
 
         Assert.IsTrue(!string.IsNullOrEmpty(testDirRoot), "I was expecting the extraction of a valid dir");
@@ -96,7 +96,6 @@ namespace Tests {
         var RootDirectory = Path.GetFullPath(testDirRoot);
 
         var foxtrotPath = SelectFoxtrot(RootDirectory, deploymentDir);
-
 
       Assert.IsTrue(File.Exists("OutOfBand.dll"));
       var tool = Path.GetFullPath(Path.Combine(RootDirectory, AsmMetaExe));
