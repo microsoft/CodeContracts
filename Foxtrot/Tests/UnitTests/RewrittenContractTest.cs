@@ -272,7 +272,9 @@ namespace Tests {
       new CodeUnderTest.RewrittenContractTest().CallPrivateRequiresTrue(true);
     }
 
+    
     [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Ignore] // This test should be ignored, because the whole test suite is running without /publicsurface flag!
     public void PositivePrivateRequiresTest2() {
       // Does not trigger due to /publicsurface
       new CodeUnderTest.RewrittenContractTest().CallPrivateRequiresTrue(false);
@@ -295,6 +297,7 @@ namespace Tests {
     }
 
     [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Ignore] // This test should be ignored, because the whole test suite is running without /publicsurface flag!
     public void PositivePrivateEnsuresTest2() {
       // Does not trigger due to /publicsurface
       new CodeUnderTest.RewrittenContractTest().CallPrivateEnsuresTrue(false);

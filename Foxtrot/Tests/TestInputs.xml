@@ -825,4 +825,46 @@
     UseExe="false"
     MustSucceed="false"
     />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\IteratorWithComplexPrecondition.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\AsyncMethodWithComplexPrecondition.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     References="AsyncCtpLibrary.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\CallPrivateRequiresShouldNotFail.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\CallPrivateEnsuresShouldNotFail.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
 </TestInputs>

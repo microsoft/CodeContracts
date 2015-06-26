@@ -243,6 +243,23 @@ namespace Tests
       TestDriver.BuildRewriteRun(options);
     }
 
+    [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "PublicSurfaceOnly", DataAccessMethod.Sequential)]
+    [TestMethod]
+    [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("V4.5")]
+    public void BuildRewriteFromSources45WithPublicSurfaceOnly()
+    {
+        var options = new Options(this.TestContext);
+        // For testing purposes you can remove /publicsurface and see what happen. Part of the tests should fail!
+        //options.FoxtrotOptions = options.FoxtrotOptions + String.Format("/throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+        options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /publicsurface /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+        options.BuildFramework = @".NETFramework\v4.5";
+        options.ContractFramework = @".NETFramework\v4.0";
+        options.UseTestHarness = true;
+        
+        TestDriver.BuildRewriteRun(options);
+    }
+
+
     private void GrabTestOptions(out string sourceFile, out string options, out string cscoptions, out List<string> refs, out List<string> libs)
     {
       sourceFile = (string)TestContext.DataRow["Name"];
