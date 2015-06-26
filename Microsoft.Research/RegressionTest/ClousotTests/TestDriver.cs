@@ -29,7 +29,7 @@ namespace Tests
     const string Clousot2Exe = @"Microsoft.Research\Clousot2\bin\debug\clousot2.exe";
     const string Clousot2SExe = @"Microsoft.Research\Clousot2S\bin\debug\clousot2s.exe";
     const string Clousot2SlicingExe = @"Microsoft.Research\Clousot2_Queue\bin\debug\Clousot2_Queue.exe";
-    const string ClousotServiceHostExe = @"Microsoft.Research\Clousot2_WCFServiceHost\bin\debug\Clousot2_WCFServiceHost.exe";
+    const string ClousotServiceHostExe = @"Microsoft.Research\Clousot2_WCFServiceHost\bin\debug\Cloudot.exe";
     const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
 
     private static readonly Random randGenerator = new Random();
