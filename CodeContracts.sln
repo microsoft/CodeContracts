@@ -319,7 +319,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.CSharp.1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.CSharp.12", "Microsoft.Research\ContractAdornments\CSharp\ContractAdornments.CSharp.12.csproj", "{9C55B970-24B3-4623-9BA2-2D0F070E31A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.CSharp.14", "Microsoft.Research\ContractAdornments\CSharp\ContractAdornments.CSharp.14.csproj", "{7FB60D9A-CF16-46C0-8154-696D85F8D451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.CSharp.14", "Microsoft.Research\ContractAdornments\CSharp.Roslyn\ContractAdornments.CSharp.14.csproj", "{7FB60D9A-CF16-46C0-8154-696D85F8D451}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.Interfaces", "Microsoft.Research\ContractAdornments\Interfaces\ContractAdornments.Interfaces.csproj", "{B0C91C82-C1D8-4697-B07E-18E17D11EB41}"
 EndProject

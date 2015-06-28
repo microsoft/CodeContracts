@@ -340,7 +340,7 @@
       <Name>ContractAdornments.CSharp.12</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\CSharp\ContractAdornments.CSharp.14.csproj">
+    <ProjectReference Include="..\CSharp.Roslyn\ContractAdornments.CSharp.14.csproj">
       <Project>{7fb60d9a-cf16-46c0-8154-696d85f8d451}</Project>
       <Name>ContractAdornments.CSharp.14</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
