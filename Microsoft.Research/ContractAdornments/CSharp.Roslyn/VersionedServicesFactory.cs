@@ -19,7 +19,7 @@ namespace ContractAdornments.CSharp
 
         public ITextViewTracker CreateTextViewTracker(IWpfTextView textView, IProjectTracker projectTracker, VSTextProperties vsTextProperties)
         {
-            throw new NotSupportedException();
+            return new TextViewTracker(textView, projectTracker, vsTextProperties);
         }
 
         public IContractsProvider CreateContractsProvider(IProjectTracker projectTracker)

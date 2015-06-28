@@ -12,14 +12,12 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices;
 using Adornments;
 using ContractAdornments.Interfaces;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
@@ -43,7 +41,7 @@ namespace ContractAdornments {
       return null;
     }
 
-    public static SnapshotSpan Convert(this CSharpSpan span, ITextSnapshot snapshot) {
+    public static SnapshotSpan Convert(this LinePositionSpan span, ITextSnapshot snapshot) {
       Contract.Requires(snapshot != null);
       var startIndex = snapshot.GetPositionFromLineColumn(span.Start.Line, span.Start.Character);
       var endIndex = snapshot.GetPositionFromLineColumn(span.End.Line, span.End.Character);
@@ -54,15 +52,15 @@ namespace ContractAdornments {
       return new SnapshotSpan(snapshot, startIndex, usableLength);
     }
     
-    public static Position Convert(this ITrackingPoint point, ITextSnapshot snapshot) {
+    public static LinePosition Convert(this ITrackingPoint point, ITextSnapshot snapshot) {
       Contract.Requires(point != null);
       
       var snapshotPoint = point.GetPoint(snapshot);
       var line = snapshotPoint.GetContainingLine();
-      if (line == null) return default(Position);
+      if (line == null) return default(LinePosition);
       int lineIndex = line.LineNumber;
       int charIndex = snapshotPoint.Position - line.Start.Position;
-      return new Position(lineIndex, charIndex);
+      return new LinePosition(lineIndex, charIndex);
     }
 
     public static int GetPositionFromLineColumn(this ITextSnapshot snapshot, int line, int column) {
@@ -73,67 +71,28 @@ namespace ContractAdornments {
       return textline.Start.Position + column;
     }
 
-    public static string GetName(this PropertyDeclarationNode @this, ITextSnapshot snapshot) {
+    public static string GetName(this PropertyDeclarationSyntax @this, ITextSnapshot snapshot) {
       Contract.Requires(@this != null);
       Contract.Requires(snapshot != null);
-
-      var nameNode = @this.MemberName;
-      if (nameNode != null)
-      {
-        var nameNodeSpan = nameNode.GetSpan();
-        return nameNodeSpan.Convert(snapshot).GetText();
-      }
-
-      return null;
+      return @this.Identifier.ValueText;
     }
-    public static string GetName(this MethodDeclarationNode @this, ITextSnapshot snapshot) {
+
+    public static string GetName(this MethodDeclarationSyntax @this, ITextSnapshot snapshot) {
       Contract.Requires(@this != null);
       Contract.Requires(snapshot != null);
-
-      var nameNode = @this.MemberName;
-      if (nameNode != null)
-      {
-        var nameNodeSpan = nameNode.GetSpan();
-        return nameNodeSpan.Convert(snapshot).GetText();
-      }
-
-      return null;
+      return @this.Identifier.ValueText;
     }
-    public static string GetName(this TypeBaseNode @this, ITextSnapshot snapshot)
-    {
+
+    public static string GetName(this BaseTypeDeclarationSyntax @this, ITextSnapshot snapshot) {
+      Contract.Requires(@this != null);
       Contract.Requires(snapshot != null);
-
-      var span = @this.GetSpan();
-      var nSpan = span.Convert(snapshot);
-      var text = nSpan.GetText();
-      if (text != null)
-      {
-        return text;
-      }
-      return null;
+      return @this.Identifier.ValueText;
     }
-    public static bool IsModelReady(this ParseTree parseTree) {
+
+    public static bool IsModelReady(this SyntaxTree parseTree) {
       Contract.Requires(parseTree != null);
-
-      try {
-        if (parseTree == null)
-          return false;
-
-        var rootNode = parseTree.RootNode;
-
-      } catch (InvalidOperationException e) {
-        if (e.Message.Contains(ContractsPackageAccessor.InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
-          return false;
-        else
-          throw e;
-      } catch (COMException e) {
-        if (e.Message.Contains(ContractsPackageAccessor.COMExceptionMessage_BindingFailed))
-          return false;
-        else
-          throw e;
-      }
-
-      return true;
+      SyntaxNode ignored;
+      return parseTree.TryGetRoot(out ignored);
     }
   }
   public static class AdornmentOptionsHelper {

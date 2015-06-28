@@ -12,19 +12,15 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Diagnostics.Contracts;
+using System.Timers;
+using Adornments;
+using ContractAdornments.Interfaces;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using System.IO;
-using VSLangProj;
-using System;
-using System.Collections.Generic;
-using System.Windows.Media;
-using Adornments;
-using System.Timers;
-using ContractAdornments.Interfaces;
 
 namespace ContractAdornments {
   internal sealed class TextViewTracker : ITextViewTracker {
@@ -42,15 +38,15 @@ namespace ContractAdornments {
         return this._projectTracker;
       }
     }
-    public readonly FileName FileName;
+    public readonly DocumentId FileName;
     readonly Timer _textBufferChangedTimer;
     public VSTextProperties VSTextProperties;
 
-    public SourceFile LatestSourceFile { get; private set; }
+    public Document LatestSourceFile { get; private set; }
     public bool IsLatestSourceFileStale { get; set; }
     public event EventHandler<LatestSourceFileChangedEventArgs> LatestSourceFileChanged;
 
-    public Compilation LatestCompilation { get; private set; }
+    public Workspace LatestCompilation { get; private set; }
     public bool IsLatestCompilationStale { get; set; }
     public event EventHandler<LatestCompilationChangedEventArgs> LatestCompilationChanged;
 
@@ -90,9 +86,8 @@ namespace ContractAdornments {
       ContractsPackageAccessor.Current.QueueWorkItem((() => { VSTextProperties.LineHeight = TextView.LineHeight; }));
 
       //Set the file name
-      var fn = TextView.GetFileName();
-      if (fn == null) { fn = "dummyFileName"; }
-      FileName = new FileName(fn);
+      Document document = TextView.TextSnapshot.GetOpenDocumentInCurrentContextWithChanges();
+      FileName = document.Id;
     }
 
     void OnClosed(object sender, EventArgs e) {
@@ -115,7 +110,7 @@ namespace ContractAdornments {
       ContractsPackageAccessor.Current.NewCompilation -= OnNewComilation;
 //      ContractsPackageAccessor.Current.NewSourceFile -= OnNewSourceFile;
       ContractsPackageAccessor.Current.ExtensionFailed -= OnFailed;
-      ContractsPackageAccessor.Current.Logger.WriteToLog("TextViewTracker for '" + FileName.Value + "' unsubscribed from all events.");
+      ContractsPackageAccessor.Current.Logger.WriteToLog("TextViewTracker for '" + FileName + "' unsubscribed from all events.");
     }
 
     void OnBuildDone() {
@@ -150,7 +145,7 @@ namespace ContractAdornments {
       }, "OnTextViewSettled");
     }
 
-    void OnNewSourceFile(SourceFile sourceFile) {
+    void OnNewSourceFile(Document sourceFile) {
       Contract.Requires(sourceFile != null);  
 
       // BUGBUG: Foxtrot1 extractor gets confused and a style-checker error is issued thinking there is code in the contract section.
@@ -158,8 +153,7 @@ namespace ContractAdornments {
       //Contract.Requires(sourceFile.FileName != null);
 
       //Is this source file relevant to us?
-      if (FileName == sourceFile.FileName) {
-
+      if (FileName == sourceFile.Id) {
         //Update our latest source file info
         LatestSourceFile = sourceFile;
 
@@ -174,31 +168,28 @@ namespace ContractAdornments {
     }
     void OnNewComilation(object compilationObject) {
       Contract.Requires(compilationObject != null);
-      Compilation comp = (Compilation)compilationObject;
+      Workspace comp = (Workspace)compilationObject;
 
       //Is this compilation relevant to us?
-      SourceFile sourceFile;
-      if (comp.SourceFiles != null)
+      Document sourceFile = comp.CurrentSolution.GetDocument(FileName);
+      if (sourceFile != null)
       {
-        if (comp.SourceFiles.TryGetValue(FileName, out sourceFile))
-        {
-          // Update source file
-          LatestSourceFile = sourceFile;
-          //Save and update our staleness
-          var wasLatestSourceFileStale = IsLatestSourceFileStale;
-          IsLatestSourceFileStale = false;
+        // Update source file
+        LatestSourceFile = sourceFile;
+        //Save and update our staleness
+        var wasLatestSourceFileStale = IsLatestSourceFileStale;
+        IsLatestSourceFileStale = false;
 
-          //Updated our latest compilation info
-          LatestCompilation = comp;
+        //Updated our latest compilation info
+        LatestCompilation = comp;
 
-          //Save and update our staleness
-          var wasLatestCompilationStale = IsLatestCompilationStale;
-          IsLatestCompilationStale = false;
+        //Save and update our staleness
+        var wasLatestCompilationStale = IsLatestCompilationStale;
+        IsLatestCompilationStale = false;
 
-          //Report our latest compilation
-          if (LatestCompilationChanged != null)
-            LatestCompilationChanged(this, new LatestCompilationChangedEventArgs(wasLatestCompilationStale, IsLatestCompilationStale, LatestCompilation));
-        }
+        //Report our latest compilation
+        if (LatestCompilationChanged != null)
+          LatestCompilationChanged(this, new LatestCompilationChangedEventArgs(wasLatestCompilationStale, IsLatestCompilationStale, LatestCompilation));
       }
     }
     
@@ -206,9 +197,9 @@ namespace ContractAdornments {
   public class LatestCompilationChangedEventArgs : EventArgs {
     public bool WasLatestCompilationStale { get; private set; }
     public bool IsLatestCompilationStale { get; private set; }
-    public Compilation LatestCompilation { get; private set; }
+    public Workspace LatestCompilation { get; private set; }
 
-    public LatestCompilationChangedEventArgs(bool wasLatestCompilationStale, bool isLatestCompilationStale, Compilation latestCompilation) {
+    public LatestCompilationChangedEventArgs(bool wasLatestCompilationStale, bool isLatestCompilationStale, Workspace latestCompilation) {
       WasLatestCompilationStale = wasLatestCompilationStale;
       IsLatestCompilationStale = isLatestCompilationStale;
       LatestCompilation = latestCompilation;
@@ -217,9 +208,9 @@ namespace ContractAdornments {
   public class LatestSourceFileChangedEventArgs : EventArgs {
     public bool WasLatestSourceFileStale { get; private set; }
     public bool IsLatestSourceFileStale { get; private set; }
-    public SourceFile LatestSourceFile { get; private set; }
+    public Document LatestSourceFile { get; private set; }
 
-    public LatestSourceFileChangedEventArgs(bool wasLatestSourceFileStale, bool isLatestSourceFileStale, SourceFile latestSourceFile) {
+    public LatestSourceFileChangedEventArgs(bool wasLatestSourceFileStale, bool isLatestSourceFileStale, Document latestSourceFile) {
       WasLatestSourceFileStale = wasLatestSourceFileStale;
       IsLatestSourceFileStale = isLatestSourceFileStale;
       LatestSourceFile = latestSourceFile;
