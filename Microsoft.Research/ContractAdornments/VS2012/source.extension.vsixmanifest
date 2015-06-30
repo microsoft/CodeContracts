@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Version="1.8.10107.10"
-              Id="ContractAdornments.MicrosoftResearch.2fb66ab7-53ec-479b-bd35-e9dd5be0426b"
-              Language="en"
-              Publisher="Microsoft Research" />
+    <Identity Version="1.9.0629.42" Id="ContractAdornments.MicrosoftResearch.2fb66ab7-53ec-479b-bd35-e9dd5be0426b" Language="en" Publisher="Microsoft Research" />
     <DisplayName>Code Contracts Editor Extensions VS2012</DisplayName>
     <Description xml:space="preserve">Displays Code Contracts (when editing C#) in code, Intellisense, and in metadata files.
 
@@ -24,21 +21,16 @@ Displays contracts in Signature Help tool tips.</Description>
     <Icon>QuickInfo_Large.png</Icon>
     <PreviewImage>QuickInfo_Large.png</PreviewImage>
   </Metadata>
-
   <Installation AllUsers="false" SystemComponent="false">
     <InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
     <InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.Pro" />
     <InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.Premium" />
     <InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.Ultimate" />
   </Installation>
-
   <Dependencies>
     <Dependency Version="[1.4.60307.10,2.0)" d:Source="Installed" Id="CodeContractsVSIX.MicrosoftResearch.990ACB05-1AAE-4fa6-A178-9BF28206012F" DisplayName="Code Contracts Tools" d:InstallSource="Download" Location="http://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970/file/93972/5/Contracts.devlab9ts.msi" />
-    <Dependency
-        Id="Microsoft.Framework.NDP"
-        DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
   </Dependencies>
-
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

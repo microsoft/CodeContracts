@@ -66,6 +66,7 @@
 <?define var.VS10RegistryCompGuid             = "{990ACAF6-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS11RegistryCompGuid             = "{990ACAF7-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS12RegistryCompGuid             = "{990ACAF8-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS14RegistryCompGuid             = "{990ACB0A-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets40CompGuid       = "{990ACAF9-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.SandcastleCompGuid               = "{990ACAFA-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.EnvironmentVariablesCompGuid     = "{990ACAFB-1AAE-4fa6-A178-9BF28206012F}" ?>
@@ -80,8 +81,10 @@
 <?define var.VS10VsixManifestCompGuid         = "{990ACB05-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS11VsixManifestCompGuid         = "{990ACB06-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS12VsixManifestCompGuid         = "{990ACB07-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.VS14VsixManifestCompGuid         = "{990ACB0B-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VSCloseCheckCompGuid             = "{990ACB08-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ContractsTargets140CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
 
 
   <!--=====================================================================
@@ -212,6 +215,7 @@
     <PropertyRef Id="VS10_ROOT_FOLDER"/>
     <PropertyRef Id="VS11_ROOT_FOLDER"/>
     <PropertyRef Id="VS12_ROOT_FOLDER_EXISTS"/>
+    <PropertyRef Id="VS14_ROOT_FOLDER_EXISTS"/>
 
 <!--
     <Condition Message="This installer requires Visual Studio 2008 or 2010.">
@@ -224,6 +228,7 @@
         <util:RestartResource Path="[VS10DEVENV]" />
         <util:RestartResource Path="[VS11DEVENV]" />
         <util:RestartResource Path="[VS12DEVENV]" />
+        <util:RestartResource Path="[VS14DEVENV]" />
       </Component>
     </DirectoryRef>
 
@@ -294,6 +299,27 @@
                       <File Id='VS12codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
                       <File Id='VS12codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
                       <File Id='VS12codecontracts_license.rtf' Name='license.rtf' Source='$(var.License)' Vital='yes'/>
+                    </Component>            
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="VS14_ROOT_FOLDER" Name="VS14Root">
+        <Directory Id="VS14_Common7" Name="Common7">
+          <Directory Id="VS14_IDE" Name="IDE">
+            <Directory Id="VS14_Extensions" Name="Extensions">
+              <Directory Id="VS14_ExtensionsMicrosoft" Name="Microsoft">
+                <Directory Id="VS14_ExtensionsMicrosoftContracts" Name="CodeContracts">
+                  <Directory Id="VS14_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
+                    <Component Id='VS14extension.manifestComp' Guid='$(var.VS14VsixManifestCompGuid)'>
+                      <Condition><![CDATA[Installed OR VS14_ROOT_FOLDER_EXISTS]]></Condition>
+                      <File Id='VS14extension.manifest' Name='extension.vsixmanifest' Source='VS14.extension.vsixmanifest' Vital='yes'/>
+                      <File Id='VS14codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
+                      <File Id='VS14codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
+                      <File Id='VS14codecontracts_license.rtf' Name='license.rtf' Source='$(var.License)' Vital='yes'/>
                     </Component>            
                   </Directory>
                 </Directory>
@@ -976,6 +1002,16 @@
                   <?endif?>
                 </Component>                   
               </Directory>
+              <Directory Id='MsBuildv140' Name='v14.0'>
+                <Component Id='ContractsTargets140' Guid='$(var.ContractsTargets140CompGuid)'>
+                  <File Id='ContractsTargets140' Name="$(var.CodeContractsTargets)"
+                        Source="MsBuild\v14.0\$(var.CodeContractsTargets)" Vital='yes' />
+                  <?if $(var.Feature_CCCheck) = true ?>
+                    <File Id='ContractsAnalysisTargets140' Name="$(var.CodeContractsTargets2)"
+                          Source="MsBuild\v14.0\$(var.CodeContractsTargets2)" Vital='yes' />
+                  <?endif?>
+                </Component>                   
+              </Directory>
             </Directory>
 
             <!--=====================================================================
@@ -1177,12 +1213,14 @@
         <ComponentRef Id='VS10extension.manifestComp' />
         <ComponentRef Id='VS11extension.manifestComp' />
         <ComponentRef Id='VS12extension.manifestComp' />
+        <ComponentRef Id='VS14extension.manifestComp' />
         <ComponentRef Id='Microsoft.Contracts' />
         <ComponentRef Id='Microsoft.ContractsSL3' />
         <ComponentRef Id='Microsoft.ContractsWP71' />
         <ComponentRef Id='ContractsTargets35' />
         <ComponentRef Id='ContractsTargets40' />
         <ComponentRef Id='ContractsTargets120' />
+        <ComponentRef Id='ContractsTargets140' />
         <ComponentRef Id='ContractsPropertyPane' />
         <ComponentRef Id='CodeContractTools' />
         <ComponentRef Id='OutOfBandContracts35' />
@@ -1204,6 +1242,7 @@
         <ComponentRef Id='VS10PackageRegistryComponent' />
         <ComponentRef Id='VS11PackageRegistryComponent' />
         <ComponentRef Id='VS12PackageRegistryComponent' />
+        <ComponentRef Id='VS14PackageRegistryComponent' />
 <!--        <ComponentRef Id='VS10ExpressPackageRegistryComponent' /> -->
         <ComponentRef Id='EnvironmentVariables' />
       </Feature>
@@ -1337,6 +1376,26 @@
       </Component>      
     </DirectoryRef>
       
+    <!-- regsitry entries for the packages -->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- 14.0 hive (VS14) -->
+      <Component
+        Id="VS14PackageRegistryComponent"
+        Guid="$(var.VS14RegistryCompGuid)" Transitive="yes"
+        Win64="no">
+        <RegistryKey
+          Root="HKLM"
+          Key="Software\Microsoft\VisualStudio\14.0"
+          Action="none">
+          <?include vsregistrykeys.wxs?>
+          <RegistryKey Key="$(var.CodeToolsKey)\CodeContracts\CommonTargets\After" >
+             <RegistryValue Name="TargetsFile" Value="$$(CodeContractsInstallDir)MsBuild\v14.0\Microsoft.CodeContracts.targets" Type="string" />
+             <RegistryValue Name="MSBuildVersions" Value="14.0" Type="string" />   <!-- semicolon seperated list of versions -->
+          </RegistryKey>
+        </RegistryKey>
+      </Component>      
+    </DirectoryRef>
+      
     <!--=====================================================================
        The user interface: link in "UI.wxs" (which is a generic reusable module)
     ======================================================================-->
@@ -1372,6 +1431,7 @@
     -->
     <CustomActionRef Id="VS2012Setup" />
     <CustomActionRef Id="VS2013Setup" />
+    <CustomActionRef Id="VS2015Setup" />
 
   </Product>
 
