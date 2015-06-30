@@ -56,6 +56,7 @@ namespace Microsoft.Contracts.Foxtrot {
 
   [ContractVerification(true)]
   public static class Extractor {
+
     #region Public API
     /// <summary>
     /// Modifies <paramref name="assembly"/> by extracting any Code Contracts
@@ -2077,19 +2078,17 @@ namespace Microsoft.Contracts.Foxtrot {
           method.Contract.ContractInitializer = contractInitializerBlock;
           method.Contract.AsyncEnsures = asyncPostconditions;
 
+          
+          // Following replacement causes some weird issues for complex preconditions (like x != null && x.Length > 0)
+          // when CCRewriter is used with /publicsurface or Preconditions only.
+          // This fix could be temporal and proper fix would be applied in the future.
+          // After discussion this issue with original CC authors (Mike Barnett and Francesco Logozzo),
+          // we decided that this fix is safe and lack of Assume statement in the MoveNext method will not affect
+          // customers (neither CCRewriter customers now CCCheck customers).
+          // If this assumption would not be true in the future, proper fix should be applied.
           // put requires as assumes into movenext method at original position
-          Contract.Assert(origPreconditions != null);
-          if (originalContractPosition != null && originalContractPosition.Statements != null /*&& origPreconditions != null */&& origPreconditions.Count > 0) {
-            var origStatements = originalContractPosition.Statements;
-            foreach (var pre in origPreconditions) {
-              if (pre == null) continue;
-              var assume = new MethodCall(new MemberBinding(null, this.contractNodes.AssumeMethod), new ExpressionList(pre.Condition), NodeType.Call);
-              assume.SourceContext = pre.SourceContext;
-              var assumeStmt =new ExpressionStatement(assume);
-              assumeStmt.SourceContext = pre.SourceContext;
-              origStatements.Add(assumeStmt);
-            }
-          }
+          ReplaceRequiresWithAssumeInMoveNext(origPreconditions, originalContractPosition);
+
           // no postPreamble to initialize, as method is not a ctor
         } finally
         {
@@ -2110,6 +2109,29 @@ namespace Microsoft.Contracts.Foxtrot {
         }
       }
     }
+
+      /// <summary>
+      /// Method replaces Requires to Assume in the MoveNext method of the async or iterator state machine.
+      /// </summary>
+      private void ReplaceRequiresWithAssumeInMoveNext(RequiresList origPreconditions, AssumeBlock originalContractPosition)
+      {
+          Contract.Assert(origPreconditions != null);
+          if (originalContractPosition != null && originalContractPosition.Statements != null
+              /*&& origPreconditions != null */&& origPreconditions.Count > 0)
+          {
+              var origStatements = originalContractPosition.Statements;
+              foreach (var pre in origPreconditions)
+              {
+                  if (pre == null) continue;
+                  var assume = new MethodCall(new MemberBinding(null, this.contractNodes.AssumeMethod),
+                      new ExpressionList(pre.Condition), NodeType.Call);
+                  assume.SourceContext = pre.SourceContext;
+                  var assumeStmt = new ExpressionStatement(assume);
+                  assumeStmt.SourceContext = pre.SourceContext;
+                  origStatements.Add(assumeStmt);
+              }
+          }
+      }
 
     static Identifier tasknamespace;
 

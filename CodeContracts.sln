@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeProviders", "CodeProviders", "{76F9B10B-70B6-40FF-B5A7-3562734BF8E4}"
 EndProject
@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Microsoft.Research\RegressionTest\CodeContracts10.testsettings = Microsoft.Research\RegressionTest\CodeContracts10.testsettings
 		CodeContracts10.vsmdi = CodeContracts10.vsmdi
+		FoxtrotTestRun.testrunconfig = FoxtrotTestRun.testrunconfig
 		Local.testsettings = Local.testsettings
 		Performance1.psess = Performance1.psess
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings

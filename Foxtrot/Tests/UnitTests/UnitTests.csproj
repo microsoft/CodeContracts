@@ -141,7 +141,7 @@
       <Name>LegacyCodeUnderTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUnderTest\OutOfBand\OutOfBand.csproj">
-      <Project>{A9346FC0-4978-47A4-9D4E-35ADB9C48139}</Project>
+      <Project>{a9346fc0-4978-47a4-9d4e-35adb9c48139}</Project>
       <Name>OutOfBand</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUnderTest\SubtypeWithoutContracts\SubtypeWithoutContracts.csproj">
