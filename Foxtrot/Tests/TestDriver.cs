@@ -225,7 +225,7 @@ namespace Tests
             var targetfile = Path.Combine(outputdir, options.TestName + extension);
 
             // add Microsoft.Contracts reference if needed
-            if (!options.IsV35)
+            if (options.IsV35)
             {
                 options.References.Add("Microsoft.Contracts.dll");
             }

@@ -183,19 +183,6 @@ namespace Tests
                             Moniker);
                 }
 
-                if (IsRoslynBasedCompiler)
-                {
-                    if (UseTestHarness)
-                    {
-                        return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} {1}", Moniker,
-                            MakeAbsolute(@"Foxtrot\Tests\Sources\TestHarness.cs"));
-                    }
-                    else
-                    {
-                        return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} ", Moniker);
-                    }
-                }
-
                 if (UseTestHarness)
                 {
                     return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} /noconfig /nostdlib {1}", Moniker,

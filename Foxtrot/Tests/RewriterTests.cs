@@ -64,6 +64,9 @@ namespace Tests
         public void Roslyn_IteratorBlockWithComplexGeneric()
         {
             var options = CreateRoslynOptions("VS14RC3");
+            // Bug with metadata reader could be reproduced only with a new mscorlib and new System.dll.
+            options.BuildFramework = @".NetFramework\v4.6";
+            options.ReferencesFramework = @".NetFramework\v4.6";
             TestDriver.BuildRewriteRun(options);
         }
 
