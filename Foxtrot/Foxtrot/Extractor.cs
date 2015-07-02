@@ -2084,10 +2084,10 @@ namespace Microsoft.Contracts.Foxtrot {
           // This fix could be temporal and proper fix would be applied in the future.
           // After discussion this issue with original CC authors (Mike Barnett and Francesco Logozzo),
           // we decided that this fix is safe and lack of Assume statement in the MoveNext method will not affect
-          // customers (neither CCRewriter customers now CCCheck customers).
+          // customers (neither CCRewriter customers nor CCCheck customers).
           // If this assumption would not be true in the future, proper fix should be applied.
           // put requires as assumes into movenext method at original position
-          ReplaceRequiresWithAssumeInMoveNext(origPreconditions, originalContractPosition);
+          // ReplaceRequiresWithAssumeInMoveNext(origPreconditions, originalContractPosition);
 
           // no postPreamble to initialize, as method is not a ctor
         } finally
