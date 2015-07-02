@@ -10,6 +10,53 @@
      Compiler="CS"
      />
 
+  <!-- Tests for Roslyn-based compiler compatibility -->
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\RequiresForAll.cs"
+     CompilerOptions=""
+     FoxtrotOptions="-assemblyMode standard"
+     References="System.Core.dll"
+     ContractReferenceAssemblies="true"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\AsyncRequiresWithForAll.cs"
+     FoxtrotOptions=""
+     References="AsyncCtpLibrary.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\AsyncWithoutContract.cs"
+     FoxtrotOptions=""
+     References="AsyncCtpLibrary.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\InheritGenericAbstractClass.cs"
+     FoxtrotOptions=""
+     References="System.Core.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\CapturingAsyncLambda.cs"
+     FoxtrotOptions=""
+     References="AsyncCtpLibrary.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <TestFile
      Name="Foxtrot\Tests\Sources\RequiresForAll.cs"
      CompilerOptions=""

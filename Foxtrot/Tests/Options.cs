@@ -17,8 +17,6 @@ namespace Tests
 
         private readonly string compilerCode;
 
-        private readonly string compilerOptions;
-
         public string FoxtrotOptions;
 
         private List<string> libPaths;
@@ -195,13 +193,15 @@ namespace Tests
             }
         }
 
-        public string CompilerOptions
+        public string FinalCompilerOptions
         {
             get
             {
-                return DefaultCompilerOptions + " " + compilerOptions;
+                return DefaultCompilerOptions + " " + CompilerOptions;
             }
         }
+
+        public string CompilerOptions { get; set; }
 
         private class TestGroup
         {
@@ -255,7 +255,7 @@ namespace Tests
                 SourceFile = LoadString(dataRow, "Name");
                 FoxtrotOptions = LoadString(dataRow, "FoxtrotOptions");
                 UseContractReferenceAssemblies = LoadBool("ContractReferenceAssemblies", dataRow, true);
-                compilerOptions = LoadString(dataRow, "CompilerOptions");
+                CompilerOptions = LoadString(dataRow, "CompilerOptions");
                 References = LoadList(dataRow, "References", "mscorlib.dll", "System.dll", "ClousotTestHarness.dll");
                 libPaths = LoadList(dataRow, "LibPaths", MakeAbsolute(TestHarnessDirectory));
                 compilerCode = LoadString("Compiler", dataRow, "CS");

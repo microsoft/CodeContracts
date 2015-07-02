@@ -48,10 +48,31 @@ namespace Tests
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
         [TestMethod]
         [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
-        public void BuildRewriteRunFromSourcesRoslynVS14RC()
+        public void Roslyn_BuildRewriteRunFromSources()
         {
             var options = CreateRoslynOptions("VS14RC3");
 
+            TestDriver.BuildRewriteRun(options);
+        }
+
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "RoslynCompatibility", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void Roslyn_CompatibilityCheck()
+        {
+            var options = CreateRoslynOptions("VS14RC3");
+
+            TestDriver.BuildRewriteRun(options);
+        }
+
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "RoslynCompatibility", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void Roslyn_CompatibilityCheckInReleaseMode()
+        {
+            var options = CreateRoslynOptions("VS14RC3");
+
+            options.CompilerOptions = "/optimize";
             TestDriver.BuildRewriteRun(options);
         }
 

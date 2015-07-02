@@ -244,7 +244,7 @@ namespace Tests
                     Directory.CreateDirectory(outputdir);
                 }
 
-                string arguments = String.Format("/t:{4} /out:{0} {3} {2} {1}", targetfile, sourceFile, referenceString, options.CompilerOptions, targetKind);
+                string arguments = String.Format("/t:{4} /out:{0} {3} {2} {1}", targetfile, sourceFile, referenceString, options.FinalCompilerOptions, targetKind);
 
                 if (!options.ReleaseMode)
                 {
