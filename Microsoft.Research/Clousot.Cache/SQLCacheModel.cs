@@ -701,10 +701,9 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 
   public class LocalDbClousotCacheFactory : SQLClousotCacheFactory
   {
-    public LocalDbClousotCacheFactory()
-      : base(@"(LocalDb)\v11.0", true)
-    {
-    }
+    public LocalDbClousotCacheFactory(string dbName)
+      : base(dbName, true)
+    {}
 
     protected override SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
     {
