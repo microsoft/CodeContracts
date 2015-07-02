@@ -2306,7 +2306,7 @@ namespace Microsoft.Contracts.Foxtrot {
             if (mb != null)
             {
               Method m = (Method)mb.BoundMember;
-              if (HelperMethods.IsClosureMethod(this.containingType, m) && !HelperMethods.IsClosureType(this.containingType, m.DeclaringType)) 
+              if (IsClosureMethod(this.containingType, m) && !IsClosureType(this.containingType, m.DeclaringType)) 
               {
                 // then there is no closure class, m is just a method the compiler
                 // added to the class itself
@@ -2314,17 +2314,18 @@ namespace Microsoft.Contracts.Foxtrot {
                 // we record the instance here, although we will eventually make a copy of the
                 // template by making the method generic in its parent type type-parameters.
                 MembersToDuplicate.Add(m);
-              } else
+              }
+              else
               {
                 //Console.WriteLine("Not atomic closure part: {0}", m.FullName);
                   var declaringTypeName = m.DeclaringType.Name.Name;
                   var name = m.Name.Name;
                   string message =
                       string.Format(
-                          "DeclaringName should contain 'DisplayClass' or Name should not have '__'. \r\nDeclaringTypeName: {0}, Name: {1}",
+                          "DeclaringName should contain 'DisplayClass', <>c or Name should not have '__'. \r\nDeclaringTypeName: {0}, Name: {1}",
                           declaringTypeName, name);
 
-                Debug.Assert(declaringTypeName.Contains("DisplayClass") || !name.Contains("__"), message);
+                  Debug.Assert(declaringTypeName.Contains("DisplayClass") || declaringTypeName.Contains("<>c") || !name.Contains("__"), message);
               }
             }
           }
@@ -2397,7 +2398,6 @@ namespace Microsoft.Contracts.Foxtrot {
         Duplicator dup = this;
 
         if (mapParameters) {
-          #region Map the self parameter
           if (sourceMethod.ThisParameter != null) {
             if (targetMethod.ThisParameter != null) {
               dup.DuplicateFor[sourceMethod.ThisParameter.UniqueKey] = targetMethod.ThisParameter;
@@ -2407,17 +2407,14 @@ namespace Microsoft.Contracts.Foxtrot {
               replaceThisWithParameter = targetMethod.Parameters[0];
             }
           }
-          #endregion
-          #region Map the method parameters
+
           if (sourceMethod.Parameters != null && targetMethod.Parameters != null
             && sourceMethod.Parameters.Count == targetMethod.Parameters.Count) {
             for (int i = 0, n = sourceMethod.Parameters.Count; i < n; i++) {
               dup.DuplicateFor[sourceMethod.Parameters[i].UniqueKey] = targetMethod.Parameters[i];
             }
           }
-          #endregion
         }
-        #region Scrub contract class reference to type to be annotated
 
         var originalType = IsContractTypeForSomeOtherType(sourceMethod.DeclaringType, contractNodes);
         if (originalType != null) {
@@ -2429,7 +2426,6 @@ namespace Microsoft.Contracts.Foxtrot {
           this.targetTypeToForwardTo = originalType;
           //dup.DuplicateFor[contractType.UniqueKey] = originalType;
         }
-        #endregion
       }
 
       /// <summary>
