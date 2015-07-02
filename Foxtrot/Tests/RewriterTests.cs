@@ -25,6 +25,8 @@ namespace Tests
     [TestClass]
     public class RewriterTests
     {
+        const string FrameworkBinariesToRewritePath = @"Foxtrot\Tests\RewriteExistingBinaries\";
+
         public TestContext TestContext { get; set; }
 
         [TestCleanup]
@@ -42,7 +44,50 @@ namespace Tests
             }
         }
 
-        const string FrameworkBinariesToRewritePath = @"Foxtrot\Tests\RewriteExistingBinaries\";
+        #region Roslyn compiler unit tests
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void BuildRewriteRunFromSourcesRoslynVS14RC()
+        {
+            var options = CreateRoslynOptions("VS14RC3");
+
+            TestDriver.BuildRewriteRun(options);
+        }
+
+        /// <summary>
+        /// Unit test for #47 - "Could not resolve type reference" for some iterator methods in VS2015
+        /// </summary>
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "IteratorWithComplexGeneric", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void Roslyn_IteratorBlockWithComplexGeneric()
+        {
+            var options = CreateRoslynOptions("VS14RC3");
+            TestDriver.BuildRewriteRun(options);
+        }
+
+        /// <summary>
+        /// Creates <see cref="Options"/> instance with default values suitable for testing roslyn-based compiler.
+        /// </summary>
+        /// <param name="compilerVersion">Should be the same as a folder name in the /Imported/Roslyn folder.</param>
+        private Options CreateRoslynOptions(string compilerVersion)
+        {
+            var options = new Options(this.TestContext);
+            // For VS14RC+ version compiler name is the same Csc.exe, and behavior from async/iterator perspective is similar
+            // to old compiler as well. That's why IsLegacyRoslyn should be false in this test case.
+            options.IsLegacyRoslyn = false;
+            options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+            options.CompilerPath = string.Format(@"Roslyn\{0}", compilerVersion);
+            options.BuildFramework = @".NetFramework\v4.5";
+            options.ReferencesFramework = @".NetFramework\v4.5";
+            options.ContractFramework = @".NETFramework\v4.5";
+            options.UseTestHarness = true;
+
+            return options;
+        }
+
+        #endregion Roslyn compiler unit tests
 
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "RewriteExisting", DataAccessMethod.Sequential)]
         [TestMethod]
@@ -166,24 +211,6 @@ namespace Tests
             options.IsLegacyRoslyn = true;
             options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
             options.BuildFramework = @"Roslyn\v4.5";
-            options.ReferencesFramework = @".NetFramework\v4.5";
-            options.ContractFramework = @".NETFramework\v4.0";
-            options.UseTestHarness = true;
-
-            TestDriver.BuildRewriteRun(options);
-        }
-
-        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
-        [TestMethod]
-        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
-        public void BuildRewriteRunFromSourcesRoslynVS14RC()
-        {
-            var options = new Options(this.TestContext);
-            // For VS14RC+ version compiler name is the same Csc.exe, and behavior from async/iterator perspective is similar
-            // to old compiler as well. That's why IsLegacyRoslyn should be false in this test case.
-            options.IsLegacyRoslyn = false;
-            options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
-            options.BuildFramework = @"Roslyn\VS14RC";
             options.ReferencesFramework = @".NetFramework\v4.5";
             options.ContractFramework = @".NETFramework\v4.0";
             options.UseTestHarness = true;

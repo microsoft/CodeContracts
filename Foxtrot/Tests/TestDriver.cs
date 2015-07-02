@@ -101,7 +101,9 @@ namespace Tests
 
         private static int PEVerify(string assemblyFile, Options options)
         {
-            var peVerifyPath = options.MakeAbsolute(Path.Combine(ToolsRoot, String.Format(@"{0}\peverify.exe", options.BuildFramework)));
+            var peVerifyPath = options.GetPEVerifyFullPath(ToolsRoot);
+            Assert.IsTrue(File.Exists(peVerifyPath), string.Format("Can't find peverify.exe at '{0}'", peVerifyPath));
+
             var path = Path.GetDirectoryName(assemblyFile);
             var file = Path.GetFileName(assemblyFile);
             if (file == "mscorlib.dll") return -1; // peverify returns 0 for mscorlib without verifying.
@@ -210,13 +212,13 @@ namespace Tests
         {
             var sourceFile = options.MakeAbsolute(options.SourceFile);
 
-            var compilerPath = options.GetCompilerPath(ToolsRoot);
+            var compilerPath = options.GetCompilerAbsolutePath(ToolsRoot);
             Assert.IsTrue(File.Exists(compilerPath), string.Format("Can't find compiler at '{0}'", compilerPath));
 
             var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ReferencesFramework));
             var sourcedir = absoluteSourceDir = Path.GetDirectoryName(sourceFile);
 
-            var outputdir = Path.Combine(Path.Combine(sourcedir, "bin"), options.BuildFramework);
+            var outputdir = Path.Combine(Path.Combine(sourcedir, "bin"), options.CompilerPath);
             var extension = options.UseExe ? ".exe" : ".dll";
             var targetKind = options.UseExe ? "exe" : "library";
 

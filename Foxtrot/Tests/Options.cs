@@ -108,9 +108,14 @@ namespace Tests
 
         public bool IsRoslynBasedCompiler { get { return CompilerPath.Contains("Roslyn"); } }
 
-        public string GetCompilerPath(string toolsRoot)
+        public string GetCompilerAbsolutePath(string toolsRoot)
         {
             return MakeAbsolute(Path.Combine(toolsRoot, CompilerPath, Compiler));
+        }
+
+        public string GetPEVerifyFullPath(string toolsRoot)
+        {
+            return MakeAbsolute(Path.Combine(toolsRoot, CompilerPath, "peverify.exe"));
         }
 
         string Moniker

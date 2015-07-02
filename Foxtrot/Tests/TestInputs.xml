@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TestInputs>
+
+  <!-- Tests for IteratorBlockWithComplexGeneric test case -->
+  <IteratorWithComplexGeneric
+     Name="Foxtrot\Tests\RoslynCompatibility\IteratorWithTuple.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <TestFile
      Name="Foxtrot\Tests\Sources\RequiresForAll.cs"
      CompilerOptions=""
