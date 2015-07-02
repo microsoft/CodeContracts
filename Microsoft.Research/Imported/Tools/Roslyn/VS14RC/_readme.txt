@@ -1,1 +1,0 @@
-Roslyn bits was taken from installed VS14RC.
