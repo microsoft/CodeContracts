@@ -3673,6 +3673,90 @@ namespace System.Compiler{
       }
     }
   }
+  public sealed class SerializedTypeNameList
+  {
+    private Metadata.SerializedTypeName[]/*!*/ elements = new Metadata.SerializedTypeName[4];
+    private int count = 0;
+    public SerializedTypeNameList()
+    {
+      this.elements = new Metadata.SerializedTypeName[4];
+      //^ base();
+    }
+    public SerializedTypeNameList(int capacity)
+    {
+      this.elements = new Metadata.SerializedTypeName[capacity];
+      //^ base();
+    }
+    public SerializedTypeNameList(params Metadata.SerializedTypeName[] elements)
+    {
+      if (elements == null) elements = new Metadata.SerializedTypeName[0];
+      this.elements = elements;
+      this.count = elements.Length;
+      //^ base();
+    }
+    public void Add(Metadata.SerializedTypeName element)
+    {
+      int n = this.elements.Length;
+      int i = this.count++;
+      if (i == n)
+      {
+        int m = n * 2; if (m < 4) m = 4;
+        Metadata.SerializedTypeName[] newElements = new Metadata.SerializedTypeName[m];
+        for (int j = 0; j < n; j++) newElements[j] = elements[j];
+        this.elements = newElements;
+      }
+      this.elements[i] = element;
+    }
+    public int Count
+    {
+      get { return this.count; }
+    }
+    [Obsolete("Use Count property instead.")]
+    public int Length
+    {
+      get { return this.count; }
+    }
+    public Metadata.SerializedTypeName this[int index]
+    {
+      get
+      {
+        return this.elements[index];
+      }
+      set
+      {
+        this.elements[index] = value;
+      }
+    }
+    public Enumerator GetEnumerator()
+    {
+      return new Enumerator(this);
+    }
+    public struct Enumerator
+    {
+      private int index;
+      private readonly SerializedTypeNameList/*!*/ list;
+      public Enumerator(SerializedTypeNameList/*!*/ list)
+      {
+        this.index = -1;
+        this.list = list;
+      }
+      public Metadata.SerializedTypeName Current
+      {
+        get
+        {
+          return this.list[this.index];
+        }
+      }
+      public bool MoveNext()
+      {
+        return ++this.index < this.list.count;
+      }
+      public void Reset()
+      {
+        this.index = -1;
+      }
+    }
+  }
 }
 #else
 using System;

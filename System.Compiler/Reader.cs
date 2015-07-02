@@ -41,6 +41,10 @@ using Interface = Microsoft.Cci.InterfaceNode;
 using Event = Microsoft.Cci.EventNode;
 using Return = Microsoft.Cci.ReturnNode;
 using Throw = Microsoft.Cci.ThrowNode;
+using SerializedTypeNameList = System.Collections.Generic.List<SerializedTypeName>;
+#if NoWriter
+using StringList = System.Collections.Generic.List<string>;
+#endif
 #endif
 #if UseSingularityPDB
 using Microsoft.Singularity.PdbInfo;
@@ -1591,181 +1595,51 @@ namespace System.Compiler.Metadata{
       }
       throw new InvalidMetadataException(ExceptionStrings.UnexpectedTypeInCustomAttribute);
     }
-    //TODO: rewrite this entire mess using a proper grammar based parser
-    private TypeNode/*!*/ GetTypeFromSerializedName(string serializedName) {
+    private TypeNode GetTypeFromSerializedName(string serializedName)
+    {
       if (serializedName == null) return null;
-      string assemblyName = null;
-      string typeName = serializedName;
-      int firstComma = FindFirstCommaOutsideBrackets(serializedName);
-      if (firstComma > 0){
-        int i = 1;
-        while (firstComma+i < serializedName.Length && serializedName[firstComma+i] == ' ') i++;
-        assemblyName = serializedName.Substring(firstComma+i);
-        typeName = serializedName.Substring(0, firstComma);
-      }
-      return this.GetTypeFromSerializedName(typeName, assemblyName);
-    }
-    private static int FindFirstCommaOutsideBrackets(string/*!*/ serializedName) {
-      int numBrackets = 0;
-      int numAngles = 0;
-      for (int i = 0, n = serializedName == null ? 0 : serializedName.Length; i < n; i++){
-        char ch = serializedName[i];
-        if (ch == '[')
-          numBrackets++;
-        else if (ch == ']') {
-          if (--numBrackets < 0) return -1;
-        } else if (ch == '<')
-          numAngles++;
-        else if (ch == '>') {
-          if (--numAngles < 0) return -1;
-        } else if (ch == ',' && numBrackets == 0 && numAngles == 0)
-          return i;
-      }
-      return -1;
-    }
-    private TypeNode/*!*/ GetTypeFromSerializedName(string/*!*/ typeName, string assemblyName) {
-      string/*!*/ nspace, name;
-      int i;
-      ParseTypeName(typeName, out nspace, out name, out i);
-      Module tMod = null;
-      TypeNode t = this.LookupType(nspace, name, assemblyName, out tMod);
-      if (t == null) {
-        if (i < typeName.Length && typeName[i] == '!') {
-          int codedIndex = 0;
-          if (PlatformHelpers.TryParseInt32(typeName.Substring(0, i), out codedIndex)) {
-            t = this.DecodeAndGetTypeDefOrRefOrSpec(codedIndex);
-            if (t != null) return t;
-          }
-        }
-        t = this.GetDummyTypeNode(Identifier.For(nspace), Identifier.For(name), tMod, null, false);
-      }
-      if (i >= typeName.Length) return t;
-      char ch = typeName[i];
-      if (ch == '+') return this.GetTypeFromSerializedName(typeName.Substring(i+1), t);
-      if (ch == '&') return t.GetReferenceType();
-      if (ch == '*') return t.GetPointerType();
-      if (ch == '[') return this.ParseArrayOrGenericType(typeName.Substring(i+1, typeName.Length-1-i), t);
-      throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName);
-    }
-    private TypeNode/*!*/ GetTypeFromSerializedName(string/*!*/ typeName, TypeNode/*!*/ nestingType) {
-      string/*!*/ name;
-      int i = 0;
-      ParseSimpleTypeName(typeName, out name, ref i);
-      TypeNode t = nestingType.GetNestedType(Identifier.For(name));
-      if (t == null)
-        t = this.GetDummyTypeNode(Identifier.Empty, Identifier.For(name), nestingType.DeclaringModule, nestingType, false);
-      if (i >= typeName.Length) return t;
-      char ch = typeName[i];
-      if (ch == '+') return this.GetTypeFromSerializedName(typeName.Substring(i+1), t);
-      if (ch == '&') return t.GetReferenceType();
-      if (ch == '*') return t.GetPointerType();
-      if (ch == '[') return this.ParseArrayOrGenericType(typeName.Substring(i+1, typeName.Length-1-i), t);
-      throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName);
-    }
-    private TypeNode/*!*/ ParseArrayOrGenericType(string typeName, TypeNode/*!*/ rootType) {
-      if (typeName == null || rootType == null) { Debug.Assert(false); return rootType; }
-      //Get here after "rootType[" has been parsed. What follows is either an array type specifier or some generic type arguments.
-      if (typeName.Length == 0)
-        throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName); //Something ought to follow the [
-      if (typeName[0] == ']'){ //Single dimensional array with zero lower bound
-        if (typeName.Length == 1) return rootType.GetArrayType(1);
-        if (typeName[1] == '[' && typeName.Length > 2)
-          return this.ParseArrayOrGenericType(typeName.Substring(2), rootType.GetArrayType(1));
+      SerializedTypeName name;
+      if (!SerializedTypeName.TryParse(serializedName, out name))
         throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName);
-      }
-      if (typeName[0] == '*'){ //Single dimensional array with unknown lower bound
-        if (typeName.Length > 1 && typeName[1] == ']'){
-          if (typeName.Length == 2) return rootType.GetArrayType(1, true);
-          if (typeName[2] == '[' && typeName.Length > 3)
-            return this.ParseArrayOrGenericType(typeName.Substring(3), rootType.GetArrayType(1, true));
-        }
-        throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName);
-      }
-      if (typeName[0] == ','){ //Muti dimensional array
-        int rank = 1;
-        while (rank < typeName.Length && typeName[rank] == ',') rank++;
-        if (rank < typeName.Length && typeName[rank] == ']') {
-          if (typeName.Length == rank+1) return rootType.GetArrayType(rank+1);
-          if (typeName[rank+1] == '[' && typeName.Length > rank+2)
-            return this.ParseArrayOrGenericType(typeName.Substring(rank+2), rootType.GetArrayType(rank));
-        }
-        throw new InvalidMetadataException(ExceptionStrings.BadSerializedTypeName);
-      }
-      //Generic type instance
-      int offset = 0;
-      if (typeName[0] == '[') offset = 1; //Assembly qualified type name forming part of a generic parameter list        
-      TypeNodeList arguments = new TypeNodeList();
-      int commaPos = FindFirstCommaOutsideBrackets(typeName);
-      while (commaPos > 1){
-        arguments.Add(this.GetTypeFromSerializedName(typeName.Substring(offset, commaPos-offset)));
-        typeName = typeName.Substring(commaPos+1);
-        offset = typeName[0] == '[' ? 1 : 0;
-        commaPos = FindFirstCommaOutsideBrackets(typeName);
-      }
-      //Find the position of the first unbalanced ].
-      int lastCharPos = offset;
-      for (int leftBracketCount = 0; lastCharPos < typeName.Length; lastCharPos++) {
-        char ch = typeName[lastCharPos];
-        if (ch == '[') leftBracketCount++;
-        else if (ch == ']') {
-          leftBracketCount--;
-          if (leftBracketCount < 0) break;
-        }
-      }
-      arguments.Add(this.GetTypeFromSerializedName(typeName.Substring(offset, lastCharPos-offset)));
-      TypeNode retVal = rootType.GetGenericTemplateInstance(this.module, arguments);
-      if (lastCharPos+1 < typeName.Length && typeName[lastCharPos+1] == ']')
-        lastCharPos++;
-      if (lastCharPos+1 < typeName.Length) {
-        //The generic type is complete, but there is yet more to the type
-        char ch = typeName[lastCharPos+1];
-        if (ch == '+') retVal = this.GetTypeFromSerializedName(typeName.Substring(lastCharPos+2), retVal);
-        if (ch == '&') retVal = retVal.GetReferenceType();
-        if (ch == '*') retVal = retVal.GetPointerType();
-        if (ch == '[') retVal = this.ParseArrayOrGenericType(typeName.Substring(lastCharPos+2, typeName.Length-1-lastCharPos-1), retVal);
-      }
-      return retVal;
+      return this.GetTypeFromTypeName(name);
     }
-    private static void ParseSimpleTypeName(string/*!*/ source, out string/*!*/ name, ref int i) {
-      int n = source.Length;
-      int start = i;
-      for (; i < n; i++){
-        char ch = source[i];
-        if (ch == '\\'){ i++; continue;}
-        if (ch == '.' || ch == '+' || ch == '&' || ch == '*' || ch == '[' || ch == '!') break;
-        if (ch == '<'){
-          int unmatched = 1;
-          while (unmatched > 0 && ++i < n){
-            ch = source[i];
-            if (ch == '\\') i++;
-            else if (ch == '<') unmatched++;
-            else if (ch == '>') unmatched--;
-          }
-        }
+    private TypeNode GetTypeFromTypeName(SerializedTypeName typeName)
+    {
+      string firstName = typeName.Names.Count > 0 ? typeName.Names[0] : string.Empty;
+      int lastDot = firstName.LastIndexOf('.');
+      string ns, name;
+      if (lastDot < 0) {
+        ns = string.Empty;
+        name = firstName;
+      } else {
+        ns = firstName.Substring(0, lastDot);
+        name = firstName.Substring(lastDot + 1);
       }
-      if (i < n)
-        name = source.Substring(start, i-start);
-      else
-        name = source.Substring(start);
+      Module mod;
+      TypeNode type = this.LookupType(ns, name, typeName.Assembly, out mod);
+      if (type == null)
+        type = this.GetDummyTypeNode(Identifier.For(ns), Identifier.For(name), mod, null, false);
+      if (typeName.Names.Count > 1)
+        for (int i = 1; i < typeName.Names.Count; i++) {
+          TypeNode t = type.GetNestedType(Identifier.For(typeName.Names[i]));
+          if (t == null)
+            t = this.GetDummyTypeNode(Identifier.Empty, Identifier.For(typeName.Names[i]), type.DeclaringModule, type, false);
+          type = t;
+        }
+      if (typeName.GenericArguments.Count > 0) {
+        TypeNodeList arguments = new TypeNodeList();
+        foreach (SerializedTypeName genArg in typeName.GenericArguments)
+          arguments.Add(this.GetTypeFromTypeName(genArg));
+        type = type.GetGenericTemplateInstance(this.module, arguments);
+      }
+      return typeName.ApplySignature(type);
     }
-    private static void ParseTypeName(string/*!*/ source, out string/*!*/ nspace, out string/*!*/ name, out int i) {
-      i = 0;
-      int n = source.Length;
-      nspace = string.Empty;
-      while (true){
-        int start = i;
-        ParseSimpleTypeName(source, out name, ref i);
-        if (i < n && source[i] == '.'){i++; continue;}
-        if (start != 0) nspace = source.Substring(0, start-1);
-        return;
-      }      
-    }
-    private TypeNode LookupType(string/*!*/ nameSpace, string/*!*/ name, string assemblyName, out Module module) {
+    private TypeNode LookupType(string /*!*/ nameSpace, string /*!*/ name, string assemblyName, out Module module) {
       Identifier namespaceId = Identifier.For(nameSpace);
       Identifier nameId = Identifier.For(name);
       module = this.module;
       //^ assume module != null;
-      if (assemblyName == null) {
+      if (string.IsNullOrEmpty(assemblyName)) {
         TypeNode t = module.GetType(namespaceId, nameId);
         if (t != null) return t;
         module = CoreSystemTypes.SystemAssembly;
@@ -1773,7 +1647,7 @@ namespace System.Compiler.Metadata{
       }
       //See if the type is in one of the assemblies explcitly referenced by the current module
       AssemblyReferenceList arefs = module.AssemblyReferences;
-      for (int i = 0, n = arefs == null ? 0 : arefs.Count; i < n; i++){
+      for (int i = 0, n = arefs == null ? 0 : arefs.Count; i < n; i++) {
         AssemblyReference aref = arefs[i];
         if (aref != null && aref.StrongName == assemblyName && aref.Assembly != null) {
           module = aref.Assembly;
@@ -1786,7 +1660,7 @@ namespace System.Compiler.Metadata{
       if (referringAssembly != null && (referringAssembly.Flags & AssemblyFlags.Retargetable) != 0)
         aRef.Flags |= AssemblyFlags.Retargetable;
       AssemblyNode aNode = this.GetAssemblyFromReference(aRef);
-      if (aNode != null){
+      if (aNode != null) {
         module = aNode;
         TypeNode result = aNode.GetType(namespaceId, nameId);
         return result;
@@ -4205,6 +4079,382 @@ namespace System.Compiler.Metadata{
     }
     public readonly string Name;
     public readonly uint Attributes;
+  }
+
+  public class SerializedTypeName {
+    private readonly StringList names = new StringList();
+    private string assembly = string.Empty;
+    private readonly SerializedTypeNameList genericArguments = new SerializedTypeNameList();
+    private bool isGenericArgument;
+    private readonly Int32List signature = new Int32List();
+    public StringList Names {
+      get { return this.names; }
+    }
+    public string Assembly {
+      get { return this.assembly; }
+    }
+    public SerializedTypeNameList GenericArguments {
+      get { return this.genericArguments; }
+    }
+    public bool IsGenericArgument {
+      get { return this.isGenericArgument; }
+    }
+    private SerializedTypeName() {
+    }
+    public static bool TryParse(string typeNameString, out SerializedTypeName typeName) {
+      typeName = new SerializedTypeName();
+      return TypeNameParser.TryParse(typeNameString, typeName);
+    }
+    private SerializedTypeName AddGenericArgument() {
+      SerializedTypeName genArg = new SerializedTypeName {isGenericArgument = true};
+      this.genericArguments.Add(genArg);
+      return genArg;
+    }
+    private const int ByRefSignature = -1;
+    private const int PointerSignature = -2;
+    private const int SzArraySignature = -3;
+    private void SetByRef() {
+      this.signature.Add(ByRefSignature);
+    }
+    private void SetPointer() {
+      this.signature.Add(PointerSignature);
+    }
+    private void SetSzArray() {
+      this.signature.Add(SzArraySignature);
+    }
+    private void SetArray(int rank) {
+      if (rank < 1) throw new ArgumentOutOfRangeException("rank");
+      this.signature.Add(rank);
+    }
+    public TypeNode ApplySignature(TypeNode type) {
+      foreach (var sig in this.signature)
+        switch (sig) {
+          case ByRefSignature:
+            type = type.GetReferenceType();
+            break;
+          case PointerSignature:
+            type = type.GetPointerType();
+            break;
+          case SzArraySignature:
+            type = type.GetArrayType(1);
+            break;
+          default:
+            type = type.GetArrayType(sig, true);
+            break;
+        }
+      return type;
+    }
+    private class TypeNameParser {
+      private SerializedTypeName typeName;
+      private readonly string typeNameString;
+      private int itr;
+      private int currentItr;
+      private TypeNameTokens currentToken;
+      private TypeNameTokens nextToken;
+      private TypeNameParser(string typeNameString, SerializedTypeName typeName) {
+        if (typeNameString == null)
+          typeNameString = string.Empty;
+        this.currentToken = TypeNameTokens.Empty;
+        this.nextToken = TypeNameTokens.Empty;
+        this.typeName = typeName;
+        this.typeNameString = typeNameString;
+        this.currentItr = this.itr = 0;
+      }
+      public static bool TryParse(string typeNameString, SerializedTypeName typeName) {
+        var parser = new TypeNameParser(typeNameString, typeName);
+        return parser.Start();
+      }
+      private void NextToken() {
+        this.currentToken = this.nextToken;
+        this.currentItr = this.itr;
+        this.nextToken = this.LexAToken();
+      }
+      private bool NextTokenIs(TypeNameTokens token) {
+        return (this.nextToken & token) != 0;
+      }
+      private bool TokenIs(TypeNameTokens token) {
+        return (this.currentToken & token) != 0;
+      }
+      private bool IsTypeNameReservedChar(char ch) {
+        switch (ch) {
+          case ',':
+          case '[':
+          case ']':
+          case '&':
+          case '*':
+          case '+':
+          case '\\':
+            return true;
+          default:
+            return false;
+        }
+      }
+      private TypeNameTokens LexAToken() {
+        do {
+          if (this.nextToken == TypeNameTokens.Identifier)
+            return TypeNameTokens.PostIdentifier;
+          if (this.nextToken == TypeNameTokens.End)
+            return TypeNameTokens.End;
+          if (this.itr >= this.typeNameString.Length)
+            return TypeNameTokens.End;
+          if (char.IsWhiteSpace(this.typeNameString[this.itr])) {
+            this.itr++;
+            continue;
+          }
+          char c = this.typeNameString[this.itr];
+          this.itr++;
+          switch (c) {
+            case ',':
+              return TypeNameTokens.Comma;
+            case '[':
+              return TypeNameTokens.OpenSqBracket;
+            case ']':
+              return TypeNameTokens.CloseSqBracket;
+            case '&':
+              return TypeNameTokens.Amperstand;
+            case '*':
+              return TypeNameTokens.Astrix;
+            case '+':
+              return TypeNameTokens.Plus;
+            case '\\':
+              this.itr--;
+              return TypeNameTokens.Identifier;
+          }
+          this.itr--;
+          return TypeNameTokens.Identifier;
+        } while (true);
+      }
+      private string GetIdentifier(TypeNameIdentifiers identifierType) {
+        int start = this.currentItr;
+        Int32List escape = new Int32List();
+        if (identifierType == TypeNameIdentifiers.Id) {
+          do {
+            char c = this.currentItr < this.typeNameString.Length ? this.typeNameString[this.currentItr] : '\0';
+            this.currentItr++;
+            switch (c) {
+              case ',':
+              case '[':
+              case ']':
+              case '&':
+              case '*':
+              case '+':
+              case '\0':
+                goto done;
+              case '\\':
+                escape.Add(this.currentItr - 1);
+                if (!this.IsTypeNameReservedChar(this.typeNameString[this.currentItr]) || this.currentItr >= this.typeNameString.Length)
+                  return null;
+                this.currentItr++;
+                break;
+            }
+          } while (true);
+          done:
+          this.currentItr--;
+        } else if (identifierType == TypeNameIdentifiers.FusionName)
+          this.currentItr = this.typeNameString.Length;
+        else if (identifierType == TypeNameIdentifiers.EmbeddedFusionName) {
+          for (; (this.currentItr < this.typeNameString.Length) && (this.typeNameString[this.currentItr] != ']'); this.currentItr++) {
+            if (this.typeNameString[this.currentItr] == '\\')
+              if (this.typeNameString[this.currentItr + 1] == ']') {
+                escape.Add(this.currentItr);
+                this.currentItr++;
+                continue;
+              }
+            if (this.currentItr >= this.typeNameString.Length)
+              return null;
+          }
+          if (this.currentItr >= this.typeNameString.Length)
+            return null;
+        } else
+          return null;
+        this.itr = this.currentItr;
+        this.nextToken = this.LexAToken();
+        if (escape.Count < 1)
+          return this.typeNameString.Substring(start, this.currentItr - start);
+        Text.StringBuilder idBuilder = new Text.StringBuilder(this.currentItr - start - escape.Count);
+        int s = start;
+        for (int i = 0; i < escape.Count; i++) {
+          int e = escape[i];
+          idBuilder.Append(this.typeNameString, s, e - s);
+          s = e + 1;
+        }
+        if (s < this.typeNameString.Length)
+          idBuilder.Append(this.typeNameString, s, this.currentItr - s);
+        return idBuilder.ToString();
+      }
+      private bool Start() {
+        this.NextToken();
+        this.NextToken();
+        return this.AQN();
+      }
+      private bool AQN() {
+        if (!this.TokenIs(TypeNameTokens.AQN)) return false;
+        if (this.TokenIs(TypeNameTokens.End)) return true;
+        if (!this.FullName()) return false;
+        if (this.TokenIs(TypeNameTokens.Comma)) {
+          this.NextToken();
+          if (!this.AssemSpec()) return false;
+        }
+        if (!this.TokenIs(TypeNameTokens.End)) return false;
+        return true;
+      }
+      private bool AssemSpec() {
+        if (!this.TokenIs(TypeNameTokens.AssemSpec)) return false;
+        string assembly = this.GetIdentifier(TypeNameIdentifiers.FusionName);
+        if (assembly != null) this.typeName.assembly = assembly;
+        this.NextToken();
+        return true;
+      }
+      private bool FullName() {
+        if (!this.TokenIs(TypeNameTokens.FullName)) return false;
+        if (!this.Name()) return false;
+        if (!this.GenParams()) return false;
+        if (!this.Qualifier()) return false;
+        return true;
+      }
+      private bool GenParams() {
+        if (!this.TokenIs(TypeNameTokens.GenParam))
+          return true;
+        if (!this.NextTokenIs(TypeNameTokens.GenArgs))
+          return true;
+        this.NextToken();
+        if (!this.GenArgs()) return false;
+        if (!this.TokenIs(TypeNameTokens.CloseSqBracket)) return false;
+        this.NextToken();
+        return true;
+      }
+      private bool GenArgs() {
+        while (true) {
+          if (!this.TokenIs(TypeNameTokens.GenArgs)) return false;
+          if (!this.GenArg()) return false;
+          if (!this.TokenIs(TypeNameTokens.Comma)) return true;
+          this.NextToken();
+        }
+      }
+      private bool GenArg() {
+        SerializedTypeName enclosingTypeName = this.typeName;
+        this.typeName = this.typeName.AddGenericArgument();
+        if (this.TokenIs(TypeNameTokens.OpenSqBracket)) {
+          this.NextToken();
+          if (!this.EAQN()) return false;
+          if (!this.TokenIs(TypeNameTokens.CloseSqBracket)) return false;
+          this.NextToken();
+        } else if (!this.FullName()) return false;
+        this.typeName = enclosingTypeName;
+        return true;
+      }
+      private bool EAQN() {
+        if (!this.TokenIs(TypeNameTokens.EAQN)) return false;
+        if (!this.FullName()) return false;
+        if (this.TokenIs(TypeNameTokens.Comma)) {
+          this.NextToken();
+          if (!this.EAssemSpec()) return false;
+        }
+        return true;
+      }
+      private bool EAssemSpec() {
+        if (!this.TokenIs(TypeNameTokens.EAssemSpec)) return false;
+        string assembly = this.GetIdentifier(TypeNameIdentifiers.EmbeddedFusionName);
+        if (assembly != null) this.typeName.assembly = assembly;
+        this.NextToken();
+        return true;
+      }
+      private bool Qualifier() {
+        while (this.TokenIs(TypeNameTokens.Qualifier)) {
+          if (this.TokenIs(TypeNameTokens.Amperstand)) {
+            this.typeName.SetByRef();
+            this.NextToken();
+            return true;
+          }
+          if (this.TokenIs(TypeNameTokens.Astrix)) {
+            this.typeName.SetPointer();
+            this.NextToken();
+          } else if (!this.Array()) return false;
+        }
+        return true;
+      }
+      private bool Array() {
+        if (!this.TokenIs(TypeNameTokens.Array)) return false;
+        this.NextToken();
+        if (this.TokenIs(TypeNameTokens.Astrix)) {
+          this.typeName.SetArray(1);
+          this.NextToken();
+        } else {
+          int rank = 1;
+          if (!this.Rank(ref rank)) return false;
+          if (rank == 1)
+            this.typeName.SetSzArray();
+          else
+            this.typeName.SetArray(rank);
+        }
+        if (!this.TokenIs(TypeNameTokens.CloseSqBracket)) return false;
+        this.NextToken();
+        return true;
+      }
+      private bool Rank(ref int rank) {
+        while (this.TokenIs(TypeNameTokens.Rank)) {
+          rank++;
+          this.NextToken();
+        }
+        return true;
+      }
+      private bool Name() {
+        if (!this.TokenIs(TypeNameTokens.Name)) return false;
+        string name = this.GetIdentifier(TypeNameIdentifiers.Id);
+        if (name != null) this.typeName.names.Add(name);
+        this.NextToken();
+        if (this.TokenIs(TypeNameTokens.Plus)) {
+          do {
+            this.NextToken();
+            if (!this.TokenIs(TypeNameTokens.NestName)) return false;
+            name = this.GetIdentifier(TypeNameIdentifiers.Id);
+            if (name != null) this.typeName.names.Add(name);
+            this.NextToken();
+          } while (this.TokenIs(TypeNameTokens.Plus));
+        }
+        return true;
+      }
+    }
+    [Flags]
+    private enum TypeNameTokens : ushort {
+      //
+      // TOKENS
+      //
+      Empty = 0x8000,
+      Identifier = 0x0001,
+      PostIdentifier = 0x0002,
+      OpenSqBracket = 0x0004,
+      CloseSqBracket = 0x0008,
+      Comma = 0x0010,
+      Plus = 0x0020,
+      Astrix = 0x0040,
+      Amperstand = 0x0080,
+      End = 0x4000,
+
+      //
+      // 1 TOKEN LOOK AHEAD
+      //
+      Name = Identifier,
+      NestName = Identifier,
+      AssemSpec = Identifier,
+      GenParam = OpenSqBracket | Empty,
+      FullName = Name,
+      AQN = FullName | End,
+      GenArg = OpenSqBracket | FullName,
+      GenArgs = GenArg,
+      EAQN = Identifier,
+      EAssemSpec = Identifier,
+      Array = OpenSqBracket,
+      Qualifier = Amperstand | Astrix | Array | Empty,
+      Rank = Comma | Empty,
+    }
+    [Flags]
+    private enum TypeNameIdentifiers : byte {
+      None = 0x00,
+      Id = 0x01,
+      FusionName = 0x02,
+      EmbeddedFusionName = 0x03,
+    }
   }
 
   internal abstract class ILParser{
