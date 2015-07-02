@@ -2297,6 +2297,7 @@ namespace Microsoft.Contracts.Foxtrot {
               else
               {
                 if (field.Name.Name.Contains("__locals" /* csc.exe */) ||
+                    field.Name.Name.Contains("<>8__") /* roslyn-based csc */ ||
                     field.Name.Name.Contains("__spill") /* rcsc.exe */ ||
                     field.Name.Name.Contains("__CachedAnonymousMethodDelegate") /* junk, revisit */
                   )
@@ -2866,10 +2867,19 @@ namespace Microsoft.Contracts.Foxtrot {
         }
         return Pair.For(-2, EvalKind.None);
       }
+
+      // Roslyn-based compiler in Release mode can skip statemachine initialization
+      var methodCall = expression as MethodCall;
+      if (methodCall != null)
+      {
+          return Pair.For(-2, EvalKind.None);
+      }
+
       if (ignoreUnknown)
       {
         return Pair.For(-2, EvalKind.None);
       }
+
       throw new NotImplementedException("async/iterator issue");
     }
 
