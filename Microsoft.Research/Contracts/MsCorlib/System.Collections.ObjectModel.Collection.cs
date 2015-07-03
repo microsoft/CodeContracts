@@ -321,7 +321,7 @@ namespace System.Collections.ObjectModel
         //     index is less than zero.-or-index is greater than System.Collections.ObjectModel.Collection<T>.Count.
         protected virtual void InsertItem(int index, T item)
         {
-            
+            Contract.Requires((index >= 0) && (index <= Count));
         }
         //
         // Summary:
@@ -364,7 +364,7 @@ namespace System.Collections.ObjectModel
         //     index is less than zero.-or-index is equal to or greater than System.Collections.ObjectModel.Collection<T>.Count.
         protected virtual void RemoveItem(int index)
         {
-            
+            Contract.Requires((index >= 0) && (index < Count));
         }
         //
         // Summary:
@@ -383,7 +383,7 @@ namespace System.Collections.ObjectModel
         //     index is less than zero.-or-index is greater than System.Collections.ObjectModel.Collection<T>.Count.
         protected virtual void SetItem(int index, T item)
         {
-            
+            Contract.Requires((index >= 0) && (index <= Count));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
