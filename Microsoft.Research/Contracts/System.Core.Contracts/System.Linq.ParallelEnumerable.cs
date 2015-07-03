@@ -406,6 +406,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>() != null);
+      Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>().Any());
 
       return default(ParallelQuery<TSource>);
     }
@@ -415,6 +416,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>() != null);
+      Contract.Ensures(Contract.Result<System.Linq.ParallelQuery<TSource>>().Any());
 
       return default(ParallelQuery<TSource>);
     }

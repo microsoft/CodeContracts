@@ -63,10 +63,12 @@ namespace System.ComponentModel.Composition.Hosting
 
     protected virtual new void OnChanged(ComposablePartCatalogChangeEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnChanging(ComposablePartCatalogChangeEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     public void Refresh()

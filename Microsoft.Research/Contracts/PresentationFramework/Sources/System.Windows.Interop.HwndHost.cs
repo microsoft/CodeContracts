@@ -74,10 +74,12 @@ namespace System.Windows.Interop
 
     protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnKeyUp(System.Windows.Input.KeyEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new bool OnMnemonicCore(ref MSG msg, System.Windows.Input.ModifierKeys modifiers)

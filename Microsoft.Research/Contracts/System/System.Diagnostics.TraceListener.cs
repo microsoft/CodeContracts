@@ -13,7 +13,7 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if !SILVERLIGHT
-
+using System.Collections.Specialized;
 using System.Diagnostics.Contracts;
 using System;
 
@@ -45,6 +45,15 @@ namespace System.Diagnostics
       set
       {
         Contract.Requires(value >= 0);
+      }
+    }
+
+    public StringDictionary Attributes
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<StringDictionary>() != null);
+        return null;
       }
     }
 

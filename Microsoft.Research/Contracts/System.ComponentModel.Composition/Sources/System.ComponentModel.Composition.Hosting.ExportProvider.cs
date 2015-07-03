@@ -67,12 +67,16 @@ namespace System.ComponentModel.Composition.Hosting
 
     public T GetExportedValue<T>(string contractName)
     {
+      Contract.Ensures(Contract.Result<T>() != null); 
+      // because of ImportCardinality.ExactlyOne =>
+      // return this.GetExportedValueCore<T>(contractName, ImportCardinality.ExactlyOne);
       return default(T);
     }
 
     public T GetExportedValue<T>()
     {
-      return default(T);
+      Contract.Ensures(Contract.Result<T>() != null);
+      return this.GetExportedValue<T>((string)null);
     }
 
     public T GetExportedValueOrDefault<T>()
@@ -148,10 +152,12 @@ namespace System.ComponentModel.Composition.Hosting
 
     protected virtual new void OnExportsChanged(ExportsChangeEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnExportsChanging(ExportsChangeEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     public bool TryGetExports(System.ComponentModel.Composition.Primitives.ImportDefinition definition, AtomicComposition atomicComposition, out IEnumerable<System.ComponentModel.Composition.Primitives.Export> exports)

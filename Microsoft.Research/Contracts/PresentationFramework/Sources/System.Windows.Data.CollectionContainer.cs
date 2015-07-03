@@ -47,10 +47,12 @@ namespace System.Windows.Data
 
     protected virtual new void OnContainedCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
     {
+      Contract.Requires(args != null);
     }
 
     protected virtual new bool ReceiveWeakEvent(Type managerType, Object sender, EventArgs e)
     {
+      Contract.Requires(e != null);
       return default(bool);
     }
 

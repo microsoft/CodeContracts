@@ -202,6 +202,7 @@
     <Compile Include="System.Xml.Linq.XNodeDocumentOrderComparer.cs" />
     <Compile Include="System.Xml.Linq.XObject.cs" />
     <Compile Include="System.Xml.Linq.XObjectChangeEventArgs.cs" />
+    <Compile Include="System.Xml.Linq.XProcessingInstruction.cs" />
     <Compile Include="System.Xml.Linq.XStreamingElement.cs" />
     <Compile Include="System.Xml.Linq.XNodeEqualityComparer.cs" />
     <Compile Include="System.Xml.XPath.Extensions.cs" />

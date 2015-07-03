@@ -21,6 +21,17 @@ using System.Diagnostics.Contracts;
 
 namespace System.Windows.Threading
 {
+  // Summary:
+  //     Represents an operation that has been posted to the System.Windows.Threading.Dispatcher
+  //     queue.
+  public sealed class DispatcherOperation
+  {
+  }
+
+  public enum DispatcherPriority
+  {
+  }
+
   public sealed class Dispatcher
   {
     private Dispatcher() { }
@@ -41,11 +52,36 @@ namespace System.Windows.Threading
 
     //extern public event DispatcherUnhandledExceptionFilterEventHandler UnhandledExceptionFilter;
 
-    // public DispatcherOperation BeginInvoke(Delegate method, params object[] args);
-    //public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method);
-    // public DispatcherOperation BeginInvoke(Delegate method, DispatcherPriority priority, params object[] args);
-    //    public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg);
-    //  public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg, params object[] args);
+    public DispatcherOperation BeginInvoke(Delegate method, params object[] args)
+    {
+      Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
+      return null;
+    }
+
+    public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method)
+    {
+      Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
+      return null;
+    }
+
+    public DispatcherOperation BeginInvoke(Delegate method, DispatcherPriority priority, params object[] args)
+    {
+      Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
+      return null;
+    }
+
+    public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg)
+    {
+      Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
+      return null;
+    }
+
+    public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg, params object[] args)
+    {
+      Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
+      return null;
+    }
+
     //    public void BeginInvokeShutdown(DispatcherPriority priority);
     //extern public bool CheckAccess();
 
@@ -55,7 +91,7 @@ namespace System.Windows.Threading
 
     public static Dispatcher FromThread(Thread thread)
     {
-      Contract.Ensures(Contract.Result<Dispatcher>() != null);
+      // May return null!
 
       return null;
     }

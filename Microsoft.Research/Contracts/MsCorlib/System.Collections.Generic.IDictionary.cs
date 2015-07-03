@@ -167,11 +167,13 @@ namespace System.Collections.Generic
     {
       get
       {
+        Contract.Requires(!ReferenceEquals(key, null));
         // Contract.Requires(ContainsKey(key));
         throw new NotImplementedException();
       }
       set
       {
+        Contract.Requires(!ReferenceEquals(key, null));
         // Contract.Ensures(ContainsKey(key));
         //Contract.Ensures(old(ContainsKey(key)) ==> Count == old(Count));
         //Contract.Ensures(!old(ContainsKey(key)) ==> Count == old(Count) + 1);
@@ -181,29 +183,31 @@ namespace System.Collections.Generic
 
     void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
     {
+      Contract.Requires(!ReferenceEquals(key, null));
       // Contract.Requires(!ContainsKey(key));
       //modifies this.*;
       //Contract.Ensures(ContainsKey(key));
     }
 
-    bool IDictionary<TKey, TValue>.ContainsKey(TKey key)
+    public bool ContainsKey(TKey key)
     {
-      var @this = (IDictionary<TKey, TValue>)this;
-      Contract.Ensures(!Contract.Result<bool>() || @this.Count > 0);
+      Contract.Requires(!ReferenceEquals(key, null));
+      Contract.Ensures(!Contract.Result<bool>() || (Count > 0));
 
       throw new NotImplementedException();
     }
 
     bool IDictionary<TKey, TValue>.Remove(TKey key)
     {
+      Contract.Requires(!ReferenceEquals(key, null));
       // Contract.Ensures(!Contract.Result<bool>() || Contract.OldValue(ContainsKey(key)) && !ContainsKey(key));
       throw new NotImplementedException();
     }
 
     bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
     {
-      var @this = (IDictionary<TKey, TValue>)this;
-      Contract.Ensures(Contract.Result<bool>() == @this.ContainsKey(key));
+      Contract.Requires(!ReferenceEquals(key, null));
+      Contract.Ensures(Contract.Result<bool>() == ContainsKey(key));
       throw new NotImplementedException();
     }
 
@@ -211,7 +215,7 @@ namespace System.Collections.Generic
 
     #region ICollection<KeyValuePair<TKey,TValue>> Members
 
-    int ICollection<KeyValuePair<TKey, TValue>>.Count
+    public int Count
     {
       get { throw new NotImplementedException(); }
     }
