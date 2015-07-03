@@ -585,8 +585,9 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       catch
       {
         // Ignore any errors here, could be 
-        // - not using LocalDB at all (any of the connection string parameters did not exist)
+        // - not using LocalDB at all (any of the connection string parameters did not exist).
         // - file was never registered (first time used) or already detached.
+        // - any DbProvider specific exception.
       }
     }
   }
