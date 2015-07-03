@@ -22,23 +22,12 @@ namespace System.Windows.Threading
   {
     protected DispatcherObject() { }
 
-    // DetachFromDispatcher is e.g. called by Freezable.Freeze()
-    //
-    // This method allows certain derived classes to break the dispatcher affinity
-    // of our objects.
-    // [FriendAccessAllowed] // Built into Base, also used by Framework.
-    internal void DetachFromDispatcher()
-    {
-      // _dispatcher = null;
-    }
-
     public Dispatcher Dispatcher
     {
       get
       {
         // Note: a DispatcherObject that is not associated with a
-        // dispatcher is considered to be free-threaded.
-        // => maybe null!
+        // dispatcher is considered to be free-threaded and will return null.
         return null;
       }
     }
