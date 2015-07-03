@@ -121,8 +121,8 @@ namespace System.Collections.ObjectModel
         //     The zero-based index specifying the new location of the item.
         public void Move(int oldIndex, int newIndex)
         {
-            Contract.Requires(oldIndex < Count);
-            Contract.Requires(newIndex < Count);
+            Contract.Requires((oldIndex >= 0) && (oldIndex < Count));
+            Contract.Requires((newIndex >= 0) && (newIndex < Count));
         }
         //
         // Summary:
@@ -136,8 +136,8 @@ namespace System.Collections.ObjectModel
         //     The zero-based index specifying the new location of the item.
         protected virtual void MoveItem(int oldIndex, int newIndex)
         {
-            Contract.Requires(oldIndex < Count);
-            Contract.Requires(newIndex < Count);
+            Contract.Requires((oldIndex >= 0) && (oldIndex < Count));
+            Contract.Requires((newIndex >= 0) && (newIndex < Count));
         }
         //
         // Summary:
