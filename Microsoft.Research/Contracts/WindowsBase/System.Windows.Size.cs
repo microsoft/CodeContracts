@@ -140,7 +140,7 @@ namespace System.Windows
       }
       set
       {
-        // Contract.Requires(!this.IsEmpty); => see comment in Rect
+        Contract.Requires(!this.IsEmpty);
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Height == value || Double.IsNaN(value));
@@ -179,7 +179,7 @@ namespace System.Windows
       }
       set
       {
-        // Contract.Requires(!this.IsEmpty); => see comment in Rect
+        Contract.Requires(!this.IsEmpty);
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Width == value || Double.IsNaN(value));
