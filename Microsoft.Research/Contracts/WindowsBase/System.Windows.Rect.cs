@@ -16,6 +16,19 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 
+
+// 2015-03-36: tom-englert
+// Temporarily disabled checks for Contract.Requires(!this.IsEmpty);
+// => This requirement is true, but it's impossible to proof with acceptable effort.
+//    Even simple code like
+//
+//      var r = new Rect();
+//      r.Widht = 10.0;
+//
+//    will create a warning "CodeContracts: requires unproven: !this.IsEmpty. Are you making some assumption on get_Width that the static checker is unaware of?"
+//    As soon as the checker can infer the proper constraints, this can be enabled again.
+
+
 namespace System.Windows
 {
   // Summary:
@@ -214,7 +227,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Height == value || Double.IsNaN(value));
@@ -339,7 +352,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
         Contract.Requires(value >= 0.0 || Double.IsNaN(value));
 
         Contract.Ensures(this.Width == value || Double.IsNaN(value));
@@ -361,7 +374,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
         Contract.Ensures(this.X == value || Double.IsNaN(value));
       }
@@ -382,7 +395,7 @@ namespace System.Windows
       }
       set
       {
-        Contract.Requires(!this.IsEmpty);
+        // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
         Contract.Ensures(this.Y == value || Double.IsNaN(value));
       }
@@ -484,8 +497,7 @@ namespace System.Windows
     //     the rectangle's System.Windows.Rect.Top and System.Windows.Rect.Bottom properties.
     public void Inflate(Size size)
     {
-      Contract.Requires(!this.IsEmpty);
-
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.Contract.Requires(!this.IsEmpty);
     }
     //
     // Summary:
@@ -500,8 +512,7 @@ namespace System.Windows
     //     The amount by which to expand or shrink the top and bottom sides of the rectangle.
     public void Inflate(double width, double height)
     {
-      Contract.Requires(!this.IsEmpty);
-
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
     }
     //
     // Summary:
@@ -523,7 +534,7 @@ namespace System.Windows
     //     The resulting rectangle.
     public static Rect Inflate(Rect rect, Size size)
     {
-      Contract.Requires(!rect.IsEmpty);
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
       return default(Rect);
     }
@@ -546,7 +557,7 @@ namespace System.Windows
     //     The resulting rectangle.
     public static Rect Inflate(Rect rect, double width, double height)
     {
-      Contract.Requires(!rect.IsEmpty);
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
       return default(Rect);
     }
@@ -599,8 +610,7 @@ namespace System.Windows
     //     This method is called on the System.Windows.Rect.Empty rectangle.
     public void Offset(Vector offsetVector)
     {
-      Contract.Requires(!this.IsEmpty);
-
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
     }
     //
     // Summary:
@@ -618,8 +628,7 @@ namespace System.Windows
     //     This method is called on the System.Windows.Rect.Empty rectangle.
     public void Offset(double offsetX, double offsetY)
     {
-      Contract.Requires(!this.IsEmpty);
-
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
     }
     //
     // Summary:
@@ -641,7 +650,7 @@ namespace System.Windows
     //     rect is System.Windows.Rect.Empty.
     public static Rect Offset(Rect rect, Vector offsetVector)
     {
-      Contract.Requires(!rect.IsEmpty);
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
       return default(Rect);
     }
@@ -668,7 +677,7 @@ namespace System.Windows
     //     rect is System.Windows.Rect.Empty.
     public static Rect Offset(Rect rect, double offsetX, double offsetY)
     {
-      Contract.Requires(!rect.IsEmpty);
+      // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
       return default(Rect);
     }
