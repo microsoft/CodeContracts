@@ -16,6 +16,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Linq;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.CodeAnalysis.Caching.Models;
@@ -558,6 +561,34 @@ namespace Microsoft.Research.CodeAnalysis.Caching
     {
       get { return this.cachename; }
     }
+
+    protected static void DetachDeletedDb(string connection)
+    {
+      // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 
+      // If this is the case, we can't create a new database and the user is stuck unless he knows the tricky internals of LocalDB and how to get rid of the registration.
+      // => If we use LocalDB and the file does not exist, we try to detach it. 
+      try
+      {
+        var connectionString = new DbConnectionStringBuilder { ConnectionString = connection };
+        var fileName = (string)connectionString["AttachDbFileName"];
+        if (File.Exists(fileName)) 
+          return;
+
+        var catalog = (string)connectionString["Initial Catalog"];
+        var dataSource = (string)connectionString["Data Source"];
+
+        using (var master = new DataContext(string.Format(CultureInfo.InvariantCulture, @"Data Source={0};Initial Catalog=master;Integrated Security=True", dataSource)))
+        {
+          master.ExecuteCommand(@"exec sp_detach_db {0}", catalog);
+        }
+      }
+      catch
+      {
+        // Ignore any errors here, could be 
+        // - not using LocalDB at all (any of the connection string parameters did not exist)
+        // - file was never registered (first time used) or already detached.
+      }
+    }
   }
 
   public class SqlCacheModelNoCreate : SQLCacheModel
@@ -614,6 +645,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       : base(connection, cachename, trace)
     {
       Contract.Requires(cachename != null);
+
+      DetachDeletedDb(connection);
     }
   }
 
@@ -637,6 +670,8 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       : base(connection, cachename, trace)
     {
       Contract.Requires(cachename != null);
+
+      DetachDeletedDb(connection);
     }
   }
 
