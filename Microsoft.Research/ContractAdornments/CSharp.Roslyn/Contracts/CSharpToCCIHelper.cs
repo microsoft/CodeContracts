@@ -16,13 +16,19 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Microsoft.Cci;
-using Microsoft.RestrictedUsage.CSharp.Semantics;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
-using Microsoft.RestrictedUsage.CSharp.Utilities;
 using System;
+using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
+using CSharpNamespace = Microsoft.CodeAnalysis.INamespaceSymbol;
+using CSharpParameter = Microsoft.CodeAnalysis.IParameterSymbol;
+using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
+
+using IEventSymbol = Microsoft.CodeAnalysis.IEventSymbol;
+using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;
+using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+using ITypeParameterSymbol = Microsoft.CodeAnalysis.ITypeParameterSymbol;
+using RefKind = Microsoft.CodeAnalysis.RefKind;
+using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
+using TypeKind = Microsoft.CodeAnalysis.TypeKind;
 
 namespace ContractAdornments {
   /// <summary>
@@ -41,10 +47,9 @@ namespace ContractAdornments {
       Contract.Requires(semanticMember != null);
 
       var callingConvention = CallingConvention.Default;
-      if (semanticMember.IsMethod) {
-        if (semanticMember.TypeParameters != null && semanticMember.TypeParameters.Count > 0)
-          callingConvention = callingConvention | CallingConvention.Generic;
-      }
+      IMethodSymbol methodSymbol = semanticMember as IMethodSymbol;
+      if (methodSymbol != null && methodSymbol.IsGenericMethod)
+        callingConvention = callingConvention | CallingConvention.Generic;
       if (!semanticMember.IsStatic)
         callingConvention = callingConvention | CallingConvention.HasThis;
       return callingConvention;
@@ -60,8 +65,8 @@ namespace ContractAdornments {
                        Contract.Result<PrimitiveTypeCode>() != PrimitiveTypeCode.Reference &&
                        Contract.Result<PrimitiveTypeCode>() != PrimitiveTypeCode.Invalid,
                        "These types aren't checked for; all others are.");
-      if(type.Name == null || String.IsNullOrEmpty(type.Name.Text)) throw new IllFormedSemanticModelException("A CSharpType was found with a null or empty 'Name' field.", type);
-      switch (type.Name.Text) {
+      if(type.Name == null || String.IsNullOrEmpty(type.Name)) throw new IllFormedSemanticModelException("A CSharpType was found with a null or empty 'Name' field.", type);
+      switch (type.Name) {
         case "Boolean": return PrimitiveTypeCode.Boolean;
         case "Char": return PrimitiveTypeCode.Char;
         case "SByte": return PrimitiveTypeCode.Int8;
@@ -116,10 +121,9 @@ namespace ContractAdornments {
       Contract.Requires(member1 != null);
       Contract.Requires(member2 != null);
       #region Check kind
-      if (member1.IsProperty ^ member2.IsProperty) return false;
-      if (member1.IsMethod ^ member2.IsMethod) return false;
-      if (member1.IsField ^ member2.IsField) return false;
-      if (member1.IsIndexer ^ member2.IsIndexer) return false;
+      if (member1.Kind != member2.Kind) return false;
+      if (member1.MethodKind() != member2.MethodKind()) return false;
+      if (member1.IsIndexer() ^ member2.IsIndexer()) return false;
       #endregion
       #region Check name
       if (member1.Name == null ^ member2.Name == null) return false;
@@ -127,19 +131,19 @@ namespace ContractAdornments {
           && !member1.Name.Equals(member2.Name)) return false;
       #endregion
       #region Check explicit interface implementation
-      if (member1.ExplicitInterfaceImplementation != null ^ member2.ExplicitInterfaceImplementation != null) return false;
-      if (member1.ExplicitInterfaceImplementation != null && member2.ExplicitInterfaceImplementation != null 
-          && !TypesAreEquivalent(member1.ExplicitInterfaceImplementation, member2.ExplicitInterfaceImplementation)) return false;
+      if (member1.ExplicitInterfaceImplementation() != null ^ member2.ExplicitInterfaceImplementation() != null) return false;
+      if (member1.ExplicitInterfaceImplementation() != null && member2.ExplicitInterfaceImplementation() != null 
+          && !TypesAreEquivalent(member1.ExplicitInterfaceImplementation(), member2.ExplicitInterfaceImplementation())) return false;
       #endregion
       #region Check parameters
-      if (member1.Parameters == null ^ member2.Parameters == null) return false;
-      if (member1.Parameters != null && member2.Parameters != null
-          && !ParameterListsAreEquivalent(member1.Parameters, member2.Parameters)) return false;
+      if (member1.Parameters().IsDefault ^ member2.Parameters().IsDefault) return false;
+      if (!member1.Parameters().IsDefault && !member2.Parameters().IsDefault
+          && !ParameterListsAreEquivalent(member1.Parameters(), member2.Parameters())) return false;
       #endregion
       #region Check return type
-      if (member1.ReturnType == null) throw new IllFormedSemanticModelException("A CSharpMember (member) was found with a null 'ReturnType' field.", member1);
-      if (member2.ReturnType == null) throw new IllFormedSemanticModelException("A CSharpMember (member) was found with a null 'ReturnType' field.", member2);
-      if (!TypesAreEquivalent(member1.ReturnType, member2.ReturnType)) return false;
+      if (member1.ReturnType() == null) throw new IllFormedSemanticModelException("A CSharpMember (member) was found with a null 'ReturnType' field.", member1);
+      if (member2.ReturnType() == null) throw new IllFormedSemanticModelException("A CSharpMember (member) was found with a null 'ReturnType' field.", member2);
+      if (!TypesAreEquivalent(member1.ReturnType(), member2.ReturnType())) return false;
       #endregion
       return true;
     }
@@ -155,9 +159,9 @@ namespace ContractAdornments {
       if (param1.Type == null) throw new IllFormedSemanticModelException("A CSharpParameter was found with a null 'Type' field.", param1);
       if (param2.Type == null) throw new IllFormedSemanticModelException("A CSharpParameter was found with a null 'Type' field.", param2);
       if (!TypesAreEquivalent(param1.Type, param2.Type)) return false;
-      if (param1.IsOut ^ param2.IsOut) return false;
+      if ((param1.RefKind == RefKind.Out) ^ (param2.RefKind == RefKind.Out)) return false;
       if (param1.IsParams ^ param2.IsParams) return false;
-      if (param1.IsRef ^ param2.IsRef) return false;
+      if ((param1.RefKind == RefKind.Ref) ^ (param2.RefKind == RefKind.Ref)) return false;
       if (param1.IsThis ^ param2.IsThis) return false;
       return true;
     }
@@ -179,28 +183,21 @@ namespace ContractAdornments {
     public static bool TryGetBaseMember(CSharpMember member, out CSharpMember baseMember) {
       Contract.Requires(member != null);
       Contract.Ensures(!Contract.Result<bool>() ||
-                       member.IsMethod == Contract.ValueAtReturn(out baseMember).IsMethod
-                    && member.IsProperty == Contract.ValueAtReturn(out baseMember).IsProperty
-                    && member.IsIndexer == Contract.ValueAtReturn(out baseMember).IsIndexer
-                    && member.IsField == Contract.ValueAtReturn(out baseMember).IsField);
+                       member.Kind == Contract.ValueAtReturn(out baseMember).Kind);
 
       baseMember = null;
 
       if (member.ContainingType == null) throw new IllFormedSemanticModelException("A CSharpMember (method) was found with a null 'ContainingType' field.", member);
-      if (!member.ContainingType.IsClass) return false;
+      if (member.ContainingType.TypeKind != TypeKind.Class) return false;
       var containingType = member.ContainingType;
-      var baseClass = containingType.BaseClass;
+      var baseClass = containingType.BaseType;
       while (baseClass != null) {
         if (TryGetMemberWithSameSignatureFromType(baseClass, member, out baseMember))
         {
-          Contract.Assume(
-              member.IsMethod == baseMember.IsMethod
-           && member.IsProperty == baseMember.IsProperty
-           && member.IsIndexer == baseMember.IsIndexer
-           && member.IsField == baseMember.IsField);
+          Contract.Assume(member.Kind == baseMember.Kind);
           return true;
         }
-        baseClass = baseClass.BaseClass;
+        baseClass = baseClass.BaseType;
       }
       return false;
     }
@@ -215,8 +212,7 @@ namespace ContractAdornments {
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out member) != null);
 
       member = null;
-      var members = type.Members;
-      if (members == null) throw new IllFormedSemanticModelException("A CSharpType was found with a null 'Members' field.", type);
+      var members = type.GetMembers();
       foreach (var m in members) {
         if (m == null) throw new IllFormedSemanticModelException("An null 'member' was found in a CSharpType's 'Members' field.", type);
         if (MembersAreEquivalent(m, memberToMatch)) {
@@ -238,18 +234,18 @@ namespace ContractAdornments {
 
       interfaceMethod = null;
 
-      if (member.ExplicitInterfaceImplementation != null)
-        if (TryGetMemberWithSameSignatureFromType(member.ExplicitInterfaceImplementation, member, out interfaceMethod))
+      if (member.ExplicitInterfaceImplementation() != null)
+        if (TryGetMemberWithSameSignatureFromType(member.ExplicitInterfaceImplementation(), member, out interfaceMethod))
         {
           return true;
         }
 
-      if (member.ContainingType == null || member.ContainingType.BaseInterfaces == null)
+      if (member.ContainingType == null || member.ContainingType.AllInterfaces.IsDefault)
       {
         return false;
       }
       
-      foreach (var i in member.ContainingType.BaseInterfaces)
+      foreach (var i in member.ContainingType.AllInterfaces)
       {
         if (i == null) continue;
         if (TryGetMemberWithSameSignatureFromType(i, member, out interfaceMethod))
@@ -270,10 +266,13 @@ namespace ContractAdornments {
       if (type2 == null) return false;
 
       #region Check if type parameter
-      if (type1.IsTypeParameter ^ type2.IsTypeParameter) return false;
-      if (type1.IsTypeParameter && type2.IsTypeParameter) {
-        if (type1.HasReferenceTypeConstraint ^ type2.HasReferenceTypeConstraint) return false;
-        if (type1.HasValueTypeConstraint ^ type2.HasValueTypeConstraint) return false;
+      if ((type1.TypeKind == TypeKind.TypeParameter) != (type2.TypeKind == TypeKind.TypeParameter))
+          return false;
+      if (type1.TypeKind == TypeKind.TypeParameter) {
+        ITypeParameterSymbol typeParameter1 = (ITypeParameterSymbol)type1;
+        ITypeParameterSymbol typeParameter2 = (ITypeParameterSymbol)type2;
+        if (typeParameter1.HasReferenceTypeConstraint ^ typeParameter2.HasReferenceTypeConstraint) return false;
+        if (typeParameter1.HasValueTypeConstraint ^ typeParameter2.HasValueTypeConstraint) return false;
         return true;
       }
       #endregion
@@ -297,28 +296,28 @@ namespace ContractAdornments {
       }
       #endregion
       #region Check type parameters
-      if (type1.TypeParameters != null ^ type2.TypeParameters != null) return false;
-      if (type1.TypeParameters != null && type2.TypeParameters != null &&
-        type1.TypeParameters.Count != type2.TypeParameters.Count) return false;
+      if (!type1.TypeParameters().IsDefault ^ !type2.TypeParameters().IsDefault) return false;
+      if (!type1.TypeParameters().IsDefault && !type2.TypeParameters().IsDefault &&
+        type1.TypeParameters().Length != type2.TypeParameters().Length) return false;
       #endregion
       #region Check type arguments
       
-      if (type1.TypeArguments != null ^ type2.TypeArguments != null) return false;
-      if (type1.TypeArguments != null && type2.TypeArguments != null &&
-        !TypeListsAreEquivalent(type1.TypeArguments, type2.TypeArguments)) return false;
+      if (!type1.TypeArguments().IsDefault ^ !type2.TypeArguments().IsDefault) return false;
+      if (!type1.TypeArguments().IsDefault && !type2.TypeArguments().IsDefault &&
+        !TypeListsAreEquivalent(type1.TypeArguments(), type2.TypeArguments())) return false;
       #endregion
       #region Check array
-      if (type1.IsArray ^ type2.IsArray) return false;
-      if (type1.IsArray && type2.IsArray)
-        return TypesAreEquivalent(type1.ElementType, type2.ElementType);
+      if ((type1.TypeKind == TypeKind.Array) ^ (type2.TypeKind == TypeKind.Array)) return false;
+      if ((type1.TypeKind == TypeKind.Array) && (type2.TypeKind == TypeKind.Array))
+        return TypesAreEquivalent(type1.ElementType(), type2.ElementType());
       #endregion
       #region Check pointer
-      if (type1.IsPointer ^ type2.IsPointer) return false;
-      if (type1.IsPointer && type2.IsPointer)
-        return TypesAreEquivalent(type1.ElementType, type2.ElementType);
+      if ((type1.TypeKind == TypeKind.Pointer) ^ (type2.TypeKind == TypeKind.Pointer)) return false;
+      if ((type1.TypeKind == TypeKind.Pointer) && (type2.TypeKind == TypeKind.Pointer))
+        return TypesAreEquivalent(type1.ElementType(), type2.ElementType());
       #endregion
-      if (type1.IsClass != type2.IsClass
-        || type1.IsStruct != type2.IsStruct
+      if ((type1.TypeKind == TypeKind.Class) != (type2.TypeKind == TypeKind.Class)
+        || (type1.TypeKind == TypeKind.Struct) != (type2.TypeKind == TypeKind.Struct)
         || type1.IsStatic != type2.IsStatic
         || type1.IsValueType != type2.IsValueType)
         return false;
@@ -338,23 +337,11 @@ namespace ContractAdornments {
     public static CSharpMember Uninstantiate(this CSharpMember member) {
       Contract.Requires(member != null);
       Contract.Ensures(Contract.Result<CSharpMember>() != null);
-      Contract.Ensures(member.IsMethod == Contract.Result<CSharpMember>().IsMethod);
-      Contract.Ensures(member.IsConstructor == Contract.Result<CSharpMember>().IsConstructor);
-      Contract.Ensures(member.IsProperty == Contract.Result<CSharpMember>().IsProperty);
-      Contract.Ensures(member.IsIndexer == Contract.Result<CSharpMember>().IsIndexer);
+      Contract.Ensures(member.Kind == Contract.Result<CSharpMember>().Kind);
 
-      var uninstantiatedMember = member;
+      var uninstantiatedMember = member.OriginalDefinition;
 
-      var definingMember = member.DefiningMember;
-      while (definingMember != null) {
-        uninstantiatedMember = definingMember;
-        definingMember = definingMember.DefiningMember;
-      }
-
-      Contract.Assume(member.IsMethod == uninstantiatedMember.IsMethod);
-      Contract.Assume(member.IsConstructor == uninstantiatedMember.IsConstructor);
-      Contract.Assume(member.IsProperty == uninstantiatedMember.IsProperty);
-      Contract.Assume(member.IsIndexer == uninstantiatedMember.IsIndexer);
+      Contract.Assume(member.Kind == uninstantiatedMember.Kind);
       return uninstantiatedMember;
     }
     [Pure]
@@ -362,13 +349,7 @@ namespace ContractAdornments {
       Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<CSharpType>() != null);
 
-      var uninstantiatedType = type;
-
-      var definingType = type.DefiningType;
-      while (definingType != null) {
-        uninstantiatedType = definingType;
-        definingType = definingType.DefiningType;
-      }
+      var uninstantiatedType = type.OriginalDefinition;
 
       return uninstantiatedType;
     }

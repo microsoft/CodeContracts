@@ -16,18 +16,23 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using Microsoft.RestrictedUsage.CSharp.Semantics;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
-using Microsoft.RestrictedUsage.CSharp.Utilities;
 using Microsoft.Cci;
 using Microsoft.Cci.Contracts;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Cci.MutableContracts;
 using ContractAdornments.Interfaces;
+using CSharpAssembly = Microsoft.CodeAnalysis.IAssemblySymbol;
+using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
+using CSharpNamespace = Microsoft.CodeAnalysis.INamespaceSymbol;
+using CSharpParameter = Microsoft.CodeAnalysis.IParameterSymbol;
+using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
+
+using IArrayTypeSymbol = Microsoft.CodeAnalysis.IArrayTypeSymbol;
+using ITypeParameterSymbol = Microsoft.CodeAnalysis.ITypeParameterSymbol;
+using RefKind = Microsoft.CodeAnalysis.RefKind;
+using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
+using TypeKind = Microsoft.CodeAnalysis.TypeKind;
 
 namespace ContractAdornments {
   public class ContractsProvider : IContractsProvider {
@@ -98,7 +103,7 @@ namespace ContractAdornments {
       #endregion
       // distinguish between the AssemblyName and the ProjectName
 
-      var semanticAssemblyFileName = semanticAssembly.BinaryFileName.Value ?? ((semanticAssembly.Name == null) ? null : semanticAssembly.Name.Text);
+      var semanticAssemblyFileName = (semanticAssembly.Name == null) ? null : semanticAssembly.Name;
       if (string.IsNullOrWhiteSpace(semanticAssemblyFileName)) return false;
       var semanticAssemblyName = Path.GetFileName(semanticAssemblyFileName);
       if (semanticAssemblyName.EndsWith(".dll") || semanticAssemblyName.EndsWith(".exe"))
@@ -129,8 +134,8 @@ namespace ContractAdornments {
         ContractsPackageAccessor.Current.Logger.WriteToLog("Assembly identity for the project: " + _projectTracker.ProjectName + " was null.");
       #endregion
       #region Build assembly reference
-      if (semanticAssembly.Name == null || string.IsNullOrWhiteSpace(semanticAssembly.Name.Text)) goto ReturnFalseNoOutput; // because we have no name.
-      var projectName = Path.GetFileName(semanticAssembly.Name.Text);
+      if (semanticAssembly.Name == null || string.IsNullOrWhiteSpace(semanticAssembly.Name)) goto ReturnFalseNoOutput; // because we have no name.
+      var projectName = Path.GetFileName(semanticAssembly.Name);
       if (projectName.EndsWith(".dll") || projectName.EndsWith(".exe"))
           projectName = projectName.Remove(projectName.Length - 4, 4);
       var references = _projectTracker.References;
@@ -170,7 +175,7 @@ namespace ContractAdornments {
       #endregion
       #region ReturnFalse:
     ReturnFalse:
-      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build assembly reference for: " + semanticAssembly.Name.Text);
+      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build assembly reference for: " + semanticAssembly.Name);
     ReturnFalseNoOutput:
       if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticAssemblysToCCIAssemblys[semanticAssembly] = Dummy.AssemblyReference;
@@ -179,7 +184,7 @@ namespace ContractAdornments {
     }
     public bool TryGetPropertyContract(CSharpMember semanticMember, out IMethodContract getterContract, out IMethodContract setterContract)
     {
-        Contract.Requires(semanticMember == null || semanticMember.IsProperty || semanticMember.IsIndexer);
+        Contract.Requires(semanticMember == null || semanticMember.Kind == SymbolKind.Property);
 
         getterContract = null;
         setterContract = null;
@@ -206,7 +211,7 @@ namespace ContractAdornments {
     }
     public bool TryGetMethodContract(CSharpMember semanticMethod, out IMethodContract methodContract)
     {
-      Contract.Requires(semanticMethod == null || semanticMethod.IsConstructor || semanticMethod.IsMethod);
+      Contract.Requires(semanticMethod == null || semanticMethod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out methodContract) != null));
 
       methodContract = null;
@@ -230,7 +235,7 @@ namespace ContractAdornments {
         methodContract = null;
         if (semanticMethod.Name != null)
         {
-          ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to get CCI reference for: " + semanticMethod.Name.Text);
+          ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to get CCI reference for: " + semanticMethod.Name);
         }
       }
       return false;
@@ -272,7 +277,7 @@ namespace ContractAdornments {
       return methodContract != null;
     }
     public bool TryGetMethodContractSafe(CSharpMember semanticMehod, out IMethodContract methodContract) {
-      Contract.Requires(semanticMehod == null || semanticMehod.IsMethod || semanticMehod.IsConstructor);
+      Contract.Requires(semanticMehod == null || semanticMehod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out methodContract) != null));
 
       methodContract = null;
@@ -309,7 +314,7 @@ namespace ContractAdornments {
       return methodContract != null;
     }
     public bool TryGetMethodReference(CSharpMember semanticMethod, out IMethodReference cciMethod) {
-      Contract.Requires(semanticMethod == null || semanticMethod.IsConstructor || semanticMethod.IsMethod);
+      Contract.Requires(semanticMethod == null || semanticMethod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cciMethod) != null);
 
       cciMethod = null;
@@ -340,36 +345,36 @@ namespace ContractAdornments {
       workingCciMethod.ContainingType = containingType;
       #endregion
       #region Get return type reference
-      if (semanticMethod.IsConstructor)
+      if (semanticMethod.IsConstructor())
         workingCciMethod.Type = this.Host.PlatformType.SystemVoid;
       else {
         ITypeReference returnType;
-        if (!TryGetTypeReference(semanticMethod.ReturnType, out returnType))
+        if (!TryGetTypeReference(semanticMethod.ReturnType(), out returnType))
           goto ReturnFalse;
         workingCciMethod.Type = returnType;
       }
       #endregion
       #region Get name
-      if (!semanticMethod.IsConstructor && semanticMethod.Name == null) goto ReturnFalse;
-      workingCciMethod.Name = Host.NameTable.GetNameFor(semanticMethod.IsConstructor?".ctor":semanticMethod.Name.Text);
+      if (!semanticMethod.IsConstructor() && semanticMethod.Name == null) goto ReturnFalse;
+      workingCciMethod.Name = Host.NameTable.GetNameFor(semanticMethod.IsConstructor()?".ctor":semanticMethod.Name);
       #endregion
       #region Get generic param count
-      if (semanticMethod.TypeParameters == null)
+      if (semanticMethod.TypeParameters().IsDefault)
         workingCciMethod.GenericParameterCount = 0;
       else
-        workingCciMethod.GenericParameterCount = (ushort)semanticMethod.TypeParameters.Count;
+        workingCciMethod.GenericParameterCount = (ushort)semanticMethod.TypeParameters().Length;
       #endregion
       #region Get parameter references
       List<IParameterTypeInformation> cciParameters;
-      if (semanticMethod.Parameters == null) goto ReturnFalse;
-      Contract.Assume(semanticMethod.Parameters.Count <= ushort.MaxValue, "Should be a postcondition?");
-      if (!TryGetParametersList(semanticMethod.Parameters, out cciParameters))
+      if (semanticMethod.Parameters().IsDefault) goto ReturnFalse;
+      Contract.Assume(semanticMethod.Parameters().Length <= ushort.MaxValue, "Should be a postcondition?");
+      if (!TryGetParametersList(semanticMethod.Parameters(), out cciParameters))
         goto ReturnFalse;
       workingCciMethod.Parameters = cciParameters;
       #endregion
       #region Get the assembly reference (this also ensures the assembly gets loaded properly)
       IAssemblyReference assemblyReference;
-      TryGetAssemblyReference(semanticMethod.Assembly, out assemblyReference);
+      TryGetAssemblyReference(semanticMethod.ContainingAssembly, out assemblyReference);
       #endregion
       cciMethod = workingCciMethod;
       return true;
@@ -393,7 +398,7 @@ namespace ContractAdornments {
       #endregion
       #region If root
       try {
-        if (semanticNamespace.IsRoot) {
+        if (semanticNamespace.IsGlobalNamespace) {
           cciNamespace = new Microsoft.Cci.MutableCodeModel.RootUnitNamespaceReference() { Unit = cciAssembly };
           goto ReturnTrue;
         }
@@ -410,7 +415,7 @@ namespace ContractAdornments {
         if (!TryGetNamespaceReference(semanticNamespace.ContainingNamespace, cciAssembly, out parentNs))
           goto ReturnFalse;
         if (semanticNamespace.Name == null) goto ReturnFalse;
-        cciNamespace = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(parentNs, Host.NameTable.GetNameFor(semanticNamespace.Name.Text));
+        cciNamespace = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(parentNs, Host.NameTable.GetNameFor(semanticNamespace.Name));
         goto ReturnTrue;
       }
       #endregion
@@ -481,7 +486,7 @@ namespace ContractAdornments {
       workingParameter.Index = index;
       #endregion
       #region Get our reference status
-      workingParameter.IsByReference = semanticParameter.IsOut || semanticParameter.IsRef;
+      workingParameter.IsByReference = semanticParameter.RefKind == RefKind.Out || semanticParameter.RefKind == RefKind.Ref;
       #endregion
       #region ReturnTrue:
     //ReturnTrue:
@@ -491,13 +496,13 @@ namespace ContractAdornments {
     ReturnFalse:
       if (semanticParameter.Name != null)
       {
-        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build parameter reference for: " + semanticParameter.Name.Text);
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build parameter reference for: " + semanticParameter.Name);
       }
       return false;
       #endregion
     }
     public bool TryGetPropertyAccessorReferences(CSharpMember semanticProperty, out IMethodReference getter, out IMethodReference setter) {
-      Contract.Requires(semanticProperty == null || semanticProperty.IsProperty || semanticProperty.IsIndexer);
+      Contract.Requires(semanticProperty == null || semanticProperty.Kind == SymbolKind.Property);
 
       getter = setter = null;
 
@@ -525,30 +530,30 @@ namespace ContractAdornments {
       #endregion
       #region Get return type
       ITypeReference returnType;
-      if (!TryGetTypeReference(semanticProperty.ReturnType, out returnType))
+      if (!TryGetTypeReference(semanticProperty.ReturnType(), out returnType))
         goto ReturnFalse;
       #endregion
       #region Get the property's name
       string propertyName;
-      if (semanticProperty.IsIndexer)
+      if (semanticProperty.IsIndexer())
         propertyName = "Item";
       else
       {
         if (semanticProperty.Name == null) goto ReturnFalse;
-        propertyName = semanticProperty.Name.Text;
+        propertyName = semanticProperty.Name;
       }
       #endregion
       #region Get the parameters
       List<IParameterTypeInformation> getterParams;
-      if (semanticProperty.Parameters != null) {
-        if (!TryGetParametersList(semanticProperty.Parameters, out getterParams))
+      if (!semanticProperty.Parameters().IsDefault) {
+        if (!TryGetParametersList(semanticProperty.Parameters(), out getterParams))
           goto ReturnFalse;
       } else
         getterParams = new List<IParameterTypeInformation>();
 
       List<IParameterTypeInformation> setterParams;
-      if (semanticProperty.Parameters != null) {
-        if (!TryGetParametersList(semanticProperty.Parameters, out setterParams, 1))
+      if (!semanticProperty.Parameters().IsDefault) {
+        if (!TryGetParametersList(semanticProperty.Parameters(), out setterParams, 1))
           goto ReturnFalse;
         #region Append the "value" param
         var valParam = new Microsoft.Cci.MutableCodeModel.ParameterTypeInformation() {
@@ -585,7 +590,7 @@ namespace ContractAdornments {
       #endregion
       #region Get the assembly reference (this also ensures the assembly gets loaded properly)
       IAssemblyReference assemblyReference;
-      TryGetAssemblyReference(semanticProperty.Assembly, out assemblyReference);
+      TryGetAssemblyReference(semanticProperty.ContainingAssembly, out assemblyReference);
       #endregion
       #region ReturnTrue:
     //ReturnTrue:
@@ -596,7 +601,7 @@ namespace ContractAdornments {
     ReturnFalse:
       if (semanticProperty.Name != null)
       {
-        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build accessor references for: " + semanticProperty.Name.Text);
+        ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build accessor references for: " + semanticProperty.Name);
       }
       _semanticPropertiesToCCIAccessorMethods[semanticProperty] = new Tuple<IMethodReference, IMethodReference>(Dummy.MethodReference, Dummy.MethodReference);
       return false;
@@ -618,9 +623,9 @@ namespace ContractAdornments {
           return cciType != null && cciType != Dummy.TypeReference;
       #endregion
       #region If generic
-      if (semanticType.TypeArguments != null && semanticType.TypeArguments.Count > 0) {
+      if (!semanticType.TypeArguments().IsDefault && semanticType.TypeArguments().Length > 0) {
         var genericArguments = new List<ITypeReference>();
-        foreach (var semanticTypeArg in semanticType.TypeArguments) {
+        foreach (var semanticTypeArg in semanticType.TypeArguments()) {
           if (semanticTypeArg == null) goto ReturnFalse;
           ITypeReference cciTypeArg = null;
           if (TryGetTypeReference(semanticTypeArg, out cciTypeArg)) {
@@ -630,7 +635,7 @@ namespace ContractAdornments {
           }
         }
         ITypeReference genericType = null;
-        if (!TryGetTypeReference(semanticType.DefiningType, out genericType)) {
+        if (!TryGetTypeReference(semanticType.ContainingType, out genericType)) {
           goto ReturnFalse;
         }
         cciType = new Microsoft.Cci.MutableCodeModel.GenericTypeInstanceReference() {
@@ -642,16 +647,16 @@ namespace ContractAdornments {
       }
       #endregion
       #region If array
-      if (semanticType.IsArray) {
+      if (semanticType.TypeKind == TypeKind.Array) {
         ITypeReference eleType;
-        if (!TryGetTypeReference(semanticType.ElementType, out eleType))
+        if (!TryGetTypeReference(semanticType.ElementType(), out eleType))
           goto ReturnFalse;
-        if (semanticType.ElementType.IsArray) {
-          Contract.Assume(semanticType.Rank > 0);
+        if (semanticType.ElementType().TypeKind == TypeKind.Array) {
+          Contract.Assume(((IArrayTypeSymbol)semanticType).Rank > 0);
           cciType = new Microsoft.Cci.MutableCodeModel.MatrixTypeReference() {
             ElementType = eleType,
             InternFactory = this.Host.InternFactory,
-            Rank = (uint)semanticType.Rank
+            Rank = (uint)((IArrayTypeSymbol)semanticType).Rank
           };
           goto ReturnTrue;
         } else {
@@ -664,23 +669,23 @@ namespace ContractAdornments {
       }
       #endregion
       #region If type parameter
-      if (semanticType.IsTypeParameter) {
-        if (semanticType.DefiningMember != null) {
+      if (semanticType.TypeKind == TypeKind.TypeParameter) {
+        if (semanticType.ContainingSymbol != null && semanticType.ContainingSymbol.Kind == SymbolKind.Method) {
           cciType = new Microsoft.Cci.MutableCodeModel.GenericMethodParameterReference() {
-            Index = (ushort)(semanticType.DefiningMember.TypeParameters != null? semanticType.DefiningMember.TypeParameters.IndexOf(semanticType) : 0),
+            Index = (ushort)(!semanticType.ContainingSymbol.TypeParameters().IsDefault ? semanticType.ContainingSymbol.TypeParameters().IndexOf((ITypeParameterSymbol)semanticType) : 0),
             InternFactory = this.Host.InternFactory,
-            Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name.Text : "T"),
+            Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name : "T"),
           };
           goto ReturnTrue;
-        } else if (semanticType.DefiningType != null) {
+        } else if (semanticType.ContainingType != null) {
           ITypeReference cciDefiningType;
-          if (!TryGetTypeReference(semanticType.DefiningType, out cciDefiningType))
+          if (!TryGetTypeReference(semanticType.ContainingType, out cciDefiningType))
             goto ReturnFalse;
           cciType = new Microsoft.Cci.MutableCodeModel.GenericTypeParameterReference() {
             DefiningType = cciDefiningType,
-            Index = (ushort)(semanticType.DefiningType.TypeParameters != null ? semanticType.DefiningType.TypeParameters.IndexOf(semanticType) : 0),
+            Index = (ushort)(semanticType.ContainingType.TypeParameters != null ? semanticType.ContainingType.TypeParameters.IndexOf((ITypeParameterSymbol)semanticType) : 0),
             InternFactory = this.Host.InternFactory,
-            Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name.Text : "T"),
+            Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name : "T"),
           };
           goto ReturnTrue;
         }
@@ -697,15 +702,15 @@ namespace ContractAdornments {
         }
         if (semanticType.ContainingType == null)
         {
-          if (semanticType.Name == null || semanticType.Name.Text == null) goto ReturnFalse;
+          if (semanticType.Name == null || semanticType.Name == null) goto ReturnFalse;
           cciType = new Microsoft.Cci.MutableCodeModel.NamespaceTypeReference()
           {
             ContainingUnitNamespace = cciNamespace,
-            GenericParameterCount = (ushort) (semanticType.TypeParameters == null ? 0 : semanticType.TypeParameters.Count),
+            GenericParameterCount = (ushort) (semanticType.TypeParameters().IsDefault ? 0 : semanticType.TypeParameters().Length),
             InternFactory = Host.InternFactory,
             IsValueType = semanticType.IsValueType,
-            IsEnum = semanticType.IsEnum,
-            Name = Host.NameTable.GetNameFor(semanticType.Name.Text),
+            IsEnum = semanticType.TypeKind == TypeKind.Enum,
+            Name = Host.NameTable.GetNameFor(semanticType.Name),
             TypeCode = CSharpToCCIHelper.GetPrimitiveTypeCode(semanticType),
           };
           goto ReturnTrue;
@@ -717,14 +722,14 @@ namespace ContractAdornments {
         ITypeReference containingType;
         if (!TryGetTypeReference(semanticType.ContainingType, cciAssembly, out containingType))
           goto ReturnFalse;
-        if (semanticType.Name == null || semanticType.Name.Text == null) goto ReturnFalse;
+        if (semanticType.Name == null || semanticType.Name == null) goto ReturnFalse;
         cciType = new Microsoft.Cci.MutableCodeModel.NestedTypeReference()
         {
           ContainingType = containingType,
-          GenericParameterCount = (ushort)(semanticType.TypeParameters == null ? 0 : semanticType.TypeParameters.Count),
+          GenericParameterCount = (ushort)(semanticType.TypeParameters().IsDefault ? 0 : semanticType.TypeParameters().Length),
           InternFactory = this.Host.InternFactory,
           MangleName = true,
-          Name = Host.NameTable.GetNameFor(semanticType.Name.Text)
+          Name = Host.NameTable.GetNameFor(semanticType.Name)
         };
         goto ReturnTrue;
       }
@@ -737,7 +742,7 @@ namespace ContractAdornments {
       #endregion
       #region ReturnFalse:
     ReturnFalse:
-      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build type reference for: " + (semanticType.Name != null ? semanticType.Name.Text : semanticType.ToString()));
+      ContractsPackageAccessor.Current.Logger.WriteToLog("Failed to build type reference for: " + (semanticType.Name != null ? semanticType.Name : semanticType.ToString()));
       if (ContractsPackageAccessor.Current.VSOptionsPage.Caching)
         _semanticTypesToCCITypes[semanticType] = Dummy.TypeReference;
       return false;
@@ -760,7 +765,7 @@ namespace ContractAdornments {
       #endregion
       #region Get assembly reference
       IAssemblyReference cciAssembly;
-      if (!TryGetAssemblyReference(semanticType.Assembly, out cciAssembly))
+      if (!TryGetAssemblyReference(semanticType.ContainingAssembly, out cciAssembly))
         goto ReturnFalse;
       #endregion
       return TryGetTypeReference(semanticType, cciAssembly, out cciType);

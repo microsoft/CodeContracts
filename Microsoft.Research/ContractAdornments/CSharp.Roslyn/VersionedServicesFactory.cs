@@ -26,18 +26,17 @@ namespace ContractAdornments.CSharp
 
         public IContractsProvider CreateContractsProvider(IProjectTracker projectTracker)
         {
-            throw new NotSupportedException();
+            return new ContractsProvider(projectTracker);
         }
-
 
         public IQuickInfoSource CreateQuickInfoSource(ITextBuffer textBuffer, ITextViewTracker textViewTracker)
         {
-            throw new NotSupportedException();
+            return new QuickInfoSource(textBuffer, textViewTracker);
         }
 
         public ISignatureHelpSource CreateSignatureHelpSource(ITextBuffer textBuffer, ITextViewTracker textViewTracker)
         {
-            throw new NotSupportedException();
+            return new SignatureHelpSource(textBuffer, textViewTracker);
         }
 
         private sealed class RoslynCompilerHost : ICompilerHost

@@ -14,15 +14,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Language.Intellisense;
-using Microsoft.VisualStudio.Text;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
-using Microsoft.Cci.Contracts;
-using Microsoft.VisualStudio.TextManager.Interop;
 using ContractAdornments.Interfaces;
+using Microsoft.Cci.Contracts;
+using Microsoft.VisualStudio.Language.Intellisense;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.TextManager.Interop;
+using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
+using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
+using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
+using SyntaxTree = Microsoft.CodeAnalysis.SyntaxTree;
 
 namespace ContractAdornments {
   class SignatureHelpSource : ISignatureHelpSource {
@@ -74,8 +76,8 @@ namespace ContractAdornments {
           return;
 
         //Can we get our ParseTree?
-        var parseTree = sourceFile.GetParseTree();
-        if (parseTree == null)
+        SyntaxTree parseTree;
+        if (!sourceFile.TryGetSyntaxTree(out parseTree))
           return;
 
         //Can we get our compilation?
@@ -160,10 +162,10 @@ namespace ContractAdornments {
       }, "AugmentSignatureHelpSession");
     }
 
-    private string[] GetContractsForOverloads(Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember[] overloads)
+    private string[] GetContractsForOverloads(CSharpMember[] overloads)
     {
         Contract.Requires(overloads != null);
-        Contract.Requires(Contract.ForAll(overloads, o => o == null || o.IsConstructor || o.IsMethod || o.IsProperty || o.IsIndexer));
+        Contract.Requires(Contract.ForAll(overloads, o => o == null || o.Kind == SymbolKind.Method || o.Kind == SymbolKind.Property));
 
         var result = new string[overloads.Length];
 
@@ -173,7 +175,7 @@ namespace ContractAdornments {
             //Can we get our contracts?
             if (mem == null) continue;
 
-            if (mem.IsConstructor || mem.IsMethod)
+            if (mem.Kind == SymbolKind.Method)
             {
                 IMethodContract methodContracts;
                 if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetMethodContract(mem, out methodContracts))
@@ -181,7 +183,7 @@ namespace ContractAdornments {
 
                 result[i] = IntellisenseContractsHelper.FormatContracts(methodContracts);
             }
-            else if (mem.IsProperty || mem.IsIndexer)
+            else if (mem.Kind == SymbolKind.Property)
             {
                 IMethodContract getter, setter;
 
@@ -194,21 +196,21 @@ namespace ContractAdornments {
         return result;
     }
 
-    private Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember[] GetSignatureOverloads(Microsoft.RestrictedUsage.CSharp.Semantics.CSharpType declType, IList<ISignature> signatures, Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember semanticMember)
+    private CSharpMember[] GetSignatureOverloads(CSharpType declType, IList<ISignature> signatures, CSharpMember semanticMember)
     {
         Contract.Requires(signatures != null);
         Contract.Requires(declType != null);
         Contract.Requires(semanticMember != null);
 
-        if (signatures.Count == 1 || declType.Members == null)
+        if (signatures.Count == 1 || declType.GetMembers().IsDefault)
         {
             return new[] { semanticMember };
         }
-        var result = new Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember[signatures.Count];
-        for (int i = 0; i < declType.Members.Count; i++)
+        var result = new CSharpMember[signatures.Count];
+        for (int i = 0; i < declType.GetMembers().Length; i++)
         {
-            var mem = declType.Members[i];
-            if (mem == null || !(mem.IsMethod || mem.IsConstructor || mem.IsIndexer)) continue;
+            var mem = declType.GetMembers()[i];
+            if (mem == null || !(mem.Kind == SymbolKind.Method || mem.IsIndexer())) continue;
             if (mem.Name != semanticMember.Name) continue;
             if (mem.IsStatic != semanticMember.IsStatic) continue;
 
@@ -218,7 +220,7 @@ namespace ContractAdornments {
         return result;
     }
 
-    private void FuzzyIdentifySignature(Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember mem, Microsoft.RestrictedUsage.CSharp.Semantics.CSharpMember[] result, [Pure] IList<ISignature> signatures)
+    private void FuzzyIdentifySignature(CSharpMember mem, CSharpMember[] result, [Pure] IList<ISignature> signatures)
     {
         Contract.Requires(signatures != null);
         Contract.Requires(result != null);
@@ -231,15 +233,15 @@ namespace ContractAdornments {
             var sig = signatures[i];
             if (sig == null) continue;
             if (sig.Parameters == null) continue;
-            if (mem.Parameters == null) continue;
-            if (sig.Parameters.Count != mem.Parameters.Count) continue;
+            if (mem.Parameters().IsDefault) continue;
+            if (sig.Parameters.Count != mem.Parameters().Length) continue;
 
             var match = true;
-            for (int j = 0; j < mem.Parameters.Count; j++)
+            for (int j = 0; j < mem.Parameters().Length; j++)
             {
-                var p = mem.Parameters[j];
+                var p = mem.Parameters()[j];
                 var s = sig.Parameters[j];
-                if (p == null || p.Name == null || s == null || p.Name.Text != s.Name) { match = false; break; }
+                if (p == null || p.Name == null || s == null || p.Name != s.Name) { match = false; break; }
                 // need to compare types, but how. Sig doesn't seem to give it to us
             }
             if (!match) continue;

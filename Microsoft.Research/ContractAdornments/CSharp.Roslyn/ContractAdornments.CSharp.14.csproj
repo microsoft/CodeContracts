@@ -409,16 +409,17 @@
     <Compile Include="..\..\common\include\version.cs">
       <Link>Version\version.cs</Link>
     </Compile>
-    <None Include="Contracts\ContractsProvider.cs" />
-    <None Include="Contracts\CSharpToCCIHelper.cs" />
+    <Compile Include="Contracts\ContractsProvider.cs" />
+    <Compile Include="Contracts\CSharpToCCIHelper.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ISymbolExtensions.cs" />
     <Compile Include="VersionedServicesFactory.cs" />
     <None Include="Inheritance\InheritanceTracker.cs" />
     <None Include="Inheritance\MethodCollector.cs" />
     <None Include="Inheritance\PropertyCollector.cs" />
-    <None Include="Intellisense\IntellisenseContractsHelper.cs" />
-    <None Include="Intellisense\QuickInfo.cs" />
-    <None Include="Intellisense\SignatureHelp.cs" />
+    <Compile Include="Intellisense\IntellisenseContractsHelper.cs" />
+    <Compile Include="Intellisense\QuickInfo.cs" />
+    <Compile Include="Intellisense\SignatureHelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextView\TextViewTracker.cs" />
   </ItemGroup>

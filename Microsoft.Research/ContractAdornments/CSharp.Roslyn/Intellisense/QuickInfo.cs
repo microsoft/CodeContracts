@@ -14,20 +14,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Language.Intellisense;
 using System.Diagnostics.Contracts;
-using Microsoft.VisualStudio.Text;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
-using Microsoft.RestrictedUsage.CSharp.Semantics;
-using Microsoft.RestrictedUsage.CSharp.Utilities;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
-using Microsoft.Cci.Contracts;
-using Microsoft.Cci;
 using ContractAdornments.Interfaces;
+using Microsoft.Cci.Contracts;
+using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio.Language.Intellisense;
+using Microsoft.VisualStudio.Text;
 
 namespace ContractAdornments {
   class QuickInfoSource : IQuickInfoSource {
@@ -85,8 +77,8 @@ namespace ContractAdornments {
           return;
 
         //Can we get our ParseTree?
-        var parseTree = sourceFile.GetParseTree();
-        if (parseTree == null)
+        SyntaxTree parseTree;
+        if (!sourceFile.TryGetSyntaxTree(out parseTree))
           return;
 
         //Can we get our compilation?
@@ -160,12 +152,12 @@ namespace ContractAdornments {
       if (span != null) { applicableToSpan = span; }
     }
 
-    private string GetFormattedContracts(CSharpMember semanticMember)
+    private string GetFormattedContracts(ISymbol semanticMember)
     {
         Contract.Requires(semanticMember != null);
-        Contract.Requires(semanticMember.IsMethod || semanticMember.IsConstructor || semanticMember.IsProperty || semanticMember.IsIndexer);
+        Contract.Requires(semanticMember.Kind == SymbolKind.Method || semanticMember.Kind == SymbolKind.Property);
 
-        if (semanticMember.IsProperty || semanticMember.IsIndexer)
+        if (semanticMember.Kind == SymbolKind.Property)
         {
             IMethodContract setter, getter;
             if (!((ContractsProvider)_textViewTracker.ProjectTracker.ContractsProvider).TryGetPropertyContract(semanticMember, out getter, out setter))

@@ -18,16 +18,30 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 using Microsoft.VisualStudio.Text;
-using Microsoft.RestrictedUsage.CSharp.Core;
-using Microsoft.RestrictedUsage.CSharp.Extensions;
-using Microsoft.RestrictedUsage.CSharp.Semantics;
-using Microsoft.RestrictedUsage.CSharp.Utilities;
-using Microsoft.RestrictedUsage.CSharp.Syntax;
-using Microsoft.RestrictedUsage.CSharp.Compiler;
 using Microsoft.Cci.Contracts;
 using Microsoft.Cci;
 using System.Runtime.InteropServices;
 using UtilitiesNamespace;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+using Compilation = Microsoft.CodeAnalysis.Workspace;
+using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
+using ParseTree = Microsoft.CodeAnalysis.SyntaxTree;
+using ParseTreeNode = Microsoft.CodeAnalysis.SyntaxNode;
+using Position = Microsoft.CodeAnalysis.Text.LinePosition;
+using SourceFile = Microsoft.CodeAnalysis.Document;
+
+using InvocationExpressionSyntax = Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax;
+using ObjectCreationExpressionSyntax = Microsoft.CodeAnalysis.CSharp.Syntax.ObjectCreationExpressionSyntax;
+using RefKind = Microsoft.CodeAnalysis.RefKind;
+using SemanticModel = Microsoft.CodeAnalysis.SemanticModel;
+using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
+using TypeKind = Microsoft.CodeAnalysis.TypeKind;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.VisualStudio.Threading;
+using Microsoft.VisualStudio.Shell;
 
 namespace ContractAdornments {
   public static class IntellisenseContractsHelper {
@@ -37,72 +51,26 @@ namespace ContractAdornments {
       Contract.Requires(comp != null);
       Contract.Requires(sourceFile != null);
       Contract.Ensures(Contract.Result<CSharpMember>() == null ||
-                       Contract.Result<CSharpMember>().IsMethod || 
-                       Contract.Result<CSharpMember>().IsConstructor || 
-                       Contract.Result<CSharpMember>().IsProperty || 
-                       Contract.Result<CSharpMember>().IsIndexer);
+                       Contract.Result<CSharpMember>().Kind == SymbolKind.Method || 
+                       Contract.Result<CSharpMember>().Kind == SymbolKind.Property);
 
       // The CSharp model can throw internal exceptions at unexpected moments, so we filter them here:
       try
       {
-        CSharpMember semanticMember;
-        if (parseTreeNode.IsAnyMember())
-        {
-          semanticMember = comp.GetMemberFromMemberDeclaration(parseTreeNode);
-          if (semanticMember == null) return null;
+        SemanticModel semanticModel =  ThreadHelper.JoinableTaskFactory.Run(() => sourceFile.GetSemanticModelAsync());
+
+        CSharpMember semanticMember = semanticModel.GetDeclaredSymbol(parseTreeNode);
+        if (semanticMember != null)
           goto Success;
-        }
+
         //Can we get our expression tree?
-        var expressionTree = comp.FindExpressionTree(sourceFile, parseTreeNode);
-        if (expressionTree == null)
-          return null;
-
-        //Can we get our expression?
-        var expression = expressionTree.FindLeafExpression(parseTreeNode);
-        if (expression == null)
-          return null;
-
-        //Can we get our semanticMember?
-        semanticMember = expression.FindExpressionExplicitMember();
-
-
+        semanticMember = semanticModel.GetSymbolInfo(parseTreeNode).Symbol;
         if (semanticMember == null)
-        {
-          MEMGRPExpression memgrpExpr = expression as MEMGRPExpression;
-          if (memgrpExpr != null)
-          {
-            var foo = memgrpExpr.OwningCall;
-            if (foo != null)
-            {
-              semanticMember = foo.mwi;
-            }
-            if (semanticMember == null && memgrpExpr.mps != null && memgrpExpr.mps.Text == "$Item$")
-            {
-              if (memgrpExpr.Object != null && memgrpExpr.Object.Type != null)
-              {
-                var type = memgrpExpr.Object.Type;
-                if (type.Members == null) goto TryNext;
+          return null;
 
-                // find indexer member
-                for (int i = 0; i < type.Members.Count; i++)
-                {
-                  var mem = type.Members[i];
-                  if (mem == null) continue;
-                  if (mem.IsIndexer)
-                  {
-                    semanticMember = mem;
-                    break;
-                  }
-                }
-              }
-            }
-
-          }
-        }
-      TryNext: ;
       Success:
         //Is our semanticMember a method?
-        if (semanticMember == null || !(semanticMember.IsMethod || semanticMember.IsConstructor || semanticMember.IsProperty || semanticMember.IsIndexer))
+        if (semanticMember == null || !(semanticMember.Kind == SymbolKind.Method || semanticMember.Kind == SymbolKind.Property))
           return null;
 
         //Unistantiate
@@ -120,36 +88,33 @@ namespace ContractAdornments {
       Contract.Requires(parseTree != null);
       Contract.Requires(triggerPoint != null);
 
-      //Can we get our position?
-      var pos = triggerPoint.Convert(snapshot);
-      if (pos == default(Position))
+      SyntaxNode syntaxRoot;
+      if (!parseTree.TryGetRoot(out syntaxRoot))
         return null;
 
-      //Can we get our leaf node?
-      var leafNode = parseTree.FindLeafNode(pos);
-      if (leafNode == null)
+      var leafNode = syntaxRoot.FindToken(triggerPoint.GetPosition(snapshot), false);
+      if (leafNode.IsKind(SyntaxKind.None))
         return null;
 
       //Is anyone in our ancestry a call node?
-      var nodeInQuestion = leafNode;
+      var nodeInQuestion = leafNode.Parent;
       ParseTreeNode ptn = null;
 
       while (nodeInQuestion != null) {
-
         //Is the node in question a node call?
-        var asCall = nodeInQuestion.AsAnyCall();
+        var asCall = nodeInQuestion as InvocationExpressionSyntax;
         if (asCall != null) {
           ptn = asCall;
           break;
         }
 
-        var asCtorCall = nodeInQuestion.AsAnyCreation();
+        var asCtorCall = nodeInQuestion as ObjectCreationExpressionSyntax;
         if (asCtorCall != null) {
           ptn = asCtorCall;
           break;
         }
-                
-        //Climp higher up our ancestry for the next iteration
+
+        //Climb higher up our ancestry for the next iteration
         nodeInQuestion = nodeInQuestion.Parent;
       }
 
@@ -162,23 +127,24 @@ namespace ContractAdornments {
       Contract.Requires(parseTree != null);
       Contract.Requires(triggerPoint != null);
 
-      //Can we get our position?
-      var pos = triggerPoint.Convert(snapshot);
-      if (pos == default(Position))
+      SyntaxNode syntaxRoot;
+      if (!parseTree.TryGetRoot(out syntaxRoot))
         return null;
 
-      //Can we get our leaf node?
-      var leafNode = parseTree.FindLeafNode(pos);
-      if (leafNode == null)
+      var leafToken = syntaxRoot.FindToken(triggerPoint.GetPosition(snapshot), false);
+      if (leafToken.IsKind(SyntaxKind.None))
         return null;
 
-      var asPropDecl = leafNode.AsProperty();
+      var leafNode = leafToken.Parent;
+
+      var asPropDecl = leafNode as PropertyDeclarationSyntax;
       if (asPropDecl != null)
       {
           return asPropDecl;
       }
+
       //Is our leaf node a name?
-      var asName = leafNode.AsAnyName();
+      var asName = leafNode as IdentifierNameSyntax;
       if (asName == null)
         return null;
 
@@ -189,39 +155,42 @@ namespace ContractAdornments {
       while (nodeInQuestion != null) {
 
         //Is the node in question a node call?
-        var asCall = nodeInQuestion.AsAnyCall();
+        var asCall = nodeInQuestion as InvocationExpressionSyntax;
         if (asCall != null) {
 
           //Make sure we aren't on the right side of the call
-          if (asCall.Right == lastNode)
+          MemberAccessExpressionSyntax memberAccessExpression = asCall.Expression as MemberAccessExpressionSyntax;
+          if (memberAccessExpression == null || memberAccessExpression.Name == leafNode)
             return null;
 
           return asCall;
         }
 
-        var asProp = nodeInQuestion.AsDot();
+        var asProp = nodeInQuestion as MemberAccessExpressionSyntax;
         if (asProp != null)
         {
             //Make sure we aren't on the left side of the dot
-            if (asProp.Right == lastNode && asProp.Right.IsName())
+            if (asProp.Name == lastNode && asProp.Name is IdentifierNameSyntax)
             {
                 return asProp;
             }
         }
 
-        var asCtorCall = nodeInQuestion.AsAnyCreation();
+        var asCtorCall = nodeInQuestion as ObjectCreationExpressionSyntax;
         if (asCtorCall != null)
         {
             return asCtorCall;
         }
 
-        var declNode = nodeInQuestion.AsAnyMember();
+        var declNode = nodeInQuestion as MemberDeclarationSyntax;
         if (declNode != null)
         {
             if (lastNode == leafNode) { return declNode; }
             return null;
         }
 
+#warning What exactly is this doing?
+#if false
         NamedAssignmentNode na = nodeInQuestion as NamedAssignmentNode;
         if (na != null)
         {
@@ -230,8 +199,10 @@ namespace ContractAdornments {
                 return na;
             }
         }
+#endif
+
         //Is our parent a binary operator?
-        var asBinaryOperator = nodeInQuestion.AsAnyBinaryOperator();
+        var asBinaryOperator = nodeInQuestion as BinaryExpressionSyntax;
         if (asBinaryOperator != null) {
 
           //Make sure we are always on the rightmost of any binary operator
@@ -241,7 +212,7 @@ namespace ContractAdornments {
         } else
           lastNonBinaryOperatorNode = nodeInQuestion;
 
-        //Climp higher up our ancestry for the next iteration
+        //Climb higher up our ancestry for the next iteration
         lastNode = nodeInQuestion;
         nodeInQuestion = nodeInQuestion.Parent;
       }
@@ -249,9 +220,9 @@ namespace ContractAdornments {
       //Did we successfully find a call node?
       if (nodeInQuestion == null)
         return null;
-      if (nodeInQuestion.Kind != NodeKind.Call)
+      if (nodeInQuestion.Kind() != SyntaxKind.InvocationExpression)
         return null;
-      var callNode = nodeInQuestion.AsAnyCall();
+      var callNode = nodeInQuestion as InvocationExpressionSyntax;
 
       return callNode;
     }
