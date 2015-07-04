@@ -3,14 +3,13 @@
 
 namespace ContractAdornments.CSharp
 {
-    using System;
     using System.Collections.Generic;
     using Adornments;
     using ContractAdornments.Interfaces;
+    using Microsoft.CodeAnalysis.Text;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Editor;
-    using Microsoft.CodeAnalysis.Text;
 
     internal sealed class VersionedServicesFactory : IVersionedServicesFactory
     {

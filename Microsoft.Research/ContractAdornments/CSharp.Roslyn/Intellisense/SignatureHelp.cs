@@ -18,13 +18,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using ContractAdornments.Interfaces;
 using Microsoft.Cci.Contracts;
+using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.TextManager.Interop;
-using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
-using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
-using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
-using SyntaxTree = Microsoft.CodeAnalysis.SyntaxTree;
 
 namespace ContractAdornments {
   class SignatureHelpSource : ISignatureHelpSource {
@@ -162,7 +159,7 @@ namespace ContractAdornments {
       }, "AugmentSignatureHelpSession");
     }
 
-    private string[] GetContractsForOverloads(CSharpMember[] overloads)
+    private string[] GetContractsForOverloads(ISymbol[] overloads)
     {
         Contract.Requires(overloads != null);
         Contract.Requires(Contract.ForAll(overloads, o => o == null || o.Kind == SymbolKind.Method || o.Kind == SymbolKind.Property));
@@ -196,7 +193,7 @@ namespace ContractAdornments {
         return result;
     }
 
-    private CSharpMember[] GetSignatureOverloads(CSharpType declType, IList<ISignature> signatures, CSharpMember semanticMember)
+    private ISymbol[] GetSignatureOverloads(ITypeSymbol declType, IList<ISignature> signatures, ISymbol semanticMember)
     {
         Contract.Requires(signatures != null);
         Contract.Requires(declType != null);
@@ -206,7 +203,7 @@ namespace ContractAdornments {
         {
             return new[] { semanticMember };
         }
-        var result = new CSharpMember[signatures.Count];
+        var result = new ISymbol[signatures.Count];
         for (int i = 0; i < declType.GetMembers().Length; i++)
         {
             var mem = declType.GetMembers()[i];
@@ -220,7 +217,7 @@ namespace ContractAdornments {
         return result;
     }
 
-    private void FuzzyIdentifySignature(CSharpMember mem, CSharpMember[] result, [Pure] IList<ISignature> signatures)
+    private void FuzzyIdentifySignature(ISymbol mem, ISymbol[] result, [Pure] IList<ISignature> signatures)
     {
         Contract.Requires(signatures != null);
         Contract.Requires(result != null);

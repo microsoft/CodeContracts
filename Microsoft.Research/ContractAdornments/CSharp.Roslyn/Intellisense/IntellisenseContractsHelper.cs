@@ -13,53 +13,35 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
-using System.Diagnostics.Contracts;
-using Microsoft.VisualStudio.Text;
-using Microsoft.Cci.Contracts;
 using Microsoft.Cci;
-using System.Runtime.InteropServices;
-using UtilitiesNamespace;
+using Microsoft.Cci.Contracts;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-using Compilation = Microsoft.CodeAnalysis.Workspace;
-using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
-using ParseTree = Microsoft.CodeAnalysis.SyntaxTree;
-using ParseTreeNode = Microsoft.CodeAnalysis.SyntaxNode;
-using Position = Microsoft.CodeAnalysis.Text.LinePosition;
-using SourceFile = Microsoft.CodeAnalysis.Document;
-
-using InvocationExpressionSyntax = Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax;
-using ObjectCreationExpressionSyntax = Microsoft.CodeAnalysis.CSharp.Syntax.ObjectCreationExpressionSyntax;
-using RefKind = Microsoft.CodeAnalysis.RefKind;
-using SemanticModel = Microsoft.CodeAnalysis.SemanticModel;
-using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
-using TypeKind = Microsoft.CodeAnalysis.TypeKind;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.VisualStudio.Threading;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using UtilitiesNamespace;
 
 namespace ContractAdornments {
   public static class IntellisenseContractsHelper {
 
-    public static CSharpMember GetSemanticMember(this ParseTreeNode parseTreeNode, Compilation comp, SourceFile sourceFile) {
+    public static ISymbol GetSemanticMember(this SyntaxNode parseTreeNode, Workspace comp, Document sourceFile) {
       Contract.Requires(parseTreeNode != null);
       Contract.Requires(comp != null);
       Contract.Requires(sourceFile != null);
-      Contract.Ensures(Contract.Result<CSharpMember>() == null ||
-                       Contract.Result<CSharpMember>().Kind == SymbolKind.Method || 
-                       Contract.Result<CSharpMember>().Kind == SymbolKind.Property);
+      Contract.Ensures(Contract.Result<ISymbol>() == null ||
+                       Contract.Result<ISymbol>().Kind == SymbolKind.Method || 
+                       Contract.Result<ISymbol>().Kind == SymbolKind.Property);
 
       // The CSharp model can throw internal exceptions at unexpected moments, so we filter them here:
       try
       {
         SemanticModel semanticModel =  ThreadHelper.JoinableTaskFactory.Run(() => sourceFile.GetSemanticModelAsync());
 
-        CSharpMember semanticMember = semanticModel.GetDeclaredSymbol(parseTreeNode);
+        ISymbol semanticMember = semanticModel.GetDeclaredSymbol(parseTreeNode);
         if (semanticMember != null)
           goto Success;
 
@@ -83,7 +65,7 @@ namespace ContractAdornments {
         return null;
       }
     }
-    public static ParseTreeNode GetAnyCallNodeAboveTriggerPoint(ITrackingPoint triggerPoint, ITextSnapshot snapshot, ParseTree parseTree) {
+    public static SyntaxNode GetAnyCallNodeAboveTriggerPoint(ITrackingPoint triggerPoint, ITextSnapshot snapshot, SyntaxTree parseTree) {
       Contract.Requires(snapshot != null);
       Contract.Requires(parseTree != null);
       Contract.Requires(triggerPoint != null);
@@ -98,7 +80,7 @@ namespace ContractAdornments {
 
       //Is anyone in our ancestry a call node?
       var nodeInQuestion = leafNode.Parent;
-      ParseTreeNode ptn = null;
+      SyntaxNode ptn = null;
 
       while (nodeInQuestion != null) {
         //Is the node in question a node call?
@@ -121,7 +103,7 @@ namespace ContractAdornments {
       //Did we successfully find a call node?
       return ptn;
     }
-    public static ParseTreeNode GetTargetAtTriggerPoint(ITrackingPoint triggerPoint, ITextSnapshot snapshot, ParseTree parseTree)
+    public static SyntaxNode GetTargetAtTriggerPoint(ITrackingPoint triggerPoint, ITextSnapshot snapshot, SyntaxTree parseTree)
     {
       Contract.Requires(snapshot != null);
       Contract.Requires(parseTree != null);

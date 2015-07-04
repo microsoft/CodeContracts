@@ -16,23 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using ContractAdornments.Interfaces;
 using Microsoft.Cci;
 using Microsoft.Cci.Contracts;
-using System.Diagnostics;
-using System.Linq;
 using Microsoft.Cci.MutableContracts;
-using ContractAdornments.Interfaces;
-using CSharpAssembly = Microsoft.CodeAnalysis.IAssemblySymbol;
-using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
-using CSharpNamespace = Microsoft.CodeAnalysis.INamespaceSymbol;
-using CSharpParameter = Microsoft.CodeAnalysis.IParameterSymbol;
-using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
-
-using IArrayTypeSymbol = Microsoft.CodeAnalysis.IArrayTypeSymbol;
-using ITypeParameterSymbol = Microsoft.CodeAnalysis.ITypeParameterSymbol;
-using RefKind = Microsoft.CodeAnalysis.RefKind;
-using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
-using TypeKind = Microsoft.CodeAnalysis.TypeKind;
+using Microsoft.CodeAnalysis;
+using AssemblyIdentity = Microsoft.Cci.AssemblyIdentity;
 
 namespace ContractAdornments {
   public class ContractsProvider : IContractsProvider {
@@ -46,10 +35,10 @@ namespace ContractAdornments {
       }
     }
 
-    readonly Dictionary<CSharpMember, IMethodReference> _semanticMembersToCCIMethods;
-    readonly Dictionary<CSharpType, ITypeReference> _semanticTypesToCCITypes;
-    readonly Dictionary<CSharpAssembly, IAssemblyReference> _semanticAssemblysToCCIAssemblys;
-    readonly Dictionary<CSharpMember, Tuple<IMethodReference, IMethodReference>> _semanticPropertiesToCCIAccessorMethods;
+    readonly Dictionary<ISymbol, IMethodReference> _semanticMembersToCCIMethods;
+    readonly Dictionary<ITypeSymbol, ITypeReference> _semanticTypesToCCITypes;
+    readonly Dictionary<IAssemblySymbol, IAssemblyReference> _semanticAssemblysToCCIAssemblys;
+    readonly Dictionary<ISymbol, Tuple<IMethodReference, IMethodReference>> _semanticPropertiesToCCIAccessorMethods;
 
     [ContractInvariantMethod]
     void ObjectInvariant() {
@@ -68,10 +57,10 @@ namespace ContractAdornments {
       _projectTracker = projectTracker;
 
       //Initialize our caches
-      _semanticMembersToCCIMethods = new Dictionary<CSharpMember, IMethodReference>();
-      _semanticTypesToCCITypes = new Dictionary<CSharpType, ITypeReference>();
-      _semanticAssemblysToCCIAssemblys = new Dictionary<CSharpAssembly, IAssemblyReference>();
-      _semanticPropertiesToCCIAccessorMethods = new Dictionary<CSharpMember, Tuple<IMethodReference, IMethodReference>>();
+      _semanticMembersToCCIMethods = new Dictionary<ISymbol, IMethodReference>();
+      _semanticTypesToCCITypes = new Dictionary<ITypeSymbol, ITypeReference>();
+      _semanticAssemblysToCCIAssemblys = new Dictionary<IAssemblySymbol, IAssemblyReference>();
+      _semanticPropertiesToCCIAccessorMethods = new Dictionary<ISymbol, Tuple<IMethodReference, IMethodReference>>();
     }
 
     public void Clear() {
@@ -86,7 +75,7 @@ namespace ContractAdornments {
     }
     //int counter = 0;
     [ContractVerification(true)]
-    public bool TryGetAssemblyReference(CSharpAssembly semanticAssembly, out IAssemblyReference cciAssembly) {
+    public bool TryGetAssemblyReference(IAssemblySymbol semanticAssembly, out IAssemblyReference cciAssembly) {
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cciAssembly) != null);
 
       cciAssembly = null;
@@ -182,7 +171,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetPropertyContract(CSharpMember semanticMember, out IMethodContract getterContract, out IMethodContract setterContract)
+    public bool TryGetPropertyContract(ISymbol semanticMember, out IMethodContract getterContract, out IMethodContract setterContract)
     {
         Contract.Requires(semanticMember == null || semanticMember.Kind == SymbolKind.Property);
 
@@ -209,7 +198,7 @@ namespace ContractAdornments {
         }
         return success;
     }
-    public bool TryGetMethodContract(CSharpMember semanticMethod, out IMethodContract methodContract)
+    public bool TryGetMethodContract(ISymbol semanticMethod, out IMethodContract methodContract)
     {
       Contract.Requires(semanticMethod == null || semanticMethod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out methodContract) != null));
@@ -276,7 +265,7 @@ namespace ContractAdornments {
       }
       return methodContract != null;
     }
-    public bool TryGetMethodContractSafe(CSharpMember semanticMehod, out IMethodContract methodContract) {
+    public bool TryGetMethodContractSafe(ISymbol semanticMehod, out IMethodContract methodContract) {
       Contract.Requires(semanticMehod == null || semanticMehod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out methodContract) != null));
 
@@ -313,7 +302,7 @@ namespace ContractAdornments {
 
       return methodContract != null;
     }
-    public bool TryGetMethodReference(CSharpMember semanticMethod, out IMethodReference cciMethod) {
+    public bool TryGetMethodReference(ISymbol semanticMethod, out IMethodReference cciMethod) {
       Contract.Requires(semanticMethod == null || semanticMethod.Kind == SymbolKind.Method);
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cciMethod) != null);
 
@@ -386,7 +375,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetNamespaceReference(CSharpNamespace semanticNamespace, IAssemblyReference cciAssembly, out IUnitNamespaceReference cciNamespace) {
+    public bool TryGetNamespaceReference(INamespaceSymbol semanticNamespace, IAssemblyReference cciAssembly, out IUnitNamespaceReference cciNamespace) {
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out cciNamespace) != null));
 
       cciNamespace = null;
@@ -431,7 +420,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetParametersList(IList<CSharpParameter> semanticParameters, out List<IParameterTypeInformation> cciParameters, ushort indexOffset = 0) {
+    public bool TryGetParametersList(IList<IParameterSymbol> semanticParameters, out List<IParameterTypeInformation> cciParameters, ushort indexOffset = 0) {
       Contract.Requires(semanticParameters != null);
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cciParameters) != null);
       cciParameters = null;
@@ -463,7 +452,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetParameterReference(CSharpParameter semanticParameter, ushort index, out IParameterTypeInformation cciParameter) {
+    public bool TryGetParameterReference(IParameterSymbol semanticParameter, ushort index, out IParameterTypeInformation cciParameter) {
 
       cciParameter = null;
 
@@ -501,7 +490,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetPropertyAccessorReferences(CSharpMember semanticProperty, out IMethodReference getter, out IMethodReference setter) {
+    public bool TryGetPropertyAccessorReferences(ISymbol semanticProperty, out IMethodReference getter, out IMethodReference setter) {
       Contract.Requires(semanticProperty == null || semanticProperty.Kind == SymbolKind.Property);
 
       getter = setter = null;
@@ -607,7 +596,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetTypeReference(CSharpType semanticType, IAssemblyReference cciAssembly, out ITypeReference cciType) {
+    public bool TryGetTypeReference(ITypeSymbol semanticType, IAssemblyReference cciAssembly, out ITypeReference cciType) {
       Contract.Ensures(!Contract.Result<bool>() || (Contract.ValueAtReturn(out cciType) != null));
 
       cciType = null;
@@ -748,7 +737,7 @@ namespace ContractAdornments {
       return false;
       #endregion
     }
-    public bool TryGetTypeReference(CSharpType semanticType, out ITypeReference cciType) {
+    public bool TryGetTypeReference(ITypeSymbol semanticType, out ITypeReference cciType) {
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cciType) != null && semanticType != null);
 
       cciType = null;
@@ -778,7 +767,7 @@ namespace ContractAdornments {
     }
 
     [ContractVerification(true)]
-    void EnsureAssemblyIsLoaded(CSharpAssembly semanticAssembly, ref IAssemblyReference assemblyReference) {
+    void EnsureAssemblyIsLoaded(IAssemblySymbol semanticAssembly, ref IAssemblyReference assemblyReference) {
       Contract.Ensures(assemblyReference != null || Contract.OldValue(assemblyReference) == null);
       #region Check input
       if (semanticAssembly == null || assemblyReference == null) {

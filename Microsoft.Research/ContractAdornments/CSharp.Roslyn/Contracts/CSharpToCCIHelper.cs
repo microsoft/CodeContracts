@@ -12,23 +12,11 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using Microsoft.Cci;
-using System;
-using CSharpMember = Microsoft.CodeAnalysis.ISymbol;
-using CSharpNamespace = Microsoft.CodeAnalysis.INamespaceSymbol;
-using CSharpParameter = Microsoft.CodeAnalysis.IParameterSymbol;
-using CSharpType = Microsoft.CodeAnalysis.ITypeSymbol;
-
-using IEventSymbol = Microsoft.CodeAnalysis.IEventSymbol;
-using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;
-using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
-using ITypeParameterSymbol = Microsoft.CodeAnalysis.ITypeParameterSymbol;
-using RefKind = Microsoft.CodeAnalysis.RefKind;
-using SymbolKind = Microsoft.CodeAnalysis.SymbolKind;
-using TypeKind = Microsoft.CodeAnalysis.TypeKind;
+using Microsoft.CodeAnalysis;
 
 namespace ContractAdornments {
   /// <summary>
@@ -43,7 +31,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static CallingConvention GetCallingConventionFor(CSharpMember semanticMember) {
+    public static CallingConvention GetCallingConventionFor(ISymbol semanticMember) {
       Contract.Requires(semanticMember != null);
 
       var callingConvention = CallingConvention.Default;
@@ -59,7 +47,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static PrimitiveTypeCode GetPrimitiveTypeCode(CSharpType type) {
+    public static PrimitiveTypeCode GetPrimitiveTypeCode(ITypeSymbol type) {
       Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<PrimitiveTypeCode>() != PrimitiveTypeCode.Pointer &&
                        Contract.Result<PrimitiveTypeCode>() != PrimitiveTypeCode.Reference &&
@@ -117,7 +105,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool MembersAreEquivalent(CSharpMember member1, CSharpMember member2) {
+    public static bool MembersAreEquivalent(ISymbol member1, ISymbol member2) {
       Contract.Requires(member1 != null);
       Contract.Requires(member2 != null);
       #region Check kind
@@ -152,7 +140,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool ParametersAreEquivalent(CSharpParameter param1, CSharpParameter param2) {
+    public static bool ParametersAreEquivalent(IParameterSymbol param1, IParameterSymbol param2) {
       Contract.Requires(param1 != null);
       Contract.Requires(param2 != null);
       //return param1.Equals(param2); //Doesn't work for our purposes.
@@ -170,7 +158,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool ParameterListsAreEquivalent(IEnumerable<CSharpParameter> paramList1, IEnumerable<CSharpParameter> paramList2) {
+    public static bool ParameterListsAreEquivalent(IEnumerable<IParameterSymbol> paramList1, IEnumerable<IParameterSymbol> paramList2) {
       Contract.Requires(paramList1 != null);
       Contract.Requires(paramList2 != null);
       return EnumerablesAreEquivalent(paramList1, paramList2, (p1, p2) => ParametersAreEquivalent(p1, p2));
@@ -180,7 +168,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool TryGetBaseMember(CSharpMember member, out CSharpMember baseMember) {
+    public static bool TryGetBaseMember(ISymbol member, out ISymbol baseMember) {
       Contract.Requires(member != null);
       Contract.Ensures(!Contract.Result<bool>() ||
                        member.Kind == Contract.ValueAtReturn(out baseMember).Kind);
@@ -206,7 +194,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool TryGetMemberWithSameSignatureFromType(CSharpType type, CSharpMember memberToMatch, out CSharpMember member) {
+    public static bool TryGetMemberWithSameSignatureFromType(ITypeSymbol type, ISymbol memberToMatch, out ISymbol member) {
       Contract.Requires(type != null);
       Contract.Requires(memberToMatch != null);
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out member) != null);
@@ -227,7 +215,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool TryGetInterfaceMember(CSharpMember member, out CSharpMember interfaceMethod) {
+    public static bool TryGetInterfaceMember(ISymbol member, out ISymbol interfaceMethod) {
       Contract.Requires(member != null);
       Contract.Ensures(!Contract.Result<bool>() ||
                        Contract.ValueAtReturn(out interfaceMethod) != null);
@@ -260,7 +248,7 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool TypesAreEquivalent(CSharpType type1, CSharpType type2) {
+    public static bool TypesAreEquivalent(ITypeSymbol type1, ITypeSymbol type2) {
       if (type1 == null && type2 == null) return true;
       if (type1 == null) return false;
       if (type2 == null) return false;
@@ -328,16 +316,16 @@ namespace ContractAdornments {
     /// </summary>
     /// <exception cref="IllFormedSemanticModelException">Thrown if the semantic member/type has fields that are null or empty and are required to not be so for the proper operation of this method.</exception>
     [Pure]
-    public static bool TypeListsAreEquivalent(IEnumerable<CSharpType> typeList1, IEnumerable<CSharpType> typeList2) {
+    public static bool TypeListsAreEquivalent(IEnumerable<ITypeSymbol> typeList1, IEnumerable<ITypeSymbol> typeList2) {
       Contract.Requires(typeList1 != null);
       Contract.Requires(typeList2 != null);
       return EnumerablesAreEquivalent(typeList1, typeList2, (t1, t2) => TypesAreEquivalent(t1, t2));
     }
     [Pure]
-    public static CSharpMember Uninstantiate(this CSharpMember member) {
+    public static ISymbol Uninstantiate(this ISymbol member) {
       Contract.Requires(member != null);
-      Contract.Ensures(Contract.Result<CSharpMember>() != null);
-      Contract.Ensures(member.Kind == Contract.Result<CSharpMember>().Kind);
+      Contract.Ensures(Contract.Result<ISymbol>() != null);
+      Contract.Ensures(member.Kind == Contract.Result<ISymbol>().Kind);
 
       var uninstantiatedMember = member.OriginalDefinition;
 
@@ -345,9 +333,9 @@ namespace ContractAdornments {
       return uninstantiatedMember;
     }
     [Pure]
-    public static CSharpType Uninstantiate(this CSharpType type) {
+    public static ITypeSymbol Uninstantiate(this ITypeSymbol type) {
       Contract.Requires(type != null);
-      Contract.Ensures(Contract.Result<CSharpType>() != null);
+      Contract.Ensures(Contract.Result<ITypeSymbol>() != null);
 
       var uninstantiatedType = type.OriginalDefinition;
 
@@ -357,10 +345,10 @@ namespace ContractAdornments {
 
   [Serializable]
   public class IllFormedSemanticModelException : Exception {
-    public CSharpMember BadMember { get; private set; }
-    public CSharpType BadType { get; private set; }
-    public CSharpParameter BadParameter { get; private set; }
-    public CSharpNamespace BadNamespace { get; private set; }
+    public ISymbol BadMember { get; private set; }
+    public ITypeSymbol BadType { get; private set; }
+    public IParameterSymbol BadParameter { get; private set; }
+    public INamespaceSymbol BadNamespace { get; private set; }
     public CSharpKind Kind { get; private set; }
 
     [ContractInvariantMethod]
@@ -374,25 +362,25 @@ namespace ContractAdornments {
     public IllFormedSemanticModelException() { }
     public IllFormedSemanticModelException(string message) : base(message) { }
     public IllFormedSemanticModelException(string message, Exception inner) : base(message, inner) { }
-    public IllFormedSemanticModelException(string message, CSharpType badType) : base(message) {
+    public IllFormedSemanticModelException(string message, ITypeSymbol badType) : base(message) {
         Contract.Requires(badType != null);
 
         BadType = badType;
         Kind = CSharpKind.CSharpType; 
     }
-    public IllFormedSemanticModelException(string message, CSharpMember badMember) : base(message) {
+    public IllFormedSemanticModelException(string message, ISymbol badMember) : base(message) {
         Contract.Requires(badMember != null);
 
         BadMember = badMember;
         Kind = CSharpKind.CSharpMember;
     }
-    public IllFormedSemanticModelException(string message, CSharpParameter badParameter) : base(message) {
+    public IllFormedSemanticModelException(string message, IParameterSymbol badParameter) : base(message) {
         Contract.Requires(badParameter != null);
 
         BadParameter = badParameter; 
         Kind = CSharpKind.CSharpParameter; 
     }
-    public IllFormedSemanticModelException(string message, CSharpNamespace badNamespace) : base(message) {
+    public IllFormedSemanticModelException(string message, INamespaceSymbol badNamespace) : base(message) {
         Contract.Requires(badNamespace != null);
 
         BadNamespace = badNamespace;
