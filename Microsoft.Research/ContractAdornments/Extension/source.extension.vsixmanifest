@@ -35,6 +35,10 @@ Displays contracts in Signature Help tool tips.</Description>
         <Edition>Pro</Edition>
         <Edition>VST_All</Edition>
       </VisualStudio>
+      <VisualStudio Version="14.0">
+        <Edition>Pro</Edition>
+        <Edition>VST_All</Edition>
+      </VisualStudio>
     </SupportedProducts>
     <SupportedFrameworkRuntimeEdition MinVersion="4.0" />
   </Identifier>
