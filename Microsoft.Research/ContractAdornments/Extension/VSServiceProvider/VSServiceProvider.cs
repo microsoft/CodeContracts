@@ -269,7 +269,7 @@ namespace ContractAdornments {
       int vsMajorVersion = typeof(ErrorHandler).Assembly.GetName().Version.Major;
       string assemblyName = "ContractAdornments.CSharp." + vsMajorVersion;
       Assembly assembly = Assembly.Load(assemblyName);
-      return (IVersionedServicesFactory)assembly.GetType("ContractAdornments.CSharp.VersionedServicesFactory");
+      return (IVersionedServicesFactory)assembly.CreateInstance("ContractAdornments.CSharp.VersionedServicesFactory");
     }
 
     NonlockingHost CreateHost(Version version) {
