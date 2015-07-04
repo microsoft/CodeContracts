@@ -17,18 +17,6 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 
 
-// 2015-03-36: tom-englert
-// Temporarily disabled checks for Contract.Requires(!this.IsEmpty);
-// => This requirement is true, but it's impossible to proof with acceptable effort.
-//    Even simple code like
-//
-//      var r = new Rect();
-//      r.Widht = 10.0;
-//
-//    will create a warning "CodeContracts: requires unproven: !this.IsEmpty. Are you making some assumption on get_Width that the static checker is unaware of?"
-//    As soon as the checker can infer the proper constraints, this can be enabled again.
-
-
 namespace System.Windows
 {
   // Summary:
