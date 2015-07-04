@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TestInputs>
   <TestFile
+     Name="Foxtrot\Tests\Sources\RequiresForAll.cs"
+     CompilerOptions=""
+     FoxtrotOptions="-assemblyMode standard"
+     References="System.Core.dll"
+     ContractReferenceAssemblies="true"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <TestFile
      Name="Foxtrot\Tests\Sources\PostAmbleDeletion.cs"
      CompilerOptions=""
      FoxtrotOptions="-assemblyMode standard"
@@ -370,7 +380,7 @@
      Compiler="CS"
      />
   <TestFile
-     Name="Foxtrot\Tests\Sources\Async12.cs"
+     Name="Foxtrot\Tests\Sources\Async_EnsuresWithCapturedForAll.cs"
      CompilerOptions=""
      FoxtrotOptions=""
      References="AsyncCtpLibrary.dll"
@@ -815,4 +825,46 @@
     UseExe="false"
     MustSucceed="false"
     />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\IteratorWithComplexPrecondition.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\AsyncMethodWithComplexPrecondition.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     References="AsyncCtpLibrary.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\CallPrivateRequiresShouldNotFail.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
+  <PublicSurfaceOnly
+    Name="Foxtrot\Tests\PublicSurfaceOnly\CallPrivateEnsuresShouldNotFail.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     MustSucceed="false"
+    />
+
 </TestInputs>

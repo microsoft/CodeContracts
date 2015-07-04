@@ -32,6 +32,7 @@
   <UsingTask TaskName="CodePlex.Tools.MsBuild.Policheck" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
   <UsingTask TaskName="CodePlex.Tools.MsBuild.PatchProjectReferences" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
   <UsingTask TaskName="CodePlex.Tools.MsBuild.CodeSign" AssemblyFile="..\ImportedCodeBox\CodePlex.Tools.MsBuild.dll" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.XmlPeek" AssemblyName="Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
 
   <!--==============================================
     Figure out features based on configurations
@@ -202,21 +203,45 @@
   <Target Name="UpdateVSIXVersions"
           DependsOnTargets="Validate">
     <Message Text="Updating Version Number in VSIX manifest"/>
-    <Exec
-      WorkingDirectory="..\ContractAdornments"
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2010\source.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="..\ContractAdornments"
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VS2012\source.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS10.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS11.extension.vsixmanifest" />
-    <Exec
-      WorkingDirectory="."
-      Command="&quot;..\common\bin\UpdateManifestVersion.exe&quot; $(CCNetLabel) VSIX\VS12.extension.vsixmanifest" />
+<PropertyGroup>
+      <Vsix10Namespace>
+        &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2010' /&gt;
+      </Vsix10Namespace>
+      <Vsix20Namespace>
+        &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' /&gt;
+      </Vsix20Namespace>
+    </PropertyGroup>
+
+    <XmlPoke
+       Namespaces="$(Vsix10Namespace)"
+       Query="//vsx:Identifier/vsx:Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="..\ContractAdornments\VS2010\source.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="..\ContractAdornments\VS2012\source.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix10Namespace)"
+       Query="//vsx:Identifier/vsx:Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS10.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS11.extension.vsixmanifest" />
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS12.extension.vsixmanifest" />
+	  
   </Target>
 
   <!--==========================================================
@@ -370,8 +395,33 @@
 
     ==========================================================-->
   <Target Name="MergeExes"
-    DependsOnTargets="ILMergeFoxtrot;ILMergeAsmMeta;ILMergeClousot;ILMergeCCDoc"/>
+    DependsOnTargets="PrepareMerges;ExecuteMerges"/>
 
+  <Target Name="PrepareMerges" BeforeTargets="ExecuteMerges"
+    DependsOnTargets="RestoreToolPackages;PrepareILMerge"/>
+	
+  <Target Name="RestoreToolPackages">
+    <Exec Command="&quot;$(SolutionDir).NuGet\NuGet.exe&quot; restore &quot;$(SolutionDir)packages.config&quot; -PackagesDirectory &quot;$(SolutionDir)packages&quot;" />
+  </Target>
+  
+  <Target Name="PrepareILMerge">
+    <Message Text="Preparing IL Merge"/>
+    <XmlPeek
+      XmlInputPath="$(SolutionDir)packages.config"
+      Query="//package[@id='ILMerge']/@version">
+      <Output TaskParameter="Result" ItemName="ILMergeVersion" />
+    </XmlPeek>
+    <PropertyGroup>
+      <ILMergeExePath>$(SolutionDir)packages\ILMerge.@(ILMergeVersion)\tools\ilmerge.exe</ILMergeExePath>
+        <ILMergeExeV40>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
+        <ILMergeExeV45>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
+    </PropertyGroup>
+    <Message Text="Using ILMerge in version: @(ILMergeVersion)"/>
+  </Target>	
+	
+  <Target Name="ExecuteMerges"
+    DependsOnTargets="ILMergeFoxtrot;ILMergeAsmMeta;ILMergeClousot;ILMergeCCDoc"/>
+    
   <PropertyGroup>
     <FoxtrotDir>..\..\Foxtrot\Driver\$(BinDir)</FoxtrotDir>
     <CCRefGenAttributesDir>CCRefGenAttributes\$(BinDir)</CCRefGenAttributesDir>
@@ -391,8 +441,6 @@
     <CCDocgenConfig>$(CCI2Dir)\ccdoc.exe.config</CCDocgenConfig>
     <CCCheckConfig>$(Clousot1Dir)\clousot.exe.config</CCCheckConfig>
 
-    <ILMergeExeV40>..\ImportedILMerge\ilmerge.exe "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
-    <ILMergeExeV45>..\ImportedILMerge\ilmerge.exe "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
   </PropertyGroup>
 
   <ItemGroup>
@@ -820,6 +868,7 @@
       ManagedContracts.wxs;
       dev10.wxs;
       dev12.wxs;
+      dev14.wxs;
       UI.wxs;
     "/>
     <WixBaseDirs Include="

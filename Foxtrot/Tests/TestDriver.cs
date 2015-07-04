@@ -62,6 +62,10 @@ namespace Tests
       {
         if (options.MustSucceed)
         {
+            if (capture.ExitCode != 0)
+            {
+                Console.WriteLine("");
+            }
           Assert.AreEqual(0, capture.ExitCode, "{0} returned an errorcode of {1}.", FoxtrotExe, capture.ExitCode);
         }
         return capture;
@@ -447,7 +451,10 @@ namespace Tests
       }
     }
 
-    public bool IsRoslyn { get; set; }
+    /// <summary>
+    /// Should be true, if old (pre-RC) Roslyn compiler needs to be used.
+    /// </summary>
+    public bool IsLegacyRoslyn { get; set; }
 
     public string Compiler
     {
@@ -456,7 +463,7 @@ namespace Tests
         switch (compilerCode)
         {
           case "VB":
-            if (IsRoslyn)
+            if (IsLegacyRoslyn)
             {
               return "rvbc.exe";
             }
@@ -465,7 +472,7 @@ namespace Tests
               return "vbc.exe";
             }
           default:
-            if (IsRoslyn)
+            if (IsLegacyRoslyn)
             {
               return "rcsc.exe";
             }
@@ -478,14 +485,14 @@ namespace Tests
     }
 
     bool IsV40 { get { return this.BuildFramework.Contains("v4.0"); } }
-    bool IsV45 { get { return this.BuildFramework.Contains("v4.5"); } }
+    bool IsV45 { get { return this.BuildFramework.Contains("v4.5") || BuildFramework.Contains("VS14"); } }
     bool IsSilverlight { get { return this.BuildFramework.Contains("Silverlight"); } }
 
     string Moniker
     {
       get
       {
-        if (!IsRoslyn) { return FrameworkMoniker; }
+        if (!IsLegacyRoslyn) { return FrameworkMoniker; }
         if (compilerCode == "VB")
         {
           return FrameworkMoniker + ",ROSLYN";
