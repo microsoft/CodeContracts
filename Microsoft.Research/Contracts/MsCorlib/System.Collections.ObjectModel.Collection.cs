@@ -383,7 +383,8 @@ namespace System.Collections.ObjectModel
         //     index is less than zero.-or-index is greater than System.Collections.ObjectModel.Collection<T>.Count.
         protected virtual void SetItem(int index, T item)
         {
-            Contract.Requires((index >= 0) && (index <= Count));
+            // Comment is wrong, index must be < Count!
+            Contract.Requires((index >= 0) && (index < Count));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
