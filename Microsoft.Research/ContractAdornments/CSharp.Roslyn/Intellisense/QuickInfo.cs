@@ -98,7 +98,7 @@ namespace ContractAdornments {
         if (!parseTree.IsModelReady() || _textViewTracker.IsLatestCompilationStale || _textViewTracker.IsLatestSourceFileStale) {
 
           //Ask for a new model
-          ContractsPackageAccessor.Current.AskForNewVSModel();
+          ContractsPackageAccessor.Current.AskForNewVSModel(_textBuffer);
 
           //Return a message saying we aren't ready yet
           ContractsPackageAccessor.Current.Logger.WriteToLog("The VS model is out of date! Aborting contract lookup.");

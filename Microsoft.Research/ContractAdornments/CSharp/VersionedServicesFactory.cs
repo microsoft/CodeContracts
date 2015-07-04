@@ -68,7 +68,7 @@ namespace ContractAdornments.CSharp
                 _compiler = compiler;
             }
 
-            public object GetCompilation()
+            public object GetCompilation(ITextBuffer textBuffer)
             {
                 return _compiler.GetCompilation();
             }

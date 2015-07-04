@@ -4,6 +4,7 @@
 namespace ContractAdornments.Interfaces
 {
     using System;
+    using Microsoft.VisualStudio.Text;
     using UtilitiesNamespace;
 
     public interface IContractsPackage
@@ -27,6 +28,6 @@ namespace ContractAdornments.Interfaces
 
         void QueueWorkItem(Action action);
 
-        void AskForNewVSModel();
+        void AskForNewVSModel(ITextBuffer textBuffer);
     }
 }

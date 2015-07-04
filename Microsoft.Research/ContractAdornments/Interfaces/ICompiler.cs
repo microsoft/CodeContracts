@@ -3,8 +3,10 @@
 
 namespace ContractAdornments.Interfaces
 {
+    using Microsoft.VisualStudio.Text;
+
     public interface ICompiler
     {
-        object GetCompilation();
+        object GetCompilation(ITextBuffer textBuffer);
     }
 }

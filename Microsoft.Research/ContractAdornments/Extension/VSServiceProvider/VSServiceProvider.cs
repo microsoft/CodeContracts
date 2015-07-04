@@ -27,6 +27,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text;
 using UtilitiesNamespace;
 using VSLangProj;
 
@@ -616,13 +617,13 @@ namespace ContractAdornments {
 
       _workItems.Enqueue(action);
     }
-    public void AskForNewVSModel() {
+    public void AskForNewVSModel(ITextBuffer textBuffer) {
      if (!_isGettingVSModel) {
-        QueueWorkItem(GetNewModel);
+        QueueWorkItem(() => GetNewModel(textBuffer));
         _isGettingVSModel = true;
       }
     }
-    void GetNewModel() {
+    void GetNewModel(ITextBuffer textBuffer) {
       _isGettingVSModel = false;
       if (InBuild || _compilerHost == null || _compilerHost.Compilers == null) {
         // AskForNewVSModel();
@@ -647,7 +648,7 @@ namespace ContractAdornments {
                   }
               }
 #endif
-              var compilation = compiler.GetCompilation();
+              var compilation = compiler.GetCompilation(textBuffer);
               var reportNewCompilation = this.NewCompilation;
               if (reportNewCompilation != null)
               {
@@ -662,7 +663,7 @@ namespace ContractAdornments {
           {
               //For some reason, occasionaly InvalidOperationExceptions can be thrown when operating on the semantic tree.
               Logger.WriteToLog("The Visual Studio Semantic/Syntactic model threw an exception, it's snapshot is out of date.");
-              AskForNewVSModel();
+              AskForNewVSModel(textBuffer);
               return;
           }
           else
@@ -676,7 +677,7 @@ namespace ContractAdornments {
           {
               //For some reason, occasionaly InvalidOperationExceptions can be thrown when operating on the semantic tree.
               Logger.WriteToLog("The Visual Studio Semantic/Syntactic model threw an exception, it's snapshot is out of date.");
-              AskForNewVSModel();
+              AskForNewVSModel(textBuffer);
               return;
           }
           else

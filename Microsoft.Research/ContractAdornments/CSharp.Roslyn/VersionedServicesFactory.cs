@@ -4,17 +4,19 @@
 namespace ContractAdornments.CSharp
 {
     using System;
+    using System.Collections.Generic;
     using Adornments;
     using ContractAdornments.Interfaces;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Editor;
+    using Microsoft.CodeAnalysis.Text;
 
     internal sealed class VersionedServicesFactory : IVersionedServicesFactory
     {
         public ICompilerHost CreateCompilerHost()
         {
-            throw new NotSupportedException();
+            return new RoslynCompilerHost();
         }
 
         public ITextViewTracker CreateTextViewTracker(IWpfTextView textView, IProjectTracker projectTracker, VSTextProperties vsTextProperties)
@@ -36,6 +38,25 @@ namespace ContractAdornments.CSharp
         public ISignatureHelpSource CreateSignatureHelpSource(ITextBuffer textBuffer, ITextViewTracker textViewTracker)
         {
             throw new NotSupportedException();
+        }
+
+        private sealed class RoslynCompilerHost : ICompilerHost
+        {
+            public IEnumerable<ICompiler> Compilers
+            {
+                get
+                {
+                    yield return new RoslynCompiler();
+                }
+            }
+        }
+
+        private sealed class RoslynCompiler : ICompiler
+        {
+            public object GetCompilation(ITextBuffer textBuffer)
+            {
+                return textBuffer.GetWorkspace();
+            }
         }
     }
 }

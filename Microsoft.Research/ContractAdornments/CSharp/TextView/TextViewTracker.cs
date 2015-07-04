@@ -122,7 +122,7 @@ namespace ContractAdornments {
         
       IsLatestSourceFileStale = true;
       IsLatestCompilationStale = true;
-      ContractsPackageAccessor.Current.AskForNewVSModel();
+      ContractsPackageAccessor.Current.AskForNewVSModel(TextView.TextBuffer);
     }
 
     void OnTextBufferChanged(object sender, TextContentChangedEventArgs e) {
@@ -143,7 +143,7 @@ namespace ContractAdornments {
 
         ContractsPackageAccessor.Current.Logger.WriteToLog("Timer elapsed. Waiting for new syntactic info.");
 
-        ContractsPackageAccessor.Current.AskForNewVSModel();
+        ContractsPackageAccessor.Current.AskForNewVSModel(TextView.TextBuffer);
 
         IsLatestCompilationStale = true;
         IsLatestSourceFileStale = true;
