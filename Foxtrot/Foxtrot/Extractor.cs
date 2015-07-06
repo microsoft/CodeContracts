@@ -2298,6 +2298,7 @@ namespace Microsoft.Contracts.Foxtrot {
               {
                 if (field.Name.Name.Contains("__locals" /* csc.exe */) ||
                     field.Name.Name.Contains("<>8__") /* roslyn-based csc */ ||
+                    field.Name.Name.Contains("<>9__") /* roslyn-based cached anonymous method delegates */ ||
                     field.Name.Name.Contains("__spill") /* rcsc.exe */ ||
                     field.Name.Name.Contains("__CachedAnonymousMethodDelegate") /* junk, revisit */
                   )

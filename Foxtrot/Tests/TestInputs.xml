@@ -21,6 +21,16 @@
      Compiler="CS"
      />
 
+  <RoslynCompatibility 
+     Name="Foxtrot\Tests\RoslynCompatibility\InheritNonGenericAbstractClass.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     References="System.Core.dll"
+     ContractReferenceAssemblies="true"
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <RoslynCompatibility
      Name="Foxtrot\Tests\RoslynCompatibility\AsyncRequiresWithForAll.cs"
      FoxtrotOptions=""

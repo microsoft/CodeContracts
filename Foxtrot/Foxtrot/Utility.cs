@@ -2274,18 +2274,23 @@ namespace Microsoft.Contracts.Foxtrot {
         this.containingType = Unspecialize(containingType);
       }
 
-      public override void VisitTypeReference(TypeNode type)
+      private void TryAddTypeTOMembersToDuplicate(TypeNode type)
       {
-        if (type == null) return;
-        if (HelperMethods.IsClosureType(this.containingType, type))
-        {
           TypeNode template = type;
           while (template.Template != null) { template = template.Template; }
 
           if (!this.MembersToDuplicate.Contains(template))
           {
-            this.MembersToDuplicate.Add(template);
+              this.MembersToDuplicate.Add(template);
           }
+      }
+
+      public override void VisitTypeReference(TypeNode type)
+      {
+        if (type == null) return;
+        if (HelperMethods.IsClosureType(this.containingType, type))
+        {
+          TryAddTypeTOMembersToDuplicate(type);
         }
         else
         {
@@ -2306,14 +2311,32 @@ namespace Microsoft.Contracts.Foxtrot {
             if (mb != null)
             {
               Method m = (Method)mb.BoundMember;
-              if (IsClosureMethod(this.containingType, m) && !IsClosureType(this.containingType, m.DeclaringType)) 
+              if (IsClosureMethod(this.containingType, m)) 
               {
-                // then there is no closure class, m is just a method the compiler
-                // added to the class itself
+                  if (HelperMethods.IsClosureType(this.containingType, m.DeclaringType))
+                  {
+                      // Roslyn-based compiler changed non-capturing lambda caching.
+                      // Instead of storing delegate in a field like CS$<>9_CachedAnonymousMethodDelegate1
+                      // Roslyn-based compiler generates a closure class called <>c with a set of instance
+                      // methods and a singleton instance.
+                      // This change allows to duplicate this new closure type
+                      if (m.DeclaringType.Name.Name.Contains("<>c") &&
+                          !m.DeclaringType.Name.Name.Contains("DisplayClass"))
+                      {
+                          TryAddTypeTOMembersToDuplicate(m.DeclaringType);
+                      }
+                  }
+                  else
+                  {
+                      // Logic for pre-Roslyn compiler.
 
-                // we record the instance here, although we will eventually make a copy of the
-                // template by making the method generic in its parent type type-parameters.
-                MembersToDuplicate.Add(m);
+                      // then there is no closure class, m is just a method the compiler
+                      // added to the class itself
+
+                      // we record the instance here, although we will eventually make a copy of the
+                      // template by making the method generic in its parent type type-parameters.
+                      MembersToDuplicate.Add(m);
+                  }
               }
               else
               {

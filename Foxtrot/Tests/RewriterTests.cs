@@ -161,6 +161,7 @@ namespace Tests
         public void RewriteQuickGraph()
         {
             var options = new Options("QuickGraph", (string)TestContext.DataRow["FoxtrotOptions"], TestContext);
+            options.BuildFramework = @".NetFramework\v4.0";
             TestDriver.RewriteAndVerify("", @"Foxtrot\Tests\Quickgraph\QuickGraphBinaries\Quickgraph.dll", options);
         }
 
@@ -170,6 +171,7 @@ namespace Tests
         public void RewriteQuickGraphData()
         {
             var options = new Options("QuickGraphData", (string)TestContext.DataRow["FoxtrotOptions"], TestContext);
+            options.BuildFramework = @".NetFramework\v4.0";
             options.FoxtrotOptions = options.FoxtrotOptions + " /verbose:4";
             options.Delete(@"Foxtrot\Tests\QuickGraph\QuickGraphBinaries\QuickGraph.Contracts.dll");
             TestDriver.RewriteAndVerify("", @"Foxtrot\Tests\Quickgraph\QuickGraphBinaries\Quickgraph.Data.dll", options);
@@ -181,6 +183,7 @@ namespace Tests
         public void RewriteQuickGraphDataOOB()
         {
             var options = new Options("QuickGraphDataOOB", (string)TestContext.DataRow["FoxtrotOptions"], TestContext);
+            options.BuildFramework = @".NetFramework\v4.0";
             options.LibPaths.Add(@"Foxtrot\Tests\QuickGraph\QuickGraphBinaries\Contracts"); // subdirectory containing contracts.
             options.FoxtrotOptions = options.FoxtrotOptions + " /verbose:4";
             TestDriver.RewriteAndVerify("", @"Foxtrot\Tests\Quickgraph\QuickGraphBinaries\Quickgraph.Data.dll", options);
