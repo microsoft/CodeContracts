@@ -562,7 +562,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       get { return this.cachename; }
     }
 
-    protected static void DetachDeletedDb(string connection)
+    protected void DetachDeletedDb(string connection)
     {
       // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 
       // If this is the case, we can't create a new database and the user is stuck unless he knows the tricky internals of LocalDB and how to get rid of the registration.
@@ -582,12 +582,22 @@ namespace Microsoft.Research.CodeAnalysis.Caching
           master.ExecuteCommand(@"exec sp_detach_db {0}", catalog);
         }
       }
-      catch
+      catch (ArgumentException)
       {
-        // Ignore any errors here, could be 
-        // - not using LocalDB at all (any of the connection string parameters did not exist).
-        // - file was never registered (first time used) or already detached.
-        // - any DbProvider specific exception.
+        // Not using LocalDB at all (any of the connection string parameters did not exist).
+      }
+      catch (SqlException)
+      {
+        // The file was never registered (first time used) or is already detached.
+      }
+      catch (Exception ex)
+      {
+        // Ignore other errors, could be any DbProvider specific exception. 
+        // Usually we won't get here, but the active provider might not be LocalDB, in this case we know nothing about the provider and the exceptions it might raise.
+        if (this.trace)
+        {
+           Console.WriteLine("[cache] DetachDeletedDb failed: {0}", ex.Message);
+        }
       }
     }
   }
