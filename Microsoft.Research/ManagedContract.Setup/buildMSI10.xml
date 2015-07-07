@@ -216,13 +216,7 @@
        Namespaces="$(Vsix10Namespace)"
        Query="//vsx:Identifier/vsx:Version"
        Value="$(CCNetLabel)"
-       XmlInputPath="..\ContractAdornments\VS2010\source.extension.vsixmanifest" />
-
-    <XmlPoke
-       Namespaces="$(Vsix20Namespace)"
-       Query="//vsx:Metadata/vsx:Identity/@Version"
-       Value="$(CCNetLabel)"
-       XmlInputPath="..\ContractAdornments\VS2012\source.extension.vsixmanifest" />
+       XmlInputPath="..\ContractAdornments\Extension\source.extension.vsixmanifest" />
 
     <XmlPoke
        Namespaces="$(Vsix10Namespace)"

@@ -1,4 +1,8 @@
 @echo off
+
+rem Make sure NuGet packages are restored before proceeding with the build
+..\..\.nuget\NuGet.exe restore ..\..\CodeContracts.sln
+
 if "%2" == "" goto nonetlabel
 
 echo Build %2 version (%1)
