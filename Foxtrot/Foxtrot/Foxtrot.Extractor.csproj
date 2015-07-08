@@ -171,7 +171,7 @@
     <Compile Include="Extraction\LookForBadStuff.cs" />
     <Compile Include="Extraction\ReplaceBranchTarget.cs" />
     <Compile Include="Extraction\ScrubContractClass.cs" />
-    <Compile Include="VisitorIncludingClosures.cs" />
+    <Compile Include="Extraction\VisitorIncludingClosures.cs" />
     <None Include="..\..\Microsoft.Research\common\Contracts.snk">
       <Link>Contracts.snk</Link>
     </None>
