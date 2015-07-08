@@ -70,7 +70,6 @@ namespace Tests {
     [AssemblyInitialize]
     public static void AssembyInitialize(TestContext context)
     {
-
         //
         // VERY IMPORTANT!! Do NOT do anything that caused any type from CodeUnderTest.dll to be loaded
         // before the assembly is rewritten!!!
@@ -83,12 +82,13 @@ namespace Tests {
         int x;
         const string AsmMetaExe = @"Microsoft.Research\ImportedCCI2\AsmMeta.exe";
 
-        var deploymentDir = Directory.GetCurrentDirectory();
+        var deploymentDir = context.TestDeploymentDir;
 
         var testResultPosition = deploymentDir.IndexOf(@"TestResults");
-
-        Assert.IsTrue(testResultPosition != -1, "Can't find the TestResults directory!!!");
-
+        
+        Assert.IsTrue(testResultPosition != -1, 
+            string.Format("Can't find the TestResults directory!!! Current deployment directory is '{0}'", deploymentDir));
+        
         var testDirRoot = deploymentDir.Substring(0, testResultPosition);
 
         Assert.IsTrue(!string.IsNullOrEmpty(testDirRoot), "I was expecting the extraction of a valid dir");
@@ -97,13 +97,20 @@ namespace Tests {
 
         var foxtrotPath = SelectFoxtrot(RootDirectory, deploymentDir);
 
-
       Assert.IsTrue(File.Exists("OutOfBand.dll"));
       var tool = Path.GetFullPath(Path.Combine(RootDirectory, AsmMetaExe));
 
       Assert.IsTrue(File.Exists(tool), string.Format("The tool {0} does not exists!!!!", tool));
 
-      x = RunProcess(deploymentDir, tool, @"/libpaths:..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\v3.5 OutOfBand.dll");
+      var refAssemblies = @"..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\v3.5";
+      
+    Assert.IsTrue(Directory.Exists(refAssemblies),
+          string.Format("Can't find reference assembly folder at {0}", Path.Combine(deploymentDir, refAssemblies)));
+
+      Assert.IsTrue(File.Exists(tool), string.Format("The tool {0} does not exists!!!!", tool));
+
+      x = RunProcess(deploymentDir, tool, string.Format(@"/libpaths:{0} OutOfBand.dll", refAssemblies));
+
       Assert.AreEqual(0, x, "AsmMeta failed on OutOfBand.dll");
       Assert.IsTrue(File.Exists("OutOfBand.Contracts.dll"), "AsmMeta must have failed to produce a reference assembly for OutOfBand.dll");
 
@@ -273,7 +280,9 @@ namespace Tests {
       new CodeUnderTest.RewrittenContractTest().CallPrivateRequiresTrue(true);
     }
 
+    
     [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Ignore] // This test should be ignored, because the whole test suite is running without /publicsurface flag!
     public void PositivePrivateRequiresTest2() {
       // Does not trigger due to /publicsurface
       new CodeUnderTest.RewrittenContractTest().CallPrivateRequiresTrue(false);
@@ -296,6 +305,7 @@ namespace Tests {
     }
 
     [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Ignore] // This test should be ignored, because the whole test suite is running without /publicsurface flag!
     public void PositivePrivateEnsuresTest2() {
       // Does not trigger due to /publicsurface
       new CodeUnderTest.RewrittenContractTest().CallPrivateEnsuresTrue(false);

@@ -1359,16 +1359,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Clousot2_WCFServiceHost, Version=1.1.1.1, Culture=neutral, PublicKeyToken=188286aac86319f9, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Cloudot, Version=1.1.1.1, Culture=neutral, PublicKeyToken=188286aac86319f9, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_37818F9D55733213D42DCA35A4460AFC"
                     {
-                    "Name" = "8:Clousot2_WCFServiceHost.exe"
+                    "Name" = "8:Cloudot.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Clousot2_WCFServiceHost.exe"
+            "SourcePath" = "8:Cloudot.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_014AED61FFB1448C8468E56265FA62F9"
