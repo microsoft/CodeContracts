@@ -119,6 +119,15 @@
      />
 
   <TestFile
+     Name="Foxtrot\Tests\Sources\ComplexGeneric.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     References="System.Core.dll"
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+  <TestFile
      Name="Foxtrot\Tests\Sources\PostAmbleDeletion.cs"
      CompilerOptions=""
      FoxtrotOptions="-assemblyMode standard"
