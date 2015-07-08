@@ -208,3 +208,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+Microsoft.Research/CCDoc/Sandcastle/Sandcastle.zip
