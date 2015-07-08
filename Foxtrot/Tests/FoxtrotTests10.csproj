@@ -103,6 +103,7 @@
     <None Include="CheckerTests\CheckerErrors.cs" />
     <Compile Include="CRASanitizeTest.cs" />
     <Compile Include="ExtractorTest.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RewriterTests.cs" />
     <None Include="Sources\InheritPreInterface.cs" />

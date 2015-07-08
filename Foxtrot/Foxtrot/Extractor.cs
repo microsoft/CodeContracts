@@ -2084,10 +2084,10 @@ namespace Microsoft.Contracts.Foxtrot {
           // This fix could be temporal and proper fix would be applied in the future.
           // After discussion this issue with original CC authors (Mike Barnett and Francesco Logozzo),
           // we decided that this fix is safe and lack of Assume statement in the MoveNext method will not affect
-          // customers (neither CCRewriter customers now CCCheck customers).
+          // customers (neither CCRewriter customers nor CCCheck customers).
           // If this assumption would not be true in the future, proper fix should be applied.
           // put requires as assumes into movenext method at original position
-          ReplaceRequiresWithAssumeInMoveNext(origPreconditions, originalContractPosition);
+          // ReplaceRequiresWithAssumeInMoveNext(origPreconditions, originalContractPosition);
 
           // no postPreamble to initialize, as method is not a ctor
         } finally
@@ -2297,6 +2297,8 @@ namespace Microsoft.Contracts.Foxtrot {
               else
               {
                 if (field.Name.Name.Contains("__locals" /* csc.exe */) ||
+                    field.Name.Name.Contains("<>8__") /* roslyn-based csc */ ||
+                    field.Name.Name.Contains("<>9__") /* roslyn-based cached anonymous method delegates */ ||
                     field.Name.Name.Contains("__spill") /* rcsc.exe */ ||
                     field.Name.Name.Contains("__CachedAnonymousMethodDelegate") /* junk, revisit */
                   )
@@ -2866,10 +2868,19 @@ namespace Microsoft.Contracts.Foxtrot {
         }
         return Pair.For(-2, EvalKind.None);
       }
+
+      // Roslyn-based compiler in Release mode can skip statemachine initialization
+      var methodCall = expression as MethodCall;
+      if (methodCall != null)
+      {
+          return Pair.For(-2, EvalKind.None);
+      }
+
       if (ignoreUnknown)
       {
         return Pair.For(-2, EvalKind.None);
       }
+
       throw new NotImplementedException("async/iterator issue");
     }
 

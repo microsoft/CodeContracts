@@ -102,7 +102,15 @@ namespace Tests {
 
       Assert.IsTrue(File.Exists(tool), string.Format("The tool {0} does not exists!!!!", tool));
 
-      x = RunProcess(deploymentDir, tool, @"/libpaths:..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\v3.5 OutOfBand.dll");
+      var refAssemblies = @"..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\v3.5";
+      
+    Assert.IsTrue(Directory.Exists(refAssemblies),
+          string.Format("Can't find reference assembly folder at {0}", Path.Combine(deploymentDir, refAssemblies)));
+
+      Assert.IsTrue(File.Exists(tool), string.Format("The tool {0} does not exists!!!!", tool));
+
+      x = RunProcess(deploymentDir, tool, string.Format(@"/libpaths:{0} OutOfBand.dll", refAssemblies));
+
       Assert.AreEqual(0, x, "AsmMeta failed on OutOfBand.dll");
       Assert.IsTrue(File.Exists("OutOfBand.Contracts.dll"), "AsmMeta must have failed to produce a reference assembly for OutOfBand.dll");
 
