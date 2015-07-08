@@ -149,6 +149,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Documentation\ContractAssumeAssertStatement.cs" />
     <Compile Include="Extraction\AbbreviationDuplicator.cs" />
     <Compile Include="Extraction\AsyncContractDuplicator.cs" />
     <Compile Include="Extraction\AsyncReturnValueQuery.cs" />
@@ -181,7 +182,7 @@
     <Compile Include="Checker\Warning.cs" />
     <Compile Include="CodeInspector.cs" />
     <Compile Include="ContractNodes.cs" />
-    <Compile Include="Documentation.cs" />
+    <Compile Include="Documentation\GenerateDocumentationFromPDB.cs" />
     <Compile Include="DuplicatorForContractsAndClosures.cs" />
     <Compile Include="Extraction\Extractor.cs" />
     <Compile Include="ContractBlocks.cs" />

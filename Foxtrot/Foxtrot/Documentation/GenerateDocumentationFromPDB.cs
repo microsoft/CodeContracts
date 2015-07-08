@@ -1086,15 +1086,4 @@ namespace Microsoft.Contracts.Foxtrot
             this.VisitAssembly(assemblyNode);
         }
     }
-
-    public sealed class ContractAssumeAssertStatement : ExpressionStatement
-    {
-        public readonly string SourceText;
-
-        public ContractAssumeAssertStatement(Expression expression, SourceContext sctx, string sourceText)
-            : base(expression, sctx)
-        {
-            this.SourceText = sourceText;
-        }
-    }
 }
