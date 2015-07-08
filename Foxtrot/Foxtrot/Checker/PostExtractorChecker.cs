@@ -1,21 +1,7 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Compiler;
-using System.CodeDom.Compiler;
 using System.Diagnostics.Contracts;
 
 namespace Microsoft.Contracts.Foxtrot
@@ -116,7 +102,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             private static readonly Identifier SuppressMessageIdentifier = Identifier.For("SuppressMessageAttribute");
-                // Should be thread-safe
+            // Should be thread-safe
 
             private static Dictionary<string, object> GrabSuppressAttributes(Method method)
             {
@@ -352,7 +338,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 this.HandleError(
                     new Warning(1020, "Contract class '" + Class.FullName + "' should be an abstract class.",
-                    new SourceContext()));
+                        new SourceContext()));
             }
 
             Interface iface = originalType as Interface;
@@ -366,7 +352,7 @@ namespace Microsoft.Contracts.Foxtrot
                         new Warning(1066,
                             "Class '" + Class.FullName + "' is annotated as being the contract for the interface '" +
                             iface.FullName + "' and cannot have an explicit base class other than System.Object.",
-                        new SourceContext()));
+                            new SourceContext()));
                 }
 
                 Interface instance = null;
@@ -386,7 +372,7 @@ namespace Microsoft.Contracts.Foxtrot
                         new Error(1008,
                             "Class '" + Class.FullName + "' is annotated as being the contract for the interface '" +
                             iface.FullName + "' but doesn't implement the interface.",
-                        new SourceContext()));
+                            new SourceContext()));
                 }
                 else
                 {
@@ -400,7 +386,7 @@ namespace Microsoft.Contracts.Foxtrot
                                 new Error(1068,
                                     string.Format("Class '{0}' is annotated as being the contract for the interface '{1}' but implements unrelated interface '{2}'.",
                                         Class.FullName, iface.FullName, J.FullName),
-                                new SourceContext()));
+                                    new SourceContext()));
                         }
                     }
                 }
@@ -416,7 +402,7 @@ namespace Microsoft.Contracts.Foxtrot
                             new Error(1009,
                                 "Class '" + Class.FullName + "' is annotated as being the contract for the abstract class '" +
                                 abstractClass.FullName + "' but doesn't extend the class.",
-                            new SourceContext()));
+                                new SourceContext()));
                     }
 
                     if (Class.Interfaces != null && Class.Interfaces.Count > 0)
@@ -425,7 +411,7 @@ namespace Microsoft.Contracts.Foxtrot
                             new Error(1067,
                                 "Class '" + Class.FullName + "' is annotated as being the contract for the abstract class '" +
                                 abstractClass.FullName + "' and cannot implement any interfaces.",
-                            new SourceContext()));
+                                new SourceContext()));
                     }
                 }
             }
@@ -439,10 +425,10 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1021, "The class '" + Class.FullName
-                            + "' is supposed to be a contract class for '" +
-                            originalType.FullName
-                            + "', but that type does not point back to this class.",
-                        new SourceContext()));
+                                        + "' is supposed to be a contract class for '" +
+                                        originalType.FullName
+                                        + "', but that type does not point back to this class.",
+                            new SourceContext()));
                 }
 
                 // Checks that contract class matches real class
@@ -451,8 +437,8 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1043, "The contract class '" + Class.FullName
-                            + "' and the type '" + originalType.FullName + "' must agree on all generic parameters.",
-                        new SourceContext()));
+                                        + "' and the type '" + originalType.FullName + "' must agree on all generic parameters.",
+                            new SourceContext()));
                 }
 
                 // Check that they have the same container if they are generic
@@ -461,9 +447,9 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1044, "The contract class '" + Class.FullName
-                            + "' and the type '" + originalType.FullName
-                            + "' must have the same declaring type if any.",
-                        new SourceContext()));
+                                        + "' and the type '" + originalType.FullName
+                                        + "' must have the same declaring type if any.",
+                            new SourceContext()));
                 }
             }
 
@@ -475,7 +461,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 this.HandleError(
                     new Error(1079, "The class '" + Class.FullName + "' cannot have a base type that is a contract class.",
-                    new SourceContext()));
+                        new SourceContext()));
             }
         }
 
@@ -510,9 +496,9 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1006, "Type '" + typeNode.FullName
-                            + "' has the attribute [ContractClass], but its argument '"
-                            + contractType.FullName + "' is not a class.",
-                        new SourceContext()));
+                                        + "' has the attribute [ContractClass], but its argument '"
+                                        + contractType.FullName + "' is not a class.",
+                            new SourceContext()));
 
                     return;
                 }
@@ -523,7 +509,7 @@ namespace Microsoft.Contracts.Foxtrot
                         new Error(1018,
                             "Type '" + typeNode.FullName +
                             "' has the [ContractClass] attribute, but it isn't an interface or an abstract class.",
-                        new SourceContext()));
+                            new SourceContext()));
                 }
 
                 TypeNode backPointer = HelperMethods.GetTypeFromAttribute(contractClass, ContractNodes.ContractClassForAttributeName);
@@ -536,9 +522,9 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1019, "Type '" + typeNode.FullName
-                            + "' specifies the class '" + contractClass.FullName
-                            + "' as its contract class, but that class does not point back to this type.",
-                        new SourceContext()));
+                                        + "' specifies the class '" + contractClass.FullName
+                                        + "' as its contract class, but that class does not point back to this type.",
+                            new SourceContext()));
                 }
             }
         }
@@ -607,11 +593,11 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     this.HandleError(
                         new Error(1010, "Field '" +
-                            field.FullName +
-                            "' is marked [ContractPublicPropertyName(\"" + s +
-                            "\")], but no public field/property named '" +
-                            s + "' with type '" + field.Type + "' can be found",
-                        field.SourceContext));
+                                        field.FullName +
+                                        "' is marked [ContractPublicPropertyName(\"" + s +
+                                        "\")], but no public field/property named '" +
+                                        s + "' with type '" + field.Type + "' can be found",
+                            field.SourceContext));
                 }
             }
         }
@@ -756,7 +742,7 @@ namespace Microsoft.Contracts.Foxtrot
                             new Error(1064,
                                 "Contract abbreviator method '" + method.FullName +
                                 "' cannot be virtual or implement an interface method.'",
-                            HelperMethods.SourceContextOfMethod(method)));
+                                HelperMethods.SourceContextOfMethod(method)));
                     }
 
                     if (!HelperMethods.IsVoidType(method.ReturnType))
@@ -764,7 +750,7 @@ namespace Microsoft.Contracts.Foxtrot
                         this.HandleError(
                             new Error(1060,
                                 "Contract abbreviator method '" + method.FullName + "' must have void return type.'",
-                            HelperMethods.SourceContextOfMethod(method)));
+                                HelperMethods.SourceContextOfMethod(method)));
                     }
 
                     if (method.Contract != null)
@@ -782,14 +768,14 @@ namespace Microsoft.Contracts.Foxtrot
                                 new Error(1062,
                                     "Contract abbreviator '" + method.FullName +
                                     "' cannot contain if-then-throw contracts or validator calls. Only regular contracts and abbreviator calls are allowed.",
-                                HelperMethods.SourceContextOfMethod(method)));
+                                    HelperMethods.SourceContextOfMethod(method)));
                         }
 
                         if (method.Contract.EnsuresCount + method.Contract.RequiresCount == 0)
                         {
                             this.HandleError(
                                 new Warning(1063, "No contracts recognized in contract abbreviator '" + method.FullName + "'.",
-                                HelperMethods.SourceContextOfMethod(method)));
+                                    HelperMethods.SourceContextOfMethod(method)));
                         }
                     }
                     else
@@ -797,7 +783,7 @@ namespace Microsoft.Contracts.Foxtrot
                         // no contracts
                         this.HandleError(
                             new Warning(1063, "No contracts recognized in contract abbreviator '" + method.FullName + "'.",
-                            HelperMethods.SourceContextOfMethod(method)));
+                                HelperMethods.SourceContextOfMethod(method)));
                     }
 
                     // abbreviator code must be completely visible to all callers as it is effectively inlined there.
@@ -2425,356 +2411,6 @@ namespace Microsoft.Contracts.Foxtrot
                     this.Visit(stmt);
                 }
             }
-        }
-    }
-
-    /// <summary>
-    /// Checks for a minimum level of visibility in a code tree.
-    /// </summary>
-    [ContractVerification(true)]
-    internal class VisibilityHelper : InspectorIncludingClosures
-    {
-        private Member memberInErrorFound;
-
-        /// <summary>
-        /// The visibility of things is checked to be as visible as this member.
-        /// </summary>
-        private Member AsThisMember;
-
-        /// <summary>
-        /// Creates a new instance of this class.
-        /// </summary>
-        public VisibilityHelper()
-        {
-        }
-
-        private void ReInitialize(Method asThisMember)
-        {
-            this.CurrentMethod = asThisMember;
-            memberInErrorFound = null;
-            this.AsThisMember = asThisMember;
-        }
-
-        /// <summary>
-        /// Checks for less-than-visible member references in an expression.
-        /// </summary>
-        public override void VisitMemberBinding(MemberBinding binding)
-        {
-            if (binding == null) return;
-
-            Member mem = binding.BoundMember;
-            if (mem != null)
-            {
-                Field f = mem as Field;
-                bool specPublic = false;
-
-                if (f != null)
-                {
-                    specPublic = IsSpecPublic(f);
-                }
-                
-                if (!specPublic && !HelperMethods.IsCompilerGenerated(mem))
-                {
-                    // F: It seems there is some type-state like invariant here justifying why this.AsThisMemeber != null
-                    Contract.Assume(this.AsThisMember != null);
-                    
-                    if (!HelperMethods.IsReferenceAsVisibleAs(mem, this.AsThisMember))
-                    {
-                        this.memberInErrorFound = mem;
-                        return;
-                    }
-                }
-            }
-
-            base.VisitMemberBinding(binding);
-        }
-
-        private static bool IsSpecPublic(Field f)
-        {
-            // F: 
-            Contract.Requires(f != null);
-
-            return f.Attributes.HasAttribute(ContractNodes.SpecPublicAttributeName);
-        }
-
-        /// <summary>
-        /// Returns true if expr is as visible as method
-        /// </summary>
-        public bool IsAsVisibleAs(Expression expr, Method method)
-        {
-            return AsVisibleAs(expr, method) == null;
-        }
-
-        /// <summary>
-        /// Returns null if okay, otherwise a member not as visible as method
-        /// </summary>
-        public Member AsVisibleAs(Expression expr, Method method)
-        {
-            this.ReInitialize(method);
-            this.VisitExpression(expr);
-            return this.memberInErrorFound;
-        }
-    }
-
-    /// <summary>
-    /// Represents an error based on CCI source context information.
-    /// </summary>
-    [ContractVerification(true)]
-    public class Error : CompilerError
-    {
-        public Error(int errorCode, string error, SourceContext context)
-        {
-            Contract.Requires(error != null);
-
-            if (context.IsValid)
-            {
-                // F: Why context.Document != null? Added the assumption
-                Contract.Assume(context.Document != null);
-
-                this.FileName = context.Document.Name;
-            }
-            else
-            {
-                this.FileName = " "; // non-empty to prevent VS/msbuild from prepending EXEC 
-            }
-
-            this.Line = context.StartLine;
-            this.Column = context.StartColumn;
-            this.ErrorNumber = "CC" + errorCode;
-            this.ErrorText = error;
-        }
-    }
-
-    /// <summary>
-    /// Represents a warning based on CCI source context information.
-    /// </summary>
-    [ContractVerification(true)]
-    public class Warning : Error
-    {
-        public Warning(int errorCode, string error, SourceContext context)
-            : base(errorCode, error, context)
-        {
-            // F:
-            Contract.Requires(error != null);
-
-            this.IsWarning = true;
-        }
-    }
-
-    [ContractVerification(true)]
-    internal class InspectorIncludingClosures : Inspector
-    {
-        private Method currentMethod;
-
-        protected Method CurrentMethod
-        {
-            get { return this.currentMethod; }
-            set
-            {
-                this.currentMethod = value;
-                if (value != null)
-                {
-                    this.CurrentType = value.DeclaringType;
-                }
-            }
-        }
-
-        protected TypeNode CurrentType { get; set; }
-
-        public override void VisitMethod(Method method)
-        {
-            if (method == null) return;
-            var savedCurrentMethod = this.CurrentMethod;
-            this.CurrentMethod = method;
-            try
-            {
-                base.VisitMethod(method);
-            }
-            finally
-            {
-                this.CurrentMethod = savedCurrentMethod;
-            }
-        }
-
-        /// <summary>
-        /// Need to visit closures as well
-        /// </summary>
-        public override void VisitConstruct(Construct cons)
-        {
-            if (cons == null) return;
-            if (cons.Operands == null) return;
-            if (cons.Operands.Count < 2) return;
-
-            if (cons.Type.IsDelegateType())
-            {
-                UnaryExpression ue = cons.Operands[1] as UnaryExpression;
-                if (ue == null) goto JustVisit;
-
-                MemberBinding mb = ue.Operand as MemberBinding;
-                if (mb == null) goto JustVisit;
-                
-                Method m = mb.BoundMember as Method;
-                
-                var um = HelperMethods.Unspecialize(m);
-                
-                if (HelperMethods.IsAnonymousDelegate(um, this.CurrentType))
-                {
-                    this.VisitAnonymousDelegate(um, m);
-                }
-            }
-        
-        JustVisit:
-            base.VisitConstruct(cons);
-        }
-
-        private readonly Stack<Method> delegates = new Stack<Method>();
-        private readonly Stack<Func<TypeNode, TypeNode>> substitution = new Stack<Func<TypeNode, TypeNode>>();
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"),
-         System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(delegates != null);
-            Contract.Invariant(substitution != null);
-        }
-
-        public override void VisitBlock(Block block)
-        {
-            Contract.Ensures(this.delegates.Count == Contract.OldValue(this.delegates.Count));
-
-            base.VisitBlock(block);
-        }
-
-        public virtual void VisitAnonymousDelegate(Method method, Method instantiated)
-        {
-            if (method == null) return;
-
-            this.delegates.Push(method);
-            this.substitution.Push(Substitution(method, instantiated));
-            
-            try
-            {
-                this.VisitBlock(method.Body);
-            }
-            finally
-            {
-                this.delegates.Pop();
-                this.substitution.Pop();
-            }
-        }
-
-        protected Func<TypeNode, TypeNode> CurrentSubstitution
-        {
-            get
-            {
-                if (this.substitution.Count == 0)
-                {
-                    return t => t;
-                }
-
-                return this.substitution.Peek();
-            }
-        }
-
-        private Func<TypeNode, TypeNode> Substitution(Method method, Method instantiated)
-        {
-            var previous = this.CurrentSubstitution;
-            if (method == instantiated)
-            {
-                return previous;
-            }
-
-            return (t) =>
-            {
-                var tp = t as ITypeParameter;
-                if (tp == null) return t;
-
-                if (tp.DeclaringMember == method)
-                {
-                    if (instantiated.TemplateArguments == null ||
-                        instantiated.TemplateArguments.Count <= tp.ParameterListIndex)
-                    {
-                        return t;
-                    }
-                    
-                    return instantiated.TemplateArguments[tp.ParameterListIndex];
-                }
-
-                var decl = method.DeclaringType;
-                var idecl = instantiated.DeclaringType;
-                
-                while (decl != null)
-                {
-                    if ((TypeNode) tp.DeclaringMember == decl)
-                    {
-                        if (idecl.TemplateArguments == null || idecl.TemplateArguments.Count <= tp.ParameterListIndex)
-                            return t;
-
-                        return idecl.TemplateArguments[tp.ParameterListIndex];
-                    }
-
-                    decl = decl.DeclaringType;
-                    idecl = idecl.DeclaringType;
-                }
-
-                return previous(t);
-            };
-        }
-
-        public override void VisitMemberBinding(MemberBinding memberBinding)
-        {
-            if (memberBinding == null) return;
-
-            if (memberBinding.BoundMember == null) return;
-
-            var declaringType = memberBinding.BoundMember.DeclaringType;
-            
-            if (declaringType != null && delegates.Count > 0 && this.CurrentType != null &&
-                HelperMethods.IsClosureType(this.CurrentType, declaringType))
-            {
-                var parameter = FindNamedParameter(memberBinding.BoundMember);
-                if (parameter != null) this.VisitParameter(parameter);
-            }
-            else
-            {
-                base.VisitMemberBinding(memberBinding);
-            }
-        }
-
-        private Parameter FindNamedParameter(Member member)
-        {
-            if (member == null) return null;
-
-            if (this.CurrentMethod == null) return null; // happens when we look at invariants.
-            
-            if (member.Name == null) return null;
-            
-            if (member.Name.Name == null) return null;
-
-            var parameters = this.CurrentMethod.Parameters;
-
-            Contract.Assert(member.Name.Name != null);
-            
-            if (this.CurrentMethod.HasThis() && member.Name.Name.StartsWith("<>") && member.Name.Name.EndsWith("_this"))
-            {
-                return this.CurrentMethod.ThisParameter;
-            }
-
-            if (parameters != null)
-            {
-                for (int i = 0; i < parameters.Count; i++)
-                {
-                    var par = parameters[i];
-                    if (par == null) continue;
-
-                    if (par.Name == null) continue;
-
-                    if (member.Name.UniqueIdKey == par.Name.UniqueIdKey) return par;
-                }
-            }
-
-            return null;
         }
     }
 }
