@@ -149,6 +149,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Documentation\ContractAssumeAssertStatement.cs" />
+    <Compile Include="Extraction\AbbreviationDuplicator.cs" />
+    <Compile Include="Extraction\AsyncContractDuplicator.cs" />
+    <Compile Include="Extraction\AsyncReturnValueQuery.cs" />
+    <Compile Include="Cache.cs" />
+    <Compile Include="Checker\Error.cs" />
+    <Compile Include="Checker\InspectorIncludingClosures.cs" />
+    <Compile Include="Checker\VisibilityHelper.cs" />
+    <Compile Include="Extraction\CheckLocals.cs" />
+    <Compile Include="Extraction\ClousotExtractor.cs" />
+    <Compile Include="Extraction\CopyOutOfBandContracts.cs" />
+    <Compile Include="Extraction\CountPopExpressions.cs" />
+    <Compile Include="Extraction\ExtractionFinalizer.cs" />
+    <Compile Include="Extraction\ExtractorException.cs" />
+    <Compile Include="Extraction\ExtractorVisitor.cs" />
+    <Compile Include="Extraction\FilterForRuntime.cs" />
+    <Compile Include="Extraction\FindLocals.cs" />
+    <Compile Include="Extraction\ForwardingDuplicator.cs" />
+    <Compile Include="Extraction\GatherLocals.cs" />
+    <Compile Include="Extraction\LookForBadStuff.cs" />
+    <Compile Include="Extraction\ReplaceBranchTarget.cs" />
+    <Compile Include="Extraction\ScrubContractClass.cs" />
+    <Compile Include="Extraction\VisitorIncludingClosures.cs" />
     <None Include="..\..\Microsoft.Research\common\Contracts.snk">
       <Link>Contracts.snk</Link>
     </None>
@@ -156,12 +179,18 @@
       <Link>version.cs</Link>
     </Compile>
     <Compile Include="AssemblyResolver.cs" />
-    <Compile Include="Checker.cs" />
+    <Compile Include="Checker\Warning.cs" />
+    <Compile Include="CodeInspector.cs" />
     <Compile Include="ContractNodes.cs" />
-    <Compile Include="Documentation.cs" />
-    <Compile Include="Extractor.cs" />
+    <Compile Include="Documentation\GenerateDocumentationFromPDB.cs" />
+    <Compile Include="DuplicatorForContractsAndClosures.cs" />
+    <Compile Include="Extraction\Extractor.cs" />
+    <Compile Include="ContractBlocks.cs" />
+    <Compile Include="Extraction\ExtractorExtensions.cs" />
+    <Compile Include="FindClosurePartsToDuplicate.cs" />
+    <Compile Include="Checker\PostExtractorChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="HelperMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Research\DataStructures\DataStructures.csproj">

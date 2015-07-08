@@ -152,7 +152,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RewriteUtils.cs" />
+    <Compile Include="ExitTraceListener.cs" />
+    <Compile Include="FoxtrotOptions.cs" />
+    <Compile Include="Rewriting\CleanUpOldAndResult.cs" />
+    <Compile Include="Rewriting\CollectBoundVariables.cs" />
+    <Compile Include="Rewriting\CollectOldExpressions.cs" />
+    <Compile Include="Rewriting\RemoveContractClasses.cs" />
+    <Compile Include="Rewriting\RemoveShortBranches.cs" />
+    <Compile Include="Rewriting\ReplaceResult.cs" />
+    <Compile Include="Rewriting\ReplaceReturns.cs" />
+    <Compile Include="Rewriting\RewriteException.cs" />
+    <Compile Include="Rewriting\RewriteHelper.cs" />
+    <Compile Include="Rewriting\RewriteInvariant.cs" />
+    <Compile Include="Rewriting\RuntimeContractEmitFlags.cs" />
+    <Compile Include="Rewriting\RuntimeContractMethods.cs" />
+    <Compile Include="Rewriting\SubstituteClosureClassWithinOldExpressions.cs" />
+    <Compile Include="Rewriting\SubstituteParameters.cs" />
+    <Compile Include="Rewriting\WrapParametersInOldExpressions.cs" />
     <None Include="..\..\Microsoft.Research\common\Contracts.snk">
       <Link>Contracts.snk</Link>
     </None>
@@ -160,7 +176,9 @@
       <Link>version.cs</Link>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="..\Foxtrot\Rewriter.cs" />
+    <Compile Include="..\Foxtrot\Rewriter.cs">
+      <Link>Rewriting\Rewriter.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +239,7 @@
       <Name>Foxtrot.Extractor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
