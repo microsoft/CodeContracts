@@ -152,6 +152,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExitTraceListener.cs" />
+    <Compile Include="FoxtrotOptions.cs" />
     <Compile Include="Rewriting\CleanUpOldAndResult.cs" />
     <Compile Include="Rewriting\CollectBoundVariables.cs" />
     <Compile Include="Rewriting\CollectOldExpressions.cs" />
