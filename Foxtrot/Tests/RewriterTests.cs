@@ -48,10 +48,10 @@ namespace Tests
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]
         [TestMethod]
         [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        [Timeout(10*60*1000)]
         public void Roslyn_BuildRewriteRunFromSources()
         {
             var options = CreateRoslynOptions("VS14RC3");
-
             TestDriver.BuildRewriteRun(options);
         }
 

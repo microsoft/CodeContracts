@@ -180,15 +180,30 @@ namespace Tests
                                       "/optioncompare:Binary /optionexplicit+ /optionstrict+ /optioninfer+ ",
                             Moniker);
                 }
-
-                if (UseTestHarness)
+                
+                if (IsRoslynBasedCompiler)
                 {
-                    return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} /noconfig /nostdlib {1}", Moniker,
-                        MakeAbsolute(@"Foxtrot\Tests\Sources\TestHarness.cs"));
+                    if (UseTestHarness)
+                    {
+                        return String.Format("/d:CONTRACTS_FULL;ROSLYN;DEBUG;{0} /noconfig /nostdlib {1}", Moniker,
+                            MakeAbsolute(@"Foxtrot\Tests\Sources\TestHarness.cs"));
+                    }
+                    else
+                    {
+                        return String.Format("/d:CONTRACTS_FULL;ROSLYN;DEBUG;{0} /noconfig /nostdlib", Moniker);
+                    }
                 }
                 else
                 {
-                    return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} /noconfig /nostdlib", Moniker);
+                    if (UseTestHarness)
+                    {
+                        return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} /noconfig /nostdlib {1}", Moniker,
+                            MakeAbsolute(@"Foxtrot\Tests\Sources\TestHarness.cs"));
+                    }
+                    else
+                    {
+                        return String.Format("/d:CONTRACTS_FULL;DEBUG;{0} /noconfig /nostdlib", Moniker);
+                    }
                 }
             }
         }

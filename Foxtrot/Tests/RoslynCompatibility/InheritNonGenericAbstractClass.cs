@@ -45,7 +45,7 @@ namespace Tests.Sources
         public string Method2(params string[] strings)
         {
             Contract.Requires(Contract.ForAll(strings, s => s.Length > 0));
-            Contract.Ensures(Contract.Exists(0, strings.Length, index => strings[index] != null && strings[index] == "42" && 
+            Contract.Ensures(Contract.Exists(0, strings.Length, index => strings[index] != null && strings[index] == "43" && 
                                           Contract.ForAll(0, index, prior => Contract.Result<string>() != null)));
             return "";
         }
@@ -82,17 +82,16 @@ return "";
     {
       if (behave)
       {
-        new Foo().Method("1", "2", "3");
-        new Foo().Method2("11", "21", "31");
+        new Foo().Method("42", "42", "42");
+        new Foo().Method2("43", "43", "43");
       }
       else
       {
-        new Foo().Method("1", "");
-        new Foo().Method2("1", "");
+        new Foo().Method("11", "11");
       }
     }
 
-    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
-    public string NegativeExpectedCondition = "Contract.ForAll(strings, s => s.Length > 0)";
+    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Postcondition;
+    public string NegativeExpectedCondition = "Contract.Exists(0, strings.Length, index => strings[index] != null && strings[index] == \"42\" && Contract.ForAll(0, index, prior => Contract.Result<string>() != null))";
   }
 }
