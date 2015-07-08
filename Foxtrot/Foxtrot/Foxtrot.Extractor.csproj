@@ -157,11 +157,15 @@
     </Compile>
     <Compile Include="AssemblyResolver.cs" />
     <Compile Include="Checker.cs" />
+    <Compile Include="CodeInspector.cs" />
     <Compile Include="ContractNodes.cs" />
     <Compile Include="Documentation.cs" />
+    <Compile Include="DuplicatorForContractsAndClosures.cs" />
     <Compile Include="Extractor.cs" />
+    <Compile Include="ContractBlocks.cs" />
+    <Compile Include="FindClosurePartsToDuplicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="HelperMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Research\DataStructures\DataStructures.csproj">

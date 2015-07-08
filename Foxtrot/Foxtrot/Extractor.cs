@@ -668,7 +668,7 @@ namespace Microsoft.Contracts.Foxtrot {
   /// the contracts to the calling context by duplicating the actual argument expressions into
   /// the contracts where the helper parameters occur.
   /// </summary>
-  internal class AbbreviationDuplicator : HelperMethods.DuplicatorForContractsAndClosures
+  internal class AbbreviationDuplicator : DuplicatorForContractsAndClosures
   {
     ExpressionList actuals;
     Expression targetObject;
