@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Microsoft.Research.CodeAnalysis.Caching.Models;
 using Microsoft.Research.DataStructures;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 
 namespace Microsoft.Research.CodeAnalysis.Caching
 {
@@ -265,5 +266,39 @@ namespace Microsoft.Research.CodeAnalysis.Caching
     public interface IClousotCacheFactory
     {
         IClousotCache Create(IClousotCacheOptions options);
+    }
+
+    public static class ClousotCacheFactoryExtensions
+    {
+        /// <summary>
+        /// Extension method that creates cache asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// Task's result would be null if <see cref="factory"/>'s Create method returns null or when
+        /// TestCache will return false.
+        /// </remarks>
+        public static Task<IClousotCache> CreateAndCheckAsync(this IClousotCacheFactory factory, IClousotCacheOptions options)
+        {
+            Contract.Requires(factory != null);
+            Contract.Requires(options != null);
+
+            // This implementation violates common TPL practice that suggest not to wrap
+            // sync functions into async. But this helps to fix particular issue with
+            // cache selection.
+            // This implementation could be refined in the future by switching to appropriate
+            // asynchronous implementation.
+
+            return Task.Factory.StartNew(() =>
+            {
+                var cache = factory.Create(options);
+                
+                if (cache == null || !cache.TestCache())
+                {
+                    return null;
+                }
+
+                return cache;
+            });
+        }
     }
 }

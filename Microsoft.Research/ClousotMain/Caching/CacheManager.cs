@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Research.DataStructures;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using Microsoft.Research.CodeAnalysis.Caching;
 using Microsoft.Research.Slicing;
 
@@ -162,22 +163,79 @@ namespace Microsoft.Research.CodeAnalysis
                     Console.WriteLine("[cache] Slice time stamp : {0}", this.sliceTime);
                 }
 
-                foreach (var factory in cacheAccessorFactories)
-                {
-                    this.cacheAccessor = factory.Create(options);
-                    //test the db connection
-                    if (this.cacheAccessor != null && this.cacheAccessor.TestCache())
-                    {
-                        break;
-                    }
-
-                    this.cacheAccessor = null;
-                }
+                this.cacheAccessor = CreateCacheAccessorAsync(cacheAccessorFactories, options).Result;
             }
             finally
             {
                 this.StopTimer(Timer.ctor);
             }
+        }
+
+        /// <summary>
+        /// Creates <see cref="IClousotCache"/> in parallel and returns the first one that succeeds.
+        /// </summary>
+        /// <remarks>
+        /// Resulting task will never fail and if the method would not be able to connect
+        /// to the cache, result of the task would be null. 
+        /// Implementation could be refined by adding cancellation.
+        /// </remarks>
+        /// 
+        private Task<IClousotCache> CreateCacheAccessorAsync(
+            IEnumerable<IClousotCacheFactory> cacheAccessorFactories, GeneralOptions options)
+        {
+            var tcs = new TaskCompletionSource<IClousotCache>();
+            
+            var factories = cacheAccessorFactories.ToList();
+
+            var numberOfRemainingTasks = factories.Count;
+
+            if (numberOfRemainingTasks == 0)
+            {
+                // Factory sequence is empty, can't connect to cache.
+                tcs.TrySetResult(null);
+                return tcs.Task;
+            }
+
+            // Need to materialize all factories first.
+            foreach (var factory in factories)
+            {
+                var task = factory.CreateAndCheckAsync(options);
+
+                task.ContinueWith(t =>
+                {
+                    var remainingTaskCount = Interlocked.Decrement(ref numberOfRemainingTasks);
+
+                    if (t.Status == TaskStatus.RanToCompletion)
+                    {
+                        // CreateAndCheckAsync can return null. We should skip this result in this case!
+                        if (t.Result != null)
+                        {
+                            tcs.TrySetResult(t.Result);
+                        }
+                    }
+                    else if (t.Status == TaskStatus.Faulted)
+                    {
+                        //Observing an exception to avoid application crache.
+                        var exception = t.Exception;
+                        if (trace)
+                        {
+                            Console.WriteLine("Failed to connect to cache. Error: " + exception);
+                        }
+                    }
+
+                    // Don't need to handle (potential) cancelled state.
+
+                    // If remainingTaskCount is 0, then we were unable to connect to any cache!
+                    if (remainingTaskCount == 0)
+                    {
+                        // Always using "Try"-methods, because result could be already set by another task continuation handler
+                        tcs.TrySetResult(null);
+                    }
+                });
+            }
+
+            // Resutling task should be finished by the first successful factory call.
+            return tcs.Task;
         }
 
 #if false
