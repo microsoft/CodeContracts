@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
-  <Identifier Id="ContractAdornments.MicrosoftResearch.1fb66ab7-53ec-479b-bd35-e9dd5be0426b">
+  <Identifier Id="ContractAdornments.MicrosoftResearch.2fb66ab7-53ec-479b-bd35-e9dd5be0426b">
     <Name>Code Contracts Editor Extensions</Name>
     <Author>Microsoft Research</Author>
     <Version>1.8.10107.10</Version>
