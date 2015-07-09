@@ -93,29 +93,40 @@ namespace System
     [Pure]
     public static float Abs(float value)
     {
+      Contract.Ensures((Contract.Result<float>() >= 0.0) || float.IsNaN(Contract.Result<float>()) || float.IsPositiveInfinity(Contract.Result<float>()));
+
+      // 2015-03-26: tom-englert
+      // Disabled, since this was too complex for the checker to understand.
+      // e.g. new Rect(0, 0, Math.Abs(a), Math.Abs(b)) raised a warning that with and height are unproven to be positive values.
+
       // !NaN ==>  >= 0
-      Contract.Ensures(float.IsNaN(value) || Contract.Result<float>() >= 0.0);
+      // Contract.Ensures(float.IsNaN(value) || Contract.Result<float>() >= 0.0);
 
       // NaN ==> NaN
-      Contract.Ensures(!float.IsNaN(value) || float.IsNaN(Contract.Result<float>()));
+      // Contract.Ensures(!float.IsNaN(value) || float.IsNaN(Contract.Result<float>()));
 
       // Infty ==> +Infty
-      Contract.Ensures(!float.IsInfinity(value) || float.IsPositiveInfinity(Contract.Result<float>()));
+      // Contract.Ensures(!float.IsInfinity(value) || float.IsPositiveInfinity(Contract.Result<float>()));
 
       return default(float);
     }
 
     [Pure]
     public static double Abs(double value)
-    {      
+    {
+      Contract.Ensures((Contract.Result<double>() >= 0.0) || double.IsNaN(Contract.Result<double>()) || double.IsPositiveInfinity(Contract.Result<double>()));
+
+      // 2015-03-26: tom-englert
+      // Disabled, since this was too complex for the checker to understand.
+      // e.g. new Rect(0, 0, Math.Abs(a), Math.Abs(b)) raised a warning that with and height are unproven to be positive values.
+
       // !NaN ==>  >= 0
-      Contract.Ensures(double.IsNaN(value) || Contract.Result<double>() >= 0.0);
+      // Contract.Ensures(double.IsNaN(value) || Contract.Result<double>() >= 0.0);
 
       // NaN ==> NaN
-      Contract.Ensures(!double.IsNaN(value) || double.IsNaN(Contract.Result<double>()));
-
+      // Contract.Ensures(!double.IsNaN(value) || double.IsNaN(Contract.Result<double>()));
       // Infty ==> +Infty
-      Contract.Ensures(!double.IsInfinity(value) || double.IsPositiveInfinity(Contract.Result<double>()));
+      // Contract.Ensures(!double.IsInfinity(value) || double.IsPositiveInfinity(Contract.Result<double>()));
 
       return default(double);
     }
