@@ -179,63 +179,41 @@ namespace Microsoft.Research.CodeAnalysis
         /// to the cache, result of the task would be null. 
         /// Implementation could be refined by adding cancellation.
         /// </remarks>
-        /// 
-        private Task<IClousotCache> CreateCacheAccessorAsync(
+        private async Task<IClousotCache> CreateCacheAccessorAsync(
             IEnumerable<IClousotCacheFactory> cacheAccessorFactories, GeneralOptions options)
         {
-            var tcs = new TaskCompletionSource<IClousotCache>();
-            
             var factories = cacheAccessorFactories.ToList();
 
-            var numberOfRemainingTasks = factories.Count;
+            List<Task<IClousotCache>> factoryTasks = 
+                factories.Select(factory => factory.CreateAndCheckAsync(options)).ToList();
 
-            if (numberOfRemainingTasks == 0)
+            while (factoryTasks.Count > 0)
             {
-                // Factory sequence is empty, can't connect to cache.
-                tcs.TrySetResult(null);
-                return tcs.Task;
-            }
+                Task<IClousotCache> factoryTask = 
+                    await Task.WhenAny(factoryTasks).ConfigureAwait(false);
 
-            // Need to materialize all factories first.
-            foreach (var factory in factories)
-            {
-                var task = factory.CreateAndCheckAsync(options);
-
-                task.ContinueWith(t =>
+                if (factoryTask.Status == TaskStatus.RanToCompletion && factoryTask.Result != null)
                 {
-                    var remainingTaskCount = Interlocked.Decrement(ref numberOfRemainingTasks);
-
-                    if (t.Status == TaskStatus.RanToCompletion)
+                    // Return the first result which completed successfully and provided a non-null cache
+                    return factoryTask.Result;
+                }
+                
+                if (factoryTask.Status == TaskStatus.Faulted)
+                {
+                    // Observing an exception to avoid TaskScheduler.TaskUnobservedException 
+                    // that could cause application crash based on app.config settings.
+                    var exception = factoryTask.Exception;
+                    if (trace)
                     {
-                        // CreateAndCheckAsync can return null. We should skip this result in this case!
-                        if (t.Result != null)
-                        {
-                            tcs.TrySetResult(t.Result);
-                        }
+                        Console.WriteLine("Failed to connect to cache. Error: " + exception);
                     }
-                    else if (t.Status == TaskStatus.Faulted)
-                    {
-                        //Observing an exception to avoid application crache.
-                        var exception = t.Exception;
-                        if (trace)
-                        {
-                            Console.WriteLine("Failed to connect to cache. Error: " + exception);
-                        }
-                    }
+                }
 
-                    // Don't need to handle (potential) cancelled state.
-
-                    // If remainingTaskCount is 0, then we were unable to connect to any cache!
-                    if (remainingTaskCount == 0)
-                    {
-                        // Always using "Try"-methods, because result could be already set by another task continuation handler
-                        tcs.TrySetResult(null);
-                    }
-                });
+                factoryTasks.Remove(factoryTask);
             }
 
-            // Resutling task should be finished by the first successful factory call.
-            return tcs.Task;
+            // No factory was able to create a cache.
+            return null;
         }
 
 #if false
