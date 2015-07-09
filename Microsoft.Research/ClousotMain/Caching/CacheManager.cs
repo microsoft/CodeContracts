@@ -187,6 +187,8 @@ namespace Microsoft.Research.CodeAnalysis
             List<Task<IClousotCache>> factoryTasks = 
                 factories.Select(factory => factory.CreateAndCheckAsync(options)).ToList();
 
+            ObservePotentialExceptions(factoryTasks);
+
             while (factoryTasks.Count > 0)
             {
                 Task<IClousotCache> factoryTask = 
@@ -198,22 +200,29 @@ namespace Microsoft.Research.CodeAnalysis
                     return factoryTask.Result;
                 }
                 
-                if (factoryTask.Status == TaskStatus.Faulted)
-                {
-                    // Observing an exception to avoid TaskScheduler.TaskUnobservedException 
-                    // that could cause application crash based on app.config settings.
-                    var exception = factoryTask.Exception;
-                    if (trace)
-                    {
-                        Console.WriteLine("Failed to connect to cache. Error: " + exception);
-                    }
-                }
-
                 factoryTasks.Remove(factoryTask);
             }
 
             // No factory was able to create a cache.
             return null;
+        }
+
+        /// <summary>
+        /// Method observes exceptions for all tasks to prevent TaskScheduler.UnobservedException
+        /// and potential escalation policy (that actually depends on the .NET Version and app.config settings).
+        /// </summary>
+        private void ObservePotentialExceptions(IEnumerable<Task> tasks)
+        {
+            foreach (var task in tasks)
+            {
+                // Using home-backed observation strategy.
+                // If needed method could be
+                task.ContinueWith(
+                    t =>
+                    {
+                        Exception ignored = t.Exception;
+                    }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnFaulted);
+            }
         }
 
 #if false
