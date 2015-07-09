@@ -124,6 +124,7 @@ namespace System.Windows.Controls
 
     protected virtual new void OnCleanUpVirtualizedItem(CleanUpVirtualizedItemEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnClearChildren()

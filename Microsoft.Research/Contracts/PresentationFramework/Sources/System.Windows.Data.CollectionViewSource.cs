@@ -15,6 +15,8 @@
 // File System.Windows.Data.CollectionViewSource.cs
 // Automatically generated contract file.
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Diagnostics.Contracts;
@@ -72,6 +74,7 @@ namespace System.Windows.Data
 
     protected virtual new bool ReceiveWeakEvent(Type managerType, Object sender, EventArgs e)
     {
+      Contract.Requires(e != null);
       return default(bool);
     }
 
@@ -116,6 +119,7 @@ namespace System.Windows.Data
     {
       get
       {
+        Contract.Ensures(Contract.Result<ObservableCollection<GroupDescription>>() != null);
         return default(System.Collections.ObjectModel.ObservableCollection<System.ComponentModel.GroupDescription>);
       }
     }
@@ -124,6 +128,7 @@ namespace System.Windows.Data
     {
       get
       {
+        Contract.Ensures(Contract.Result<SortDescriptionCollection>() != null);
         return default(System.ComponentModel.SortDescriptionCollection);
       }
     }

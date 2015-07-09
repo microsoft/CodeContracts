@@ -43,6 +43,7 @@ namespace System.Windows.Controls
     #region Methods and constructors
     protected virtual new UIElementCollection CreateUIElementCollection(System.Windows.FrameworkElement logicalParent)
     {
+      Contract.Ensures(Contract.Result<UIElementCollection>() != null);
       return default(UIElementCollection);
     }
 
@@ -106,9 +107,20 @@ namespace System.Windows.Controls
     {
       get
       {
+        Contract.Ensures(Contract.Result<UIElementCollection>() != null);
         return default(UIElementCollection);
       }
     }
+
+    protected internal UIElementCollection InternalChildren
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<UIElementCollection>() != null);
+        return default(UIElementCollection);
+      }
+    }
+
 
     internal protected virtual new bool HasLogicalOrientation
     {

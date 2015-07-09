@@ -57,6 +57,7 @@ namespace System.Web.UI.WebControls
 
     protected virtual new void OnDataBound (EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnDataPropertyChanged ()
@@ -69,6 +70,7 @@ namespace System.Web.UI.WebControls
 
     protected virtual new void OnPagePreLoad (Object sender, EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected internal override void OnPreRender (EventArgs e)

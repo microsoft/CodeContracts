@@ -162,6 +162,26 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
+
+#if NETFRAMEWORK_4_0 || NETFRAMEWORK_4_5
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Concat(IEnumerable<string> args)
+    {
+      Contract.Ensures(Contract.Result<String>() != null);
+      return default(String);
+    }
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Concat<T>(IEnumerable<T> args)
+    {
+      Contract.Ensures(Contract.Result<String>() != null);
+      return default(String);
+    }
+#endif
+
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Copy(String str)
@@ -1198,6 +1218,17 @@ namespace System
     }
 
 #if NETFRAMEWORK_4_0 || NETFRAMEWORK_4_5
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Join(String separator, Object[] value)
+    {
+        Contract.Requires(value != null);
+        Contract.Ensures(Contract.Result<string>() != null);
+
+        return default(String);
+    }
+
     [Pure]
     public static string Join(string separator, IEnumerable<string> values)
     {

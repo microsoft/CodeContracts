@@ -329,7 +329,20 @@ namespace System.Data
     //     otherwise a null value if no System.Data.DataRow objects exist.
     //[Browsable(false)]
     //[ResDescription("DataTableRowsDescr")]
-    //public DataRowCollection Rows { get; }
+    public DataRowCollection Rows
+    {
+        get
+        {
+            // Here the documentation is definitely wrong!
+            //
+            // internal readonly DataRowCollection rowCollection;
+            //
+            // return this.rowCollection;
+
+            Contract.Ensures(Contract.Result<DataRowCollection>() != null);
+            return null;
+        }
+    }
     //
     // Summary:
     //     Gets or sets an System.ComponentModel.ISite for the System.Data.DataTable.

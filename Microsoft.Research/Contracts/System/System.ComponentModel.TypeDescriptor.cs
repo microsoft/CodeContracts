@@ -589,6 +589,7 @@ namespace System.ComponentModel
     public static TypeConverter GetConverter(object component)
     {
       Contract.Requires(component != null);
+      Contract.Ensures(Contract.Result<TypeConverter>() != null);
 
       return default(TypeConverter);
     }
@@ -609,6 +610,7 @@ namespace System.ComponentModel
     public static TypeConverter GetConverter(Type type)
     {
       Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<TypeConverter>() != null);
 
       return default(TypeConverter);
     }
@@ -638,6 +640,7 @@ namespace System.ComponentModel
     public static TypeConverter GetConverter(object component, bool noCustomTypeDesc)
     {
       Contract.Requires(component != null);
+      Contract.Ensures(Contract.Result<TypeConverter>() != null);
 
       return default(TypeConverter);
     }

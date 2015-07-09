@@ -109,7 +109,7 @@ namespace System.Windows
     public object GetValue(DependencyProperty dp)
     {
       Contract.Requires(dp != null);
-      Contract.Ensures(Contract.Result<object>() != null);
+      // May return null if property type is not a value type!
 
       return null;
     }
