@@ -182,7 +182,6 @@ namespace System.ComponentModel
 
       return default(object);
     }
-#endif
     //
     // Summary:
     //     Compares this to another object to see if they are equivalent.
@@ -333,9 +332,11 @@ namespace System.ComponentModel
     //
     //   e:
     //     An System.EventArgs that contains the event data.
-    //protected virtual void OnValueChanged(object component, EventArgs e);
+    protected virtual void OnValueChanged(object component, EventArgs e)
+    {
+      Contract.Requires(e != null);
+    }
 
-#if !SILVERLIGHT
     //
     // Summary:
     //     Enables other objects to be notified when this property changes.

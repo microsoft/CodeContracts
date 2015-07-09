@@ -252,6 +252,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IEnumerable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<TSource>>().Any());
       return default(IEnumerable<TSource>);
     }
 
@@ -279,6 +280,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IEnumerable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<TSource>>().Any());
       return default(IEnumerable<TSource>);
     }
     //

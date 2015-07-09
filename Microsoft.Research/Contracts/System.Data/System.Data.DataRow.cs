@@ -98,7 +98,14 @@ namespace System.Data
     //
     // Returns:
     //     The System.Data.DataTable to which this row belongs.
-    //public DataTable Table { get; }
+    public DataTable Table
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<DataTable>() != null);
+        return null;
+      }
+    }
 
     // Summary:
     //     Gets or sets the data stored in the specified System.Data.DataColumn.

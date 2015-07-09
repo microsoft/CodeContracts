@@ -170,6 +170,7 @@ namespace System.Globalization
       }
     }
 
+#if !SILVERLIGHT
     public string DateSeparator
     {
       get
@@ -183,6 +184,7 @@ namespace System.Globalization
         Contract.Requires(value != null);
       }
     }
+#endif
 
     public string FullDateTimePattern
     {
@@ -198,6 +200,7 @@ namespace System.Globalization
       }
     }
 
+#if !SILVERLIGHT
     public string TimeSeparator
     {
       get
@@ -211,13 +214,13 @@ namespace System.Globalization
         Contract.Requires(value != null);
       }
     }
-
+#endif
     public Calendar Calendar
     {
       get
       {
         Contract.Ensures(Contract.Result<Calendar>() != null);
-        return default(string);
+        return default(Calendar);
       }
 
       set
@@ -334,16 +337,20 @@ namespace System.Globalization
 
       return default(string);
     }
+
+#if !SILVERLIGHT
     public String[] GetAllDateTimePatterns(Char format)
     {
-
+      Contract.Ensures(Contract.Result<String[]>() != null);
       return default(String[]);
     }
     public String[] GetAllDateTimePatterns()
     {
-
+      Contract.Ensures(Contract.Result<String[]>() != null);
       return default(String[]);
     }
+#endif
+
     public string GetAbbreviatedDayName(DayOfWeek dayofweek)
     {
       Contract.Requires((int)dayofweek >= 0);
@@ -369,24 +376,20 @@ namespace System.Globalization
 
       return default(int);
     }
-    public object Clone()
+    public virtual object Clone()
     {
 
       return default(object);
     }
-    public object GetFormat(Type formatType)
+    public virtual object GetFormat(Type formatType)
     {
 
       return default(object);
     }
     public static DateTimeFormatInfo GetInstance(IFormatProvider provider)
     {
-
-      return default(DateTimeFormatInfo);
-    }
-    public DateTimeFormatInfo()
-    {
-      return default(DateTimeFormatInfo);
+        Contract.Ensures(Contract.Result<DateTimeFormatInfo>() != null);
+        return default(DateTimeFormatInfo);
     }
   }
 }

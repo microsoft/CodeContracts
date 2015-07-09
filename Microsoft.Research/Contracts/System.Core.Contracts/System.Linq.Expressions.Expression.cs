@@ -5566,8 +5566,14 @@ namespace System.Linq.Expressions
   {
     private Expression() { }
 
-    // public TDelegate Compile();
-  }
+#if !SILVERLIGHT
+    public TDelegate Compile()
+    {
+      Contract.Ensures(!ReferenceEquals(Contract.Result<TDelegate>(), null));
+      return default(TDelegate);
+    }
+#endif
 
+  }
 
 }

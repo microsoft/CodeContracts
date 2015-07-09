@@ -22,7 +22,15 @@ namespace System.Windows.Threading
   {
     protected DispatcherObject() { }
 
-    public Dispatcher Dispatcher { get { Contract.Ensures(Contract.Result<Dispatcher>() != null); return null; } }
+    public Dispatcher Dispatcher
+    {
+      get
+      {
+        // Note: a DispatcherObject that is not associated with a
+        // dispatcher is considered to be free-threaded and will return null.
+        return null;
+      }
+    }
 
     extern public bool CheckAccess();
 

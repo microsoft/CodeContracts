@@ -169,7 +169,17 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to get or set the property, when the property is not
     //     overridden in a descendant class.
-    // public virtual WebHeaderCollection Headers { get; set; }
+    public virtual WebHeaderCollection Headers
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<WebHeaderCollection>() != null);
+        return null;
+      }
+      set
+      {
+      }
+    }
 
     //
     // Summary:
@@ -190,7 +200,18 @@ namespace System.Net
     //   System.NotImplementedException:
     //     If the property is not overridden in a descendant class, any attempt is made
     //     to get or set the property.
-    extern public virtual string Method { get; set; }
+    public virtual string Method
+    {
+      get
+      {
+        Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
+        return null;
+      }
+      set
+      {
+        Contract.Requires(!String.IsNullOrEmpty(value));
+      }
+    }
     //
     // Summary:
     //     When overridden in a descendant class, indicates whether to pre-authenticate
@@ -220,7 +241,7 @@ namespace System.Net
     {
       get
       {
-        Contract.Ensures(Contract.Result<IWebProxy>() != null);
+        // default is not null, but it's possible to set proxy to null.
         return default(IWebProxy);
       }
       set
@@ -297,7 +318,11 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual IAsyncResult BeginGetRequestStream(AsyncCallback callback, object state);
+    public virtual IAsyncResult BeginGetRequestStream(AsyncCallback callback, object state)
+    {
+      Contract.Ensures(Contract.Result<IAsyncResult>() != null);
+      return null;
+    }
     //
     // Summary:
     //     When overridden in a descendant class, begins an asynchronous request for
@@ -317,7 +342,11 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual IAsyncResult BeginGetResponse(AsyncCallback callback, object state);
+    public virtual IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
+    {
+      Contract.Ensures(Contract.Result<IAsyncResult>() != null);
+      return null;
+    }
     //
     // Summary:
     //     Initializes a new System.Net.WebRequest instance for the specified URI scheme.
@@ -345,6 +374,7 @@ namespace System.Net
     public static WebRequest Create(string requestUriString)
     {
       Contract.Requires(requestUriString != null);
+      Contract.Ensures(Contract.Result<WebRequest>() != null);
 
       return default(WebRequest);
     }
@@ -372,6 +402,7 @@ namespace System.Net
     public static WebRequest Create(Uri requestUri)
     {
       Contract.Requires(requestUri != null);
+      Contract.Ensures(Contract.Result<WebRequest>() != null);
 
       return default(WebRequest);
     }
@@ -399,6 +430,7 @@ namespace System.Net
     public static WebRequest CreateDefault(Uri requestUri)
     {
       Contract.Requires(requestUri != null);
+      Contract.Ensures(Contract.Result<WebRequest>() != null);
 
       return default(WebRequest);
     }
@@ -418,7 +450,12 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual Stream EndGetRequestStream(IAsyncResult asyncResult);
+    public virtual Stream EndGetRequestStream(IAsyncResult asyncResult)
+    {
+      Contract.Requires(asyncResult != null);
+      Contract.Ensures(Contract.Result<Stream>() != null);
+      return null;
+    }
     //
     // Summary:
     //     When overridden in a descendant class, returns a System.Net.WebResponse.
@@ -434,7 +471,12 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual WebResponse EndGetResponse(IAsyncResult asyncResult);
+    public virtual WebResponse EndGetResponse(IAsyncResult asyncResult)
+    {
+      Contract.Requires(asyncResult != null);
+      Contract.Ensures(Contract.Result<WebResponse>() != null);
+      return null;
+    }
     //
     // Summary:
     //     Populates a System.Runtime.Serialization.SerializationInfo with the data
@@ -460,7 +502,11 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual Stream GetRequestStream();
+    public virtual Stream GetRequestStream()
+    {
+      Contract.Ensures(Contract.Result<Stream>() != null);
+      return null;
+    }
     //
     // Summary:
     //     When overridden in a descendant class, returns a response to an Internet
@@ -473,7 +519,11 @@ namespace System.Net
     //   System.NotImplementedException:
     //     Any attempt is made to access the method, when the method is not overridden
     //     in a descendant class.
-    //public virtual WebResponse GetResponse();
+    public virtual WebResponse GetResponse()
+    {
+      Contract.Ensures(Contract.Result<WebResponse>() != null);
+      return null;
+    }
     //
     // Summary:
     //     Returns a proxy configured with the Internet Explorer settings of the currently

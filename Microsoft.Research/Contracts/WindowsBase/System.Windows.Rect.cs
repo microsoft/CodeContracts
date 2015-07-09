@@ -94,8 +94,8 @@ namespace System.Windows
     //     The height of the rectangle.
     public Rect(double x, double y, double width, double height)
     {
-      Contract.Requires(width >= 0.0);
-      Contract.Requires(height >= 0.0);
+      Contract.Requires((width >= 0.0) || double.IsNaN(width) || double.IsPositiveInfinity(width));
+      Contract.Requires((height >= 0.0) || double.IsNaN(height) || double.IsPositiveInfinity(height));
 
       Contract.Ensures(Contract.ValueAtReturn(out this).X == x);
       Contract.Ensures(Contract.ValueAtReturn(out this).Y == y);
@@ -209,16 +209,16 @@ namespace System.Windows
     {
       get
       {
-        Contract.Ensures(this.IsEmpty || Contract.Result<double>() >= 0.0 || Double.IsNaN(Contract.Result<double>()));
+        Contract.Ensures(this.IsEmpty || Contract.Result<double>() >= 0.0 || Double.IsNaN(Contract.Result<double>()) || Double.IsPositiveInfinity(Contract.Result<double>()));
 
         return default(double);
       }
       set
       {
         // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
-        Contract.Requires(value >= 0.0 || Double.IsNaN(value));
+        Contract.Requires((value >= 0.0) || Double.IsNaN(value) || Double.IsPositiveInfinity(value));
 
-        Contract.Ensures(this.Height == value || Double.IsNaN(value));
+        Contract.Ensures(this.Height == value);
       }
     }
     
@@ -334,16 +334,16 @@ namespace System.Windows
     {
       get
       {
-        Contract.Ensures(this.IsEmpty || Contract.Result<double>() >= 0.0 || Double.IsNaN(Contract.Result<double>()));
+        Contract.Ensures(this.IsEmpty || Contract.Result<double>() >= 0.0 || Double.IsNaN(Contract.Result<double>()) || Double.IsPositiveInfinity(Contract.Result<double>()));
 
         return default(double);
       }
       set
       {
         // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
-        Contract.Requires(value >= 0.0 || Double.IsNaN(value));
+        Contract.Requires(value >= 0.0 || Double.IsNaN(value) || Double.IsPositiveInfinity(value));
 
-        Contract.Ensures(this.Width == value || Double.IsNaN(value));
+        Contract.Ensures(this.Width == value);
       }
     }
     //
@@ -364,7 +364,7 @@ namespace System.Windows
       {
         // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
-        Contract.Ensures(this.X == value || Double.IsNaN(value));
+        Contract.Ensures(this.X == value);
       }
     }
     //
@@ -385,7 +385,7 @@ namespace System.Windows
       {
         // Contract.Requires(!this.IsEmpty); => Is true, but impossible to proof with acceptable effort.
 
-        Contract.Ensures(this.Y == value || Double.IsNaN(value));
+        Contract.Ensures(this.Y == value);
       }
     }
     // Summary:

@@ -59,6 +59,7 @@ namespace System.Windows.Controls
 
     protected virtual new void OnItemsChanged(Object sender, System.Windows.Controls.Primitives.ItemsChangedEventArgs args)
     {
+      Contract.Requires(args != null);
     }
 
     protected void RemoveInternalChildRange(int index, int range)

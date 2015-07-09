@@ -19,6 +19,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics.Contracts;
 using System;
+using System.Windows.Input;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -767,6 +768,7 @@ namespace System.Windows
     {
       get
       {
+        Contract.Ensures(Contract.Result<CommandBindingCollection>() != null);
         return default(System.Windows.Input.CommandBindingCollection);
       }
     }
@@ -775,6 +777,7 @@ namespace System.Windows
     {
       get
       {
+        Contract.Ensures(!Contract.Result<Size>().IsEmpty);
         return default(Size);
       }
     }
@@ -813,6 +816,7 @@ namespace System.Windows
     {
       get
       {
+        Contract.Ensures(Contract.Result<InputBindingCollection>() != null);
         return default(System.Windows.Input.InputBindingCollection);
       }
     }
