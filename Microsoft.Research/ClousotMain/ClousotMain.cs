@@ -286,6 +286,11 @@ namespace Microsoft.Research.CodeAnalysis
         BoxedExpression.ConstFalse = BoxedExpression.ConstBool(false, mdDecoder);
         BoxedExpression.ConstTrue = BoxedExpression.ConstBool(true, mdDecoder);
 
+        // Setting min connection pool size for local db allows to check connections
+        // concurrently. This value should be the same (or at least comparable with) 
+        // as a number of records in the cacheAccessorFactories variable.
+        const int MinLocalConnectionPoolSize = 2;
+
         var cacheInitTime = new TimeSpan(0);
         if (options.NeedCache)
         {
@@ -296,9 +301,11 @@ namespace Microsoft.Research.CodeAnalysis
             if (!options.forceCacheServer)
             {
               cacheAccessorFactories = new IClousotCacheFactory[]{
-                new SQLClousotCacheFactory(options.CacheServer) ,
-                  //new SQLClousotCacheFactory(@"localhost\sqlexpress", true),
-                new LocalDbClousotCacheFactory(),
+                new SQLClousotCacheFactory(options.CacheServer),
+                // Looking for MSSQLLocalDB first and falling back to older (v11.0) version otherwise.
+                new LocalDbClousotCacheFactory(@"(LocalDb)\MSSQLLocalDB", MinLocalConnectionPoolSize),
+                new LocalDbClousotCacheFactory(@"(LocalDb)\v11.0", MinLocalConnectionPoolSize),
+                //new SQLClousotCacheFactory(@"localhost\sqlexpress", true),
               };
             }
             else
