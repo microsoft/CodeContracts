@@ -278,14 +278,16 @@
          PropertyName="CodeContractsSdkPath" />
     </GetFrameworkSdkPath>
     <PropertyGroup>
-      <CodeContractsSnExe>"$(CodeContractsSdkPath)Bin\NETFX 4.5.1 Tools\sn.exe"</CodeContractsSnExe>
+      <!-- SN is in the Framework SDK tools path, but TargetFrameworkSDKToolsDirectory isn't always available  -->
+      <CodeContractsSnExe Condition=" '$(TargetFrameworkSDKToolsDirectory)' != '' ">$(TargetFrameworkSDKToolsDirectory)sn.exe</CodeContractsSnExe>
+      <CodeContractsSnExe Condition=" '$(TargetFrameworkSDKToolsDirectory)' == '' ">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\sn.exe</CodeContractsSnExe>
     </PropertyGroup>
     <Exec
        Condition="'$(KeyOriginatorFile)' != ''"   
-       Command='$(CodeContractsSnExe) /R "@(IntermediateAssembly)" "$(KeyOriginatorFile)"' />
+       Command='&quot;$(CodeContractsSnExe)&quot; /R "@(IntermediateAssembly)" "$(KeyOriginatorFile)"' />
     <Exec
        Condition="'$(KeyContainerName)' != ''"   
-       Command='$(CodeContractsSnExe) /Rc "@(IntermediateAssembly)" "$(KeyContainerName)"' />
+       Command='&quot;$(CodeContractsSnExe)&quot; /Rc "@(IntermediateAssembly)" "$(KeyContainerName)"' />
   </Target>
   
   <Target
