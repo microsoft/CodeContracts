@@ -47,6 +47,7 @@ namespace System.Windows.Data
 
     protected virtual new void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
     {
+        Contract.Requires(e != null);
     }
     #endregion
 

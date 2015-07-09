@@ -16,6 +16,7 @@
 using System;
 using System.Runtime;
 using System.Diagnostics.Contracts;
+using System.Collections.Specialized;
 
 namespace System.Diagnostics
 {
@@ -35,7 +36,7 @@ namespace System.Diagnostics
 
     }
 
-    /*
+
     public StringDictionary Attributes
     {
       get
@@ -55,7 +56,7 @@ namespace System.Diagnostics
         return null;
       }
     }
-    */
+
 
     public string Name { get { Contract.Ensures(Contract.Result<string>() != null); return null; } }
     

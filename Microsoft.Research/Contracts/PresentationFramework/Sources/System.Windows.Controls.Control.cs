@@ -57,10 +57,12 @@ namespace System.Windows.Controls
 
     protected virtual new void OnMouseDoubleClick(System.Windows.Input.MouseButtonEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnPreviewMouseDoubleClick(System.Windows.Input.MouseButtonEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)

@@ -189,6 +189,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="System.ComponentModel.GroupDescription.cs" />
+    <Compile Include="System.ComponentModel.ICollectionView.cs" />
+    <Compile Include="System.ComponentModel.SortDescriptionCollection.cs" />
     <Compile Include="System.Windows.DependencyObject.cs" />
     <Compile Include="System.Windows.DependencyProperty.cs" />
     <Compile Include="System.Windows.Freezable.cs" />

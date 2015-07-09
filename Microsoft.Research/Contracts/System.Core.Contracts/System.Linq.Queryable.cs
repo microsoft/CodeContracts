@@ -926,6 +926,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IQueryable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IQueryable<TSource>>().Any());
       return default(IQueryable<TSource>);
     }
     //
@@ -956,6 +957,7 @@ namespace System.Linq
     {
       Contract.Requires(source != null);
       Contract.Ensures(Contract.Result<IQueryable<TSource>>() != null);
+      Contract.Ensures(Contract.Result<IQueryable<TSource>>().Any());
       return default(IQueryable<TSource>);
     }
     //

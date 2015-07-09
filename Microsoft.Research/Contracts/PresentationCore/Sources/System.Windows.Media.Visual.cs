@@ -19,6 +19,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics.Contracts;
 using System;
+using System.Windows.Media.Media3D;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -104,21 +105,25 @@ namespace System.Windows.Media
 
     public GeneralTransform TransformToAncestor(System.Windows.Media.Visual ancestor)
     {
+      Contract.Ensures(Contract.Result<GeneralTransform>() != null);
       return default(GeneralTransform);
     }
 
     public System.Windows.Media.Media3D.GeneralTransform2DTo3D TransformToAncestor(System.Windows.Media.Media3D.Visual3D ancestor)
     {
+      Contract.Ensures(Contract.Result<GeneralTransform2DTo3D>() != null);
       return default(System.Windows.Media.Media3D.GeneralTransform2DTo3D);
     }
 
     public GeneralTransform TransformToDescendant(System.Windows.Media.Visual descendant)
     {
+      Contract.Ensures(Contract.Result<GeneralTransform>() != null);
       return default(GeneralTransform);
     }
 
     public GeneralTransform TransformToVisual(System.Windows.Media.Visual visual)
     {
+      Contract.Ensures(Contract.Result<GeneralTransform>() != null);
       return default(GeneralTransform);
     }
 

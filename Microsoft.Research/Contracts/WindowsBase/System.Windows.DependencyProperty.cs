@@ -70,14 +70,28 @@ namespace System.Windows
     // Returns:
     //     The type of the object that registered the property or added itself as owner
     //     of the property.
-    extern public Type OwnerType { get; }
+    public Type OwnerType
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<Type>() != null);
+        return null;
+      }
+    }
     //
     // Summary:
     //     Gets the type that the dependency property uses for its value.
     //
     // Returns:
     //     The System.Type of the property value.
-    extern public Type PropertyType { get; }
+    public Type PropertyType
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<Type>() != null);
+        return null;
+      }
+    }
     //
     // Summary:
     //     Gets a value that indicates whether the dependency property identified by

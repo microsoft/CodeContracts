@@ -1,3 +1,5 @@
+﻿
+
 // CodeContracts
 // 
 // Copyright (c) Microsoft Corporation
@@ -12,33 +14,23 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
 using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices;
+using System;
 
-namespace System.Globalization {
-  // Summary:
-  //     Defines different rules for determining the first week of the year.
-  public enum CalendarWeekRule {
-    // Summary:
-    //     Indicates that the first week of the year starts on the first day of the
-    //     year and ends before the following designated first day of the week. The
-    //     value is 0.
-    FirstDay = 0,
-    //
-    // Summary:
-    //     Indicates that the first week of the year begins on the first occurrence
-    //     of the designated first day of the week on or after the first day of the
-    //     year. The value is 1.
-    FirstFullWeek = 1,
-    //
-    // Summary:
-    //     Indicates that the first week of the year is the first week with four or
-    //     more days before the designated first day of the week. The value is 2.
-    FirstFourDayWeek = 2,
-  }
+namespace System.Diagnostics
+{
+#if !SILVERLIGHT
+    public sealed class FileVersionInfo
+    {
+        private FileVersionInfo()
+        {
+        }
+
+        public static FileVersionInfo GetVersionInfo(string fileName)
+        {
+            Contract.Ensures(Contract.Result<FileVersionInfo>() != null);
+            return null;
+        }
+    }
+#endif
 }
-

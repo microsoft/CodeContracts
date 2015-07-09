@@ -112,10 +112,12 @@ namespace System.Windows.Data
 
     protected virtual new void OnBeginChangeLogging(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
     {
+      Contract.Requires(args != null);
     }
 
     protected virtual new void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
     {
+      Contract.Requires(args != null);
     }
 
     protected void OnCollectionChanged(Object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
@@ -128,6 +130,7 @@ namespace System.Windows.Data
 
     protected virtual new void OnCurrentChanging(System.ComponentModel.CurrentChangingEventArgs args)
     {
+      Contract.Requires(args != null);
     }
 
     protected void OnCurrentChanging()
@@ -136,6 +139,7 @@ namespace System.Windows.Data
 
     protected virtual new void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     public virtual new bool PassesFilter(Object item)

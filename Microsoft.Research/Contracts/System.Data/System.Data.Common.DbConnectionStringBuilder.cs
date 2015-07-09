@@ -45,7 +45,14 @@ namespace System.Data.Common
     extern public virtual bool IsFixedSize { get; }
     extern public virtual bool IsReadOnly { get; }
 
-     // Exceptions:
+
+    // Property Value
+    //  The value associated with the specified key. If the specified key is not found,
+    //  trying to get it returns a null reference (Nothing in Visual Basic), and trying to set it creates a new element using the specified key.
+    //  Passing a null (Nothing in Visual Basic) key throws an ArgumentNullException.
+    //  Assigning a null value removes the key/value pair.
+    //
+    // Exceptions:
     //   System.ArgumentNullException:
     //     keyword is a null reference (Nothing in Visual Basic).
     //
@@ -57,13 +64,11 @@ namespace System.Data.Common
     {
       get
       {
-        Contract.Ensures(Contract.Result<object>() != null);
         return null;
       }
-
       set
       {
-        Contract.Requires(value != null);
+        Contract.Requires(keyword != null);
       }
     }
 
@@ -110,11 +115,18 @@ namespace System.Data.Common
     [Pure]
     protected virtual void GetProperties(Hashtable propertyDescriptors) { }
 
-    [Pure]
-    public virtual bool Remove(string keyword) { return false; }
+    public virtual bool Remove(string keyword)
+    {
+      Contract.Requires(keyword != null);
+      return false;
+    }
 
     [Pure]
-    public virtual bool ShouldSerialize(string keyword) { return false; }
+    public virtual bool ShouldSerialize(string keyword)
+    {
+      Contract.Requires(keyword != null);
+      return false;
+    }
 
     [Pure]
     public virtual bool TryGetValue(string keyword, out object value)

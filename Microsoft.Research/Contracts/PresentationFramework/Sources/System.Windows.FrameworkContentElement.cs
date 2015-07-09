@@ -102,10 +102,12 @@ namespace System.Windows
 
     protected virtual new void OnContextMenuClosing(System.Windows.Controls.ContextMenuEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnContextMenuOpening(System.Windows.Controls.ContextMenuEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnGotFocus(RoutedEventArgs e)
@@ -114,6 +116,7 @@ namespace System.Windows
 
     protected virtual new void OnInitialized(EventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -126,10 +129,12 @@ namespace System.Windows
 
     protected virtual new void OnToolTipClosing(System.Windows.Controls.ToolTipEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     protected virtual new void OnToolTipOpening(System.Windows.Controls.ToolTipEventArgs e)
     {
+      Contract.Requires(e != null);
     }
 
     public sealed override DependencyObject PredictFocus(System.Windows.Input.FocusNavigationDirection direction)

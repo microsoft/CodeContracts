@@ -174,8 +174,7 @@ namespace System.Windows
     {
       get
       {
-        Contract.Ensures(Contract.Result<System.Windows.Application>() != null);
-
+        // May return null if called from non-WPF application (e.g. WinForms app with embedded WPF controls).
         return default(System.Windows.Application);
       }
     }

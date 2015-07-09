@@ -285,6 +285,9 @@
       <Name>PreContractsBuildDummy</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="System.Data.DataRowCollection.cs" />
+  </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
   </PropertyGroup>
