@@ -642,13 +642,21 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 
   public class SQLClousotCacheFactory : IClousotCacheFactory
   {
+    public const int DefaultMinPoolSize = 0;
+
+    /// <summary>
+    /// Specifying MinPoolSize increases degree of parallelism for concurrent connections to the sql database.
+    /// With default value (that is 0) there is no way to connect to different local db instances simultaneously.
+    /// </summary>
+    readonly protected int minPoolSize;
     readonly protected string DbName;
     readonly protected bool deleteOnModelChange;
 
-    public SQLClousotCacheFactory(string DbName, bool deleteOnModelChange = false)
+    public SQLClousotCacheFactory(string DbName, bool deleteOnModelChange = false, int minPoolSize = DefaultMinPoolSize)
     {
       this.deleteOnModelChange = deleteOnModelChange;
       this.DbName = DbName;
+      this.minPoolSize = minPoolSize;
     }
 
     public virtual IClousotCache Create(IClousotCacheOptions options)
@@ -695,14 +703,19 @@ namespace Microsoft.Research.CodeAnalysis.Caching
         UserInstance = false,
         MultipleActiveResultSets = true,
         ConnectTimeout = options.CacheServerTimeout,
+        MinPoolSize = minPoolSize,
       };
     }
   }
 
   public class LocalDbClousotCacheFactory : SQLClousotCacheFactory
   {
-    public LocalDbClousotCacheFactory(string dbName)
-      : base(dbName, true)
+    public LocalDbClousotCacheFactory(int minPoolSize = DefaultMinPoolSize)
+        : this(@"(LocalDb)\MSSQLLocalDB", minPoolSize)
+    {}
+
+    public LocalDbClousotCacheFactory(string dbName, int minPoolSize = DefaultMinPoolSize)
+        : base(dbName, true, minPoolSize)
     {}
 
     protected override SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
@@ -718,6 +731,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
           UserInstance = false,
           MultipleActiveResultSets = true,
           ConnectTimeout = options.CacheServerTimeout,
+          MinPoolSize = minPoolSize,
           AttachDBFilename = Path.Combine(options.CacheDirectory.AssumeNotNull(), name + ".mdf")
         };
       }
