@@ -235,7 +235,13 @@
        Query="//vsx:Metadata/vsx:Identity/@Version"
        Value="$(CCNetLabel)"
        XmlInputPath="VSIX\VS12.extension.vsixmanifest" />
-	  
+
+    <XmlPoke
+       Namespaces="$(Vsix20Namespace)"
+       Query="//vsx:Metadata/vsx:Identity/@Version"
+       Value="$(CCNetLabel)"
+       XmlInputPath="VSIX\VS14.extension.vsixmanifest" />
+
   </Target>
 
   <!--==========================================================
