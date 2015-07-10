@@ -1,27 +1,9 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// ==++==
-// 
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-// ==--==
 /*============================================================
 **
-** Class:  Contract
 ** 
-** <OWNER>briangru,mbarnett</OWNER>
 **
 ** Purpose: The contract class allows for expressing preconditions,
 ** postconditions, and object invariants about methods in source
@@ -60,8 +42,8 @@ using System.Security;
 using System.Security.Permissions;
 #endif
 
-namespace System.Diagnostics.Contracts {
-
+namespace System.Diagnostics.Contracts
+{
     #region Attributes
 
     /// <summary>
@@ -88,7 +70,8 @@ namespace System.Diagnostics.Contracts {
             _typeWithContracts = typeContainingContracts;
         }
 
-        public Type TypeContainingContracts {
+        public Type TypeContainingContracts
+        {
             get { return _typeWithContracts; }
         }
     }
@@ -107,7 +90,8 @@ namespace System.Diagnostics.Contracts {
             _typeIAmAContractFor = typeContractsAreFor;
         }
 
-        public Type TypeContractsAreFor {
+        public Type TypeContractsAreFor
+        {
             get { return _typeIAmAContractFor; }
         }
     }
@@ -160,7 +144,7 @@ namespace System.Diagnostics.Contracts {
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
     [SuppressMessage("Microsoft.Design", "CA1019:DefineAccessorsForAttributeArguments", Justification = "Thank you very much, but we like the names we've defined for the accessors")]
-    internal sealed class MutabilityAttribute : Attribute 
+    internal sealed class MutabilityAttribute : Attribute
     {
         private Mutability _mutabilityMarker;
 
@@ -169,7 +153,8 @@ namespace System.Diagnostics.Contracts {
             _mutabilityMarker = mutabilityMarker;
         }
 
-        public Mutability Mutability {
+        public Mutability Mutability
+        {
             get { return _mutabilityMarker; }
         }
     }
@@ -185,14 +170,15 @@ namespace System.Diagnostics.Contracts {
     /// Apply this attribute to a property to apply to both the getter and setter.
     /// </remarks>
     [Conditional("CONTRACTS_FULL")]
-    [AttributeUsage(AttributeTargets.All, AllowMultiple=true, Inherited=false)]
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
     public sealed class ContractVerificationAttribute : Attribute
     {
         private string _value;
 
         public ContractVerificationAttribute(string value) { _value = value; }
 
-        public string Value {
+        public string Value
+        {
             get { return _value; }
         }
 
@@ -215,7 +201,8 @@ namespace System.Diagnostics.Contracts {
             _publicName = name;
         }
 
-        public String Name {
+        public String Name
+        {
             get { return _publicName; }
         }
     }
@@ -253,7 +240,8 @@ namespace System.Diagnostics.Contracts {
 #endif
         public static void Assume(bool condition)
         {
-            if (!condition) {
+            if (!condition)
+            {
                 ReportFailure(ContractFailureKind.Assume, null, null, null);
             }
         }
@@ -274,7 +262,8 @@ namespace System.Diagnostics.Contracts {
 #endif
         public static void Assume(bool condition, String userMessage)
         {
-            if (!condition) {
+            if (!condition)
+            {
                 ReportFailure(ContractFailureKind.Assume, userMessage, null, null);
             }
         }
@@ -720,7 +709,7 @@ namespace System.Diagnostics.Contracts {
         /// The runtime value is 2^64 - 1 or 2^32 - 1.
         /// </summary>
         [SuppressMessage("Microsoft.Performance", "CA1802", Justification = "FxCop is confused")]
-        static readonly ulong MaxWritableExtent = (UIntPtr.Size == 4) ? UInt32.MaxValue : UInt64.MaxValue;
+        private static readonly ulong MaxWritableExtent = (UIntPtr.Size == 4) ? UInt32.MaxValue : UInt64.MaxValue;
 
         /// <summary>
         /// Allows specifying a writable extent for a UIntPtr, similar to SAL's writable extent.
@@ -751,7 +740,7 @@ namespace System.Diagnostics.Contracts {
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
         public static ulong WritableBytes(IntPtr startAddress) { return MaxWritableExtent - (ulong)startAddress; }
-        
+
         /// <summary>
         /// Allows specifying a writable extent for a UIntPtr, similar to SAL's writable extent.
         /// NOTE: this is for static checking only. No useful runtime code can be generated for this
@@ -851,7 +840,8 @@ namespace System.Diagnostics.Contracts {
         #endregion
     }
 
-    public enum ContractFailureKind {
+    public enum ContractFailureKind
+    {
         Precondition,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Postcondition")]
         Postcondition,
@@ -861,8 +851,6 @@ namespace System.Diagnostics.Contracts {
         Assert,
         Assume,
     }
-
-
 }
 
 
