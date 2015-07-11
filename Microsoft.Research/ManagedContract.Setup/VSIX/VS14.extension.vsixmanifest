@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Version="1.9.10709.0" Id="CodeContractsVSIX.MicrosoftResearch.990ACB05-1AAE-4fa6-A178-9BF28206012F" Language="en" Publisher="Microsoft Research" />
+    <Identity Version="1.9.10710.1" Id="CodeContractsVSIX.MicrosoftResearch.990ACB05-1AAE-4fa6-A178-9BF28206012F" Language="en" Publisher="Microsoft Research" />
     <DisplayName>Code Contracts Tools</DisplayName>
     <Description xml:space="preserve">Tools to instrument and statically analyze .NET code with CodeContracts</Description>
     <MoreInfo>http://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970</MoreInfo>
