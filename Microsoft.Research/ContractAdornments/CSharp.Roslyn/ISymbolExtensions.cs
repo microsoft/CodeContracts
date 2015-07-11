@@ -54,6 +54,9 @@ namespace ContractAdornments
             if (namedTypeSymbol == null)
                 return default(ImmutableArray<ITypeSymbol>);
 
+            if (namedTypeSymbol.Equals(namedTypeSymbol.OriginalDefinition))
+                return ImmutableArray<ITypeSymbol>.Empty;
+
             return namedTypeSymbol.TypeArguments;
         }
 
