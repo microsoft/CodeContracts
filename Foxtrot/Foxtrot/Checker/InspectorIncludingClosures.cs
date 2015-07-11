@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -22,14 +11,14 @@ namespace Microsoft.Contracts.Foxtrot
     [ContractVerification(true)]
     internal class InspectorIncludingClosures : Inspector
     {
-        private Method currentMethod;
+        private Method _currentMethod;
 
         protected Method CurrentMethod
         {
-            get { return this.currentMethod; }
+            get { return _currentMethod; }
             set
             {
-                this.currentMethod = value;
+                _currentMethod = value;
                 if (value != null)
                 {
                     this.CurrentType = value.DeclaringType;
@@ -70,36 +59,36 @@ namespace Microsoft.Contracts.Foxtrot
 
                 MemberBinding mb = ue.Operand as MemberBinding;
                 if (mb == null) goto JustVisit;
-                
+
                 Method m = mb.BoundMember as Method;
-                
+
                 var um = HelperMethods.Unspecialize(m);
-                
+
                 if (HelperMethods.IsAnonymousDelegate(um, this.CurrentType))
                 {
                     this.VisitAnonymousDelegate(um, m);
                 }
             }
-        
-            JustVisit:
+
+        JustVisit:
             base.VisitConstruct(cons);
         }
 
-        private readonly Stack<Method> delegates = new Stack<Method>();
-        private readonly Stack<Func<TypeNode, TypeNode>> substitution = new Stack<Func<TypeNode, TypeNode>>();
+        private readonly Stack<Method> _delegates = new Stack<Method>();
+        private readonly Stack<Func<TypeNode, TypeNode>> _substitution = new Stack<Func<TypeNode, TypeNode>>();
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"),
          System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(delegates != null);
-            Contract.Invariant(substitution != null);
+            Contract.Invariant(_delegates != null);
+            Contract.Invariant(_substitution != null);
         }
 
         public override void VisitBlock(Block block)
         {
-            Contract.Ensures(this.delegates.Count == Contract.OldValue(this.delegates.Count));
+            Contract.Ensures(_delegates.Count == Contract.OldValue(_delegates.Count));
 
             base.VisitBlock(block);
         }
@@ -108,17 +97,17 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (method == null) return;
 
-            this.delegates.Push(method);
-            this.substitution.Push(Substitution(method, instantiated));
-            
+            _delegates.Push(method);
+            _substitution.Push(Substitution(method, instantiated));
+
             try
             {
                 this.VisitBlock(method.Body);
             }
             finally
             {
-                this.delegates.Pop();
-                this.substitution.Pop();
+                _delegates.Pop();
+                _substitution.Pop();
             }
         }
 
@@ -126,12 +115,12 @@ namespace Microsoft.Contracts.Foxtrot
         {
             get
             {
-                if (this.substitution.Count == 0)
+                if (_substitution.Count == 0)
                 {
                     return t => t;
                 }
 
-                return this.substitution.Peek();
+                return _substitution.Peek();
             }
         }
 
@@ -155,16 +144,16 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         return t;
                     }
-                    
+
                     return instantiated.TemplateArguments[tp.ParameterListIndex];
                 }
 
                 var decl = method.DeclaringType;
                 var idecl = instantiated.DeclaringType;
-                
+
                 while (decl != null)
                 {
-                    if ((TypeNode) tp.DeclaringMember == decl)
+                    if ((TypeNode)tp.DeclaringMember == decl)
                     {
                         if (idecl.TemplateArguments == null || idecl.TemplateArguments.Count <= tp.ParameterListIndex)
                             return t;
@@ -187,8 +176,8 @@ namespace Microsoft.Contracts.Foxtrot
             if (memberBinding.BoundMember == null) return;
 
             var declaringType = memberBinding.BoundMember.DeclaringType;
-            
-            if (declaringType != null && delegates.Count > 0 && this.CurrentType != null &&
+
+            if (declaringType != null && _delegates.Count > 0 && this.CurrentType != null &&
                 HelperMethods.IsClosureType(this.CurrentType, declaringType))
             {
                 var parameter = FindNamedParameter(memberBinding.BoundMember);
@@ -205,15 +194,15 @@ namespace Microsoft.Contracts.Foxtrot
             if (member == null) return null;
 
             if (this.CurrentMethod == null) return null; // happens when we look at invariants.
-            
+
             if (member.Name == null) return null;
-            
+
             if (member.Name.Name == null) return null;
 
             var parameters = this.CurrentMethod.Parameters;
 
             Contract.Assert(member.Name.Name != null);
-            
+
             if (this.CurrentMethod.HasThis() && member.Name.Name.StartsWith("<>") && member.Name.Name.EndsWith("_this"))
             {
                 return this.CurrentMethod.ThisParameter;

@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -28,22 +17,22 @@ namespace Microsoft.Contracts.Foxtrot
     internal sealed class CopyOutOfBandContracts : Inspector
     {
         //private Duplicator outOfBandDuplicator;
-        private readonly ForwardingDuplicator outOfBandDuplicator;
-        private readonly AssemblyNode targetAssembly;
+        private readonly ForwardingDuplicator _outOfBandDuplicator;
+        private readonly AssemblyNode _targetAssembly;
 
-        private readonly List<KeyValuePair<Member, TypeNode>> toBeDuplicatedMembers =
+        private readonly List<KeyValuePair<Member, TypeNode>> _toBeDuplicatedMembers =
             new List<KeyValuePair<Member, TypeNode>>();
 
-        private TrivialHashtable duplicatedMembers;
+        private TrivialHashtable _duplicatedMembers;
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"),
          SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(this.toBeDuplicatedMembers != null);
-            Contract.Invariant(this.outOfBandDuplicator != null);
-            Contract.Invariant(this.duplicatedMembers != null);
+            Contract.Invariant(_toBeDuplicatedMembers != null);
+            Contract.Invariant(_outOfBandDuplicator != null);
+            Contract.Invariant(_duplicatedMembers != null);
         }
 
         [Conditional("CONTRACTTRACE")]
@@ -67,8 +56,8 @@ namespace Microsoft.Contracts.Foxtrot
                 throw new ExtractorException("CopyOutOfBandContracts was given the same assembly as both the source and target!");
             }
 
-            this.outOfBandDuplicator = new ForwardingDuplicator(targetAssembly, null, contractNodes, targetContractNodes);
-            this.targetAssembly = targetAssembly;
+            _outOfBandDuplicator = new ForwardingDuplicator(targetAssembly, null, contractNodes, targetContractNodes);
+            _targetAssembly = targetAssembly;
 
             FuzzilyForwardReferencesFromSource2Target(targetAssembly, sourceAssembly);
 
@@ -79,10 +68,10 @@ namespace Microsoft.Contracts.Foxtrot
 
         private void CopyMissingMembers()
         {
-            Contract.Ensures(this.duplicatedMembers != null);
+            Contract.Ensures(_duplicatedMembers != null);
 
-            this.duplicatedMembers = new TrivialHashtable(this.toBeDuplicatedMembers.Count*2);
-            foreach (var missing in this.toBeDuplicatedMembers)
+            _duplicatedMembers = new TrivialHashtable(_toBeDuplicatedMembers.Count * 2);
+            foreach (var missing in _toBeDuplicatedMembers)
             {
                 Contract.Assume(missing.Value != null);
                 Contract.Assume(missing.Key != null);
@@ -96,10 +85,10 @@ namespace Microsoft.Contracts.Foxtrot
 
                 this.Duplicator.TargetType = targetType;
 
-                var dup = (Member) this.Duplicator.Visit(missing.Key);
+                var dup = (Member)this.Duplicator.Visit(missing.Key);
 
                 targetType.Members.Add(dup);
-                duplicatedMembers[missing.Key.UniqueKey] = missing;
+                _duplicatedMembers[missing.Key.UniqueKey] = missing;
             }
         }
 
@@ -109,7 +98,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 Contract.Ensures(Contract.Result<Duplicator>() != null);
 
-                return this.outOfBandDuplicator;
+                return _outOfBandDuplicator;
             }
         }
 
@@ -202,7 +191,7 @@ namespace Microsoft.Contracts.Foxtrot
                     if (mAsField == null) continue;
 
                     if (FuzzyEqual(mAsField.Type, memAsField.Type)) return mem;
-                    
+
                     continue;
                 }
 
@@ -211,9 +200,9 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     Event mAsEvent = m as Event;
                     if (mAsEvent == null) continue;
-                    
+
                     if (FuzzyEqual(mAsEvent.HandlerType, memAsEvent.HandlerType)) return mem;
-                    
+
                     continue;
                 }
 
@@ -342,7 +331,7 @@ namespace Microsoft.Contracts.Foxtrot
                 }
                 else
                 {
-                    this.toBeDuplicatedMembers.Add(new KeyValuePair<Member, TypeNode>(currentMember, targetType));
+                    _toBeDuplicatedMembers.Add(new KeyValuePair<Member, TypeNode>(currentMember, targetType));
                     // For types, prepare a bit more.
                     var nestedType = currentMember as TypeNode;
                     if (nestedType != null)
@@ -369,7 +358,7 @@ namespace Microsoft.Contracts.Foxtrot
             Method method = currentMember as Method;
             if (method != null)
             {
-                Method existingMethod = (Method) existingMember;
+                Method existingMethod = (Method)existingMember;
 
                 Contract.Assume(TemplateParameterCount(method) == TemplateParameterCount(existingMethod));
 
@@ -403,12 +392,12 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (method == null) return;
             // we might have copied this method already
-            if (this.duplicatedMembers[method.UniqueKey] != null)
+            if (_duplicatedMembers[method.UniqueKey] != null)
             {
                 return;
             }
 
-            Method targetMethod = method.FindShadow(this.targetAssembly);
+            Method targetMethod = method.FindShadow(_targetAssembly);
 
             if (targetMethod != null)
             {
@@ -420,7 +409,7 @@ namespace Microsoft.Contracts.Foxtrot
                     var parameter = method.Parameters[i];
                     if (parameter == null) continue;
 
-                    this.outOfBandDuplicator.DuplicateFor[parameter.UniqueKey] = targetMethod.Parameters[i];
+                    _outOfBandDuplicator.DuplicateFor[parameter.UniqueKey] = targetMethod.Parameters[i];
                 }
 
                 CopyAttributesWithoutDuplicateUnlessAllowMultiple(targetMethod, method);
@@ -428,21 +417,21 @@ namespace Microsoft.Contracts.Foxtrot
 
                 targetMethod.SetDelayedContract((m, dummy) =>
                 {
-                    var savedMethod = this.outOfBandDuplicator.TargetMethod;
+                    var savedMethod = _outOfBandDuplicator.TargetMethod;
 
-                    this.outOfBandDuplicator.TargetMethod = method;
-                    this.outOfBandDuplicator.TargetType = method.DeclaringType;
+                    _outOfBandDuplicator.TargetMethod = method;
+                    _outOfBandDuplicator.TargetType = method.DeclaringType;
 
                     Contract.Assume(method.DeclaringType != null);
 
-                    this.outOfBandDuplicator.TargetModule = method.DeclaringType.DeclaringModule;
-                    MethodContract mc = this.outOfBandDuplicator.VisitMethodContract(method.Contract);
+                    _outOfBandDuplicator.TargetModule = method.DeclaringType.DeclaringModule;
+                    MethodContract mc = _outOfBandDuplicator.VisitMethodContract(method.Contract);
                     targetMethod.Contract = mc;
 
                     if (savedMethod != null)
                     {
-                        this.outOfBandDuplicator.TargetMethod = savedMethod;
-                        this.outOfBandDuplicator.TargetType = savedMethod.DeclaringType;
+                        _outOfBandDuplicator.TargetMethod = savedMethod;
+                        _outOfBandDuplicator.TargetType = savedMethod.DeclaringType;
                     }
                 });
             }
@@ -453,12 +442,12 @@ namespace Microsoft.Contracts.Foxtrot
             if (typeNode == null) return;
 
             // we might have copied this type already
-            if (this.duplicatedMembers[typeNode.UniqueKey] != null)
+            if (_duplicatedMembers[typeNode.UniqueKey] != null)
             {
                 return;
             }
 
-            TypeNode targetType = typeNode.FindShadow(this.targetAssembly);
+            TypeNode targetType = typeNode.FindShadow(_targetAssembly);
             if (targetType != null)
             {
                 if (targetType.Contract == null)
@@ -466,11 +455,11 @@ namespace Microsoft.Contracts.Foxtrot
                     targetType.Contract = new TypeContract(targetType, true);
                 }
 
-                this.outOfBandDuplicator.TargetType = targetType;
+                _outOfBandDuplicator.TargetType = targetType;
                 if (typeNode.Contract != null)
                 {
                     InvariantList duplicatedInvariants =
-                        this.outOfBandDuplicator.VisitInvariantList(typeNode.Contract.Invariants);
+                        _outOfBandDuplicator.VisitInvariantList(typeNode.Contract.Invariants);
 
                     targetType.Contract.Invariants = duplicatedInvariants;
                 }
@@ -488,7 +477,7 @@ namespace Microsoft.Contracts.Foxtrot
                 }
                 else
                 {
-                    this.outOfBandDuplicator.VisitTypeNode(typeNode);
+                    _outOfBandDuplicator.VisitTypeNode(typeNode);
                 }
             }
         }
@@ -498,9 +487,9 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(targetMember != null);
             Contract.Requires(sourceMember != null);
 
-//      if (sourceMember.Attributes == null) return;
-//      if (targetMember.Attributes == null) targetMember.Attributes = new AttributeList();
-            var attrs = this.outOfBandDuplicator.VisitAttributeList(sourceMember.Attributes);
+            //      if (sourceMember.Attributes == null) return;
+            //      if (targetMember.Attributes == null) targetMember.Attributes = new AttributeList();
+            var attrs = _outOfBandDuplicator.VisitAttributeList(sourceMember.Attributes);
 
             Contract.Assume(attrs != null, "We fail to specialize the ensures");
 
@@ -526,10 +515,10 @@ namespace Microsoft.Contracts.Foxtrot
 
             var ctor = a.Constructor as MemberBinding;
             if (ctor == null) return null;
-            
+
             var mb = ctor.BoundMember;
             if (mb == null) return null;
-            
+
             return mb.DeclaringType;
         }
 
@@ -541,7 +530,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (sourceMember.ReturnAttributes == null) return;
 
             if (targetMember.ReturnAttributes == null) targetMember.ReturnAttributes = new AttributeList();
-            var attrs = this.outOfBandDuplicator.VisitAttributeList(sourceMember.ReturnAttributes);
+            var attrs = _outOfBandDuplicator.VisitAttributeList(sourceMember.ReturnAttributes);
 
             Contract.Assume(attrs != null, "We fail to specialize the ensures");
 

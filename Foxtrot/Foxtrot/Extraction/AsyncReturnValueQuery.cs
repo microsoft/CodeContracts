@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Compiler;
 
@@ -18,15 +7,15 @@ namespace Microsoft.Contracts.Foxtrot
 {
     internal class AsyncReturnValueQuery : InspectorIncludingClosures
     {
-        private bool foundReturnValueTaskResult;
-        private ContractNodes contractNodes;
-        private TypeNode actualResultType;
+        private bool _foundReturnValueTaskResult;
+        private ContractNodes _contractNodes;
+        private TypeNode _actualResultType;
 
         public AsyncReturnValueQuery(ContractNodes contractNodes, Method currentMethod, TypeNode actualResultType)
         {
-            this.contractNodes = contractNodes;
+            _contractNodes = contractNodes;
             this.CurrentMethod = currentMethod;
-            this.actualResultType = actualResultType;
+            _actualResultType = actualResultType;
         }
 
         /// <summary>
@@ -39,7 +28,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             v.Visit(node);
 
-            return v.foundReturnValueTaskResult;
+            return v._foundReturnValueTaskResult;
         }
 
         public override void VisitMethodCall(MethodCall call)
@@ -65,9 +54,9 @@ namespace Microsoft.Contracts.Foxtrot
                         if (calledMethod2 != null)
                         {
                             Method template2 = calledMethod2.Template;
-                            if (contractNodes.IsResultMethod(template2))
+                            if (_contractNodes.IsResultMethod(template2))
                             {
-                                this.foundReturnValueTaskResult = true;
+                                _foundReturnValueTaskResult = true;
                                 //return new ReturnValue(calledMethod.DeclaringType.TemplateArguments[0]);
                                 return;
                             }
@@ -76,12 +65,12 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
-            if (this.actualResultType != null && contractNodes.IsResultMethod(template) &&
-                calledMethod.ReturnType == this.actualResultType)
+            if (_actualResultType != null && _contractNodes.IsResultMethod(template) &&
+                calledMethod.ReturnType == _actualResultType)
             {
                 // using Contract.Result<T>() in a Task<T> returning method, this is a shorthand for
                 // Contract.Result<Task<T>>().Result
-                this.foundReturnValueTaskResult = true;
+                _foundReturnValueTaskResult = true;
                 return;
             }
 

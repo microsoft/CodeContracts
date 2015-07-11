@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Diagnostics; // needed for Debug.Assert (etc.)
 using System.Compiler;
@@ -21,8 +10,8 @@ namespace Microsoft.Contracts.Foxtrot
 {
     public static class HelperMethods
     {
-        private static Identifier MulticastDelegateId = Identifier.For("MulticastDelegate");
-        private static Identifier DelegateId = Identifier.For("Delegate");
+        private static Identifier s_multicastDelegateId = Identifier.For("MulticastDelegate");
+        private static Identifier s_delegateId = Identifier.For("Delegate");
 
         public static TypeNode FindType(AssemblyNode startingPoint, Identifier ns, Identifier name)
         {
@@ -31,20 +20,20 @@ namespace Microsoft.Contracts.Foxtrot
 
         public struct ExpressionScanner
         {
-            private readonly Action<Field, bool> action;
-            private bool inStore;
+            private readonly Action<Field, bool> _action;
+            private bool _inStore;
 
             public bool IsValid
             {
-                get { return this.action != null; }
+                get { return _action != null; }
             }
 
             public ExpressionScanner(Action<Field, bool> action)
             {
                 Contract.Requires(action != null);
                 Contract.Ensures(Contract.ValueAtReturn(out this).IsValid);
-                this.action = action;
-                this.inStore = false;
+                _action = action;
+                _inStore = false;
             }
 
             internal void Visit(Statement statement)
@@ -66,28 +55,28 @@ namespace Microsoft.Contracts.Foxtrot
                         return;
 
                     case NodeType.AssignmentStatement:
-                        var astmt = (AssignmentStatement) statement;
+                        var astmt = (AssignmentStatement)statement;
                         Visit(astmt.Source);
-                        var savedInStore = this.inStore;
-                        
+                        var savedInStore = _inStore;
+
                         try
                         {
-                            this.inStore = true;
+                            _inStore = true;
                             Visit(astmt.Target);
                         }
                         finally
                         {
-                            this.inStore = savedInStore;
+                            _inStore = savedInStore;
                         }
                         return;
 
                     case NodeType.ExpressionStatement:
-                        var estmt = (ExpressionStatement) statement;
+                        var estmt = (ExpressionStatement)statement;
                         if (estmt.Expression.NodeType == NodeType.Dup)
                         {
                             return; // not an expression
                         }
-                        
+
                         if (estmt.Expression.NodeType == NodeType.Pop)
                         {
                             var unary = estmt.Expression as UnaryExpression;
@@ -107,22 +96,22 @@ namespace Microsoft.Contracts.Foxtrot
                         return;
 
                     case NodeType.Block:
-                        var block = (Block) statement;
+                        var block = (Block)statement;
                         Visit(block.Statements);
                         return;
 
                     case NodeType.SwitchInstruction:
-                        var sw = (SwitchInstruction) statement;
+                        var sw = (SwitchInstruction)statement;
                         Visit(sw.Expression);
                         return;
 
                     case NodeType.Throw:
-                        var th = (Throw) statement;
+                        var th = (Throw)statement;
                         Visit(th.Expression);
                         return;
 
                     case NodeType.Return:
-                        var ret = (Return) statement;
+                        var ret = (Return)statement;
                         Visit(ret.Expression);
                         return;
 
@@ -153,12 +142,12 @@ namespace Microsoft.Contracts.Foxtrot
                 switch (expression.NodeType)
                 {
                     case NodeType.MemberBinding:
-                        var mb = (MemberBinding) expression;
+                        var mb = (MemberBinding)expression;
                         Visit(mb.TargetObject);
                         var field = mb.BoundMember as Field;
                         if (field != null)
                         {
-                            action(field, this.inStore);
+                            _action(field, _inStore);
                         }
                         return;
 
@@ -175,37 +164,37 @@ namespace Microsoft.Contracts.Foxtrot
                         break;
 
                     case NodeType.AddressDereference:
-                        var ad = (AddressDereference) expression;
+                        var ad = (AddressDereference)expression;
                         Visit(ad.Address);
                         return;
 
                     case NodeType.Construct:
-                        var c = (Construct) expression;
+                        var c = (Construct)expression;
                         Visit(c.Operands);
                         return;
 
                     case NodeType.ConstructArray:
-                        var ca = (ConstructArray) expression;
+                        var ca = (ConstructArray)expression;
                         Visit(ca.Operands);
                         return;
 
                     case NodeType.Call:
                     case NodeType.Callvirt:
-                        var call = (MethodCall) expression;
+                        var call = (MethodCall)expression;
                         Visit(call.Callee);
                         Visit(call.Operands);
                         return;
 
                     case NodeType.Cpblk:
                     case NodeType.Initblk:
-                        var tern = (TernaryExpression) expression;
+                        var tern = (TernaryExpression)expression;
                         Visit(tern.Operand1);
                         Visit(tern.Operand2);
                         Visit(tern.Operand3);
                         return;
 
                     case NodeType.Indexer:
-                        var indexer = (Indexer) expression;
+                        var indexer = (Indexer)expression;
                         Visit(indexer.Object);
                         Visit(indexer.Operands);
                         return;
@@ -216,7 +205,7 @@ namespace Microsoft.Contracts.Foxtrot
                         {
                             Visit(binary.Operand1);
                             Visit(binary.Operand2);
-                            
+
                             return;
                         }
 
@@ -224,7 +213,7 @@ namespace Microsoft.Contracts.Foxtrot
                         if (unary != null)
                         {
                             Visit(unary.Operand);
-                            
+
                             return;
                         }
 
@@ -255,12 +244,12 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (type.BaseType != null)
             {
-                if (type.BaseType.Name.Matches(MulticastDelegateId))
+                if (type.BaseType.Name.Matches(s_multicastDelegateId))
                 {
                     return true;
                 }
 
-                if (type.BaseType.Name.Matches(DelegateId))
+                if (type.BaseType.Name.Matches(s_delegateId))
                 {
                     return true;
                 }
@@ -293,7 +282,7 @@ namespace Microsoft.Contracts.Foxtrot
 
         public static TypeNode BaseClass(TypeNode type)
         {
-            Class c = (Class) type;
+            Class c = (Class)type;
             return (c.BaseClass);
         }
 
@@ -302,12 +291,12 @@ namespace Microsoft.Contracts.Foxtrot
             if (HasBaseClass(t))
             {
                 TypeNode basecl = BaseClass(t);
-                
+
                 while (basecl.Template != null) basecl = basecl.Template;
-                
+
                 if (basecl == tfrom)
                     return true;
-                
+
                 if (IsInheritedFrom(basecl, tfrom))
                     return true;
             }
@@ -396,9 +385,9 @@ namespace Microsoft.Contracts.Foxtrot
 
             // toplevel type
             if (t.DeclaringModule == tfrom.DeclaringModule) return true;
-            
+
             if (t.IsPublic) return true;
-            
+
             return false;
         }
 
@@ -408,7 +397,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (inner == outer) return true;
 
             if (inner.DeclaringType != null) return IsContainedIn(inner.DeclaringType, outer);
-            
+
             return false;
         }
 
@@ -421,7 +410,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             TypeNode t = member.DeclaringType;
             Method method = member as Method;
-            
+
             if (method != null && method.Template != null)
             {
                 if (method.TemplateArguments != null)
@@ -442,7 +431,7 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     if (!IsVisibleFrom(t.TemplateArguments[i], tfrom)) return false;
                 }
-                
+
                 t = Unspecialize(t);
             }
 
@@ -457,14 +446,14 @@ namespace Microsoft.Contracts.Foxtrot
             if (member.IsFamily)
             {
                 if (IsInheritedFrom(tfrom, t)) return true;
-                
+
                 return false;
             }
 
             if (member.IsFamilyAndAssembly)
             {
                 if (tfrom.DeclaringModule == t.DeclaringModule && IsInheritedFrom(tfrom, t)) return true;
-                
+
                 return false;
             }
 
@@ -546,7 +535,7 @@ namespace Microsoft.Contracts.Foxtrot
             for (Member s1 = member; s1 != null; s1 = s1.DeclaringType)
             {
                 if (s1.IsPublic) continue;
-                
+
                 bool asRestrictive = false;
                 for (Member s2 = asThisMember; s2 != null; s2 = s2.DeclaringType)
                 {
@@ -645,7 +634,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (type is Class || type is Interface || type is Struct || type is EnumNode || type is DelegateNode)
                     return true;
-                
+
                 return false;
             }
 
@@ -684,7 +673,7 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     method = method.Template;
                 }
-                
+
                 unspecialized = method;
             }
             else
@@ -693,9 +682,9 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             var declaringType = member.DeclaringType;
-            
+
             Contract.Assume(declaringType != null, "non type member must have declaring type");
-            
+
             if (declaringType.ConsolidatedTemplateArguments != null)
             {
                 for (int i = 0; i < declaringType.ConsolidatedTemplateArguments.Count; i++)
@@ -703,9 +692,9 @@ namespace Microsoft.Contracts.Foxtrot
                     if (!IsTypeAsVisibleAs(declaringType.ConsolidatedTemplateArguments[i], asThisMember)) return false;
                 }
             }
-            
+
             Contract.Assume(IsAtomic(unspecialized));
-            
+
             return IsDefinitionAsVisibleAs(unspecialized, asThisMember);
         }
 
@@ -719,23 +708,23 @@ namespace Microsoft.Contracts.Foxtrot
             switch (type.NodeType)
             {
                 case NodeType.ArrayType:
-                    ArrayType arrType = (ArrayType) type;
+                    ArrayType arrType = (ArrayType)type;
                     return IsTypeAsVisibleAs(arrType.ElementType, asThisMember);
 
                 case NodeType.ClassParameter:
                 case NodeType.TypeParameter:
                     return true;
-                
+
                 case NodeType.Pointer:
-                    Pointer pType = (Pointer) type;
+                    Pointer pType = (Pointer)type;
                     return IsTypeAsVisibleAs(pType.ElementType, asThisMember);
-                
+
                 case NodeType.Reference:
-                    Reference rType = (Reference) type;
+                    Reference rType = (Reference)type;
                     return IsTypeAsVisibleAs(rType.ElementType, asThisMember);
-                
+
                 case NodeType.FunctionPointer:
-                    FunctionPointer funcPointer = (FunctionPointer) type;
+                    FunctionPointer funcPointer = (FunctionPointer)type;
                     if (funcPointer.ParameterTypes != null)
                     {
                         for (int i = 0; i < funcPointer.ParameterTypes.Count; i++)
@@ -745,15 +734,15 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     return IsTypeAsVisibleAs(funcPointer.ReturnType, asThisMember);
-                
+
                 case NodeType.OptionalModifier:
                 case NodeType.RequiredModifier:
-                    TypeModifier modType = (TypeModifier) type;
-                    
+                    TypeModifier modType = (TypeModifier)type;
+
                     if (!IsTypeAsVisibleAs(modType.ModifiedType, asThisMember)) return false;
-                    
+
                     return IsTypeAsVisibleAs(modType.Modifier, asThisMember);
-                
+
                 default:
                     if (type.Template != null)
                     {
@@ -770,11 +759,11 @@ namespace Microsoft.Contracts.Foxtrot
 
                         return true;
                     }
-                    
+
                     // atomic type
                     Contract.Assume(IsAtomic(type));
-                    
-                    return IsDefinitionAsVisibleAs((Member) type, asThisMember);
+
+                    return IsDefinitionAsVisibleAs((Member)type, asThisMember);
             }
         }
 
@@ -786,15 +775,15 @@ namespace Microsoft.Contracts.Foxtrot
 
             TypeNode t2 = m2 as TypeNode;
             if (t2 == null) return false;
-            
+
             TypeNode t1 = m1.DeclaringType;
             while (t1 != null)
             {
                 if (t1 == t2) return true;
-                
+
                 t1 = t1.DeclaringType;
             }
-            
+
             return false;
         }
 
@@ -811,10 +800,10 @@ namespace Microsoft.Contracts.Foxtrot
             while (t1 != null)
             {
                 if (t1.IsAssignableTo(t2)) return true;
-                
+
                 t1 = t1.DeclaringType;
             }
-            
+
             return false;
         }
 
@@ -866,11 +855,11 @@ namespace Microsoft.Contracts.Foxtrot
             for (int i = 0; i < attributes.Count; i++)
             {
                 var attr = attributes[i];
-                
+
                 if (attr == null) continue;
-                
+
                 if (attr.Type == null) continue;
-                
+
                 if (typeName.Matches(attr.Type.Name)) return true;
             }
 
@@ -905,7 +894,7 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         return DoesInheritContracts(type.DeclaringType);
                     }
-                    
+
                     return ContractOption(type.DeclaringModule, "Contract", "Inheritance");
             }
         }
@@ -974,7 +963,7 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         return ContractOption(type.DeclaringType, category, setting);
                     }
-                    
+
                     return ContractOption(type.DeclaringModule, category, setting);
             }
         }
@@ -1002,9 +991,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (module == null) return true; // default
 
             if (module.ContainingAssembly == null) return true; // default
-            
+
             var tv = ContractOption(module.ContainingAssembly.Attributes, category, setting);
-            
+
             switch (tv)
             {
                 case ThreeValued.False:
@@ -1070,7 +1059,7 @@ namespace Microsoft.Contracts.Foxtrot
                     if (string.Compare("mutable", setting, true) == 0)
                     {
                         if (!value) return ThreeValued.True;
-                        
+
                         return ThreeValued.False;
                     }
                 }
@@ -1091,21 +1080,21 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 return false;
             }
-            
+
             if (attr.Type == null) return false;
-            
+
             if (!ContractNodes.ContractOptionAttributeName.Matches(attr.Type.Name)) return false;
-            
+
             if (attr.Expressions == null) return false;
-            
+
             if (attr.Expressions.Count != 3) return false;
-            
+
             if (!AsLiteralString(attr.Expressions[0], out category)) return false;
-            
+
             if (!AsLiteralString(attr.Expressions[1], out setting)) return false;
-            
+
             if (!AsLiteralBool(attr.Expressions[2], out toggle)) return false;
-            
+
             return true;
         }
 
@@ -1114,11 +1103,11 @@ namespace Microsoft.Contracts.Foxtrot
         {
             value = null;
             var lit = exp as Literal;
-            
+
             if (lit == null) return false;
-            
+
             value = lit.Value as string;
-            
+
             return value != null;
         }
 
@@ -1128,10 +1117,10 @@ namespace Microsoft.Contracts.Foxtrot
             value = false;
             var lit = exp as Literal;
             if (lit == null) return false;
-            
+
             if (!(lit.Value is bool)) return false;
-            
-            value = (bool) lit.Value;
+
+            value = (bool)lit.Value;
             return true;
         }
 
@@ -1155,15 +1144,15 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     method = method.Template;
                 }
-                
+
                 if (!method.Name.Matches(name)) return false;
-                
+
                 if (method.DeclaringType == null) return false;
-                
+
                 if (!method.DeclaringType.Name.Matches(ContractNodes.ContractClassName)) return false;
-                
+
                 if (!method.DeclaringType.Namespace.Matches(ContractNodes.ContractNamespace)) return false;
-                
+
                 return true;
             }
 
@@ -1176,9 +1165,9 @@ namespace Microsoft.Contracts.Foxtrot
                 }
 
                 if (!type.Name.Matches(name)) return false;
-                
+
                 if (!type.Namespace.Matches(ContractNodes.ContractNamespace)) return false;
-                
+
                 return true;
             }
 
@@ -1246,9 +1235,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (overridden != null)
             {
                 Contract.Assume(overridden.DeclaringType != null, "non-types always have declaring types");
-                
+
                 var dt = Unspecialize(overridden.DeclaringType);
-                
+
                 if (dt == Unspecialize(inType)) return overridden;
             }
 
@@ -1256,9 +1245,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (result != null) return result;
 
             result = FindImplementedMethod(m.ShallowImplicitlyImplementedInterfaceMethods, inType);
-            
+
             if (result != null) return result;
-            
+
             return null;
         }
 
@@ -1313,9 +1302,9 @@ namespace Microsoft.Contracts.Foxtrot
             for (int i = 0, n = currentClump.Statements.Count; i < n; i++)
             {
                 Block b = currentClump.Statements[i] as Block;
-                
+
                 if (b == null || b.Statements == null || b.Statements.Count <= 0) continue;
-                
+
                 for (int j = 0, m = b.Statements.Count; j < m; j++)
                 {
                     Statement s = b.Statements[j];
@@ -1339,9 +1328,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (sl == null || sl.Count <= beginningIndex) return -1;
 
             int i = beginningIndex;
-            
+
             while (i < sl.Count && (sl[i] == null || sl[i].NodeType == NodeType.Nop)) i++;
-            
+
             return i;
         }
 
@@ -1355,9 +1344,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (s == null) return null;
 
             ExpressionStatement es = s as ExpressionStatement;
-            
+
             if (es == null) return null;
-            
+
             // If the expression statement represents a method call, then it can
             // have two different values as its expression:
             // 0. if the method's return type is void, then the expression is just the
@@ -1374,7 +1363,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             MemberBinding mb = mc.Callee as MemberBinding;
             if (mb == null) return null;
-            
+
             return mb.BoundMember as Method;
         }
 
@@ -1393,7 +1382,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // no nested blocks except for assume blocks we add in the middle of MoveNext methods
                 if (b.Statements[i] is Block && !(b.Statements[i] is AssumeBlock)) return false;
             }
-            
+
             return true;
         }
 
@@ -1405,7 +1394,7 @@ namespace Microsoft.Contracts.Foxtrot
         internal static bool IsClump(StatementList /*?*/ sl)
         {
             if (sl == null || sl.Count == 0) return true;
-            
+
             for (int i = 0, n = sl.Count; i < n; i++)
             {
                 if (!IsBasicBlock(sl[i] as Block)) return false;
@@ -1424,9 +1413,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (stmts == null) return true;
 
             if (!IsClump(stmts)) return false;
-            
+
             TrivialHashtable blocks = new TrivialHashtable(stmts.Count); // can't be any bigger!
-            
+
             for (int i = 0, n = stmts.Count; i < n; i++)
             {
                 if (stmts[i] == null) continue;
@@ -1437,13 +1426,13 @@ namespace Microsoft.Contracts.Foxtrot
             for (int i = 0, n = stmts.Count; i < n; i++)
             {
                 Block b = stmts[i] as Block;
-                
+
                 if (b == null) continue; // tolerate nulls
                 if (b.Statements == null || b.Statements.Count == 0) continue;
-                
+
                 Branch br = b.Statements[b.Statements.Count - 1] as Branch;
                 if (br == null) continue;
-                
+
                 Block target = br.Target;
                 if (target == null) continue;
 
@@ -1466,15 +1455,15 @@ namespace Microsoft.Contracts.Foxtrot
                 if (b == null) continue; // tolerate nulls
 
                 Console.WriteLine("Block {0}", b.UniqueKey);
-                
+
                 if (b.Statements == null || b.Statements.Count == 0) continue;
-                
+
                 Branch br = b.Statements[b.Statements.Count - 1] as Branch;
                 if (br == null) continue;
-                
+
                 Block target = br.Target;
                 if (target == null) continue;
-                
+
                 Console.WriteLine("  branch to {0}", target.UniqueKey);
             }
         }
@@ -1483,16 +1472,16 @@ namespace Microsoft.Contracts.Foxtrot
         /// TODO: Remove this when we support compiler-generated enumerators.
         /// </summary>
         public static readonly TypeNode compilerGeneratedAttributeNode =
-            TypeNode.GetTypeNode(typeof (System.Runtime.CompilerServices.CompilerGeneratedAttribute));
+            TypeNode.GetTypeNode(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute));
 
         public static readonly TypeNode debuggerNonUserCodeAttributeNode =
-            TypeNode.GetTypeNode(typeof (System.Diagnostics.DebuggerNonUserCodeAttribute));
+            TypeNode.GetTypeNode(typeof(System.Diagnostics.DebuggerNonUserCodeAttribute));
 
         public static readonly TypeNode debuggerBrowsableAttributeNode =
-            TypeNode.GetTypeNode(typeof (System.Diagnostics.DebuggerBrowsableAttribute));
+            TypeNode.GetTypeNode(typeof(System.Diagnostics.DebuggerBrowsableAttribute));
 
         public static readonly TypeNode debuggerBrowsableStateType =
-            TypeNode.GetTypeNode(typeof (System.Diagnostics.DebuggerBrowsableState));
+            TypeNode.GetTypeNode(typeof(System.Diagnostics.DebuggerBrowsableState));
 
         public static readonly Identifier compilerGeneratedAttributeName = Identifier.For("CompilerGeneratedAttribute");
 
@@ -1506,11 +1495,11 @@ namespace Microsoft.Contracts.Foxtrot
             if (t == null) return false;
 
             if (t.Template != null) t = t.Template;
-            
+
             if (t.GetAttributeByName(compilerGeneratedAttributeName) != null) return true;
-            
+
             if (t.DeclaringType != null) return IsCompilerGenerated(t.DeclaringType);
-            
+
             return false;
         }
 
@@ -1519,7 +1508,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (IsCompilerGeneratedMemberOnly(m)) return true;
 
             TypeNode t = m.DeclaringType;
-            
+
             return IsCompilerGenerated(t);
         }
 
@@ -1531,7 +1520,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (IsCompilerGeneratedMemberOnly(m)) return true;
 
             if (IsDebuggerNonUserCodeMemberOnly(m)) return true;
-            
+
             return false;
         }
 
@@ -1540,7 +1529,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (attributeType == null) return null;
 
             AttributeList attributes = member.Attributes;
-            
+
             for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++)
             {
                 AttributeNode attr = attributes[i];
@@ -1550,17 +1539,17 @@ namespace Microsoft.Contracts.Foxtrot
                 if (mb != null)
                 {
                     if (mb.BoundMember == null) continue;
-                    
+
                     if (!mb.BoundMember.DeclaringType.Name.Matches(attributeType)) continue;
-                    
+
                     return attr;
                 }
-                
+
                 Literal lit = attr.Constructor as Literal;
                 if (lit == null) continue;
-                
+
                 if (!(lit.Value as TypeNode).Name.Matches(attributeType)) continue;
-                
+
                 return attr;
             }
 
@@ -1572,7 +1561,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (m == null) return false;
 
             if (m.GetAttributeByName(compilerGeneratedAttributeName) != null) return true;
-            
+
             return false;
         }
 
@@ -1581,9 +1570,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (m == null) return false;
 
             if (debuggerNonUserCodeAttributeNode == null) return false;
-            
+
             if (m.GetAttribute(debuggerNonUserCodeAttributeNode) != null) return true;
-            
+
             return false;
         }
 
@@ -1621,30 +1610,30 @@ namespace Microsoft.Contracts.Foxtrot
 
                     AssignmentStatement initObj = s as AssignmentStatement;
                     if (initObj == null) break;
-                    
+
                     AddressDereference addrderef = initObj.Target as AddressDereference;
                     if (addrderef == null) break;
-                    
+
                     if (addrderef.Address != m.ThisParameter) break;
-                    
+
                     Literal initObjArg = initObj.Source as Literal;
                     if (initObjArg == null) break;
-                    
+
                     if (initObjArg.Value != null) break;
                 }
-                
+
                 preambleBlock.Statements.Add(s);
 
                 var oldCount = firstBlock.Statements.Count;
                 var oldStats = firstBlock.Statements;
-                
+
                 firstBlock.Statements[currentIndex] = null;
 
                 Contract.Assert(oldStats == firstBlock.Statements);
                 Contract.Assert(oldCount == firstBlock.Statements.Count);
-                
+
                 currentIndex++;
-                
+
                 Contract.Assert(currentIndex <= firstBlock.Statements.Count);
             }
 
@@ -1673,7 +1662,7 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         // we currently keep the local initializer in both "contractLocalsInitializer" for static decoding
                         // AND in the preamble block for runtime checking code generation.
-                        localAliasingThis = (Local) assgn.Target;
+                        localAliasingThis = (Local)assgn.Target;
 
                         //        contractInitializer.Statements.Add((Statement)(firstBlock.Statements[currentIndex].Clone()));
 
@@ -1696,33 +1685,33 @@ namespace Microsoft.Contracts.Foxtrot
                     if (!s.SourceContext.Hidden) break;
 
                     AssignmentStatement litAssgn = s as AssignmentStatement;
-                    
+
                     if (litAssgn == null) break;
                     var local = litAssgn.Target as Local;
-                    
+
                     if (local == null) break;
-                    
+
                     if (local.Name == null) break;
-                    
+
                     if (!local.Name.Name.StartsWith("VB$t_ref$L")) break;
                     // okay, we are assigning one of these locals. Put it into the preamble.
                 }
 
                 preambleBlock.Statements.Add(s);
-                
+
                 var oldCount = firstBlock.Statements.Count;
                 var oldStats = firstBlock.Statements;
-                
+
                 firstBlock.Statements[currentIndex] = null;
-                
+
                 Contract.Assert(oldStats == firstBlock.Statements);
                 Contract.Assert(oldCount == firstBlock.Statements.Count);
-                
+
                 currentIndex++;
-                
+
                 Contract.Assert(currentIndex <= firstBlock.Statements.Count);
             }
-            
+
             Contract.Assert(currentIndex <= firstBlock.Statements.Count);
 
             return currentIndex;
@@ -1731,18 +1720,18 @@ namespace Microsoft.Contracts.Foxtrot
         public struct StackDepthTracker
         {
             public int Depth;
-            private readonly Local introducedClosureLocal;
+            private readonly Local _introducedClosureLocal;
 
             public bool IsValid
             {
-                get { return this.introducedClosureLocal != null; }
+                get { return _introducedClosureLocal != null; }
             }
 
             public StackDepthTracker(Local introducedClosureLocal)
             {
                 Contract.Ensures(introducedClosureLocal == null || Contract.ValueAtReturn(out this).IsValid);
 
-                this.introducedClosureLocal = introducedClosureLocal;
+                _introducedClosureLocal = introducedClosureLocal;
                 this.Depth = 0;
             }
 
@@ -1777,13 +1766,13 @@ namespace Microsoft.Contracts.Foxtrot
                         return statement;
 
                     case NodeType.AssignmentStatement:
-                        var astmt = (AssignmentStatement) statement.Clone();
+                        var astmt = (AssignmentStatement)statement.Clone();
                         astmt.Target = Visit(astmt.Target);
                         astmt.Source = Visit(astmt.Source);
                         return astmt;
 
                     case NodeType.ExpressionStatement:
-                        var estmt = (ExpressionStatement) statement.Clone();
+                        var estmt = (ExpressionStatement)statement.Clone();
                         if (estmt.Expression.NodeType == NodeType.Dup)
                         {
                             if (this.Depth == 0)
@@ -1800,7 +1789,7 @@ namespace Microsoft.Contracts.Foxtrot
                             if (unary != null && unary.Operand != null)
                             {
                                 // we are popping the thing we just push, so the depth does not change.
-                                unary = (UnaryExpression) unary.Clone();
+                                unary = (UnaryExpression)unary.Clone();
                                 unary.Operand = Visit(unary.Operand);
                                 estmt.Expression = unary;
                                 return estmt;
@@ -1826,22 +1815,22 @@ namespace Microsoft.Contracts.Foxtrot
                         return estmt;
 
                     case NodeType.Block:
-                        var block = (Block) statement.Clone();
+                        var block = (Block)statement.Clone();
                         block.Statements = Visit(block.Statements);
                         return block;
 
                     case NodeType.SwitchInstruction:
-                        var sw = (SwitchInstruction) statement.Clone();
+                        var sw = (SwitchInstruction)statement.Clone();
                         sw.Expression = Visit(sw.Expression);
                         return sw;
 
                     case NodeType.Throw:
-                        var th = (Throw) statement.Clone();
+                        var th = (Throw)statement.Clone();
                         th.Expression = Visit(th.Expression);
                         return th;
 
                     case NodeType.Return:
-                        var ret = (Return) statement.Clone();
+                        var ret = (Return)statement.Clone();
                         ret.Expression = Visit(ret.Expression);
                         return ret;
 
@@ -1849,7 +1838,7 @@ namespace Microsoft.Contracts.Foxtrot
                         var br = statement as Branch;
                         if (br != null)
                         {
-                            br = (Branch) br.Clone();
+                            br = (Branch)br.Clone();
                             br.Condition = Visit(br.Condition);
                             return br;
                         }
@@ -1882,14 +1871,14 @@ namespace Microsoft.Contracts.Foxtrot
                 Contract.Requires(this.Depth >= 0);
                 Contract.Ensures(this.Depth >= 0);
 
-                if (this.introducedClosureLocal == null) return expression;
+                if (_introducedClosureLocal == null) return expression;
 
                 if (expression == null) return null;
-                
+
                 switch (expression.NodeType)
                 {
                     case NodeType.MemberBinding:
-                        var mb = (MemberBinding) expression.Clone();
+                        var mb = (MemberBinding)expression.Clone();
                         mb.TargetObject = Visit(mb.TargetObject);
                         return mb;
 
@@ -1901,7 +1890,7 @@ namespace Microsoft.Contracts.Foxtrot
                     case NodeType.Pop:
                         if (this.Depth == 0)
                         {
-                            return this.introducedClosureLocal;
+                            return _introducedClosureLocal;
                         }
                         this.Depth--;
                         break;
@@ -1911,37 +1900,37 @@ namespace Microsoft.Contracts.Foxtrot
                         break;
 
                     case NodeType.AddressDereference:
-                        var ad = (AddressDereference) expression.Clone();
+                        var ad = (AddressDereference)expression.Clone();
                         ad.Address = Visit(ad.Address);
                         return ad;
 
                     case NodeType.Construct:
-                        var c = (Construct) expression.Clone();
+                        var c = (Construct)expression.Clone();
                         c.Operands = Visit(c.Operands);
                         return c;
 
                     case NodeType.ConstructArray:
-                        var ca = (ConstructArray) expression.Clone();
+                        var ca = (ConstructArray)expression.Clone();
                         ca.Operands = Visit(ca.Operands);
                         return ca;
 
                     case NodeType.Call:
                     case NodeType.Callvirt:
-                        var call = (MethodCall) expression.Clone();
+                        var call = (MethodCall)expression.Clone();
                         call.Callee = Visit(call.Callee);
                         call.Operands = Visit(call.Operands);
                         return call;
 
                     case NodeType.Cpblk:
                     case NodeType.Initblk:
-                        var tern = (TernaryExpression) expression.Clone();
+                        var tern = (TernaryExpression)expression.Clone();
                         tern.Operand1 = Visit(tern.Operand1);
                         tern.Operand2 = Visit(tern.Operand2);
                         tern.Operand3 = Visit(tern.Operand3);
                         return tern;
 
                     case NodeType.Indexer:
-                        var indexer = (Indexer) expression.Clone();
+                        var indexer = (Indexer)expression.Clone();
                         indexer.Object = Visit(indexer.Object);
                         indexer.Operands = Visit(indexer.Operands);
                         return indexer;
@@ -1950,7 +1939,7 @@ namespace Microsoft.Contracts.Foxtrot
                         var binary = expression as BinaryExpression;
                         if (binary != null)
                         {
-                            binary = (BinaryExpression) binary.Clone();
+                            binary = (BinaryExpression)binary.Clone();
                             binary.Operand1 = Visit(binary.Operand1);
                             binary.Operand2 = Visit(binary.Operand2);
                             return binary;
@@ -1959,11 +1948,11 @@ namespace Microsoft.Contracts.Foxtrot
                         var unary = expression as UnaryExpression;
                         if (unary != null)
                         {
-                            unary = (UnaryExpression) unary.Clone();
+                            unary = (UnaryExpression)unary.Clone();
                             unary.Operand = Visit(unary.Operand);
                             return unary;
                         }
-                        
+
                         throw new NotImplementedException("ClosureNormalization Expression");
                 }
 
@@ -1975,12 +1964,12 @@ namespace Microsoft.Contracts.Foxtrot
                 if (expressionList == null) return null;
 
                 expressionList = expressionList.Clone();
-                
+
                 for (int i = 0; i < expressionList.Count; i++)
                 {
                     expressionList[i] = Visit(expressionList[i]);
                 }
-                
+
                 return expressionList;
             }
         }
@@ -1993,17 +1982,17 @@ namespace Microsoft.Contracts.Foxtrot
             ref StackDepthTracker dupStackTracker, out TypeNode closureType)
         {
             int indexForClosureCreationStatement = currentIndex;
-            
+
             closureType = null;
             Local introducedClosureLocal = null;
-            
+
             while (indexForClosureCreationStatement < firstBlock.Statements.Count)
             {
                 var closureCreationCandidate = firstBlock.Statements[indexForClosureCreationStatement];
                 closureType = IsClosureCreation(m, closureCreationCandidate);
-                
+
                 if (closureType != null) break;
-                
+
                 if (contractNodes.IsContractOrValidatorOrAbbreviatorCall(closureCreationCandidate))
                 {
                     // found contracts before closure creation, so get out
@@ -2012,7 +2001,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (closureCreationCandidate != null && closureCreationCandidate.SourceContext.IsValid)
                     return currentIndex;
-                
+
                 indexForClosureCreationStatement++;
             }
 
@@ -2040,21 +2029,21 @@ namespace Microsoft.Contracts.Foxtrot
                             {
                                 introducedClosureLocal = new Local(closureType);
                                 contractInitializer.Add(
-                                    new AssignmentStatement(introducedClosureLocal, (Expression) estmt.Expression.Clone()));
+                                    new AssignmentStatement(introducedClosureLocal, (Expression)estmt.Expression.Clone()));
                             }
                             else
                             {
-                                contractInitializer.Add((Statement) firstBlock.Statements[i].Clone());
+                                contractInitializer.Add((Statement)firstBlock.Statements[i].Clone());
                             }
                         }
                         else
                         {
-                            contractInitializer.Add((Statement) firstBlock.Statements[i].Clone());
+                            contractInitializer.Add((Statement)firstBlock.Statements[i].Clone());
                         }
                     }
                     else
                     {
-                        contractInitializer.Add((Statement) firstBlock.Statements[i].Clone());
+                        contractInitializer.Add((Statement)firstBlock.Statements[i].Clone());
                     }
 
                     if (preambleBlock != null)
@@ -2085,11 +2074,11 @@ namespace Microsoft.Contracts.Foxtrot
                     if (s == null) continue;
 
                     if (s.NodeType == NodeType.Nop) continue;
-                    
+
                     if (s.SourceContext.IsValid) break; // end of closure
-                    
+
                     if (s is Return) break; // Return is also an ExpressionStatement
-                    
+
                     ExpressionStatement exprSt = s as ExpressionStatement;
                     if (exprSt != null && exprSt.Expression.NodeType == NodeType.Dup)
                     {
@@ -2099,13 +2088,14 @@ namespace Microsoft.Contracts.Foxtrot
 
                     AssignmentStatement assign = s as AssignmentStatement;
                     if (assign == null) break;
-                    
+
                     MemberBinding mb = assign.Target as MemberBinding;
-                    
+
                     if (mb == null) break;
-                    
+
                     if (mb.TargetObject == null ||
-                        (mb.TargetObject.Type != closureType && mb.TargetObject.NodeType != NodeType.Pop)) break;
+                        (mb.TargetObject.Type != closureType && mb.TargetObject.NodeType != NodeType.Pop))
+                        break;
                 }
 
                 if (endOfAssignmentsToClosureFields - 1 < firstBlock.Statements.Count &&
@@ -2119,9 +2109,9 @@ namespace Microsoft.Contracts.Foxtrot
                 for (int i = indexForClosureCreationStatement + 1; i < endOfAssignmentsToClosureFields; i++)
                 {
                     var stmt = firstBlock.Statements[i];
-                    
+
                     if (stmt == null) continue;
-                    
+
                     if (preambleBlock != null)
                     {
                         preambleBlock.Statements.Add(stmt);
@@ -2136,7 +2126,7 @@ namespace Microsoft.Contracts.Foxtrot
                         }
                         else
                         {
-                            contractInitializer.Add((Statement) stmt.Clone());
+                            contractInitializer.Add((Statement)stmt.Clone());
                         }
                     }
 
@@ -2159,7 +2149,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (expr == null) return false;
 
             if (expr.Expression != null && expr.Expression.NodeType == NodeType.Dup) return true;
-            
+
             return false;
         }
 
@@ -2193,14 +2183,14 @@ namespace Microsoft.Contracts.Foxtrot
             postPreamble = null;
 
             if (m == null || m.Body == null || m.Body.Statements == null || !(m.Body.Statements.Count > 0)) return null;
-            
+
             Block firstBlock = m.Body.Statements[0] as Block;
             if (firstBlock == null) return null;
-            
+
             Block preambleBlock = new PreambleBlock(new StatementList(0));
 
             Local result;
-            
+
             int nextInstructionInFirstBlock = ExtractClosureInitializationAndLocalThis(m, firstBlock, contractNodes,
                 contractInitializer, preambleBlock, 0, out result, ref dupStackTracker);
 
@@ -2217,22 +2207,22 @@ namespace Microsoft.Contracts.Foxtrot
 
                 // Type (2b): base or deferring ctor call
 
-                found = SearchClump(m.Body.Statements, 
-                    delegate(Statement s)
+                found = SearchClump(m.Body.Statements,
+                    delegate (Statement s)
                     {
                         if (s == null) return false;
 
                         ExpressionStatement es = s as ExpressionStatement;
                         if (es == null) return false;
-                    
+
                         MethodCall mc = es.Expression as MethodCall;
                         if (mc == null) return false;
-                    
+
                         MemberBinding mb = mc.Callee as MemberBinding;
                         if (mb == null) return false;
-                    
+
                         Method callee = mb.BoundMember as Method;
-                    
+
                         // can't depend on the TargetObject being "this": it could be "pop" if
                         // the arguments to the call had any control flow
                         // e.g., a boolean short-circuit expression or a ternary expression.
@@ -2250,15 +2240,14 @@ namespace Microsoft.Contracts.Foxtrot
                         }
 
                         return false;
-
-                    }, 
+                    },
                     out i, out j);
 
                 if (found)
                 {
                     // for VB constructors and C# constructors with closures, we need to extend the scope to include field initializers
 
-                    Block b = (Block) m.Body.Statements[i];
+                    Block b = (Block)m.Body.Statements[i];
                     int k = j + 1;
                     Local extraClosureLocal = null;
                     int stackDepth = 0;
@@ -2277,99 +2266,99 @@ namespace Microsoft.Contracts.Foxtrot
                                 continue;
 
                             case NodeType.AssignmentStatement:
-                            {
-                                AssignmentStatement assgmt = (AssignmentStatement) b.Statements[k];
-                                MemberBinding mb = assgmt.Target as MemberBinding;
-                                if (mb == null)
                                 {
-                                    // we might be initializing locals for default values etc
-                                    if (stackDepth > 0) continue;
-                                    
+                                    AssignmentStatement assgmt = (AssignmentStatement)b.Statements[k];
+                                    MemberBinding mb = assgmt.Target as MemberBinding;
+                                    if (mb == null)
+                                    {
+                                        // we might be initializing locals for default values etc
+                                        if (stackDepth > 0) continue;
+
+                                        goto doneWithFieldInits;
+                                    }
+
+                                    if (!(mb.BoundMember is Field))
+                                    {
+                                        // we might be initializing locals for default values etc
+                                        if (stackDepth > 0) continue;
+                                        goto doneWithFieldInits;
+                                    }
+
+                                    if (mb.TargetObject == null)
+                                    {
+                                        // we might be initializing locals for default values etc
+                                        if (stackDepth > 0) continue;
+                                        goto doneWithFieldInits;
+                                    }
+
+                                    // there are 2 cases here. Either we are assigning to this.f = ..., which is a field initialization,
+                                    // or it is initializing the closure field for "this" with this.
+                                    if (mb.TargetObject.NodeType == NodeType.This)
+                                    {
+                                        // okay field initialization
+                                        continue;
+                                    }
+
+                                    if (mb.TargetObject.NodeType == NodeType.Pop)
+                                    {
+                                        // okay field initialization (popping this)
+                                        stackDepth--;
+                                        continue;
+                                    }
+
+                                    // we might also be initializing the extra closure fields, if the target is the extraClosureLocal.
+                                    if (mb.TargetObject == extraClosureLocal)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (mb.TargetObject.NodeType == NodeType.Local && assgmt.Source != null &&
+                                        assgmt.Source.NodeType == NodeType.This && mb.BoundMember.Name != null &&
+                                        (mb.BoundMember.Name.Name.EndsWith("_this") || mb.BoundMember.Name.Name == "$VB$Me"))
+                                    {
+                                        // closure initialization (storing this)
+                                        // add it to postPreamble, since it needs to be inserted for duplicate closure object
+                                        postPreamble = new Block(new StatementList(1));
+                                        postPreamble.Statements.Add((Statement)b.Statements[k].Clone());
+                                        continue;
+                                    }
+
                                     goto doneWithFieldInits;
                                 }
-
-                                if (!(mb.BoundMember is Field))
-                                {
-                                    // we might be initializing locals for default values etc
-                                    if (stackDepth > 0) continue;
-                                    goto doneWithFieldInits;
-                                }
-
-                                if (mb.TargetObject == null)
-                                {
-                                    // we might be initializing locals for default values etc
-                                    if (stackDepth > 0) continue;
-                                    goto doneWithFieldInits;
-                                }
-
-                                // there are 2 cases here. Either we are assigning to this.f = ..., which is a field initialization,
-                                // or it is initializing the closure field for "this" with this.
-                                if (mb.TargetObject.NodeType == NodeType.This)
-                                {
-                                    // okay field initialization
-                                    continue;
-                                }
-
-                                if (mb.TargetObject.NodeType == NodeType.Pop)
-                                {
-                                    // okay field initialization (popping this)
-                                    stackDepth--;
-                                    continue;
-                                }
-
-                                // we might also be initializing the extra closure fields, if the target is the extraClosureLocal.
-                                if (mb.TargetObject == extraClosureLocal)
-                                {
-                                    continue;
-                                }
-
-                                if (mb.TargetObject.NodeType == NodeType.Local && assgmt.Source != null &&
-                                    assgmt.Source.NodeType == NodeType.This && mb.BoundMember.Name != null &&
-                                    (mb.BoundMember.Name.Name.EndsWith("_this") || mb.BoundMember.Name.Name == "$VB$Me"))
-                                {
-                                    // closure initialization (storing this)
-                                    // add it to postPreamble, since it needs to be inserted for duplicate closure object
-                                    postPreamble = new Block(new StatementList(1));
-                                    postPreamble.Statements.Add((Statement) b.Statements[k].Clone());
-                                    continue;
-                                }
-
-                                goto doneWithFieldInits;
-                            }
 
                             case NodeType.ExpressionStatement:
-                            {
-                                ExpressionStatement estmt = (ExpressionStatement) b.Statements[k];
-                                if (estmt.Expression != null && estmt.Expression is This)
                                 {
-                                    // handle special push/pop pattern occurring occasionally
-                                    stackDepth++;
+                                    ExpressionStatement estmt = (ExpressionStatement)b.Statements[k];
+                                    if (estmt.Expression != null && estmt.Expression is This)
+                                    {
+                                        // handle special push/pop pattern occurring occasionally
+                                        stackDepth++;
+                                        continue;
+                                    }
+
+                                    // handle ctor calls on addresses of value types
+                                    // NOTE: this could be mistakenly the first user statement.
+                                    MethodCall mc = estmt.Expression as MethodCall;
+                                    if (mc == null) goto doneWithFieldInits;
+
+                                    MemberBinding mb = mc.Callee as MemberBinding;
+                                    if (mb == null) goto doneWithFieldInits;
+
+                                    if (!(mb.BoundMember is InstanceInitializer)) goto doneWithFieldInits;
+
+                                    if (!mb.BoundMember.DeclaringType.IsValueType) goto doneWithFieldInits;
+
+                                    if (mb.TargetObject.NodeType != NodeType.AddressOf) goto doneWithFieldInits;
+
                                     continue;
                                 }
-
-                                // handle ctor calls on addresses of value types
-                                // NOTE: this could be mistakenly the first user statement.
-                                MethodCall mc = estmt.Expression as MethodCall;
-                                if (mc == null) goto doneWithFieldInits;
-
-                                MemberBinding mb = mc.Callee as MemberBinding;
-                                if (mb == null) goto doneWithFieldInits;
-                                
-                                if (!(mb.BoundMember is InstanceInitializer)) goto doneWithFieldInits;
-                                
-                                if (!mb.BoundMember.DeclaringType.IsValueType) goto doneWithFieldInits;
-                                
-                                if (mb.TargetObject.NodeType != NodeType.AddressOf) goto doneWithFieldInits;
-                                
-                                continue;
-                            }
 
                             default:
                                 goto doneWithFieldInits;
                         }
                     }
 
-                    doneWithFieldInits:
+                doneWithFieldInits:
 
                     StatementList sl2 = ExtractClump(m.Body.Statements, 0, 0, i, k - 1);
                     preambleBlock.Statements.Add(new Block(sl2));
@@ -2400,32 +2389,32 @@ namespace Microsoft.Contracts.Foxtrot
                                 continue;
 
                             case NodeType.AssignmentStatement:
-                            {
-                                AssignmentStatement assgmt = (AssignmentStatement) b.Statements[k];
-                                MemberBinding mb = assgmt.Target as MemberBinding;
-                                
-                                if (mb == null) goto doneWithFieldInits;
-
-                                if (!(mb.BoundMember is Field)) goto doneWithFieldInits;
-                                
-                                if (mb.TargetObject == null) goto doneWithFieldInits;
-                                
-                                // we might be initializing the extra closure fields, if the target is the extraClosureLocal.
-                                if (mb.TargetObject == extraClosureLocal)
                                 {
-                                    continue;
-                                }
+                                    AssignmentStatement assgmt = (AssignmentStatement)b.Statements[k];
+                                    MemberBinding mb = assgmt.Target as MemberBinding;
 
-                                goto doneWithFieldInits;
-                            }
+                                    if (mb == null) goto doneWithFieldInits;
+
+                                    if (!(mb.BoundMember is Field)) goto doneWithFieldInits;
+
+                                    if (mb.TargetObject == null) goto doneWithFieldInits;
+
+                                    // we might be initializing the extra closure fields, if the target is the extraClosureLocal.
+                                    if (mb.TargetObject == extraClosureLocal)
+                                    {
+                                        continue;
+                                    }
+
+                                    goto doneWithFieldInits;
+                                }
 
                             default:
                                 goto doneWithFieldInits;
                         }
                     }
 
-                    doneWithFieldInits:
-                    
+                doneWithFieldInits:
+
                     for (int toCopy = nextInstructionInFirstBlock; toCopy < k; toCopy++)
                     {
                         preambleBlock.Statements.Add(firstBlock.Statements[toCopy]);
@@ -2465,7 +2454,7 @@ namespace Microsoft.Contracts.Foxtrot
                     if (!s.SourceContext.Hidden) break;
 
                     var es = s as ExpressionStatement;
-                    
+
                     if (es != null)
                     {
                         MethodCall call = es.Expression as MethodCall;
@@ -2476,9 +2465,9 @@ namespace Microsoft.Contracts.Foxtrot
 
                             var encMethod = mb.BoundMember as Method;
                             if (encMethod == null) break;
-                            
+
                             if (encMethod.Name.Name != "__ENCAddToList") break;
-                            
+
                             // okay, we are calling the VB memory leak, put it into the preamble
                             goto addToPreamble;
                         }
@@ -2488,20 +2477,20 @@ namespace Microsoft.Contracts.Foxtrot
                 }
 
                 if (s == null) continue;
-                
-            addToPreamble:
+
+                addToPreamble:
                 preamble.Add(s);
-                
+
                 var oldCount = firstBlock.Statements.Count;
                 var oldStats = firstBlock.Statements;
-                
+
                 firstBlock.Statements[currentIndex] = null;
-                
+
                 Contract.Assert(oldStats == firstBlock.Statements);
                 Contract.Assert(oldCount == firstBlock.Statements.Count);
-                
+
                 currentIndex++;
-                
+
                 Contract.Assert(currentIndex <= firstBlock.Statements.Count);
             }
 
@@ -2527,7 +2516,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 return true;
             }
-            
+
             closureLocal = null;
             return false;
         }
@@ -2549,7 +2538,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 return null;
             }
-            
+
             if (IsClosureType(containingMethod.DeclaringType, assign.Target.Type))
             {
                 return assign.Target.Type;
@@ -2565,7 +2554,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             var construct = expr.Expression as Construct;
             if (construct == null) return null;
-            
+
             if (IsClosureType(containingMethod.DeclaringType, construct.Type))
             {
                 return construct.Type;
@@ -2601,11 +2590,11 @@ namespace Microsoft.Contracts.Foxtrot
             type = Unspecialize(type);
 
             if (type.DeclaringType == null) return false;
-            
+
             if (type.IsVisibleOutsideAssembly) return false;
-            
+
             if (!IsInsideOf(type, parent)) return false;
-            
+
             if (!IsCompilerGenerated(type)) return false;
 
             return true;
@@ -2616,25 +2605,25 @@ namespace Microsoft.Contracts.Foxtrot
         {
             Contract.Requires(container != null);
             Contract.Requires(method != null);
-            
+
             method = Unspecialize(method);
-            
+
             var type = method.DeclaringType;
-            
+
             Debug.Assert(TypeNode.IsCompleteTemplate(type));
-            
+
             if (IsClosureType(container, type)) return true;
-            
+
             // can be a direct member of a type inside container
-            
+
             if (!method.IsPrivate) return false;
-            
+
             if (method.DeclaringMember != null) return false; // property or event helpers
-            
+
             if (!IsInsideOf(method, container)) return false;
-            
+
             if (!IsCompilerGenerated(method)) return false;
-            
+
             return true;
         }
 
@@ -2647,17 +2636,17 @@ namespace Microsoft.Contracts.Foxtrot
             var type = Unspecialize(field.DeclaringType);
 
             if (IsClosureType(container, type)) return true;
-            
+
             // can be a direct member of a type inside container for caching delegates
-            
+
             if (!field.IsPrivate) return false;
-            
+
             if (!(field.Type.IsDelegateType())) return false;
-            
+
             if (!IsInsideOf(field, container)) return false;
-            
+
             if (!IsCompilerGenerated(field)) return false;
-            
+
             return true;
         }
 
@@ -2714,11 +2703,11 @@ namespace Microsoft.Contracts.Foxtrot
             for (int i = 0; i < attributes.Count; i++)
             {
                 var attr = attributes[i];
-                
+
                 if (attr == null) continue;
-                
+
                 if (attr.Type == null) continue;
-                
+
                 if (attributeName.Matches(attr.Type.Name)) return attr;
             }
 
@@ -2753,24 +2742,24 @@ namespace Microsoft.Contracts.Foxtrot
             if (member == null) return null;
 
             AttributeNode contractClass = member.Attributes.GetAttribute(attributeName);
-            
+
             if (contractClass == null)
                 return null;
-            
+
             if (contractClass.Expressions == null) return null;
-            
+
             if (contractClass.Expressions.Count <= position) return null;
-            
+
             Expression typeExpr = contractClass.GetPositionalArgument(position);
-            
+
             if (typeExpr == null)
                 return null;
-            
+
             Literal literal = typeExpr as Literal;
-            
+
             if (literal == null)
                 return null;
-            
+
             return literal.Value;
         }
 
@@ -2788,7 +2777,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 Statement s = b.Statements[i];
                 if (s == null || s.NodeType == NodeType.Nop) continue;
-                
+
                 if (IsClosureCreation(containing, s, out closureLocal))
                 {
                     if (closureLocal != null)
@@ -2975,8 +2964,8 @@ namespace Microsoft.Contracts.Foxtrot
             foreach (Member mem in sourceType.Members)
             {
                 if (mem == null) continue;
-                Member newMember = (Member) dup.DuplicateFor[mem.UniqueKey];
-                if (newMember != null && mem != (Member) targetType && newMember.DeclaringType == targetType &&
+                Member newMember = (Member)dup.DuplicateFor[mem.UniqueKey];
+                if (newMember != null && mem != (Member)targetType && newMember.DeclaringType == targetType &&
                     !targetType.Members.Contains(newMember))
                 {
                     TypeNode nestedType = mem as TypeNode;
@@ -2992,7 +2981,7 @@ namespace Microsoft.Contracts.Foxtrot
                         // don't add instantiations
                         continue;
                     }
-                    
+
                     // second conjunct is to make sure we don't recursively add a nested type to itself
                     // e.g., ArrayList+IListWrapper extends ArrayList and so inherits contracts from it
                     // so this method could be called with sourceMethod "ArrayList.M" and targetMethod "ArrayList+IListWrapper.M"
@@ -3017,11 +3006,11 @@ namespace Microsoft.Contracts.Foxtrot
             int memindex, TypeNode targetType)
         {
             Member mem = fmd.MembersToDuplicate[memindex];
-            
+
             TypeNode nestedType = mem as TypeNode;
             Method closureInstanceMethod = mem as Method;
             Method closureMethodTemplate = closureInstanceMethod;
-            
+
             while (closureMethodTemplate != null && closureMethodTemplate.Template != null)
             {
                 closureMethodTemplate = closureMethodTemplate.Template;
@@ -3032,7 +3021,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // if nested type is nested inside another type to be duplicated, skip it
                 if (nestedType.DeclaringType != null && fmd.MembersToDuplicate.Contains(nestedType.DeclaringType))
                     return;
-                
+
                 // For call-site wrappers, we end up having multiple methods from the same original contract method
                 // thus we have to avoid duplicating the same closure type multiple times.
                 var duplicatedNestedType = FindExistingClosureType(targetType, nestedType);
@@ -3073,7 +3062,7 @@ namespace Microsoft.Contracts.Foxtrot
                         //dup.DuplicateFor[oldSelfInstanceType.UniqueKey] = newSelfInstanceType;
                         // specialize duplicated type
                         var specializer = new Specializer(targetType.DeclaringModule, originalTemplateParameters, dupTPs);
-                        
+
                         specializer.VisitTypeParameterList(dupTPs); // for constraints etc.
                         specializer.VisitTypeNode(duplicatedNestedType);
 
@@ -3081,7 +3070,7 @@ namespace Microsoft.Contracts.Foxtrot
                             originalTemplateParameters, dupTPs);
 
                         bodySpecializer.Visit(duplicatedNestedType);
-                        
+
                         // after copying the closure class, clear the self specialization forwarding
                         //  OriginalDecl<X,Y,Z>.NestedType<A,B,C> -> WrapperType<U,V,W>.NewNestedType<X,Y,Z,A,B,C>
                         //dup.DuplicateFor[oldSelfInstanceType.UniqueKey] = null;
@@ -3122,10 +3111,10 @@ namespace Microsoft.Contracts.Foxtrot
                 Method closureMethod = closureMethodTemplate;
 
                 Debug.Assert(closureMethod.Template == null);
-                
+
                 //var m = FindExistingClosureMethod(targetType, closureMethod);
                 Method m = null;
-                
+
                 // why did we ever try to find an existing one? This can capture a completely unrelated closure that happens to match by name.
                 if (m == null)
                 {
@@ -3151,15 +3140,15 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         var oldThis = dupMethod.ThisParameter;
                         oldThis.Type = dup.PossiblyRemapContractClassToInterface(oldThis.Type);
-                        
+
                         dupMethod.Flags |= MethodFlags.Static;
                         dupMethod.CallingConvention &= ~CallingConventionFlags.HasThis;
-                        
+
                         var oldParameters = dupMethod.Parameters;
-                        
+
                         dupMethod.Parameters = new ParameterList(oldParameters.Count + 1);
                         dupMethod.Parameters.Add(oldThis); // make explicit
-                        
+
                         for (int i = 0; i < oldParameters.Count; i++)
                         {
                             dupMethod.Parameters.Add(oldParameters[i]);
@@ -3225,7 +3214,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                     var targetConsolidated = targetType.ConsolidatedTemplateParameters;
                     if (targetConsolidated == null || targetConsolidated.Count == 0) return sourceConsolidated;
-                    
+
                     if (sourceConsolidated.Count == targetConsolidated.Count) return null; // no extra type parameters
 
                     result = new TypeNodeList(sourceConsolidated.Count - targetConsolidated.Count);
@@ -3233,7 +3222,7 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         if (i < targetConsolidated.Count) continue;
                         result.Add(sourceConsolidated[i]);
-                        
+
                         return result;
                     }
                 }
@@ -3244,11 +3233,11 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         var sourceConsolidated = sourceType.ConsolidatedTemplateParameters;
                         if (sourceConsolidated == null || sourceConsolidated.Count == 0) return null;
-                        
+
                         var targetConsolidated = targetType.ConsolidatedTemplateParameters;
-                        
+
                         if (targetConsolidated == null || targetConsolidated.Count == 0) return sourceConsolidated;
-                        
+
                         if (sourceConsolidated.Count == targetConsolidated.Count)
                             return null; // no extra type parameters
 
@@ -3280,7 +3269,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             var tcount1 = t1.TemplateParameters == null ? 0 : t1.TemplateParameters.Count;
             var tcount2 = t2.TemplateParameters == null ? 0 : t2.TemplateParameters.Count;
-            
+
             return tcount1 == tcount2;
         }
 
@@ -3323,7 +3312,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 originals = originals.Clone();
             }
-            
+
             if (closureMethod.TemplateParameters != null && closureMethod.TemplateParameters.Count > 0)
             {
                 if (originals == null)
@@ -3348,7 +3337,7 @@ namespace Microsoft.Contracts.Foxtrot
             actuals = closureInstanceMethod.DeclaringType.ConsolidatedTemplateArguments == null
                 ? null
                 : closureInstanceMethod.DeclaringType.ConsolidatedTemplateArguments.Clone();
-            
+
             if (closureInstanceMethod.TemplateArguments != null && closureInstanceMethod.TemplateArguments.Count > 0)
             {
                 if (actuals == null)
@@ -3373,22 +3362,22 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 // setup forwarding of tparams to method params
                 ITypeParameter tp = originals[i] as ITypeParameter;
-                
+
                 TypeNode mtp = NewEqualMethodTypeParameter(tp, dupMethod, i);
-                
+
                 tparams[i] = mtp;
             }
 
             var specializer = new Specializer(declaringModule, originals, tparams);
-            
+
             // System.Console.WriteLine("Made {0} a generic method", dupMethod.FullName);
             dupMethod.TemplateParameters = tparams;
             dupMethod.IsGeneric = true;
 
             specializer.VisitMethod(dupMethod);
-            
+
             var bodySpecializer = new MethodBodySpecializer(declaringModule, originals, tparams);
-            
+
             bodySpecializer.CurrentType = dupMethod.DeclaringType;
             bodySpecializer.CurrentMethod = dupMethod;
             bodySpecializer.VisitBlock(dupMethod.Body);
@@ -3400,18 +3389,18 @@ namespace Microsoft.Contracts.Foxtrot
 
             Duplicator dup = new Duplicator(declaringType.DeclaringModule, null);
             dup.FindTypesToBeDuplicated(typeParameters);
-            
+
             TypeNodeList result = dup.VisitTypeParameterList(typeParameters);
-            
+
             for (int i = 0; i < result.Count; i++)
             {
                 TypeNode tn = result[i];
-                
+
                 tn.DeclaringType = declaringType;
                 tn.DeclaringModule = declaringType.DeclaringModule;
 
-                ITypeParameter tp = (ITypeParameter) tn;
-                
+                ITypeParameter tp = (ITypeParameter)tn;
+
                 tp.ParameterListIndex = offsetIndex + i;
                 tp.DeclaringMember = declaringType;
             }
@@ -3429,11 +3418,11 @@ namespace Microsoft.Contracts.Foxtrot
 
                 mcp.Interfaces = cp.Interfaces.Clone();
                 mcp.BaseClass = cp.BaseClass;
-                
+
                 mcp.TypeParameterFlags = cp.TypeParameterFlags & ~TypeParameterFlags.VarianceMask;
                 mcp.DeclaringType = declaringType;
                 mcp.DeclaringModule = declaringType.DeclaringModule;
-                
+
                 mcp.Name = cp.Name;
                 mcp.ParameterListIndex = index;
                 mcp.DeclaringMember = declaringMethod;
@@ -3447,12 +3436,12 @@ namespace Microsoft.Contracts.Foxtrot
                 MethodTypeParameter mp = new MethodTypeParameter();
 
                 mp.Interfaces = tp.Interfaces.Clone();
-                
+
                 mp.TypeParameterFlags = tp.TypeParameterFlags & ~TypeParameterFlags.VarianceMask;
-                
+
                 mp.DeclaringType = declaringType;
                 mp.DeclaringModule = declaringType.DeclaringModule;
-                
+
                 mp.Name = tp.Name;
                 mp.ParameterListIndex = index;
                 mp.DeclaringMember = declaringMethod;
@@ -3469,14 +3458,14 @@ namespace Microsoft.Contracts.Foxtrot
             if (cp != null)
             {
                 ClassParameter mcp = new ClassParameter();
-                
+
                 mcp.Interfaces = dup.VisitInterfaceReferenceList(cp.Interfaces);
                 mcp.BaseClass = cp.BaseClass;
-                
+
                 mcp.TypeParameterFlags = cp.TypeParameterFlags & ~TypeParameterFlags.VarianceMask;
                 mcp.DeclaringType = declaringType;
                 mcp.DeclaringModule = declaringType.DeclaringModule;
-                
+
                 mcp.Name = cp.Name;
                 mcp.ParameterListIndex = index;
                 mcp.DeclaringMember = declaringType;
@@ -3491,10 +3480,10 @@ namespace Microsoft.Contracts.Foxtrot
 
                 mp.Interfaces = dup.VisitInterfaceReferenceList(tp.Interfaces);
                 mp.TypeParameterFlags = tp.TypeParameterFlags & ~TypeParameterFlags.VarianceMask;
-                
+
                 mp.DeclaringType = declaringType;
                 mp.DeclaringModule = declaringType.DeclaringModule;
-                
+
                 mp.Name = tp.Name;
                 mp.ParameterListIndex = index;
                 mp.DeclaringMember = declaringType;
@@ -3511,16 +3500,16 @@ namespace Microsoft.Contracts.Foxtrot
         internal static void SafeAddMember(TypeNode targetType, Member duplicatedMember, Member original)
         {
             Debug.Assert(targetType.Template == null);
-            
+
             if (targetType.Members.Contains(duplicatedMember)) return;
 
             // System.Console.WriteLine("Adding duped member {0} from {1}", duplicatedMember.FullName, original.FullName);
             var newName = CopiedMemberName(original);
             var newVersionedName = NextUnusedMemberName(targetType, newName);
-            
+
             duplicatedMember.Name = Identifier.For(newVersionedName);
             duplicatedMember.EnsureMangledName();
-            
+
             targetType.Members.Add(duplicatedMember);
         }
 
@@ -3570,7 +3559,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (type.IsGeneric && type.TemplateParameters != null)
             {
                 var tcount = type.TemplateParameters.Count;
-                
+
                 if (tcount == 0) return name;
 
                 var lastTick = name.LastIndexOf(TargetPlatform.GenericTypeNamesMangleChar);
@@ -3615,7 +3604,7 @@ namespace Microsoft.Contracts.Foxtrot
         internal static Method GetImplementation(TypeNode contractClass, Method abstractMethod)
         {
             Method m = contractClass.FindShadow(abstractMethod);
-            
+
             if (m != null) // implicit implementation
                 return m;
 
@@ -3632,7 +3621,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                         if (ifaceMethod == abstractMethod || ifaceMethod.Template == abstractMethod)
                             return m; // explicit implementation
-                        
+
                         if (ifaceMethod.Template != null && ifaceMethod.Template == abstractMethod.Template)
                         {
                             return m;
@@ -3665,7 +3654,7 @@ namespace Microsoft.Contracts.Foxtrot
             statementIndex = -1;
 
             if (!IsClump(clump)) return false;
-            
+
             for (int i = 0, n = clump.Count; i < n; i++)
             {
                 Block b = clump[i] as Block;
@@ -3674,12 +3663,12 @@ namespace Microsoft.Contracts.Foxtrot
                 for (int j = 0, m = b.Statements == null ? 0 : b.Statements.Count; j < m; j++)
                 {
                     Statement s = b.Statements[j];
-                    
+
                     if (test(s))
                     {
                         blockIndex = i;
                         statementIndex = j;
-                        
+
                         return true;
                     }
                 }
@@ -3720,9 +3709,9 @@ namespace Microsoft.Contracts.Foxtrot
             StatementList clump = new StatementList();
 
             // first extract the tail of the first block into a new block.
-            Block oldFirstBlock = (Block) blocks[firstBlockIndex];
+            Block oldFirstBlock = (Block)blocks[firstBlockIndex];
             Block newFirstBlock = new Block(new StatementList());
-            
+
             if (oldFirstBlock != null)
             {
                 var count = firstBlockIndex == lastBlockIndex ? lastStmtIndex + 1 : oldFirstBlock.Statements.Count;
@@ -3730,7 +3719,7 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     var stmt = oldFirstBlock.Statements[stmtIndex];
                     newFirstBlock.Statements.Add(stmt);
-                    
+
                     if (stmt == null) continue;
 
                     oldFirstBlock.Statements[stmtIndex] = assumeBlock;
@@ -3739,17 +3728,17 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             clump.Add(newFirstBlock);
-            
+
             var currentBlockIndex = firstBlockIndex + 1;
-            
+
             if (currentBlockIndex > lastBlockIndex) return clump;
 
             // setup info about forwarding branches to new last full block
             Block newLastBlock = null;
 
             var lastFullBlock = lastBlockIndex - 1;
-            var oldLastBlock = (Block) blocks[lastBlockIndex];
-            
+            var oldLastBlock = (Block)blocks[lastBlockIndex];
+
             if (oldLastBlock != null && lastStmtIndex == oldLastBlock.Statements.Count - 1)
             {
                 // last block is also fully used.
@@ -3774,16 +3763,16 @@ namespace Microsoft.Contracts.Foxtrot
             // Next extract full blocks between currentBlockIndex and including lastFullBlock
             for (; currentBlockIndex <= lastFullBlock; currentBlockIndex++)
             {
-                var block = (Block) blocks[currentBlockIndex];
+                var block = (Block)blocks[currentBlockIndex];
 
                 // don't skip null blocks since context relies on number
                 clump.Add(block);
 
                 if (block == null) continue;
-                
+
                 blocks[currentBlockIndex] = assumeBlock;
                 assumeBlock = null;
-                
+
                 if (newLastBlock != null && block.Statements != null && block.Statements.Count > 0)
                 {
                     // check if we need to adjust branch to last block
@@ -3820,25 +3809,25 @@ namespace Microsoft.Contracts.Foxtrot
         internal static bool GetLastSourceContext(StatementList clump, out SourceContext sctx)
         {
             sctx = new SourceContext();
-            
+
             bool found = false;
-            
+
             if (clump == null || (!(0 < clump.Count))) return found;
-            
+
             for (int i = clump.Count - 1; 0 <= i && !found; i--)
             {
                 Block b = clump[i] as Block;
                 if (b == null) continue;
-                
+
                 for (int j = b.Statements == null ? 0 : b.Statements.Count - 1; 0 <= j; j--)
                 {
                     Statement s = b.Statements[j];
                     if (s == null) continue;
-                    
+
                     if (s.NodeType == NodeType.Nop) continue; // skip curlys
-                    
+
                     sctx = s.SourceContext;
-                    
+
                     if (sctx.IsValid)
                     {
                         found = true;
@@ -3853,7 +3842,7 @@ namespace Microsoft.Contracts.Foxtrot
         public static TypeNode IsContractTypeForSomeOtherTypeUnspecialized(TypeNode t, ContractNodes contractNodes)
         {
             TypeNode unspecializedType = GetTypeFromAttribute(t, ContractNodes.ContractClassForAttributeName);
-            
+
             return unspecializedType;
         }
 
@@ -3862,7 +3851,7 @@ namespace Microsoft.Contracts.Foxtrot
             var unspecializedType = IsContractTypeForSomeOtherTypeUnspecialized(t, contractNodes);
 
             if (unspecializedType == null) return null;
-            
+
             // else go search t's list of interfaces/base classes to find the specialized type
             // (which might be specialized only with a type parameter, but that's better than
             // returning the unspecialized one from the attribute, because the unspecialized one
@@ -3874,7 +3863,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             if (unspecializedType == t.BaseType || unspecializedType == t.BaseType.Template) return t.BaseType;
-            
+
             return null;
         }
 
@@ -3883,17 +3872,17 @@ namespace Microsoft.Contracts.Foxtrot
             if (Class == null) return false;
 
             if (Class.Attributes == null) return false;
-            
+
             for (int i = 0; i < Class.Attributes.Count; i++)
             {
                 var attr = Class.Attributes[i];
-                
+
                 if (attr == null) continue;
-                
+
                 if (attr.Type == null) continue;
-                
+
                 if (attr.Type.Name == null) continue;
-                
+
                 if (attr.Type.Name.Name == "ContractClassForAttribute") return true;
             }
 
@@ -3911,11 +3900,11 @@ namespace Microsoft.Contracts.Foxtrot
         {
             var template = setter;
             if (template.Template != null) template = template.Template;
-            
+
             var f = BackingFieldFinder.BackingField(template);
-            
+
             if (f == null) throw new Exception("backing field not found");
-            
+
             return setter.DeclaringType.GetField(f.Name);
         }
 
@@ -3923,25 +3912,25 @@ namespace Microsoft.Contracts.Foxtrot
         {
             var template = setter;
             if (template.Template != null) template = template.Template;
-            
+
             var f = BackingFieldFinder.BackingField(template);
-            
+
             if (f == null) return null;
-            
+
             return setter.DeclaringType.GetField(f.Name);
         }
 
         private class BackingFieldFinder : Inspector
         {
-            private Field Found;
+            private Field _found;
 
             public static Field BackingField(Method setter)
             {
                 var v = new BackingFieldFinder();
-                
+
                 v.Visit(setter.Body);
-                
-                return v.Found;
+
+                return v._found;
             }
 
             public override void VisitMemberBinding(MemberBinding memberBinding)
@@ -3949,7 +3938,7 @@ namespace Microsoft.Contracts.Foxtrot
                 Field f = memberBinding.BoundMember as Field;
                 if (f != null)
                 {
-                    this.Found = f;
+                    _found = f;
                     return;
                 }
 
@@ -3994,23 +3983,23 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (member.DeclaringType == null)
             {
-                return Unspecialize((TypeNode) member);
+                return Unspecialize((TypeNode)member);
             }
 
             var template = member.DeclaringType.Template;
             if (template == null) return member;
 
             while (template.Template != null) template = template.Template;
-            
+
             MemberList specializedMembers = member.DeclaringType.Members;
             MemberList unspecializedMembers = template.Members;
-            
+
             for (int i = 0, n = specializedMembers.Count; i < n; i++)
             {
                 if (specializedMembers[i] != member) continue;
-                
+
                 var unspecializedMember = unspecializedMembers[i];
-                
+
                 if (unspecializedMember == null)
                 {
                     Contract.Assume(false, "Should find unspeced member here");
@@ -4021,7 +4010,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             Contract.Assume(false, "Couldn't find unspecialized member");
-            
+
             return member;
         }
 
@@ -4030,11 +4019,11 @@ namespace Microsoft.Contracts.Foxtrot
             if (!IsCompilerGenerated(method)) return false;
 
             if (IsClosureType(referringMethodDeclaringType, method.DeclaringType)) return true;
-            
+
             // if static/instance there might be no closure
-            
+
             if (method.DeclaringType == referringMethodDeclaringType) return true;
-            
+
             return false;
         }
 
@@ -4060,9 +4049,9 @@ namespace Microsoft.Contracts.Foxtrot
             while (current != null)
             {
                 while (current.Template != null) current = current.Template;
-                
+
                 if (IsExceptionType(current)) return true;
-                
+
                 current = current.BaseType;
             }
 
@@ -4074,7 +4063,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (type == expected) return true;
 
             if (type == null) return false;
-            
+
             if (expected == null) return false;
 
             if (TemplateParameterCount(type) == TemplateParameterCount(expected) &&
@@ -4082,16 +4071,16 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 return true;
             }
-            
+
             return false;
         }
 
         private static int TemplateParameterCount(TypeNode type)
         {
             if (type == null) return 0;
-            
+
             if (type.TemplateParameters == null) return 0;
-            
+
             return type.TemplateParameters.Count;
         }
 
@@ -4101,12 +4090,12 @@ namespace Microsoft.Contracts.Foxtrot
             if (block == null) return false;
 
             if (block.Statements == null) return false;
-            
+
             foreach (var s in block.Statements)
             {
                 if (IsNonTrivial(s)) return true;
             }
-            
+
             return false;
         }
 
@@ -4116,11 +4105,11 @@ namespace Microsoft.Contracts.Foxtrot
             if (s == null) return false;
 
             Block b = s as Block;
-            
+
             if (b != null) return (IsNonTrivial(b));
-            
+
             if (s.NodeType == NodeType.Nop) return false;
-            
+
             return true;
         }
 
@@ -4137,26 +4126,26 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 var genericType = instantiatedType.Template;
                 var contractClass = GetTypeFromAttribute(genericType, ContractNodes.ContractClassAttributeName) as Class;
-                
+
                 if (contractClass == null) return null;
 
                 // instantiate
                 Debug.Assert(contractClass.ConsolidatedTemplateParameters != null &&
                              contractClass.ConsolidatedTemplateParameters.Count ==
                              instantiatedType.ConsolidatedTemplateArguments.Count);
-                
+
                 TypeNode instantiatedContractClass =
                     contractClass.GetConsolidatedTemplateInstance(instantiatedType.DeclaringModule, null,
                         contractClass.DeclaringType, instantiatedType.TemplateArguments,
                         instantiatedType.ConsolidatedTemplateArguments);
-                
+
                 return instantiatedContractClass;
             }
             else
             {
                 var contractClass =
                     GetTypeFromAttribute(instantiatedType, ContractNodes.ContractClassAttributeName) as Class;
-                
+
                 if (contractClass == null) return null;
 
                 return contractClass;
@@ -4172,9 +4161,9 @@ namespace Microsoft.Contracts.Foxtrot
         public static Method GetContractMethod(Method instantiatedMethod)
         {
             if (instantiatedMethod == null) return null;
-            
+
             Method candidate = instantiatedMethod;
-            
+
             if (candidate.IsAbstract)
             {
                 TypeNode contractClass = GetContractClass(instantiatedMethod.DeclaringType);
@@ -4183,7 +4172,7 @@ namespace Microsoft.Contracts.Foxtrot
                     candidate = GetImplementation(contractClass, instantiatedMethod);
                 }
             }
-            
+
             if (candidate != null)
             {
                 if (candidate.Contract != null &&

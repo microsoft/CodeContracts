@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Compiler;
 
@@ -25,7 +14,7 @@ namespace Microsoft.Contracts.Foxtrot
     /// </summary>
     internal sealed class GatherLocals : Inspector
     {
-        private Local exemptResultLocal;
+        private Local _exemptResultLocal;
         public TrivialHashtable Locals = new TrivialHashtable();
 
         /// <summary>
@@ -33,7 +22,7 @@ namespace Microsoft.Contracts.Foxtrot
         /// </summary>
         private bool IsLocalExempt(Local local)
         {
-            if (local == exemptResultLocal) return true;
+            if (local == _exemptResultLocal) return true;
 
             bool strict = false;
 
@@ -47,7 +36,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             return HelperMethods.IsCompilerGenerated(localType)
                    || local.Name.Name == "_preConditionHolds"
-                // introduced by extractor itself for legacy pre-conditions
+                   // introduced by extractor itself for legacy pre-conditions
                    || (strict
                        ? (LocalNameIsExempt(local.Name.Name))
                        : (HelperMethods.IsDelegateType(localType)
@@ -78,7 +67,7 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (assignment.Target is Local && IsResultExpression(assignment.Source))
             {
-                exemptResultLocal = (Local) assignment.Target;
+                _exemptResultLocal = (Local)assignment.Target;
             }
 
             base.VisitAssignmentStatement(assignment);

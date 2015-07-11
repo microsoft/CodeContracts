@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Compiler;
 using System.Diagnostics.Contracts;
@@ -29,13 +18,13 @@ namespace Microsoft.Contracts.Foxtrot
     /// </summary>
     internal sealed class ScrubContractClass : InspectorIncludingClosures
     {
-        private Class contractClass;
-        private TypeNode abstractClass;
-        private ExtractorVisitor parent;
+        private Class _contractClass;
+        private TypeNode _abstractClass;
+        private ExtractorVisitor _parent;
 
         private TypeNode OriginalType
         {
-            get { return this.abstractClass; }
+            get { return _abstractClass; }
         }
 
         public ScrubContractClass(ExtractorVisitor parent, Class contractClass, TypeNode originalType)
@@ -43,21 +32,21 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(TypeNode.IsCompleteTemplate(contractClass));
             Contract.Requires(TypeNode.IsCompleteTemplate(originalType));
 
-            this.parent = parent;
-            this.contractClass = contractClass;
-            this.abstractClass = originalType;
+            _parent = parent;
+            _contractClass = contractClass;
+            _abstractClass = originalType;
         }
 
-        private Method currentMethod;
+        private Method _currentMethod;
 
         public override void VisitMethod(Method method)
         {
-            this.currentMethod = method;
-            this.currentSourceContext = default(SourceContext);
+            _currentMethod = method;
+            _currentSourceContext = default(SourceContext);
             base.VisitMethod(method);
         }
 
-        private SourceContext currentSourceContext;
+        private SourceContext _currentSourceContext;
 
         public override void VisitStatementList(StatementList statements)
         {
@@ -70,7 +59,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (stmt.SourceContext.IsValid)
                 {
-                    this.currentSourceContext = stmt.SourceContext;
+                    _currentSourceContext = stmt.SourceContext;
                 }
 
                 this.Visit(stmt);
@@ -89,13 +78,13 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Assume(member.DeclaringType != null, "top-level types should not be memberbound");
 
             var declaringType = HelperMethods.Unspecialize(member.DeclaringType);
-            if (declaringType == contractClass)
+            if (declaringType == _contractClass)
             {
                 // must reroute
                 Method method = member as Method;
                 if (method != null)
                 {
-                    if (HelperMethods.IsClosureMethod(this.contractClass, HelperMethods.Unspecialize(method))) return;
+                    if (HelperMethods.IsClosureMethod(_contractClass, HelperMethods.Unspecialize(method))) return;
 
                     var template = method.Template;
 
@@ -120,10 +109,10 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     // couldn't find target: must issue error
-                    parent.HandleError(this.currentMethod, 1075,
+                    _parent.HandleError(_currentMethod, 1075,
                         string.Format(
                             "Contract class '{0}' references member '{1}' which is not part of the abstract class/interface being annotated.",
-                            this.contractClass.FullName, member.FullName), currentSourceContext);
+                            _contractClass.FullName, member.FullName), _currentSourceContext);
                 }
             }
         }
@@ -134,7 +123,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             var type = HelperMethods.Unspecialize(field.Type);
 
-            if (type == contractClass)
+            if (type == _contractClass)
             {
                 if (field.Type.TemplateArguments != null)
                 {
@@ -160,7 +149,7 @@ namespace Microsoft.Contracts.Foxtrot
             var memberBinding = call.Callee as MemberBinding;
             if (memberBinding == null) return;
 
-            Method method = (Method) memberBinding.BoundMember;
+            Method method = (Method)memberBinding.BoundMember;
             var dt = method.DeclaringType;
             if (dt is Interface)
             {
