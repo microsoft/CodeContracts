@@ -98,7 +98,7 @@ namespace TestInfrastructure
     public static void AreEqual(object expected, object actual)
     {
       if (object.Equals(expected, actual)) return;
-      var result = String.Format("Expected: {0}, Actual: {1}", expected, actual);
+      var result = String.Format("Expected: '{0}', Actual: '{1}'", expected, actual);
       Console.WriteLine(result);
       throw new Exception(result);
     }

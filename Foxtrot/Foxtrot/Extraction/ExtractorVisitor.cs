@@ -2256,6 +2256,18 @@ namespace Microsoft.Contracts.Foxtrot
                             goto OuterLoop;
                         }
 
+                        // Roslyn-based compiler introduced new pattern for async methods with 2 await statements.
+                        // Current implementation sets seenFinalCompare to true when `if (num != 0)` code was found in the MoveNext method.
+                        // This usually meant that async preamble is finished and next statement could be a contract statement
+                        // (or legacy contract statement, doesn't matter).
+                        // But VS2015 compiler changes the behavior and right after `if (num != 0)` there another check that should be skipped.
+                        // Please see additional comments at IsRoslynStateCheckForSecondFinishedAwaiter
+                        if (seenFinalCompare && isAsync && IsRoslynStateCheckForSecondFinishedAwaiter(branch.Condition, env, true))
+                        {
+                            // just skipping current statement!
+                            continue;
+                        }
+
                         var value = EvaluateExpression(branch.Condition, env, seenFinalCompare, isAsync);
                         if (value.Two == EvalKind.IsDisposingTest)
                         {
@@ -2263,13 +2275,13 @@ namespace Microsoft.Contracts.Foxtrot
                             {
                                 return FindTargetBlock(blocks, branch.Target, currentBlockIndex);
                             }
-                            
+
                             if (i + 1 < block.Statements.Count)
                             {
                                 statementIndex = i + 1;
                                 return currentBlockIndex;
                             }
-                            
+
                             if (currentBlockIndex + 1 < body.Statements.Count)
                             {
                                 return currentBlockIndex + 1;
@@ -2292,7 +2304,7 @@ namespace Microsoft.Contracts.Foxtrot
                             currentBlockIndex = FindTargetBlock(blocks, branch.Target, currentBlockIndex);
                             goto OuterLoop;
                         }
-                        
+
                         continue;
                     }
 
@@ -2456,6 +2468,57 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     return (mb.BoundMember.Name != null && mb.BoundMember.Name.Name.Contains("__doFinallyBodies"));
                 }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Roslyn-based compiler introduces different pattern for async method with two await statements:
+        /// Instead of using switch (as it does for 2+ awaits) it generates following code:
+        /// 
+        /// if (num != 0)
+		///	{
+		///		if (num == 1) // &lt;-- this if-statement should be processed differently!
+		///		{
+        ///			taskAwaiter = this.&lt;>u__1;
+		///			this.&lt;>u__1 = default(TaskAwaiter);
+        ///			this.&lt;>1__state = -1;
+		///			goto IL_E8;
+		///		}
+		///		Contract.Requires(this.str != null);
+		///		taskAwaiter2 = Task.Delay(42).GetAwaiter();
+		///		if (!taskAwaiter2.IsCompleted)
+		///		{
+        ///			this.&lt;>1__state = 0;
+        ///			this.&lt;>u__1 = taskAwaiter2;
+        ///			Foo.&lt;Method2>d__0 &lt;Method2>d__ = this;
+        ///			this.&lt;>t__builder.AwaitUnsafeOnCompleted&lt;TaskAwaiter, Foo.&lt;Method2>d__0>(ref taskAwaiter2, ref &lt;Method2>d__);
+		///			return;
+		///		}
+		///	}
+        ///	else
+        ///	{
+        ///		taskAwaiter2 = this.&lt;>u__1;
+        ///		this.&lt;>u__1 = default(TaskAwaiter);
+        ///		this.&lt;>1__state = -1;
+        ///	}
+        /// 
+        /// Unfortunately, `if (num != 0)`  was always used to detect that upcoming statement is a contract statement.
+        /// That's why after migration to VS2015 ccrewrite was failing trying to compile a method with two awaits.
+        /// 
+        /// Current method helps to distinguish this new pattern and returns true for binary expression that checks state variable with 1.
+        /// </summary>
+        private static bool IsRoslynStateCheckForSecondFinishedAwaiter(Expression expression, Dictionary<Variable, Pair<int, EvalKind>> env, bool ignoreUnknown)
+        {
+            var binary = expression as BinaryExpression;
+            if (binary != null)
+            {
+                var op1 = EvaluateExpression(binary.Operand1, env, ignoreUnknown, ignoreUnknown);
+                var op2 = EvaluateExpression(binary.Operand2, env, ignoreUnknown, ignoreUnknown);
+
+                // Checking is it "num == 1" statement that will present in Roslyn-based async method with exactly 2 await expressions.
+                return binary.NodeType == NodeType.Eq && op1.Two == EvalKind.IsStateValue && op2.One == 1;
             }
 
             return false;
