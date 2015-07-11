@@ -52,16 +52,6 @@ namespace Tests.Sources
       Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<T>>(), item => item != null));
     }
 
-    public string[] GetSubscribers2(bool behave)
-    {
-      MustReturnCollectionWithoutNullItem<string>();
-      
-      if (behave) {
-        return new string[]{"a","B","c"};
-      }
-      return null;
-    }
-
   }
 
   partial class TestMain
