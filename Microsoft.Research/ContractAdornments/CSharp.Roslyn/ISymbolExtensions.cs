@@ -72,6 +72,28 @@ namespace ContractAdornments
             }
         }
 
+        public static IMethodSymbol DefiningMember(this ITypeSymbol symbol)
+        {
+            ITypeParameterSymbol typeParameterSymbol = symbol as ITypeParameterSymbol;
+            if (typeParameterSymbol != null)
+                return typeParameterSymbol.DeclaringMethod;
+
+            return null;
+        }
+
+        public static ITypeSymbol DefiningType(this ITypeSymbol symbol)
+        {
+            ITypeParameterSymbol typeParameterSymbol = symbol as ITypeParameterSymbol;
+            if (typeParameterSymbol != null)
+                return typeParameterSymbol.DeclaringType;
+
+            ITypeSymbol originalDefinition = symbol.OriginalDefinition;
+            if (originalDefinition != symbol)
+                return originalDefinition;
+
+            return null;
+        }
+
         public static ImmutableArray<ITypeParameterSymbol> TypeParameters(this ISymbol symbol)
         {
             switch (symbol.Kind)

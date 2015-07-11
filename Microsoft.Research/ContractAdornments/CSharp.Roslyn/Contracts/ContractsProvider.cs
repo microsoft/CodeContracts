@@ -624,7 +624,7 @@ namespace ContractAdornments {
           }
         }
         ITypeReference genericType = null;
-        if (!TryGetTypeReference(semanticType.ContainingType, out genericType)) {
+        if (!TryGetTypeReference(semanticType.DefiningType(), out genericType)) {
           goto ReturnFalse;
         }
         cciType = new Microsoft.Cci.MutableCodeModel.GenericTypeInstanceReference() {
@@ -659,20 +659,20 @@ namespace ContractAdornments {
       #endregion
       #region If type parameter
       if (semanticType.TypeKind == TypeKind.TypeParameter) {
-        if (semanticType.ContainingSymbol != null && semanticType.ContainingSymbol.Kind == SymbolKind.Method) {
+        if (semanticType.DefiningMember() != null) {
           cciType = new Microsoft.Cci.MutableCodeModel.GenericMethodParameterReference() {
-            Index = (ushort)(!semanticType.ContainingSymbol.TypeParameters().IsDefault ? semanticType.ContainingSymbol.TypeParameters().IndexOf((ITypeParameterSymbol)semanticType) : 0),
+            Index = (ushort)(!semanticType.DefiningMember().TypeParameters().IsDefault ? semanticType.DefiningMember().TypeParameters().IndexOf((ITypeParameterSymbol)semanticType) : 0),
             InternFactory = this.Host.InternFactory,
             Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name : "T"),
           };
           goto ReturnTrue;
-        } else if (semanticType.ContainingType != null) {
+        } else if (semanticType.DefiningType() != null) {
           ITypeReference cciDefiningType;
-          if (!TryGetTypeReference(semanticType.ContainingType, out cciDefiningType))
+          if (!TryGetTypeReference(semanticType.DefiningType(), out cciDefiningType))
             goto ReturnFalse;
           cciType = new Microsoft.Cci.MutableCodeModel.GenericTypeParameterReference() {
             DefiningType = cciDefiningType,
-            Index = (ushort)(semanticType.ContainingType.TypeParameters != null ? semanticType.ContainingType.TypeParameters.IndexOf((ITypeParameterSymbol)semanticType) : 0),
+            Index = (ushort)(!semanticType.DefiningType().TypeParameters().IsDefaultOrEmpty ? semanticType.DefiningType().TypeParameters().IndexOf((ITypeParameterSymbol)semanticType) : 0),
             InternFactory = this.Host.InternFactory,
             Name = Host.NameTable.GetNameFor(semanticType.Name != null ? semanticType.Name : "T"),
           };
