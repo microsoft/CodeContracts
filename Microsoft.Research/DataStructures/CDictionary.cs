@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -450,7 +439,7 @@ namespace Microsoft.Research.DataStructures
         public CDictionary<TKey, TValue> Clone()
         {
             int count = this.count;
-            CDictionary<TKey, TValue> res = new CDictionary<TKey, TValue>(this.Count, this.comparer);
+            CDictionary<TKey, TValue> res = new CDictionary<TKey, TValue>(this.Count, comparer);
             Entry[] entries = this.entries;
             for (int i = 0; i < count; i++)
             {
@@ -476,7 +465,7 @@ namespace Microsoft.Research.DataStructures
 
         private void Initialize(int capacity)
         {
-            Contract.Requires(capacity>=0);
+            Contract.Requires(capacity >= 0);
             int size = HashHelpers.GetPrime(capacity);
             buckets = new int[size];
             for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
@@ -538,22 +527,22 @@ namespace Microsoft.Research.DataStructures
             int newCount = 0;
             for (int i = 0; i < count; i++)
             {
-                int hashCode = this.entries[i].hashCode;
+                int hashCode = entries[i].hashCode;
                 if (hashCode >= 0)
                 {
-                    newEntries[newCount].key = this.entries[i].key;
+                    newEntries[newCount].key = entries[i].key;
                     newEntries[newCount].hashCode = hashCode;
                     int bucket = hashCode % newSize;
-                    newEntries[newCount].value = this.entries[i].value;
+                    newEntries[newCount].value = entries[i].value;
                     newEntries[newCount].next = newBuckets[bucket];
                     newBuckets[bucket] = newCount++;
                 }
             }
             this.count = newCount;
-            this.buckets = newBuckets;
-            this.entries = newEntries;
-            this.freeList = -1;
-            this.freeCount = 0;
+            buckets = newBuckets;
+            entries = newEntries;
+            freeList = -1;
+            freeCount = 0;
         }
 
         private void Grow()
@@ -563,15 +552,15 @@ namespace Microsoft.Research.DataStructures
             for (int i = 0; i < newBuckets.Length; i++) newBuckets[i] = -1;
             int count = this.count;
             Entry[] newEntries = new Entry[newSize];
-            Array.Copy(this.entries, 0, newEntries, 0, count);
+            Array.Copy(entries, 0, newEntries, 0, count);
             for (int i = 0; i < count; i++)
             {
                 int bucket = newEntries[i].hashCode % newSize;
                 newEntries[i].next = newBuckets[bucket];
                 newBuckets[bucket] = i;
             }
-            this.buckets = newBuckets;
-            this.entries = newEntries;
+            buckets = newBuckets;
+            entries = newEntries;
         }
 
         /// <summary>
@@ -749,15 +738,15 @@ namespace Microsoft.Research.DataStructures
             /// <returns></returns>
             public bool MoveNext()
             {
-                Contract.Assume(this.dictionary != null);
+                Contract.Assume(dictionary != null);
 #if DEBUG
                 Contract.Assert(version == dictionary.version, "invalid operation");
 #endif
 
                 // Use unsigned comparison since we set index to dictionary.count+1 when the enumeration ends.
                 // dictionary.count+1 could be negative if dictionary.count is Int32.MaxValue
-                var count = this.dictionary.count;
-                var entries = this.dictionary.entries;
+                var count = dictionary.count;
+                var entries = dictionary.entries;
                 while ((uint)index < (uint)count)
                 {
                     if (entries[index].hashCode >= 0)
@@ -787,8 +776,8 @@ namespace Microsoft.Research.DataStructures
             /// </summary>
             public void Dispose()
             {
-                if (this.dictionary != null)
-                    this.dictionary = null;
+                if (dictionary != null)
+                    dictionary = null;
             }
 
             object IEnumerator.Current
@@ -811,7 +800,7 @@ namespace Microsoft.Research.DataStructures
 
             void IEnumerator.Reset()
             {
-                Contract.Assume(this.dictionary != null);
+                Contract.Assume(dictionary != null);
 #if DEBUG
                 Contract.Assert(version == dictionary.version, "invalid operation");
 #endif
@@ -825,7 +814,7 @@ namespace Microsoft.Research.DataStructures
                 get
                 {
                     Contract.Assume(current.Key != null);
-                    Contract.Assert(this.dictionary != null);
+                    Contract.Assert(dictionary != null);
                     Contract.Assert(index != 0 && (index != dictionary.count + 1), "invalid operation");
 
                     return new DictionaryEntry(current.Key, current.Value);
@@ -836,7 +825,7 @@ namespace Microsoft.Research.DataStructures
             {
                 get
                 {
-                    Contract.Assert(this.dictionary != null);
+                    Contract.Assert(dictionary != null);
                     Contract.Assert(index != 0 && (index != dictionary.count + 1), "invalid operation");
 
                     return current.Key;
@@ -847,7 +836,7 @@ namespace Microsoft.Research.DataStructures
             {
                 get
                 {
-                    Contract.Assert(this.dictionary != null);
+                    Contract.Assert(dictionary != null);
                     Contract.Assert(index != 0 && (index != dictionary.count + 1), "invalid operation");
 
                     return current.Value;
@@ -1034,8 +1023,8 @@ namespace Microsoft.Research.DataStructures
                     Contract.Assert(version == dictionary.version, "invalid operation");
 #endif
 
-                    var count = this.dictionary.count;
-                    var entries = this.dictionary.entries;
+                    var count = dictionary.count;
+                    var entries = dictionary.entries;
                     while ((uint)index < (uint)count)
                     {
                         if (entries[index].hashCode >= 0)
@@ -1258,13 +1247,13 @@ namespace Microsoft.Research.DataStructures
                 /// <returns></returns>
                 public bool MoveNext()
                 {
-                    Contract.Assume(this.dictionary != null);
+                    Contract.Assume(dictionary != null);
 #if DEBUG
                     Contract.Assert(version == dictionary.version, "invalid operation");
 #endif
 
-                    var count = this.dictionary.count;
-                    var entries = this.dictionary.entries;
+                    var count = dictionary.count;
+                    var entries = dictionary.entries;
                     while ((uint)index < (uint)count)
                     {
                         if (entries[index].hashCode >= 0)
@@ -1303,7 +1292,7 @@ namespace Microsoft.Research.DataStructures
 
                 void System.Collections.IEnumerator.Reset()
                 {
-                    Contract.Assume(this.dictionary != null);
+                    Contract.Assume(dictionary != null);
 #if DEBUG
                     Contract.Assert(version == dictionary.version, "invalid operation");
 #endif
