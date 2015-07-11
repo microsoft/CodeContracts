@@ -54,6 +54,10 @@ namespace ContractAdornments
             if (namedTypeSymbol == null)
                 return default(ImmutableArray<ITypeSymbol>);
 
+            // Roslyn treats the parameters of uninstantiated generic types as the type arguments, while the old
+            // IntelliSense services treated uninstantiated generic types as not having type arguments. Since this
+            // method is meant to mimic the behavior of the old IntelliSense services, we specifically catch this case
+            // and return a default immutable array.
             if (namedTypeSymbol.Equals(namedTypeSymbol.OriginalDefinition))
                 return ImmutableArray<ITypeSymbol>.Empty;
 
