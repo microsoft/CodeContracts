@@ -789,13 +789,15 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 
     public static string GetDesiredDbName()
     {
+        const string registryKeyPath = @"SOFTWARE\Microsoft\Microsoft SQL Server Local DB\Installed Versions";
+
         var versionKeyFileMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { @"11.0", @"(LocalDb)\v11.0" },
             { @"12.0", @"(LocalDb)\MSSQLLocalDB" },
         };
 
-        using (var rootKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server Local DB\Installed Versions"))
+        using (var rootKey = Registry.LocalMachine.OpenSubKey(registryKeyPath))
         {
             if (rootKey == null)
                 return null;
