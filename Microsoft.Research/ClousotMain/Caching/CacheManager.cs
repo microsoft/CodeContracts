@@ -23,7 +23,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Research.DataStructures;
 using System.Diagnostics.Contracts;
-using System.Threading.Tasks;
 using Microsoft.Research.CodeAnalysis.Caching;
 using Microsoft.Research.Slicing;
 
@@ -163,65 +162,21 @@ namespace Microsoft.Research.CodeAnalysis
                     Console.WriteLine("[cache] Slice time stamp : {0}", this.sliceTime);
                 }
 
-                this.cacheAccessor = CreateCacheAccessorAsync(cacheAccessorFactories, options).Result;
+                foreach (var factory in cacheAccessorFactories)
+                {
+                    this.cacheAccessor = factory.Create(options);
+                    //test the db connection
+                    if (this.cacheAccessor != null && this.cacheAccessor.TestCache())
+                    {
+                        break;
+                    }
+
+                    this.cacheAccessor = null;
+                }
             }
             finally
             {
                 this.StopTimer(Timer.ctor);
-            }
-        }
-
-        /// <summary>
-        /// Creates <see cref="IClousotCache"/> in parallel and returns the first one that succeeds.
-        /// </summary>
-        /// <remarks>
-        /// Resulting task will never fail and if the method would not be able to connect
-        /// to the cache, result of the task would be null. 
-        /// Implementation could be refined by adding cancellation.
-        /// </remarks>
-        private async Task<IClousotCache> CreateCacheAccessorAsync(
-            IEnumerable<IClousotCacheFactory> cacheAccessorFactories, GeneralOptions options)
-        {
-            var factories = cacheAccessorFactories.ToList();
-
-            List<Task<IClousotCache>> factoryTasks = 
-                factories.Select(factory => factory.CreateAndCheckAsync(options)).ToList();
-
-            ObservePotentialExceptions(factoryTasks);
-
-            while (factoryTasks.Count > 0)
-            {
-                Task<IClousotCache> factoryTask = 
-                    await Task.WhenAny(factoryTasks).ConfigureAwait(false);
-
-                if (factoryTask.Status == TaskStatus.RanToCompletion && factoryTask.Result != null)
-                {
-                    // Return the first result which completed successfully and provided a non-null cache
-                    return factoryTask.Result;
-                }
-                
-                factoryTasks.Remove(factoryTask);
-            }
-
-            // No factory was able to create a cache.
-            return null;
-        }
-
-        /// <summary>
-        /// Method observes exceptions for all tasks to prevent TaskScheduler.UnobservedException
-        /// and potential escalation policy (that actually depends on the .NET Version and app.config settings).
-        /// </summary>
-        private void ObservePotentialExceptions(IEnumerable<Task> tasks)
-        {
-            foreach (var task in tasks)
-            {
-                // Using home-backed observation strategy.
-                // If needed method could be
-                task.ContinueWith(
-                    t =>
-                    {
-                        Exception ignored = t.Exception;
-                    }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnFaulted);
             }
         }
 
