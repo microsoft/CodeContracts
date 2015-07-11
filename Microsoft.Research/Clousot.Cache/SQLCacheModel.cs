@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #define EF5
 
@@ -46,775 +35,777 @@ namespace Microsoft.Research.CodeAnalysis.Caching
 {
     using Microsoft.Win32;
 
-    static class IndexExtension
-  {
-    public static void CreateUniqueIndex<TModel>(this DbContext context, Expression<Func<TModel, object>> expression)
+    internal static class IndexExtension
     {
-      Contract.Requires(context != null);
-      Contract.Requires(expression != null);
-      // Assumes singular table name matching the name of the Model type
-
-      var tableName = typeof(TModel).Name + "s"; // hack. No way to read the configuration back? IF we use non-standard table names, this won't work
-      var columnName = GetLambdaExpressionName(expression.Body);
-      var indexName = string.Format("IX_{0}_{1}", tableName, columnName);
-
-      var createIndexSql = string.Format("CREATE INDEX {0} ON {1} ({2})", indexName, tableName, columnName);
-
-      try
-      {
-        Contract.Assume(context.Database != null);
-        context.Database.ExecuteSqlCommand(createIndexSql);
-      }
-      catch
-      { }
-    }
-
-    public static string GetLambdaExpressionName(Expression expression)
-    {
-      MemberExpression memberExp = expression as MemberExpression;
-
-      if (memberExp == null)
-      {
-        // Check if it is an UnaryExpression and unwrap it
-        var unaryExp = expression as UnaryExpression;
-        if (unaryExp != null)
-          memberExp = unaryExp.Operand as MemberExpression;
-      }
-
-      if (memberExp == null)
-        throw new ArgumentException("Cannot get name from expression", "expression");
-
-      return memberExp.Member.Name;
-    }
-
-  }
-
-  public abstract class SQLCacheModel : ClousotCacheContext, ICacheModel
-  {
-    [ContractInvariantMethod]
-    private void ObjectInvariant()
-    {
-      Contract.Invariant(cachename != null);
-    }
-
-    
-    private bool isFresh;
-    private int nbWaitingChanges = 0;
-    const int MaxWaitingChanges = 500;
-    private DateTime lastSave;
-    const int MaxWaitTime = 30; // seconds
-    readonly private bool trace;
-    readonly protected string cachename;
-
-    public SQLCacheModel(string connection, string cachename, bool trace = false)
-      : base(connection)
-    {
-      Contract.Requires(cachename != null);
-
-      this.trace = trace;
-      Contract.Assume(this.Configuration != null);
-      this.Configuration.AutoDetectChangesEnabled = false;
-      this.Configuration.ValidateOnSaveEnabled = false;
-      lastSave = DateTime.Now;
-      this.cachename = cachename;
-    }
-
-    /// <summary>
-    /// Called when created for first time
-    /// </summary>
-    protected void Initialize()
-    {
-      this.isFresh = true;
-      this.CreateUniqueIndex<Method>(x => x.Hash);
-    }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-      base.OnModelCreating(modelBuilder);
-    }
-
-    public new IEnumerable<Method> Methods
-    {
-      get
-      {
-        return base.Methods;
-      }
-    }
-
-    public new IEnumerable<Metadata> Metadatas
-    {
-      get
-      {
-        return base.Metadatas;
-      }
-    }
-
-    public new IEnumerable<AssemblyInfo> AssemblyInfoes
-    {
-      get
-      {
-        return base.AssemblyInfoes;
-      }
-    }
-
-    public Metadata MetadataByKey(string key)
-    {
-      try
-      {
-        return base.Metadatas.Find(key);
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
+        public static void CreateUniqueIndex<TModel>(this DbContext context, Expression<Func<TModel, object>> expression)
         {
-          Console.WriteLine("[cache] SqlCacheModel: MetadataByKey failed: {0}", e.Message);
-        }
-        return default(Metadata);
-      }
-    }
+            Contract.Requires(context != null);
+            Contract.Requires(expression != null);
+            // Assumes singular table name matching the name of the Model type
 
-    public Method MethodByHash(byte[] hash)
-    {
-      try
-      {
-        var query = base.Methods.Where(m => m.Hash.Equals(hash));
-        
-        return query.FirstOrDefault();
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: MethodByHash failed: {0}", e.Message);
-        }
-        return null;
-      }
-    }
+            var tableName = typeof(TModel).Name + "s"; // hack. No way to read the configuration back? IF we use non-standard table names, this won't work
+            var columnName = GetLambdaExpressionName(expression.Body);
+            var indexName = string.Format("IX_{0}_{1}", tableName, columnName);
 
-    public Method BaselineByName(byte[] methodNameHash, string baselineName)
-    {
-      try
-      {
-        var candidate = base.BaselineMethods.Find(methodNameHash, baselineName);
-        //var candidate = base.BaselineMethods.Where(m => m.MethodFullName == methodName && m.BaselineId == baselineName).FirstOrDefault();
-        if (candidate != null) return candidate.Method;
-        return null;
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: MethodByName failed: {0}", e.Message);
-        }
-        return null;
-      }
-    }
+            var createIndexSql = string.Format("CREATE INDEX {0} ON {1} ({2})", indexName, tableName, columnName);
 
-    public Metadata NewMetadata()
-    {
-      return new Metadata();
-    }
-
-    public Method NewMethod()
-    {
-      return new Method();
-    }
-
-    public Outcome NewOutcome(Method method)
-    {
-      var result = new Outcome() { Method = method };
-      if (ValidMethodModel(method))
-      {
-        method.Outcomes.AssumeNotNull().Add(result);
-      }
-      return result;
-    }
-
-    public Suggestion NewSuggestion(Method method)
-    {
-      var result = new Suggestion() { Method = method };
-      if (ValidMethodModel(method))
-      {
-        method.Suggestions.AssumeNotNull().Add(result);
-      }
-      return result;
-    }
-
-    public OutcomeContext NewOutcomeContext(Outcome outcome)
-    {
-      var result = new OutcomeContext();
-      if (ValidMethodModel(outcome.Method))
-      {
-        outcome.OutcomeContexts.Add(result);
-      }
-      return result;
-    }
-
-    public ContextEdge NewContextEdge(OutcomeOrSuggestion item)
-    {
-      // TODO: this might now work if the underlying DfContext generates proxies.
-
-      Outcome outcome = item as Outcome;
-      if (outcome != null)
-      {
-        var result = new OutcomeContextEdge();
-        Contract.Assume(outcome.Method != null);
-        if (ValidMethodModel(outcome.Method))
-        {
-          outcome.OutcomeContextEdges.Add(result);
-        }
-        return result;
-      }
-      Suggestion sugg = item as Suggestion;
-      if (sugg != null)
-      {
-        Contract.Assume(sugg.Method != null);
-        var result = new SuggestionContextEdge();
-        if (ValidMethodModel(sugg.Method))
-        {
-          sugg.SuggestionContextEdges.Add(result);
-        }
-        return result;
-      }
-      return null;
-    }
-
-    public void DeleteMethodModel(Method methodModel)
-    {
-      try
-      {
-        base.Methods.Remove(methodModel);
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: DeleteMethodModel failed: {0}", e.Message);
-        }
-      }
-    }
-
-    public AssemblyInfo GetOrCreateAssemblyInfo(Guid guid)
-    {
-      var result = base.AssemblyInfoes.Find(guid);
-      if (result == null)
-      {
-        result = base.AssemblyInfoes.Create();
-        Contract.Assume(result != null);
-        result.AssemblyId = guid;
-        base.AssemblyInfoes.Add(result);
-      }
-
-      return result;
-    }
-
-    public IdHashTimeToMethod NewHashDateBindingForNow(ByteArray methodIdHash, Method methodModel)
-    {
-      var result = new IdHashTimeToMethod { Method = methodModel, MethodIdHash = methodIdHash.Bytes, Time = DateTime.Now };
-      return result;
-    }
-
-    public ByteArray GetHashForDate(ByteArray methodIdHash, DateTime t, bool afterT)
-    {
-      try
-      {
-        var methodIdHashBytes = methodIdHash.Bytes;
-        var latest = base.IdHashTimeToMethods
-          //        .Where(b => b.MethodIdHash.Equals(methodIdHashBytes) && (afterT? b.Time >= t : b.Time <= t))
-          .Where(b => b.MethodIdHash.Equals(methodIdHashBytes))
-          .OrderByDescending(b => b.Time)
-          .FirstOrDefault();
-
-        if (latest == null)
-          return null;
-        return latest.Method.AssumeNotNull().Hash;
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: GetHashForDate failed: {0}", e.Message);
-        }
-        return null;
-      }
-    }
-
-    public bool IsValid
-    {
-      get
-      {
-        try {
-          return base.Database != null
-            && base.Database.Connection != null
-            && base.Database.Connection.State != System.Data.ConnectionState.Broken;
-        }
-        catch (Exception e)
-        {
-          if (this.trace)
-          {
-            Console.WriteLine("[cache] SqlCacheModel: IsValid failed: {0}", e.Message);
-          }
-          return false;
-        }
-      }
-    }
-
-    public bool IsFresh { get { return this.isFresh; } }
-
-    public void SaveChanges(bool now)
-    {
-      if (!now && ++this.nbWaitingChanges <= MaxWaitingChanges && (DateTime.Now - this.lastSave).Seconds < MaxWaitTime)
-        return;
-
-      this.lastSave = DateTime.Now;
-      for (var i = 0; i < 3; i++)
-      {
-        try
-        {
-          if (this.trace)
-          {
-            Console.WriteLine("[cache] SqlCacheModel: SaveChanges saving...");
-          }
-          Contract.Assume(this.Configuration != null);
-          this.Configuration.AutoDetectChangesEnabled = true;
-          base.SaveChanges();
-          Contract.Assume(this.Configuration != null);
-          this.Configuration.AutoDetectChangesEnabled = false;
-          this.nbWaitingChanges = 0;
-        }
-        catch (Exception e)
-        {
-          if (this.trace || i == 2)
-          {
-            Console.WriteLine("[cache] SqlCacheModel: SaveChanges failed: {0}", e.Message);
-
-            foreach (var result in this.GetValidationErrors())
+            try
             {
-              foreach (var error in result.ValidationErrors)
-              {
-                Console.WriteLine("validation error: {0}", error.ErrorMessage);
-              }
+                Contract.Assume(context.Database != null);
+                context.Database.ExecuteSqlCommand(createIndexSql);
+            }
+            catch
+            { }
+        }
+
+        public static string GetLambdaExpressionName(Expression expression)
+        {
+            MemberExpression memberExp = expression as MemberExpression;
+
+            if (memberExp == null)
+            {
+                // Check if it is an UnaryExpression and unwrap it
+                var unaryExp = expression as UnaryExpression;
+                if (unaryExp != null)
+                    memberExp = unaryExp.Operand as MemberExpression;
             }
 
-            for (var inner = e.InnerException; inner != null; inner = inner.InnerException)
-            {
-              Console.WriteLine("Innner exception: {0}", inner.Message);
-            }
-          }
-          FixupPendingChanges();
-          continue;
+            if (memberExp == null)
+                throw new ArgumentException("Cannot get name from expression", "expression");
+
+            return memberExp.Member.Name;
         }
-        break;
-      }
     }
 
-    private void FixupPendingChanges()
+    public abstract class SQLCacheModel : ClousotCacheContext, ICacheModel
     {
-      var objContext = (this as IObjectContextAdapter).ObjectContext;
-      Contract.Assume(objContext != null);
-      RemoveDuplicateAdds<AssemblyInfo>(objContext, ai => base.AssemblyInfoes.Find(ai.AssemblyId));
-      RemoveDuplicateAdds<Method>(objContext, method => this.MethodByHash(method.Hash));
-    }
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(cachename != null);
+        }
 
-    private void RemoveDuplicateAdds<T>(ObjectContext objContext, Func<T,T> getStored) where T:class
-    {
-      Contract.Requires(objContext != null);
-      Contract.Requires(getStored != null);
-      Contract.Assume(this.ChangeTracker != null);
-      Contract.Assume(this.ChangeTracker.Entries<T>() != null);
+
+        private bool _isFresh;
+        private int _nbWaitingChanges = 0;
+        private const int MaxWaitingChanges = 500;
+        private DateTime _lastSave;
+        private const int MaxWaitTime = 30; // seconds
+        readonly private bool _trace;
+        readonly protected string cachename;
+
+        public SQLCacheModel(string connection, string cachename, bool trace = false)
+          : base(connection)
+        {
+            Contract.Requires(cachename != null);
+
+            _trace = trace;
+            Contract.Assume(this.Configuration != null);
+            this.Configuration.AutoDetectChangesEnabled = false;
+            this.Configuration.ValidateOnSaveEnabled = false;
+            _lastSave = DateTime.Now;
+            this.cachename = cachename;
+        }
+
+        /// <summary>
+        /// Called when created for first time
+        /// </summary>
+        protected void Initialize()
+        {
+            _isFresh = true;
+            this.CreateUniqueIndex<Method>(x => x.Hash);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public new IEnumerable<Method> Methods
+        {
+            get
+            {
+                return base.Methods;
+            }
+        }
+
+        public new IEnumerable<Metadata> Metadatas
+        {
+            get
+            {
+                return base.Metadatas;
+            }
+        }
+
+        public new IEnumerable<AssemblyInfo> AssemblyInfoes
+        {
+            get
+            {
+                return base.AssemblyInfoes;
+            }
+        }
+
+        public Metadata MetadataByKey(string key)
+        {
+            try
+            {
+                return base.Metadatas.Find(key);
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: MetadataByKey failed: {0}", e.Message);
+                }
+                return default(Metadata);
+            }
+        }
+
+        public Method MethodByHash(byte[] hash)
+        {
+            try
+            {
+                var query = base.Methods.Where(m => m.Hash.Equals(hash));
+
+                return query.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: MethodByHash failed: {0}", e.Message);
+                }
+                return null;
+            }
+        }
+
+        public Method BaselineByName(byte[] methodNameHash, string baselineName)
+        {
+            try
+            {
+                var candidate = base.BaselineMethods.Find(methodNameHash, baselineName);
+                //var candidate = base.BaselineMethods.Where(m => m.MethodFullName == methodName && m.BaselineId == baselineName).FirstOrDefault();
+                if (candidate != null) return candidate.Method;
+                return null;
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: MethodByName failed: {0}", e.Message);
+                }
+                return null;
+            }
+        }
+
+        public Metadata NewMetadata()
+        {
+            return new Metadata();
+        }
+
+        public Method NewMethod()
+        {
+            return new Method();
+        }
+
+        public Outcome NewOutcome(Method method)
+        {
+            var result = new Outcome() { Method = method };
+            if (ValidMethodModel(method))
+            {
+                method.Outcomes.AssumeNotNull().Add(result);
+            }
+            return result;
+        }
+
+        public Suggestion NewSuggestion(Method method)
+        {
+            var result = new Suggestion() { Method = method };
+            if (ValidMethodModel(method))
+            {
+                method.Suggestions.AssumeNotNull().Add(result);
+            }
+            return result;
+        }
+
+        public OutcomeContext NewOutcomeContext(Outcome outcome)
+        {
+            var result = new OutcomeContext();
+            if (ValidMethodModel(outcome.Method))
+            {
+                outcome.OutcomeContexts.Add(result);
+            }
+            return result;
+        }
+
+        public ContextEdge NewContextEdge(OutcomeOrSuggestion item)
+        {
+            // TODO: this might now work if the underlying DfContext generates proxies.
+
+            Outcome outcome = item as Outcome;
+            if (outcome != null)
+            {
+                var result = new OutcomeContextEdge();
+                Contract.Assume(outcome.Method != null);
+                if (ValidMethodModel(outcome.Method))
+                {
+                    outcome.OutcomeContextEdges.Add(result);
+                }
+                return result;
+            }
+            Suggestion sugg = item as Suggestion;
+            if (sugg != null)
+            {
+                Contract.Assume(sugg.Method != null);
+                var result = new SuggestionContextEdge();
+                if (ValidMethodModel(sugg.Method))
+                {
+                    sugg.SuggestionContextEdges.Add(result);
+                }
+                return result;
+            }
+            return null;
+        }
+
+        public void DeleteMethodModel(Method methodModel)
+        {
+            try
+            {
+                base.Methods.Remove(methodModel);
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: DeleteMethodModel failed: {0}", e.Message);
+                }
+            }
+        }
+
+        public AssemblyInfo GetOrCreateAssemblyInfo(Guid guid)
+        {
+            var result = base.AssemblyInfoes.Find(guid);
+            if (result == null)
+            {
+                result = base.AssemblyInfoes.Create();
+                Contract.Assume(result != null);
+                result.AssemblyId = guid;
+                base.AssemblyInfoes.Add(result);
+            }
+
+            return result;
+        }
+
+        public IdHashTimeToMethod NewHashDateBindingForNow(ByteArray methodIdHash, Method methodModel)
+        {
+            var result = new IdHashTimeToMethod { Method = methodModel, MethodIdHash = methodIdHash.Bytes, Time = DateTime.Now };
+            return result;
+        }
+
+        public ByteArray GetHashForDate(ByteArray methodIdHash, DateTime t, bool afterT)
+        {
+            try
+            {
+                var methodIdHashBytes = methodIdHash.Bytes;
+                var latest = base.IdHashTimeToMethods
+                  //        .Where(b => b.MethodIdHash.Equals(methodIdHashBytes) && (afterT? b.Time >= t : b.Time <= t))
+                  .Where(b => b.MethodIdHash.Equals(methodIdHashBytes))
+                  .OrderByDescending(b => b.Time)
+                  .FirstOrDefault();
+
+                if (latest == null)
+                    return null;
+                return latest.Method.AssumeNotNull().Hash;
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: GetHashForDate failed: {0}", e.Message);
+                }
+                return null;
+            }
+        }
+
+        public bool IsValid
+        {
+            get
+            {
+                try
+                {
+                    return base.Database != null
+                      && base.Database.Connection != null
+                      && base.Database.Connection.State != System.Data.ConnectionState.Broken;
+                }
+                catch (Exception e)
+                {
+                    if (_trace)
+                    {
+                        Console.WriteLine("[cache] SqlCacheModel: IsValid failed: {0}", e.Message);
+                    }
+                    return false;
+                }
+            }
+        }
+
+        public bool IsFresh { get { return _isFresh; } }
+
+        public void SaveChanges(bool now)
+        {
+            if (!now && ++_nbWaitingChanges <= MaxWaitingChanges && (DateTime.Now - _lastSave).Seconds < MaxWaitTime)
+                return;
+
+            _lastSave = DateTime.Now;
+            for (var i = 0; i < 3; i++)
+            {
+                try
+                {
+                    if (_trace)
+                    {
+                        Console.WriteLine("[cache] SqlCacheModel: SaveChanges saving...");
+                    }
+                    Contract.Assume(this.Configuration != null);
+                    this.Configuration.AutoDetectChangesEnabled = true;
+                    base.SaveChanges();
+                    Contract.Assume(this.Configuration != null);
+                    this.Configuration.AutoDetectChangesEnabled = false;
+                    _nbWaitingChanges = 0;
+                }
+                catch (Exception e)
+                {
+                    if (_trace || i == 2)
+                    {
+                        Console.WriteLine("[cache] SqlCacheModel: SaveChanges failed: {0}", e.Message);
+
+                        foreach (var result in this.GetValidationErrors())
+                        {
+                            foreach (var error in result.ValidationErrors)
+                            {
+                                Console.WriteLine("validation error: {0}", error.ErrorMessage);
+                            }
+                        }
+
+                        for (var inner = e.InnerException; inner != null; inner = inner.InnerException)
+                        {
+                            Console.WriteLine("Innner exception: {0}", inner.Message);
+                        }
+                    }
+                    FixupPendingChanges();
+                    continue;
+                }
+                break;
+            }
+        }
+
+        private void FixupPendingChanges()
+        {
+            var objContext = (this as IObjectContextAdapter).ObjectContext;
+            Contract.Assume(objContext != null);
+            RemoveDuplicateAdds<AssemblyInfo>(objContext, ai => base.AssemblyInfoes.Find(ai.AssemblyId));
+            RemoveDuplicateAdds<Method>(objContext, method => this.MethodByHash(method.Hash));
+        }
+
+        private void RemoveDuplicateAdds<T>(ObjectContext objContext, Func<T, T> getStored) where T : class
+        {
+            Contract.Requires(objContext != null);
+            Contract.Requires(getStored != null);
+            Contract.Assume(this.ChangeTracker != null);
+            Contract.Assume(this.ChangeTracker.Entries<T>() != null);
 #if EF5
-      var pendingAssemblyInfo = this.ChangeTracker.Entries<T>().AssumeNotNull().Where(a => a.State == System.Data.EntityState.Added);
+            var pendingAssemblyInfo = this.ChangeTracker.Entries<T>().AssumeNotNull().Where(a => a.State == System.Data.EntityState.Added);
 #else
       var pendingAssemblyInfo = this.ChangeTracker.Entries<T>().AssumeNotNull().Where(a => a.State == System.Data.Entity.EntityState.Added);
 #endif
-      foreach (var p in pendingAssemblyInfo)
-      {
-        Contract.Assume(p != null);
-        if (getStored(p.Entity) != null) {
-          objContext.Detach(p.Entity);
-        }
-      }
-    }
-
-    public void AddOrUpdate(Metadata value)
-    {
-      try
-      {
-        base.Metadatas.AddOrUpdate(value);
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate Metadata failed: {0}", e.Message);
-        }
-      }
-    }
-
-    public void AddOrUpdate(AssemblyInfo ainfo)
-    {
-      return; // nothing to do if we go through our construction.
-      //try
-      //{
-      //  base.AssemblyInfoes.AddOrUpdate(ainfo);
-      //}
-      //catch (Exception e)
-      //{
-      //  if (this.trace)
-      //  {
-      //    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate AssemblyInfo failed: {0}", e.Message);
-      //  }
-      //}
-
-    }
-
-    private bool ValidMethodModel(Method methodModel, bool warn = false)
-    {
-      if (methodModel.FullName == null) return true; // not set yet?
-      if (methodModel.FullName.Length > CacheUtils.MaxMethodLength)
-      {
-        Console.WriteLine("[cache] Won't cache Method {0}. FullName is too long: {1} > {2}", methodModel.FullName, methodModel.FullName.Length, CacheUtils.MaxMethodLength);
-        return false;
-      }
-      return true;
-    }
-
-    public void AddOrUpdate(Method methodModel)
-    {
-      if (!ValidMethodModel(methodModel, warn:true)) return;
-      try
-      {
-        // don't use Migrations.AddOrUpdate method. It is really slow. Assume we can update (no cache hit)
-        base.Methods.Add(methodModel);
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate MethodModel failed: {0}", e.Message);
-        }
-      }
-    }
-
-    public void AddOrUpdate(IdHashTimeToMethod idhash)
-    {
-      if (!ValidMethodModel(idhash.Method)) return;
-      try
-      {
-        // assume no duplicates
-        base.IdHashTimeToMethods.Add(idhash);
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
-        {
-          Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate IdHashTimeToMethod failed: {0}", e.Message);
-        }
-      }
-    }
-
-    public void AddOrUpdate(Method method, AssemblyInfo assemblyInfo)
-    {
-        if (!ValidMethodModel(method)) return;
-        try
-        {
-            if (!method.Assemblies.AssumeNotNull()
-              .Where(a => a.AssemblyId == assemblyInfo.AssemblyId).AssumeNotNull()
-              .Any())
+            foreach (var p in pendingAssemblyInfo)
             {
-                method.Assemblies.Add(assemblyInfo);
+                Contract.Assume(p != null);
+                if (getStored(p.Entity) != null)
+                {
+                    objContext.Detach(p.Entity);
+                }
             }
         }
-        catch (Exception e)
+
+        public void AddOrUpdate(Metadata value)
         {
-            if (this.trace)
+            try
             {
-                Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate method assembly binding failed: {0}", e.Message);
+                base.Metadatas.AddOrUpdate(value);
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate Metadata failed: {0}", e.Message);
+                }
+            }
+        }
+
+        public void AddOrUpdate(AssemblyInfo ainfo)
+        {
+            return; // nothing to do if we go through our construction.
+                    //try
+                    //{
+                    //  base.AssemblyInfoes.AddOrUpdate(ainfo);
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //  if (this.trace)
+                    //  {
+                    //    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate AssemblyInfo failed: {0}", e.Message);
+                    //  }
+                    //}
+
+        }
+
+        private bool ValidMethodModel(Method methodModel, bool warn = false)
+        {
+            if (methodModel.FullName == null) return true; // not set yet?
+            if (methodModel.FullName.Length > CacheUtils.MaxMethodLength)
+            {
+                Console.WriteLine("[cache] Won't cache Method {0}. FullName is too long: {1} > {2}", methodModel.FullName, methodModel.FullName.Length, CacheUtils.MaxMethodLength);
+                return false;
+            }
+            return true;
+        }
+
+        public void AddOrUpdate(Method methodModel)
+        {
+            if (!ValidMethodModel(methodModel, warn: true)) return;
+            try
+            {
+                // don't use Migrations.AddOrUpdate method. It is really slow. Assume we can update (no cache hit)
+                base.Methods.Add(methodModel);
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate MethodModel failed: {0}", e.Message);
+                }
+            }
+        }
+
+        public void AddOrUpdate(IdHashTimeToMethod idhash)
+        {
+            if (!ValidMethodModel(idhash.Method)) return;
+            try
+            {
+                // assume no duplicates
+                base.IdHashTimeToMethods.Add(idhash);
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate IdHashTimeToMethod failed: {0}", e.Message);
+                }
+            }
+        }
+
+        public void AddOrUpdate(Method method, AssemblyInfo assemblyInfo)
+        {
+            if (!ValidMethodModel(method)) return;
+            try
+            {
+                if (!method.Assemblies.AssumeNotNull()
+                  .Where(a => a.AssemblyId == assemblyInfo.AssemblyId).AssumeNotNull()
+                  .Any())
+                {
+                    method.Assemblies.Add(assemblyInfo);
+                }
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate method assembly binding failed: {0}", e.Message);
+                }
+            }
+        }
+
+        public void AddOrUpdate(BaselineMethod baseline)
+        {
+            try
+            {
+                var candidate = base.BaselineMethods.Find(baseline.MethodFullNameHash, baseline.BaselineId);
+                if (candidate != null)
+                {
+                    candidate.Method = baseline.Method;
+                }
+                else
+                {
+                    base.BaselineMethods.Add(baseline);
+                }
+            }
+            catch (Exception e)
+            {
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate baseline binding failed: {0}", e.Message);
+                }
+            }
+        }
+
+
+        public string CacheName
+        {
+            get { return this.cachename; }
+        }
+
+        protected void DetachDeletedDb(string connection)
+        {
+            // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 
+            // If this is the case, we can't create a new database and the user is stuck unless he knows the tricky internals of LocalDB and how to get rid of the registration.
+            // => If we use LocalDB and the file does not exist, we try to detach it. 
+            try
+            {
+                var connectionString = new DbConnectionStringBuilder { ConnectionString = connection };
+                var fileName = (string)connectionString["AttachDbFileName"];
+                if (File.Exists(fileName))
+                    return;
+
+                var catalog = (string)connectionString["Initial Catalog"];
+                var dataSource = (string)connectionString["Data Source"];
+
+                using (var master = new DataContext(string.Format(CultureInfo.InvariantCulture, @"Data Source={0};Initial Catalog=master;Integrated Security=True", dataSource)))
+                {
+                    master.ExecuteCommand(@"exec sp_detach_db {0}", catalog);
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Not using LocalDB at all (any of the connection string parameters did not exist).
+            }
+            catch (SqlException)
+            {
+                // The file was never registered (first time used) or is already detached.
+            }
+            catch (Exception ex)
+            {
+                // Ignore other errors, could be any DbProvider specific exception. 
+                // Usually we won't get here, but the active provider might not be LocalDB, in this case we know nothing about the provider and the exceptions it might raise.
+                if (_trace)
+                {
+                    Console.WriteLine("[cache] DetachDeletedDb failed: {0}", ex.Message);
+                }
             }
         }
     }
 
-    public void AddOrUpdate(BaselineMethod baseline)
+    public class SqlCacheModelNoCreate : SQLCacheModel
     {
-      try
-      {
-        var candidate = base.BaselineMethods.Find(baseline.MethodFullNameHash, baseline.BaselineId);
-        if (candidate != null)
+        static SqlCacheModelNoCreate()
         {
-          candidate.Method = baseline.Method;
+            Database.SetInitializer<SqlCacheModelNoCreate>(null);
         }
-        else
+
+        public SqlCacheModelNoCreate(string connection, string cacheName, bool trace) : base(connection, cacheName, trace)
         {
-          base.BaselineMethods.Add(baseline);
+            Contract.Requires(cacheName != null);
         }
-      }
-      catch (Exception e)
-      {
-        if (this.trace)
+    }
+
+    public class SqlCacheModelUseExisting : SQLCacheModel
+    {
+        private class Policy : CreateDatabaseIfNotExists<SqlCacheModelUseExisting>
         {
-          Console.WriteLine("[cache] SqlCacheModel: AddOrUpdate baseline binding failed: {0}", e.Message);
+            protected override void Seed(SqlCacheModelUseExisting context)
+            {
+                context.Initialize();
+                base.Seed(context);
+            }
         }
-      }
-      
-    }
 
-
-    public string CacheName
-    {
-      get { return this.cachename; }
-    }
-
-    protected void DetachDeletedDb(string connection)
-    {
-      // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 
-      // If this is the case, we can't create a new database and the user is stuck unless he knows the tricky internals of LocalDB and how to get rid of the registration.
-      // => If we use LocalDB and the file does not exist, we try to detach it. 
-      try
-      {
-        var connectionString = new DbConnectionStringBuilder { ConnectionString = connection };
-        var fileName = (string)connectionString["AttachDbFileName"];
-        if (File.Exists(fileName)) 
-          return;
-
-        var catalog = (string)connectionString["Initial Catalog"];
-        var dataSource = (string)connectionString["Data Source"];
-
-        using (var master = new DataContext(string.Format(CultureInfo.InvariantCulture, @"Data Source={0};Initial Catalog=master;Integrated Security=True", dataSource)))
+        static SqlCacheModelUseExisting()
         {
-          master.ExecuteCommand(@"exec sp_detach_db {0}", catalog);
+            Database.SetInitializer<SqlCacheModelUseExisting>(new Policy());
         }
-      }
-      catch (ArgumentException)
-      {
-        // Not using LocalDB at all (any of the connection string parameters did not exist).
-      }
-      catch (SqlException)
-      {
-        // The file was never registered (first time used) or is already detached.
-      }
-      catch (Exception ex)
-      {
-        // Ignore other errors, could be any DbProvider specific exception. 
-        // Usually we won't get here, but the active provider might not be LocalDB, in this case we know nothing about the provider and the exceptions it might raise.
-        if (this.trace)
+
+        public SqlCacheModelUseExisting(string connection, string cachename, bool trace)
+          : base(connection, cachename, trace)
         {
-           Console.WriteLine("[cache] DetachDeletedDb failed: {0}", ex.Message);
+            Contract.Requires(cachename != null);
         }
-      }
     }
-  }
 
-  public class SqlCacheModelNoCreate : SQLCacheModel
-  {
-    static SqlCacheModelNoCreate()
+    public class SqlCacheModelClearExisting : SQLCacheModel
     {
-      Database.SetInitializer<SqlCacheModelNoCreate>(null);
-    }
-
-    public SqlCacheModelNoCreate(string connection, string cacheName, bool trace) : base(connection, cacheName, trace) {
-      Contract.Requires(cacheName != null);    
-    }
-  }
-
-  public class SqlCacheModelUseExisting : SQLCacheModel
-  {
-    class Policy : CreateDatabaseIfNotExists<SqlCacheModelUseExisting>
-    {
-      protected override void Seed(SqlCacheModelUseExisting context)
-      {
-        context.Initialize();
-        base.Seed(context);
-      }
-    }
-
-    static SqlCacheModelUseExisting() {
-      Database.SetInitializer<SqlCacheModelUseExisting>(new Policy());
-    }
-
-    public SqlCacheModelUseExisting(string connection, string cachename, bool trace)
-      : base(connection, cachename, trace)
-    {
-      Contract.Requires(cachename != null);
-    }
-  }
-
-  public class SqlCacheModelClearExisting : SQLCacheModel
-  {
-    class Policy : DropCreateDatabaseAlways<SqlCacheModelClearExisting>
-    {
-      protected override void Seed(SqlCacheModelClearExisting context)
-      {
-        context.Initialize();
-        base.Seed(context);
-      }
-    }
-
-    static SqlCacheModelClearExisting()
-    {
-      Database.SetInitializer<SqlCacheModelClearExisting>(new Policy());
-    }
-
-    public SqlCacheModelClearExisting(string connection, string cachename, bool trace)
-      : base(connection, cachename, trace)
-    {
-      Contract.Requires(cachename != null);
-
-      DetachDeletedDb(connection);
-    }
-  }
-
-  public class SqlCacheModelDropOnModelChange : SQLCacheModel
-  {
-    class Policy : DropCreateDatabaseIfModelChanges<SqlCacheModelDropOnModelChange>
-    {
-      protected override void Seed(SqlCacheModelDropOnModelChange context)
-      {
-        context.Initialize();
-        base.Seed(context);
-      }
-    }
-
-    static SqlCacheModelDropOnModelChange()
-    {
-      Database.SetInitializer<SqlCacheModelDropOnModelChange>(new Policy());
-    }
-
-    public SqlCacheModelDropOnModelChange(string connection, string cachename, bool trace)
-      : base(connection, cachename, trace)
-    {
-      Contract.Requires(cachename != null);
-
-      DetachDeletedDb(connection);
-    }
-  }
-
-  public class SQLClousotCacheFactory : IClousotCacheFactory
-  {
-    public const int DefaultMinPoolSize = 0;
-
-    /// <summary>
-    /// Specifying MinPoolSize increases degree of parallelism for concurrent connections to the sql database.
-    /// With default value (that is 0) there is no way to connect to different local db instances simultaneously.
-    /// </summary>
-    readonly protected int minPoolSize;
-    readonly protected string DbName;
-    readonly protected bool deleteOnModelChange;
-
-    public SQLClousotCacheFactory(string DbName, bool deleteOnModelChange = false, int minPoolSize = DefaultMinPoolSize)
-    {
-      this.deleteOnModelChange = deleteOnModelChange;
-      this.DbName = DbName;
-      this.minPoolSize = minPoolSize;
-    }
-
-    public virtual IClousotCache Create(IClousotCacheOptions options)
-    {
-      if (String.IsNullOrWhiteSpace(DbName) || options == null) { return null; }
-      var connection = BuildConnectionString(options).ToString();
-
-      Contract.Assert(DbName != null, "Helping cccheck");
-
-      SQLCacheModel model;
-      if (options.ClearCache)
-      {
-        model = new SqlCacheModelClearExisting(connection, DbName, options.Trace);
-      }
-      else if (options.SaveToCache)
-      {
-        if (this.deleteOnModelChange)
+        private class Policy : DropCreateDatabaseAlways<SqlCacheModelClearExisting>
         {
-          model = new SqlCacheModelDropOnModelChange(connection, DbName, options.Trace);
+            protected override void Seed(SqlCacheModelClearExisting context)
+            {
+                context.Initialize();
+                base.Seed(context);
+            }
         }
-        else
+
+        static SqlCacheModelClearExisting()
         {
-          model = new SqlCacheModelUseExisting(connection, DbName, options.Trace);
+            Database.SetInitializer<SqlCacheModelClearExisting>(new Policy());
         }
-      }
-      else
-      {
-        model = new SqlCacheModelNoCreate(connection, DbName, options.Trace);
-      }
-      return new ClousotCache(model, options);
-    }
 
-    [Pure]
-    protected virtual SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
-    {
-      Contract.Requires(options != null);
-      Contract.Ensures(Contract.Result<SqlConnectionStringBuilder>() != null);
-
-      return new SqlConnectionStringBuilder
-      {
-        IntegratedSecurity = true,
-        InitialCatalog = options.GetCacheDBName(),
-        DataSource = this.DbName,
-        UserInstance = false,
-        MultipleActiveResultSets = true,
-        ConnectTimeout = options.CacheServerTimeout,
-        MinPoolSize = minPoolSize,
-      };
-    }
-  }
-
-  public class LocalDbClousotCacheFactory : SQLClousotCacheFactory
-  {
-    public LocalDbClousotCacheFactory(int minPoolSize = DefaultMinPoolSize)
-          : this(GetDesiredDbName(), minPoolSize)
-    {}
-
-    public LocalDbClousotCacheFactory(string dbName, int minPoolSize = DefaultMinPoolSize)
-        : base(dbName, true, minPoolSize)
-    {}
-
-    protected override SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
-    {
-      if (!string.IsNullOrWhiteSpace(options.CacheDirectory))
-      {
-        var name = options.GetCacheDBName();
-        return new SqlConnectionStringBuilder
+        public SqlCacheModelClearExisting(string connection, string cachename, bool trace)
+          : base(connection, cachename, trace)
         {
-          IntegratedSecurity = true,
-          InitialCatalog = name,
-          DataSource = this.DbName,
-          UserInstance = false,
-          MultipleActiveResultSets = true,
-          ConnectTimeout = options.CacheServerTimeout,
-          MinPoolSize = minPoolSize,
-          AttachDBFilename = Path.Combine(options.CacheDirectory.AssumeNotNull(), name + ".mdf")
-        };
-      }
+            Contract.Requires(cachename != null);
 
-      return base.BuildConnectionString(options);
+            DetachDeletedDb(connection);
+        }
     }
 
-    public static string GetDesiredDbName()
+    public class SqlCacheModelDropOnModelChange : SQLCacheModel
     {
-        const string registryKeyPath = @"SOFTWARE\Microsoft\Microsoft SQL Server Local DB\Installed Versions";
+        private class Policy : DropCreateDatabaseIfModelChanges<SqlCacheModelDropOnModelChange>
+        {
+            protected override void Seed(SqlCacheModelDropOnModelChange context)
+            {
+                context.Initialize();
+                base.Seed(context);
+            }
+        }
 
-        var versionKeyFileMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        static SqlCacheModelDropOnModelChange()
+        {
+            Database.SetInitializer<SqlCacheModelDropOnModelChange>(new Policy());
+        }
+
+        public SqlCacheModelDropOnModelChange(string connection, string cachename, bool trace)
+          : base(connection, cachename, trace)
+        {
+            Contract.Requires(cachename != null);
+
+            DetachDeletedDb(connection);
+        }
+    }
+
+    public class SQLClousotCacheFactory : IClousotCacheFactory
+    {
+        public const int DefaultMinPoolSize = 0;
+
+        /// <summary>
+        /// Specifying MinPoolSize increases degree of parallelism for concurrent connections to the sql database.
+        /// With default value (that is 0) there is no way to connect to different local db instances simultaneously.
+        /// </summary>
+        readonly protected int minPoolSize;
+        readonly protected string DbName;
+        readonly protected bool deleteOnModelChange;
+
+        public SQLClousotCacheFactory(string DbName, bool deleteOnModelChange = false, int minPoolSize = DefaultMinPoolSize)
+        {
+            this.deleteOnModelChange = deleteOnModelChange;
+            this.DbName = DbName;
+            this.minPoolSize = minPoolSize;
+        }
+
+        public virtual IClousotCache Create(IClousotCacheOptions options)
+        {
+            if (String.IsNullOrWhiteSpace(DbName) || options == null) { return null; }
+            var connection = BuildConnectionString(options).ToString();
+
+            Contract.Assert(DbName != null, "Helping cccheck");
+
+            SQLCacheModel model;
+            if (options.ClearCache)
+            {
+                model = new SqlCacheModelClearExisting(connection, DbName, options.Trace);
+            }
+            else if (options.SaveToCache)
+            {
+                if (this.deleteOnModelChange)
+                {
+                    model = new SqlCacheModelDropOnModelChange(connection, DbName, options.Trace);
+                }
+                else
+                {
+                    model = new SqlCacheModelUseExisting(connection, DbName, options.Trace);
+                }
+            }
+            else
+            {
+                model = new SqlCacheModelNoCreate(connection, DbName, options.Trace);
+            }
+            return new ClousotCache(model, options);
+        }
+
+        [Pure]
+        protected virtual SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
+        {
+            Contract.Requires(options != null);
+            Contract.Ensures(Contract.Result<SqlConnectionStringBuilder>() != null);
+
+            return new SqlConnectionStringBuilder
+            {
+                IntegratedSecurity = true,
+                InitialCatalog = options.GetCacheDBName(),
+                DataSource = this.DbName,
+                UserInstance = false,
+                MultipleActiveResultSets = true,
+                ConnectTimeout = options.CacheServerTimeout,
+                MinPoolSize = minPoolSize,
+            };
+        }
+    }
+
+    public class LocalDbClousotCacheFactory : SQLClousotCacheFactory
+    {
+        public LocalDbClousotCacheFactory(int minPoolSize = DefaultMinPoolSize)
+              : this(GetDesiredDbName(), minPoolSize)
+        { }
+
+        public LocalDbClousotCacheFactory(string dbName, int minPoolSize = DefaultMinPoolSize)
+            : base(dbName, true, minPoolSize)
+        { }
+
+        protected override SqlConnectionStringBuilder BuildConnectionString(IClousotCacheOptions options)
+        {
+            if (!string.IsNullOrWhiteSpace(options.CacheDirectory))
+            {
+                var name = options.GetCacheDBName();
+                return new SqlConnectionStringBuilder
+                {
+                    IntegratedSecurity = true,
+                    InitialCatalog = name,
+                    DataSource = this.DbName,
+                    UserInstance = false,
+                    MultipleActiveResultSets = true,
+                    ConnectTimeout = options.CacheServerTimeout,
+                    MinPoolSize = minPoolSize,
+                    AttachDBFilename = Path.Combine(options.CacheDirectory.AssumeNotNull(), name + ".mdf")
+                };
+            }
+
+            return base.BuildConnectionString(options);
+        }
+
+        public static string GetDesiredDbName()
+        {
+            const string registryKeyPath = @"SOFTWARE\Microsoft\Microsoft SQL Server Local DB\Installed Versions";
+
+            var versionKeyFileMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { @"11.0", @"(LocalDb)\v11.0" },
             { @"12.0", @"(LocalDb)\MSSQLLocalDB" },
         };
 
-        using (var rootKey = Registry.LocalMachine.OpenSubKey(registryKeyPath))
-        {
-            if (rootKey == null)
-                return null;
+            using (var rootKey = Registry.LocalMachine.OpenSubKey(registryKeyPath))
+            {
+                if (rootKey == null)
+                    return null;
 
-            return rootKey.GetSubKeyNames()
-                .OrderByDescending(name => name.ToUpperInvariant()) // use latest version available.
-                .Select(versionKey => GetValueOrDefault(versionKeyFileMapping, versionKey))
-                .FirstOrDefault(entry => entry != null);
+                return rootKey.GetSubKeyNames()
+                    .OrderByDescending(name => name.ToUpperInvariant()) // use latest version available.
+                    .Select(versionKey => GetValueOrDefault(versionKeyFileMapping, versionKey))
+                    .FirstOrDefault(entry => entry != null);
+            }
+        }
+
+        private static TValue GetValueOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dict, TKey key)
+        {
+            Contract.Requires(!ReferenceEquals(key, null));
+
+            TValue value;
+            return dict.TryGetValue(key, out value) ? value : default(TValue);
         }
     }
-
-    private static TValue GetValueOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dict, TKey key)
-    {
-        Contract.Requires(!ReferenceEquals(key, null));
-
-        TValue value;
-        return dict.TryGetValue(key, out value) ? value : default(TValue);
-    }
-  }
 }
