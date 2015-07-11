@@ -1,31 +1,22 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics.Contracts;
 
-namespace Microsoft.Glee.Optimization {
-
-    public enum Relation {
+namespace Microsoft.Glee.Optimization
+{
+    public enum Relation
+    {
         LessOrEqual,
         Equal,
         GreaterOrEqual
     }
 
-    public enum Status {
+    public enum Status
+    {
         Unknown,
         Infeasible,
         Unbounded,
@@ -37,16 +28,18 @@ namespace Microsoft.Glee.Optimization {
     /// <summary>
     /// Solves the general linear program but always looking for the minimum
     /// </summary>
-    
-  [ContractClass(typeof(LinearProgramInterfaceContracts))]
-    public interface LinearProgramInterface {
+
+    [ContractClass(typeof(LinearProgramInterfaceContracts))]
+    public interface LinearProgramInterface
+    {
         /// <summary>
         /// When looking for the Quadratical Program minimum both variables of some variable pairs cannot appear in the basis together
         /// </summary>
-        int[] ForbiddenPairs { set;            get;        }
+        int[] ForbiddenPairs { set; get; }
 
-        double Epsilon {
-          get; /*set;*/
+        double Epsilon
+        {
+            get; /*set;*/
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
@@ -106,7 +99,8 @@ namespace Microsoft.Glee.Optimization {
         /// </summary>
         double GetMinimalValue();
 
-        Status Status {
+        Status Status
+        {
             get;
             set;
         }
@@ -124,126 +118,126 @@ namespace Microsoft.Glee.Optimization {
         /// <param name="var"></param>
         /// <param name="l"></param>
         void LimitVariableFromAbove(int var, double l);
-         
-        double EpsilonForArtificials{get;set;}
-        double EpsilonForReducedCosts { get;set;}
+
+        double EpsilonForArtificials { get; set; }
+        double EpsilonForReducedCosts { get; set; }
     }
 
 
     [ContractClassFor(typeof(LinearProgramInterface))]
-    abstract class LinearProgramInterfaceContracts :
+    internal abstract class LinearProgramInterfaceContracts :
       LinearProgramInterface
     {
-      #region LinearProgramInterface Members
+        #region LinearProgramInterface Members
 
-      int[] LinearProgramInterface.ForbiddenPairs
-      {
-        get
+        int[] LinearProgramInterface.ForbiddenPairs
         {
-          throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
-        set
+
+        double LinearProgramInterface.Epsilon
         {
-          throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
-      }
 
-      double LinearProgramInterface.Epsilon
-      {
-        get
+        double[] LinearProgramInterface.FeasibleSolution()
         {
-          throw new NotImplementedException();
+            throw new NotImplementedException();
         }
-      }
 
-      double[] LinearProgramInterface.FeasibleSolution()
-      {
-        throw new NotImplementedException();
-      }
-
-      double[] LinearProgramInterface.MinimalSolution()
-      {
-        throw new NotImplementedException();
-      }
-
-      double[] LinearProgramInterface.LeastSquareSolution()
-      {
-        Contract.Requires(((LinearProgramInterface)this).Status == Status.Infeasible);
-
-        return default(double[]);
-      }
-
-      void LinearProgramInterface.InitCosts(double[] costsParam)
-      {
-        throw new NotImplementedException();
-      }
-
-      void LinearProgramInterface.SetVariable(int i, double val)
-      {
-        throw new NotImplementedException();
-      }
-
-      void LinearProgramInterface.AddConstraint(double[] coeff, Relation relation, double rightSide)
-      {
-        throw new NotImplementedException();
-      }
-
-      void LinearProgramInterface.Minimize()
-      {
-        throw new NotImplementedException();
-      }
-
-      double LinearProgramInterface.GetMinimalValue()
-      {
-        throw new NotImplementedException();
-      }
-
-      Status LinearProgramInterface.Status
-      {
-        get
+        double[] LinearProgramInterface.MinimalSolution()
         {
-          throw new NotImplementedException();
+            throw new NotImplementedException();
         }
-        set
-        {
-          throw new NotImplementedException();
-        }
-      }
 
-      void LinearProgramInterface.LimitVariableFromBelow(int var, double l)
-      {
-        throw new NotImplementedException();
-      }
-
-      void LinearProgramInterface.LimitVariableFromAbove(int var, double l)
-      {
-        throw new NotImplementedException();
-      }
-
-      double LinearProgramInterface.EpsilonForArtificials
-      {
-        get
+        double[] LinearProgramInterface.LeastSquareSolution()
         {
-          throw new NotImplementedException();
-        }
-        set
-        {
-          throw new NotImplementedException();
-        }
-      }
+            Contract.Requires(((LinearProgramInterface)this).Status == Status.Infeasible);
 
-      double LinearProgramInterface.EpsilonForReducedCosts
-      {
-        get
-        {
-          throw new NotImplementedException();
+            return default(double[]);
         }
-        set
-        {
-          throw new NotImplementedException();
-        }
-      }
 
-      #endregion
+        void LinearProgramInterface.InitCosts(double[] costsParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        void LinearProgramInterface.SetVariable(int i, double val)
+        {
+            throw new NotImplementedException();
+        }
+
+        void LinearProgramInterface.AddConstraint(double[] coeff, Relation relation, double rightSide)
+        {
+            throw new NotImplementedException();
+        }
+
+        void LinearProgramInterface.Minimize()
+        {
+            throw new NotImplementedException();
+        }
+
+        double LinearProgramInterface.GetMinimalValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        Status LinearProgramInterface.Status
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        void LinearProgramInterface.LimitVariableFromBelow(int var, double l)
+        {
+            throw new NotImplementedException();
+        }
+
+        void LinearProgramInterface.LimitVariableFromAbove(int var, double l)
+        {
+            throw new NotImplementedException();
+        }
+
+        double LinearProgramInterface.EpsilonForArtificials
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        double LinearProgramInterface.EpsilonForReducedCosts
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }
