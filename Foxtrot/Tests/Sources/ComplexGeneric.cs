@@ -24,6 +24,24 @@ using System.Diagnostics.Contracts;
 
 namespace Tests.Sources
 {
+// This bug was relevant only for .NET 4.0+
+#if NETFRAMEWORK_3_5
+
+    partial class TestMain
+    {
+        partial void Run()
+        {
+            if (!this.behave)
+            {
+                throw new System.ArgumentNullException();
+            }
+        }
+
+        public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
+        public string NegativeExpectedCondition = "Value cannot be null.";
+    }
+
+#else
 
     // CCRewriter was unable to read this code from the IL due to an issue in CCI.
     // This test just makes sure that the fix is in place.
@@ -64,5 +82,7 @@ namespace Tests.Sources
         public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
         public string NegativeExpectedCondition = "Value cannot be null.";
     }
+
+#endif
 
 }

@@ -13,58 +13,62 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tests.Sources
 {
-
-  public static class ValidationHelper
-  {
-    [ContractAbbreviator]
-    public static void MustReturnCollectionWithoutNullItem<T>()
+    public class Foo
     {
-      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
-      Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<T>>(), item => item != null));
-    }
-  }
+        public async Task Method1(string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            Contract.EndContractBlock();
 
-  public sealed class GenericClass<T>
-    where T : class
-  {
-    public string[] GetSubscribers(bool behave)
-    {
-      ValidationHelper.MustReturnCollectionWithoutNullItem<string>();
-      
-      if (behave) {
-        return new string[]{"a","B","c"};
-      }
-      return null;
-    }
+            await Task.Delay(42);
+        }
 
-    [ContractAbbreviator]
-    public static void MustReturnCollectionWithoutNullItem<T>()
-    {
-      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
-      Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<T>>(), item => item != null));
-    }
+        public async Task Method2(string str)
+        {
+            // This code lead to failure previously!
+            if (str == null) throw new ArgumentNullException("str");
+            Contract.EndContractBlock();
+            
+            await Task.Delay(42);
+            await Task.Delay(43);
+        }
 
-  }
+        public async Task Method5(string str)
+        {
+            if (str == null) throw new ArgumentNullException("str");
+            Contract.EndContractBlock();
+
+            await Task.Delay(42);
+            await Task.Delay(42);
+            await Task.Delay(42);
+            await Task.Delay(42);
+            await Task.Delay(42);
+        }
+
+    }
 
   partial class TestMain
   {
     partial void Run()
     {
-      var g = new GenericClass<string>();
-      g.GetSubscribers(behave);
+      if (behave)
+      {
+        new Foo().Method2("1");
+      }
+      else
+      {
+        new Foo().Method2(null);
+      }
     }
 
-    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Postcondition;
-    public string NegativeExpectedCondition = "Contract.Result<IEnumerable<T>>() != null";
-
+    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
+    public string NegativeExpectedCondition = "Value cannot be null.\r\nParameter name: str";
   }
-
 }

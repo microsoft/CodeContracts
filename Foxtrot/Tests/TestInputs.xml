@@ -12,6 +12,24 @@
 
   <!-- Tests for Roslyn-based compiler compatibility -->
   <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\AsyncWithLegacyRequires.cs"
+     CompilerOptions=""
+     References=""
+     FoxtrotOptions=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\AsyncRequiresWithMultipleAwaits.cs"
+     CompilerOptions=""
+     References=""
+     FoxtrotOptions=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
      Name="Foxtrot\Tests\Sources\InheritOOBClosure.cs"
      CompilerOptions=""
      LibPaths="Foxtrot\Tests\AssemblyWithContracts\bin\Debug"
@@ -271,6 +289,7 @@
      BinDir="false"
      Compiler="CS"
      />
+
   <TestFile
      Name="Foxtrot\Tests\Sources\Async1.cs"
      CompilerOptions=""
