@@ -2262,7 +2262,7 @@ namespace Microsoft.Contracts.Foxtrot
                         // (or legacy contract statement, doesn't matter).
                         // But VS2015 compiler changes the behavior and right after `if (num != 0)` there another check that should be skipped.
                         // Please see additional comments at IsRoslynStateCheckForSecondFinishedAwaiter
-                        if (seenFinalCompare && isAsync && IsRoslynStateCheckForSecondFinishedAwaiter(branch.Condition, env, true))
+                        if (seenFinalCompare && isAsync && IsRoslynStateCheckForSecondFinishedAwaiter(branch.Condition, env, ignoreUnknown: true))
                         {
                             // just skipping current statement!
                             continue;
