@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Compiler;
 using System.Diagnostics.Contracts;
@@ -21,15 +10,15 @@ namespace Microsoft.Contracts.Foxtrot
     {
         protected Method sourceMethod;
         protected Method targetMethod;
-        private Parameter replaceThisWithParameter;
+        private Parameter _replaceThisWithParameter;
 
         /// <summary>
         /// Nonnull if the contract is copied from a contract class
         /// </summary>
-        private TypeNode contractClass;
+        private TypeNode _contractClass;
 
-        private TypeNode contractClassToForward;
-        private TypeNode targetTypeToForwardTo;
+        private TypeNode _contractClassToForward;
+        private TypeNode _targetTypeToForwardTo;
 
         public DuplicatorForContractsAndClosures(Module module, Method sourceMethod, Method targetMethod,
             ContractNodes contractNodes)
@@ -60,7 +49,7 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         // target is a static wrapper. But duplicator cannot handle This -> Parameter conversion
                         // so we handle it explicitly here in this visitor.
-                        replaceThisWithParameter = targetMethod.Parameters[0];
+                        _replaceThisWithParameter = targetMethod.Parameters[0];
                     }
                 }
 
@@ -77,20 +66,20 @@ namespace Microsoft.Contracts.Foxtrot
             var originalType = HelperMethods.IsContractTypeForSomeOtherType(sourceMethod.DeclaringType, contractNodes);
             if (originalType != null)
             {
-                var contractType = this.contractClass = sourceMethod.DeclaringType;
+                var contractType = _contractClass = sourceMethod.DeclaringType;
                 while (contractType.Template != null)
                 {
                     contractType = contractType.Template;
                 }
-                    
+
                 while (originalType.Template != null)
                 {
                     originalType = originalType.Template;
                 }
 
                 // forward ContractType<A,B> -> originalType<A',B'>
-                this.contractClassToForward = contractType;
-                this.targetTypeToForwardTo = originalType;
+                _contractClassToForward = contractType;
+                _targetTypeToForwardTo = originalType;
 
                 //dup.DuplicateFor[contractType.UniqueKey] = originalType;
             }
@@ -106,15 +95,15 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(candidate != null);
 
             var type = HelperMethods.Unspecialize(candidate);
-            if (type == this.contractClassToForward)
+            if (type == _contractClassToForward)
             {
                 if (candidate.TemplateArguments != null)
                 {
-                    var inst = this.targetTypeToForwardTo.GetTemplateInstance(candidate, candidate.TemplateArguments);
+                    var inst = _targetTypeToForwardTo.GetTemplateInstance(candidate, candidate.TemplateArguments);
                     return inst;
                 }
-                    
-                return this.targetTypeToForwardTo;
+
+                return _targetTypeToForwardTo;
             }
 
             return candidate;
@@ -123,24 +112,24 @@ namespace Microsoft.Contracts.Foxtrot
         public override Expression VisitLocal(Local local)
         {
             var result = base.VisitLocal(local);
-                
+
             var asLoc = result as Local;
             if (asLoc != null && RemoveNameForLocals)
             {
                 asLoc.Name = null; // Don't clash with original local name
             }
-                
+
             return result;
         }
 
         public override Field VisitField(Field field)
         {
             field = base.VisitField(field);
-                
+
             if (field == null) return field;
 
             field.Type = PossiblyRemapContractClassToInterface(field.Type);
-                
+
             return field;
         }
 
@@ -148,21 +137,21 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (type == null) return null;
 
-            var result = (TypeNode) this.DuplicateFor[type.UniqueKey];
-                
+            var result = (TypeNode)this.DuplicateFor[type.UniqueKey];
+
             if (result != null) return result;
-                
+
             result = base.VisitTypeReference(type);
-                
+
             this.DuplicateFor[result.UniqueKey] = result;
-                
+
             return result;
         }
 
         public override Member VisitMemberReference(Member member)
         {
             Method m = member as Method;
-            if (m != null && m.DeclaringType != null && m.DeclaringType == this.contractClass)
+            if (m != null && m.DeclaringType != null && m.DeclaringType == _contractClass)
             {
                 // Find the corresponding reference in the interface/abstract class
                 var implIntf = m.ImplementedInterfaceMethods;
@@ -202,10 +191,10 @@ namespace Microsoft.Contracts.Foxtrot
             if (plain == null) return null;
 
             var result = base.VisitRequiresPlain(plain);
-                
+
             // resanitize
             result.UserMessage = ExtractorVisitor.FilterUserMessage(this.targetMethod, result.UserMessage);
-                
+
             return result;
         }
 
@@ -214,9 +203,9 @@ namespace Microsoft.Contracts.Foxtrot
             if (normal == null) return null;
 
             var result = base.VisitEnsuresNormal(normal);
-                
+
             result.UserMessage = ExtractorVisitor.FilterUserMessage(this.targetMethod, result.UserMessage);
-                
+
             return result;
         }
 
@@ -226,14 +215,14 @@ namespace Microsoft.Contracts.Foxtrot
 
             var result = base.VisitEnsuresExceptional(exceptional);
             result.UserMessage = ExtractorVisitor.FilterUserMessage(this.targetMethod, result.UserMessage);
-                
+
             return result;
         }
 
         public override Class VisitClass(Class Class)
         {
             Class = base.VisitClass(Class);
-                
+
             Class.Template = null;
 
             return Class;
@@ -244,7 +233,7 @@ namespace Microsoft.Contracts.Foxtrot
             Struct = base.VisitStruct(Struct);
 
             Struct.Template = null;
-                
+
             return Struct;
         }
 
@@ -253,14 +242,14 @@ namespace Microsoft.Contracts.Foxtrot
             var original = This;
 
             var result = base.VisitThis(This);
-                
+
             This = result as This;
-                
-            if (this.replaceThisWithParameter != null && This != null)
+
+            if (_replaceThisWithParameter != null && This != null)
             {
                 if (original == sourceMethod.ThisParameter)
                 {
-                    return this.replaceThisWithParameter;
+                    return _replaceThisWithParameter;
                 }
             }
 
@@ -270,14 +259,14 @@ namespace Microsoft.Contracts.Foxtrot
         public override Expression VisitMethodCall(MethodCall call)
         {
             var result = base.VisitMethodCall(call);
-                
+
             // for value type targets we may have to insert a constrained callvirt
             call = result as MethodCall;
             if (call == null) return result; // type changed
-                
+
             MemberBinding memberBinding = call.Callee as MemberBinding;
             if (memberBinding == null) return result;
-                
+
             if (call.NodeType != NodeType.Callvirt)
             {
                 // check if we need to turn it into a call virt because we put in an abstract method call
@@ -285,7 +274,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 Method abstractMethod = memberBinding.BoundMember as Method;
                 if (abstractMethod == null || !abstractMethod.IsAbstract) return result;
-                    
+
                 call.NodeType = NodeType.Callvirt;
             }
 
@@ -296,8 +285,8 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 call.Constraint = this.targetMethod.DeclaringType;
             }
-                
-            if (target != targetMethod.ThisParameter && target != this.replaceThisWithParameter) return result;
+
+            if (target != targetMethod.ThisParameter && target != _replaceThisWithParameter) return result;
 
             TypeNode constraint = null;
             if (targetMethod.DeclaringType.IsValueType)
@@ -309,14 +298,14 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (constraint == null)
             {
-                constraint = IsConstrainedTypeVariable(this.replaceThisWithParameter);
+                constraint = IsConstrainedTypeVariable(_replaceThisWithParameter);
             }
-                
+
             if (constraint != null)
             {
                 call.Constraint = constraint;
             }
-                
+
             return call;
         }
 
@@ -325,11 +314,11 @@ namespace Microsoft.Contracts.Foxtrot
             if (target == null) return null;
 
             Reference r = target.Type as Reference;
-                
+
             if (r == null) return null;
-                
+
             if (!(r.ElementType is ITypeParameter)) return null;
-                
+
             return r.ElementType;
         }
 
@@ -342,14 +331,14 @@ namespace Microsoft.Contracts.Foxtrot
             if (assignment == null) return null;
 
             var result = base.VisitAssignmentStatement(assignment);
-                
+
             assignment = result as AssignmentStatement;
-                
+
             if (assignment != null && assignment.Target != null && assignment.Target.Type is Interface)
             {
                 if (assignment.Source != null & assignment.Source.Type is Reference)
                 {
-                    var refType = (Reference) assignment.Source.Type;
+                    var refType = (Reference)assignment.Source.Type;
                     if (refType.ElementType is ITypeParameter)
                     {
                         // found a type mismatch

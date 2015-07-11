@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.CodeDom.Compiler;
@@ -26,26 +15,26 @@ namespace Microsoft.Contracts.Foxtrot
     [ContractVerification(false)] // F:
     public sealed class PostExtractorChecker : Inspector
     {
-        private readonly Action<System.CodeDom.Compiler.CompilerError> m_errorHandler;
-        private readonly bool allowPreconditionsInOverrides;
-        private readonly bool explicitUserValidations;
-        private readonly bool addInterfaceWrappersWhenNeeded;
+        private readonly Action<System.CodeDom.Compiler.CompilerError> _errorHandler;
+        private readonly bool _allowPreconditionsInOverrides;
+        private readonly bool _explicitUserValidations;
+        private readonly bool _addInterfaceWrappersWhenNeeded;
 
         /// <summary>
         /// Identical to the runtime checking level option.
         /// Instrumentation level: 0=no contracts, 1=ReleaseRequires, 2=Requires, 3=Ensures, 4=Invariants. (Each increase includes the previous)
         /// </summary>
-        private readonly int runtimeCheckingLevel = 4; // all contracts
+        private readonly int _runtimeCheckingLevel = 4; // all contracts
 
-        private readonly PurityChecker purityChecker;
-        private readonly PreconditionChecker preconditionChecker;
-        private readonly PostconditionChecker postconditionChecker;
-        private readonly VisibilityChecker visibilityChecker;
-        private readonly CheckForCallsToInvariantMethods invariantCallChecker;
-        private readonly MethodBodyChecker methodBodyChecker;
-        private readonly InvariantChecker invariantChecker;
-        private readonly ContractNodes contractNodes;
-        private CurrentState currentState;
+        private readonly PurityChecker _purityChecker;
+        private readonly PreconditionChecker _preconditionChecker;
+        private readonly PostconditionChecker _postconditionChecker;
+        private readonly VisibilityChecker _visibilityChecker;
+        private readonly CheckForCallsToInvariantMethods _invariantCallChecker;
+        private readonly MethodBodyChecker _methodBodyChecker;
+        private readonly InvariantChecker _invariantChecker;
+        private readonly ContractNodes _contractNodes;
+        private CurrentState _currentState;
 
         [ContractVerification(false)] // F: todo
         private struct CurrentState
@@ -54,81 +43,81 @@ namespace Microsoft.Contracts.Foxtrot
             public readonly Method Method;
             public readonly TypeNode Type;
 
-            private Dictionary<string, object> typeSuppressed;
-            private Dictionary<string, object> methodSuppressed;
-            private Dictionary<string, object> assemblySuppressed;
+            private Dictionary<string, object> _typeSuppressed;
+            private Dictionary<string, object> _methodSuppressed;
+            private Dictionary<string, object> _assemblySuppressed;
 
             public CurrentState(AssemblyNode assembly)
             {
                 this.Assembly = assembly;
                 this.Type = null;
                 this.Method = null;
-                this.assemblySuppressed = null;
-                this.typeSuppressed = null;
-                this.methodSuppressed = null;
+                _assemblySuppressed = null;
+                _typeSuppressed = null;
+                _methodSuppressed = null;
             }
 
             private CurrentState(Method method, CurrentState oldState)
             {
                 this.Assembly = oldState.Assembly;
-                this.assemblySuppressed = oldState.assemblySuppressed;
+                _assemblySuppressed = oldState._assemblySuppressed;
                 this.Type = oldState.Type;
-                this.typeSuppressed = oldState.typeSuppressed;
+                _typeSuppressed = oldState._typeSuppressed;
                 this.Method = method;
-                this.methodSuppressed = null;
+                _methodSuppressed = null;
             }
 
             public CurrentState(TypeNode type, CurrentState oldState)
             {
                 this.Type = type;
                 this.Method = null;
-                this.typeSuppressed = null;
-                this.methodSuppressed = null;
+                _typeSuppressed = null;
+                _methodSuppressed = null;
                 this.Assembly = oldState.Assembly;
-                this.assemblySuppressed = oldState.assemblySuppressed;
+                _assemblySuppressed = oldState._assemblySuppressed;
             }
 
             public bool IsSuppressed(string errorNumber)
             {
-                if (this.Assembly != null && this.assemblySuppressed == null)
+                if (this.Assembly != null && _assemblySuppressed == null)
                 {
-                    this.assemblySuppressed = new Dictionary<string, object>();
-                    GrabSuppressAttributes(this.assemblySuppressed, this.Assembly.Attributes);
+                    _assemblySuppressed = new Dictionary<string, object>();
+                    GrabSuppressAttributes(_assemblySuppressed, this.Assembly.Attributes);
                 }
 
-                if (this.assemblySuppressed != null && this.assemblySuppressed.ContainsKey(errorNumber)) return true;
+                if (_assemblySuppressed != null && _assemblySuppressed.ContainsKey(errorNumber)) return true;
 
-                if (this.Type != null && this.typeSuppressed == null)
+                if (this.Type != null && _typeSuppressed == null)
                 {
-                    this.typeSuppressed = GrabSuppressAttributes(this.Type);
+                    _typeSuppressed = GrabSuppressAttributes(this.Type);
                 }
-                
-                if (this.typeSuppressed != null && this.typeSuppressed.ContainsKey(errorNumber)) return true;
 
-                if (this.Method != null && this.methodSuppressed == null)
+                if (_typeSuppressed != null && _typeSuppressed.ContainsKey(errorNumber)) return true;
+
+                if (this.Method != null && _methodSuppressed == null)
                 {
-                    this.methodSuppressed = GrabSuppressAttributes(this.Method);
+                    _methodSuppressed = GrabSuppressAttributes(this.Method);
                 }
-                
-                if (this.methodSuppressed != null && this.methodSuppressed.ContainsKey(errorNumber)) return true;
+
+                if (_methodSuppressed != null && _methodSuppressed.ContainsKey(errorNumber)) return true;
 
                 return false;
             }
 
-            private static readonly Identifier SuppressMessageIdentifier = Identifier.For("SuppressMessageAttribute");
+            private static readonly Identifier s_suppressMessageIdentifier = Identifier.For("SuppressMessageAttribute");
             // Should be thread-safe
 
             private static Dictionary<string, object> GrabSuppressAttributes(Method method)
             {
                 var result = new Dictionary<string, object>();
-                
+
                 GrabSuppressAttributes(result, method.Attributes);
-                
+
                 if (method.DeclaringMember != null)
                 {
                     GrabSuppressAttributes(result, method.DeclaringMember.Attributes);
                 }
-                
+
                 return result;
             }
 
@@ -153,10 +142,10 @@ namespace Microsoft.Contracts.Foxtrot
                         var attr = attributes[i];
 
                         if (attr == null) continue;
-                        
+
                         if (attr.Type == null) continue;
-                        
-                        if (attr.Type.Name.Matches(SuppressMessageIdentifier))
+
+                        if (attr.Type.Name.Matches(s_suppressMessageIdentifier))
                         {
                             if (attr.Expressions != null && attr.Expressions.Count >= 2)
                             {
@@ -165,14 +154,14 @@ namespace Microsoft.Contracts.Foxtrot
 
                                 string category = expr.Value as string;
                                 if (category != "Microsoft.Contracts") continue;
-                                
+
                                 var errorCode = attr.Expressions[1] as Literal;
                                 if (errorCode == null) continue;
-                                
+
                                 string errorCodeLit = errorCode.Value as string;
-                                
+
                                 Contract.Assume(errorCodeLit != null); // F:
-                                
+
                                 if (errorCodeLit.StartsWith("CC"))
                                 {
                                     result.Add(errorCodeLit, errorCodeLit);
@@ -198,13 +187,13 @@ namespace Microsoft.Contracts.Foxtrot
          System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"), ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(m_errorHandler != null);
-            Contract.Invariant(purityChecker != null);
-            Contract.Invariant(invariantChecker != null);
-            Contract.Invariant(methodBodyChecker != null);
-            Contract.Invariant(visibilityChecker != null);
-            Contract.Invariant(this.invariantMethods != null);
-            Contract.Invariant(this.contractNodes != null);
+            Contract.Invariant(_errorHandler != null);
+            Contract.Invariant(_purityChecker != null);
+            Contract.Invariant(_invariantChecker != null);
+            Contract.Invariant(_methodBodyChecker != null);
+            Contract.Invariant(_visibilityChecker != null);
+            Contract.Invariant(_invariantMethods != null);
+            Contract.Invariant(_contractNodes != null);
         }
 
         [ContractVerification(true)]
@@ -217,21 +206,21 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(errorHandler != null);
             Contract.Requires(usedToExtract != null);
 
-            this.m_errorHandler = errorHandler;
-            this.allowPreconditionsInOverrides = allowPreconditionsInOverrides;
-            this.explicitUserValidations = explicitUserValidations;
-            this.addInterfaceWrappersWhenNeeded = addInterfaceWrappersWhenNeeded;
-            this.runtimeCheckingLevel = runtimeCheckingLevel;
+            _errorHandler = errorHandler;
+            _allowPreconditionsInOverrides = allowPreconditionsInOverrides;
+            _explicitUserValidations = explicitUserValidations;
+            _addInterfaceWrappersWhenNeeded = addInterfaceWrappersWhenNeeded;
+            _runtimeCheckingLevel = runtimeCheckingLevel;
 
-            this.purityChecker = new PurityChecker(this.HandleError, fSharp, usedToExtract);
-            this.preconditionChecker = new PreconditionChecker(this.HandleError, usedToExtract);
-            this.postconditionChecker = new PostconditionChecker(this.HandleError, fSharp);
-            this.invariantCallChecker = new CheckForCallsToInvariantMethods(this);
-            this.methodBodyChecker = new MethodBodyChecker(this.HandleError, usedToExtract);
-            this.invariantChecker = new InvariantChecker(this.HandleError, usedToExtract);
-            this.contractNodes = usedToExtract;
-            this.visibilityChecker = new VisibilityChecker(this.HandleError, usedToExtract);
-            this.invariantMethods = new TrivialHashtable(0);
+            _purityChecker = new PurityChecker(this.HandleError, fSharp, usedToExtract);
+            _preconditionChecker = new PreconditionChecker(this.HandleError, usedToExtract);
+            _postconditionChecker = new PostconditionChecker(this.HandleError, fSharp);
+            _invariantCallChecker = new CheckForCallsToInvariantMethods(this);
+            _methodBodyChecker = new MethodBodyChecker(this.HandleError, usedToExtract);
+            _invariantChecker = new InvariantChecker(this.HandleError, usedToExtract);
+            _contractNodes = usedToExtract;
+            _visibilityChecker = new VisibilityChecker(this.HandleError, usedToExtract);
+            _invariantMethods = new TrivialHashtable(0);
         }
 
 
@@ -240,9 +229,9 @@ namespace Microsoft.Contracts.Foxtrot
         /// </summary>
         private void HandleError(CompilerError error)
         {
-            if (error.IsWarning && this.currentState.IsSuppressed(error.ErrorNumber)) return;
-            
-            this.m_errorHandler(error);
+            if (error.IsWarning && _currentState.IsSuppressed(error.ErrorNumber)) return;
+
+            _errorHandler(error);
         }
 
         /// <summary>
@@ -261,7 +250,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             if (current == method) return null; // no root base method
-            
+
             return current;
         }
 
@@ -272,7 +261,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (t1.TemplateParameters != null)
             {
                 if (t1.TemplateParameters.Count != t2.TemplateParameters.Count) return false;
-                
+
                 for (int i = 0, n = t1.TemplateParameters.Count; i < n; i++)
                 {
                     var tn1 = t1.TemplateParameters[i];
@@ -287,16 +276,16 @@ namespace Microsoft.Contracts.Foxtrot
                     if ((tn1.Interfaces == null) != (tn2.Interfaces == null)) return false;
 
                     if (tn1.Interfaces != null && tn1.Interfaces.Count != tn2.Interfaces.Count) return false;
-                    
+
                     TypeParameter tp1 = tn1 as TypeParameter;
-                    
+
                     if (tp1 != null)
                     {
                         var tp2 = tn2 as TypeParameter;
                         if (tp2 == null) return false;
 
                         if (tp1.IsReferenceType != tp2.IsReferenceType) return false;
-                        
+
                         if (tp1.IsValueType != tp2.IsValueType) return false;
 
                         if ((tp1.TypeParameterFlags & TypeParameterFlags.DefaultConstructorConstraint) !=
@@ -311,9 +300,9 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         var cp2 = tn2 as ClassParameter;
                         if (cp2 == null) return false;
-                        
+
                         if (cp1.IsReferenceType != cp2.IsReferenceType) return false;
-                        
+
                         if (cp1.IsValueType != cp2.IsValueType) return false;
 
                         if ((cp1.TypeParameterFlags & TypeParameterFlags.DefaultConstructorConstraint) !=
@@ -496,8 +485,8 @@ namespace Microsoft.Contracts.Foxtrot
                 // F:
                 Contract.Assume(typeNode.Contract.Invariants != null);
 
-                this.purityChecker.CheckInvariants(typeNode, typeNode.Contract.Invariants);
-                this.invariantChecker.Check(typeNode);
+                _purityChecker.CheckInvariants(typeNode, typeNode.Contract.Invariants);
+                _invariantChecker.Check(typeNode);
             }
 
             // Make sure that if this class has a contractClass, that that class points back to this one
@@ -573,14 +562,14 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         Member mem = mems[i];
                         Field f = mem as Field;
-                        
+
                         if (f != null)
                         {
                             if (!f.IsPublic) continue;
 
                             //if (f.Type != field.Type) continue; // REVIEW: When it becomes possible, allow widening
                             error = false;
-                            
+
                             break;
                         }
 
@@ -588,14 +577,14 @@ namespace Microsoft.Contracts.Foxtrot
                         if (p != null)
                         {
                             Method getter = p.Getter;
-                            
+
                             if (getter == null) continue; // found by Clousot.
-                            
+
                             if (!getter.IsPublic) continue;
-                            
+
                             //if (getter.ReturnType != field.Type) continue; // REVIEW: When it becomes possible, allow widening
                             error = false;
-                            
+
                             break;
                         }
                     }
@@ -631,9 +620,9 @@ namespace Microsoft.Contracts.Foxtrot
             while (method.Template != null) method = method.Template;
 
             var declType = method.DeclaringType;
-            
+
             if (declType == null) return method;
-            
+
             if (!declType.IsAbstract) return method; // only abstract types and interfaces can have OOB
 
             // get rid of instantiations
@@ -651,18 +640,18 @@ namespace Microsoft.Contracts.Foxtrot
                     if (attr == null) continue;
 
                     if (attr.Type == null) continue;
-                    
+
                     if (attr.Type.Name == null) continue;
-                    
+
                     if (attr.Type.Name.Name != "ContractClassAttribute") continue;
 
                     if (attr.Expressions == null) return method;
-                    
+
                     Literal lit = attr.Expressions[0] as Literal;
-                    
+
                     if (lit == null) return method; // not found
                     TypeNode t = lit.Value as TypeNode;
-                    
+
                     if (t == null) return method; // not found
                     if (t.Template != null)
                     {
@@ -707,7 +696,7 @@ namespace Microsoft.Contracts.Foxtrot
                 for (int i = 0; i < method.ShallowImplicitlyImplementedInterfaceMethods.Count; i++)
                 {
                     var intfMethod = method.ShallowImplicitlyImplementedInterfaceMethods[i];
-                    
+
                     if (intfMethod != null) yield return intfMethod;
                 }
             }
@@ -717,31 +706,32 @@ namespace Microsoft.Contracts.Foxtrot
         private static bool ImplementsAnyInterfaces(Method rootMethod)
         {
             Contract.Requires(rootMethod != null);
-            
+
             if (rootMethod.ImplementedInterfaceMethods != null && rootMethod.ImplementedInterfaceMethods.Count > 0)
                 return true;
-            
+
             if (rootMethod.ImplicitlyImplementedInterfaceMethods != null &&
-                rootMethod.ImplicitlyImplementedInterfaceMethods.Count > 0) return true;
-            
+                rootMethod.ImplicitlyImplementedInterfaceMethods.Count > 0)
+                return true;
+
             return false;
         }
 
-        private readonly TrivialHashtable invariantMethods;
+        private readonly TrivialHashtable _invariantMethods;
 
         [ContractVerification(true)]
         public override void VisitMethod(Method method)
         {
             if (method == null) return;
-            
+
             // closures used from methods are visited from the method from which they are referenced
             if (HelperMethods.IsCompilerGenerated(method)) return;
 
-            var savedState = this.currentState;
+            var savedState = _currentState;
             try
             {
-                this.currentState = savedState.Derive(method);
-                if (this.contractNodes.IsObjectInvariantMethod(method))
+                _currentState = savedState.Derive(method);
+                if (_contractNodes.IsObjectInvariantMethod(method))
                 {
                     return;
                 }
@@ -801,8 +791,8 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     // abbreviator code must be completely visible to all callers as it is effectively inlined there.
-                    this.visibilityChecker.CheckRequires(method.Contract);
-                    this.visibilityChecker.CheckAbbreviatorEnsures(method.Contract);
+                    _visibilityChecker.CheckRequires(method.Contract);
+                    _visibilityChecker.CheckAbbreviatorEnsures(method.Contract);
 
                     return; // no further checks as we check the rest in use-site methods.
                 }
@@ -813,21 +803,21 @@ namespace Microsoft.Contracts.Foxtrot
 
                 // Check purity
 
-                this.purityChecker.Check(method);
+                _purityChecker.Check(method);
 
                 // Check Method Body
 
-                this.methodBodyChecker.Check(method);
+                _methodBodyChecker.Check(method);
 
                 SourceContext sourceContext = HelperMethods.SourceContextOfMethod(method);
-                
+
                 Method firstRootMethod = null;
 
                 var methodDeclaringType = method.DeclaringType;
 
                 Contract.Assume(methodDeclaringType != null);
-                
-                TypeNode classForWhichThisIsContractMethod = HelperMethods.IsContractTypeForSomeOtherType(methodDeclaringType, this.contractNodes);
+
+                TypeNode classForWhichThisIsContractMethod = HelperMethods.IsContractTypeForSomeOtherType(methodDeclaringType, _contractNodes);
 
                 foreach (var rootMethod in RootMethodsForRequires(method))
                 {
@@ -844,7 +834,7 @@ namespace Microsoft.Contracts.Foxtrot
                                     string.Format(
                                         "Contract class {2} cannot define contract for method {0} as its original definition is not in type {1}. Define the contract on type {3} instead.",
                                         rootMethod.FullName, classForWhichThisIsContractMethod, methodDeclaringType.FullName,
-                                        rootMethod.DeclaringType), 
+                                        rootMethod.DeclaringType),
                                     sourceContext));
 
                             continue;
@@ -856,7 +846,7 @@ namespace Microsoft.Contracts.Foxtrot
                                 new Error(1077,
                                     string.Format(
                                         "Contract class {1} cannot define contract for non-abstract method {0}. Define the contract on {0} instead.",
-                                        rootMethod.FullName, methodDeclaringType.FullName), 
+                                        rootMethod.FullName, methodDeclaringType.FullName),
                                     sourceContext));
 
                             continue;
@@ -866,7 +856,7 @@ namespace Microsoft.Contracts.Foxtrot
                         continue;
                     }
 
-                    if (!allowPreconditionsInOverrides)
+                    if (!_allowPreconditionsInOverrides)
                     {
                         // Overrides cannot add preconditions unless this is "the" contract method for an abstract method
 
@@ -876,21 +866,21 @@ namespace Microsoft.Contracts.Foxtrot
                             {
                                 if (req == null) continue;
 
-                                if (!this.explicitUserValidations || !req.IsFromValidation)
+                                if (!_explicitUserValidations || !req.IsFromValidation)
                                 {
                                     SourceContext sc = req.SourceContext;
                                     if (rootMethod.DeclaringType is Interface)
                                     {
                                         this.HandleError(
                                             new Warning(1033,
-                                                string.Format( "Method '{0}' implements interface method '{1}', thus cannot add Requires.", method.FullName, rootMethod.FullName), 
+                                                string.Format("Method '{0}' implements interface method '{1}', thus cannot add Requires.", method.FullName, rootMethod.FullName),
                                                 sc));
                                     }
                                     else
                                     {
                                         this.HandleError(
                                             new Warning(1032,
-                                                string.Format("Method '{0}' overrides '{1}', thus cannot add Requires.", method.FullName, rootMethod.FullName), 
+                                                string.Format("Method '{0}' overrides '{1}', thus cannot add Requires.", method.FullName, rootMethod.FullName),
                                                 sc));
                                     }
 
@@ -927,20 +917,20 @@ namespace Microsoft.Contracts.Foxtrot
 
                     // Check that validations are present if necessary
 
-                    if (this.explicitUserValidations && !HasValidations(method.Contract))
+                    if (_explicitUserValidations && !HasValidations(method.Contract))
                     {
                         var rootMethodContract = GetMethodWithContractFor(rootMethod).Contract;
                         if (rootMethodContract != null)
                         {
                             for (int i = 0; i < rootMethodContract.RequiresCount; i++)
                             {
-                                var req = (RequiresPlain) rootMethodContract.Requires[i];
+                                var req = (RequiresPlain)rootMethodContract.Requires[i];
                                 if (req == null) continue;
 
                                 if (!req.IsWithException) continue;
-                                
+
                                 var operation = (rootMethod.DeclaringType is Interface) ? "implements" : "overrides";
-                                
+
                                 if (req.SourceConditionText != null && req.ExceptionType.Name != null)
                                 {
                                     this.HandleError(new Warning(1055,
@@ -990,30 +980,30 @@ namespace Microsoft.Contracts.Foxtrot
 
                 // Explicit parameter validations should not use Requires<E>
 
-                if (this.explicitUserValidations && method.Contract != null)
+                if (_explicitUserValidations && method.Contract != null)
                 {
                     for (int i = 0; i < method.Contract.RequiresCount; i++)
                     {
-                        var req = (RequiresPlain) method.Contract.Requires[i];
+                        var req = (RequiresPlain)method.Contract.Requires[i];
                         if (req == null) continue;
 
                         if (req.IsFromValidation) continue;
-                        
+
                         if (!req.IsWithException) continue;
-                        
+
                         // found Requires<E>
                         this.HandleError(new Error(1058,
                             String.Format(
                                 "Method '{0}' should not have Requires<E> contract when assembly mode is set to 'Custom Parameter Validation'. Either change it to a legacy if-then-throw validation or change the assembly mode to 'Standard Contract Requires'.",
                                 method.FullName), req.SourceContext));
-                        
+
                         return; // avoid duplicate errors.
                     }
                 }
 
                 // non-user validation assembly
 
-                if (!this.explicitUserValidations && HasValidations(method.Contract))
+                if (!_explicitUserValidations && HasValidations(method.Contract))
                 {
                     if (firstRootMethod != null)
                     {
@@ -1086,7 +1076,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
             finally
             {
-                this.currentState = savedState;
+                _currentState = savedState;
             }
         }
 
@@ -1097,18 +1087,18 @@ namespace Microsoft.Contracts.Foxtrot
 
         private void CheckRequires(MethodContract methodContract)
         {
-            this.preconditionChecker.CheckRequires(methodContract);
-            this.visibilityChecker.CheckRequires(methodContract);
+            _preconditionChecker.CheckRequires(methodContract);
+            _visibilityChecker.CheckRequires(methodContract);
         }
 
         private void CheckEnsures(MethodContract methodContract)
         {
-            this.postconditionChecker.CheckEnsures(methodContract);
+            _postconditionChecker.CheckEnsures(methodContract);
         }
 
         public override void VisitAssembly(AssemblyNode assembly)
         {
-            this.currentState = new CurrentState(assembly);
+            _currentState = new CurrentState(assembly);
 
             if (ContractNodes.IsAlreadyRewritten(assembly))
             {
@@ -1123,9 +1113,9 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (typeNode == null) return;
 
-            var savedState = this.currentState;
-            this.currentState = savedState.Derive(typeNode);
-            
+            var savedState = _currentState;
+            _currentState = savedState.Derive(typeNode);
+
             try
             {
                 GatherInvariantMethods(typeNode.Members);
@@ -1134,11 +1124,11 @@ namespace Microsoft.Contracts.Foxtrot
 
                 base.VisitTypeNode(typeNode);
 
-                this.invariantCallChecker.VisitMemberList(typeNode.Members);
+                _invariantCallChecker.VisitMemberList(typeNode.Members);
             }
             finally
             {
-                this.currentState = savedState;
+                _currentState = savedState;
             }
         }
 
@@ -1153,9 +1143,9 @@ namespace Microsoft.Contracts.Foxtrot
                 var method = memberList[i] as Method;
                 if (method == null) continue;
 
-                if (this.contractNodes.IsObjectInvariantMethod(method))
+                if (_contractNodes.IsObjectInvariantMethod(method))
                 {
-                    this.invariantMethods[method.UniqueKey] = method;
+                    _invariantMethods[method.UniqueKey] = method;
                 }
             }
         }
@@ -1171,9 +1161,9 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (Class == null) return;
 
-            var savedState = this.currentState;
+            var savedState = _currentState;
 
-            this.currentState = savedState.Derive(Class);
+            _currentState = savedState.Derive(Class);
 
             try
             {
@@ -1183,7 +1173,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
             finally
             {
-                this.currentState = savedState;
+                _currentState = savedState;
             }
 
             base.VisitClass(Class);
@@ -1195,7 +1185,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (Class.Interfaces == null) return;
 
-            if (this.runtimeCheckingLevel == 0) return;
+            if (_runtimeCheckingLevel == 0) return;
 
             if (!HelperMethods.ContractOption(Class, "runtime", "checking") ||
                 !HelperMethods.ContractOption(Class, "contract", "inheritance"))
@@ -1234,13 +1224,13 @@ namespace Microsoft.Contracts.Foxtrot
 
                 var contract = contractMethod.Contract;
                 if (contract == null) continue;
-                
+
                 if (contract.RequiresCount + contract.EnsuresCount == 0) continue;
 
                 // find base implementing method
                 var baseMethod = FindInheritedMethod(Class.BaseClass, intfMethod);
                 if (baseMethod == null) continue;
-                
+
                 var baseMethodImplementsInterfaceMethod = false;
                 if (baseMethod.ImplicitlyImplementedInterfaceMethods != null)
                 {
@@ -1256,9 +1246,9 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (baseMethodImplementsInterfaceMethod) continue;
 
-                if (this.runtimeCheckingLevel < 3 && contract.RequiresCount == 0) continue;
+                if (_runtimeCheckingLevel < 3 && contract.RequiresCount == 0) continue;
 
-                if (this.addInterfaceWrappersWhenNeeded)
+                if (_addInterfaceWrappersWhenNeeded)
                 {
                     AddInterfaceImplementationWrapper(Class, intfMethod, baseMethod);
                 }
@@ -1276,19 +1266,19 @@ namespace Microsoft.Contracts.Foxtrot
         private static void AddInterfaceImplementationWrapper(Class Class, Method intfMethod, Method baseMethod)
         {
             var d = new Duplicator(Class.DeclaringModule, Class);
-            
+
             d.SkipBodies = true;
 
             var copy = d.VisitMethod(baseMethod);
-            
+
             copy.Flags = MethodFlags.Private | MethodFlags.HideBySig | MethodFlags.Virtual | MethodFlags.NewSlot |
                          MethodFlags.Final;
-            
+
             copy.ImplementedInterfaceMethods = new MethodList(intfMethod);
             copy.Name = Identifier.For("InheritedInterfaceImplementationContractWrapper$" + intfMethod.Name.Name);
             copy.ClearBody();
             copy.ThisParameter.Type = Class;
-            
+
             var bodyBlock = new Block(new StatementList());
             copy.Body = new Block(new StatementList(bodyBlock));
 
@@ -1312,7 +1302,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 bodyBlock.Statements.Add(new Return(callExpression));
             }
-            
+
             Class.Members.Add(copy);
         }
 
@@ -1327,9 +1317,9 @@ namespace Microsoft.Contracts.Foxtrot
                 }
 
                 var candidate = baseClass.GetExactMatchingMethod(interfaceMethod);
-                
+
                 if (candidate != null) return candidate;
-            
+
                 baseClass = baseClass.BaseClass;
             }
 
@@ -1344,7 +1334,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 if (interfaceList[i] == intf) return true;
             }
-            
+
             return false;
         }
 
@@ -1353,7 +1343,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (method == null) return false;
 
             var methodContract = method.Contract;
-            
+
             return methodContract != null && methodContract.RequiresCount > 0;
         }
 
@@ -1363,7 +1353,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             return methodContract.EnsuresCount > 0 ||
                    Contract.Exists(0, methodContract.RequiresCount,
-                       i => !((RequiresPlain) methodContract.Requires[i]).IsFromValidation);
+                       i => !((RequiresPlain)methodContract.Requires[i]).IsFromValidation);
         }
 
         public void VisitForPostCheck(AssemblyNode assemblyNode)
@@ -1452,7 +1442,7 @@ namespace Microsoft.Contracts.Foxtrot
                 if (method == null) return null;
 
                 if (method.Template != null) return method.Template;
-                
+
                 return method;
             }
 
@@ -1461,7 +1451,7 @@ namespace Microsoft.Contracts.Foxtrot
                 if (memberBinding == null) return;
 
                 var method = TemplateOrMethod(memberBinding.BoundMember as Method);
-                
+
                 if (usedToExtract.IsInvariantMethod(method))
                 {
                     // indicates invariant use inside a method not marked by ObjectInvariantAttribute
@@ -1469,11 +1459,11 @@ namespace Microsoft.Contracts.Foxtrot
                     Contract.Assume(this.CurrentMethod != null);
 
                     var containingMethodName = this.CurrentMethod.FullName;
-                    
+
                     this.errorHandler(new Error(1022,
                         string.Format("Bad use of method 'Contract.Invariant' in method body '{0}'",
                             containingMethodName), lastSC));
-                    
+
                     return;
                 }
 
@@ -1493,18 +1483,18 @@ namespace Microsoft.Contracts.Foxtrot
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {
-                Contract.Invariant(this.parent != null);
+                Contract.Invariant(_parent != null);
             }
 
-            private readonly PostExtractorChecker parent;
+            private readonly PostExtractorChecker _parent;
 
             public CheckForCallsToInvariantMethods(PostExtractorChecker parent)
             {
                 Contract.Requires(parent != null);
-                this.parent = parent;
+                _parent = parent;
             }
 
-            private SourceContext lastSC;
+            private SourceContext _lastSC;
 
             public override void VisitStatementList(StatementList statements)
             {
@@ -1515,9 +1505,9 @@ namespace Microsoft.Contracts.Foxtrot
                     var st = statements[i];
                     if (st != null && st.SourceContext.IsValid)
                     {
-                        lastSC = st.SourceContext;
+                        _lastSC = st.SourceContext;
                     }
-                    
+
                     this.Visit(st);
                 }
             }
@@ -1540,12 +1530,12 @@ namespace Microsoft.Contracts.Foxtrot
 
                 var m = mb.BoundMember as Method;
                 if (m == null) return;
-                
+
                 Method invMethod = this.InvariantMethods[m.UniqueKey] as Method;
                 if (invMethod != null)
                 {
-                    this.parent.HandleError(new Error(1042,
-                        "Explicit use of invariant method '" + invMethod.FullName + "' is not allowed.", this.lastSC));
+                    _parent.HandleError(new Error(1042,
+                        "Explicit use of invariant method '" + invMethod.FullName + "' is not allowed.", _lastSC));
                 }
             }
 
@@ -1557,8 +1547,8 @@ namespace Microsoft.Contracts.Foxtrot
                     Contract.Ensures(Contract.Result<TrivialHashtable>() != null);
 
                     // F:
-                    Contract.Assume(this.parent.invariantMethods != null);
-                    return this.parent.invariantMethods;
+                    Contract.Assume(_parent._invariantMethods != null);
+                    return _parent._invariantMethods;
                 }
             }
         }
@@ -1590,29 +1580,29 @@ namespace Microsoft.Contracts.Foxtrot
         [ContractVerification(true)]
         internal class PreconditionChecker : BasicChecker
         {
-            private bool hasError;
+            private bool _hasError;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")
             ]
             public bool HasError
             {
-                get { return hasError; }
+                get { return _hasError; }
             }
 
-            private Requires current;
+            private Requires _current;
 
             private Requires Current
             {
                 get
                 {
                     // F: this.current may be null (e.g. after the constructor)          
-                    return this.current;
+                    return _current;
                 }
                 set
                 {
                     // F:
                     Contract.Requires(value != null);
-                    this.current = value;
+                    _current = value;
                     this.lastSC = value.SourceContext;
                 }
             }
@@ -1630,7 +1620,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // F:
                 Contract.Requires(message != null);
 
-                this.hasError = true;
+                _hasError = true;
 
                 this.errorHandler(new Error(1011, message, this.CurrentSourceContext));
 
@@ -1658,10 +1648,10 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 if (req == null) return;
 
-                this.hasError = false;
-                
+                _hasError = false;
+
                 this.Current = req;
-                
+
                 this.Visit(req);
             }
 
@@ -1670,10 +1660,10 @@ namespace Microsoft.Contracts.Foxtrot
                 if (contract == null) return;
 
                 this.CurrentMethod = contract.DeclaringMethod;
-                
+
                 var requiresList = contract.Requires;
                 if (requiresList == null) return;
-                
+
                 foreach (var req in requiresList)
                 {
                     CheckPrecondition(req);
@@ -1687,17 +1677,17 @@ namespace Microsoft.Contracts.Foxtrot
             /// <summary>
             /// Parent instance.
             /// </summary>
-            private bool fSharp;
+            private bool _fSharp;
 
-            private bool checkingExceptionalPostcondition;
-            private Action<CompilerError> errorHandler;
+            private bool _checkingExceptionalPostcondition;
+            private Action<CompilerError> _errorHandler;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"),
              System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {
-                Contract.Invariant(this.errorHandler != null);
+                Contract.Invariant(_errorHandler != null);
             }
 
             private MethodContractElement Current { get; set; }
@@ -1712,10 +1702,10 @@ namespace Microsoft.Contracts.Foxtrot
                 // F:
                 Contract.Requires(message != null);
 
-                this.errorHandler(new Error(number, message, this.CurrentSourceContext));
+                _errorHandler(new Error(number, message, this.CurrentSourceContext));
                 if (this.Current.DefSite.IsValid)
                 {
-                    this.errorHandler(new Warning(0, "  location related to previous warning.", this.Current.DefSite));
+                    _errorHandler(new Warning(0, "  location related to previous warning.", this.Current.DefSite));
                 }
             }
 
@@ -1723,8 +1713,8 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 Contract.Requires(errorHandler != null);
 
-                this.errorHandler = errorHandler;
-                this.fSharp = fSharp;
+                _errorHandler = errorHandler;
+                _fSharp = fSharp;
             }
 
             public override void VisitOldExpression(OldExpression oldExpression)
@@ -1734,7 +1724,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // Make sure the argument to Old() isn't just a literal.
                 if (oldExpression.expression is Literal)
                     this.HandleError(1000, "Literal expression in Old expression.");
-                
+
                 base.VisitOldExpression(oldExpression);
             }
 
@@ -1743,7 +1733,7 @@ namespace Microsoft.Contracts.Foxtrot
                 if (returnValue == null) return;
 
                 var type = returnValue.Type;
-                
+
                 if (type == null) return;
 
                 CheckProperUseOfReturnValueHelper(type);
@@ -1751,7 +1741,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             private void CheckProperUseOfReturnValueHelper(TypeNode type)
             {
-                if (this.checkingExceptionalPostcondition)
+                if (_checkingExceptionalPostcondition)
                 {
                     Method method = this.CurrentMethod;
                     this.HandleError(1001,
@@ -1762,7 +1752,7 @@ namespace Microsoft.Contracts.Foxtrot
                     // Make sure the type of result matches the type of the method.
                     //Method method = GetLastNode<Method>();
                     Method method = this.CurrentMethod;
-                    if (!this.fSharp && type != method.ReturnType &&
+                    if (!_fSharp && type != method.ReturnType &&
                         !method.ReturnType.IsAssignableTo(type, this.CurrentSubstitution))
                     {
                         this.HandleError(1002,
@@ -1774,13 +1764,13 @@ namespace Microsoft.Contracts.Foxtrot
 
             public override void VisitEnsuresExceptional(EnsuresExceptional exceptional)
             {
-                this.checkingExceptionalPostcondition = true;
+                _checkingExceptionalPostcondition = true;
                 base.VisitEnsuresExceptional(exceptional);
             }
 
             public override void VisitEnsuresNormal(EnsuresNormal normal)
             {
-                this.checkingExceptionalPostcondition = false;
+                _checkingExceptionalPostcondition = false;
                 base.VisitEnsuresNormal(normal);
             }
 
@@ -1808,7 +1798,7 @@ namespace Microsoft.Contracts.Foxtrot
                     var ens = contract.ModelEnsures[i];
                     CheckPostcondition(ens);
                 }
-                
+
                 for (int i = 0; i < contract.AsyncEnsuresCount; i++)
                 {
                     var ens = contract.AsyncEnsures[i];
@@ -1829,21 +1819,21 @@ namespace Microsoft.Contracts.Foxtrot
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {
-                Contract.Invariant(this.visibilityHelper != null);
-                Contract.Invariant(this.errorHandler != null);
+                Contract.Invariant(_visibilityHelper != null);
+                Contract.Invariant(_errorHandler != null);
             }
 
-            private readonly Action<CompilerError> errorHandler;
-            private readonly ContractNodes contractNodes;
+            private readonly Action<CompilerError> _errorHandler;
+            private readonly ContractNodes _contractNodes;
 
-            private readonly VisibilityHelper visibilityHelper = new VisibilityHelper();
+            private readonly VisibilityHelper _visibilityHelper = new VisibilityHelper();
 
             public VisibilityChecker(Action<CompilerError> errorHandler, ContractNodes usedToExtract)
             {
                 Contract.Requires(errorHandler != null);
 
-                this.errorHandler = errorHandler;
-                this.contractNodes = usedToExtract;
+                _errorHandler = errorHandler;
+                _contractNodes = usedToExtract;
             }
 
             private void HandleError(Method method, int number, string message, MethodContractElement contract)
@@ -1851,10 +1841,10 @@ namespace Microsoft.Contracts.Foxtrot
                 Contract.Requires(contract != null);
                 Contract.Requires(message != null); // F:
 
-                this.errorHandler(new Error(number, message, contract.SourceContext));
+                _errorHandler(new Error(number, message, contract.SourceContext));
                 if (contract.DefSite.IsValid)
                 {
-                    this.errorHandler(new Warning(0, "  location related to previous warning.", contract.DefSite));
+                    _errorHandler(new Warning(0, "  location related to previous warning.", contract.DefSite));
                 }
             }
 
@@ -1866,7 +1856,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 CheckRequiresPlain(method, requires as RequiresPlain);
 
-                var nonVisible = this.visibilityHelper.AsVisibleAs(requires.Condition, method);
+                var nonVisible = _visibilityHelper.AsVisibleAs(requires.Condition, method);
                 if (nonVisible != null)
                 {
                     string message = "Member '" + nonVisible.FullName +
@@ -1893,7 +1883,7 @@ namespace Microsoft.Contracts.Foxtrot
                                 "Exception type {0} in Requires<E> has less visibility than enclosing method {1}",
                                 plain.ExceptionType.FullName, method.FullName);
 
-                        this.errorHandler(new Error(1037, msg, plain.SourceContext));
+                        _errorHandler(new Error(1037, msg, plain.SourceContext));
                     }
                 }
             }
@@ -1907,7 +1897,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 CheckEnsuresExceptional(method, ensures as EnsuresExceptional);
 
-                var nonVisible = this.visibilityHelper.AsVisibleAs(ensures.PostCondition, method);
+                var nonVisible = _visibilityHelper.AsVisibleAs(ensures.PostCondition, method);
                 if (nonVisible != null)
                 {
                     string message = "Member '" + nonVisible.FullName +
@@ -1933,7 +1923,7 @@ namespace Microsoft.Contracts.Foxtrot
                                 "Exception type {0} in EnsuresOnThrow<E> has less visibility than enclosing method {1}",
                                 ensuresExceptional.Type.FullName, method.FullName);
 
-                        this.errorHandler(new Error(1037, msg, ensuresExceptional.SourceContext));
+                        _errorHandler(new Error(1037, msg, ensuresExceptional.SourceContext));
                     }
                 }
             }
@@ -1967,11 +1957,11 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (!method.IsVirtual) return method;
 
-                var origType = HelperMethods.IsContractTypeForSomeOtherTypeUnspecialized(method.DeclaringType, this.contractNodes);
+                var origType = HelperMethods.IsContractTypeForSomeOtherTypeUnspecialized(method.DeclaringType, _contractNodes);
                 if (origType == null) return method;
 
                 var result = HelperMethods.FindImplementedMethodUnspecialized(origType, method);
-                
+
                 Contract.Assert(result != null);
 
                 /*
@@ -1992,14 +1982,14 @@ namespace Microsoft.Contracts.Foxtrot
             internal void CheckAbbreviatorEnsures(MethodContract methodContract)
             {
                 if (methodContract == null) return;
-                
+
                 for (int i = 0; i < methodContract.EnsuresCount; i++)
                 {
                     var ens = methodContract.Ensures[i];
 
                     Contract.Assume(ens != null);
                     Contract.Assume(methodContract.DeclaringMethod != null); // F:
-                    
+
                     this.CheckEnsures(methodContract.DeclaringMethod, ens);
                 }
 
@@ -2027,20 +2017,20 @@ namespace Microsoft.Contracts.Foxtrot
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {
-                Contract.Invariant(this.errorHandler != null);
-                Contract.Invariant(this.contractNodes != null);
+                Contract.Invariant(_errorHandler != null);
+                Contract.Invariant(_contractNodes != null);
             }
 
             /// <summary>
             /// Error handler
             /// </summary>
-            private readonly Action<System.CodeDom.Compiler.CompilerError> errorHandler;
+            private readonly Action<System.CodeDom.Compiler.CompilerError> _errorHandler;
 
-            private readonly bool fSharp = false;
-            private readonly ContractNodes contractNodes;
+            private readonly bool _fSharp = false;
+            private readonly ContractNodes _contractNodes;
 
-            private SourceContext lastSourceContext;
-            private bool assignmentFound;
+            private SourceContext _lastSourceContext;
+            private bool _assignmentFound;
 
             /// <summary>
             /// Creates a new instance of this class.
@@ -2051,34 +2041,34 @@ namespace Microsoft.Contracts.Foxtrot
                 Contract.Requires(errorHandler != null);
                 Contract.Requires(contractNodes != null);
 
-                this.errorHandler = errorHandler;
-                this.fSharp = fSharp;
-                this.contractNodes = contractNodes;
+                _errorHandler = errorHandler;
+                _fSharp = fSharp;
+                _contractNodes = contractNodes;
             }
 
             public void CheckInvariants(TypeNode t, InvariantList invariants)
             {
                 Contract.Requires(invariants != null);
 
-                this.assignmentFound = false;
+                _assignmentFound = false;
                 foreach (var i in invariants)
                 {
                     if (i == null) continue;
 
-                    this.lastSourceContext = i.SourceContext;
+                    _lastSourceContext = i.SourceContext;
                     this.CurrentMethod = i;
-                    
+
                     this.Visit(i);
-                    
+
                     Contract.Assume(this.CurrentMethod != null);
-                    
-                    if (this.assignmentFound)
+
+                    if (_assignmentFound)
                     {
-                        this.errorHandler(
+                        _errorHandler(
                             new Error(1003,
-                                "Malformed contract. Found Invariant after assignment in method '" + this.CurrentMethod.FullName + "'.", 
+                                "Malformed contract. Found Invariant after assignment in method '" + this.CurrentMethod.FullName + "'.",
                                 i.SourceContext));
-                        
+
                         break;
                     }
                 }
@@ -2092,67 +2082,67 @@ namespace Microsoft.Contracts.Foxtrot
                 if (currentMethod.Contract == null) return;
 
                 this.CurrentMethod = currentMethod;
-                this.assignmentFound = false;
+                _assignmentFound = false;
                 bool errorIssued = false;
-                
+
                 for (int i = 0; i < currentMethod.Contract.RequiresCount; i++)
                 {
                     var req = currentMethod.Contract.Requires[i];
                     if (req == null) continue;
 
-                    this.lastSourceContext = req.SourceContext;
-                    
+                    _lastSourceContext = req.SourceContext;
+
                     this.Visit(req);
-                    
-                    if (this.assignmentFound)
+
+                    if (_assignmentFound)
                     {
                         errorIssued = true;
-                        
-                        this.errorHandler(new Error(1004,
+
+                        _errorHandler(new Error(1004,
                             "Malformed contract. Found Requires after assignment in method '"
                             + currentMethod.FullName + "'.", req.SourceContext));
-                        
+
                         break;
                     }
                 }
 
                 if (errorIssued) return;
-                
+
                 for (int i = 0; i < currentMethod.Contract.EnsuresCount; i++)
                 {
                     var ens = currentMethod.Contract.Ensures[i];
                     if (ens == null) continue;
 
-                    this.lastSourceContext = ens.SourceContext;
+                    _lastSourceContext = ens.SourceContext;
                     this.Visit(ens);
-                    
-                    if (this.assignmentFound)
+
+                    if (_assignmentFound)
                     {
                         errorIssued = true;
-                        
-                        this.errorHandler(new Error(1005,
+
+                        _errorHandler(new Error(1005,
                             "Malformed contract. Found Ensures after assignment in method '"
                             + currentMethod.FullName + "'.", ens.SourceContext));
-                        
+
                         break;
                     }
                 }
 
                 if (errorIssued) return;
-                
+
                 for (int i = 0; i < currentMethod.Contract.AsyncEnsuresCount; i++)
                 {
                     var ens = currentMethod.Contract.AsyncEnsures[i];
                     if (ens == null) continue;
-                    
-                    this.lastSourceContext = ens.SourceContext;
-                    
+
+                    _lastSourceContext = ens.SourceContext;
+
                     this.Visit(ens);
-                    
-                    if (this.assignmentFound)
+
+                    if (_assignmentFound)
                     {
                         errorIssued = true;
-                        this.errorHandler(new Error(1005,
+                        _errorHandler(new Error(1005,
                             "Malformed contract. Found Ensures after assignment in method '"
                             + currentMethod.FullName + "'.", ens.SourceContext));
                         break;
@@ -2160,25 +2150,25 @@ namespace Microsoft.Contracts.Foxtrot
                 }
 
                 if (errorIssued) return;
-                
+
                 for (int i = 0; i < currentMethod.Contract.ModelEnsuresCount; i++)
                 {
                     var ens = currentMethod.Contract.ModelEnsures[i];
-                    
+
                     if (ens == null) continue;
-                    
-                    this.lastSourceContext = ens.SourceContext;
+
+                    _lastSourceContext = ens.SourceContext;
 
                     this.Visit(ens);
 
-                    if (this.assignmentFound)
+                    if (_assignmentFound)
                     {
                         errorIssued = true;
-                        
-                        this.errorHandler(new Error(1005,
+
+                        _errorHandler(new Error(1005,
                             "Malformed contract. Found Ensures after assignment in method '"
                             + currentMethod.FullName + "'.", ens.SourceContext));
-                        
+
                         break;
                     }
                 }
@@ -2240,13 +2230,13 @@ namespace Microsoft.Contracts.Foxtrot
                 // Skip compiler-generated code.
                 // Since we only visit contract regions, any assignment to state is not allowed.
                 bool targetIsLocal = false;
-                
+
                 if (assignment.Target is Local) targetIsLocal = true;
-                
+
                 Indexer idxr = assignment.Target as Indexer;
                 if (idxr != null && idxr.Object is Local)
                     targetIsLocal = true;
-                
+
                 // Assignments to locals that are structs show up as address deference
                 AddressDereference addressDereference = assignment.Target as AddressDereference;
                 if (addressDereference != null)
@@ -2267,7 +2257,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (!IsAnonymousDelegateConstruction(assignment) && !targetIsLocal)
                 {
-                    this.assignmentFound = true;
+                    _assignmentFound = true;
                     //this.errorHandler(new Error("Detected assignment in a pure region in method '"
                     //  + this.currentMethod.FullName + "'.", assignment.SourceContext));
                 }
@@ -2288,19 +2278,19 @@ namespace Microsoft.Contracts.Foxtrot
                 MemberBinding binding = call.Callee as MemberBinding;
                 Method method = binding != null ? binding.BoundMember as Method : null;
 
-                bool pure = this.contractNodes.IsPure(method);
+                bool pure = _contractNodes.IsPure(method);
 
                 // F: For some reason the code below relies on method != null, and hence to binding call.Callee <: MemberBinding
                 Contract.Assume(method != null);
 
-                if (!this.fSharp && !pure && method != this.contractNodes.AssumeMethod)
+                if (!_fSharp && !pure && method != _contractNodes.AssumeMethod)
                 {
                     // F:
                     Contract.Assume(this.CurrentMethod != null);
 
-                    this.errorHandler(new Warning(1036,
+                    _errorHandler(new Warning(1036,
                         "Detected call to method '" + method.FullName + "' without [Pure] in contracts of method '" +
-                        this.CurrentMethod.FullName + "'.", this.lastSourceContext));
+                        this.CurrentMethod.FullName + "'.", _lastSourceContext));
                 }
 
                 // make sure we now assume this method is pure for the rest of the analysis
@@ -2309,12 +2299,12 @@ namespace Microsoft.Contracts.Foxtrot
                     var template = method;
 
                     while (template.Template != null) template = template.Template;
-                    
+
                     if (template.Contract == null)
                     {
                         template.Contract = new MethodContract(template);
                     }
-                    
+
                     template.Contract.IsPure = true;
                 }
 
@@ -2329,7 +2319,7 @@ namespace Microsoft.Contracts.Foxtrot
                 switch (expression.NodeType)
                 {
                     case NodeType.Dup:
-                        seenDup = true;
+                        _seenDup = true;
                         break;
 
                     case NodeType.Arglist:
@@ -2350,35 +2340,35 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
-            private bool seenDup;
+            private bool _seenDup;
 
             public override void VisitEnsuresExceptional(EnsuresExceptional exceptional)
             {
-                seenDup = false;
+                _seenDup = false;
                 base.VisitEnsuresExceptional(exceptional);
             }
 
             public override void VisitEnsuresNormal(EnsuresNormal normal)
             {
-                seenDup = false;
+                _seenDup = false;
                 base.VisitEnsuresNormal(normal);
             }
 
             public override void VisitInvariant(Invariant invariant)
             {
-                seenDup = false;
+                _seenDup = false;
                 base.VisitInvariant(invariant);
             }
 
             public override void VisitRequiresOtherwise(RequiresOtherwise otherwise)
             {
-                seenDup = false;
+                _seenDup = false;
                 base.VisitRequiresOtherwise(otherwise);
             }
 
             public override void VisitRequiresPlain(RequiresPlain plain)
             {
-                seenDup = false;
+                _seenDup = false;
                 base.VisitRequiresPlain(plain);
             }
 
@@ -2388,11 +2378,11 @@ namespace Microsoft.Contracts.Foxtrot
 
                 // MaF: this is too strict. Some C# code patterns use Dup and pop in a branch to avoid loading a memory location twice.
                 // we now emit the error only if there was no prior dup
-                if (!seenDup)
+                if (!_seenDup)
                 {
-                    this.errorHandler(new Warning(1069,
+                    _errorHandler(new Warning(1069,
                         "Detected expression statement evaluated for potential side-effect in contracts of method '" +
-                        this.CurrentMethod.FullName + "'.", this.lastSourceContext));
+                        this.CurrentMethod.FullName + "'.", _lastSourceContext));
                 }
             }
 
@@ -2412,7 +2402,7 @@ namespace Microsoft.Contracts.Foxtrot
             public override void VisitStatementList(StatementList statements)
             {
                 if (statements == null) return;
-                
+
                 for (int i = 0; i < statements.Count; i++)
                 {
                     var stmt = statements[i];
@@ -2420,7 +2410,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                     if (stmt.SourceContext.IsValid)
                     {
-                        lastSourceContext = stmt.SourceContext;
+                        _lastSourceContext = stmt.SourceContext;
                     }
                     this.Visit(stmt);
                 }

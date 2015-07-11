@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Compiler;
 using System.Diagnostics;
@@ -55,14 +44,14 @@ namespace Microsoft.Contracts.Foxtrot
     [ContractVerification(true)]
     internal class ForwardingDuplicator : Duplicator
     {
-        private readonly ContractNodes contractNodes;
-        private readonly ContractNodes targetContractNodes;
+        private readonly ContractNodes _contractNodes;
+        private readonly ContractNodes _targetContractNodes;
 
         public ForwardingDuplicator(Module /*!*/ module, TypeNode type, ContractNodes contractNodes,
             ContractNodes targetContractNodes) : base(module, type)
         {
-            this.contractNodes = contractNodes;
-            this.targetContractNodes = targetContractNodes;
+            _contractNodes = contractNodes;
+            _targetContractNodes = targetContractNodes;
         }
 
         /// <summary>
@@ -170,24 +159,24 @@ namespace Microsoft.Contracts.Foxtrot
             var result = base.VisitMemberBinding(memberBinding);
 
             memberBinding = result as MemberBinding;
-            if (this.targetContractNodes != null && memberBinding != null && memberBinding.TargetObject == null)
+            if (_targetContractNodes != null && memberBinding != null && memberBinding.TargetObject == null)
             {
                 // all methods are static
                 Method method = memberBinding.BoundMember as Method;
                 if (method == null) return memberBinding;
 
-                Contract.Assume(this.contractNodes != null);
+                Contract.Assume(_contractNodes != null);
 
                 if (method.Template == null)
                 {
-                    if (contractNodes.IsExistsMethod(method))
+                    if (_contractNodes.IsExistsMethod(method))
                     {
-                        return new MemberBinding(null, targetContractNodes.GetExistsTemplate);
+                        return new MemberBinding(null, _targetContractNodes.GetExistsTemplate);
                     }
-                    
-                    if (contractNodes.IsForallMethod(method))
+
+                    if (_contractNodes.IsForallMethod(method))
                     {
-                        return new MemberBinding(null, targetContractNodes.GetForAllTemplate);
+                        return new MemberBinding(null, _targetContractNodes.GetForAllTemplate);
                     }
                 }
                 else
@@ -196,24 +185,24 @@ namespace Microsoft.Contracts.Foxtrot
                     Method template = method.Template;
                     var templateArgs = method.TemplateArguments;
 
-                    if (contractNodes.IsGenericForallMethod(template))
+                    if (_contractNodes.IsGenericForallMethod(template))
                     {
                         Contract.Assume(templateArgs != null);
-                        Contract.Assume(targetContractNodes.GetForAllGenericTemplate != null);
+                        Contract.Assume(_targetContractNodes.GetForAllGenericTemplate != null);
 
                         return new MemberBinding(null,
-                            targetContractNodes.GetForAllGenericTemplate.GetTemplateInstance(
-                                targetContractNodes.GetForAllGenericTemplate.DeclaringType, templateArgs[0]));
+                            _targetContractNodes.GetForAllGenericTemplate.GetTemplateInstance(
+                                _targetContractNodes.GetForAllGenericTemplate.DeclaringType, templateArgs[0]));
                     }
-                    
-                    if (contractNodes.IsGenericExistsMethod(template))
+
+                    if (_contractNodes.IsGenericExistsMethod(template))
                     {
                         Contract.Assume(templateArgs != null);
-                        Contract.Assume(targetContractNodes.GetExistsGenericTemplate != null);
+                        Contract.Assume(_targetContractNodes.GetExistsGenericTemplate != null);
 
                         return new MemberBinding(null,
-                            targetContractNodes.GetExistsGenericTemplate.GetTemplateInstance(
-                                targetContractNodes.GetExistsGenericTemplate.DeclaringType, templateArgs[0]));
+                            _targetContractNodes.GetExistsGenericTemplate.GetTemplateInstance(
+                                _targetContractNodes.GetExistsGenericTemplate.DeclaringType, templateArgs[0]));
                     }
                 }
             }
@@ -228,64 +217,64 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (attribute == null) return null;
 
-            if (this.targetContractNodes == null) return attribute;
+            if (_targetContractNodes == null) return attribute;
 
-            if (attribute.Type == this.contractNodes.ContractClassAttribute)
+            if (attribute.Type == _contractNodes.ContractClassAttribute)
             {
                 return
                     new AttributeNode(
                         new MemberBinding(null,
-                            this.targetContractNodes.ContractClassAttribute.GetConstructor(SystemTypes.Type)),
+                            _targetContractNodes.ContractClassAttribute.GetConstructor(SystemTypes.Type)),
                         attribute.Expressions);
             }
-            
-            if (attribute.Type == this.contractNodes.ContractClassForAttribute)
+
+            if (attribute.Type == _contractNodes.ContractClassForAttribute)
             {
                 return
                     new AttributeNode(
                         new MemberBinding(null,
-                            this.targetContractNodes.ContractClassForAttribute.GetConstructor(SystemTypes.Type)),
+                            _targetContractNodes.ContractClassForAttribute.GetConstructor(SystemTypes.Type)),
                         attribute.Expressions);
             }
-            
-            if (attribute.Type == this.contractNodes.IgnoreAtRuntimeAttribute)
+
+            if (attribute.Type == _contractNodes.IgnoreAtRuntimeAttribute)
             {
                 return
                     new AttributeNode(
-                        new MemberBinding(null, this.targetContractNodes.IgnoreAtRuntimeAttribute.GetConstructor()),
+                        new MemberBinding(null, _targetContractNodes.IgnoreAtRuntimeAttribute.GetConstructor()),
                         null);
             }
-            
-            if (attribute.Type == this.contractNodes.InvariantMethodAttribute)
+
+            if (attribute.Type == _contractNodes.InvariantMethodAttribute)
             {
                 return
                     new AttributeNode(
-                        new MemberBinding(null, this.targetContractNodes.InvariantMethodAttribute.GetConstructor()),
+                        new MemberBinding(null, _targetContractNodes.InvariantMethodAttribute.GetConstructor()),
                         null);
             }
-            
-            if (attribute.Type == this.contractNodes.PureAttribute)
+
+            if (attribute.Type == _contractNodes.PureAttribute)
             {
                 return
-                    new AttributeNode(new MemberBinding(null, this.targetContractNodes.PureAttribute.GetConstructor()),
+                    new AttributeNode(new MemberBinding(null, _targetContractNodes.PureAttribute.GetConstructor()),
                         null);
             }
-            
-            if (attribute.Type == this.contractNodes.SpecPublicAttribute)
+
+            if (attribute.Type == _contractNodes.SpecPublicAttribute)
             {
                 return
                     new AttributeNode(
                         new MemberBinding(null,
-                            this.targetContractNodes.SpecPublicAttribute.GetConstructor(SystemTypes.String)),
+                            _targetContractNodes.SpecPublicAttribute.GetConstructor(SystemTypes.String)),
                         attribute.Expressions);
             }
-            
-            if (attribute.Type == this.contractNodes.VerifyAttribute)
+
+            if (attribute.Type == _contractNodes.VerifyAttribute)
             {
                 return
                     new AttributeNode(
                         new MemberBinding(null,
-                            this.targetContractNodes.VerifyAttribute.GetConstructor(SystemTypes.Boolean)),
+                            _targetContractNodes.VerifyAttribute.GetConstructor(SystemTypes.Boolean)),
                         attribute.Expressions);
             }
 

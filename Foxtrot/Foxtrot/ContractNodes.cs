@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Compiler;
@@ -50,9 +39,9 @@ namespace Microsoft.Contracts.Foxtrot
 
         public static readonly Identifier ContractClassName = Identifier.For("Contract");
         public static readonly Identifier ContractInternalNamespace = Identifier.For("System.Runtime.CompilerServices");
-        
+
         //public static readonly Identifier ContractInternalNamespace = Identifier.For("System.Diagnostics.Contracts.Internal");
-        
+
         public static readonly Identifier RaiseContractFailedEventName = Identifier.For("RaiseContractFailedEvent");
         public static readonly Identifier TriggerFailureName = Identifier.For("TriggerFailure");
         public static readonly Identifier ReportFailureName = Identifier.For("ReportFailure");
@@ -92,67 +81,100 @@ namespace Microsoft.Contracts.Foxtrot
 
         // Fields that represent methods, attributes, and types in the contract library
 
-        [RepresentationFor("System.Diagnostics.Contracts.PureAttribute")] public readonly Class /*?*/ PureAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.PureAttribute")]
+        public readonly Class /*?*/ PureAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractInvariantMethodAttribute")] public readonly Class /*?*/ InvariantMethodAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractInvariantMethodAttribute")]
+        public readonly Class /*?*/ InvariantMethodAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractClassAttribute")] internal readonly Class /*?*/ ContractClassAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractClassAttribute")]
+        internal readonly Class /*?*/ ContractClassAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractClassForAttribute")] internal readonly Class /*?*/ ContractClassForAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractClassForAttribute")]
+        internal readonly Class /*?*/ ContractClassForAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractVerificationAttribute")] public readonly Class /*?*/ VerifyAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractVerificationAttribute")]
+        public readonly Class /*?*/ VerifyAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractPublicPropertyNameAttribute")] internal readonly Class /*?*/ SpecPublicAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractPublicPropertyNameAttribute")]
+        internal readonly Class /*?*/ SpecPublicAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractReferenceAssemblyAttribute", false)] public readonly Class /*?*/ ReferenceAssemblyAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractReferenceAssemblyAttribute", false)]
+        public readonly Class /*?*/ ReferenceAssemblyAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractRuntimeIgnoredAttribute")] public readonly Class /*?*/ IgnoreAtRuntimeAttribute;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractRuntimeIgnoredAttribute")]
+        public readonly Class /*?*/ IgnoreAtRuntimeAttribute;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractClass")] public readonly Class /*?*/ ContractClass;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractClass")]
+        public readonly Class /*?*/ ContractClass;
 
-        [RepresentationFor("System.Diagnostics.Contracts.Internal.ContractHelper", false)] public readonly Class /*?*/ ContractHelperClass;
+        [RepresentationFor("System.Diagnostics.Contracts.Internal.ContractHelper", false)]
+        public readonly Class /*?*/ ContractHelperClass;
 
-        [RepresentationFor("System.Diagnostics.Contracts.ContractFailureKind")] public readonly EnumNode /*?*/ ContractFailureKind;
+        [RepresentationFor("System.Diagnostics.Contracts.ContractFailureKind")]
+        public readonly EnumNode /*?*/ ContractFailureKind;
 
-        [RepresentationFor("Contract.Assert(bool)")] public readonly Method /*?*/ AssertMethod;
-        [RepresentationFor("Contract.Assert(bool, string)")] public readonly Method /*?*/ AssertWithMsgMethod;
-        [RepresentationFor("Contract.Assume(bool b)")] public readonly Method /*?*/ AssumeMethod;
-        [RepresentationFor("Contract.Assume(bool b, string)")] public readonly Method /*?*/ AssumeWithMsgMethod;
+        [RepresentationFor("Contract.Assert(bool)")]
+        public readonly Method /*?*/ AssertMethod;
+        [RepresentationFor("Contract.Assert(bool, string)")]
+        public readonly Method /*?*/ AssertWithMsgMethod;
+        [RepresentationFor("Contract.Assume(bool b)")]
+        public readonly Method /*?*/ AssumeMethod;
+        [RepresentationFor("Contract.Assume(bool b, string)")]
+        public readonly Method /*?*/ AssumeWithMsgMethod;
 
-        [RepresentationFor("Contract.Requires(bool)")] public readonly Method /*?*/ RequiresMethod;
-        [RepresentationFor("Contract.Requires(bool,string)")] public readonly Method /*?*/ RequiresWithMsgMethod;
+        [RepresentationFor("Contract.Requires(bool)")]
+        public readonly Method /*?*/ RequiresMethod;
+        [RepresentationFor("Contract.Requires(bool,string)")]
+        public readonly Method /*?*/ RequiresWithMsgMethod;
 
-        [RepresentationFor("Contract.Requires<TException>(bool)", false)] public readonly Method /*?*/ RequiresExceptionMethod;
+        [RepresentationFor("Contract.Requires<TException>(bool)", false)]
+        public readonly Method /*?*/ RequiresExceptionMethod;
 
-        [RepresentationFor("Contract.Requires<TException>(bool,string)", false)] public readonly Method /*?*/ RequiresExceptionWithMsgMethod;
+        [RepresentationFor("Contract.Requires<TException>(bool,string)", false)]
+        public readonly Method /*?*/ RequiresExceptionWithMsgMethod;
 
-        [RepresentationFor("Contract.Ensures(bool)")] public readonly Method /*?*/ EnsuresMethod;
-        [RepresentationFor("Contract.Ensures(bool,string)")] public readonly Method /*?*/ EnsuresWithMsgMethod;
-        [RepresentationFor("Contract.EnsuresOnThrow<T>(bool)")] public readonly Method /*?*/ EnsuresOnThrowTemplate;
+        [RepresentationFor("Contract.Ensures(bool)")]
+        public readonly Method /*?*/ EnsuresMethod;
+        [RepresentationFor("Contract.Ensures(bool,string)")]
+        public readonly Method /*?*/ EnsuresWithMsgMethod;
+        [RepresentationFor("Contract.EnsuresOnThrow<T>(bool)")]
+        public readonly Method /*?*/ EnsuresOnThrowTemplate;
 
-        [RepresentationFor("Contract.EnsuresOnThrow<T>(bool,string)")] public readonly Method /*?*/ EnsuresOnThrowWithMsgTemplate;
+        [RepresentationFor("Contract.EnsuresOnThrow<T>(bool,string)")]
+        public readonly Method /*?*/ EnsuresOnThrowWithMsgTemplate;
 
-        [RepresentationFor("Contract.Invariant(bool)")] public readonly Method /*?*/ InvariantMethod;
-        [RepresentationFor("Contract.Invariant(bool,msg)")] public readonly Method /*?*/ InvariantWithMsgMethod;
+        [RepresentationFor("Contract.Invariant(bool)")]
+        public readonly Method /*?*/ InvariantMethod;
+        [RepresentationFor("Contract.Invariant(bool,msg)")]
+        public readonly Method /*?*/ InvariantWithMsgMethod;
 
-        [RepresentationFor("Contract.Result<T>()")] private readonly Method /*?*/ ResultTemplate;
-        [RepresentationFor("Contract.ValueAtReturn<T>(out T t)")] private readonly Method /*?*/ ParameterTemplate;
-        [RepresentationFor("Contract.OldValue<T>(T t)")] private readonly Method /*?*/ OldTemplate;
+        [RepresentationFor("Contract.Result<T>()")]
+        private readonly Method /*?*/ _resultTemplate;
+        [RepresentationFor("Contract.ValueAtReturn<T>(out T t)")]
+        private readonly Method /*?*/ _parameterTemplate;
+        [RepresentationFor("Contract.OldValue<T>(T t)")]
+        private readonly Method /*?*/ _oldTemplate;
 
-        [RepresentationFor("Contract.ForAll(int lo, int hi, Predicate<int> P)", false)] private readonly Method /*?*/ ForAllTemplate;
+        [RepresentationFor("Contract.ForAll(int lo, int hi, Predicate<int> P)", false)]
+        private readonly Method /*?*/ _forAllTemplate;
 
-        [RepresentationFor("Contract.ForAll<T>(IEnumerable<T> collection, Predicate<int> P)", false)] private readonly Method /*?*/ ForAllGenericTemplate;
+        [RepresentationFor("Contract.ForAll<T>(IEnumerable<T> collection, Predicate<int> P)", false)]
+        private readonly Method /*?*/ _forAllGenericTemplate;
 
-        [RepresentationFor("Contract.Exists(int lo, int hi, Predicate<int> P)", false)] private readonly Method /*?*/ ExistsTemplate;
+        [RepresentationFor("Contract.Exists(int lo, int hi, Predicate<int> P)", false)]
+        private readonly Method /*?*/ _existsTemplate;
 
-        [RepresentationFor("Contract.Exists<T>(IEnumerable<T> collection, Predicate<int> P)", false)] private readonly Method /*?*/ ExistsGenericTemplate;
+        [RepresentationFor("Contract.Exists<T>(IEnumerable<T> collection, Predicate<int> P)", false)]
+        private readonly Method /*?*/ _existsGenericTemplate;
 
-        [RepresentationFor("Contract.EndContractBlock()")] public readonly Method /*?*/ EndContract;
+        [RepresentationFor("Contract.EndContractBlock()")]
+        public readonly Method /*?*/ EndContract;
 
-        [RepresentationFor("ContractHelper.RaiseContractFailedEvent(ContractFailureKind failureKind, String userProvidedMessage, String condition, Exception originalException)", false)] 
+        [RepresentationFor("ContractHelper.RaiseContractFailedEvent(ContractFailureKind failureKind, String userProvidedMessage, String condition, Exception originalException)", false)]
         public readonly Method /*?*/ RaiseFailedEventMethod;
 
-        [RepresentationFor( "ContractHelper.ShowFailure(ContractFailureKind failureKind, String displayMessage, String userProvidedMessage, String condition, Exception originalException)", false)] 
+        [RepresentationFor("ContractHelper.ShowFailure(ContractFailureKind failureKind, String displayMessage, String userProvidedMessage, String condition, Exception originalException)", false)]
         public readonly Method /*?*/ TriggerFailureMethod;
 
         /// <summary>
@@ -177,11 +199,11 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 throw new InvalidOperationException(message);
             }
-            
+
             var error = new CompilerError(assembly.Location, 0, 0, "", message);
-            
+
             error.IsWarning = true;
-            
+
             ErrorFound(error);
         }
 
@@ -191,7 +213,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 throw new InvalidOperationException(message);
             }
-            
+
             ErrorFound(new System.CodeDom.Compiler.CompilerError(assembly.Location, 0, 0, "", message));
         }
 
@@ -274,7 +296,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             EnsuresMethod = ContractClass.GetMethod(Identifier.For("Ensures"), SystemTypes.Boolean);
-            
+
             EnsuresWithMsgMethod = ContractClass.GetMethod(Identifier.For("Ensures"), SystemTypes.Boolean, SystemTypes.String);
             EnsuresOnThrowTemplate = ContractClass.GetMethod(Identifier.For("EnsuresOnThrow"), SystemTypes.Boolean);
             EnsuresOnThrowWithMsgTemplate = ContractClass.GetMethod(Identifier.For("EnsuresOnThrow"), SystemTypes.Boolean, SystemTypes.String);
@@ -288,7 +310,7 @@ namespace Microsoft.Contracts.Foxtrot
             AssumeMethod = ContractClass.GetMethod(Identifier.For("Assume"), SystemTypes.Boolean);
             AssumeWithMsgMethod = ContractClass.GetMethod(Identifier.For("Assume"), SystemTypes.Boolean, SystemTypes.String);
 
-            ResultTemplate = ContractClass.GetMethod(ResultName);
+            _resultTemplate = ContractClass.GetMethod(ResultName);
 
             TypeNode GenericPredicate = SystemTypes.SystemAssembly.GetType(
                 Identifier.For("System"),
@@ -296,10 +318,10 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (GenericPredicate != null)
             {
-                ForAllGenericTemplate = ContractClass.GetMethod(ForallName, SystemTypes.GenericIEnumerable, GenericPredicate);
-                ExistsGenericTemplate = ContractClass.GetMethod(ExistsName, SystemTypes.GenericIEnumerable, GenericPredicate);
+                _forAllGenericTemplate = ContractClass.GetMethod(ForallName, SystemTypes.GenericIEnumerable, GenericPredicate);
+                _existsGenericTemplate = ContractClass.GetMethod(ExistsName, SystemTypes.GenericIEnumerable, GenericPredicate);
 
-                if (ForAllGenericTemplate == null)
+                if (_forAllGenericTemplate == null)
                 {
                     // The problem might be that we are in the pre 4.0 scenario and using an out-of-band contract for mscorlib
                     // in which case the contract library is defined in that out-of-band contract assembly.
@@ -315,16 +337,16 @@ namespace Microsoft.Contracts.Foxtrot
                             assemblyContainingContractClass.GetType(Identifier.For("System.Collections.Generic"),
                                 Identifier.For("IEnumerable" + TargetPlatform.GenericTypeNamesMangleChar + "1"));
 
-                        ForAllGenericTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), genericIEnum, GenericPredicate);
-                        ExistsGenericTemplate = ContractClass.GetMethod(Identifier.For("Exists"), genericIEnum, GenericPredicate);
+                        _forAllGenericTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), genericIEnum, GenericPredicate);
+                        _existsGenericTemplate = ContractClass.GetMethod(Identifier.For("Exists"), genericIEnum, GenericPredicate);
                     }
                 }
 
                 TypeNode PredicateOfInt = GenericPredicate.GetTemplateInstance(ContractClass, SystemTypes.Int32);
                 if (PredicateOfInt != null)
                 {
-                    ForAllTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
-                    ExistsTemplate = ContractClass.GetMethod(Identifier.For("Exists"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
+                    _forAllTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
+                    _existsTemplate = ContractClass.GetMethod(Identifier.For("Exists"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
                 }
             }
 
@@ -336,7 +358,7 @@ namespace Microsoft.Contracts.Foxtrot
                     Reference reference = method.Parameters[0].Type as Reference;
                     if (reference != null && reference.ElementType.IsTemplateParameter)
                     {
-                        ParameterTemplate = method;
+                        _parameterTemplate = method;
                         break;
                     }
                 }
@@ -347,7 +369,7 @@ namespace Microsoft.Contracts.Foxtrot
                 Method method = member as Method;
                 if (method != null && method.Parameters.Count == 1 && method.Parameters[0].Type.IsTemplateParameter)
                 {
-                    OldTemplate = method;
+                    _oldTemplate = method;
                     break;
                 }
             }
@@ -389,14 +411,14 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Check that every field in this class has been set
 
-            foreach (System.Reflection.FieldInfo field in typeof (ContractNodes).GetFields())
+            foreach (System.Reflection.FieldInfo field in typeof(ContractNodes).GetFields())
             {
                 if (field.GetValue(this) == null)
                 {
                     string sig = null;
                     bool required = false;
 
-                    object[] cas = field.GetCustomAttributes(typeof (RepresentationFor), false);
+                    object[] cas = field.GetCustomAttributes(typeof(RepresentationFor), false);
                     for (int i = 0, n = cas.Length; i < n; i++)
                     {
                         // should be exactly one
@@ -410,7 +432,7 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     if (!required) continue;
-                    
+
                     string msg = "Could not find contract node for '" + field.Name + "'";
                     if (sig != null)
                         msg = "Could not find the method/type '" + sig + "'";
@@ -421,10 +443,10 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     Module dm = ContractClass.DeclaringModule;
-                    
+
                     ClearFields();
                     CallErrorFound(dm, msg);
-                    
+
                     return;
                 }
             }
@@ -439,7 +461,7 @@ namespace Microsoft.Contracts.Foxtrot
                 )
             {
                 Module dm = ContractClass.DeclaringModule;
-                
+
                 ClearFields();
                 CallErrorFound(dm, "The enum ContractFailureKind must have the values 'Assert', 'Assume', 'Invariant', 'Postcondition', and 'Precondition'.");
             }
@@ -451,9 +473,9 @@ namespace Microsoft.Contracts.Foxtrot
         /// </summary>
         private void ClearFields()
         {
-            foreach (System.Reflection.FieldInfo field in typeof (ContractNodes).GetFields())
+            foreach (System.Reflection.FieldInfo field in typeof(ContractNodes).GetFields())
             {
-                object[] cas = field.GetCustomAttributes(typeof (RepresentationFor), false);
+                object[] cas = field.GetCustomAttributes(typeof(RepresentationFor), false);
                 if (cas != null && cas.Length == 1)
                 {
                     field.SetValue(this, null);
@@ -486,7 +508,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 return m;
             }
-            
+
             return null;
         }
 
@@ -498,7 +520,7 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 return true;
             }
-            
+
             return false;
         }
 
@@ -616,7 +638,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 return mc.Operands[0];
             }
-            
+
             return null;
         }
 
@@ -736,7 +758,8 @@ namespace Microsoft.Contracts.Foxtrot
             if (AreAnyPure(method.ImplicitlyImplementedInterfaceMethods)) return true;
 
             if (IsForallMethod(method) || IsGenericForallMethod(method) || IsExistsMethod(method) ||
-                IsGenericExistsMethod(method)) return true;
+                IsGenericExistsMethod(method))
+                return true;
 
             if (IsFuncOrPredicate(method)) return true;
 
@@ -762,7 +785,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ResultTemplate) return true;
+            if (method == _resultTemplate) return true;
 
             // by name matching
             return method.MatchesContractByName(ResultName);
@@ -777,7 +800,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == OldTemplate) return true;
+            if (method == _oldTemplate) return true;
 
             // by name matching
             return method.MatchesContractByName(OldName);
@@ -792,7 +815,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ParameterTemplate) return true;
+            if (method == _parameterTemplate) return true;
 
             // by name matching
             return method.MatchesContractByName(ValueAtReturnName);
@@ -807,7 +830,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ForAllTemplate) return true;
+            if (method == _forAllTemplate) return true;
 
             // by name matching
             if (method.TemplateParameters != null && method.TemplateParameters.Count > 0) return false;
@@ -824,7 +847,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ForAllGenericTemplate) return true;
+            if (method == _forAllGenericTemplate) return true;
 
             // by name matching
             if (method.TemplateParameters == null || method.TemplateParameters.Count != 1) return false;
@@ -835,12 +858,12 @@ namespace Microsoft.Contracts.Foxtrot
 
         public Method GetForAllTemplate
         {
-            get { return this.ForAllTemplate; }
+            get { return _forAllTemplate; }
         }
 
         public Method GetForAllGenericTemplate
         {
-            get { return this.ForAllGenericTemplate; }
+            get { return _forAllGenericTemplate; }
         }
 
         public bool IsExistsMethod(Method method)
@@ -852,7 +875,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ExistsTemplate) return true;
+            if (method == _existsTemplate) return true;
 
             // by name matching
             if (method.TemplateParameters != null && method.TemplateParameters.Count > 0) return false;
@@ -869,7 +892,7 @@ namespace Microsoft.Contracts.Foxtrot
                 method = method.Template;
             }
 
-            if (method == ExistsGenericTemplate) return true;
+            if (method == _existsGenericTemplate) return true;
 
             // by name matching
             if (method.TemplateParameters == null || method.TemplateParameters.Count != 1) return false;
@@ -879,12 +902,12 @@ namespace Microsoft.Contracts.Foxtrot
 
         public Method GetExistsTemplate
         {
-            get { return this.ExistsTemplate; }
+            get { return _existsTemplate; }
         }
 
         public Method GetExistsGenericTemplate
         {
-            get { return this.ExistsGenericTemplate; }
+            get { return _existsGenericTemplate; }
         }
 
         [Pure]

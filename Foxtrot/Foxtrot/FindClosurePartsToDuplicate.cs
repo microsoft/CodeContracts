@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Compiler;
@@ -23,7 +12,7 @@ namespace Microsoft.Contracts.Foxtrot
         /// <summary>
         /// Type containing the method containing the closure
         /// </summary>
-        private TypeNode containingType;
+        private TypeNode _containingType;
 
         internal MemberList MembersToDuplicate = new MemberList();
 
@@ -34,7 +23,7 @@ namespace Microsoft.Contracts.Foxtrot
         public FindClosurePartsToDuplicate(TypeNode containingType, Method sourceMethod)
         {
             this.CurrentMethod = HelperMethods.Unspecialize(sourceMethod);
-            this.containingType = HelperMethods.Unspecialize(containingType);
+            _containingType = HelperMethods.Unspecialize(containingType);
         }
 
         private void TryAddTypeToMembersToDuplicate(TypeNode type)
@@ -55,7 +44,7 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (type == null) return;
 
-            if (HelperMethods.IsClosureType(this.containingType, type))
+            if (HelperMethods.IsClosureType(_containingType, type))
             {
                 TryAddTypeToMembersToDuplicate(type);
             }
@@ -64,7 +53,7 @@ namespace Microsoft.Contracts.Foxtrot
                 Debug.Assert(!type.Name.Name.Contains("DisplayClass"));
                 //Console.WriteLine("Non-closure part: {0}", type.FullName);
             }
-                
+
             base.VisitTypeReference(type);
         }
 
@@ -78,10 +67,10 @@ namespace Microsoft.Contracts.Foxtrot
                     MemberBinding mb = ue.Operand as MemberBinding;
                     if (mb != null)
                     {
-                        Method m = (Method) mb.BoundMember;
-                        if (HelperMethods.IsClosureMethod(this.containingType, m))
+                        Method m = (Method)mb.BoundMember;
+                        if (HelperMethods.IsClosureMethod(_containingType, m))
                         {
-                            if (HelperMethods.IsClosureType(this.containingType, m.DeclaringType))
+                            if (HelperMethods.IsClosureType(_containingType, m.DeclaringType))
                             {
                                 // Roslyn-based compiler changed non-capturing lambda caching.
                                 // Instead of storing delegate in a field like CS$<>9_CachedAnonymousMethodDelegate1
@@ -132,15 +121,15 @@ namespace Microsoft.Contracts.Foxtrot
 
             Construct cons = assignment.Source as Construct;
             if (cons == null) goto JustVisit;
-                
+
             if (!(cons.Type.IsDelegateType())) goto JustVisit;
-                
+
             UnaryExpression ue = cons.Operands[1] as UnaryExpression;
             if (ue == null) goto JustVisit;
-                
+
             MemberBinding mb = ue.Operand as MemberBinding;
             if (mb == null) goto JustVisit;
-                
+
             Method m = mb.BoundMember as Method;
 
             if (m.IsStatic)
@@ -149,34 +138,34 @@ namespace Microsoft.Contracts.Foxtrot
                 if (mb == null) goto JustVisit;
 
                 if (mb.TargetObject != null) goto JustVisit;
-                    
+
                 // Record the static cache field used to hold the static closure
                 MembersToDuplicate.Add(mb.BoundMember);
 
                 goto End;
             }
 
-            JustVisit:
+        JustVisit:
             if (assignment.Source == null) goto JustVisit2;
-                
+
             if (assignment.Source.NodeType != NodeType.Pop) goto JustVisit2;
-                
+
             mb = assignment.Target as MemberBinding;
-                
+
             if (mb == null) goto JustVisit2;
-                
+
             if (mb.TargetObject != null) goto JustVisit2;
-                
+
             if (mb.BoundMember == null) goto JustVisit2;
-                
-            if (HelperMethods.Unspecialize(mb.BoundMember.DeclaringType) != this.containingType) goto JustVisit2;
-                
+
+            if (HelperMethods.Unspecialize(mb.BoundMember.DeclaringType) != _containingType) goto JustVisit2;
+
             MembersToDuplicate.Add(mb.BoundMember);
 
-            JustVisit2:
+        JustVisit2:
             ;
 
-            End:
+        End:
             base.VisitAssignmentStatement(assignment);
         }
     }

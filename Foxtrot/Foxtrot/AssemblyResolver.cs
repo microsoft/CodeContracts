@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -22,29 +11,29 @@ namespace Microsoft.Contracts.Foxtrot
 {
     public class AssemblyResolver
     {
-        public string[] EmptyExt = new[] {""};
-        public string[] DllExt = new[] {".dll", ".winmd"};
-        public string[] DllAndExeExt = new[] {".dll", ".winmd", ".exe"};
-        public string[] EmptyAndDllExt = new[] {"", ".dll", ".winmd"};
-        public string[] AllExt = new[] {"", ".dll", ".winmd", ".exe"};
+        public string[] EmptyExt = new[] { "" };
+        public string[] DllExt = new[] { ".dll", ".winmd" };
+        public string[] DllAndExeExt = new[] { ".dll", ".winmd", ".exe" };
+        public string[] EmptyAndDllExt = new[] { "", ".dll", ".winmd" };
+        public string[] AllExt = new[] { "", ".dll", ".winmd", ".exe" };
 
-        private IEnumerable<string> resolvedPaths;
-        private IEnumerable<string> libpaths;
-        
-        private bool trace;
-        private bool usePDB;
-        private bool preserveShortBranches;
-        private Action<AssemblyResolver, AssemblyNode> postLoad;
+        private IEnumerable<string> _resolvedPaths;
+        private IEnumerable<string> _libpaths;
+
+        private bool _trace;
+        private bool _usePDB;
+        private bool _preserveShortBranches;
+        private Action<AssemblyResolver, AssemblyNode> _postLoad;
 
         public AssemblyResolver(IEnumerable<string> resolvedPaths, IEnumerable<string> libpaths, bool usePDB,
             bool preserveShortBranches, bool trace, Action<AssemblyResolver, AssemblyNode> postLoad)
         {
-            this.resolvedPaths = resolvedPaths;
-            this.libpaths = libpaths;
-            this.trace = trace;
-            this.usePDB = usePDB;
-            this.preserveShortBranches = preserveShortBranches;
-            this.postLoad = postLoad;
+            _resolvedPaths = resolvedPaths;
+            _libpaths = libpaths;
+            _trace = trace;
+            _usePDB = usePDB;
+            _preserveShortBranches = preserveShortBranches;
+            _postLoad = postLoad;
         }
 
         /// <summary>
@@ -66,7 +55,7 @@ namespace Microsoft.Contracts.Foxtrot
             AssemblyNode a = null;
             try
             {
-                if (trace)
+                if (_trace)
                 {
                     LoadTracing(string.Format("Attempting to load: {0}", assemblyName));
                 }
@@ -83,9 +72,9 @@ namespace Microsoft.Contracts.Foxtrot
                 // Check user-supplied candidate paths
 
                 LoadTracing("AssemblyResolver: Attempting user-supplied candidates.");
-                if (this.resolvedPaths != null)
+                if (_resolvedPaths != null)
                 {
-                    foreach (string candidate in this.resolvedPaths)
+                    foreach (string candidate in _resolvedPaths)
                     {
                         var candidateAssemblyName = Path.GetFileNameWithoutExtension(candidate);
                         if (String.Compare(candidateAssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase) != 0)
@@ -101,7 +90,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (a == null)
                 {
-                    if (this.resolvedPaths != null)
+                    if (_resolvedPaths != null)
                     {
                     }
                 }
@@ -113,9 +102,9 @@ namespace Microsoft.Contracts.Foxtrot
                 // Check user-supplied search directories
 
                 LoadTracing("AssemblyResolver: Attempting user-supplied directories.");
-                if (this.libpaths != null)
+                if (_libpaths != null)
                 {
-                    foreach (string dir in this.libpaths)
+                    foreach (string dir in _libpaths)
                     {
                         a = ProbeForAssemblyWithExtension(dir, assemblyName, exts);
                         if (a != null)
@@ -125,7 +114,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (a == null)
                 {
-                    if (this.libpaths != null)
+                    if (_libpaths != null)
                     {
                     }
                 }
@@ -140,7 +129,7 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     a = ProbeForAssemblyWithExtension(referencingModuleDirectory, assemblyName, exts);
                 }
-                
+
                 if (a == null)
                 {
                     if (referencingModuleDirectory != null)
@@ -204,7 +193,7 @@ namespace Microsoft.Contracts.Foxtrot
                     break;
                 }
             } while (!string.IsNullOrWhiteSpace(directory));
-            
+
             return null;
         }
 
@@ -212,10 +201,10 @@ namespace Microsoft.Contracts.Foxtrot
         {
             foreach (string ext in exts)
             {
-                bool tempDebugInfo = this.usePDB;
+                bool tempDebugInfo = _usePDB;
                 string fullName = Path.Combine(directory, assemblyName + ext);
-                
-                if (this.trace)
+
+                if (_trace)
                 {
                     LoadTracing(String.Format("Attempting load from {0}", fullName));
                 }
@@ -241,7 +230,7 @@ namespace Microsoft.Contracts.Foxtrot
                         }
                     }
 
-                    if (this.trace)
+                    if (_trace)
                     {
                         LoadTracing(string.Format("Resolved assembly reference '{0}' to '{1}'. (Using directory {2})",
                             assemblyName, fullName, directory));
@@ -253,7 +242,7 @@ namespace Microsoft.Contracts.Foxtrot
                         true, // doNotLockFile
                         tempDebugInfo, // getDebugInfo
                         true, // useGlobalCache
-                        this.preserveShortBranches, // preserveShortBranches
+                        _preserveShortBranches, // preserveShortBranches
                         this.PostLoadHook
                         );
 
@@ -270,12 +259,12 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (!SystemTypes.IsInitialized) return;
 
-            if (this.postLoad != null) this.postLoad(this, assemblyNode);
+            if (_postLoad != null) _postLoad(this, assemblyNode);
         }
 
         private void LoadTracing(string msg)
         {
-            if (this.trace)
+            if (_trace)
             {
                 Console.WriteLine("Trace: {0}", msg);
             }
@@ -323,7 +312,7 @@ namespace Microsoft.Contracts.Foxtrot
                     if (string.IsNullOrEmpty(path.Trim())) continue;
 
                     var candidate = Path.GetFullPath(path);
-                    
+
                     if (candidate.EndsWith(@"\mscorlib.dll") && File.Exists(candidate))
                     {
                         return candidate;

@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Compiler;
@@ -28,7 +17,7 @@ namespace Microsoft.Contracts.Foxtrot
         {
             CodeInspector ifrv = new CodeInspector(
                 ContractNodes.RuntimeIgnoredAttributeName, contractNodes, referencingType, skipQuantifiers);
-            
+
             ifrv.Visit(node);
 
             return ifrv.foundAttribute;
@@ -37,9 +26,9 @@ namespace Microsoft.Contracts.Foxtrot
         public static bool UsesModel(Node node, ContractNodes contractNodes)
         {
             CodeInspector ifrv = new CodeInspector(ContractNodes.ModelAttributeName, contractNodes, null, false);
-            
+
             ifrv.Visit(node);
-            
+
             return ifrv.foundAttribute;
         }
 
@@ -48,24 +37,24 @@ namespace Microsoft.Contracts.Foxtrot
         /// </summary>
         public bool foundAttribute;
 
-        private readonly Identifier attributeToFind;
-        private readonly ContractNodes contractNodes;
-        private readonly bool skipQuantifiers;
-        private readonly Stack<TypeNode> referencingType;
-        private bool generatedMethodContainsInvisibleMemberReference;
+        private readonly Identifier _attributeToFind;
+        private readonly ContractNodes _contractNodes;
+        private readonly bool _skipQuantifiers;
+        private readonly Stack<TypeNode> _referencingType;
+        private bool _generatedMethodContainsInvisibleMemberReference;
 
         private CodeInspector(Identifier attributeToFind, ContractNodes contractNodes, TypeNode referencingType, bool skipQuantifiers)
         {
             this.foundAttribute = false;
-            
-            this.attributeToFind = attributeToFind;
-            this.contractNodes = contractNodes;
-            this.skipQuantifiers = skipQuantifiers;
-            this.referencingType = new Stack<TypeNode>();
+
+            _attributeToFind = attributeToFind;
+            _contractNodes = contractNodes;
+            _skipQuantifiers = skipQuantifiers;
+            _referencingType = new Stack<TypeNode>();
 
             if (referencingType != null)
             {
-                this.referencingType.Push(referencingType);
+                _referencingType.Push(referencingType);
             }
         }
 
@@ -73,16 +62,16 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (memberBinding.BoundMember != null)
             {
-                if (HelperMethods.HasAttribute(memberBinding.BoundMember.Attributes, this.attributeToFind))
+                if (HelperMethods.HasAttribute(memberBinding.BoundMember.Attributes, _attributeToFind))
                 {
                     this.foundAttribute = true;
                     return;
                 }
 
-                if (referencingType.Count > 0 &&
-                    !HelperMethods.IsVisibleFrom(memberBinding.BoundMember, this.referencingType.Peek()))
+                if (_referencingType.Count > 0 &&
+                    !HelperMethods.IsVisibleFrom(memberBinding.BoundMember, _referencingType.Peek()))
                 {
-                    this.generatedMethodContainsInvisibleMemberReference = true;
+                    _generatedMethodContainsInvisibleMemberReference = true;
                     this.foundAttribute = true;
                     return;
                 }
@@ -96,11 +85,11 @@ namespace Microsoft.Contracts.Foxtrot
                         return;
                     }
 
-                    if (this.skipQuantifiers &&
-                        (this.contractNodes.IsForallMethod(referencedMethod) ||
-                         this.contractNodes.IsGenericForallMethod(referencedMethod) ||
-                         this.contractNodes.IsExistsMethod(referencedMethod) ||
-                         this.contractNodes.IsGenericExistsMethod(referencedMethod))
+                    if (_skipQuantifiers &&
+                        (_contractNodes.IsForallMethod(referencedMethod) ||
+                         _contractNodes.IsGenericForallMethod(referencedMethod) ||
+                         _contractNodes.IsExistsMethod(referencedMethod) ||
+                         _contractNodes.IsGenericExistsMethod(referencedMethod))
                         )
                     {
                         this.foundAttribute = true;
@@ -108,8 +97,8 @@ namespace Microsoft.Contracts.Foxtrot
                     }
 
                     // check if we deal with a contract method on an interface/abstract method that is annotated
-                    var origType = HelperMethods.IsContractTypeForSomeOtherTypeUnspecialized(referencedMethod.DeclaringType, this.contractNodes);
-                    
+                    var origType = HelperMethods.IsContractTypeForSomeOtherTypeUnspecialized(referencedMethod.DeclaringType, _contractNodes);
+
                     if (origType != null)
                     {
                         var origMethod = HelperMethods.FindImplementedMethodSpecialized(origType, referencedMethod);
@@ -132,7 +121,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // look for attribute on property
                 if (referencedMethod.IsPropertyGetter && referencedMethod.DeclaringMember != null)
                 {
-                    if (HelperMethods.HasAttribute(referencedMethod.DeclaringMember.Attributes, this.attributeToFind))
+                    if (HelperMethods.HasAttribute(referencedMethod.DeclaringMember.Attributes, _attributeToFind))
                     {
                         return true;
                     }
@@ -152,25 +141,25 @@ namespace Microsoft.Contracts.Foxtrot
 
                 MemberBinding mb = ue.Operand as MemberBinding;
                 if (mb == null) goto JustVisit;
-                
+
                 Method m = mb.BoundMember as Method;
-                
+
                 if (HelperMethods.IsCompilerGenerated(m))
                 {
-                    bool savedInvisibleMemberRef = this.generatedMethodContainsInvisibleMemberReference;
+                    bool savedInvisibleMemberRef = _generatedMethodContainsInvisibleMemberReference;
                     try
                     {
-                        this.generatedMethodContainsInvisibleMemberReference = false;
-                        
+                        _generatedMethodContainsInvisibleMemberReference = false;
+
                         var unspecedM = HelperMethods.Unspecialize(m);
                         var unspecedT = unspecedM.DeclaringType;
-                        
+
                         Contract.Assert(unspecedT.Template == null);
-                        
-                        this.referencingType.Push(unspecedT);
+
+                        _referencingType.Push(unspecedT);
                         this.VisitBlock(unspecedM.Body);
-                        
-                        if (this.generatedMethodContainsInvisibleMemberReference)
+
+                        if (_generatedMethodContainsInvisibleMemberReference)
                         {
                             // remove method (and all containing closure methods)
                             savedInvisibleMemberRef = true;
@@ -186,14 +175,14 @@ namespace Microsoft.Contracts.Foxtrot
                     }
                     finally
                     {
-                        this.generatedMethodContainsInvisibleMemberReference = savedInvisibleMemberRef;
-                        this.referencingType.Pop();
+                        _generatedMethodContainsInvisibleMemberReference = savedInvisibleMemberRef;
+                        _referencingType.Pop();
                     }
                 }
             }
 
-            JustVisit:
-            
+        JustVisit:
+
             base.VisitConstruct(cons);
         }
     }

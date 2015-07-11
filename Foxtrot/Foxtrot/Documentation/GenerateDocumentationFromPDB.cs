@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Compiler;
@@ -25,10 +14,10 @@ namespace Microsoft.Contracts.Foxtrot
 {
     public class GenerateDocumentationFromPDB : Inspector
     {
-        private int tabWidth;
-        private int tabStops;
-        private bool writeOutput;
-        private ContractNodes contracts;
+        private int _tabWidth;
+        private int _tabStops;
+        private bool _writeOutput;
+        private ContractNodes _contracts;
 
         public GenerateDocumentationFromPDB(ContractNodes contracts) : this(contracts, 2, false)
         {
@@ -36,16 +25,16 @@ namespace Microsoft.Contracts.Foxtrot
 
         public GenerateDocumentationFromPDB(ContractNodes contracts, int tabWidth, bool writeOutput)
         {
-            this.contracts = contracts;
-            this.tabWidth = tabWidth;
-            this.tabStops = 0;
-            this.writeOutput = writeOutput;
+            _contracts = contracts;
+            _tabWidth = tabWidth;
+            _tabStops = 0;
+            _writeOutput = writeOutput;
         }
 
         private void Indent()
         {
             string s = "";
-            s = s.PadLeft(tabStops*tabWidth);
+            s = s.PadLeft(_tabStops * _tabWidth);
             Console.Write(s);
         }
 
@@ -170,7 +159,7 @@ namespace Microsoft.Contracts.Foxtrot
                 if (!skip)
                 {
                     bStart = aEnd + 2;
-                    
+
                     while (Char.IsWhiteSpace(predicate[aEnd - 1]))
                         aEnd--;
 
@@ -196,12 +185,12 @@ namespace Microsoft.Contracts.Foxtrot
         // These aren't operators like + per se, but ones that will cause evaluation order to possibly change,
         // or alter the semantics of what might be in a predicate.
         // @TODO: Consider adding '~'
-        private static readonly string[] Operators = new string[]
+        private static readonly string[] s_operators = new string[]
         {"==", "!=", "=", "<", ">", "(", ")", "//", "/*", "*/"};
 
         private static bool ContainsNoOperators(string s, int start, int end)
         {
-            foreach (string op in Operators)
+            foreach (string op in s_operators)
             {
                 if (s.IndexOf(op) >= 0)
                 {
@@ -228,7 +217,7 @@ namespace Microsoft.Contracts.Foxtrot
         // Recognize only SIMPLE method calls, like "System.string.Equals("", "")".
         private static bool IsSimpleFunctionCall(string s, int start, int end)
         {
-            char[] badChars = {'+', '-', '*', '/', '~', '<', '=', '>', ';', '?', ':'};
+            char[] badChars = { '+', '-', '*', '/', '~', '<', '=', '>', ';', '?', ':' };
 
             int parenCount = 0;
             int index = start;
@@ -475,7 +464,7 @@ namespace Microsoft.Contracts.Foxtrot
                 else
                 {
                     if (text[i] == ',' && angleCount == 0 && parenCount == 0) return i;
-                    
+
                     if (text[i] == ')') parenCount++;
                     else if (text[i] == '(') parenCount--;
                     else if (text[i] == '>') angleCount++;
@@ -549,21 +538,21 @@ namespace Microsoft.Contracts.Foxtrot
 
         private struct DocSlice
         {
-            private SourceDocument doc;
-            private int startLine;
-            private int startColumn;
-            private int endLine;
-            private int count;
+            private SourceDocument _doc;
+            private int _startLine;
+            private int _startColumn;
+            private int _endLine;
+            private int _count;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic"),
              System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {
-                Contract.Invariant(this.doc != null);
-                Contract.Invariant(this.startLine > 0);
-                Contract.Invariant(this.startColumn >= 0);
-                Contract.Invariant(this.count >= 0);
+                Contract.Invariant(_doc != null);
+                Contract.Invariant(_startLine > 0);
+                Contract.Invariant(_startColumn >= 0);
+                Contract.Invariant(_count >= 0);
             }
 
             public DocSlice(SourceDocument doc, int startLine, int startColumn, int endLine)
@@ -571,11 +560,11 @@ namespace Microsoft.Contracts.Foxtrot
                 Contract.Requires(doc != null);
                 Contract.Requires(startLine > 0);
 
-                this.doc = doc;
-                this.startColumn = startColumn;
-                this.startLine = startLine;
-                this.endLine = endLine;
-                this.count = 0;
+                _doc = doc;
+                _startColumn = startColumn;
+                _startLine = startLine;
+                _endLine = endLine;
+                _count = 0;
 
                 // compute count
                 int i = startLine;
@@ -585,15 +574,15 @@ namespace Microsoft.Contracts.Foxtrot
                     string s = doc[i];
                     if (s == null) return;
 
-                    count += s.Length;
+                    _count += s.Length;
                     i++;
                 }
 
-                count -= startColumn;
-                if (count < 0)
+                _count -= startColumn;
+                if (_count < 0)
                 {
                     // problem. indicates source/pdb are out of date w.r.t each other
-                    count = 0;
+                    _count = 0;
                 }
             }
 
@@ -602,7 +591,7 @@ namespace Microsoft.Contracts.Foxtrot
                 get
                 {
                     Contract.Ensures(Contract.Result<int>() >= 0);
-                    return this.count;
+                    return _count;
                 }
             }
 
@@ -614,12 +603,12 @@ namespace Microsoft.Contracts.Foxtrot
                     Contract.Requires(column < Length);
 
                     int skipped = 0;
-                    int i = startLine;
-                    column += this.startColumn; // adjust
+                    int i = _startLine;
+                    column += _startColumn; // adjust
 
-                    while (i <= endLine)
+                    while (i <= _endLine)
                     {
-                        string s = doc[i];
+                        string s = _doc[i];
 
                         if (s == null)
                         {
@@ -644,13 +633,13 @@ namespace Microsoft.Contracts.Foxtrot
                 Contract.Requires(startIndex + length <= Length);
 
                 int skipped = 0;
-                int i = startLine;
+                int i = _startLine;
                 StringBuilder sb = null; // lazily create
-                startIndex += this.startColumn; // skip to column
+                startIndex += _startColumn; // skip to column
 
-                while (i <= endLine)
+                while (i <= _endLine)
                 {
-                    string s = doc[i];
+                    string s = _doc[i];
                     if (s == null)
                     {
                         throw new InvalidOperationException();
@@ -722,8 +711,8 @@ namespace Microsoft.Contracts.Foxtrot
 
         private class SourceDocument
         {
-            private TextReader tr;
-            private List<string> lines;
+            private TextReader _tr;
+            private List<string> _lines;
 
             public SourceDocument(string fileName)
             {
@@ -733,7 +722,7 @@ namespace Microsoft.Contracts.Foxtrot
                 }
                 try
                 {
-                    tr = File.OpenText(fileName);
+                    _tr = File.OpenText(fileName);
                 }
                 catch
                 {
@@ -752,9 +741,9 @@ namespace Microsoft.Contracts.Foxtrot
 
                     EnsureRead(line);
 
-                    if (lines != null && lines.Count > line)
+                    if (_lines != null && _lines.Count > line)
                     {
-                        return lines[line];
+                        return _lines[line];
                     }
 
                     return null;
@@ -763,26 +752,26 @@ namespace Microsoft.Contracts.Foxtrot
 
             private void EnsureRead(int line)
             {
-                if (tr == null) return;
+                if (_tr == null) return;
 
-                if (lines == null) lines = new List<string>();
+                if (_lines == null) _lines = new List<string>();
                 try
                 {
-                    while (lines.Count <= line)
+                    while (_lines.Count <= line)
                     {
-                        var linestring = tr.ReadLine();
+                        var linestring = _tr.ReadLine();
                         if (linestring == null)
                         {
-                            tr = null;
+                            _tr = null;
                             break;
                         }
 
-                        lines.Add(linestring);
+                        _lines.Add(linestring);
                     }
                 }
                 catch
                 {
-                    tr = null;
+                    _tr = null;
                 }
             }
         }
@@ -796,16 +785,16 @@ namespace Microsoft.Contracts.Foxtrot
             if (sourceName == null) return null;
 
             SourceDocument result;
-            if (!sourceTexts.TryGetValue(sourceName, out result))
+            if (!_sourceTexts.TryGetValue(sourceName, out result))
             {
                 result = new SourceDocument(sourceName);
-                sourceTexts.Add(sourceName, result);
+                _sourceTexts.Add(sourceName, result);
             }
 
             return result;
         }
 
-        private Dictionary<string, SourceDocument> sourceTexts = new Dictionary<string, SourceDocument>();
+        private Dictionary<string, SourceDocument> _sourceTexts = new Dictionary<string, SourceDocument>();
 
         private string GetSource(string prefix, SourceContext sctx)
         {
@@ -842,17 +831,17 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (typeNode == null) return;
 
-            if (writeOutput)
+            if (_writeOutput)
             {
                 Indent();
                 Console.WriteLine(typeNode.FullName);
-                this.tabStops++;
+                _tabStops++;
             }
 
             base.VisitTypeNode(typeNode);
-            if (writeOutput)
+            if (_writeOutput)
             {
-                this.tabStops--;
+                _tabStops--;
             }
         }
 
@@ -863,12 +852,12 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("Contract.Invariant", sctx);
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
                 invariant.SourceConditionText = new Literal(source, SystemTypes.String);
-                if (writeOutput)
+                if (_writeOutput)
                 {
                     Indent();
                     Console.WriteLine("{0}", source);
@@ -881,13 +870,13 @@ namespace Microsoft.Contracts.Foxtrot
         {
             if (method == null) return;
 
-            if (this.contracts != null && contracts.IsObjectInvariantMethod(method)) return;
+            if (_contracts != null && _contracts.IsObjectInvariantMethod(method)) return;
 
-            if (writeOutput)
+            if (_writeOutput)
             {
                 Indent();
                 Console.WriteLine(method.FullName);
-                this.tabStops++;
+                _tabStops++;
             }
 
             base.VisitMethod(method);
@@ -898,9 +887,9 @@ namespace Microsoft.Contracts.Foxtrot
                 this.VisitRequiresList(method.Contract.Validations);
             }
 
-            if (writeOutput)
+            if (_writeOutput)
             {
-                this.tabStops--;
+                _tabStops--;
             }
         }
 
@@ -910,7 +899,7 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("if", ContextForTextExtraction(otherwise), out isVB, true);
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
@@ -931,7 +920,7 @@ namespace Microsoft.Contracts.Foxtrot
                         otherwise.SourceConditionText = new Literal(source, SystemTypes.String);
                     }
 
-                    if (writeOutput)
+                    if (_writeOutput)
                     {
                         Indent();
                         if (negatedCondition != null)
@@ -981,12 +970,12 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("Contract.Requires", ContextForTextExtraction(plain));
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
                 plain.SourceConditionText = new Literal(source, SystemTypes.String);
-                if (writeOutput)
+                if (_writeOutput)
                 {
                     Indent();
                     Console.WriteLine("{0}", source);
@@ -1002,12 +991,12 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("Contract.Ensures", ContextForTextExtraction(normal));
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
                 normal.SourceConditionText = new Literal(source, SystemTypes.String);
-                if (writeOutput)
+                if (_writeOutput)
                 {
                     Indent();
                     Console.WriteLine("{0}", source);
@@ -1022,12 +1011,12 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("Contract.Ensures", ContextForTextExtraction(exceptional));
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
                 exceptional.SourceConditionText = new Literal(source, SystemTypes.String);
-                if (writeOutput)
+                if (_writeOutput)
                 {
                     Indent();
                     Console.WriteLine("{0}", source);
@@ -1058,8 +1047,8 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (m == null) goto done;
 
-            if (m != contracts.AssertMethod && m != contracts.AssumeMethod
-                && m != contracts.AssertWithMsgMethod && m != contracts.AssumeWithMsgMethod)
+            if (m != _contracts.AssertMethod && m != _contracts.AssumeMethod
+                && m != _contracts.AssertWithMsgMethod && m != _contracts.AssumeWithMsgMethod)
             {
                 goto done;
             }
@@ -1068,7 +1057,7 @@ namespace Microsoft.Contracts.Foxtrot
             string source = GetSource("Contract.Assert", sctx);
             if (source == null)
             {
-                if (writeOutput) Console.WriteLine("<error generating documentation>");
+                if (_writeOutput) Console.WriteLine("<error generating documentation>");
             }
             else
             {
@@ -1076,7 +1065,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
         done:
-            
+
             this.VisitExpressionStatement(statement);
             return statement;
         }
