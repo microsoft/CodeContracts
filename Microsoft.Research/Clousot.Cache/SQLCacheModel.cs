@@ -44,7 +44,9 @@ using System.IO;
 
 namespace Microsoft.Research.CodeAnalysis.Caching
 {
-  static class IndexExtension
+    using Microsoft.Win32;
+
+    static class IndexExtension
   {
     public static void CreateUniqueIndex<TModel>(this DbContext context, Expression<Func<TModel, object>> expression)
     {
@@ -757,7 +759,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
   public class LocalDbClousotCacheFactory : SQLClousotCacheFactory
   {
     public LocalDbClousotCacheFactory(int minPoolSize = DefaultMinPoolSize)
-        : this(@"(LocalDb)\MSSQLLocalDB", minPoolSize)
+          : this(GetDesiredDbName(), minPoolSize)
     {}
 
     public LocalDbClousotCacheFactory(string dbName, int minPoolSize = DefaultMinPoolSize)
@@ -783,6 +785,36 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       }
 
       return base.BuildConnectionString(options);
+    }
+
+    public static string GetDesiredDbName()
+    {
+        const string registryKeyPath = @"SOFTWARE\Microsoft\Microsoft SQL Server Local DB\Installed Versions";
+
+        var versionKeyFileMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { @"11.0", @"(LocalDb)\v11.0" },
+            { @"12.0", @"(LocalDb)\MSSQLLocalDB" },
+        };
+
+        using (var rootKey = Registry.LocalMachine.OpenSubKey(registryKeyPath))
+        {
+            if (rootKey == null)
+                return null;
+
+            return rootKey.GetSubKeyNames()
+                .OrderByDescending(name => name.ToUpperInvariant()) // use latest version available.
+                .Select(versionKey => GetValueOrDefault(versionKeyFileMapping, versionKey))
+                .FirstOrDefault(entry => entry != null);
+        }
+    }
+
+    private static TValue GetValueOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dict, TKey key)
+    {
+        Contract.Requires(!ReferenceEquals(key, null));
+
+        TValue value;
+        return dict.TryGetValue(key, out value) ? value : default(TValue);
     }
   }
 }

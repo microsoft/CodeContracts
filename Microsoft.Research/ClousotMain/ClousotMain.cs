@@ -302,10 +302,7 @@ namespace Microsoft.Research.CodeAnalysis
             {
               cacheAccessorFactories = new IClousotCacheFactory[]{
                 new SQLClousotCacheFactory(options.CacheServer),
-                // Looking for MSSQLLocalDB first and falling back to older (v11.0) version otherwise.
-                new LocalDbClousotCacheFactory(@"(LocalDb)\MSSQLLocalDB", MinLocalConnectionPoolSize),
-                new LocalDbClousotCacheFactory(@"(LocalDb)\v11.0", MinLocalConnectionPoolSize),
-                //new SQLClousotCacheFactory(@"localhost\sqlexpress", true),
+                new LocalDbClousotCacheFactory(MinLocalConnectionPoolSize),
               };
             }
             else
