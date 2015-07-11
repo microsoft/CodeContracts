@@ -141,11 +141,18 @@ namespace ContractAdornments {
         if (asCall != null) {
 
           //Make sure we aren't on the right side of the call
-          MemberAccessExpressionSyntax memberAccessExpression = asCall.Expression as MemberAccessExpressionSyntax;
-          if (memberAccessExpression == null || memberAccessExpression.Name == leafNode)
-            return null;
+          if (asCall.Expression == leafNode)
+            return asCall;
 
-          return asCall;
+          MemberAccessExpressionSyntax memberAccessExpression = asCall.Expression as MemberAccessExpressionSyntax;
+          if (memberAccessExpression != null && memberAccessExpression.Name == leafNode)
+            return asCall;
+
+          GenericNameSyntax genericNameSyntax = asCall.Expression as GenericNameSyntax;
+          if (genericNameSyntax != null && genericNameSyntax.Identifier == leafToken)
+            return asCall;
+
+          return null;
         }
 
         var asProp = nodeInQuestion as MemberAccessExpressionSyntax;
