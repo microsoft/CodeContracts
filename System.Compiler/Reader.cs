@@ -2129,7 +2129,9 @@ namespace System.Compiler.Metadata{
         string lookupName = localInfo.Name;
         bool hasNoPDBName = String.IsNullOrEmpty(lookupName);
 #if !FxCop
-        string name = hasNoPDBName ? "local"+i : lookupName;
+        // _ANONYM suffix will help to distinquish real locals from locals 
+        // that has no real names.
+        string name = hasNoPDBName ? "local"+i+"_ANONYM" : lookupName;
 #else
         string name = hasNoPDBName ? "local$"+i : lookupName;
 #endif

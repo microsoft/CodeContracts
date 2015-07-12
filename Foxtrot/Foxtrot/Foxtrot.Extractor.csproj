@@ -172,6 +172,7 @@
     <Compile Include="Extraction\ReplaceBranchTarget.cs" />
     <Compile Include="Extraction\ScrubContractClass.cs" />
     <Compile Include="Extraction\VisitorIncludingClosures.cs" />
+    <Compile Include="Utils\NameUtils.cs" />
     <None Include="..\..\Microsoft.Research\common\Contracts.snk">
       <Link>Contracts.snk</Link>
     </None>
@@ -190,7 +191,7 @@
     <Compile Include="FindClosurePartsToDuplicate.cs" />
     <Compile Include="Checker\PostExtractorChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HelperMethods.cs" />
+    <Compile Include="Utils\HelperMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Research\DataStructures\DataStructures.csproj">
