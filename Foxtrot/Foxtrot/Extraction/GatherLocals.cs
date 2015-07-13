@@ -52,7 +52,8 @@ namespace Microsoft.Contracts.Foxtrot
                        ? (LocalNameIsExempt(local.Name.Name))
                        : (HelperMethods.IsDelegateType(localType)
                           || HelperMethods.IsTypeParameterType(localType)
-                          || localType.IsValueType));
+                          || localType.IsValueType
+                          || Utils.NameUtils.IsExpressionTreeLocal(local)));
         }
 
         private static bool LocalNameIsExempt(string localName)
@@ -64,7 +65,10 @@ namespace Microsoft.Contracts.Foxtrot
         {
             // if the local is a reference to a closure class, then
             // don't mark it because it is sure to be used in both
-            // the contracts and the method body
+            // the contracts and the method body.
+            
+            // Another exception for this rule is an expression initialization 
+            // that also introduces local variable that could be used in Contract.Requires
             if (!IsLocalExempt(local) && Locals[local.UniqueKey] == null)
             {
                 //Console.Write("{0} ", local.Name.Name);

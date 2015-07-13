@@ -17,6 +17,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Compiler;
 using System.Diagnostics.Contracts;
+using Microsoft.Contracts.Foxtrot.Utils;
 
 namespace Microsoft.Contracts.Foxtrot
 {
@@ -2244,7 +2245,15 @@ namespace Microsoft.Contracts.Foxtrot
                 if (assignment.Target is Local) targetIsLocal = true;
                 
                 Indexer idxr = assignment.Target as Indexer;
-                if (idxr != null && idxr.Object is Local)
+
+                // Roslyn compiler introduced new pattern: in the expression tree there is an assignment
+                // from local variable that holds expression to the array. But unlike old compiler
+                // Roslyn is not introducing local variable for holding an array.
+                // Instead of that it uses "dup" instruction and assignes parameter expression
+                // directly to the stack slot.
+                // This change should be addressed here, because otherwise ccrewrite will fail
+                // with an error.
+                if (idxr != null && (idxr.Object is Local || ExpressionTreeInitialization(assignment)))
                     targetIsLocal = true;
                 
                 // Assignments to locals that are structs show up as address deference
@@ -2273,6 +2282,19 @@ namespace Microsoft.Contracts.Foxtrot
                 }
 
                 base.VisitAssignmentStatement(assignment);
+            }
+
+            /// <summary>
+            /// Returns true the assignment was done from local variable that holds parameter expression
+            /// to the indexer.
+            /// </summary>
+            private bool ExpressionTreeInitialization(AssignmentStatement assignment)
+            {
+                if (assignment == null || assignment.Source == null)
+                    return false;
+
+                var sourceAsLocal = assignment.Source as Local;
+                return NameUtils.IsExpressionTreeLocal(sourceAsLocal);
             }
 
             /// <summary>

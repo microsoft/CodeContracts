@@ -20361,6 +20361,11 @@ namespace System.Compiler{
     }
     public uint Attributes; // from pdb
     public bool HasNoPDBInfo;
+    
+    /// <summary>
+    /// Returns true if the local has no name in the IL code
+    /// </summary>
+    public bool Anonymous { get; internal set; }
 #endif
 
   }

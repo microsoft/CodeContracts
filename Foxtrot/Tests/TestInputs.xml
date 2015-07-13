@@ -12,6 +12,15 @@
 
   <!-- Tests for Roslyn-based compiler compatibility -->
   <RoslynCompatibility
+     Name="Foxtrot\Tests\RoslynCompatibility\ExpressionsInRequires.cs"
+     CompilerOptions=""
+     References="System.Core.dll;System.Linq.Expressions.dll"
+     FoxtrotOptions=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <RoslynCompatibility
      Name="Foxtrot\Tests\RoslynCompatibility\AsyncWithLegacyRequires.cs"
      CompilerOptions=""
      References=""
