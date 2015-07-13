@@ -30,7 +30,7 @@ namespace Microsoft.Contracts.Foxtrot.Utils
         /// </summary>
         public static bool IsAnonymousLocal(Local local)
         {
-            if (local == null || local.Name == null)
+            if (local == null)
                 return false;
 
             return local.Anonymous;
@@ -42,7 +42,7 @@ namespace Microsoft.Contracts.Foxtrot.Utils
         public static bool IsOfType(Local local, string fullTypeName)
         {
             return local != null && local.Type != null &&
-                   local.Type.FullName.Equals(fullTypeName, StringComparison.OrdinalIgnoreCase);
+                   local.Type.FullName.Equals(fullTypeName, StringComparison.Ordinal);
         }
     }
 }
