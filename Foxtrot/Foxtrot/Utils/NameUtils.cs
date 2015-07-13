@@ -22,7 +22,7 @@ namespace Microsoft.Contracts.Foxtrot.Utils
             if (local == null)
                 return false;
 
-            return IsAnonymousLocal(local) && IsOfType(local, "System.Linq.Expressions.ParameterExpression");
+            return IsAnonymousLocal(local) && IsOfType(local, typeof(System.Linq.Expressions.ParameterExpression).FullName);
         }
 
         /// <summary>
@@ -33,8 +33,7 @@ namespace Microsoft.Contracts.Foxtrot.Utils
             if (local == null || local.Name == null)
                 return false;
 
-            var name = local.Name.Name;
-            return name.StartsWith("local") && name.EndsWith("_ANONYM");
+            return local.Anonymous;
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace Microsoft.Contracts.Foxtrot.Utils
         public static bool IsOfType(Local local, string fullTypeName)
         {
             return local != null && local.Type != null &&
-                   local.Type.FullName.Equals(fullTypeName, StringComparison.InvariantCulture);
+                   local.Type.FullName.Equals(fullTypeName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

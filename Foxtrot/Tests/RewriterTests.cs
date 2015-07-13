@@ -68,7 +68,7 @@ namespace Tests
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "RoslynCompatibility", DataAccessMethod.Sequential)]
         [TestMethod]
         [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("V4.5")]
-        public void Roslyn_TestTheSameCasesWithOldCompiler()
+        public void TestTheRoslynCompatibilityCasesWithVS2013Compiler()
         {
             var options = new Options(this.TestContext);
             options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
