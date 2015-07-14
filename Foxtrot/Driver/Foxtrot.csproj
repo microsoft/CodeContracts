@@ -157,6 +157,7 @@
     <Compile Include="Rewriting\CleanUpOldAndResult.cs" />
     <Compile Include="Rewriting\CollectBoundVariables.cs" />
     <Compile Include="Rewriting\CollectOldExpressions.cs" />
+    <Compile Include="Rewriting\EmitAsyncClosure.cs" />
     <Compile Include="Rewriting\RemoveContractClasses.cs" />
     <Compile Include="Rewriting\RemoveShortBranches.cs" />
     <Compile Include="Rewriting\ReplaceResult.cs" />
