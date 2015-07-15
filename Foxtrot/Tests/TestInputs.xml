@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TestInputs>
 
+  <!-- Tests for AsyncTests test case -->
+  <AsyncTests
+     Name="Foxtrot\Tests\AsyncTests\AsyncEnsuresWithAbstractClass.cs"
+     FoxtrotOptions=""
+     References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncTests
+     Name="Foxtrot\Tests\AsyncTests\AsyncEnsuresWithInterface.cs"
+     FoxtrotOptions=""
+     References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <!-- Tests for IteratorBlockWithComplexGeneric test case -->
   <IteratorWithComplexGeneric
      Name="Foxtrot\Tests\RoslynCompatibility\IteratorWithTuple.cs"

@@ -16245,6 +16245,19 @@ namespace System.Compiler{
       get { return this.validations; }
       set { this.validations = value; }
     }
+
+    /// <summary>
+    /// Returns true if current contract node has at least one precondition or postcondition.
+    /// </summary>
+    public bool HasAssertions
+    {
+        get
+        {
+            return RequiresCount > 0 || EnsuresCount > 0 ||
+                    ValidationsCount > 0 || AsyncEnsuresCount > 0;
+        }
+    }
+
     public bool IsPure
     {
       get

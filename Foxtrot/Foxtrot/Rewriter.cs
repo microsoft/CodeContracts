@@ -908,9 +908,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Copy the method's contracts.
 
-            if (method.Contract != null && (method.Contract.RequiresCount > 0 || method.Contract.EnsuresCount > 0 ||
-                                            method.Contract.ValidationsCount > 0 ||
-                                            method.Contract.AsyncEnsuresCount > 0))
+            if (method.Contract != null && method.Contract.HasAssertions)
             {
                 // Use duplicate of contract because it is going to get modified from processing Old(...) and
                 // Result(). Can't have the modified contract get inherited (or else the Old(...) processing

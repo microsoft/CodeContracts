@@ -4186,8 +4186,7 @@ namespace Microsoft.Contracts.Foxtrot
             
             if (candidate != null)
             {
-                if (candidate.Contract != null &&
-                    (candidate.Contract.RequiresCount > 0 || candidate.Contract.EnsuresCount > 0))
+                if (candidate.Contract != null && candidate.Contract.HasAssertions)
                 {
                     return candidate;
                 }
