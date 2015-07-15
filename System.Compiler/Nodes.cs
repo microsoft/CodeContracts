@@ -16247,8 +16247,7 @@ namespace System.Compiler{
     }
 
     /// <summary>
-    /// Returns true if current contract node has at least one assertion in it
-    /// (like pres/posts etc).
+    /// Returns true if current contract node has at least one precondition or postcondition.
     /// </summary>
     public bool HasAssertions
     {
