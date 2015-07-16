@@ -21,7 +21,6 @@ Documentation Generation. Our documentation generator augments existing XML doc 
 * Download: [https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970](https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970)
 * FAQ: [http://research.microsoft.com/en-us/projects/contracts/faq.aspx](http://research.microsoft.com/en-us/projects/contracts/faq.aspx)
 * Forum: [http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads](http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads)
-* JabbR chat room: [https://jabbr.net/#/rooms/CodeContracts](https://jabbr.net/#/rooms/CodeContracts)
 
 
 How to Build the tools
