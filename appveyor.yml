@@ -1,0 +1,17 @@
+version: 1.9.10000.{build}
+os: Visual Studio 2015 RC
+init:
+- ps: git config --global core.autocrlf true
+- ps: Update-AppveyorBuild -Version "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
+build_script:
+- ps: ./buildCC "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
+test: off
+#  assemblies:
+#  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
+#  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
+#  - '**\Foxtrot\Tests\bin\Debug\FoxtrotTests.dll'
+#  - '**\Foxtrot\Tests\UnitTests\bin\Debug\UnitTests.dll'
+artifacts:
+- path: '**\ManagedContract.Setup\devlab9ts\Microsoft.Contracts.*.nupkg'
+- path: '**\ManagedContract.Setup\devlab9ts\msi\Contracts.devlab9ts.msi'
+- path: '**\ContractAdornments\Extension\bin\Devlab9\CodeContractsHelper.vsix'
