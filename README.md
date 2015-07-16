@@ -28,10 +28,15 @@ How to Build the tools
 ==
 Open CodeContracts.sln and Build
 
-To create the installer and the nuget package, just run buildCC <version>
-For instance  buildCC 1.8.10107.10
+To create the installer and the nuget package, just run `buildCC <version>`.
 
 We use the convention: 
-CC major version = 1.8.1
-CC minor version = <month><day>.<buildInTheDay>
 
+* CC major version = 1.9.1
+* CC minor version = {month}{day}.{buildInTheDay}
+
+For instance:
+
+```
+buildCC 1.9.10716.10
+```
