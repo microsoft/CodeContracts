@@ -1,5 +1,4 @@
-CodeContracts
-=============
+# CodeContracts
 
 [![Join the chat at https://gitter.im/Microsoft/CodeContracts](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/CodeContracts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -21,17 +20,20 @@ Documentation Generation. Our documentation generator augments existing XML doc 
 * Download: [https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970](https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970)
 * FAQ: [http://research.microsoft.com/en-us/projects/contracts/faq.aspx](http://research.microsoft.com/en-us/projects/contracts/faq.aspx)
 * Forum: [http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads](http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads)
-* JabbR chat room: [https://jabbr.net/#/rooms/CodeContracts](https://jabbr.net/#/rooms/CodeContracts)
 
+## Building from source
 
-How to Build the tools
-==
-Open CodeContracts.sln and Build
+For working on the project, open **CodeContracts.sln** and build.
 
-To create the installer and the nuget package, just run buildCC <version>
-For instance  buildCC 1.8.10107.10
+To create the installer and the nuget package, just run `buildCC <version>`.
 
 We use the convention: 
-CC major version = 1.8.1
-CC minor version = <month><day>.<buildInTheDay>
 
+* CC major version = 1.9.1
+* CC minor version = {month}{day}.{buildInTheDay}
+
+For instance, the 10<sup>th</sup> build on July 16 would be run as follows:
+
+```
+buildCC 1.9.10716.10
+```
