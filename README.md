@@ -1,5 +1,4 @@
-CodeContracts
-=============
+# CodeContracts
 
 [![Join the chat at https://gitter.im/Microsoft/CodeContracts](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/CodeContracts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -22,10 +21,9 @@ Documentation Generation. Our documentation generator augments existing XML doc 
 * FAQ: [http://research.microsoft.com/en-us/projects/contracts/faq.aspx](http://research.microsoft.com/en-us/projects/contracts/faq.aspx)
 * Forum: [http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads](http://social.msdn.microsoft.com/Forums/en-US/codecontracts/threads)
 
+## Building from source
 
-How to Build the tools
-==
-Open CodeContracts.sln and Build
+For working on the project, open **CodeContracts.sln** and build.
 
 To create the installer and the nuget package, just run `buildCC <version>`.
 
@@ -34,7 +32,7 @@ We use the convention:
 * CC major version = 1.9.1
 * CC minor version = {month}{day}.{buildInTheDay}
 
-For instance:
+For instance, the 10<sup>th</sup> build on July 16 would be run as follows:
 
 ```
 buildCC 1.9.10716.10
