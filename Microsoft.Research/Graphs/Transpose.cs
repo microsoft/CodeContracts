@@ -1,16 +1,5 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -18,70 +7,68 @@ using System.Text;
 using Microsoft.Research.DataStructures;
 using System.Diagnostics.Contracts;
 
-
 namespace Microsoft.Research.Graphs
 {
-  public class Transpose
-  {
-
-    private class TransposedGraph<Node, EdgeInfo, OldEdgeInfo> : IGraph<Node, EdgeInfo>, IGraphVisitor<Node, OldEdgeInfo>
+    public class Transpose
     {
-      IGraph<Node, OldEdgeInfo>/*!*/ orig;
-
-      public struct Edge
-      {
-        private readonly EdgeInfo edgeInfo;
-        private readonly Node source;
-        private readonly Node target;
-
-        public Edge(Node source, EdgeInfo info, Node target)
+        private class TransposedGraph<Node, EdgeInfo, OldEdgeInfo> : IGraph<Node, EdgeInfo>, IGraphVisitor<Node, OldEdgeInfo>
         {
-          this.source = source;
-          this.edgeInfo = info;
-          this.target = target;
-        }
+            private IGraph<Node, OldEdgeInfo>/*!*/ _orig;
 
-        #region IEdge<Node, EdgeInfo> Members
+            public struct Edge
+            {
+                private readonly EdgeInfo _edgeInfo;
+                private readonly Node _source;
+                private readonly Node _target;
 
-        public EdgeInfo Info
-        {
-          get { return edgeInfo; }
-        }
-        public Node Source { get { return this.source; } }
-        public Node Target
-        {
-          get { return this.target; }
-        }
-        #endregion
-      }
+                public Edge(Node source, EdgeInfo info, Node target)
+                {
+                    _source = source;
+                    _edgeInfo = info;
+                    _target = target;
+                }
 
-      [ContractInvariantMethod]
-      private void ObjectInvariant()
-      {
-        Contract.Invariant(this.orig != null);
-        Contract.Invariant(this.reverseEdges != null);
-        Contract.Invariant(this.edgeinfomap != null);
-      }
+                #region IEdge<Node, EdgeInfo> Members
+
+                public EdgeInfo Info
+                {
+                    get { return _edgeInfo; }
+                }
+                public Node Source { get { return _source; } }
+                public Node Target
+                {
+                    get { return _target; }
+                }
+                #endregion
+            }
+
+            [ContractInvariantMethod]
+            private void ObjectInvariant()
+            {
+                Contract.Invariant(_orig != null);
+                Contract.Invariant(_reverseEdges != null);
+                Contract.Invariant(_edgeinfomap != null);
+            }
 
 
-      Dictionary<Node, List<Edge>/*!*/>/*!*/ reverseEdges = new Dictionary<Node, List<Edge>/*!*/>();
-      Converter<OldEdgeInfo, EdgeInfo>/*!*/ edgeinfomap;
+            private Dictionary<Node, List<Edge>/*!*/>/*!*/ _reverseEdges = new Dictionary<Node, List<Edge>/*!*/>();
+            private Converter<OldEdgeInfo, EdgeInfo>/*!*/ _edgeinfomap;
 
-      //^ [NotDelayed]
-      public TransposedGraph(IGraph<Node, OldEdgeInfo>/*!*/ orig, Converter<OldEdgeInfo, EdgeInfo>/*!*/ edgeinfomap)
-      {
-        Contract.Requires(orig != null);// Clousot Suggestion
-        Contract.Requires(edgeinfomap != null);// Clousot Suggestion
+            //^ [NotDelayed]
+            public TransposedGraph(IGraph<Node, OldEdgeInfo>/*!*/ orig, Converter<OldEdgeInfo, EdgeInfo>/*!*/ edgeinfomap)
+            {
+                Contract.Requires(orig != null);// Clousot Suggestion
+                Contract.Requires(edgeinfomap != null);// Clousot Suggestion
 
 
-        this.orig = orig;
-        this.edgeinfomap = edgeinfomap;
-        //^ base();
-        DepthFirst.Visitor<Node, OldEdgeInfo> v = new DepthFirst.Visitor<Node, OldEdgeInfo>(orig, this);
-        // Visit all edges to compute the transpose
-        v.VisitAll();
+                _orig = orig;
+                _edgeinfomap = edgeinfomap;
+                //^ base();
+                DepthFirst.Visitor<Node, OldEdgeInfo> v = new DepthFirst.Visitor<Node, OldEdgeInfo>(orig, this);
+                // Visit all edges to compute the transpose
+                v.VisitAll();
 
-        // debug
+                // debug
 #if false
                 foreach (Node n in this.orig.Nodes)
                 {
@@ -89,100 +76,100 @@ namespace Microsoft.Research.Graphs
                     Console.WriteLine("Depthfirst info: {0}: Start:{1}, Finish:{2}", n, info.StartTime, info.FinishTime);
                 }
 #endif
-      }
+            }
 
 
-      public IEnumerable<Node>/*!*/ Nodes
-      {
-        get { return orig.Nodes; }
-      }
+            public IEnumerable<Node>/*!*/ Nodes
+            {
+                get { return _orig.Nodes; }
+            }
 
-      public bool Contains(Node node) { return orig.Contains(node); }
+            public bool Contains(Node node) { return _orig.Contains(node); }
 
-      public IEnumerable<Pair<EdgeInfo, Node>> Successors(Node node)
-      {
-        List<Edge> edges = null;
-        this.reverseEdges.TryGetValue(node, out edges);
-        if (edges != null)
-        {
-          foreach (Edge edge in edges)
-          {
-            yield return new Pair<EdgeInfo,Node>(edge.Info, edge.Target);
-          }
+            public IEnumerable<Pair<EdgeInfo, Node>> Successors(Node node)
+            {
+                List<Edge> edges = null;
+                _reverseEdges.TryGetValue(node, out edges);
+                if (edges != null)
+                {
+                    foreach (Edge edge in edges)
+                    {
+                        yield return new Pair<EdgeInfo, Node>(edge.Info, edge.Target);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Node is not in graph");
+                }
+                yield break;
+            }
+
+
+            #region IGraphVisitor<Node,EdgeInfo> Members
+
+            private void AddNode(Node node)
+            {
+                // just materialize it
+                Ignore(Edges(node));
+            }
+            bool IGraphVisitor<Node, OldEdgeInfo>.VisitNode(Node node)
+            {
+                this.AddNode(node);
+                return true;
+            }
+
+            private void Ignore(object o) { }
+
+            private List<Edge>/*!*/ Edges(Node node)
+            {
+                Contract.Ensures(Contract.Result<List<Edge>>() != null);
+
+                List<Edge> edges;
+                if (!_reverseEdges.TryGetValue(node, out edges))
+                {
+                    edges = new List<Edge>();
+                    _reverseEdges[node] = edges;
+                }
+                else
+                {
+                    Contract.Assume(edges != null);
+                }
+                //^ assert edges != null;
+                return edges;
+            }
+
+            void IGraphVisitor<Node, OldEdgeInfo>.VisitEdge(Node source, OldEdgeInfo info, Node target)
+            {
+                // add reverse edge
+
+                // make sure that original source is materialized (new target)
+                this.AddNode(source);
+                List<Edge> edges = Edges(target);
+                edges.Add(new Edge(target, _edgeinfomap(info), source));
+            }
+
+            #endregion
         }
-        else
+
+        public static IGraph<Node, EdgeInfo>/*!*/ Build<Node, EdgeInfo>
+            (
+             IGraph<Node, EdgeInfo>/*!*/ graph
+             )
         {
-          throw new ArgumentException("Node is not in graph");
+            Contract.Requires(graph != null);// Clousot Suggestion
+
+            return new TransposedGraph<Node, EdgeInfo, EdgeInfo>(graph, delegate (EdgeInfo info) { return info; });
         }
-        yield break;
-      }
 
-
-      #region IGraphVisitor<Node,EdgeInfo> Members
-
-      private void AddNode(Node node)
-      {
-        // just materialize it
-        Ignore(Edges(node));
-      }
-      bool IGraphVisitor<Node, OldEdgeInfo>.VisitNode(Node node)
-      {
-        this.AddNode(node);
-        return true;
-      }
-
-      private void Ignore(object o) { }
-
-      private List<Edge>/*!*/ Edges(Node node)
-      {
-        Contract.Ensures(Contract.Result<List<Edge>>() != null);
-
-        List<Edge> edges;
-        if (!this.reverseEdges.TryGetValue(node, out edges))
+        public static IGraph<Node, EdgeInfo>/*!*/ Build<Node, OldEdgeInfo, EdgeInfo>
+            (
+             IGraph<Node, OldEdgeInfo>/*!*/ graph,
+             Converter<OldEdgeInfo, EdgeInfo>/*!*/ infomap
+             )
         {
-          edges = new List<Edge>();
-          this.reverseEdges[node] = edges;
+            Contract.Requires(graph != null);// Clousot Suggestion
+            Contract.Requires(infomap != null);// Clousot Suggestion
+            return new TransposedGraph<Node, EdgeInfo, OldEdgeInfo>(graph, infomap);
         }
-        else
-        {
-          Contract.Assume(edges != null);
-        }
-        //^ assert edges != null;
-        return edges;
-      }
-
-      void IGraphVisitor<Node, OldEdgeInfo>.VisitEdge(Node source, OldEdgeInfo info, Node target)
-      {
-        // add reverse edge
-
-        // make sure that original source is materialized (new target)
-        this.AddNode(source);
-        List<Edge> edges = Edges(target);
-        edges.Add(new Edge(target, this.edgeinfomap(info), source));
-      }
-
-      #endregion
     }
-
-    public static IGraph<Node, EdgeInfo>/*!*/ Build<Node, EdgeInfo>
-        (
-         IGraph<Node, EdgeInfo>/*!*/ graph
-         )
-    {
-      Contract.Requires(graph != null);// Clousot Suggestion
-
-      return new TransposedGraph<Node, EdgeInfo, EdgeInfo>(graph, delegate(EdgeInfo info) { return info; });
-    }
-
-    public static IGraph<Node, EdgeInfo>/*!*/ Build<Node, OldEdgeInfo, EdgeInfo>
-        (
-         IGraph<Node, OldEdgeInfo>/*!*/ graph,
-         Converter<OldEdgeInfo, EdgeInfo>/*!*/ infomap
-         )
-    {
-      Contract.Requires(graph != null);// Clousot Suggestion
-      Contract.Requires(infomap != null);// Clousot Suggestion
-      return new TransposedGraph<Node, EdgeInfo, OldEdgeInfo>(graph, infomap);
-    }
-  }
 }
