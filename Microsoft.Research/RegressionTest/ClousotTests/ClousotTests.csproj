@@ -174,6 +174,15 @@
     <None Include="Sources\z3test7.cs" />
     <None Include="Sources\z3test8.cs" />
     <None Include="Sources\z3test9.cs" />
+    <None Include="..\TestFrameworkOOB\Purity.cs">
+      <Link>Sources\Purity.cs</Link>
+    </None>
+    <None Include="..\TestFrameworkOOB\ReferenceToAllOOBC.cs">
+      <Link>Sources\ReferenceToAllOOBC.cs</Link>
+    </None>
+    <None Include="..\TestFrameworkOOB\UserFeedback.cs">
+      <Link>Sources\UserFeedback.cs</Link>
+    </None>
     <Compile Include="v.cs" />
     <None Include="..\Containers\TestContainers\ArrayWithNonNullAnalysis.cs">
       <Link>Sources\ArrayWithNonNullAnalysis.cs</Link>
