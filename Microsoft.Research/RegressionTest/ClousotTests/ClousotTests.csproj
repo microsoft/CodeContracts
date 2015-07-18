@@ -179,6 +179,12 @@
     <None Include="..\TestFrameworkOOB\UserFeedback.cs">
       <Link>Sources\UserFeedback.cs</Link>
     </None>
+    <Compile Include="..\IteratorAnalysis\IteratorSimpleContract\IteratorSimpleContract.cs">
+      <Link>Sources\IteratorSimpleContract.cs</Link>
+    </Compile>
+    <Compile Include="..\TestPostconditionInference\Filtering.cs">
+      <Link>Sources\Filtering.cs</Link>
+    </Compile>
     <Compile Include="Tests.cs" />
     <None Include="..\Containers\TestContainers\ArrayWithNonNullAnalysis.cs">
       <Link>Sources\ArrayWithNonNullAnalysis.cs</Link>

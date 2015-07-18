@@ -56,6 +56,8 @@ namespace ReferenceAllOOBC
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 28, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 38, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 51, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 21, MethodILOffset = 18)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 21, MethodILOffset = 28)]
         public static void TestPureLookup(Dictionary<int, string> dict, int key)
         {
             Contract.Requires(dict != null);
@@ -73,6 +75,8 @@ namespace ReferenceAllOOBC
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 18, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 34, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 54, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 21, MethodILOffset = 18)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 21, MethodILOffset = 34)]
         public static void TestOutByRef()
         {
             var d = new Dictionary<string, object>();
@@ -473,7 +477,6 @@ namespace ReferenceAllOOBC
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 100, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 141, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 154, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 166, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Lower bound access ok", PrimaryILOffset = 60, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Upper bound access ok", PrimaryILOffset = 60, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 15, MethodILOffset = 133)]

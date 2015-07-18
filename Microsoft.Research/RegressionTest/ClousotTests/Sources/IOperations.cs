@@ -59,8 +59,8 @@ namespace RaphaelSchweizer
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Upper bound access ok", PrimaryILOffset = 8, MethodILOffset = 0)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Lower bound access ok", PrimaryILOffset = 11, MethodILOffset = 0)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Upper bound access ok", PrimaryILOffset = 11, MethodILOffset = 0)]
-            [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 52, MethodILOffset = 36)]
-            [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 77, MethodILOffset = 36)]
+            [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 52, MethodILOffset = 31)]
+            [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 77, MethodILOffset = 31)]
             public double Do(params object[] operands)
             {
                 Console.Write(string.Format("We have {0} {1}s\n", operands[1], operands[0]));

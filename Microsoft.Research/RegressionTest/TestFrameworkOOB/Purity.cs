@@ -21,6 +21,7 @@ namespace TestFrameworkOOB.Purity
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "Possibly calling a method on a null reference \'dict\'", PrimaryILOffset = 3, MethodILOffset = 0), RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 16, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 21, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 21, MethodILOffset = 16)]
         public static void Test(IDictionary<int, string> dict, int key)
         {
             Contract.Requires(dict.ContainsKey(key));
