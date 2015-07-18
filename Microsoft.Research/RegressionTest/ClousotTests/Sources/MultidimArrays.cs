@@ -14,12 +14,14 @@
 
 using System;
 using System.Diagnostics.Contracts;
+
 using Microsoft.Research.ClousotRegression;
 
 
-class Test {
+internal class Test
+{
     [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=17,MethodILOffset=0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 17, MethodILOffset = 0)]
     public static void Bug1(int x, int y)
     {
         var myval = new double[x, 100];
@@ -27,10 +29,10 @@ class Test {
     }
 
     [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=21,MethodILOffset=0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 21, MethodILOffset = 0)]
     public static void Bug2(int x, int y)
     {
-      var myval = new double[234, 100];
-      Contract.Assert(myval != null);
+        var myval = new double[234, 100];
+        Contract.Assert(myval != null);
     }
 }

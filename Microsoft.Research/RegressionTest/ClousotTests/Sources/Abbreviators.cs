@@ -12,104 +12,116 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-namespace ClousotTests {
-
+namespace ClousotTests
+{
     using System;
     using System.Diagnostics.Contracts;
+
     using Microsoft.Research.ClousotRegression;
 
-    class Helper
+    internal class Helper
     {
-      [ContractAbbreviator]
-      public static void EnsureNotNull<T>()
-      {
-        Contract.Ensures(Contract.Result<T>() != null);
-
-      }
+        [ContractAbbreviator]
+        public static void EnsureNotNull<T>()
+        {
+            Contract.Ensures(Contract.Result<T>() != null);
+        }
     }
 
     public class TestAbbreviations
     {
-      public int X { get; set; }
-      public int Y { get; set; }
-      public int Z { get; set; }
+        public int X
+        {
+            get;
+            set;
+        }
 
-      [ContractAbbreviator]
-      void AdvertiseUnchanged()
-      {
-        Contract.Ensures(this.X == Contract.OldValue(this.X));
-        Contract.Ensures(this.Y == Contract.OldValue(this.Y));
-        Contract.Ensures(this.Z == Contract.OldValue(this.Z));
-      }
+        public int Y
+        {
+            get;
+            set;
+        }
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=19,MethodILOffset=6)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=43,MethodILOffset=6)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=67,MethodILOffset=6)]
+        public int Z
+        {
+            get;
+            set;
+        }
 
-      public void Work1()
-      {
-        AdvertiseUnchanged();
-      }
+        [ContractAbbreviator]
+        private void AdvertiseUnchanged()
+        {
+            Contract.Ensures(X == Contract.OldValue(X));
+            Contract.Ensures(Y == Contract.OldValue(Y));
+            Contract.Ensures(Z == Contract.OldValue(Z));
+        }
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=19,MethodILOffset=18)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=43,MethodILOffset=18)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=67,MethodILOffset=18)]
-      public void Work2()
-      {
-        AdvertiseUnchanged();
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 19, MethodILOffset = 6)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 43, MethodILOffset = 6)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 67, MethodILOffset = 6)]
+        public void Work1()
+        {
+            AdvertiseUnchanged();
+        }
 
-        X = X;
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 19, MethodILOffset = 18)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 43, MethodILOffset = 18)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 67, MethodILOffset = 18)]
+        public void Work2()
+        {
+            AdvertiseUnchanged();
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=19,MethodILOffset=12)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=43,MethodILOffset=12)]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=67,MethodILOffset=12)]
-      public void Work3()
-      {
-        AdvertiseUnchanged();
+            X = X;
+        }
 
-        Work2();
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 19, MethodILOffset = 12)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 43, MethodILOffset = 12)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 67, MethodILOffset = 12)]
+        public void Work3()
+        {
+            AdvertiseUnchanged();
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.False,Message="ensures is false: this.X == Contract.OldValue(this.X)",PrimaryILOffset=19,MethodILOffset=20)]
-      [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message=@"ensures unreachable",PrimaryILOffset=43,MethodILOffset=20)]
-      [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message=@"ensures unreachable",PrimaryILOffset=67,MethodILOffset=20)]
-      public void Work4()
-      {
-        AdvertiseUnchanged();
+            Work2();
+        }
 
-        X++;
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.False, Message = "ensures is false: this.X == Contract.OldValue(this.X)", PrimaryILOffset = 19, MethodILOffset = 20)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 43, MethodILOffset = 20)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 67, MethodILOffset = 20)]
+        public void Work4()
+        {
+            AdvertiseUnchanged();
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.True,Message="ensures is valid",PrimaryILOffset=16,MethodILOffset=10)]
-      public string GetTheData0()
-      {
-        Helper.EnsureNotNull<string>();
+            X++;
+        }
 
-        return "";
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "ensures is valid", PrimaryILOffset = 16, MethodILOffset = 10)]
+        public string GetTheData0()
+        {
+            Helper.EnsureNotNull<string>();
 
-      [ClousotRegressionTest]
-      [RegressionOutcome(Outcome=ProofOutcome.False,Message="ensures is false: Contract.Result<T>() != null",PrimaryILOffset=16,MethodILOffset=6)]
-      public string GetTheData1()
-      {
-        Helper.EnsureNotNull<string>();
+            return "";
+        }
 
-        return null;
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.False, Message = "ensures is false: Contract.Result<T>() != null", PrimaryILOffset = 16, MethodILOffset = 6)]
+        public string GetTheData1()
+        {
+            Helper.EnsureNotNull<string>();
 
-      [ClousotRegressionTest]
-      public string GetTheData2()
-      {
-        //Helper.EnsureNotNull<float>();
+            return null;
+        }
 
-        return null;
-      }
+        [ClousotRegressionTest]
+        public string GetTheData2()
+        {
+            //Helper.EnsureNotNull<float>();
 
+            return null;
+        }
     }
 }

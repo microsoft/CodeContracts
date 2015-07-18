@@ -13,37 +13,43 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+
 using Microsoft.Research.ClousotRegression;
+
 using System.Diagnostics.Contracts;
 
 
-public static class Test {
+public static class Test
+{
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 84, MethodILOffset = 0)]
+    public static void M(int x, int y)
+    {
+        int a;
+        if (x > 0)
+        {
+            if (y > 0)
+            {
+                a = 1;
+            }
+            else
+            {
+                a = 2;
+            }
+        }
+        else
+        {
+            if (y > 0)
+            {
+                a = 3;
+            }
+            else
+            {
+                a = 4;
+            }
+        }
 
-  [ClousotRegressionTest]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=84,MethodILOffset=0)]
-
-  public static void M(int x, int y) {
-
-    int a;
-    if (x > 0) {
-      if (y > 0) {
-        a = 1;
-      }
-      else {
-        a = 2;
-      }
+        Contract.Assume(x <= 0 || y > 0);
+        Contract.Assert(a != 2);
     }
-    else {
-      if (y > 0) {
-        a = 3;
-      }
-      else {
-        a = 4;
-      }
-    }
-
-    Contract.Assume(x <= 0 || y > 0);
-    Contract.Assert(a != 2);
-  }
-
 }

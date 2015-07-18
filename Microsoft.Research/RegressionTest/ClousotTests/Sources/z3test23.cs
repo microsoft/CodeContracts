@@ -13,31 +13,34 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+
 using Microsoft.Research.ClousotRegression;
+
 using System.Diagnostics.Contracts;
 
 
-public class ConstructorTestDerived {
+public class ConstructorTestDerived
+{
+    private ConstructorTestDerived next;
 
-  ConstructorTestDerived next;
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as field receiver)", PrimaryILOffset = 35, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 21, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 61, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 74, MethodILOffset = 0)]
+    public void M(ConstructorTestDerived obj)
+    {
+        Contract.Requires(obj != null);
+        Contract.Assert(this != null);
 
-  [ClousotRegressionTest]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"valid non-null reference (as field receiver)",PrimaryILOffset=35,MethodILOffset=0)]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=21,MethodILOffset=0)]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=61,MethodILOffset=0)]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"assert is valid",PrimaryILOffset=74,MethodILOffset=0)]
-  public void M(ConstructorTestDerived obj) {
-    Contract.Requires(obj != null);
-    Contract.Assert(this != null);
+        var last = obj;
+        while (obj != null)
+        {
+            last = obj;
+            obj = obj.next;
+        }
 
-    var last = obj;
-    while (obj != null) {
-      last = obj;
-      obj = obj.next;
+        Contract.Assert(last != null);
+        Contract.Assert(this != null);
     }
-
-    Contract.Assert(last != null);
-    Contract.Assert(this != null);
-  }
-
 }
