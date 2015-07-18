@@ -36,6 +36,7 @@ using System.Diagnostics;
 using Microsoft.Research.ClousotPulse.Messages;
 using Microsoft.Research.CodeAnalysis.Inference;
 using System.IO.Pipes;
+using System.Globalization;
 
 // Because these classes and methods can be called from different places (Console, Visual Studio, WCF Service, ...)
 // - do not use Console unless guarded with #if DEBUG. Instead use output
@@ -795,6 +796,10 @@ namespace Microsoft.Research.CodeAnalysis
 
       public int Analyze()
       {
+        // String formatting in the analyzer does not specify a culture, therefore some tests fail on systems with non-English culture with e.g. "expected: 2.0, actual: 2,0"
+        // Setting the threads culture should be removed as soon as issue #149 is fixed.
+        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
         try
         {
           return InternalAnalyze();
