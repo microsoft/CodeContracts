@@ -13,24 +13,25 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+
 using Microsoft.Research.ClousotRegression;
+
 using System.Diagnostics.Contracts;
 
 
-public class ConstructorTestDerived {
+public class ConstructorTestDerived
+{
+    private object data;
 
-  object data;
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as field receiver)", PrimaryILOffset = 34, MethodILOffset = 0)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as field receiver)", PrimaryILOffset = 15, MethodILOffset = 39)]
+    [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"ensures is valid", PrimaryILOffset = 26, MethodILOffset = 39)]
+    public void M(object obj)
+    {
+        Contract.Requires(obj != null);
+        Contract.Ensures(data != null);
 
-  [ClousotRegressionTest]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"valid non-null reference (as field receiver)",PrimaryILOffset=34,MethodILOffset=0)]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"valid non-null reference (as field receiver)",PrimaryILOffset=15,MethodILOffset=39)]
-  [RegressionOutcome(Outcome=ProofOutcome.True,Message=@"ensures is valid",PrimaryILOffset=26,MethodILOffset=39)]
-  public void M(object obj) {
-    Contract.Requires(obj != null);
-    Contract.Ensures(this.data != null);
-
-    this.data = obj;
-
-  }
-
+        data = obj;
+    }
 }

@@ -13,17 +13,19 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+
 using Microsoft.Research.ClousotRegression;
+
 using System.Diagnostics.Contracts;
 
-public static class Test {
+public static class Test
+{
+    [ClousotRegressionTest]
+    // no proof obligation as it isn't reachable in the CFG already
+    public static int M(int x)
+    {
+        Contract.Ensures(false);
 
-  [ClousotRegressionTest]
-  // no proof obligation as it isn't reachable in the CFG already
-  public static int M(int x) {
-    Contract.Ensures(false);
-
-    throw new Exception();
-  }
-
+        throw new Exception();
+    }
 }

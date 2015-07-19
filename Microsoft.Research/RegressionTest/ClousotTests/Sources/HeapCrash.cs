@@ -14,28 +14,28 @@
 
 using System.Configuration;
 using System.Diagnostics.Contracts;
+
 using Microsoft.Research.ClousotRegression;
 
-class Test
+internal class Test
 {
-  public static string Bug
-  {
-    [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Possibly calling a method on a null reference 'value'",PrimaryILOffset=32,MethodILOffset=0)]
-    get
+    public static string Bug
     {
-      string value = ConfigurationManager.AppSettings["bug"];
-      while (value.StartsWith("/"))
-      {
-        value = value.Substring(1);
-      }
-      while (value.EndsWith("/"))
-      {
-        value = value.Substring(0, value.Length - 1);
-      }
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "Possibly calling a method on a null reference 'value'", PrimaryILOffset = 32, MethodILOffset = 0)]
+        get
+        {
+            string value = ConfigurationManager.AppSettings["bug"];
+            while (value.StartsWith("/"))
+            {
+                value = value.Substring(1);
+            }
+            while (value.EndsWith("/"))
+            {
+                value = value.Substring(0, value.Length - 1);
+            }
 
-      return value;
+            return value;
+        }
     }
-  }
 }
-

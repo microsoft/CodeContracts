@@ -17,11 +17,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
+
 using Microsoft.Research.ClousotRegression;
 
 namespace AssumeInvariant
 {
-    class C
+    internal class C
     {
         public int field;
 
@@ -38,15 +39,15 @@ namespace AssumeInvariant
         }
     }
 
-    class Test
+    internal class Test
     {
         [Pure]
-        static void AssumeInvariant<T>(T o) { }
-
-        static void Main(string[] args)
+        private static void AssumeInvariant<T>(T o)
         {
+        }
 
-
+        private static void Main(string[] args)
+        {
             var p = new C();
 
             TestMe1(p);
@@ -54,73 +55,70 @@ namespace AssumeInvariant
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome=ProofOutcome.Top,Message="assert unproven",PrimaryILOffset=10,MethodILOffset=0)]
-        static void TestMe1(C p) {
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "assert unproven", PrimaryILOffset = 10, MethodILOffset = 0)]
+        private static void TestMe1(C p)
+        {
             Contract.Assert(p.field > 0);
         }
 
         [ClousotRegressionTest]
-        static void TestMe2(C p)
+        private static void TestMe2(C p)
         {
             AssumeInvariant(p);
 
             Contract.Assert(p.field > 0);
+        }
+    }
+}
 
+namespace AssumeInvariantOldIssue
+{
+    using System.Collections;
+
+    public class Host
+    {
+        public string Name = "";
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(Name != null);
         }
     }
 
-}
-
-namespace AssumeInvariantOldIssue {
-  using System.Collections;
-
-  public class Host
-  {
-    public string Name = "";
-    
-    [ContractInvariantMethod]
-    void ObjectInvariant()
+    internal class InvariantAtCallAndOldHandling
     {
-      Contract.Invariant(Name != null);
+        public static class ContractHelpers
+        {
+            [ContractVerification(false)]
+            public static void AssumeInvariant<T>(T o)
+            {
+            }
+        }
+
+        [ClousotRegressionTest]
+        private static void AssumeInvariantTrue()
+        {
+            foreach (Host h in new ArrayList())
+            {
+                Contract.Assume(h != null);
+
+                ContractHelpers.AssumeInvariant(h);
+
+                Contract.Assert(h.Name != null);
+            }
+        }
+
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "assert unproven", PrimaryILOffset = 53, MethodILOffset = 0)]
+        private static void AssumeInvariantUnproven()
+        {
+            foreach (Host h in new ArrayList())
+            {
+                Contract.Assume(h != null);
+
+                Contract.Assert(h.Name != null);
+            }
+        }
     }
-  }
-
-  class InvariantAtCallAndOldHandling {
-    public static class ContractHelpers
-    {
-      [ContractVerification(false)]
-      public static void AssumeInvariant<T>(T o)
-      {
-      }
-    }
-
-    [ClousotRegressionTest]
-    static void AssumeInvariantTrue()
-    {
-      foreach (Host h in new ArrayList())
-      {
-        Contract.Assume(h != null);
-
-        ContractHelpers.AssumeInvariant(h);
-
-        Contract.Assert(h.Name != null);
-      }
-
-    }
-
-    [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="assert unproven",PrimaryILOffset=53,MethodILOffset=0)]
-    static void AssumeInvariantUnproven()
-    {
-      foreach (Host h in new ArrayList())
-      {
-        Contract.Assume(h != null);
-
-        Contract.Assert(h.Name != null);
-      }
-
-    }
-
-  }
-
 }

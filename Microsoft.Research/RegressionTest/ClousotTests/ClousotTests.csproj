@@ -134,6 +134,55 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Sources\Abbreviators.cs" />
+    <None Include="Sources\ArrayForAll.cs" />
+    <None Include="Sources\AssumeInvariant.cs" />
+    <None Include="Sources\ClassWithProtocolFinal.cs" />
+    <None Include="Sources\Decimal.cs" />
+    <None Include="Sources\DoubleZero.cs" />
+    <None Include="Sources\EnumerableAll.cs" />
+    <None Include="Sources\ForAll.cs" />
+    <None Include="Sources\HeapCrash.cs" />
+    <None Include="Sources\Herman.cs" />
+    <None Include="Sources\IfaceImplicitlyImplementedBug.cs" />
+    <None Include="Sources\IOperations.cs" />
+    <None Include="Sources\Mulder.cs" />
+    <None Include="Sources\MultidimArrays.cs" />
+    <None Include="Sources\NoUpHavocMethods.cs" />
+    <None Include="Sources\OperatorOverloading.cs" />
+    <None Include="Sources\TypeSpecializations.cs" />
+    <None Include="Sources\Z3Test1.cs" />
+    <None Include="Sources\z3test10.cs" />
+    <None Include="Sources\z3test11.cs" />
+    <None Include="Sources\z3test12.cs" />
+    <None Include="Sources\z3test13.cs" />
+    <None Include="Sources\z3test14.cs" />
+    <None Include="Sources\z3test15.cs" />
+    <None Include="Sources\z3test16.cs" />
+    <None Include="Sources\z3test17.cs" />
+    <None Include="Sources\z3test18.cs" />
+    <None Include="Sources\z3test19.cs" />
+    <None Include="Sources\z3Test2.cs" />
+    <None Include="Sources\z3test20.cs" />
+    <None Include="Sources\z3test21.cs" />
+    <None Include="Sources\z3test22.cs" />
+    <None Include="Sources\z3test23.cs" />
+    <None Include="Sources\z3test3.cs" />
+    <None Include="Sources\z3test4.cs" />
+    <None Include="Sources\z3test5.cs" />
+    <None Include="Sources\z3test6.cs" />
+    <None Include="Sources\z3test7.cs" />
+    <None Include="Sources\z3test8.cs" />
+    <None Include="Sources\z3test9.cs" />
+    <None Include="..\TestFrameworkOOB\Purity.cs">
+      <Link>Sources\Purity.cs</Link>
+    </None>
+    <None Include="..\TestFrameworkOOB\ReferenceToAllOOBC.cs">
+      <Link>Sources\ReferenceToAllOOBC.cs</Link>
+    </None>
+    <None Include="..\TestFrameworkOOB\UserFeedback.cs">
+      <Link>Sources\UserFeedback.cs</Link>
+    </None>
     <Compile Include="v.cs" />
     <None Include="..\Containers\TestContainers\ArrayWithNonNullAnalysis.cs">
       <Link>Sources\ArrayWithNonNullAnalysis.cs</Link>
@@ -146,14 +195,9 @@
     </None>
     <Compile Include="AsyncTestDriver.cs" />
     <Compile Include="GroupInfo.cs" />
-    <None Include="NoWarn.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Sources\Abbreviators.cs" />
-    <None Include="Sources\ClassWithProtocolFinal.cs" />
-    <None Include="Sources\NoUpHavocMethods.cs" />
-    <None Include="Sources\IfaceImplicitlyImplementedBug.cs" />
     <Compile Include="TestDriver.cs" />
   </ItemGroup>
   <ItemGroup>
