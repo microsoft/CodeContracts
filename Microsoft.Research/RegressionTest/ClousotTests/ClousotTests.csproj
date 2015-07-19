@@ -134,7 +134,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="v.cs" />
+    <Compile Include="Tests.cs" />
     <None Include="..\Containers\TestContainers\ArrayWithNonNullAnalysis.cs">
       <Link>Sources\ArrayWithNonNullAnalysis.cs</Link>
     </None>
