@@ -22,7 +22,7 @@ namespace Tests
 {
   public class Options
   {
-    private const string RelativeRoot = @"..\..\..\";
+    private const string RelativeRoot = @"..\..\..\..\..\";
     private const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
     private static readonly string RootDirectory;
 
@@ -194,6 +194,24 @@ namespace Tests
       this.SkipSlicing = LoadBool(dataRow, "SkipSlicing", false);
     }
 
+    public Options(string sourceFile, string compilerOptions, string[] libPaths, string[] references, string options, bool contractReferenceAssemblies = false, bool exe = false, string compiler = "CS", bool skipCCI2 = false, bool skipSlicing = false)
+    {
+        this.OutDirectory = "TestResults";
+        this.SourceFile = sourceFile;
+        this.compilerOptions = compilerOptions;
+        this.LibPaths = new List<string> { MakeAbsolute(TestHarnessDirectory) };
+        this.References = new List<string> { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" };
+        this.ClousotOptions = options;
+        this.UseContractReferenceAssemblies = contractReferenceAssemblies;
+        this.UseExe = exe;
+        this.compilerCode = compiler;
+        this.SkipForCCI2 = skipCCI2;
+        this.SkipSlicing = skipSlicing;
+
+        this.LibPaths.AddRange(libPaths);
+        this.References.AddRange(references);
+    }
+
     private GroupInfo GetTestGroup(string testGroupName, string rootDir, out int instance)
     {
       if (testGroupName == null)
@@ -291,7 +309,7 @@ namespace Tests
       {
         if (!System.Diagnostics.Debugger.IsAttached) return false;
         // use only the previously failed file indices
-        return !Group.Selected;
+        return Group != null && !Group.Selected;
       }
     }
 
