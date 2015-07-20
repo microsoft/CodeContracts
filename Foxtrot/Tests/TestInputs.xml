@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TestInputs>
 
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\CancelledAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionsInInterface.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\MixedAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\NormalAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditionsNOTIMPLEMENTED
+     Name="Foxtrot\Tests\AsyncPostconditions\CapturingAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\ExceptionalAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <!-- Tests for IteratorBlockWithComplexGeneric test case -->
   <IteratorWithComplexGeneric
      Name="Foxtrot\Tests\RoslynCompatibility\IteratorWithTuple.cs"
