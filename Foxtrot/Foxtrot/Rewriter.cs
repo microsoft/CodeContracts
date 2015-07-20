@@ -372,7 +372,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 return instance;
             }
-            
+
             // we are in trouble. Need to cook up instance reference ourselves
             throw new Exception("TODO: cook up instance reference");
         }
@@ -412,7 +412,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             while (baseClass.Template is Class)
             {
-                baseClass = (Class) baseClass.Template;
+                baseClass = (Class)baseClass.Template;
             }
 
             // make sure base class is in same assembly
@@ -1216,19 +1216,9 @@ namespace Microsoft.Contracts.Foxtrot
                 ExpressionList args = new ExpressionList();
 
                 args.Add(e.PostCondition);
-                if (e.UserMessage != null)
-                    args.Add(e.UserMessage);
-                else
-                    args.Add(Literal.Null);
+                args.Add(e.UserMessage ?? Literal.Null);
 
-                if (e.SourceConditionText != null)
-                {
-                    args.Add(e.SourceConditionText);
-                }
-                else
-                {
-                    args.Add(Literal.Null);
-                }
+                args.Add(e.SourceConditionText ?? Literal.Null);
 
                 ensuresChecks.Add(
                     new ExpressionStatement(
@@ -1316,19 +1306,9 @@ namespace Microsoft.Contracts.Foxtrot
                     ExpressionList args = new ExpressionList();
                     args.Add(e.PostCondition);
 
-                    if (e.UserMessage != null)
-                        args.Add(e.UserMessage);
-                    else
-                        args.Add(Literal.Null);
+                    args.Add(e.UserMessage ?? Literal.Null);
 
-                    if (e.SourceConditionText != null)
-                    {
-                        args.Add(e.SourceConditionText);
-                    }
-                    else
-                    {
-                        args.Add(Literal.Null);
-                    }
+                    args.Add(e.SourceConditionText ?? Literal.Null);
 
                     args.Add(l);
                     var checks = new StatementList();
@@ -1405,18 +1385,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (asyncPostconditions != null && asyncPostconditions.Count > 0)
             {
-                asyncBuilder.AddAsyncPost(asyncPostconditions);
-                var funcLocal = new Local(asyncBuilder.FuncCtor.DeclaringType);
-
-                var ldftn = new UnaryExpression(new MemberBinding(null, asyncBuilder.CheckMethod), NodeType.Ldftn, CoreSystemTypes.IntPtr);
-                
-                returnBlock.Statements.Add(new AssignmentStatement(funcLocal,
-                    new Construct(new MemberBinding(null, asyncBuilder.FuncCtor),
-                        new ExpressionList(asyncBuilder.ClosureLocal, ldftn))));
-
-                returnBlock.Statements.Add(new AssignmentStatement(result,
-                    new MethodCall(new MemberBinding(result, asyncBuilder.ContinueWithMethod),
-                        new ExpressionList(funcLocal))));
+                asyncBuilder.AddAsyncPostconditions(asyncPostconditions, returnBlock, result);
             }
 
             Statement returnStatement;
@@ -1589,7 +1558,7 @@ namespace Microsoft.Contracts.Foxtrot
                     }
                     else
                     {
-                        if (EmitRequires((RequiresPlain) val, this.skipQuantifiers))
+                        if (EmitRequires((RequiresPlain)val, this.skipQuantifiers))
                         {
                             reqSequence.Add(val);
                         }
@@ -1633,7 +1602,7 @@ namespace Microsoft.Contracts.Foxtrot
             if (ro.Condition == null)
             {
                 // just a validation code block
-                BlockExpression be = (BlockExpression) ro.ThrowException;
+                BlockExpression be = (BlockExpression)ro.ThrowException;
                 return be.Block;
             }
 
@@ -1747,7 +1716,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (!(lit.Value is int)) return false;
 
-            int value = (int) lit.Value;
+            int value = (int)lit.Value;
             return value == 0 || value == 1;
         }
 
@@ -1872,7 +1841,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             var unknownMethodCallCounter = new UnknownCallCounter(true);
             unknownMethodCallCounter.VisitStatementList(checks);
-            
+
             return unknownMethodCallCounter.Count == 0;
         }
 
@@ -2003,7 +1972,7 @@ namespace Microsoft.Contracts.Foxtrot
                     Contract.Assume(method.DeclaringType != null);
 
                     if (m.DeclaringType.DeclaringModule != method.DeclaringType.DeclaringModule) return true;
-                    
+
                     if (m.IsVisibleOutsideAssembly) return true;
                 }
             }
@@ -2037,7 +2006,7 @@ namespace Microsoft.Contracts.Foxtrot
             return
                 this.Emit(RuntimeContractEmitFlags.Invariants)
                 && !method.IsStatic
-                    // Check invariants even for non-public ctors
+                // Check invariants even for non-public ctors
                 && (method.IsPublic || method is InstanceInitializer)
                 && this.InvariantMethod != null
                 && !(inExceptionCase && method is InstanceInitializer)
@@ -2153,7 +2122,7 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(asyncpostconditions != null);
 
             CollectOldExpressions coe = new CollectOldExpressions(
-                this.module, method, this.rewriterNodes, closureLocals, oldLocalNameCounter, asyncClosure );
+                this.module, method, this.rewriterNodes, closureLocals, oldLocalNameCounter, asyncClosure);
 
             foreach (Ensures e in asyncpostconditions)
             {
@@ -2382,7 +2351,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 runtimeContractsFlags.UnderlyingType = SystemTypes.Int32;
 
-                Type copyFrom = typeof (RuntimeContractEmitFlags);
+                Type copyFrom = typeof(RuntimeContractEmitFlags);
                 foreach (System.Reflection.FieldInfo fi in copyFrom.GetFields())
                 {
                     if (fi.IsLiteral)
@@ -2512,15 +2481,15 @@ namespace Microsoft.Contracts.Foxtrot
             switch (original.NodeType)
             {
                 case NodeType.Class:
-                    wrapper = CreateWrapperClass((Class) original);
+                    wrapper = CreateWrapperClass((Class)original);
                     break;
 
                 case NodeType.Struct:
-                    wrapper = CreateWrapperStruct((Struct) original);
+                    wrapper = CreateWrapperStruct((Struct)original);
                     break;
 
                 case NodeType.Interface:
-                    wrapper = CreateWrapperInterface((Interface) original);
+                    wrapper = CreateWrapperInterface((Interface)original);
                     break;
 
                 default:
@@ -2552,7 +2521,7 @@ namespace Microsoft.Contracts.Foxtrot
             var wrapper = new Class(this.assemblyBeingRewritten, null, null, flags, null, intf.Name, SystemTypes.Object, null, null);
 
             RewriteHelper.TryAddCompilerGeneratedAttribute(wrapper);
-            
+
             if (intf.TemplateParameters != null)
             {
                 Duplicator d = new Duplicator(this.assemblyBeingRewritten, wrapper);
@@ -2574,7 +2543,7 @@ namespace Microsoft.Contracts.Foxtrot
             var wrapper = new Class(this.assemblyBeingRewritten, null, null, flags, null, s.Name, SystemTypes.Object, null, null);
 
             RewriteHelper.TryAddCompilerGeneratedAttribute(wrapper);
-            
+
             if (s.TemplateParameters != null)
             {
                 Duplicator d = new Duplicator(this.assemblyBeingRewritten, wrapper);
@@ -2594,7 +2563,7 @@ namespace Microsoft.Contracts.Foxtrot
             var wrapper = new Class(this.assemblyBeingRewritten, null, null, flags, null, c.Name, SystemTypes.Object, null, null);
 
             RewriteHelper.TryAddCompilerGeneratedAttribute(wrapper);
-            
+
             if (c.TemplateParameters != null)
             {
                 Duplicator d = new Duplicator(this.assemblyBeingRewritten, wrapper);
@@ -2626,7 +2595,7 @@ namespace Microsoft.Contracts.Foxtrot
             var result = d.VisitTypeParameterList(source.TemplateParameters);
             foreach (var tp in result)
             {
-                var itp = (ITypeParameter) tp;
+                var itp = (ITypeParameter)tp;
 
                 itp.DeclaringMember = target;
                 itp.TypeParameterFlags = itp.TypeParameterFlags & ~TypeParameterFlags.VarianceMask;
@@ -2760,7 +2729,7 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(methodOfGenericType != null);
             Contract.Requires(instantiatedParentType != null);
 
-            return (Method) GetMemberInstanceReference(methodOfGenericType, instantiatedParentType);
+            return (Method)GetMemberInstanceReference(methodOfGenericType, instantiatedParentType);
 #if false
       int index = MemberIndexInTypeMembers(methodOfGenericType);
 
@@ -2790,7 +2759,7 @@ namespace Microsoft.Contracts.Foxtrot
 
         internal static Field GetFieldInstanceReference(Field fieldOfGenericType, TypeNode instantiatedParentType)
         {
-            return (Field) GetMemberInstanceReference(fieldOfGenericType, instantiatedParentType);
+            return (Field)GetMemberInstanceReference(fieldOfGenericType, instantiatedParentType);
         }
 
         internal static Member GetMemberInstanceReference(Member memberOfGenericType, TypeNode instantiatedParentType)
@@ -2828,11 +2797,11 @@ namespace Microsoft.Contracts.Foxtrot
                 Duplicator dup = new Duplicator(memberOfGenericType.DeclaringType.DeclaringModule, instantiatedParentType);
 
                 dup.RecordOriginalAsTemplate = true;
-                instMember = (Member) dup.Visit(memberOfGenericType);
+                instMember = (Member)dup.Visit(memberOfGenericType);
 
                 var spec = TypeParameterSpecialization(memberOfGenericType.DeclaringType, instantiatedParentType);
 
-                instMember = (Member) spec.Visit(instMember);
+                instMember = (Member)spec.Visit(instMember);
                 instMember.DeclaringType = instantiatedParentType;
 
                 AddMemberAtIndex(index, instantiatedParentType, instMember);
@@ -3027,7 +2996,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             for (int i = 0; i < templateMethod.Parameters.Count; i++)
             {
-                parameters.Add((Parameter) dup.VisitParameter(templateMethod.Parameters[i]));
+                parameters.Add((Parameter)dup.VisitParameter(templateMethod.Parameters[i]));
             }
 
             var retType = dup.VisitTypeReference(templateMethod.ReturnType);
@@ -3287,7 +3256,7 @@ namespace Microsoft.Contracts.Foxtrot
         private Method LookupWrapperMethod(bool virtcall, TypeNode virtCallConstraint, TypeNode wrapperType, Method templateMethod)
         {
             Method result = null;
-            
+
             if (virtcall)
             {
                 if (virtCallConstraint != null)
@@ -3361,7 +3330,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             Debug.Assert(call == statement.Expression as MethodCall);
 
-            MemberBinding mb = (MemberBinding) call.Callee;
+            MemberBinding mb = (MemberBinding)call.Callee;
             Debug.Assert(mb.BoundMember == methodToReplace);
 
             mb.BoundMember = replacementMethod;
@@ -3407,7 +3376,7 @@ namespace Microsoft.Contracts.Foxtrot
                     this.lastStmtContext = stmt.SourceContext;
                 }
 
-                statements[i] = (Statement) base.Visit(stmt);
+                statements[i] = (Statement)base.Visit(stmt);
             }
 
             return statements;
@@ -3487,7 +3456,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 return result;
             }
-                
+
             return base.VisitExpressionStatement(statement);
         }
 
