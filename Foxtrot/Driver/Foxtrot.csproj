@@ -169,6 +169,8 @@
     <Compile Include="Rewriting\RuntimeContractMethods.cs" />
     <Compile Include="Rewriting\SubstituteClosureClassWithinOldExpressions.cs" />
     <Compile Include="Rewriting\SubstituteParameters.cs" />
+    <Compile Include="Rewriting\Utils\ParameterExtensions.cs" />
+    <Compile Include="Rewriting\Utils\TypeNodeExtensions.cs" />
     <Compile Include="Rewriting\WrapParametersInOldExpressions.cs" />
     <None Include="..\..\Microsoft.Research\common\Contracts.snk">
       <Link>Contracts.snk</Link>
