@@ -78,7 +78,7 @@ namespace Microsoft.VisualStudio.CodeTools
             // Get the visual studio root key
             if (VsRoot == null)
             {
-                ILocalRegistry2 localReg = GetService(typeof(ILocalRegistry)) as ILocalRegistry2;
+                ILocalRegistry2 localReg = GetService(typeof(SLocalRegistry)) as ILocalRegistry2;
                 if (localReg != null)
                 {
                     localReg.GetLocalRegistryRoot(out VsRoot);
