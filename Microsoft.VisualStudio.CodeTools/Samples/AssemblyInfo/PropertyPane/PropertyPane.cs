@@ -1,19 +1,6 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// Copyright (c) 2010 Microsoft Research
-//
 // The definition of a Property page that is displayed inside
 // C# and VB project property pages. It loads and saves
 // two properties from/to the project files:
@@ -67,87 +54,91 @@ using Microsoft.VisualStudio.CodeTools;
  * After setting all these entries, run the CodeToolsUpdate program
  * to register the property page in VS.
  */
+
 namespace AssemblyInfo
 {
-	[Guid("DAA2FC39-92C8-4e9b-9E3E-4A52D08D1D83")]
-	public partial class PropertyPane : UserControl, IPropertyPane
-	{
-		#region Fields and constructor
-		private ProjectProperty[] properties;
+    [Guid("DAA2FC39-92C8-4e9b-9E3E-4A52D08D1D83")]
+    public partial class PropertyPane : UserControl, IPropertyPane
+    {
+        #region Fields and constructor
+        private ProjectProperty[] properties;
 
-		public PropertyPane()
-		{
-			InitializeComponent();
-			// The names of the properties correspond to the properties defined in the Targets file
-			properties = new ProjectProperty[] {
-				new CheckBoxProperty( "AssemblyInfoEnabled", EnableCheckBox, false ),
-				new TextBoxProperty( "AssemblyInfoFormatString", FormatTextBox, "Assembly: {0}, Version: {1}, Types: {2}")
-			};
-		}
+        public PropertyPane()
+        {
+            InitializeComponent();
+            // The names of the properties correspond to the properties defined in the Targets file
+            properties = new ProjectProperty[] {
+                new CheckBoxProperty( "AssemblyInfoEnabled", EnableCheckBox, false ),
+                new TextBoxProperty( "AssemblyInfoFormatString", FormatTextBox, "Assembly: {0}, Version: {1}, Types: {2}")
+            };
+        }
 
-		private void PropertiesChanged()
-		{
-			if (host != null) {
-				host.PropertiesChanged();
-			}
-		}
+        private void PropertiesChanged()
+        {
+            if (host != null)
+            {
+                host.PropertiesChanged();
+            }
+        }
 
-		private void EnableDisableUI()
-		{
-			FormatTextBox.Enabled = EnableCheckBox.Checked;
-		}
-		#endregion
+        private void EnableDisableUI()
+        {
+            FormatTextBox.Enabled = EnableCheckBox.Checked;
+        }
+        #endregion
 
-		#region IPropertyPane
-		private IPropertyPaneHost host; // = null;
+        #region IPropertyPane
+        private IPropertyPaneHost host; // = null;
 
-		public void SetHost(IPropertyPaneHost h)
-		{
-			host = h;
-		}
+        public void SetHost(IPropertyPaneHost h)
+        {
+            host = h;
+        }
 
-		public string Title
-		{
-			get { return "Assembly Info"; }
-		}
+        public string Title
+        {
+            get { return "Assembly Info"; }
+        }
 
-		public int HelpContext
-		{
-			get { return 0; }
-		}
+        public int HelpContext
+        {
+            get { return 0; }
+        }
 
-		public string HelpFile
-		{
-			get { return ""; }
-		}
-		
-		public void LoadProperties(string[] configNames, IPropertyStorage storage)
-		{
-			foreach (var prop in this.properties) {
-				prop.Load(configNames, storage);
-			}
-			EnableDisableUI();
-		}
+        public string HelpFile
+        {
+            get { return ""; }
+        }
 
-		public void SaveProperties(string[] configNames, IPropertyStorage storage)
-		{
-			foreach (var prop in this.properties) {
-				prop.Save(configNames, storage);
-			}
-		}
-		#endregion
+        public void LoadProperties(string[] configNames, IPropertyStorage storage)
+        {
+            foreach (var prop in properties)
+            {
+                prop.Load(configNames, storage);
+            }
+            EnableDisableUI();
+        }
 
-		#region Events
-		private void EnableCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			PropertiesChanged();
-			EnableDisableUI();
-		}
+        public void SaveProperties(string[] configNames, IPropertyStorage storage)
+        {
+            foreach (var prop in properties)
+            {
+                prop.Save(configNames, storage);
+            }
+        }
+        #endregion
 
-		private void FormatTextBox_TextChanged(object sender, EventArgs e)
-		{
-			PropertiesChanged();
-		}
-		#endregion
-	}
+        #region Events
+        private void EnableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            PropertiesChanged();
+            EnableDisableUI();
+        }
+
+        private void FormatTextBox_TextChanged(object sender, EventArgs e)
+        {
+            PropertiesChanged();
+        }
+        #endregion
+    }
 }
