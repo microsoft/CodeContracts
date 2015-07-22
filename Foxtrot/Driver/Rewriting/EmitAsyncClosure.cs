@@ -58,6 +58,9 @@ namespace Microsoft.Contracts.Foxtrot
     /// </remarks>
     internal class EmitAsyncClosure : StandardVisitor
     {
+        // This assembly should be in this class but not in the SystemTypes from System.CompilerCC.
+        // Moving this type there will lead to test failures and assembly resolution errors.
+        private static readonly AssemblyNode/*!*/ SystemCoreAssembly = SystemTypes.GetSystemCoreAssembly(false, true);
         private static readonly Identifier CheckExceptionMethodId = Identifier.For("CheckException");
         private static readonly Identifier CheckMethodId = Identifier.For("CheckPost");
 
@@ -592,7 +595,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             // TODO: use static for this?
             var taskExtensions =
-                    HelperMethods.FindType(SystemTypes.SystemCoreAssembly,
+                    HelperMethods.FindType(SystemCoreAssembly,
                     Identifier.For("System.Threading.Tasks"),
                     Identifier.For("TaskExtensions"));
 

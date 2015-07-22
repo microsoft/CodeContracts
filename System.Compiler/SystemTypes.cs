@@ -1220,7 +1220,6 @@ namespace System.Compiler{
     public static AssemblyNode /*!*/SystemXmlAssembly;
 #endif
 #endif
-    public static AssemblyNode/*!*/ SystemCoreAssembly;
     public static AssemblyNode/*!*/ CollectionsAssembly;
     public static AssemblyNode/*!*/ DiagnosticsDebugAssembly;
     public static AssemblyNode/*!*/ DiagnosticsToolsAssembly;
@@ -1761,7 +1760,6 @@ namespace System.Compiler{
       SystemXmlAssembly = SystemTypes.GetSystemXmlAssembly(doNotLockFile, getDebugInfo);
 #endif
 #endif
-      SystemCoreAssembly = SystemTypes.GetSystemCoreAssembly(doNotLockFile, getDebugInfo);
       CollectionsAssembly = SystemTypes.GetCollectionsAssembly(doNotLockFile, getDebugInfo);
       DiagnosticsDebugAssembly = SystemTypes.GetDiagnosticsDebugAssembly(doNotLockFile, getDebugInfo);
       DiagnosticsToolsAssembly = SystemTypes.GetDiagnosticsToolsAssembly(doNotLockFile, getDebugInfo);
@@ -2536,7 +2534,7 @@ namespace System.Compiler{
       result.typeCode = typeCode;
       return result;
     }
-    private static AssemblyNode/*!*/ GetSystemCoreAssembly(bool doNotLockFile, bool getDebugInfo)
+    public static AssemblyNode/*!*/ GetSystemCoreAssembly(bool doNotLockFile, bool getDebugInfo)
     {
         Identifier AssemblyId = Identifier.For("System.Core");
         AssemblyReference aref = (AssemblyReference)TargetPlatform.AssemblyReferenceFor[AssemblyId.UniqueIdKey];
