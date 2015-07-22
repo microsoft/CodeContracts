@@ -50,10 +50,12 @@ namespace Tests.Sources
         var t = new TestMain(true);
         t.Run();
       }
-      catch
+      catch(Exception e)
       {
         Console.WriteLine();
         Console.WriteLine("Positive test failed.");
+        Console.WriteLine("Error: " + e);
+
         Console.WriteLine();
         throw;
       }
