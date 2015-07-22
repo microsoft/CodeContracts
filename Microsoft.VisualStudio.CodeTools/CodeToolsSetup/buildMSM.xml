@@ -63,7 +63,7 @@
       Targets="Rebuild"
       />
 
-    <Exec Command="tlbexp ..\ITaskManager\bin\$(BuildConfig)\ITaskManager.dll /out:..\TLB\ITaskManager.tlb"/>
+    <Exec Command="Tools\tlbexp ..\ITaskManager\bin\$(BuildConfig)\ITaskManager.dll /out:..\TLB\ITaskManager.tlb"/>
   </Target>
 
   <!--==========================================================
