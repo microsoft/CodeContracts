@@ -412,7 +412,7 @@ namespace Microsoft.VisualStudio.CodeTools
 
         private void InitializeTaskProvider()
         {
-            taskList = Common.GetService(typeof(SVsTaskList)) as IVsTaskList;
+            taskList = Common.GetService(typeof(SVsErrorList)) as IVsTaskList;
             if (taskList != null)
             {
                 taskList.RegisterTaskProvider(this, out taskListCookie);
