@@ -1,4 +1,8 @@
 @echo off
+
+rem Make sure NuGet packages are restored before proceeding with the build
+..\..\.nuget\NuGet.exe restore ..\CodeTools10.sln
+
 if "%1" == "" goto default
 if "%1" == "export" goto export
 
