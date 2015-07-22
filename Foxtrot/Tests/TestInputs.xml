@@ -11,6 +11,14 @@
      />
 
   <AsyncTests
+     Name="Foxtrot\Tests\AsyncTests\AsyncInGenericClass.cs"
+     FoxtrotOptions=""
+     References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncTests
      Name="Foxtrot\Tests\AsyncTests\AsyncEnsuresWithAbstractClass.cs"
      FoxtrotOptions=""
      References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
