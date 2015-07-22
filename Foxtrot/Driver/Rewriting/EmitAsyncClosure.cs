@@ -106,10 +106,6 @@ namespace Microsoft.Contracts.Foxtrot
 
             declaringType.Members.Add(this.closureClass);
             RewriteHelper.TryAddCompilerGeneratedAttribute(this.closureClass);
-            
-            // Generate closure constructor
-            var ctor = CreateConstructor(closureClass);
-            closureClass.Members.Add(ctor);
 
             var taskType = from.ReturnType;
 
@@ -128,7 +124,7 @@ namespace Microsoft.Contracts.Foxtrot
                 this.closureClass.EnsureMangledName();
 
                 this.forwarder = new Specializer(
-                    targetModule: this.declaringType.DeclaringModule, 
+                    targetModule: this.declaringType.DeclaringModule,
                     pars: from.TemplateParameters,
                     args: this.closureClass.TemplateParameters);
 
@@ -143,20 +139,32 @@ namespace Microsoft.Contracts.Foxtrot
 
             this.checkMethodTaskType = taskType;
 
-            // now that we added the ctor and the check method, let's instantiate the closure class if necessary
+            // Emiting CheckPost method declaration
+            EmitCheckPostMethodCore(checkMethodTaskType);
+
+            // Generate closure constructor.
+            // Constructor should be generated AFTER visiting type parameters in
+            // the previous block of code. Otherwise current class would not have
+            // appropriate number of generic arguments!
+            var ctor = CreateConstructor(closureClass);
+            closureClass.Members.Add(ctor);
+
+            // Now that we added the ctor and the check method, let's instantiate the closure class if necessary
             if (this.closureClassInstance == null)
             {
                 var consArgs = new TypeNodeList();
                 var args = new TypeNodeList();
 
-                var parentCount = this.closureClass.DeclaringType.ConsolidatedTemplateParameters.CountOrDefault();
+                var parentCount = this.closureClass.DeclaringType.ConsolidatedTemplateParameters == null
+                    ? 0
+                    : this.closureClass.DeclaringType.ConsolidatedTemplateParameters.Count;
 
                 for (int i = 0; i < parentCount; i++)
                 {
                     consArgs.Add(this.closureClass.DeclaringType.ConsolidatedTemplateParameters[i]);
                 }
 
-                var methodCount = from.TemplateParameters.CountOrDefault();
+                var methodCount = from.TemplateParameters == null ? 0 : from.TemplateParameters.Count;
                 for (int i = 0; i < methodCount; i++)
                 {
                     consArgs.Add(from.TemplateParameters[i]);
@@ -195,14 +203,11 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(taskBasedResult != null);
             Contract.Requires(asyncPostconditions.Count > 0);
 
-            Contract.Assert(taskBasedResult.Type == checkMethodTaskType);
+            Contract.Assume(taskBasedResult.Type == checkMethodTaskType);
 
             // Async postconditions are impelemented using custom closure class
             // with CheckPost method that checks postconditions when the task
             // is finished.
-
-            // Emiting CheckPost method declaration
-            EmitCheckPostMethodCore(checkMethodTaskType);
 
             // Add Async postconditions to the AsyncClosure
             AddAsyncPost(asyncPostconditions);
@@ -241,7 +246,7 @@ namespace Microsoft.Contracts.Foxtrot
         {
             get { return (InstanceInitializer)this.closureClassInstance.GetMembersNamed(StandardIds.Ctor)[0]; }
         }
-
+        
         [Pure]
         private static TypeNodeList CreateTemplateParameters(Class closureClass, Method @from, TypeNode declaringType)
         {
@@ -265,29 +270,38 @@ namespace Microsoft.Contracts.Foxtrot
 
         private void AddContinueWithMethodToReturnBlock(Block returnBlock, Local taskBasedResult)
         {
+            Contract.Requires(returnBlock != null);
+            Contract.Requires(taskBasedResult != null);
+
             var taskType = taskBasedResult.Type;
 
             // To find appropriate ContinueWith method task type should be unwrapped
             var taskTemplate = HelperMethods.Unspecialize(taskType);
 
-            var continueWithMethod = GetContinueWithMethod(closureClass, taskTemplate, taskType);
+            var continueWithMethodLocal = GetContinueWithMethod(closureClass, taskTemplate, taskType);
 
             // TODO: not sure that this is possible situation when continueWith method is null. 
             // Maybe Contract.Assert(continueWithMethod != null) should be used instead!
 
-            if (continueWithMethod != null)
+            if (continueWithMethodLocal != null)
             {
                 // We need to create delegate instance that should be passed to ContinueWith method
-                var funcType = continueWithMethod.Parameters[0].Type;
+                var funcType = continueWithMethodLocal.Parameters[0].Type;
                 var funcCtor = funcType.GetConstructor(SystemTypes.Object, SystemTypes.IntPtr);
 
-                Contract.Assert(funcCtor != null);
+                Contract.Assume(funcCtor != null);
 
                 var funcLocal = new Local(funcCtor.DeclaringType);
 
                 // Creating a method pointer to the AsyncClosure.CheckMethod
+                // In this case we can't use checkMethod field.
+                // Getting CheckMethod from clsoureClassInstance will provide correct (potentially updated)
+                // generic arguments for enclosing type.
+                var checkMethodFromClosureInstance = (Method) closureClassInstance.GetMembersNamed(CheckMethodId)[0];
+                Contract.Assume(checkMethodFromClosureInstance != null);
+
                 var ldftn = new UnaryExpression(
-                    new MemberBinding(null, checkPostMethod),
+                    new MemberBinding(null, checkMethodFromClosureInstance),
                     NodeType.Ldftn,
                     CoreSystemTypes.IntPtr);
 
@@ -304,7 +318,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // Generating: result.ContinueWith(closure.CheckPost);
                 var continueWithCall =
                     new MethodCall(
-                        new MemberBinding(taskBasedResult, continueWithMethod),
+                        new MemberBinding(taskBasedResult, continueWithMethodLocal),
                         new ExpressionList(funcLocal));
 
                 // Generating: TaskExtensions.Unwrap(result.ContinueWith(...))
@@ -325,11 +339,13 @@ namespace Microsoft.Contracts.Foxtrot
         /// </summary>
         private void EmitCheckPostMethodCore(TypeNode taskType)
         {
+            Contract.Requires(taskType != null);
+
             this.checkMethodTaskParameter = new Parameter(Identifier.For("task"), taskType);
 
             // TODO ST: can I switch to new Local(taskType.Type)?!? In this case this initialization
             // could be moved outside this method
-            this.originalResultLocal = new Local(checkMethodTaskParameter.Type);
+            this.originalResultLocal = new Local(new Identifier("taskLocal"), checkMethodTaskParameter.Type);
 
             // Generate: public Task<T> CheckPost(Task<T> task) where T is taskType or
             // public Task CheckPost(Task task) for non-generic task.
@@ -532,11 +548,11 @@ namespace Microsoft.Contracts.Foxtrot
                 
                 methodBody.Add(checkExceptionBlock);
             }
-            else
-            {
-                // no exceptional post conditions
-                newBodyBlock.Statements.Add(origBody);
-            }
+
+            // Previously, following line was executed only without exceptional postconditions!
+            // With new implementation this should be done for both: normal and exceptional postconditions.
+            // no exceptional post conditions
+            newBodyBlock.Statements.Add(origBody);
 
             Block returnBlock = CreateReturnBlock(checkMethodTaskParameter, lastEnsuresSourceContext);
             methodBody.Add(returnBlock);
@@ -580,7 +596,7 @@ namespace Microsoft.Contracts.Foxtrot
                     Identifier.For("System.Threading.Tasks"),
                     Identifier.For("TaskExtensions"));
 
-            Contract.Assert(taskExtensions != null, "Can't find System.Threading.Tasks.TaskExtensions type");
+            Contract.Assume(taskExtensions != null, "Can't find System.Threading.Tasks.TaskExtensions type");
 
             var unwrapCandidates = taskExtensions.GetMembersNamed(Identifier.For("Unwrap"));
 
@@ -588,11 +604,13 @@ namespace Microsoft.Contracts.Foxtrot
                 "Can't find Unwrap method in the TaskExtensions type");
 
             // Should be only two methods. If that is not true, we need to change this code to reflect this!
-            Contract.Assert(unwrapCandidates.Count == 2, "Should be exactly two candidate Unwrap methods.");
+            Contract.Assume(unwrapCandidates.Count == 2, "Should be exactly two candidate Unwrap methods.");
 
             // We need to find appropriate Unwrap method based on CheckMethod argument type.
             var firstMethod = (Method)unwrapCandidates[0];
             var secondMethod = (Method)unwrapCandidates[1];
+
+            Contract.Assume(firstMethod != null && secondMethod != null);
 
             var genericUnwrapCandidate = firstMethod.IsGeneric ? firstMethod : secondMethod;
             var nonGenericUnwrapCandidate = firstMethod.IsGeneric ? secondMethod : firstMethod;
