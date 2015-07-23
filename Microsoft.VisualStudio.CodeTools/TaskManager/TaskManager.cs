@@ -390,7 +390,7 @@ namespace Microsoft.VisualStudio.CodeTools
         {
             try
             {  // sometimes failed on VS2010
-                outputWindow = Common.GetService(typeof(IVsOutputWindow)) as IVsOutputWindow;
+                outputWindow = Common.GetService(typeof(SVsOutputWindow)) as IVsOutputWindow;
             }
             catch
             {
@@ -412,7 +412,7 @@ namespace Microsoft.VisualStudio.CodeTools
 
         private void InitializeTaskProvider()
         {
-            taskList = Common.GetService(typeof(SVsTaskList)) as IVsTaskList;
+            taskList = Common.GetService(typeof(SVsErrorList)) as IVsTaskList;
             if (taskList != null)
             {
                 taskList.RegisterTaskProvider(this, out taskListCookie);
@@ -504,7 +504,7 @@ namespace Microsoft.VisualStudio.CodeTools
 
         private void InitializeRunningDocTableEvents()
         {
-            rdt = Common.GetService(typeof(IVsRunningDocumentTable)) as IVsRunningDocumentTable;
+            rdt = Common.GetService(typeof(SVsRunningDocumentTable)) as IVsRunningDocumentTable;
             if (rdt != null)
             {
                 rdt.AdviseRunningDocTableEvents(this, out rdtEventsCookie);

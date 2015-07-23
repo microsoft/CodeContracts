@@ -1,5 +1,5 @@
 version: 1.9.10000.{build}
-os: Visual Studio 2015 RC
+os: Visual Studio 2015
 init:
 - ps: git config --global core.autocrlf true
 - ps: Update-AppveyorBuild -Version "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"

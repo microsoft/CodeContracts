@@ -46,6 +46,28 @@
 
   <!--==========================================================
 
+     Common properties for building the solution configuration
+
+   ===========================================================-->
+  <PropertyGroup>
+    <SolutionDir>..\</SolutionDir>
+    <SolutionName>CodeTools10.sln</SolutionName>
+    <Platform>Mixed Platforms</Platform>
+  </PropertyGroup>
+
+  <Target Name="BuildSolutionConfig"
+    DependsOnTargets="Validate">
+    <MsBuild
+      Projects="$(SolutionDir)$(SolutionName)"
+      Properties='Configuration=$(BuildConfig);Platform=$(Platform)'
+      Targets="Rebuild"
+      />
+
+    <Exec Command="Tools\tlbexp ..\ITaskManager\bin\$(BuildConfig)\ITaskManager.dll /out:..\TLB\ITaskManager.tlb"/>
+  </Target>
+
+  <!--==========================================================
+
      Common properties used by many targets
 
    ===========================================================-->
@@ -59,7 +81,7 @@
   </PropertyGroup>
 
   <Target Name="All"
-   DependsOnTargets="Validate;CopyBinaries;MakeMSI"
+   DependsOnTargets="Validate;BuildSolutionConfig;CopyBinaries;MakeMSI"
   />
 
   <Target Name="Validate">
