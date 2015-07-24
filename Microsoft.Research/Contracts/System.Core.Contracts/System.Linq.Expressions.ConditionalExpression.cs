@@ -90,11 +90,11 @@ namespace System.Linq.Expressions
     [Pure]
     public ConditionalExpression Update(Expression test, Expression ifTrue, Expression ifFalse)
     {
-        Contract.Requires(test != null);
-        Contract.Requires(ifTrue != null);
-        Contract.Requires(ifFalse != null);
-        Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
-        return default(ConditionalExpression);
+      Contract.Requires(test != null);
+      Contract.Requires(ifTrue != null);
+      Contract.Requires(ifFalse != null);
+      Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
+      return default(ConditionalExpression);
     }
 #endif
   }

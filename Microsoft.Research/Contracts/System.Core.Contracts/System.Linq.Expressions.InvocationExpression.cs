@@ -58,6 +58,21 @@ namespace System.Linq.Expressions
     }
 
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   expression:
+    //     The System.Linq.Expressions.InvocationExpression.Expression property of the result.
+    //
+    //   arguments:
+    //     The System.Linq.Expressions.InvocationExpression.Arguments property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
     [Pure]
     public InvocationExpression Update(Expression expression, IEnumerable<Expression> arguments)
     {

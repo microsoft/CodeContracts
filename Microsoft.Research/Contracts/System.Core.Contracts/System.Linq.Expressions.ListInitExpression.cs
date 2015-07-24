@@ -58,6 +58,22 @@ namespace System.Linq.Expressions
     }
 
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   newExpression:
+    //     The System.Linq.Expressions.ListInitExpression.NewExpression property of the
+    //     result.
+    //
+    //   initializers:
+    //     The System.Linq.Expressions.ListInitExpression.Initializers property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
     [Pure]
     public ListInitExpression Update(NewExpression newExpression, IEnumerable<ElementInit> initializers)
     {
