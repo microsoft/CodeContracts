@@ -15,11 +15,12 @@
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
 // File System.Linq.Expressions.SwitchCase.cs
 // Automatically generated contract file.
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-using System.Diagnostics.Contracts;
-using System;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -44,8 +45,11 @@ namespace System.Linq.Expressions
     #region Methods and constructors
     private SwitchCase() {}
 
+    [Pure]
     public SwitchCase Update (IEnumerable<Expression> testValues, Expression body)
     {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<SwitchCase>() != null);
       return default(SwitchCase);
     }
     #endregion
@@ -55,15 +59,17 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<Expression>() != null);
         return default(Expression);
       }
     }
 
-    public System.Collections.ObjectModel.ReadOnlyCollection<Expression> TestValues
+    public ReadOnlyCollection<Expression> TestValues
     {
       get
       {
-        return default(System.Collections.ObjectModel.ReadOnlyCollection<Expression>);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>() != null);
+        return default(ReadOnlyCollection<Expression>);
       }
     }
     #endregion

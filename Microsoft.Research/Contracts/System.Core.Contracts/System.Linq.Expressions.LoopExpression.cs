@@ -49,8 +49,11 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public LoopExpression Update (LabelTarget breakLabel, LabelTarget continueLabel, Expression body)
     {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LoopExpression>() != null);
       return default(LoopExpression);
     }
     #endregion
@@ -60,6 +63,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<Expression>() != null);
         return default(Expression);
       }
     }

@@ -42,8 +42,11 @@ namespace System.Linq.Expressions {
     #region Methods and constructors
     private CatchBlock() {}
 
+    [Pure]
     public CatchBlock Update(ParameterExpression variable, Expression filter, Expression body)
     {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
       return default(CatchBlock);
     }
     #endregion
@@ -53,6 +56,7 @@ namespace System.Linq.Expressions {
     {
       get
       {
+        Contract.Ensures(Contract.Result<Expression>() != null);
         return default(Expression);
       }
     }
@@ -69,6 +73,7 @@ namespace System.Linq.Expressions {
     {
       get
       {
+        Contract.Ensures(Contract.Result<Type>() != null);
         return default(Type);
       }
     }

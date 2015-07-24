@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -243,6 +243,7 @@
     <Compile Include="System.Linq.ParallelQuery.cs" />
     <Compile Include="System.Linq.ParallelQuery_1.cs" />
     <Compile Include="System.Linq.Queryable.cs" />
+    <Compile Include="System.Runtime.CompilerServices.DebugInfoGenerator.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSite.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSiteBinder.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSite_1.cs" />

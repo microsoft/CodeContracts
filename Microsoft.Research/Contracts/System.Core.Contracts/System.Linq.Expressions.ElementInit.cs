@@ -13,10 +13,11 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Text;
-using System.Diagnostics.Contracts;
 
 namespace System.Linq.Expressions
 {
@@ -60,5 +61,14 @@ namespace System.Linq.Expressions
       }
     }
 
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    [Pure]
+    public ElementInit Update(IEnumerable<Expression> arguments)
+    {
+      Contract.Requires(arguments != null);
+      Contract.Ensures(Contract.Result<ElementInit>() != null);
+      return default(ElementInit);
+    }
+#endif
   }
 }

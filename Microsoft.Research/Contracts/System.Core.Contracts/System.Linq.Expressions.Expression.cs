@@ -283,6 +283,19 @@ namespace System.Linq.Expressions
     }
 #endif
 
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Reduces the binary expression node to a simpler expression.
+    //
+    // Returns:
+    //     The reduced expression.
+    public virtual Expression Reduce()
+    {
+      Contract.Ensures(Contract.Result<Expression>() != null);
+      return default(Expression);
+    }
+#endif
 
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -6217,7 +6230,6 @@ namespace System.Linq.Expressions
     [Pure]
     public static IndexExpression MakeIndex(Expression instance, PropertyInfo indexer, IEnumerable<Expression> arguments)
     {
-      Contract.Requires(instance != null);
       Contract.Ensures(Contract.Result<IndexExpression>() != null);
       return default(IndexExpression);
     }
@@ -10271,6 +10283,50 @@ namespace System.Linq.Expressions
     }
 #endif
 
+#if NETFRAMEWORK_4_0
+    //
+    // Summary:
+    //     Produces a delegate that represents the lambda expression.
+    //
+    // Parameters:
+    //   debugInfoGenerator:
+    //     Debugging information generator used by the compiler to mark sequence points
+    //     and annotate local variables.
+    //
+    // Returns:
+    //     A delegate containing the compiled version of the lambda.
+    public TDelegate Compile(DebugInfoGenerator debugInfoGenerator)
+    {
+      Contract.Requires(debugInfoGenerator != null);
+      Contract.Ensures(!ReferenceEquals(Contract.Result<TDelegate>(), null));
+      return default(TDelegate);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   body:
+    //     The System.Linq.Expressions.LambdaExpression.Body property of the result.
+    //
+    //   parameters:
+    //     The System.Linq.Expressions.LambdaExpression.Parameters property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
+    [Pure]
+    public Expression<TDelegate> Update(Expression body, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+#endif
   }
 
 }

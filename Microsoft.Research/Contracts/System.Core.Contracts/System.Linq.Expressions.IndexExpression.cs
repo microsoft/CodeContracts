@@ -15,11 +15,12 @@
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
 // File System.Linq.Expressions.IndexExpression.cs
 // Automatically generated contract file.
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-using System.Diagnostics.Contracts;
-using System;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -49,18 +50,21 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public IndexExpression Update (Expression @object, IEnumerable<Expression> arguments)
     {
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
       return default(IndexExpression);
     }
     #endregion
 
     #region Properties and indexers
-    public System.Collections.ObjectModel.ReadOnlyCollection<Expression> Arguments
+    public ReadOnlyCollection<Expression> Arguments
     {
       get
       {
-        return default(System.Collections.ObjectModel.ReadOnlyCollection<Expression>);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>() != null);
+        return default(ReadOnlyCollection<Expression>);
       }
     }
 

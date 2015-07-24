@@ -15,11 +15,12 @@
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
 // File System.Linq.Expressions.TryExpression.cs
 // Automatically generated contract file.
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-using System.Diagnostics.Contracts;
-using System;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -49,8 +50,11 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public TryExpression Update (Expression body, IEnumerable<CatchBlock> handlers, Expression @finally, Expression fault)
     {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
       return default(TryExpression);
     }
     #endregion
@@ -60,6 +64,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<Expression>() != null);
         return default(Expression);
       }
     }
@@ -80,11 +85,12 @@ namespace System.Linq.Expressions
       }
     }
 
-    public System.Collections.ObjectModel.ReadOnlyCollection<CatchBlock> Handlers
+    public ReadOnlyCollection<CatchBlock> Handlers
     {
       get
       {
-        return default(System.Collections.ObjectModel.ReadOnlyCollection<CatchBlock>);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<CatchBlock>>() != null);
+        return default(ReadOnlyCollection<CatchBlock>);
       }
     }
 

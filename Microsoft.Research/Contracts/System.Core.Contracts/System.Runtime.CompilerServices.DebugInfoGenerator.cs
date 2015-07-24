@@ -12,13 +12,13 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
-// File System.Linq.Expressions.RuntimeVariablesExpression.cs
+#if NETFRAMEWORK_4_0
+// File System.Runtime.CompilerServices.DebugInfoGenerator.cs
 // Automatically generated contract file.
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
 using System.IO;
 using System.Text;
 
@@ -38,52 +38,46 @@ using System.Text;
 #pragma warning disable 0108
 
 
-namespace System.Linq.Expressions
+namespace System.Runtime.CompilerServices
 {
-  sealed public partial class RuntimeVariablesExpression : Expression
+  public abstract class DebugInfoGenerator
   {
     #region Methods and constructors
-    private RuntimeVariablesExpression() {}
 
-    protected internal override Expression Accept (ExpressionVisitor visitor)
+    //
+    // Summary:
+    //     Initializes a new instance of the System.Runtime.CompilerServices.DebugInfoGenerator
+    //     class.
+    protected DebugInfoGenerator()
+    { }
+
+    //
+    // Summary:
+    //     Creates a program database (PDB) symbol generator.
+    //
+    // Returns:
+    //     A PDB symbol generator.
+    public static DebugInfoGenerator CreatePdbGenerator()
     {
-      return default(Expression);
+      Contract.Ensures(Contract.Result<DebugInfoGenerator>() != null);
+      return default(DebugInfoGenerator);
     }
 
-    [Pure]
-    public RuntimeVariablesExpression Update (IEnumerable<ParameterExpression> variables)
-    {
-      Contract.Requires(variables != null);
-      Contract.Ensures(Contract.Result<RuntimeVariablesExpression>() != null);
-      return default(RuntimeVariablesExpression);
-    }
-    #endregion
+    //
+    // Summary:
+    //     Marks a sequence point in Microsoft intermediate language (MSIL) code.
+    //
+    // Parameters:
+    //   method:
+    //     The lambda expression that is generated.
+    //
+    //   ilOffset:
+    //     The offset within MSIL code at which to mark the sequence point.
+    //
+    //   sequencePoint:
+    //     Debug information that corresponds to the sequence point.
+    public abstract void MarkSequencePoint(LambdaExpression method, int ilOffset, DebugInfoExpression sequencePoint);
 
-    #region Properties and indexers
-    public override ExpressionType NodeType
-    {
-      get
-      {
-        return default(ExpressionType);
-      }
-    }
-
-    public override Type Type
-    {
-      get
-      {
-        return default(Type);
-      }
-    }
-
-    public ReadOnlyCollection<ParameterExpression> Variables
-    {
-      get
-      {
-        Contract.Ensures(Contract.Result<ReadOnlyCollection<ParameterExpression>>() != null);
-        return default(ReadOnlyCollection<ParameterExpression>);
-      }
-    }
     #endregion
   }
 }

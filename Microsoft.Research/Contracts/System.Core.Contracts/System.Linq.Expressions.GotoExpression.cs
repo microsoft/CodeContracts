@@ -68,8 +68,11 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public GotoExpression Update (LabelTarget target, Expression value)
     {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
       return default(GotoExpression);
     }
     #endregion
@@ -95,6 +98,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<LabelTarget>() != null);
         return default(LabelTarget);
       }
     }

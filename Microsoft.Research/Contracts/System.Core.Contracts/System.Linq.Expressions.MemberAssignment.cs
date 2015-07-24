@@ -39,5 +39,15 @@ namespace System.Linq.Expressions
         return default(Expression);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    [Pure]
+    public MemberAssignment Update(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<MemberAssignment>() != null);
+      return default(MemberAssignment);
+    }
+#endif
   }
 }

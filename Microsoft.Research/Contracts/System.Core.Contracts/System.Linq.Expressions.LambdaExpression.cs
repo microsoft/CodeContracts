@@ -14,8 +14,13 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+#if NETFRAMEWORK_4_0
+using System.Reflection.Emit;
+#endif
 
 namespace System.Linq.Expressions
 {
@@ -55,6 +60,23 @@ namespace System.Linq.Expressions
       }
     }
 
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Gets the return type of the lambda expression.
+    //
+    // Returns:
+    //     The System.Type object representing the type of the lambda expression.
+    public Type ReturnType
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<Type>() != null);
+        return default(Type);
+      }
+    }
+#endif
+
 #if !SILVERLIGHT_4_0_WP
     // Summary:
     //     Produces a delegate that represents the lambda expression.
@@ -66,6 +88,59 @@ namespace System.Linq.Expressions
     {
       Contract.Ensures(Contract.Result<Delegate>() != null);
       return default(Delegate);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0
+    //
+    // Summary:
+    //     Produces a delegate that represents the lambda expression.
+    //
+    // Parameters:
+    //   debugInfoGenerator:
+    //     Debugging information generator used by the compiler to mark sequence points
+    //     and annotate local variables.
+    //
+    // Returns:
+    //     A delegate containing the compiled version of the lambda.
+    public Delegate Compile(DebugInfoGenerator debugInfoGenerator)
+    {
+      Contract.Requires(debugInfoGenerator != null);
+      Contract.Ensures(Contract.Result<Delegate>() != null);
+      return default(Delegate);
+    }
+
+    //
+    // Summary:
+    //     Compiles the lambda into a method definition.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.Emit.MethodBuilder which will be used to hold the lambda's
+    //     IL.
+    public void CompileToMethod(MethodBuilder method)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(method.IsStatic);
+    }
+
+    //
+    // Summary:
+    //     Compiles the lambda into a method definition and custom debug information.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.Emit.MethodBuilder which will be used to hold the lambda's
+    //     IL.
+    //
+    //   debugInfoGenerator:
+    //     Debugging information generator used by the compiler to mark sequence points
+    //     and annotate local variables.
+    public void CompileToMethod(MethodBuilder method, DebugInfoGenerator debugInfoGenerator)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(method.IsStatic);
+      Contract.Requires(debugInfoGenerator != null);
     }
 #endif
   }

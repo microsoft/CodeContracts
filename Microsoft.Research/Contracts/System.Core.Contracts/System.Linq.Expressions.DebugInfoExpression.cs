@@ -55,6 +55,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<SymbolDocumentInfo>() != null);
         return default(SymbolDocumentInfo);
       }
     }

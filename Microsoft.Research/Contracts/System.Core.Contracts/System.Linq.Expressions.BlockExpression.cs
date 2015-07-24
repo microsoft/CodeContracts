@@ -135,6 +135,7 @@ namespace System.Linq.Expressions
     // Returns:
     //     This expression if no children changed, or an expression with the updated
     //     children.
+    [Pure]
     public BlockExpression Update(IEnumerable<ParameterExpression> variables, IEnumerable<Expression> expressions)
     {
       Contract.Requires(variables != null);

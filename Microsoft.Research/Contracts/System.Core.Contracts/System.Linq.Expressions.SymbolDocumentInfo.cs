@@ -56,6 +56,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<string>() != null);
         return default(string);
       }
     }

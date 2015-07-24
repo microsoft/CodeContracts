@@ -49,8 +49,11 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public LabelExpression Update (LabelTarget target, Expression defaultValue)
     {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<LabelExpression>() != null);
       return default(LabelExpression);
     }
     #endregion
@@ -76,6 +79,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<LabelTarget>() != null);
         return default(LabelTarget);
       }
     }

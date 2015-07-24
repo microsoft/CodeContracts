@@ -66,5 +66,15 @@ namespace System.Linq.Expressions
         return default(Expression);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    [Pure]
+    public UnaryExpression Update(Expression operand)
+    {
+      Contract.Requires(operand != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
   }
 }
