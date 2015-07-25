@@ -53,6 +53,8 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<MethodInfo>() != null);
+        Contract.Ensures(!Contract.Result<MethodInfo>().IsGenericMethodDefinition);
+        Contract.Ensures(!Contract.Result<MethodInfo>().ContainsGenericParameters);
         return default(MethodInfo);
       }
     }
@@ -63,7 +65,15 @@ namespace System.Linq.Expressions
     // Returns:
     //     An System.Linq.Expressions.Expression that represents the receiving object
     //     of the method.
-    extern public Expression Object { get; }
+    public Expression Object
+    {
+      get
+      {
+        Contract.Ensures(Method.IsStatic || Contract.Result<Expression>() != null);
+        Contract.Ensures(!Method.IsStatic || Contract.Result<Expression>() == null);
+        return default(Expression);
+      }
+    }
 
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
     //
@@ -84,6 +94,8 @@ namespace System.Linq.Expressions
     [Pure]
     public MethodCallExpression Update(Expression @object, IEnumerable<Expression> arguments)
     {
+      Contract.Requires(Method.IsStatic || @object != null);
+      Contract.Requires(!Method.IsStatic || @object == null);
       Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
       return default(MethodCallExpression);
     }

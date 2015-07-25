@@ -49,6 +49,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<Type>() != null);
+        Contract.Ensures(!Contract.Result<Type>().IsByRef);
         return default(Type);
       }
     }

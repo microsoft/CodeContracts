@@ -72,6 +72,7 @@ namespace System.Linq.Expressions
     public GotoExpression Update (LabelTarget target, Expression value)
     {
       Contract.Requires(target != null);
+      Contract.Requires(value != null || target.Type == typeof(void), "Label type must be void when no value is provided");
       Contract.Ensures(Contract.Result<GotoExpression>() != null);
       return default(GotoExpression);
     }

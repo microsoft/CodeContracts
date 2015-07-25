@@ -50,6 +50,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<MemberInfo>() != null);
+        Contract.Ensures(Contract.Result<MemberInfo>() is FieldInfo || Contract.Result<MemberInfo>() is PropertyInfo);
         return default(MemberInfo);
       }
     }

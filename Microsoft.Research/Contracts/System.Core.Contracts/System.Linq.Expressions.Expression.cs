@@ -951,6 +951,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(array != null);
       Contract.Requires(indexes != null);
+      Contract.Requires(indexes.Length >= 1);
       Contract.Ensures(Contract.Result<IndexExpression>() != null);
       return default(IndexExpression);
     }
@@ -1064,6 +1065,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(array != null);
       Contract.Requires(indexes != null);
+      Contract.Requires(indexes.Length >= 1);
       Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
       return default(MethodCallExpression);
     }
@@ -1235,6 +1237,7 @@ namespace System.Linq.Expressions
     public static BlockExpression Block(params Expression[] expressions)
     {
       Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1299,6 +1302,7 @@ namespace System.Linq.Expressions
     public static BlockExpression Block(IEnumerable<ParameterExpression> variables, params Expression[] expressions)
     {
       Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1343,6 +1347,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1419,6 +1424,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -2723,10 +2729,10 @@ namespace System.Linq.Expressions
     public static DebugInfoExpression DebugInfo(SymbolDocumentInfo document, int startLine, int startColumn, int endLine, int endColumn)
     {
       Contract.Requires(document != null);
-      Contract.Requires(startLine > 0);
-      Contract.Requires(startColumn > 0);
+      Contract.Requires(startLine >= 1);
+      Contract.Requires(startColumn >= 1);
       Contract.Requires(endLine >= startLine);
-      Contract.Requires(endColumn > 0);
+      Contract.Requires(endColumn >= 1);
       Contract.Requires(endLine != startLine || endColumn >= startColumn);
       Contract.Ensures(Contract.Result<DebugInfoExpression>() != null);
       return default(DebugInfoExpression);
@@ -2793,6 +2799,7 @@ namespace System.Linq.Expressions
     [Pure]
     public static DefaultExpression Default(Type type)
     {
+      Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<DefaultExpression>() != null);
       return default(DefaultExpression);
     }
@@ -3247,6 +3254,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(addMethod != null);
       Contract.Requires(arguments != null);
+      Contract.Requires(arguments.Length >= 1);
       Contract.Ensures(Contract.Result<ElementInit>() != null);
       return default(ElementInit);
     }
@@ -3559,6 +3567,8 @@ namespace System.Linq.Expressions
     public static MemberExpression Field(Expression expression, FieldInfo field)
     {
       Contract.Requires(field != null);
+      Contract.Requires(field.IsStatic || expression != null);
+      Contract.Requires(!field.IsStatic || expression == null);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
@@ -4259,6 +4269,7 @@ namespace System.Linq.Expressions
     public static LabelTarget Label()
     {
       Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == typeof(void));
       return default(LabelTarget);
     }
     //
@@ -4276,6 +4287,7 @@ namespace System.Linq.Expressions
     public static LabelTarget Label(Type type)
     {
       Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == type);
       return default(LabelTarget);
     }
     //
@@ -4293,6 +4305,7 @@ namespace System.Linq.Expressions
     public static LabelTarget Label(string name)
     {
       Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == typeof(void));
       return default(LabelTarget);
     }
     //
@@ -4312,6 +4325,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(target != null);
       Contract.Ensures(Contract.Result<LabelExpression>() != null);
+      Contract.Ensures(Contract.Result<LabelExpression>().Target == target);
       return default(LabelExpression);
     }
     //
@@ -4355,6 +4369,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(target != null);
       Contract.Ensures(Contract.Result<LabelExpression>() != null);
+      Contract.Ensures(Contract.Result<LabelExpression>().Target == target);
       return default(LabelExpression);
     }
 #endif
@@ -5411,6 +5426,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(member != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
@@ -5484,6 +5500,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(propertyAccessor != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
@@ -5602,6 +5619,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
@@ -5647,6 +5665,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
@@ -5744,6 +5763,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
@@ -5807,6 +5827,7 @@ namespace System.Linq.Expressions
     public static LoopExpression Loop(Expression body, LabelTarget @break, LabelTarget @continue)
     {
       Contract.Requires(body != null);
+      Contract.Requires(@continue == null || @continue.Type == typeof(void));
       Contract.Ensures(Contract.Result<LoopExpression>() != null);
       return default(LoopExpression);
     }
@@ -6264,6 +6285,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(expression != null);
       Contract.Requires(member != null);
+      Contract.Requires(member is FieldInfo || member is PropertyInfo);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
@@ -6447,6 +6469,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(member != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberMemberBinding>() != null);
       return default(MemberMemberBinding);
     }
@@ -6524,6 +6547,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(propertyAccessor != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberMemberBinding>() != null);
       return default(MemberMemberBinding);
     }
@@ -6596,6 +6620,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberInitExpression>() != null);
       return default(MemberInitExpression);
     }
@@ -7568,6 +7593,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(bounds != null);
+      Contract.Requires(bounds.Length >= 1);
       Contract.Ensures(Contract.Result<NewArrayExpression>() != null);
       return default(NewArrayExpression);
     }
@@ -7638,6 +7664,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<NewArrayExpression>() != null);
       return default(NewArrayExpression);
     }
@@ -8616,7 +8643,6 @@ namespace System.Linq.Expressions
     [Pure]
     public static IndexExpression Property(Expression instance, PropertyInfo indexer, IEnumerable<Expression> arguments)
     {
-      Contract.Requires(instance != null);
       Contract.Requires(indexer != null);
       Contract.Ensures(Contract.Result<IndexExpression>() != null);
       return default(IndexExpression);
@@ -8640,7 +8666,7 @@ namespace System.Linq.Expressions
     [Pure]
     public static MemberExpression Property(Expression expression, Type type, string propertyName)
     {
-      Contract.Requires(expression != null);
+      Contract.Requires(type != null);
       Contract.Requires(propertyName != null);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
@@ -8667,7 +8693,6 @@ namespace System.Linq.Expressions
     [Pure]
     public static IndexExpression Property(Expression instance, PropertyInfo indexer, params Expression[] arguments)
     {
-      Contract.Requires(instance != null);
       Contract.Requires(indexer != null);
       Contract.Ensures(Contract.Result<IndexExpression>() != null);
       return default(IndexExpression);
@@ -9174,6 +9199,7 @@ namespace System.Linq.Expressions
     public static RuntimeVariablesExpression RuntimeVariables(params ParameterExpression[] variables)
     {
       Contract.Requires(variables != null);
+      Contract.Requires(variables.Length >= 1);
       Contract.Ensures(Contract.Result<RuntimeVariablesExpression>() != null);
       return default(RuntimeVariablesExpression);
     }
@@ -9554,6 +9580,8 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Expression switchValue, params SwitchCase[] cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9578,6 +9606,8 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, params SwitchCase[] cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9605,6 +9635,7 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, MethodInfo comparison, IEnumerable<SwitchCase> cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9632,6 +9663,8 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, MethodInfo comparison, params SwitchCase[] cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9662,6 +9695,7 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Type type, Expression switchValue, Expression defaultBody, MethodInfo comparison, IEnumerable<SwitchCase> cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9692,6 +9726,8 @@ namespace System.Linq.Expressions
     public static SwitchExpression Switch(Type type, Expression switchValue, Expression defaultBody, MethodInfo comparison, params SwitchCase[] cases)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -9716,6 +9752,7 @@ namespace System.Linq.Expressions
     public static SwitchCase SwitchCase(Expression body, IEnumerable<Expression> testValues)
     {
       Contract.Requires(body != null);
+      Contract.Requires(testValues != null);
       Contract.Ensures(Contract.Result<SwitchCase>() != null);
       return default(SwitchCase);
     }
@@ -9736,6 +9773,8 @@ namespace System.Linq.Expressions
     public static SwitchCase SwitchCase(Expression body, params Expression[] testValues)
     {
       Contract.Requires(body != null);
+      Contract.Requires(testValues != null);
+      Contract.Requires(testValues.Length >= 1);
       Contract.Ensures(Contract.Result<SwitchCase>() != null);
       return default(SwitchCase);
     }
@@ -9910,6 +9949,8 @@ namespace System.Linq.Expressions
     public static TryExpression TryCatch(Expression body, params CatchBlock[] handlers)
     {
       Contract.Requires(body != null);
+      Contract.Requires(handlers != null);
+      Contract.Requires(handlers.Length >= 1);
       Contract.Ensures(Contract.Result<TryExpression>() != null);
       return default(TryExpression);
     }
@@ -9935,6 +9976,7 @@ namespace System.Linq.Expressions
     public static TryExpression TryCatchFinally(Expression body, Expression @finally, params CatchBlock[] handlers)
     {
       Contract.Requires(body != null);
+      Contract.Requires(@finally != null || handlers != null && handlers.Length >= 1);
       Contract.Ensures(Contract.Result<TryExpression>() != null);
       return default(TryExpression);
     }
@@ -9956,6 +9998,7 @@ namespace System.Linq.Expressions
     public static TryExpression TryFault(Expression body, Expression fault)
     {
       Contract.Requires(body != null);
+      Contract.Requires(fault != null);
       Contract.Ensures(Contract.Result<TryExpression>() != null);
       return default(TryExpression);
     }
@@ -9977,6 +10020,7 @@ namespace System.Linq.Expressions
     public static TryExpression TryFinally(Expression body, Expression @finally)
     {
       Contract.Requires(body != null);
+      Contract.Requires(@finally != null);
       Contract.Ensures(Contract.Result<TryExpression>() != null);
       return default(TryExpression);
     }

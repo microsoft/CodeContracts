@@ -54,6 +54,7 @@ namespace System.Linq.Expressions
     public SwitchExpression Update (Expression switchValue, IEnumerable<SwitchCase> cases, Expression defaultBody)
     {
       Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
       Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
@@ -65,6 +66,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<SwitchCase>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<SwitchCase>>().Count >= 1);
         return default(ReadOnlyCollection<SwitchCase>);
       }
     }

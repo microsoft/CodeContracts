@@ -40,6 +40,7 @@ using System.Text;
 
 namespace System.Runtime.CompilerServices
 {
+  [ContractClass(typeof(ContractForDebugInfoGenerator))]
   public abstract class DebugInfoGenerator
   {
     #region Methods and constructors
@@ -80,5 +81,28 @@ namespace System.Runtime.CompilerServices
 
     #endregion
   }
+
+  [ContractClassFor(typeof(DebugInfoGenerator))]
+  abstract class ContractForDebugInfoGenerator : DebugInfoGenerator
+  {
+    // Summary:
+    //     Marks a sequence point in Microsoft intermediate language (MSIL) code.
+    //
+    // Parameters:
+    //   method:
+    //     The lambda expression that is generated.
+    //
+    //   ilOffset:
+    //     The offset within MSIL code at which to mark the sequence point.
+    //
+    //   sequencePoint:
+    //     Debug information that corresponds to the sequence point.
+    public override void MarkSequencePoint(LambdaExpression method, int ilOffset, DebugInfoExpression sequencePoint)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(sequencePoint != null);
+    }
+  }
+
 }
 #endif
