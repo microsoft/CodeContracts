@@ -57,6 +57,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>().Count >= 1);
         return default(ReadOnlyCollection<Expression>);
       }
     }

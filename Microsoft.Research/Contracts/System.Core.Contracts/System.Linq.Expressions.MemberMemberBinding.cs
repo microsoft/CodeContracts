@@ -38,6 +38,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<MemberBinding>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<MemberBinding>>().Count >= 1);
         return default(ReadOnlyCollection<MemberBinding>);
       }
     }

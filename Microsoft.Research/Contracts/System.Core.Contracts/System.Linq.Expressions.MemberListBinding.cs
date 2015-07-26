@@ -40,6 +40,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<ElementInit>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<ElementInit>>().Count >= 1);
         return default(ReadOnlyCollection<ElementInit>);
       }
     }

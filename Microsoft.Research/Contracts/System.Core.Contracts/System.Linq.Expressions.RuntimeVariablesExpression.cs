@@ -81,6 +81,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<ParameterExpression>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<ParameterExpression>>().Count >= 1);
         return default(ReadOnlyCollection<ParameterExpression>);
       }
     }
