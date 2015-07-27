@@ -81,7 +81,6 @@
 <?define var.VS11VsixManifestCompGuid         = "{990ACB06-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS12VsixManifestCompGuid         = "{990ACB07-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS14VsixManifestCompGuid         = "{990ACB0B-1AAE-4fa6-A178-9BF28206012F}" ?>
-<?define var.VSCloseCheckCompGuid             = "{990ACB08-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets140CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
 
@@ -221,15 +220,6 @@
       <![CDATA[Installed OR VS90DEVENV OR VS10DEVENV]]>
     </Condition>
 -->
-    <DirectoryRef Id="INSTALLBINDIR">
-      <Component Id="VisualStudioCloseCheck" Guid="$(var.VSCloseCheckCompGuid)" Win64="no">
-        <File Source="votive2010.dll" KeyPath="yes" Checksum="yes" Vital="yes" />
-        <util:RestartResource Path="[VS10DEVENV]" />
-        <util:RestartResource Path="[VS11DEVENV]" />
-        <util:RestartResource Path="[VS12DEVENV]" />
-        <util:RestartResource Path="[VS14DEVENV]" />
-      </Component>
-    </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
       <Directory Id="VS10_ROOT_FOLDER" Name="VS10Root">
@@ -1195,7 +1185,6 @@
         <?if $(var.Feature_Pex) = true ?>
           <MergeRef Id="ExtendedReflectionModule"/>
         <?endif?>
-        <ComponentRef Id='VisualStudioCloseCheck' />
         <ComponentRef Id='VS10extension.manifestComp' />
         <ComponentRef Id='VS11extension.manifestComp' />
         <ComponentRef Id='VS12extension.manifestComp' />
