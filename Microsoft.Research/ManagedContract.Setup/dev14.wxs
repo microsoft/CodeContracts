@@ -89,32 +89,6 @@
     </Property>
   </Fragment>
 
-  <!-- Indicates whether the Visual Studio Team Dev Tools is installed -->
-  <!--  -->
-  <!-- twepoiuadidasjgfksjdfnmncxzbxiuwpaituaqskg -->
-  <!-- old: doesn't work for contracts
-  <Fragment>    
-    <Property Id="VS14_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS11DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\14.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-  </Fragment>
-
-  <Fragment>
-    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS90DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-  </Fragment>
-  -->
   <Fragment>
     <CustomAction Id="VS14InstallVSTemplates" Property="VS14DEVENV" ExeCommand="/InstallVSTemplates" Execute="deferred" Return="ignore" Impersonate="no" />
     <PropertyRef Id="VS14DEVENV" />

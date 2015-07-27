@@ -20,7 +20,6 @@
 <!--=====================================================================
    Installer Configurations
 
-     var.Feature_VSTSCheck     for VSTS check
      var.Feature_Pex           for Pex integration
      var.Feature_CCCheck       include CCCheck
      var.Feature_Leaderboard   include Leaderboard access
@@ -232,19 +231,6 @@
       </Component>
     </DirectoryRef>
 
-    <?if $(var.Feature_VSTSCheck) = true ?>
-    <!-- with static checker requires VSTS Dev 10 -->
-    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED"/>
-    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
-    <PropertyRef Id="VS90_IDE_VSTA_INSTALLED"/>
-    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED"/>
-    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
-    <PropertyRef Id="VS10_IDE_VSTA_INSTALLED"/>
-    <Condition Message="This installer requires VS2010 Premium or up, or VS2008 Team System.">
-      <![CDATA[Installed OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS90_IDE_VSTA_INSTALLED OR VS10_IDE_VSTA_INSTALLED]]>
-    </Condition>
-    <?endif?>
-    
     <DirectoryRef Id="TARGETDIR">
       <Directory Id="VS10_ROOT_FOLDER" Name="VS10Root">
         <Directory Id="VS10_Common7" Name="Common7">
@@ -1434,60 +1420,5 @@
     <CustomActionRef Id="VS2015Setup" />
 
   </Product>
-
-  <!-- Indicates whether the Visual Studio Team Dev Tools is installed -->
-  <Fragment>
-    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS90DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS90DevToolsUnderVSSetup2"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS90_IDE_VSTA_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTA90"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS10DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS10DevToolsUnderVSSetup2"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTA_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTA10"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
-        Type="raw"
-        />
-    </Property>
-  </Fragment>
-
- 
-
 
 </Wix>

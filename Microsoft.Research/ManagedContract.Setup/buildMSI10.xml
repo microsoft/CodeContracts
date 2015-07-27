@@ -39,7 +39,6 @@
 
     Properties set
       $(BuildConfig)
-      $(Feature_VSTSCheck)
       $(Feature_Unsafe)
       $(Feature_Pex)
       $(ClousotVersion)
@@ -52,7 +51,6 @@
     <When Condition="'$(ReleaseConfig)'=='devlab9ts'">
       <PropertyGroup>
         <BuildConfig>Devlab9</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>false</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
@@ -67,7 +65,6 @@
     <When Condition="'$(ReleaseConfig)'=='msft9'">
       <PropertyGroup>
         <BuildConfig>Internal9</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>true</Feature_Leaderboard>
@@ -82,7 +79,6 @@
     <When Condition="'$(ReleaseConfig)'=='debug'">
       <PropertyGroup>
         <BuildConfig>Debug</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
@@ -907,7 +903,6 @@
        BaseDirectories="@(WixBaseDirs);.\WixBinaries"
        Variables="
                   License=$(License);
-                  Feature_VSTSCheck=$(Feature_VSTSCheck);
                   Feature_Unsafe=$(Feature_Unsafe);
                   Feature_Pex=$(Feature_Pex);
                   Feature_CCCheck=$(Feature_CCCheck);
