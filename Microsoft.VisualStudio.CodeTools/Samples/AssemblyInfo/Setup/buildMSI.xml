@@ -175,7 +175,7 @@
     <Wix
        Files="@(WixSources)"
        UseBuiltinExtensions="false"
-       WixDirectory="..\ManagedContract.Setup\WixBinaries"
+       WixDirectory="..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Extensions="WixNetFxExtension;WixVSExtension;WixUtilExtension"
        OutputFile="$(MsiOutputFile)"
        BaseDirectories="@(WixBaseDirs)"

@@ -163,7 +163,7 @@
     <Wix
        Files="@(WixSources)"
        UseBuiltinExtensions="false"
-       WixDirectory="..\..\Microsoft.Research\ManagedContract.Setup\WixBinaries"
+       WixDirectory="..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Extensions=""
        OutputFile="$(MsiOutputFile)"
        BaseDirectories="@(WixBaseDirs)"

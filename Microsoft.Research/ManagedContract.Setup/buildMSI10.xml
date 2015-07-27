@@ -893,10 +893,10 @@
     <Wix
        Files="@(WixSources)"
        UseBuiltinExtensions="false"
-       WixDirectory=".\WixBinaries"
+       WixDirectory="..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Extensions="WixNetFxExtension;WixVSExtension;WixUtilExtension"
        OutputFile="$(MsiOutputFile)"
-       BaseDirectories="@(WixBaseDirs);.\WixBinaries"
+       BaseDirectories="@(WixBaseDirs);..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Variables="
                   License=$(License);
                   Feature_Unsafe=$(Feature_Unsafe);
