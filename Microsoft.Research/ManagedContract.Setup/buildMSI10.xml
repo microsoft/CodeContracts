@@ -394,16 +394,12 @@
     DependsOnTargets="PrepareMerges;ExecuteMerges"/>
 
   <Target Name="PrepareMerges" BeforeTargets="ExecuteMerges"
-    DependsOnTargets="RestoreToolPackages;PrepareILMerge"/>
-	
-  <Target Name="RestoreToolPackages">
-    <Exec Command="&quot;$(SolutionDir).NuGet\NuGet.exe&quot; restore &quot;$(SolutionDir)packages.config&quot; -PackagesDirectory &quot;$(SolutionDir)packages&quot;" />
-  </Target>
-  
+    DependsOnTargets="PrepareILMerge"/>
+
   <Target Name="PrepareILMerge">
     <Message Text="Preparing IL Merge"/>
     <XmlPeek
-      XmlInputPath="$(SolutionDir)packages.config"
+      XmlInputPath="$(SolutionDir).nuget\packages.config"
       Query="//package[@id='ILMerge']/@version">
       <Output TaskParameter="Result" ItemName="ILMergeVersion" />
     </XmlPeek>
