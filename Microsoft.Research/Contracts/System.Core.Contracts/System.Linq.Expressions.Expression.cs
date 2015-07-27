@@ -8704,8 +8704,7 @@ namespace System.Linq.Expressions
     //
     // Parameters:
     //   instance:
-    //     The object to which the property belongs. If the property is static/shared, it
-    //     must be null.
+    //     The object to which the property belongs. This parameter must not be null.
     //
     //   propertyName:
     //     The name of the indexer.
