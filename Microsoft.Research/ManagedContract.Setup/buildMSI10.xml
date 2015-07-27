@@ -858,9 +858,6 @@
   <ItemGroup>
     <WixSources Include="
       ManagedContracts.wxs;
-      dev10.wxs;
-      dev12.wxs;
-      dev14.wxs;
       UI.wxs;
     "/>
     <WixBaseDirs Include="
