@@ -68,5 +68,34 @@ namespace System.Linq.Expressions
         return default(Expression);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression
+    //
+    // Parameters:
+    //   test:
+    //     The System.Linq.Expressions.ConditionalExpression.Test property of the result.
+    //
+    //   ifTrue:
+    //     The System.Linq.Expressions.ConditionalExpression.IfTrue property of the result.
+    //
+    //   ifFalse:
+    //     The System.Linq.Expressions.ConditionalExpression.IfFalse property of the result.
+    //
+    // Returns:
+    //     This expression if no children changed, or an expression with the updated children.
+    [Pure]
+    public ConditionalExpression Update(Expression test, Expression ifTrue, Expression ifFalse)
+    {
+      Contract.Requires(test != null);
+      Contract.Requires(ifTrue != null);
+      Contract.Requires(ifFalse != null);
+      Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
+      return default(ConditionalExpression);
+    }
+#endif
   }
 }

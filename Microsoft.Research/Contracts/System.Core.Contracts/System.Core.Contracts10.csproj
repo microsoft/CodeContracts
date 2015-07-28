@@ -243,6 +243,7 @@
     <Compile Include="System.Linq.ParallelQuery.cs" />
     <Compile Include="System.Linq.ParallelQuery_1.cs" />
     <Compile Include="System.Linq.Queryable.cs" />
+    <Compile Include="System.Runtime.CompilerServices.DebugInfoGenerator.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSite.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSiteBinder.cs" />
     <Compile Include="System.Runtime.CompilerServices.CallSite_1.cs" />

@@ -15,11 +15,13 @@
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
 // File System.Linq.Expressions.DynamicExpression.cs
 // Automatically generated contract file.
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Diagnostics.Contracts;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -49,34 +51,39 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public DynamicExpression Update (IEnumerable<Expression> arguments)
     {
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
       return default(DynamicExpression);
     }
     #endregion
 
     #region Properties and indexers
-    public System.Collections.ObjectModel.ReadOnlyCollection<Expression> Arguments
+    public ReadOnlyCollection<Expression> Arguments
     {
       get
       {
-        return default(System.Collections.ObjectModel.ReadOnlyCollection<Expression>);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>() != null);
+        return default(ReadOnlyCollection<Expression>);
       }
     }
 
-    public System.Runtime.CompilerServices.CallSiteBinder Binder
+    public CallSiteBinder Binder
     {
       get
       {
-        return default(System.Runtime.CompilerServices.CallSiteBinder);
+        Contract.Ensures(Contract.Result<CallSiteBinder>() != null);
+        return default(CallSiteBinder);
       }
     }
 
-    public System.Type DelegateType
+    public Type DelegateType
     {
       get
       {
-        return default(System.Type);
+        Contract.Ensures(Contract.Result<Type>() != null);
+        return default(Type);
       }
     }
 

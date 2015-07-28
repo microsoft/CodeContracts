@@ -13,10 +13,11 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Text;
-using System.Diagnostics.Contracts;
 
 namespace System.Linq.Expressions
 {
@@ -71,5 +72,26 @@ namespace System.Linq.Expressions
         return default(ReadOnlyCollection<MemberInfo>);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   arguments:
+    //     The System.Linq.Expressions.NewExpression.Arguments property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
+    [Pure]
+    public NewExpression Update(IEnumerable<Expression> arguments)
+    {
+      Contract.Ensures(Contract.Result<NewExpression>() != null);
+      return default(NewExpression);
+    }
+#endif
   }
 }

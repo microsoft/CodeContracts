@@ -99,5 +99,35 @@ namespace System.Linq.Expressions
         return default(Expression);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   left:
+    //     The System.Linq.Expressions.BinaryExpression.Left property of the result.
+    //
+    //   conversion:
+    //     The System.Linq.Expressions.BinaryExpression.Conversion property of the result.
+    //
+    //   right:
+    //     The System.Linq.Expressions.BinaryExpression.Right property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
+    [Pure]
+    public BinaryExpression Update(Expression left, LambdaExpression conversion, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
   }
 }

@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -282,6 +283,19 @@ namespace System.Linq.Expressions
     }
 #endif
 
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Reduces the binary expression node to a simpler expression.
+    //
+    // Returns:
+    //     The reduced expression.
+    public virtual Expression Reduce()
+    {
+      Contract.Ensures(Contract.Result<Expression>() != null);
+      return default(Expression);
+    }
+#endif
 
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -317,7 +331,6 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
-
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -363,7 +376,7 @@ namespace System.Linq.Expressions
       return default(BinaryExpression);
     }
 
-#if !SILVERLIGHT_3_0 && !NETFRAMEWORK_3_5
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an addition
@@ -383,6 +396,7 @@ namespace System.Linq.Expressions
     //     property equal to System.Linq.Expressions.ExpressionType.AddAssign and the
     //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
     //     properties set to the specified values.
+    [Pure]
     public static BinaryExpression AddAssign(Expression left, Expression right)
     {
       Contract.Requires(left != null);
@@ -390,7 +404,6 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
-
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an addition
@@ -415,6 +428,7 @@ namespace System.Linq.Expressions
     //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
     //     and System.Linq.Expressions.BinaryExpression.Method properties set to the
     //     specified values.
+    [Pure]
     public static BinaryExpression AddAssign(Expression left, Expression right, MethodInfo method)
     {
       Contract.Requires(left != null);
@@ -450,6 +464,7 @@ namespace System.Linq.Expressions
     //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
     //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
     //     properties set to the specified values.
+    [Pure]
     public static BinaryExpression AddAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
     {
       Contract.Requires(left != null);
@@ -457,6 +472,9 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an addition
@@ -476,6 +494,7 @@ namespace System.Linq.Expressions
     //     property equal to System.Linq.Expressions.ExpressionType.AddAssignChecked
     //     and the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
     //     properties set to the specified values.
+    [Pure]
     public static BinaryExpression AddAssignChecked(Expression left, Expression right)
     {
       Contract.Requires(left != null);
@@ -507,6 +526,7 @@ namespace System.Linq.Expressions
     //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
     //     and System.Linq.Expressions.BinaryExpression.Method properties set to the
     //     specified values.
+    [Pure]
     public static BinaryExpression AddAssignChecked(Expression left, Expression right, MethodInfo method)
     {
       Contract.Requires(left != null);
@@ -514,7 +534,6 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
-
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an addition
@@ -543,6 +562,7 @@ namespace System.Linq.Expressions
     //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
     //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
     //     properties set to the specified values.
+    [Pure]
     public static BinaryExpression AddAssignChecked(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
     {
       Contract.Requires(left != null);
@@ -709,6 +729,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a conditional
@@ -790,6 +811,152 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     AND assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.AndAssign and the System.Linq.Expressions.BinaryExpression.Left
+    //     and System.Linq.Expressions.BinaryExpression.Right properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression AndAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     AND assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.AndAssign and the System.Linq.Expressions.BinaryExpression.Left,
+    //     System.Linq.Expressions.BinaryExpression.Right, and System.Linq.Expressions.BinaryExpression.Method
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression AndAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     AND assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.AndAssign and the System.Linq.Expressions.BinaryExpression.Left,
+    //     System.Linq.Expressions.BinaryExpression.Right, System.Linq.Expressions.BinaryExpression.Method,
+    //     and System.Linq.Expressions.BinaryExpression.Conversion properties set to the
+    //     specified values.
+    [Pure]
+    public static BinaryExpression AndAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression to access a multidimensional
+    //     array.
+    //
+    // Parameters:
+    //   array:
+    //     An expression that represents the multidimensional array.
+    //
+    //   indexes:
+    //     An System.Collections.Generic.IEnumerable`1 containing expressions used to index
+    //     the array.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression ArrayAccess(Expression array, IEnumerable<Expression> indexes)
+    {
+      Contract.Requires(array != null);
+      Contract.Requires(indexes != null);
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression to access an array.
+    //
+    // Parameters:
+    //   array:
+    //     An expression representing the array to index.
+    //
+    //   indexes:
+    //     An array that contains expressions used to index the array.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression ArrayAccess(Expression array, params Expression[] indexes)
+    {
+      Contract.Requires(array != null);
+      Contract.Requires(indexes != null);
+      Contract.Requires(indexes.Length >= 1);
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents applying
@@ -898,9 +1065,11 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(array != null);
       Contract.Requires(indexes != null);
+      Contract.Requires(indexes.Length >= 1);
       Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
       return default(MethodCallExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents getting
@@ -929,6 +1098,37 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents an assignment
+    //     operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Assign and the System.Linq.Expressions.BinaryExpression.Left
+    //     and System.Linq.Expressions.BinaryExpression.Right properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression Assign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberAssignment that represents the initialization
@@ -1002,7 +1202,8 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<MemberAssignment>() != null);
       return default(MemberAssignment);
     }
-#if  NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BlockExpression that contains the given
@@ -1014,8 +1215,10 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(IEnumerable<Expression> expressions)
     {
+      Contract.Requires(expressions != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1030,8 +1233,11 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(params Expression[] expressions)
     {
+      Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1049,8 +1255,11 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Expression arg0, Expression arg1)
     {
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1068,8 +1277,10 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(IEnumerable<ParameterExpression> variables, IEnumerable<Expression> expressions)
     {
+      Contract.Requires(expressions != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1087,8 +1298,11 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(IEnumerable<ParameterExpression> variables, params Expression[] expressions)
     {
+      Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1106,8 +1320,11 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Type type, IEnumerable<Expression> expressions)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(expressions != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1125,8 +1342,12 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Type type, params Expression[] expressions)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1147,8 +1368,12 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Expression arg0, Expression arg1, Expression arg2)
     {
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1169,8 +1394,11 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Type type, IEnumerable<ParameterExpression> variables, IEnumerable<Expression> expressions)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(expressions != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1191,8 +1419,12 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Type type, IEnumerable<ParameterExpression> variables, params Expression[] expressions)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(expressions != null);
+      Contract.Requires(expressions.Length >= 1);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1216,8 +1448,13 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Expression arg0, Expression arg1, Expression arg2, Expression arg3)
     {
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
@@ -1244,12 +1481,120 @@ namespace System.Linq.Expressions
     //
     // Returns:
     //     The created System.Linq.Expressions.BlockExpression.
+    [Pure]
     public static BlockExpression Block(Expression arg0, Expression arg1, Expression arg2, Expression arg3, Expression arg4)
     {
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
+      Contract.Requires(arg4 != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);
     }
 #endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a break statement.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Break, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Break(LabelTarget target)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a break statement
+    //     with the specified type.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Break, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, and the System.Linq.Expressions.Expression.Type property set to type.
+    [Pure]
+    public static GotoExpression Break(LabelTarget target, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a break statement.
+    //     The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Break, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Break(LabelTarget target, Expression value)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a break statement
+    //     with the specified type. The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Break, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Break(LabelTarget target, Expression value, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MethodCallExpression that represents a
@@ -1499,6 +1844,416 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
       return default(MethodCallExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static (Shared in Visual Basic) method.
+    //
+    // Parameters:
+    //   method:
+    //     The System.Reflection.MethodInfo that represents the target method.
+    //
+    //   arguments:
+    //     A collection of System.Linq.Expressions.Expression that represents the call arguments.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, IEnumerable<Expression> arguments)
+    {
+      Contract.Requires(method != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static (Shared in Visual Basic) method that takes one argument.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.MethodCallExpression.Method
+    //     property equal to.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    //
+    // Exceptions:
+    //   T:System.ArgumentNullException:
+    //     method is null.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, Expression arg0)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static method that takes two arguments.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.MethodCallExpression.Method
+    //     property equal to.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    //
+    // Exceptions:
+    //   T:System.ArgumentNullException:
+    //     method is null.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, Expression arg0, Expression arg1)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a method that takes two arguments.
+    //
+    // Parameters:
+    //   instance:
+    //     An System.Linq.Expressions.Expression that specifies the instance for an instance
+    //     call. (pass null for a static (Shared in Visual Basic) method).
+    //
+    //   method:
+    //     The System.Reflection.MethodInfo that represents the target method.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    [Pure]
+    public static MethodCallExpression Call(Expression instance, MethodInfo method, Expression arg0, Expression arg1)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static method that takes three arguments.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.MethodCallExpression.Method
+    //     property equal to.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    //   arg2:
+    //     The System.Linq.Expressions.Expression that represents the third argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    //
+    // Exceptions:
+    //   T:System.ArgumentNullException:
+    //     method is null.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, Expression arg0, Expression arg1, Expression arg2)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a method that takes three arguments.
+    //
+    // Parameters:
+    //   instance:
+    //     An System.Linq.Expressions.Expression that specifies the instance for an instance
+    //     call. (pass null for a static (Shared in Visual Basic) method).
+    //
+    //   method:
+    //     The System.Reflection.MethodInfo that represents the target method.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    //   arg2:
+    //     The System.Linq.Expressions.Expression that represents the third argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    [Pure]
+    public static MethodCallExpression Call(Expression instance, MethodInfo method, Expression arg0, Expression arg1, Expression arg2)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static method that takes four arguments.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.MethodCallExpression.Method
+    //     property equal to.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    //   arg2:
+    //     The System.Linq.Expressions.Expression that represents the third argument.
+    //
+    //   arg3:
+    //     The System.Linq.Expressions.Expression that represents the fourth argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    //
+    // Exceptions:
+    //   T:System.ArgumentNullException:
+    //     method is null.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, Expression arg0, Expression arg1, Expression arg2, Expression arg3)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MethodCallExpression that represents a call
+    //     to a static method that takes five arguments.
+    //
+    // Parameters:
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.MethodCallExpression.Method
+    //     property equal to.
+    //
+    //   arg0:
+    //     The System.Linq.Expressions.Expression that represents the first argument.
+    //
+    //   arg1:
+    //     The System.Linq.Expressions.Expression that represents the second argument.
+    //
+    //   arg2:
+    //     The System.Linq.Expressions.Expression that represents the third argument.
+    //
+    //   arg3:
+    //     The System.Linq.Expressions.Expression that represents the fourth argument.
+    //
+    //   arg4:
+    //     The System.Linq.Expressions.Expression that represents the fifth argument.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.MethodCallExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Call and the System.Linq.Expressions.MethodCallExpression.Object
+    //     and System.Linq.Expressions.MethodCallExpression.Method properties set to the
+    //     specified values.
+    //
+    // Exceptions:
+    //   T:System.ArgumentNullException:
+    //     method is null.
+    [Pure]
+    public static MethodCallExpression Call(MethodInfo method, Expression arg0, Expression arg1, Expression arg2, Expression arg3, Expression arg4)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
+      Contract.Requires(arg4 != null);
+      Contract.Ensures(Contract.Result<MethodCallExpression>() != null);
+      return default(MethodCallExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.CatchBlock representing a catch statement with
+    //     a reference to the caught System.Exception object for use in the handler body.
+    //
+    // Parameters:
+    //   variable:
+    //     A System.Linq.Expressions.ParameterExpression representing a reference to the
+    //     System.Exception object caught by this handler.
+    //
+    //   body:
+    //     The body of the catch statement.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.CatchBlock.
+    [Pure]
+    public static CatchBlock Catch(ParameterExpression variable, Expression body)
+    {
+      Contract.Requires(variable != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
+      return default(CatchBlock);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.CatchBlock representing a catch statement.
+    //
+    // Parameters:
+    //   type:
+    //     The System.Linq.Expressions.Expression.Type of System.Exception this System.Linq.Expressions.CatchBlock
+    //     will handle.
+    //
+    //   body:
+    //     The body of the catch statement.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.CatchBlock.
+    [Pure]
+    public static CatchBlock Catch(Type type, Expression body)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
+      return default(CatchBlock);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.CatchBlock representing a catch statement with
+    //     an System.Exception filter and a reference to the caught System.Exception object.
+    //
+    // Parameters:
+    //   variable:
+    //     A System.Linq.Expressions.ParameterExpression representing a reference to the
+    //     System.Exception object caught by this handler.
+    //
+    //   body:
+    //     The body of the catch statement.
+    //
+    //   filter:
+    //     The body of the System.Exception filter.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.CatchBlock.
+    [Pure]
+    public static CatchBlock Catch(ParameterExpression variable, Expression body, Expression filter)
+    {
+      Contract.Requires(variable != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
+      return default(CatchBlock);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.CatchBlock representing a catch statement with
+    //     an System.Exception filter but no reference to the caught System.Exception object.
+    //
+    // Parameters:
+    //   type:
+    //     The System.Linq.Expressions.Expression.Type of System.Exception this System.Linq.Expressions.CatchBlock
+    //     will handle.
+    //
+    //   body:
+    //     The body of the catch statement.
+    //
+    //   filter:
+    //     The body of the System.Exception filter.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.CatchBlock.
+    [Pure]
+    public static CatchBlock Catch(Type type, Expression body, Expression filter)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
+      return default(CatchBlock);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DebugInfoExpression for clearing a sequence
+    //     point.
+    //
+    // Parameters:
+    //   document:
+    //     The System.Linq.Expressions.SymbolDocumentInfo that represents the source file.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.DebugInfoExpression for clearing a sequence
+    //     point.
+    [Pure]
+    public static DebugInfoExpression ClearDebugInfo(SymbolDocumentInfo document)
+    {
+      Contract.Requires(document != null);
+      Contract.Ensures(Contract.Result<DebugInfoExpression>() != null);
+      return default(DebugInfoExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a coalescing
@@ -1625,6 +2380,46 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
       return default(ConditionalExpression);
     }
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.ConditionalExpression that represents a conditional
+    //     statement.
+    //
+    // Parameters:
+    //   test:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.Test
+    //     property equal to.
+    //
+    //   ifTrue:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.IfTrue
+    //     property equal to.
+    //
+    //   ifFalse:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.IfFalse
+    //     property equal to.
+    //
+    //   type:
+    //     A System.Linq.Expressions.Expression.Type to set the System.Linq.Expressions.Expression.Type
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.ConditionalExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Conditional and the
+    //     System.Linq.Expressions.ConditionalExpression.Test, System.Linq.Expressions.ConditionalExpression.IfTrue,
+    //     and System.Linq.Expressions.ConditionalExpression.IfFalse properties set to the
+    //     specified values.
+    [Pure]
+    public static ConditionalExpression Condition(Expression test, Expression ifTrue, Expression ifFalse, Type type)
+    {
+      Contract.Requires(test != null);
+      Contract.Requires(ifTrue != null);
+      Contract.Requires(ifFalse != null);
+      Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
+      return default(ConditionalExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.ConstantExpression that has the System.Linq.Expressions.ConstantExpression.Value
@@ -1680,6 +2475,56 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<ConstantExpression>() != null);
       return default(ConstantExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a continue statement.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Continue, the System.Linq.Expressions.GotoExpression.Target property
+    //     set to target, and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Continue(LabelTarget target)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a continue statement
+    //     with the specified type.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Continue, the System.Linq.Expressions.GotoExpression.Target property
+    //     set to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Continue(LabelTarget target, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents a conversion
@@ -1851,6 +2696,115 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DebugInfoExpression with the specified span.
+    //
+    // Parameters:
+    //   document:
+    //     The System.Linq.Expressions.SymbolDocumentInfo that represents the source file.
+    //
+    //   startLine:
+    //     The start line of this System.Linq.Expressions.DebugInfoExpression. Must be greater
+    //     than 0.
+    //
+    //   startColumn:
+    //     The start column of this System.Linq.Expressions.DebugInfoExpression. Must be
+    //     greater than 0.
+    //
+    //   endLine:
+    //     The end line of this System.Linq.Expressions.DebugInfoExpression. Must be greater
+    //     or equal than the start line.
+    //
+    //   endColumn:
+    //     The end column of this System.Linq.Expressions.DebugInfoExpression. If the end
+    //     line is the same as the start line, it must be greater or equal than the start
+    //     column. In any case, must be greater than 0.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.DebugInfoExpression.
+    [Pure]
+    public static DebugInfoExpression DebugInfo(SymbolDocumentInfo document, int startLine, int startColumn, int endLine, int endColumn)
+    {
+      Contract.Requires(document != null);
+      Contract.Requires(startLine >= 1);
+      Contract.Requires(startColumn >= 1);
+      Contract.Requires(endLine >= startLine);
+      Contract.Requires(endColumn >= 1);
+      Contract.Requires(endLine != startLine || endColumn >= startColumn);
+      Contract.Ensures(Contract.Result<DebugInfoExpression>() != null);
+      return default(DebugInfoExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the decrementing
+    //     of the expression by 1.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to decrement.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the decremented expression.
+    [Pure]
+    public static UnaryExpression Decrement(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the decrementing
+    //     of the expression by 1.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to decrement.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the decremented expression.
+    [Pure]
+    public static UnaryExpression Decrement(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DefaultExpression that has the System.Linq.Expressions.Expression.Type
+    //     property set to the specified type.
+    //
+    // Parameters:
+    //   type:
+    //     A System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DefaultExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Default and the System.Linq.Expressions.Expression.Type
+    //     property set to the specified type.
+    [Pure]
+    public static DefaultExpression Default(Type type)
+    {
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<DefaultExpression>() != null);
+      return default(DefaultExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -1928,6 +2882,304 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a division
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.DivideAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression DivideAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a division
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.DivideAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression DivideAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a division
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.DivideAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression DivideAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arguments:
+    //     The arguments to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, IEnumerable<Expression> arguments)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, Expression arg0)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Requires(arg0 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arguments:
+    //     The arguments to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, params Expression[] arguments)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, Expression arg0, Expression arg1)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    //   arg2:
+    //     The third argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, Expression arg0, Expression arg1, Expression arg2)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   returnType:
+    //     The result type of the dynamic expression.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    //   arg2:
+    //     The third argument to the dynamic operation.
+    //
+    //   arg3:
+    //     The fourth argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.Binder
+    //     and System.Linq.Expressions.DynamicExpression.Arguments set to the specified
+    //     values.
+    [Pure]
+    public static DynamicExpression Dynamic(CallSiteBinder binder, Type returnType, Expression arg0, Expression arg1, Expression arg2, Expression arg3)
+    {
+      Contract.Requires(binder != null);
+      Contract.Requires(returnType != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates an System.Linq.Expressions.ElementInit, given an System.Collections.Generic.IEnumerable<T>
@@ -2002,9 +3254,28 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(addMethod != null);
       Contract.Requires(arguments != null);
+      Contract.Requires(arguments.Length >= 1);
       Contract.Ensures(Contract.Result<ElementInit>() != null);
       return default(ElementInit);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an empty expression that has System.Void type.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DefaultExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Default and the System.Linq.Expressions.Expression.Type
+    //     property set to System.Void.
+    [Pure]
+    public static DefaultExpression Empty()
+    {
+      Contract.Ensures(Contract.Result<DefaultExpression>() != null);
+      return default(DefaultExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an equality
@@ -2087,6 +3358,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
@@ -2164,6 +3436,105 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     XOR assignment operation, using op_ExclusiveOr for user-defined types.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ExclusiveOrAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression ExclusiveOrAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     XOR assignment operation, using op_ExclusiveOr for user-defined types.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ExclusiveOrAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression ExclusiveOrAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     XOR assignment operation, using op_ExclusiveOr for user-defined types.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ExclusiveOrAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression ExclusiveOrAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberExpression that represents accessing
@@ -2196,6 +3567,8 @@ namespace System.Linq.Expressions
     public static MemberExpression Field(Expression expression, FieldInfo field)
     {
       Contract.Requires(field != null);
+      Contract.Requires(field.IsStatic || expression != null);
+      Contract.Requires(!field.IsStatic || expression == null);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
@@ -2230,10 +3603,37 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(fieldName != null);
       Contract.Requires(expression != null);
-
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MemberExpression that represents accessing
+    //     a field.
+    //
+    // Parameters:
+    //   expression:
+    //     The containing object of the field. This can be null for static fields.
+    //
+    //   type:
+    //     The System.Linq.Expressions.Expression.Type that contains the field.
+    //
+    //   fieldName:
+    //     The field to be accessed.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.MemberExpression.
+    [Pure]
+    public static MemberExpression Field(Expression expression, Type type, string fieldName)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(fieldName != null);
+      Contract.Ensures(Contract.Result<MemberExpression>() != null);
+      return default(MemberExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Type object that represents a generic System.Action delegate
@@ -2257,10 +3657,37 @@ namespace System.Linq.Expressions
     public static Type GetActionType(params Type[] typeArgs)
     {
       Contract.Requires(typeArgs != null);
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+      Contract.Requires(typeArgs.Length <= 16);
+#else
       Contract.Requires(typeArgs.Length <= 4);
+#endif
       Contract.Ensures(Contract.Result<Type>() != null);
       return default(Type);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Gets a System.Linq.Expressions.Expression.Type object that represents a generic
+    //     System.Func or System.Action delegate type that has specific type arguments.
+    //
+    // Parameters:
+    //   typeArgs:
+    //     The type arguments of the delegate.
+    //
+    // Returns:
+    //     The delegate type.
+    [Pure]
+    public static Type GetDelegateType(params Type[] typeArgs)
+    {
+      Contract.Requires(typeArgs != null);
+      Contract.Requires(typeArgs.Length >= 1);
+      Contract.Ensures(Contract.Result<Type>() != null);
+      return default(Type);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Type object that represents a generic System.Func delegate
@@ -2285,10 +3712,118 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(typeArgs != null);
       Contract.Requires(typeArgs.Length >= 1);
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+      Contract.Requires(typeArgs.Length <= 17);
+#else
       Contract.Requires(typeArgs.Length <= 5);
+#endif
       Contract.Ensures(Contract.Result<Type>() != null);
       return default(Type);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a "go to" statement.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Goto, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to the specified value, and a null value to be passed to the target label upon
+    //     jumping.
+    [Pure]
+    public static GotoExpression Goto(LabelTarget target)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a "go to" statement.
+    //     The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Goto, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Goto(LabelTarget target, Expression value)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a "go to" statement
+    //     with the specified type.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Goto, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to the specified value, the System.Linq.Expressions.Expression.Type property
+    //     set to type, and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Goto(LabelTarget target, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a "go to" statement
+    //     with the specified type. The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Goto, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Goto(LabelTarget target, Expression value, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a "greater
@@ -2453,6 +3988,115 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.ConditionalExpression that represents a conditional
+    //     block with an if statement.
+    //
+    // Parameters:
+    //   test:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.Test
+    //     property equal to.
+    //
+    //   ifTrue:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.IfTrue
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.ConditionalExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Conditional and the
+    //     System.Linq.Expressions.ConditionalExpression.Test, System.Linq.Expressions.ConditionalExpression.IfTrue,
+    //     properties set to the specified values. The System.Linq.Expressions.ConditionalExpression.IfFalse
+    //     property is set to default expression and the type of the resulting System.Linq.Expressions.ConditionalExpression
+    //     returned by this method is System.Void.
+    [Pure]
+    public static ConditionalExpression IfThen(Expression test, Expression ifTrue)
+    {
+      Contract.Requires(test != null);
+      Contract.Requires(ifTrue != null);
+      Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
+      return default(ConditionalExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.ConditionalExpression that represents a conditional
+    //     block with if and else statements.
+    //
+    // Parameters:
+    //   test:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.Test
+    //     property equal to.
+    //
+    //   ifTrue:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.IfTrue
+    //     property equal to.
+    //
+    //   ifFalse:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.ConditionalExpression.IfFalse
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.ConditionalExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Conditional and the
+    //     System.Linq.Expressions.ConditionalExpression.Test, System.Linq.Expressions.ConditionalExpression.IfTrue,
+    //     and System.Linq.Expressions.ConditionalExpression.IfFalse properties set to the
+    //     specified values. The type of the resulting System.Linq.Expressions.ConditionalExpression
+    //     returned by this method is System.Void.
+    [Pure]
+    public static ConditionalExpression IfThenElse(Expression test, Expression ifTrue, Expression ifFalse)
+    {
+      Contract.Requires(test != null);
+      Contract.Requires(ifTrue != null);
+      Contract.Requires(ifFalse != null);
+      Contract.Ensures(Contract.Result<ConditionalExpression>() != null);
+      return default(ConditionalExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the incrementing
+    //     of the expression value by 1.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to increment.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the incremented expression.
+    [Pure]
+    public static UnaryExpression Increment(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the incrementing
+    //     of the expression by 1.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to increment.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the incremented expression.
+    [Pure]
+    public static UnaryExpression Increment(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates an System.Linq.Expressions.InvocationExpression.
@@ -2532,6 +4176,204 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<InvocationExpression>() != null);
       return default(InvocationExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Returns whether the expression evaluates to false.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to evaluate.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression IsFalse(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Returns whether the expression evaluates to false.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to evaluate.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression IsFalse(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Returns whether the expression evaluates to true.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to evaluate.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression IsTrue(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Returns whether the expression evaluates to true.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to evaluate.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression IsTrue(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelTarget representing a label with void
+    //     type and no name.
+    //
+    // Returns:
+    //     The new System.Linq.Expressions.LabelTarget.
+    [Pure]
+    public static LabelTarget Label()
+    {
+      Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == typeof(void));
+      return default(LabelTarget);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelTarget representing a label with the given
+    //     type.
+    //
+    // Parameters:
+    //   type:
+    //     The type of value that is passed when jumping to the label.
+    //
+    // Returns:
+    //     The new System.Linq.Expressions.LabelTarget.
+    [Pure]
+    public static LabelTarget Label(Type type)
+    {
+      Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == type);
+      return default(LabelTarget);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelTarget representing a label with void
+    //     type and the given name.
+    //
+    // Parameters:
+    //   name:
+    //     The name of the label.
+    //
+    // Returns:
+    //     The new System.Linq.Expressions.LabelTarget.
+    [Pure]
+    public static LabelTarget Label(string name)
+    {
+      Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      Contract.Ensures(Contract.Result<LabelTarget>().Type == typeof(void));
+      return default(LabelTarget);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelExpression representing a label without
+    //     a default value.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget which this System.Linq.Expressions.LabelExpression
+    //     will be associated with.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LabelExpression without a default value.
+    [Pure]
+    public static LabelExpression Label(LabelTarget target)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<LabelExpression>() != null);
+      Contract.Ensures(Contract.Result<LabelExpression>().Target == target);
+      return default(LabelExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelTarget representing a label with the given
+    //     type and name.
+    //
+    // Parameters:
+    //   type:
+    //     The type of value that is passed when jumping to the label.
+    //
+    //   name:
+    //     The name of the label.
+    //
+    // Returns:
+    //     The new System.Linq.Expressions.LabelTarget.
+    [Pure]
+    public static LabelTarget Label(Type type, string name)
+    {
+      Contract.Ensures(Contract.Result<LabelTarget>() != null);
+      return default(LabelTarget);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LabelExpression representing a label with the
+    //     given default value.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget which this System.Linq.Expressions.LabelExpression
+    //     will be associated with.
+    //
+    //   defaultValue:
+    //     The value of this System.Linq.Expressions.LabelExpression when the label is reached
+    //     through regular control flow.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LabelExpression with the given default value.
+    [Pure]
+    public static LabelExpression Label(LabelTarget target, Expression defaultValue)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<LabelExpression>() != null);
+      Contract.Ensures(Contract.Result<LabelExpression>().Target == target);
+      return default(LabelExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates an System.Linq.Expressions.Expression<TDelegate> where the delegate
@@ -2739,6 +4581,438 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<LambdaExpression>() != null);
       return default(LambdaExpression);
     }
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Expression body, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Expression body, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name for the lambda. Used for emitting debug information.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Expression body, string name, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An array that contains System.Linq.Expressions.ParameterExpression objects to
+    //     use to populate the System.Linq.Expressions.LambdaExpression.Parameters collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Expression body, bool tailCall, params ParameterExpression[] parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   delegateType:
+    //     A System.Linq.Expressions.Expression.Type representing the delegate signature
+    //     for the lambda.
+    //
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Type delegateType, Expression body, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name for the lambda. Used for emitting debug information.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Expression body, string name, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   delegateType:
+    //     A System.Linq.Expressions.Expression.Type representing the delegate signature
+    //     for the lambda.
+    //
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name for the lambda. Used for emitting debug information.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Type delegateType, Expression body, string name, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   delegateType:
+    //     A System.Linq.Expressions.Expression.Type representing the delegate signature
+    //     for the lambda.
+    //
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An array that contains System.Linq.Expressions.ParameterExpression objects to
+    //     use to populate the System.Linq.Expressions.LambdaExpression.Parameters collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Type delegateType, Expression body, bool tailCall, params ParameterExpression[] parameters)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates a LambdaExpression by first constructing a delegate type.
+    //
+    // Parameters:
+    //   delegateType:
+    //     A System.Linq.Expressions.Expression.Type representing the delegate signature
+    //     for the lambda.
+    //
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name for the lambda. Used for emitting debug information.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.LambdaExpression that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static LambdaExpression Lambda(Type delegateType, Expression body, string name, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LambdaExpression>() != null);
+      return default(LambdaExpression);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.Expression`1 where the delegate type is known
+    //     at compile time.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Type parameters:
+    //   TDelegate:
+    //     The delegate type.
+    //
+    // Returns:
+    //     An System.Linq.Expressions.Expression`1 that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Lambdaand the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static Expression<TDelegate> Lambda<TDelegate>(Expression body, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.Expression`1 where the delegate type is known
+    //     at compile time.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.Expression`1.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name of the lambda. Used for generating debugging information.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.Expression`1.Parameters
+    //     collection.
+    //
+    // Type parameters:
+    //   TDelegate:
+    //     The delegate type.
+    //
+    // Returns:
+    //     An System.Linq.Expressions.Expression`1 that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static Expression<TDelegate> Lambda<TDelegate>(Expression body, string name, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.Expression`1 where the delegate type is known
+    //     at compile time.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An array that contains System.Linq.Expressions.ParameterExpression objects to
+    //     use to populate the System.Linq.Expressions.LambdaExpression.Parameters collection.
+    //
+    // Type parameters:
+    //   TDelegate:
+    //     The delegate type.
+    //
+    // Returns:
+    //     An System.Linq.Expressions.Expression`1 that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static Expression<TDelegate> Lambda<TDelegate>(Expression body, bool tailCall, params ParameterExpression[] parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.Expression`1 where the delegate type is known
+    //     at compile time.
+    //
+    // Parameters:
+    //   body:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.LambdaExpression.Body
+    //     property equal to.
+    //
+    //   name:
+    //     The name of the lambda. Used for generating debugging info.
+    //
+    //   tailCall:
+    //     A System.Boolean that indicates if tail call optimization will be applied when
+    //     compiling the created expression.
+    //
+    //   parameters:
+    //     An System.Collections.Generic.IEnumerable`1 that contains System.Linq.Expressions.ParameterExpression
+    //     objects to use to populate the System.Linq.Expressions.LambdaExpression.Parameters
+    //     collection.
+    //
+    // Type parameters:
+    //   TDelegate:
+    //     The delegate type.
+    //
+    // Returns:
+    //     An System.Linq.Expressions.Expression`1 that has the System.Linq.Expressions.LambdaExpression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Lambda and the System.Linq.Expressions.LambdaExpression.Body
+    //     and System.Linq.Expressions.LambdaExpression.Parameters properties set to the
+    //     specified values.
+    [Pure]
+    public static Expression<TDelegate> Lambda<TDelegate>(Expression body, string name, bool tailCall, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
@@ -2817,6 +5091,105 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     left-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.LeftShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression LeftShiftAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     left-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.LeftShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression LeftShiftAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     left-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.LeftShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression LeftShiftAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a "less
@@ -2899,6 +5272,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a " less
@@ -2981,6 +5355,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberListBinding where the member is a
@@ -3014,6 +5389,7 @@ namespace System.Linq.Expressions
     public static MemberListBinding ListBind(MemberInfo member, IEnumerable<ElementInit> initializers)
     {
       Contract.Requires(member != null);
+      Contract.Requires(initializers != null);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
@@ -3049,6 +5425,8 @@ namespace System.Linq.Expressions
     public static MemberListBinding ListBind(MemberInfo member, params ElementInit[] initializers)
     {
       Contract.Requires(member != null);
+      Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
@@ -3085,6 +5463,7 @@ namespace System.Linq.Expressions
     public static MemberListBinding ListBind(MethodInfo propertyAccessor, IEnumerable<ElementInit> initializers)
     {
       Contract.Requires(propertyAccessor != null);
+      Contract.Requires(initializers != null);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
@@ -3120,9 +5499,12 @@ namespace System.Linq.Expressions
     public static MemberListBinding ListBind(MethodInfo propertyAccessor, params ElementInit[] initializers)
     {
       Contract.Requires(propertyAccessor != null);
+      Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<MemberListBinding>() != null);
       return default(MemberListBinding);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.ListInitExpression that uses specified
@@ -3203,7 +5585,7 @@ namespace System.Linq.Expressions
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
-      return default(ListInitExpression);      
+      return default(ListInitExpression);
     }
     //
     // Summary:
@@ -3237,6 +5619,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
@@ -3282,6 +5665,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
@@ -3379,9 +5763,76 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<ListInitExpression>() != null);
       return default(ListInitExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LoopExpression with the given body.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the loop.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.LoopExpression.
+    [Pure]
+    public static LoopExpression Loop(Expression body)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LoopExpression>() != null);
+      return default(LoopExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LoopExpression with the given body and break
+    //     target.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the loop.
+    //
+    //   break:
+    //     The break target used by the loop body.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.LoopExpression.
+    [Pure]
+    public static LoopExpression Loop(Expression body, LabelTarget @break)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<LoopExpression>() != null);
+      return default(LoopExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.LoopExpression with the given body.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the loop.
+    //
+    //   break:
+    //     The break target used by the loop body.
+    //
+    //   continue:
+    //     The continue target used by the loop body.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.LoopExpression.
+    [Pure]
+    public static LoopExpression Loop(Expression body, LabelTarget @break, LabelTarget @continue)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(@continue == null || @continue.Type == typeof(void));
+      Contract.Ensures(Contract.Result<LoopExpression>() != null);
+      return default(LoopExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression, given the left and right
@@ -3504,6 +5955,307 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.CatchBlock representing a catch statement with
+    //     the specified elements.
+    //
+    // Parameters:
+    //   type:
+    //     The System.Linq.Expressions.Expression.Type of System.Exception this System.Linq.Expressions.CatchBlock
+    //     will handle.
+    //
+    //   variable:
+    //     A System.Linq.Expressions.ParameterExpression representing a reference to the
+    //     System.Exception object caught by this handler.
+    //
+    //   body:
+    //     The body of the catch statement.
+    //
+    //   filter:
+    //     The body of the System.Exception filter.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.CatchBlock.
+    [Pure]
+    public static CatchBlock MakeCatchBlock(Type type, ParameterExpression variable, Expression body, Expression filter)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<CatchBlock>() != null);
+      return default(CatchBlock);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder
+    //     and one argument.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arg0:
+    //     The argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, Expression arg0)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Requires(arg0 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arguments:
+    //     The arguments to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, IEnumerable<Expression> arguments)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arguments:
+    //     The arguments to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, params Expression[] arguments)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder
+    //     and two arguments.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, Expression arg0, Expression arg1)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder
+    //     and three arguments.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    //   arg2:
+    //     The third argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, Expression arg0, Expression arg1, Expression arg2)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.DynamicExpression that represents a dynamic
+    //     operation bound by the provided System.Runtime.CompilerServices.CallSiteBinder
+    //     and four arguments.
+    //
+    // Parameters:
+    //   delegateType:
+    //     The type of the delegate used by the System.Runtime.CompilerServices.CallSite.
+    //
+    //   binder:
+    //     The runtime binder for the dynamic operation.
+    //
+    //   arg0:
+    //     The first argument to the dynamic operation.
+    //
+    //   arg1:
+    //     The second argument to the dynamic operation.
+    //
+    //   arg2:
+    //     The third argument to the dynamic operation.
+    //
+    //   arg3:
+    //     The fourth argument to the dynamic operation.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.DynamicExpression that has System.Linq.Expressions.Expression.NodeType
+    //     equal to System.Linq.Expressions.ExpressionType.Dynamic and has the System.Linq.Expressions.DynamicExpression.DelegateType,
+    //     System.Linq.Expressions.DynamicExpression.Binder, and System.Linq.Expressions.DynamicExpression.Arguments
+    //     set to the specified values.
+    [Pure]
+    public static DynamicExpression MakeDynamic(Type delegateType, CallSiteBinder binder, Expression arg0, Expression arg1, Expression arg2, Expression arg3)
+    {
+      Contract.Requires(delegateType != null);
+      Contract.Requires(binder != null);
+      Contract.Requires(arg0 != null);
+      Contract.Requires(arg1 != null);
+      Contract.Requires(arg2 != null);
+      Contract.Requires(arg3 != null);
+      Contract.Ensures(Contract.Result<DynamicExpression>() != null);
+      return default(DynamicExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a jump of the specified
+    //     System.Linq.Expressions.GotoExpressionKind. The value passed to the label upon
+    //     jumping can also be specified.
+    //
+    // Parameters:
+    //   kind:
+    //     The System.Linq.Expressions.GotoExpressionKind of the System.Linq.Expressions.GotoExpression.
+    //
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to kind, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression MakeGoto(GotoExpressionKind kind, LabelTarget target, Expression value, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression that represents accessing
+    //     an indexed property in an object.
+    //
+    // Parameters:
+    //   instance:
+    //     The object to which the property belongs. It should be null if the property is
+    //     static (shared in Visual Basic).
+    //
+    //   indexer:
+    //     An System.Linq.Expressions.Expression representing the property to index.
+    //
+    //   arguments:
+    //     An IEnumerable<Expression> (IEnumerable (Of Expression) in Visual Basic) that
+    //     contains the arguments that will be used to index the property.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression MakeIndex(Expression instance, PropertyInfo indexer, IEnumerable<Expression> arguments)
+    {
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberExpression that represents accessing
@@ -3533,10 +6285,48 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(expression != null);
       Contract.Requires(member != null);
-
+      Contract.Requires(member is FieldInfo || member is PropertyInfo);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TryExpression representing a try block with
+    //     the specified elements.
+    //
+    // Parameters:
+    //   type:
+    //     The result type of the try expression. If null, bodh and all handlers must have
+    //     identical type.
+    //
+    //   body:
+    //     The body of the try block.
+    //
+    //   finally:
+    //     The body of the finally block. Pass null if the try block has no finally block
+    //     associated with it.
+    //
+    //   fault:
+    //     The body of the fault block. Pass null if the try block has no fault block associated
+    //     with it.
+    //
+    //   handlers:
+    //     A collection of System.Linq.Expressions.CatchBlocks representing the catch statements
+    //     to be associated with the try block.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.TryExpression.
+    [Pure]
+    public static TryExpression MakeTry(Type type, Expression body, Expression @finally, Expression fault, IEnumerable<CatchBlock> handlers)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
+      return default(TryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression, given an operand, by calling
@@ -3608,6 +6398,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberMemberBinding that represents the
@@ -3645,7 +6436,6 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<MemberMemberBinding>() != null);
       return default(MemberMemberBinding);
     }
-
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberMemberBinding that represents the
@@ -3679,6 +6469,7 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(member != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberMemberBinding>() != null);
       return default(MemberMemberBinding);
     }
@@ -3756,9 +6547,11 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(propertyAccessor != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberMemberBinding>() != null);
       return default(MemberMemberBinding);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberInitExpression.
@@ -3827,9 +6620,11 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(newExpression != null);
       Contract.Requires(bindings != null);
+      Contract.Requires(bindings.Length >= 1);
       Contract.Ensures(Contract.Result<MemberInitExpression>() != null);
       return default(MemberInitExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -3907,6 +6702,105 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a remainder
+    //     assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ModuloAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression ModuloAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a remainder
+    //     assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ModuloAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression ModuloAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a remainder
+    //     assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.ModuloAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression ModuloAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -3986,6 +6880,203 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression MultiplyAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression MultiplyAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression MultiplyAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression MultiplyAssignChecked(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression MultiplyAssignChecked(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a multiplication
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.MultiplyAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression MultiplyAssignChecked(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -4065,6 +7156,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents an arithmetic
@@ -4133,6 +7225,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents an arithmetic
@@ -4203,6 +7296,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.NewExpression that represents calling the
@@ -4432,6 +7526,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<NewExpression>() != null);
       return default(NewExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.NewArrayExpression that represents creating
@@ -4498,9 +7593,11 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(bounds != null);
+      Contract.Requires(bounds.Length >= 1);
       Contract.Ensures(Contract.Result<NewArrayExpression>() != null);
       return default(NewArrayExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.NewArrayExpression that represents creating
@@ -4567,9 +7664,11 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(initializers != null);
+      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<NewArrayExpression>() != null);
       return default(NewArrayExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents a bitwise
@@ -4638,6 +7737,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an inequality
@@ -4720,6 +7820,47 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Returns the expression representing the ones complement.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression OnesComplement(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Returns the expression representing the ones complement.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression OnesComplement(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
@@ -4797,6 +7938,104 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     OR assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.OrAssign and the System.Linq.Expressions.BinaryExpression.Left
+    //     and System.Linq.Expressions.BinaryExpression.Right properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression OrAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     OR assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.OrAssign and the System.Linq.Expressions.BinaryExpression.Left,
+    //     System.Linq.Expressions.BinaryExpression.Right, and System.Linq.Expressions.BinaryExpression.Method
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression OrAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     OR assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.OrAssign and the System.Linq.Expressions.BinaryExpression.Left,
+    //     System.Linq.Expressions.BinaryExpression.Right, System.Linq.Expressions.BinaryExpression.Method,
+    //     and System.Linq.Expressions.BinaryExpression.Conversion properties set to the
+    //     specified values.
+    [Pure]
+    public static BinaryExpression OrAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a conditional
@@ -4877,6 +8116,28 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.ParameterExpression node that can be used to
+    //     identify a parameter or a variable in an expression tree.
+    //
+    // Parameters:
+    //   type:
+    //     The type of the parameter or variable.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.ParameterExpression node with the specified name and
+    //     type.
+    [Pure]
+    public static ParameterExpression Parameter(Type type)
+    {
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<ParameterExpression>() != null);
+      return default(ParameterExpression);
+    }
+#endif
     //
     // Summary:
     //     Creates a System.Linq.Expressions.ParameterExpression.
@@ -4906,6 +8167,91 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<ParameterExpression>() != null);
       return default(ParameterExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the assignment
+    //     of the expression followed by a subsequent decrement by 1 of the original expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PostDecrementAssign(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the assignment
+    //     of the expression followed by a subsequent decrement by 1 of the original expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PostDecrementAssign(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the assignment
+    //     of the expression followed by a subsequent increment by 1 of the original expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PostIncrementAssign(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents the assignment
+    //     of the expression followed by a subsequent increment by 1 of the original expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PostIncrementAssign(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents raising
@@ -4985,6 +8331,189 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents raising an
+    //     expression to a power and assigning the result back to the expression.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.PowerAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression PowerAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents raising an
+    //     expression to a power and assigning the result back to the expression.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.PowerAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression PowerAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents raising an
+    //     expression to a power and assigning the result back to the expression.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.PowerAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression PowerAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that decrements the expression
+    //     by 1 and assigns the result back to the expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PreDecrementAssign(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that decrements the expression
+    //     by 1 and assigns the result back to the expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PreDecrementAssign(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that increments the expression
+    //     by 1 and assigns the result back to the expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PreIncrementAssign(Expression expression)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that increments the expression
+    //     by 1 and assigns the result back to the expression.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to apply the operations on.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo that represents the implementing method.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the resultant expression.
+    [Pure]
+    public static UnaryExpression PreIncrementAssign(Expression expression, MethodInfo method)
+    {
+      Contract.Requires(expression != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberExpression that represents accessing
@@ -5091,6 +8620,110 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression representing the access to
+    //     an indexed property.
+    //
+    // Parameters:
+    //   instance:
+    //     The object to which the property belongs. If the property is static/shared, it
+    //     must be null.
+    //
+    //   indexer:
+    //     The System.Reflection.PropertyInfo that represents the property to index.
+    //
+    //   arguments:
+    //     An System.Collections.Generic.IEnumerable`1 of System.Linq.Expressions.Expression
+    //     objects that are used to index the property.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression Property(Expression instance, PropertyInfo indexer, IEnumerable<Expression> arguments)
+    {
+      Contract.Requires(indexer != null);
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.MemberExpression accessing a property.
+    //
+    // Parameters:
+    //   expression:
+    //     The containing object of the property. This can be null for static properties.
+    //
+    //   type:
+    //     The System.Linq.Expressions.Expression.Type that contains the property.
+    //
+    //   propertyName:
+    //     The property to be accessed.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.MemberExpression.
+    [Pure]
+    public static MemberExpression Property(Expression expression, Type type, string propertyName)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(propertyName != null);
+      Contract.Ensures(Contract.Result<MemberExpression>() != null);
+      return default(MemberExpression);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression representing the access to
+    //     an indexed property.
+    //
+    // Parameters:
+    //   instance:
+    //     The object to which the property belongs. If the property is static/shared, it
+    //     must be null.
+    //
+    //   indexer:
+    //     The System.Reflection.PropertyInfo that represents the property to index.
+    //
+    //   arguments:
+    //     An array of System.Linq.Expressions.Expression objects that are used to index
+    //     the property.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression Property(Expression instance, PropertyInfo indexer, params Expression[] arguments)
+    {
+      Contract.Requires(indexer != null);
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+    //
+    // Summary:
+    //     Creates an System.Linq.Expressions.IndexExpression representing the access to
+    //     an indexed property.
+    //
+    // Parameters:
+    //   instance:
+    //     The object to which the property belongs. This parameter must not be null.
+    //
+    //   propertyName:
+    //     The name of the indexer.
+    //
+    //   arguments:
+    //     An array of System.Linq.Expressions.Expression objects that are used to index
+    //     the property.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.IndexExpression.
+    [Pure]
+    public static IndexExpression Property(Expression instance, string propertyName, params Expression[] arguments)
+    {
+      Contract.Requires(instance != null);
+      Contract.Requires(propertyName != null);
+      Contract.Ensures(Contract.Result<IndexExpression>() != null);
+      return default(IndexExpression);
+    }
+#endif
     //
     // Summary:
     //     Creates a System.Linq.Expressions.MemberExpression that represents accessing
@@ -5127,6 +8760,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents an expression
@@ -5152,6 +8786,201 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a reference
+    //     equality comparison.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.Equal and the System.Linq.Expressions.BinaryExpression.Left
+    //     and System.Linq.Expressions.BinaryExpression.Right properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression ReferenceEqual(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a reference
+    //     inequality comparison.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.NotEqual and the System.Linq.Expressions.BinaryExpression.Left
+    //     and System.Linq.Expressions.BinaryExpression.Right properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression ReferenceNotEqual(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents a rethrowing
+    //     of an exception.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents a rethrowing of an
+    //     exception.
+    [Pure]
+    public static UnaryExpression Rethrow()
+    {
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents a rethrowing
+    //     of an exception with a given type.
+    //
+    // Parameters:
+    //   type:
+    //     The new System.Type of the expression.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents a rethrowing of an
+    //     exception.
+    [Pure]
+    public static UnaryExpression Rethrow(Type type)
+    {
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a return statement.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Return, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Return(LabelTarget target)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a return statement.
+    //     The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Continue, the System.Linq.Expressions.GotoExpression.Target property
+    //     set to target, and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Return(LabelTarget target, Expression value)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a return statement
+    //     with the specified type.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Return, the System.Linq.Expressions.GotoExpression.Target property set
+    //     to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and a null value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Return(LabelTarget target, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.GotoExpression representing a return statement
+    //     with the specified type. The value passed to the label upon jumping can be specified.
+    //
+    // Parameters:
+    //   target:
+    //     The System.Linq.Expressions.LabelTarget that the System.Linq.Expressions.GotoExpression
+    //     will jump to.
+    //
+    //   value:
+    //     The value that will be passed to the associated label upon jumping.
+    //
+    //   type:
+    //     An System.Type to set the System.Linq.Expressions.Expression.Type property equal
+    //     to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.GotoExpression with System.Linq.Expressions.GotoExpression.Kind
+    //     equal to Continue, the System.Linq.Expressions.GotoExpression.Target property
+    //     set to target, the System.Linq.Expressions.Expression.Type property set to type,
+    //     and value to be passed to the target label upon jumping.
+    [Pure]
+    public static GotoExpression Return(LabelTarget target, Expression value, Type type)
+    {
+      Contract.Requires(target != null);
+      Contract.Ensures(Contract.Result<GotoExpression>() != null);
+      return default(GotoExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
@@ -5230,6 +9059,151 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     right-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.RightShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression RightShiftAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     right-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.RightShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression RightShiftAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a bitwise
+    //     right-shift assignment operation.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.RightShiftAssign and
+    //     the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression RightShiftAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.RuntimeVariablesExpression.
+    //
+    // Parameters:
+    //   variables:
+    //     A collection of System.Linq.Expressions.ParameterExpression objects to use to
+    //     populate the System.Linq.Expressions.RuntimeVariablesExpression.Variables collection.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.RuntimeVariablesExpression that has the
+    //     System.Linq.Expressions.Expression.NodeType property equal to System.Linq.Expressions.ExpressionType.RuntimeVariables
+    //     and the System.Linq.Expressions.RuntimeVariablesExpression.Variables property
+    //     set to the specified value.
+    [Pure]
+    public static RuntimeVariablesExpression RuntimeVariables(IEnumerable<ParameterExpression> variables)
+    {
+      Contract.Requires(variables != null);
+      Contract.Ensures(Contract.Result<RuntimeVariablesExpression>() != null);
+      return default(RuntimeVariablesExpression);
+    }
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.RuntimeVariablesExpression.
+    //
+    // Parameters:
+    //   variables:
+    //     An array of System.Linq.Expressions.ParameterExpression objects to use to populate
+    //     the System.Linq.Expressions.RuntimeVariablesExpression.Variables collection.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.RuntimeVariablesExpression that has the
+    //     System.Linq.Expressions.Expression.NodeType property equal to System.Linq.Expressions.ExpressionType.RuntimeVariables
+    //     and the System.Linq.Expressions.RuntimeVariablesExpression.Variables property
+    //     set to the specified value.
+    [Pure]
+    public static RuntimeVariablesExpression RuntimeVariables(params ParameterExpression[] variables)
+    {
+      Contract.Requires(variables != null);
+      Contract.Requires(variables.Length >= 1);
+      Contract.Ensures(Contract.Result<RuntimeVariablesExpression>() != null);
+      return default(RuntimeVariablesExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -5309,6 +9283,203 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression SubtractAssign(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression SubtractAssign(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that does not have overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssign and the
+    //     System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression SubtractAssign(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left and System.Linq.Expressions.BinaryExpression.Right
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression SubtractAssignChecked(Expression left, Expression right)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     and System.Linq.Expressions.BinaryExpression.Method properties set to the specified
+    //     values.
+    [Pure]
+    public static BinaryExpression SubtractAssignChecked(Expression left, Expression right, MethodInfo method)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.BinaryExpression that represents a subtraction
+    //     assignment operation that has overflow checking.
+    //
+    // Parameters:
+    //   left:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Left
+    //     property equal to.
+    //
+    //   right:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.BinaryExpression.Right
+    //     property equal to.
+    //
+    //   method:
+    //     A System.Reflection.MethodInfo to set the System.Linq.Expressions.BinaryExpression.Method
+    //     property equal to.
+    //
+    //   conversion:
+    //     A System.Linq.Expressions.LambdaExpression to set the System.Linq.Expressions.BinaryExpression.Conversion
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.BinaryExpression that has the System.Linq.Expressions.Expression.NodeType
+    //     property equal to System.Linq.Expressions.ExpressionType.SubtractAssignChecked
+    //     and the System.Linq.Expressions.BinaryExpression.Left, System.Linq.Expressions.BinaryExpression.Right,
+    //     System.Linq.Expressions.BinaryExpression.Method, and System.Linq.Expressions.BinaryExpression.Conversion
+    //     properties set to the specified values.
+    [Pure]
+    public static BinaryExpression SubtractAssignChecked(Expression left, Expression right, MethodInfo method, LambdaExpression conversion)
+    {
+      Contract.Requires(left != null);
+      Contract.Requires(right != null);
+      Contract.Ensures(Contract.Result<BinaryExpression>() != null);
+      return default(BinaryExpression);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.BinaryExpression that represents an arithmetic
@@ -5388,6 +9559,531 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<BinaryExpression>() != null);
       return default(BinaryExpression);
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     without a default case.
+    //
+    // Parameters:
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Expression switchValue, params SwitchCase[] cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     that has a default case.
+    //
+    // Parameters:
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   defaultBody:
+    //     The result of the switch if switchValue does not match any of the cases.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, params SwitchCase[] cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     that has a default case.
+    //
+    // Parameters:
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   defaultBody:
+    //     The result of the switch if switchValue does not match any of the cases.
+    //
+    //   comparison:
+    //     The equality comparison method to use.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, MethodInfo comparison, IEnumerable<SwitchCase> cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     that has a default case.
+    //
+    // Parameters:
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   defaultBody:
+    //     The result of the switch if switchValue does not match any of the cases.
+    //
+    //   comparison:
+    //     The equality comparison method to use.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Expression switchValue, Expression defaultBody, MethodInfo comparison, params SwitchCase[] cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     that has a default case.
+    //
+    // Parameters:
+    //   type:
+    //     The result type of the switch.
+    //
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   defaultBody:
+    //     The result of the switch if switchValue does not match any of the cases.
+    //
+    //   comparison:
+    //     The equality comparison method to use.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Type type, Expression switchValue, Expression defaultBody, MethodInfo comparison, IEnumerable<SwitchCase> cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchExpression that represents a switch statement
+    //     that has a default case..
+    //
+    // Parameters:
+    //   type:
+    //     The result type of the switch.
+    //
+    //   switchValue:
+    //     The value to be tested against each case.
+    //
+    //   defaultBody:
+    //     The result of the switch if switchValue does not match any of the cases.
+    //
+    //   comparison:
+    //     The equality comparison method to use.
+    //
+    //   cases:
+    //     The set of cases for this switch expression.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchExpression.
+    [Pure]
+    public static SwitchExpression Switch(Type type, Expression switchValue, Expression defaultBody, MethodInfo comparison, params SwitchCase[] cases)
+    {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Requires(cases.Length >= 1);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
+      return default(SwitchExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchCase object to be used in a System.Linq.Expressions.SwitchExpression
+    //     object.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the case.
+    //
+    //   testValues:
+    //     The test values of the case.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchCase.
+    [Pure]
+    public static SwitchCase SwitchCase(Expression body, IEnumerable<Expression> testValues)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(testValues != null);
+      Contract.Ensures(Contract.Result<SwitchCase>() != null);
+      return default(SwitchCase);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.SwitchCase for use in a System.Linq.Expressions.SwitchExpression.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the case.
+    //
+    //   testValues:
+    //     The test values of the case.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.SwitchCase.
+    [Pure]
+    public static SwitchCase SwitchCase(Expression body, params Expression[] testValues)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(testValues != null);
+      Contract.Requires(testValues.Length >= 1);
+      Contract.Ensures(Contract.Result<SwitchCase>() != null);
+      return default(SwitchCase);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.SymbolDocumentInfo.
+    //
+    // Parameters:
+    //   fileName:
+    //     A System.String to set the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.SymbolDocumentInfo that has the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     property set to the specified value.
+    [Pure]
+    public static SymbolDocumentInfo SymbolDocument(string fileName)
+    {
+      Contract.Requires(fileName != null);
+      Contract.Ensures(Contract.Result<SymbolDocumentInfo>() != null);
+      return default(SymbolDocumentInfo);
+    }
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.SymbolDocumentInfo.
+    //
+    // Parameters:
+    //   fileName:
+    //     A System.String to set the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     equal to.
+    //
+    //   language:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.Language
+    //     equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.SymbolDocumentInfo that has the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     and System.Linq.Expressions.SymbolDocumentInfo.Language properties set to the
+    //     specified value.
+    [Pure]
+    public static SymbolDocumentInfo SymbolDocument(string fileName, Guid language)
+    {
+      Contract.Requires(fileName != null);
+      Contract.Ensures(Contract.Result<SymbolDocumentInfo>() != null);
+      return default(SymbolDocumentInfo);
+    }
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.SymbolDocumentInfo.
+    //
+    // Parameters:
+    //   fileName:
+    //     A System.String to set the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     equal to.
+    //
+    //   language:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.Language
+    //     equal to.
+    //
+    //   languageVendor:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.LanguageVendor
+    //     equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.SymbolDocumentInfo that has the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     and System.Linq.Expressions.SymbolDocumentInfo.Language and System.Linq.Expressions.SymbolDocumentInfo.LanguageVendor
+    //     properties set to the specified value.
+    [Pure]
+    public static SymbolDocumentInfo SymbolDocument(string fileName, Guid language, Guid languageVendor)
+    {
+      Contract.Requires(fileName != null);
+      Contract.Ensures(Contract.Result<SymbolDocumentInfo>() != null);
+      return default(SymbolDocumentInfo);
+    }
+    //
+    // Summary:
+    //     Creates an instance of System.Linq.Expressions.SymbolDocumentInfo.
+    //
+    // Parameters:
+    //   fileName:
+    //     A System.String to set the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     equal to.
+    //
+    //   language:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.Language
+    //     equal to.
+    //
+    //   languageVendor:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.LanguageVendor
+    //     equal to.
+    //
+    //   documentType:
+    //     A System.Guid to set the System.Linq.Expressions.SymbolDocumentInfo.DocumentType
+    //     equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.SymbolDocumentInfo that has the System.Linq.Expressions.SymbolDocumentInfo.FileName
+    //     and System.Linq.Expressions.SymbolDocumentInfo.Language and System.Linq.Expressions.SymbolDocumentInfo.LanguageVendor
+    //     and System.Linq.Expressions.SymbolDocumentInfo.DocumentType properties set to
+    //     the specified value.
+    [Pure]
+    public static SymbolDocumentInfo SymbolDocument(string fileName, Guid language, Guid languageVendor, Guid documentType)
+    {
+      Contract.Requires(fileName != null);
+      Contract.Ensures(Contract.Result<SymbolDocumentInfo>() != null);
+      return default(SymbolDocumentInfo);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents a throwing
+    //     of an exception.
+    //
+    // Parameters:
+    //   value:
+    //     An System.Linq.Expressions.Expression.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the exception.
+    [Pure]
+    public static UnaryExpression Throw(Expression value)
+    {
+      Contract.Requires(value != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents a throwing
+    //     of an exception with a given type.
+    //
+    // Parameters:
+    //   value:
+    //     An System.Linq.Expressions.Expression.
+    //
+    //   type:
+    //     The new System.Type of the expression.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.UnaryExpression that represents the exception.
+    [Pure]
+    public static UnaryExpression Throw(Expression value, Type type)
+    {
+      Contract.Requires(value != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TryExpression representing a try block with
+    //     any number of catch statements and neither a fault nor finally block.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the try block.
+    //
+    //   handlers:
+    //     The array of zero or more System.Linq.Expressions.CatchBlock expressions representing
+    //     the catch statements to be associated with the try block.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.TryExpression.
+    [Pure]
+    public static TryExpression TryCatch(Expression body, params CatchBlock[] handlers)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(handlers != null);
+      Contract.Requires(handlers.Length >= 1);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
+      return default(TryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TryExpression representing a try block with
+    //     any number of catch statements and a finally block.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the try block.
+    //
+    //   finally:
+    //     The body of the finally block.
+    //
+    //   handlers:
+    //     The array of zero or more System.Linq.Expressions.CatchBlock expressions representing
+    //     the catch statements to be associated with the try block.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.TryExpression.
+    [Pure]
+    public static TryExpression TryCatchFinally(Expression body, Expression @finally, params CatchBlock[] handlers)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(@finally != null || handlers != null && handlers.Length >= 1);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
+      return default(TryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TryExpression representing a try block with
+    //     a fault block and no catch statements.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the try block.
+    //
+    //   fault:
+    //     The body of the fault block.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.TryExpression.
+    [Pure]
+    public static TryExpression TryFault(Expression body, Expression fault)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(fault != null);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
+      return default(TryExpression);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TryExpression representing a try block with
+    //     a finally block and no catch statements.
+    //
+    // Parameters:
+    //   body:
+    //     The body of the try block.
+    //
+    //   finally:
+    //     The body of the finally block.
+    //
+    // Returns:
+    //     The created System.Linq.Expressions.TryExpression.
+    [Pure]
+    public static TryExpression TryFinally(Expression body, Expression @finally)
+    {
+      Contract.Requires(body != null);
+      Contract.Requires(@finally != null);
+      Contract.Ensures(Contract.Result<TryExpression>() != null);
+      return default(TryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.Expression.Type object that represents a generic
+    //     System.Action delegate type that has specific type arguments.
+    //
+    // Parameters:
+    //   typeArgs:
+    //     An array of Type objects that specify the type arguments for the System.Action
+    //     delegate type.
+    //
+    //   actionType:
+    //     When this method returns, contains the generic System.Action delegate type that
+    //     has specific type arguments. Contains null if there is no generic System.Action
+    //     delegate that matches the typeArgs.This parameter is passed uninitialized.
+    //
+    // Returns:
+    //     true if generic System.Action delegate type was created for specific typeArgs;
+    //     false otherwise.
+    [Pure]
+    public static bool TryGetActionType(Type[] typeArgs, out Type actionType)
+    {
+      Contract.Requires(typeArgs != null);
+      Contract.Requires(typeArgs.Length <= 16);
+      Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out actionType) != null);
+      actionType = default(Type);
+      return default(bool);
+    }
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.Expression.Type object that represents a generic
+    //     System.Func delegate type that has specific type arguments. The last type argument
+    //     specifies the return type of the created delegate.
+    //
+    // Parameters:
+    //   typeArgs:
+    //     An array of Type objects that specify the type arguments for the System.Func
+    //     delegate type.
+    //
+    //   funcType:
+    //     When this method returns, contains the generic System.Func delegate type that
+    //     has specific type arguments. Contains null if there is no generic System.Func
+    //     delegate that matches the typeArgs.This parameter is passed uninitialized.
+    //
+    // Returns:
+    //     true if generic System.Func delegate type was created for specific typeArgs;
+    //     false otherwise.
+    [Pure]
+    public static bool TryGetFuncType(Type[] typeArgs, out Type funcType)
+    {
+      Contract.Requires(typeArgs != null);
+      Contract.Requires(typeArgs.Length >= 1);
+      Contract.Requires(typeArgs.Length <= 17);
+      Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out funcType) != null);
+      funcType = default(Type);
+      return default(bool);
+    }
+#endif
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents an explicit
@@ -5419,6 +10115,35 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.TypeBinaryExpression that compares run-time
+    //     type identity.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to set the System.Linq.Expressions.Expression
+    //     property equal to.
+    //
+    //   type:
+    //     A System.Linq.Expressions.Expression.Type to set the System.Linq.Expressions.TypeBinaryExpression.TypeOperand
+    //     property equal to.
+    //
+    // Returns:
+    //     A System.Linq.Expressions.TypeBinaryExpression for which the System.Linq.Expressions.Expression.NodeType
+    //     property is equal to System.Linq.Expressions.Expression.TypeEqual(System.Linq.Expressions.Expression,System.Type)
+    //     and for which the System.Linq.Expressions.Expression and System.Linq.Expressions.TypeBinaryExpression.TypeOperand
+    //     properties are set to the specified values.
+    [Pure]
+    public static TypeBinaryExpression TypeEqual(Expression expression, Type type)
+    {
+      Contract.Requires(expression != null);
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<TypeBinaryExpression>() != null);
+      return default(TypeBinaryExpression);
+    }
+#endif
     //
     // Summary:
     //     Creates a System.Linq.Expressions.TypeBinaryExpression.
@@ -5449,6 +10174,7 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<TypeBinaryExpression>() != null);
       return default(TypeBinaryExpression);
     }
+
     //
     // Summary:
     //     Creates a System.Linq.Expressions.UnaryExpression that represents a unary
@@ -5518,7 +10244,33 @@ namespace System.Linq.Expressions
       Contract.Ensures(Contract.Result<UnaryExpression>() != null);
       return default(UnaryExpression);
     }
-#if  NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a System.Linq.Expressions.UnaryExpression that represents an explicit
+    //     unboxing.
+    //
+    // Parameters:
+    //   expression:
+    //     An System.Linq.Expressions.Expression to unbox.
+    //
+    //   type:
+    //     The new System.Type of the expression.
+    //
+    // Returns:
+    //     An instance of System.Linq.Expressions.UnaryExpression.
+    [Pure]
+    public static UnaryExpression Unbox(Expression expression, Type type)
+    {
+      Contract.Requires(expression != null);
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<UnaryExpression>() != null);
+      return default(UnaryExpression);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
     //
     // Summary:
     //     Creates a System.Linq.Expressions.ParameterExpression node that can be used
@@ -5574,6 +10326,50 @@ namespace System.Linq.Expressions
     }
 #endif
 
+#if NETFRAMEWORK_4_0
+    //
+    // Summary:
+    //     Produces a delegate that represents the lambda expression.
+    //
+    // Parameters:
+    //   debugInfoGenerator:
+    //     Debugging information generator used by the compiler to mark sequence points
+    //     and annotate local variables.
+    //
+    // Returns:
+    //     A delegate containing the compiled version of the lambda.
+    public TDelegate Compile(DebugInfoGenerator debugInfoGenerator)
+    {
+      Contract.Requires(debugInfoGenerator != null);
+      Contract.Ensures(!ReferenceEquals(Contract.Result<TDelegate>(), null));
+      return default(TDelegate);
+    }
+#endif
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   body:
+    //     The System.Linq.Expressions.LambdaExpression.Body property of the result.
+    //
+    //   parameters:
+    //     The System.Linq.Expressions.LambdaExpression.Parameters property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
+    [Pure]
+    public Expression<TDelegate> Update(Expression body, IEnumerable<ParameterExpression> parameters)
+    {
+      Contract.Requires(body != null);
+      Contract.Ensures(Contract.Result<Expression<TDelegate>>() != null);
+      return default(Expression<TDelegate>);
+    }
+#endif
   }
 
 }

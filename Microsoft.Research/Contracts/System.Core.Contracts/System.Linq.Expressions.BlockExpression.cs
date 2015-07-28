@@ -40,6 +40,7 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<Expression>>().Count >= 1);
         return default(ReadOnlyCollection<Expression>);
       }
     }
@@ -135,9 +136,9 @@ namespace System.Linq.Expressions
     // Returns:
     //     This expression if no children changed, or an expression with the updated
     //     children.
+    [Pure]
     public BlockExpression Update(IEnumerable<ParameterExpression> variables, IEnumerable<Expression> expressions)
     {
-      Contract.Requires(variables != null);
       Contract.Requires(expressions != null);
       Contract.Ensures(Contract.Result<BlockExpression>() != null);
       return default(BlockExpression);

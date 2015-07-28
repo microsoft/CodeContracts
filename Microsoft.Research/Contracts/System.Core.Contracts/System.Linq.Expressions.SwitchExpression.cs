@@ -15,11 +15,12 @@
 #if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
 // File System.Linq.Expressions.SwitchExpression.cs
 // Automatically generated contract file.
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-using System.Diagnostics.Contracts;
-using System;
 
 // Disable the "this variable is not used" warning as every field would imply it.
 #pragma warning disable 0414
@@ -49,18 +50,24 @@ namespace System.Linq.Expressions
       return default(Expression);
     }
 
+    [Pure]
     public SwitchExpression Update (Expression switchValue, IEnumerable<SwitchCase> cases, Expression defaultBody)
     {
+      Contract.Requires(switchValue != null);
+      Contract.Requires(cases != null);
+      Contract.Ensures(Contract.Result<SwitchExpression>() != null);
       return default(SwitchExpression);
     }
     #endregion
 
     #region Properties and indexers
-    public System.Collections.ObjectModel.ReadOnlyCollection<SwitchCase> Cases
+    public ReadOnlyCollection<SwitchCase> Cases
     {
       get
       {
-        return default(System.Collections.ObjectModel.ReadOnlyCollection<SwitchCase>);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<SwitchCase>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<SwitchCase>>().Count >= 1);
+        return default(ReadOnlyCollection<SwitchCase>);
       }
     }
 
@@ -92,6 +99,7 @@ namespace System.Linq.Expressions
     {
       get
       {
+        Contract.Ensures(Contract.Result<Expression>() != null);
         return default(Expression);
       }
     }

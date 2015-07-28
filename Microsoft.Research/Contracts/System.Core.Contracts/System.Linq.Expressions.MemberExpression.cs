@@ -50,8 +50,30 @@ namespace System.Linq.Expressions
       get
       {
         Contract.Ensures(Contract.Result<MemberInfo>() != null);
+        Contract.Ensures(Contract.Result<MemberInfo>() is FieldInfo || Contract.Result<MemberInfo>() is PropertyInfo);
         return default(MemberInfo);
       }
     }
+
+#if NETFRAMEWORK_4_0 || SILVERLIGHT_4_0 || SILVERLIGHT_5_0
+    //
+    // Summary:
+    //     Creates a new expression that is like this one, but using the supplied children.
+    //     If all of the children are the same, it will return this expression.
+    //
+    // Parameters:
+    //   expression:
+    //     The System.Linq.Expressions.MemberExpression.Expression property of the result.
+    //
+    // Returns:
+    //     This expression if no children are changed or an expression with the updated
+    //     children.
+    [Pure]
+    public MemberExpression Update(Expression expression)
+    {
+      Contract.Ensures(Contract.Result<MemberExpression>() != null);
+      return default(MemberExpression);
+    }
+#endif
   }
 }
