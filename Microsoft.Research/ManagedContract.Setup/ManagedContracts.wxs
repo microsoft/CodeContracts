@@ -20,7 +20,6 @@
 <!--=====================================================================
    Installer Configurations
 
-     var.Feature_VSTSCheck     for VSTS check
      var.Feature_Pex           for Pex integration
      var.Feature_CCCheck       include CCCheck
      var.Feature_Leaderboard   include Leaderboard access
@@ -82,7 +81,6 @@
 <?define var.VS11VsixManifestCompGuid         = "{990ACB06-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS12VsixManifestCompGuid         = "{990ACB07-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.VS14VsixManifestCompGuid         = "{990ACB0B-1AAE-4fa6-A178-9BF28206012F}" ?>
-<?define var.VSCloseCheckCompGuid             = "{990ACB08-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets140CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
 
@@ -210,43 +208,15 @@
     <PropertyRef Id="VS90_ROOT_FOLDER" />
 
     <PropertyRef Id="VS90DEVENV"/>
-    <PropertyRef Id="VS10DEVENV"/>
-    <PropertyRef Id="VS10EXPRESSDEVENV"/>
-    <PropertyRef Id="VS10_ROOT_FOLDER"/>
-    <PropertyRef Id="VS11_ROOT_FOLDER"/>
-    <PropertyRef Id="VS12_ROOT_FOLDER_EXISTS"/>
-    <PropertyRef Id="VS14_ROOT_FOLDER_EXISTS"/>
+    <PropertyRef Id="VS2010DEVENV"/>
+    <!--<PropertyRef Id="VS10EXPRESSDEVENV"/>-->
+    <PropertyRef Id="VS2010_ROOT_FOLDER"/>
+    <PropertyRef Id="VS2012_ROOT_FOLDER"/>
+    <PropertyRef Id="VS2013_ROOT_FOLDER"/>
+    <PropertyRef Id="VS14_ROOT_FOLDER"/>
 
-<!--
-    <Condition Message="This installer requires Visual Studio 2008 or 2010.">
-      <![CDATA[Installed OR VS90DEVENV OR VS10DEVENV]]>
-    </Condition>
--->
-    <DirectoryRef Id="INSTALLBINDIR">
-      <Component Id="VisualStudioCloseCheck" Guid="$(var.VSCloseCheckCompGuid)" Win64="no">
-        <File Source="votive2010.dll" KeyPath="yes" Checksum="yes" Vital="yes" />
-        <util:RestartResource Path="[VS10DEVENV]" />
-        <util:RestartResource Path="[VS11DEVENV]" />
-        <util:RestartResource Path="[VS12DEVENV]" />
-        <util:RestartResource Path="[VS14DEVENV]" />
-      </Component>
-    </DirectoryRef>
-
-    <?if $(var.Feature_VSTSCheck) = true ?>
-    <!-- with static checker requires VSTS Dev 10 -->
-    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED"/>
-    <PropertyRef Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
-    <PropertyRef Id="VS90_IDE_VSTA_INSTALLED"/>
-    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED"/>
-    <PropertyRef Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2"/>
-    <PropertyRef Id="VS10_IDE_VSTA_INSTALLED"/>
-    <Condition Message="This installer requires VS2010 Premium or up, or VS2008 Team System.">
-      <![CDATA[Installed OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED OR VS90_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS10_IDE_VSTS_DEVTOOLS_INSTALLED2 OR VS90_IDE_VSTA_INSTALLED OR VS10_IDE_VSTA_INSTALLED]]>
-    </Condition>
-    <?endif?>
-    
     <DirectoryRef Id="TARGETDIR">
-      <Directory Id="VS10_ROOT_FOLDER" Name="VS10Root">
+      <Directory Id="VS2010_ROOT_FOLDER" Name="VS10Root">
         <Directory Id="VS10_Common7" Name="Common7">
           <Directory Id="VS10_IDE" Name="IDE">
             <Directory Id="VS10_Extensions" Name="Extensions">
@@ -254,7 +224,6 @@
                 <Directory Id="VS10_ExtensionsMicrosoftContracts" Name="CodeContracts">
                   <Directory Id="VS10_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
                     <Component Id='VS10extension.manifestComp' Guid='$(var.VS10VsixManifestCompGuid)'>
-                      <Condition>VS10_ROOT_FOLDER</Condition>
                       <File Id='VS10extension.manifest' Name='extension.vsixmanifest' Source='VS10.extension.vsixmanifest' Vital='yes'/>
                       <File Id='VS10codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
                     </Component>            
@@ -265,7 +234,7 @@
           </Directory>
         </Directory>
       </Directory>
-      <Directory Id="VS11_ROOT_FOLDER" Name="VS11Root">
+      <Directory Id="VS2012_ROOT_FOLDER" Name="VS11Root">
         <Directory Id="VS11_Common7" Name="Common7">
           <Directory Id="VS11_IDE" Name="IDE">
             <Directory Id="VS11_Extensions" Name="Extensions">
@@ -273,7 +242,6 @@
                 <Directory Id="VS11_ExtensionsMicrosoftContracts" Name="CodeContracts">
                   <Directory Id="VS11_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
                     <Component Id='VS11extension.manifestComp' Guid='$(var.VS11VsixManifestCompGuid)'>
-                      <Condition>VS11_ROOT_FOLDER</Condition>
                       <File Id='VS11extension.manifest' Name='extension.vsixmanifest' Source='VS11.extension.vsixmanifest' Vital='yes'/>
                       <File Id='VS11codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
                       <File Id='VS11codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
@@ -286,7 +254,7 @@
           </Directory>
         </Directory>
       </Directory>
-      <Directory Id="VS12_ROOT_FOLDER" Name="VS12Root">
+      <Directory Id="VS2013_ROOT_FOLDER" Name="VS12Root">
         <Directory Id="VS12_Common7" Name="Common7">
           <Directory Id="VS12_IDE" Name="IDE">
             <Directory Id="VS12_Extensions" Name="Extensions">
@@ -294,7 +262,6 @@
                 <Directory Id="VS12_ExtensionsMicrosoftContracts" Name="CodeContracts">
                   <Directory Id="VS12_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
                     <Component Id='VS12extension.manifestComp' Guid='$(var.VS12VsixManifestCompGuid)'>
-                      <Condition><![CDATA[Installed OR VS12_ROOT_FOLDER_EXISTS]]></Condition>
                       <File Id='VS12extension.manifest' Name='extension.vsixmanifest' Source='VS12.extension.vsixmanifest' Vital='yes'/>
                       <File Id='VS12codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
                       <File Id='VS12codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
@@ -315,7 +282,6 @@
                 <Directory Id="VS14_ExtensionsMicrosoftContracts" Name="CodeContracts">
                   <Directory Id="VS14_ExtensionsMicrosoftContractsVersion" Name="$(var.Version)">
                     <Component Id='VS14extension.manifestComp' Guid='$(var.VS14VsixManifestCompGuid)'>
-                      <Condition><![CDATA[Installed OR VS14_ROOT_FOLDER_EXISTS]]></Condition>
                       <File Id='VS14extension.manifest' Name='extension.vsixmanifest' Source='VS14.extension.vsixmanifest' Vital='yes'/>
                       <File Id='VS14codecontracts_SM.png' Name='codecontracts_SM.png' Source='codecontracts_SM.png' Vital='yes'/>
                       <File Id='VS14codecontracts_project.png' Name='codecontracts_project.png' Source='codecontracts_project.png' Vital='yes'/>
@@ -1209,11 +1175,6 @@
         <?if $(var.Feature_Pex) = true ?>
           <MergeRef Id="ExtendedReflectionModule"/>
         <?endif?>
-        <ComponentRef Id='VisualStudioCloseCheck' />
-        <ComponentRef Id='VS10extension.manifestComp' />
-        <ComponentRef Id='VS11extension.manifestComp' />
-        <ComponentRef Id='VS12extension.manifestComp' />
-        <ComponentRef Id='VS14extension.manifestComp' />
         <ComponentRef Id='Microsoft.Contracts' />
         <ComponentRef Id='Microsoft.ContractsSL3' />
         <ComponentRef Id='Microsoft.ContractsWP71' />
@@ -1238,14 +1199,73 @@
         <ComponentRef Id='CSharpSourceDirectoryId' />
         <ComponentRef Id='VBSourceDirectoryId' />
         <ComponentRef Id='LicenseCompId' />
-        <ComponentRef Id='VS90PackageRegistryComponent' />
-        <ComponentRef Id='VS10PackageRegistryComponent' />
-        <ComponentRef Id='VS11PackageRegistryComponent' />
-        <ComponentRef Id='VS12PackageRegistryComponent' />
-        <ComponentRef Id='VS14PackageRegistryComponent' />
-<!--        <ComponentRef Id='VS10ExpressPackageRegistryComponent' /> -->
         <ComponentRef Id='EnvironmentVariables' />
       </Feature>
+    </Feature>
+
+    <Feature Id="Feature_VS2008"
+             Title="Visual Studio 2008 Support"
+             Description="Visual Studio 2008 Support"
+             AllowAdvertise="no"
+             Display="expand"
+             InstallDefault="local"
+             Level="0"
+             TypicalDefault="install">
+      <Condition Level="1">VS90DEVENV OR VS90_ROOT_FOLDER OR REMOVE</Condition>
+      <ComponentRef Id='VS90PackageRegistryComponent' />
+    </Feature>
+
+    <Feature Id="Feature_VS2010"
+             Title="Visual Studio 2010 Support"
+             Description="Visual Studio 2010 Support"
+             AllowAdvertise="no"
+             Display="expand"
+             InstallDefault="local"
+             Level="0"
+             TypicalDefault="install">
+      <Condition Level="1">VS2010DEVENV OR VS2010_ROOT_FOLDER OR REMOVE</Condition>
+      <ComponentRef Id='VS10extension.manifestComp' />
+      <ComponentRef Id='VS10PackageRegistryComponent' />
+<!--        <ComponentRef Id='VS10ExpressPackageRegistryComponent' /> -->
+    </Feature>
+
+    <Feature Id="Feature_VS2012"
+             Title="Visual Studio 2012 Support"
+             Description="Visual Studio 2012 Support"
+             AllowAdvertise="no"
+             Display="expand"
+             InstallDefault="local"
+             Level="0"
+             TypicalDefault="install">
+      <Condition Level="1">VS2012DEVENV OR VS2012_ROOT_FOLDER OR REMOVE</Condition>
+      <ComponentRef Id='VS11extension.manifestComp' />
+      <ComponentRef Id='VS11PackageRegistryComponent' />
+    </Feature>
+
+    <Feature Id="Feature_VS2013"
+             Title="Visual Studio 2013 Support"
+             Description="Visual Studio 2013 Support"
+             AllowAdvertise="no"
+             Display="expand"
+             InstallDefault="local"
+             Level="0"
+             TypicalDefault="install">
+      <Condition Level="1">VS2013DEVENV OR VS2013_ROOT_FOLDER OR REMOVE</Condition>
+      <ComponentRef Id='VS12extension.manifestComp' />
+      <ComponentRef Id='VS12PackageRegistryComponent' />
+    </Feature>
+
+    <Feature Id="Feature_VS2015"
+             Title="Visual Studio 2015 Support"
+             Description="Visual Studio 2015 Support"
+             AllowAdvertise="no"
+             Display="expand"
+             InstallDefault="local"
+             Level="0"
+             TypicalDefault="install">
+      <Condition Level="1">VS14DEVENV OR VS14_ROOT_FOLDER OR REMOVE</Condition>
+      <ComponentRef Id='VS14extension.manifestComp' />
+      <ComponentRef Id='VS14PackageRegistryComponent' />
     </Feature>
 
     <!-- Documentation -->
@@ -1304,7 +1324,7 @@
         Win64="no">
 <!-- Always write these registry entries, otherwise Daan's CodeTools won't put the msbuild hook in
         <Condition>
-          <![CDATA[VS10DEVENV]]>
+          <![CDATA[VS2010DEVENV]]>
         </Condition>
 -->
         <RegistryKey
@@ -1431,63 +1451,8 @@
     -->
     <CustomActionRef Id="VS2012Setup" />
     <CustomActionRef Id="VS2013Setup" />
-    <CustomActionRef Id="VS2015Setup" />
+    <CustomActionRef Id="VS14Setup" />
 
   </Product>
-
-  <!-- Indicates whether the Visual Studio Team Dev Tools is installed -->
-  <Fragment>
-    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS90DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS90_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS90DevToolsUnderVSSetup2"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS90_IDE_VSTA_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTA90"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS10DevToolsUnderVSSetup"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{97d9322b-672f-42ab-b3cb-ca27aaedf09d}"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTS_DEVTOOLS_INSTALLED2" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTS10DevToolsUnderVSSetup2"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Licenses\02990959-292B-4b46-BCF1-0E31989AEEB4"
-        Type="raw"
-        />
-    </Property>
-    <Property Id="VS10_IDE_VSTA_INSTALLED" Secure="yes">
-      <RegistrySearch
-        Id="SearchForVSTA10"
-        Root="HKLM"
-        Key="SOFTWARE\Microsoft\VisualStudio\10.0\Packages\{066CA8C4-DB80-473A-81AC-A60048CAAADF}"
-        Type="raw"
-        />
-    </Property>
-  </Fragment>
-
- 
-
 
 </Wix>

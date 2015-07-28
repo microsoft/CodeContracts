@@ -39,7 +39,6 @@
 
     Properties set
       $(BuildConfig)
-      $(Feature_VSTSCheck)
       $(Feature_Unsafe)
       $(Feature_Pex)
       $(ClousotVersion)
@@ -52,7 +51,6 @@
     <When Condition="'$(ReleaseConfig)'=='devlab9ts'">
       <PropertyGroup>
         <BuildConfig>Devlab9</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>false</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
@@ -67,7 +65,6 @@
     <When Condition="'$(ReleaseConfig)'=='msft9'">
       <PropertyGroup>
         <BuildConfig>Internal9</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>true</Feature_Leaderboard>
@@ -82,7 +79,6 @@
     <When Condition="'$(ReleaseConfig)'=='debug'">
       <PropertyGroup>
         <BuildConfig>Debug</BuildConfig>
-        <Feature_VSTSCheck>false</Feature_VSTSCheck>
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
@@ -398,16 +394,12 @@
     DependsOnTargets="PrepareMerges;ExecuteMerges"/>
 
   <Target Name="PrepareMerges" BeforeTargets="ExecuteMerges"
-    DependsOnTargets="RestoreToolPackages;PrepareILMerge"/>
-	
-  <Target Name="RestoreToolPackages">
-    <Exec Command="&quot;$(SolutionDir).NuGet\NuGet.exe&quot; restore &quot;$(SolutionDir)packages.config&quot; -PackagesDirectory &quot;$(SolutionDir)packages&quot;" />
-  </Target>
-  
+    DependsOnTargets="PrepareILMerge"/>
+
   <Target Name="PrepareILMerge">
     <Message Text="Preparing IL Merge"/>
     <XmlPeek
-      XmlInputPath="$(SolutionDir)packages.config"
+      XmlInputPath="$(SolutionDir).nuget\packages.config"
       Query="//package[@id='ILMerge']/@version">
       <Output TaskParameter="Result" ItemName="ILMergeVersion" />
     </XmlPeek>
@@ -866,9 +858,6 @@
   <ItemGroup>
     <WixSources Include="
       ManagedContracts.wxs;
-      dev10.wxs;
-      dev12.wxs;
-      dev14.wxs;
       UI.wxs;
     "/>
     <WixBaseDirs Include="
@@ -901,13 +890,12 @@
     <Wix
        Files="@(WixSources)"
        UseBuiltinExtensions="false"
-       WixDirectory=".\WixBinaries"
+       WixDirectory="..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Extensions="WixNetFxExtension;WixVSExtension;WixUtilExtension"
        OutputFile="$(MsiOutputFile)"
-       BaseDirectories="@(WixBaseDirs);.\WixBinaries"
+       BaseDirectories="@(WixBaseDirs);..\..\packages\WiX.Toolset.2015.3.10.0.1503\tools\wix"
        Variables="
                   License=$(License);
-                  Feature_VSTSCheck=$(Feature_VSTSCheck);
                   Feature_Unsafe=$(Feature_Unsafe);
                   Feature_Pex=$(Feature_Pex);
                   Feature_CCCheck=$(Feature_CCCheck);
