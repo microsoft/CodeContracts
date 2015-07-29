@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Compiler;
 using System.Diagnostics;
@@ -61,6 +62,12 @@ namespace Microsoft.Contracts.Foxtrot
         // This assembly should be in this class but not in the SystemTypes from System.CompilerCC.
         // Moving this type there will lead to test failures and assembly resolution errors.
         private static readonly AssemblyNode/*!*/ SystemCoreAssembly = SystemTypes.GetSystemCoreAssembly(false, true);
+        
+        private static TypeNode TaskExtensionsTypeNode = HelperMethods.FindType(
+            SystemCoreAssembly,
+            Identifier.For("System.Threading.Tasks"),
+            Identifier.For("TaskExtensions"));
+
         private static readonly Identifier CheckExceptionMethodId = Identifier.For("CheckException");
         private static readonly Identifier CheckMethodId = Identifier.For("CheckPost");
 
@@ -90,6 +97,12 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(from != null);
             Contract.Requires(from.DeclaringType != null);
             Contract.Requires(rewriter != null);
+
+            if (TaskExtensionsTypeNode == null)
+            {
+                throw new InvalidOperationException(
+                    "Can't generate async closure because System.Threading.Tasks.TaskExceptions class is unavailable.");
+            }
 
             this.rewriter = rewriter;
             this.declaringType = from.DeclaringType;
@@ -244,7 +257,7 @@ namespace Microsoft.Contracts.Foxtrot
         /// Block of code, responsible for closure instance initialization
         /// </summary>
         public Block ClosureInitializer { get; private set; }
-        
+
         private InstanceInitializer Ctor
         {
             get { return (InstanceInitializer)this.closureClassInstance.GetMembersNamed(StandardIds.Ctor)[0]; }
@@ -476,17 +489,17 @@ namespace Microsoft.Contracts.Foxtrot
             // are inverse in the IL.
             // Basically, we need to generate following code:
             // if (!(task.Status == Task.Status.RanToCompletion))
-            //   goto EndOfNormalPreconditions;
-            // {precondition check}
-            // EndOfNormalPreconditions:
+            //   goto EndOfNormalPostcondition;
+            // {postcondition check}
+            // EndOfNormalPostcondition:
             // {other Code}
 
-            // Marker for EndOfNormalPrecondition
-            Block endOfNormalPrecondition = new Block();
+            // Marker for EndOfNormalPostcondition
+            Block endOfNormalPostcondition = new Block();
 
-            // Generate: if (task.Status != RanToCompletion) goto endOfNormalPrecondition;
+            // Generate: if (task.Status != RanToCompletion) goto endOfNormalPostcondition;
             StatementList checkStatusStatements = CreateIfTaskResultIsEqualsTo(
-                checkMethodTaskParameter, TaskStatus.RanToCompletion, endOfNormalPrecondition);
+                checkMethodTaskParameter, TaskStatus.RanToCompletion, endOfNormalPostcondition);
 
             methodBodyBlock.Statements.Add(new Block(checkStatusStatements));
 
@@ -494,8 +507,8 @@ namespace Microsoft.Contracts.Foxtrot
             this.rewriter.EmitRecursionGuardAroundChecks(this.checkPostMethod, methodBodyBlock, ensuresChecks);
 
             // Now, normal postconditions are written to the method body. 
-            // We need to add endOfNormalPrecondition block as a marker.
-            methodBodyBlock.Statements.Add(endOfNormalPrecondition);
+            // We need to add endOfNormalPostcondition block as a marker.
+            methodBodyBlock.Statements.Add(endOfNormalPostcondition);
 
             //
             // Exceptional postconditions
@@ -515,11 +528,11 @@ namespace Microsoft.Contracts.Foxtrot
                 // wrapping exceptional postconditions only when task.Status is TaskStatus.Faulted
                 Block checkExceptionBlock = new Block(new StatementList());
 
-                // Marker for EndOfNormalPrecondition
-                Block endOfExceptionPrecondition = new Block();
+                // Marker for endOfExceptionPostcondition
+                Block endOfExceptionPostcondition = new Block();
 
                 StatementList checkStatusIsException = CreateIfTaskResultIsEqualsTo(
-                    checkMethodTaskParameter, TaskStatus.Faulted, endOfExceptionPrecondition);
+                    checkMethodTaskParameter, TaskStatus.Faulted, endOfExceptionPostcondition);
 
                 checkExceptionBlock.Statements.Add(new Block(checkStatusIsException));
 
@@ -547,14 +560,12 @@ namespace Microsoft.Contracts.Foxtrot
                                 checkExceptionMethod),
                             new ExpressionList(checkExceptionMethod.ThisParameter, aeLocal))));
 
-                checkExceptionBlock.Statements.Add(endOfExceptionPrecondition);
+                checkExceptionBlock.Statements.Add(endOfExceptionPostcondition);
                 
                 methodBody.Add(checkExceptionBlock);
             }
 
-            // Previously, following line was executed only without exceptional postconditions!
-            // With new implementation this should be done for both: normal and exceptional postconditions.
-            // no exceptional post conditions
+            // Copy original block to body statement for both: normal and exceptional postconditions.
             newBodyBlock.Statements.Add(origBody);
 
             Block returnBlock = CreateReturnBlock(checkMethodTaskParameter, lastEnsuresSourceContext);
@@ -563,25 +574,12 @@ namespace Microsoft.Contracts.Foxtrot
 
         private static IEnumerable<Ensures> GetTaskResultBasedEnsures(List<Ensures> asyncPostconditions)
         {
-            foreach (var post in asyncPostconditions)
-            {
-                if (!(post is EnsuresExceptional))
-                {
-                    yield return post;
-                }
-            }
+            return asyncPostconditions.Where(post => !(post is EnsuresExceptional));
         }
 
         private static IEnumerable<EnsuresExceptional> GetExceptionalEnsures(List<Ensures> asyncPostconditions)
         {
-            foreach (var post in asyncPostconditions)
-            {
-                var exceptional = post as EnsuresExceptional;
-                if (exceptional != null)
-                {
-                    yield return exceptional;
-                }
-            }
+            return asyncPostconditions.OfType<EnsuresExceptional>();
         }
 
         /// <summary>
@@ -593,15 +591,9 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(checkMethodTaskType != null);
             Contract.Ensures(Contract.Result<Member>() != null);
 
-            // TODO: use static for this?
-            var taskExtensions =
-                    HelperMethods.FindType(SystemCoreAssembly,
-                    Identifier.For("System.Threading.Tasks"),
-                    Identifier.For("TaskExtensions"));
+            Contract.Assume(TaskExtensionsTypeNode != null, "Can't find System.Threading.Tasks.TaskExtensions type");
 
-            Contract.Assume(taskExtensions != null, "Can't find System.Threading.Tasks.TaskExtensions type");
-
-            var unwrapCandidates = taskExtensions.GetMembersNamed(Identifier.For("Unwrap"));
+            var unwrapCandidates = TaskExtensionsTypeNode.GetMembersNamed(Identifier.For("Unwrap"));
 
             Contract.Assert(unwrapCandidates != null,
                 "Can't find Unwrap method in the TaskExtensions type");
@@ -679,7 +671,7 @@ namespace Microsoft.Contracts.Foxtrot
             //
             //     // Method always returns true. This is by design!
             //     // We need to check all exceptions in the AggregateException
-            //     // and fail in EnsuresOnThrow if the precondition is not met.
+            //     // and fail in EnsuresOnThrow if the postcondition is not met.
             //     return true; // handled
 
             var body = checkExceptionMethod.Body.Statements;
@@ -882,7 +874,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                     if (cand.ParameterCount != 1) continue;
 
-                    if (cand.Parameters[0].GetGenericTypeName() != "Action`1") continue;
+                    if (cand.Parameters[0].Type.GetMetadataName() != "Action`1") continue;
 
                     return cand;
                 }
@@ -894,7 +886,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 if (cand.ParameterCount != 1) continue;
 
-                if (cand.Parameters[0].GetGenericTypeName() != "Func`2") continue;
+                if (cand.Parameters[0].Type.GetMetadataName() != "Func`2") continue;
 
                 // now create instance, first of task
                 var taskInstance = taskTemplate.GetTemplateInstance(

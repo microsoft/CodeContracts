@@ -18,6 +18,7 @@ using System.Diagnostics; // needed for Debug.Assert (etc.)
 // needed for defining exception .ctors
 using System.Compiler;
 using System.Diagnostics.Contracts;
+using Microsoft.Contracts.Foxtrot.Utils;
 
 namespace Microsoft.Contracts.Foxtrot
 {
@@ -2702,11 +2703,8 @@ namespace Microsoft.Contracts.Foxtrot
                 if (virtcallConstraint != null)
                 {
                     TypeNodeList args = new TypeNodeList();
-                    var templateArgCount = (originalInstanceMethod.TemplateArguments == null)
-                        ? 0
-                        : originalInstanceMethod.TemplateArguments.Count;
 
-                    for (int i = 0; i < templateArgCount; i++)
+                    for (int i = 0; i < originalInstanceMethod.TemplateArgumentsCount(); i++)
                     {
                         args.Add(originalInstanceMethod.TemplateArguments[i]);
                     }

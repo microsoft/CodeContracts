@@ -163,7 +163,7 @@ namespace Microsoft.Contracts.Foxtrot
         ///        return "42";
         ///    }
         ///
-        /// In this case, caller of this code can decide to emit a warning, because current behaviour
+        /// In this case, caller of this code can decide to emit a warning, because current behavior
         /// could lead to issues in multithreaded environment
         /// </summary>
         public bool ContractResultWasCapturedInStaticContext { get; private set; }

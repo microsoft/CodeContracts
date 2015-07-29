@@ -1,4 +1,5 @@
-﻿using System.Compiler;
+﻿using System;
+using System.Compiler;
 using System.Diagnostics.Contracts;
 
 namespace Microsoft.Contracts.Foxtrot.Utils
@@ -6,15 +7,14 @@ namespace Microsoft.Contracts.Foxtrot.Utils
     internal static class ParameterExtensions
     {
         /// <summary>
-        /// Returns underlying parameter type.
-        /// For generic types it would be like "Func`2".
+        /// Gets the metadata name of the type. For generic types the arity is appended, such
+        /// as <c>Func`2</c> for <see cref="Func{TResult}"/>.
         /// </summary>
-        public static string GetGenericTypeName(this Parameter parameter)
+        public static string GetMetadataName(this TypeNode parameter)
         {
             Contract.Requires(parameter != null);
-            Contract.Requires(parameter.Type != null);
 
-            return HelperMethods.Unspecialize(parameter.Type).Name.Name;
+            return HelperMethods.Unspecialize(parameter).Name.Name;
         }
     }
 }
