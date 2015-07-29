@@ -2360,6 +2360,14 @@ namespace Microsoft.Contracts.Foxtrot
                             statementIndex = i;
                             return currentBlockIndex;
                         }
+                        
+                        // Roslyn-based compiler will generate AssignmentStatement with
+                        // Pop as a source node (any complex if-statement will do this). 
+                        // This type of node will lead to
+                        // InvalidOperationException in the EvaluateExpression method.
+                        // This if statement avoids the failure and fixes #172.
+                        if (assign.Source.NodeType == NodeType.Pop)
+                            continue;
 
                         var value = EvaluateExpression(assign.Source, env, seenFinalCompare, isAsync);
                         if (IsThisDotState(assign.Target))
