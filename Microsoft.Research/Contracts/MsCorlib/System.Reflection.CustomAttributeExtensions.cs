@@ -866,7 +866,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
@@ -900,7 +900,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this ParameterInfo element) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
@@ -928,7 +928,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this Module element) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
@@ -956,7 +956,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
@@ -993,7 +993,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this ParameterInfo element, bool inherit) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
@@ -1030,7 +1030,7 @@ namespace System.Reflection
     public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element, bool inherit) where T : Attribute
     {
       Contract.Requires(element != null);
-      Contract.Ensures(Contract.Result<IEnumerable<Attribute>>() != null);
+      Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
       return default(IEnumerable<T>);
     }
 
