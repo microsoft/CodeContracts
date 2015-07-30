@@ -342,6 +342,7 @@
     <Compile Include="System.Reflection.LocalVariableInfo.cs" />
     <Compile Include="System.Reflection.MethodBody.cs" />
     <Compile Include="System.Console.cs" />
+    <Compile Include="System.Reflection.CustomAttributeExtensions.cs" />
     <Compile Include="System.Runtime.CompilerServices.AysncTaskMethodBuilder.cs" />
     <Compile Include="Contracts.cs" />
     <!--    <Compile Include="System.Activator.cs" /> -->
@@ -586,6 +587,7 @@ Include="System.Runtime.InteropServices.ITypeLibImporterNotifySink.cs"
     <!--    <Compile Include="System.Runtime.InteropServices.Marshal.cs"
 /> -->
     <Compile Include="System.Runtime.CompilerServices.CompilerGeneratedAttribute.cs" />
+    <Compile Include="System.Runtime.CompilerServices.ExtensionAttribute.cs" />
     <Compile Include="System.Runtime.InteropServices.GCHandle.cs" />
     <Compile Include="System.Runtime.InteropServices.Marshal.cs" />
     <Compile Include="System.Runtime.InteropServices.OutAttribute.cs" />
