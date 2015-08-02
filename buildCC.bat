@@ -1,8 +1,5 @@
 @echo off
 
-.nuget\nuget.exe restore .nuget\packages.config -PackagesDirectory .\packages
-if errorlevel 1 goto FailedNoPop
-
 pushd Microsoft.VisualStudio.CodeTools\CodeToolsSetup
 
 call buildMSM release
@@ -29,7 +26,6 @@ exit /b 0
 
 :Failed
 popd
-:FailedNoPop
 echo .
 echo ****************************************************
 echo Build FAILED

@@ -4,6 +4,10 @@ rem Make sure NuGet packages are restored before proceeding with the build
 ..\..\.nuget\NuGet.exe restore ..\CodeTools10.sln
 if errorlevel 1 exit /b 1
 
+rem Also need to restore packages from the top-level solution before building CodeTools
+..\..\.nuget\NuGet.exe restore ..\..\CodeContracts.sln
+if errorlevel 1 exit /b 1
+
 if "%1" == "" goto default
 if "%1" == "export" goto export
 
