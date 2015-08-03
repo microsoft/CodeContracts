@@ -6178,12 +6178,37 @@ namespace Microsoft.Research.CodeAnalysis
           return false;
         }
 
+        private bool IsCachedDelegate(Field field)
+        {
+          Contract.Requires(field != null);
+
+          // old-style cached delegates
+          if (mdDecoder.IsCompilerGenerated(field) &&
+              mdDecoder.Name(field).Contains("__CachedAnonymousMethodDelegate"))
+          {
+            return true;
+          }
+
+          // Roslyn-style cached delegates
+          var declType = mdDecoder.DeclaringType(field);
+          if (mdDecoder.IsCompilerGenerated(declType) &&
+              mdDecoder.Name(declType) == "<>c" &&
+              mdDecoder.Name(field).StartsWith("<>9__"))
+          {
+            return true;
+          }
+
+          return false;
+        }
+
         private bool ReInitCachedDelegate(ESymValue fieldAddr, Field field, Domain data)
         {
-          if (!this.mdDecoder.Name(field).Contains("__CachedAnonymousMethodDelegate")) return false;
+          if (!IsCachedDelegate(field))
+            return false;
+
           if (fieldAddr == null)
           {
-            // first time we see it          
+            // first time we see it
             return true;
           }
           var val = data.TryValue(fieldAddr);
