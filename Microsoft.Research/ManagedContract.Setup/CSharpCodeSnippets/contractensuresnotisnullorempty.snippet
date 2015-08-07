@@ -5,7 +5,7 @@
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
       </SnippetTypes>
-      <Title>Contract.Ensures(!String.IsNullOrEmpty(Contract.Result()))</Title>
+      <Title>Contract.Ensures(!string.IsNullOrEmpty(Contract.Result()))</Title>
       <Shortcut>cesn</Shortcut>
       <Description>Emits an 'ensures' clause specifying result not null or empty</Description>
       <Author>Jonathan de Halleux</Author>
@@ -18,7 +18,7 @@
       </Imports>
       <Declarations>
       </Declarations>
-      <Code Language="CSharp" Kind="method body"><![CDATA[Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
+      <Code Language="CSharp" Kind="method body"><![CDATA[Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 $end$]]></Code>
     </Snippet>
   </CodeSnippet>
