@@ -142,6 +142,14 @@
       <Project>{9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2}</Project>
       <Name>CRASanitizer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+      <Project>{d7e16b38-3893-4eef-847f-a3be807e9546}</Project>
+      <Name>System.CompilerCC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Foxtrot\Foxtrot.Extractor.csproj">
+      <Project>{f7364559-90f5-480b-b975-c95a04e0daf6}</Project>
+      <Name>Foxtrot.Extractor</Name>
+    </ProjectReference>
     <ProjectReference Include="AssemblyWithContracts\AssemblyWithContracts.csproj">
       <Project>{8602713E-68E4-4A8F-BB6C-9AEA279E494F}</Project>
       <Name>AssemblyWithContracts</Name>

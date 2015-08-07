@@ -114,7 +114,8 @@ namespace Tests
         }
 
         /// <summary>
-        /// Unit test for #47 - "Could not resolve type reference" for some iterator methods in VS2015
+        /// Unit test for #47 - "Could not resolve type reference" for some iterator methods in VS2015 and
+        /// #186 - ccrewrite produces an incorrect type name in IteratorStateMachineAttribute with some generic types
         /// </summary>
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "IteratorWithComplexGeneric", DataAccessMethod.Sequential)]
         [TestMethod]
@@ -125,6 +126,7 @@ namespace Tests
             // Bug with metadata reader could be reproduced only with a new mscorlib and new System.dll.
             options.BuildFramework = @".NetFramework\v4.6";
             options.ReferencesFramework = @".NetFramework\v4.6";
+            options.DeepVerify = true;
             TestDriver.BuildRewriteRun(options);
         }
 
