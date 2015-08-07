@@ -4678,16 +4678,27 @@ namespace System.Compiler{
         sb.Append('&');
         goto done;
       }
+
       if (type.Template == null)
-        sb.Append(type.FullName);
-      else{
-        sb.Append(type.Template.FullName);
+      {
+        AppendEscapedTypeName(sb, type);
+      }
+      else
+      {
+        AppendEscapedTypeName(sb, type.Template);
+
         sb.Append('[');
-        for (int i = 0, n = type.ConsolidatedTemplateArguments == null ? 0 : type.ConsolidatedTemplateArguments.Count; i < n; i++) {
-          //^ assert type.ConsolidatedTemplateArguments != null;
-          bool isAssemQual = true;
-          this.AppendSerializedTypeName(sb, type.ConsolidatedTemplateArguments[i], ref isAssemQual);
-          if (i < n-1) sb.Append(',');
+        if (type.ConsolidatedTemplateArguments != null)
+        {
+          for (int i = 0; i < type.ConsolidatedTemplateArguments.Count; i++)
+          {
+            if (i > 0)
+              sb.Append(',');
+
+            //^ assert type.ConsolidatedTemplateArguments != null;
+            bool isAssemQual = true;
+            this.AppendSerializedTypeName(sb, type.ConsolidatedTemplateArguments[i], ref isAssemQual);
+          }
         }
         sb.Append(']');
       }
@@ -4696,6 +4707,52 @@ namespace System.Compiler{
         this.AppendAssemblyQualifierIfNecessary(sb, type, out isAssemblyQualified);
       return sb.ToString();
     }
+
+    /// <summary>
+    /// Appends the escaped full name of the type to a string builder.
+    /// </summary>
+    /// <param name="sb">String builder to append to.</param>
+    /// <param name="type">Type whose full name to append.</param>
+    void AppendEscapedTypeName(StringBuilder sb, TypeNode type)
+    {
+        // NOTE: we have to carefully deal with types defined within other types to avoid 
+        // escaping the '+' character when it is used to separate inner types from their
+        // declaring type.
+        if (type.DeclaringType != null)
+        {
+            // if this type is defined within another type, append the declaring type name first
+            // followed by the '+' separator
+            AppendEscapedTypeName(sb, type.DeclaringType);
+            sb.Append('+');
+        }
+        else if (type.Namespace != null)
+        {
+            // append the namespace name followed by a dot
+            sb.Append(type.Namespace.Name);
+            sb.Append('.');
+        }
+
+        // deal with the actual type name
+        foreach (char c in type.Name.Name)
+        {
+            if (IsTypeNameReservedChar(c))
+                sb.Append('\\');
+            sb.Append(c);
+        }
+    }
+
+    /// <summary>
+    /// Determines if the provided character has a special meaning in a fully qualified type name
+    /// and therefore has to be escaped if used as part of a type name identifier.
+    /// </summary>
+    /// <param name="ch">Character to test.</param>
+    /// <returns>True if the character has to be escaped or false - otherwise.</returns>
+    static bool IsTypeNameReservedChar(char ch)
+    {
+        return ch == ',' || ch == '[' || ch == ']' || ch == '&' || 
+               ch == '*' || ch == '+' || ch == '\\';
+    }
+
     void AppendAssemblyQualifierIfNecessary(StringBuilder/*!*/ sb, TypeNode type, out bool isAssemQualified) {
       isAssemQualified = false;
       if (type == null) return;
