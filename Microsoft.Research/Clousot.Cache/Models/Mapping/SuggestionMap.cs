@@ -30,7 +30,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching.Models.Mapping
             // Properties
             this.Property(t => t.Kind)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(MethodMap.NamePropertyMaxLength);
 
             this.Property(t => t.Message)
                 .IsRequired();
