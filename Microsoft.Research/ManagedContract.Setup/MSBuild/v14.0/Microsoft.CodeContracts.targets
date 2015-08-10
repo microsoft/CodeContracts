@@ -291,7 +291,7 @@
     <PropertyGroup>
       <!-- SN is in the Framework SDK tools path, but TargetFrameworkSDKToolsDirectory isn't always available  -->
       <CodeContractsSnExe Condition=" '$(TargetFrameworkSDKToolsDirectory)' != '' ">$(TargetFrameworkSDKToolsDirectory)sn.exe</CodeContractsSnExe>
-      <CodeContractsSnExe Condition=" '$(TargetFrameworkSDKToolsDirectory)' == '' ">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.6 Tools\sn.exe</CodeContractsSnExe>
+      <CodeContractsSnExe Condition=" '$(TargetFrameworkSDKToolsDirectory)' == '' ">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6 Tools\sn.exe</CodeContractsSnExe>
     </PropertyGroup>
     <Exec
        Condition="'$(KeyOriginatorFile)' != ''"   
