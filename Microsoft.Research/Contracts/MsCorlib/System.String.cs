@@ -779,7 +779,7 @@ namespace System
       Contract.Requires(anyOf != null);
      
       Contract.Requires(startIndex >= 0);
-      Contract.Requires(startIndex < Length);
+      Contract.Requires(startIndex <= Length);
       
       Contract.Ensures(-1 <= Contract.Result<int>());
       Contract.Ensures(Contract.Result<int>() < this.Length);
@@ -795,8 +795,7 @@ namespace System
      
       Contract.Requires(startIndex >= 0);
       Contract.Requires(count >= 0);
-      
-      Contract.Requires(startIndex + count < Length);
+      Contract.Requires(startIndex + count <= Length);
 
       Contract.Ensures(-1 <= Contract.Result<int>());
       Contract.Ensures(Contract.Result<int>() < this.Length);
