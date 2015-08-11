@@ -20,6 +20,11 @@ namespace Microsoft.Research.CodeAnalysis.Caching.Models.Mapping
 {
     public class MethodMap : EntityTypeConfiguration<Method>
     {
+        /// <summary>
+        /// The maximum length the fully qualified method name can be. IE: Namespace.ClassName.MethodName
+        /// </summary>
+        public const int NamePropertyMaxLength = 400;
+
       [ContractVerification(false)] // Too many external unknown
         public MethodMap()
         {
@@ -34,7 +39,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching.Models.Mapping
 
             this.Property(t => t.Name)
                 .IsRequired()
-                .HasMaxLength(400);
+                .HasMaxLength(NamePropertyMaxLength);
 
             this.Property(t => t.FullName)
                 .IsRequired()
