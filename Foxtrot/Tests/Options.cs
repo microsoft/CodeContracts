@@ -47,6 +47,12 @@ namespace Tests
 
         public bool UseExe = true;
 
+        /// <summary>
+        /// If set to true, verification will include reading contracts back from the rewritten
+        /// assembly in addition to running peverify.
+        /// </summary>
+        public bool DeepVerify = false;
+
         private int instance;
 
         private TestContext TestContext;

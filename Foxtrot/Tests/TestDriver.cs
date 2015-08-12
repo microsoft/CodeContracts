@@ -18,6 +18,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Collections.Generic;
+using Microsoft.Contracts.Foxtrot;
 
 namespace Tests
 {
@@ -112,6 +113,37 @@ namespace Tests
             return exitCode;
         }
 
+        /// <summary>
+        /// Attempts to extract contracts from the specified assembly file. Used to verify that
+        /// Foxtrot can still extract contracts from a rewritten assembly.
+        /// </summary>
+        private static void ExtractContracts(string assemblyFile, Options options)
+        {
+            // use assembly resolver from Foxtrot.Extractor
+            var resolver = new AssemblyResolver(
+                resolvedPaths: new string[0],
+                libpaths: options.LibPaths,
+                usePDB: false,
+                preserveShortBranches: true,
+                trace: false,
+                postLoad: (r, assemblyNode) => {
+                    ContractNodes contractNodes = null;
+                    Extractor.ExtractContracts(
+                        assemblyNode, null, null, null, null, out contractNodes,
+                        e => Assert.Fail(e.ToString()), false);
+                });
+
+            var assembly = resolver.ProbeForAssembly(
+                assemblyName: Path.GetFileNameWithoutExtension(assemblyFile),
+                referencingModuleDirectory: Path.GetDirectoryName(assemblyFile),
+                exts: new string[] { Path.GetExtension(assemblyFile) });
+
+            // the assembly must be resolved and have no metadata import errors
+            Assert.IsNotNull(assembly);
+            Assert.IsTrue(assembly.MetadataImportErrors == null || assembly.MetadataImportErrors.Count == 0,
+                          "Parsing back the rewritten assembly produced metadata import errors");
+        }
+
         internal static string RewriteAndVerify(string sourceDir, string binary, Options options)
         {
             if (!Path.IsPathRooted(sourceDir)) { sourceDir = options.MakeAbsolute(sourceDir); }
@@ -120,6 +152,9 @@ namespace Tests
             if (target != null)
             {
                 PEVerify(target, options);
+
+                if (options.DeepVerify)
+                    ExtractContracts(target, options);
             }
             return target;
         }
