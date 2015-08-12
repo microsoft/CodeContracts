@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 // CodeContracts
 // 
 // Copyright (c) Microsoft Corporation
@@ -24,7 +27,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft IT")]
 [assembly: AssemblyProduct("ClousotTests")]
-[assembly: AssemblyCopyright("Copyright © Microsoft IT 2010")]
+[assembly: AssemblyCopyright("Copyright \u00A9 Microsoft IT 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
