@@ -1,27 +1,9 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// ==++==
-// 
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-// ==--==
 /*============================================================
 **
-** Class:  Contract
 ** 
-** <OWNER>maf,mbarnett,briangru</OWNER>
 **
 ** Implementation details of MSR library.
 **
@@ -54,8 +36,8 @@ using System.Security;
 using System.Security.Permissions;
 #endif
 
-namespace System.Diagnostics.Contracts {
-
+namespace System.Diagnostics.Contracts
+{
     public static partial class Contract
     {
         #region Private Methods
@@ -161,14 +143,16 @@ namespace System.Diagnostics.Contracts {
         /// not pop up an assert dialog box or trigger escalation policy.  Hooking this event requires 
         /// full trust.
         /// </summary>
-        public static event EventHandler<ContractFailedEventArgs> ContractFailed {
+        public static event EventHandler<ContractFailedEventArgs> ContractFailed
+        {
 #if FEATURE_UNTRUSTED_CALLERS
             [SecurityCritical]
 #if FEATURE_LINK_DEMAND
             [SecurityPermission(SecurityAction.LinkDemand, Unrestricted = true)]
 #endif
 #endif
-            add {
+            add
+            {
                 Internal.ContractHelper.InternalContractFailed += value;
             }
 #if FEATURE_UNTRUSTED_CALLERS
@@ -177,7 +161,8 @@ namespace System.Diagnostics.Contracts {
             [SecurityPermission(SecurityAction.LinkDemand, Unrestricted = true)]
 #endif
 #endif
-            remove {
+            remove
+            {
                 Internal.ContractHelper.InternalContractFailed -= value;
             }
         }
@@ -214,7 +199,8 @@ namespace System.Diagnostics.Contracts {
         public Exception OriginalException { get { return _originalException; } }
 
         // Whether the event handler "handles" this contract failure, or to fail via escalation policy.
-        public bool Handled {
+        public bool Handled
+        {
             get { return _handled; }
         }
 
@@ -229,7 +215,8 @@ namespace System.Diagnostics.Contracts {
             _handled = true;
         }
 
-        public bool Unwind {
+        public bool Unwind
+        {
             get { return _unwind; }
         }
 
@@ -244,7 +231,8 @@ namespace System.Diagnostics.Contracts {
             _unwind = true;
         }
 
-        internal void SetUnwindNoDemand() {
+        internal void SetUnwindNoDemand()
+        {
             _unwind = true;
         }
     }
@@ -257,9 +245,9 @@ namespace System.Diagnostics.Contracts {
     [SuppressMessage("Microsoft.Design", "CA1064:ExceptionsShouldBePublic")]
     internal sealed class ContractException : Exception
     {
-        readonly ContractFailureKind _Kind;
-        readonly string _UserMessage;
-        readonly string _Condition;
+        private readonly ContractFailureKind _Kind;
+        private readonly string _UserMessage;
+        private readonly string _Condition;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public ContractFailureKind Kind { get { return _Kind; } }
@@ -287,9 +275,9 @@ namespace System.Diagnostics.Contracts {
         public ContractException(ContractFailureKind kind, string failure, string userMessage, string condition, Exception innerException)
             : base(failure, innerException)
         {
-            this._Kind = kind;
-            this._UserMessage = userMessage;
-            this._Condition = condition;
+            _Kind = kind;
+            _UserMessage = userMessage;
+            _Condition = condition;
         }
 
 #if FEATURE_SERIALIZATION
@@ -345,7 +333,8 @@ namespace System.Diagnostics.Contracts.Internal
 #if FEATURE_UNTRUSTED_CALLERS
             [SecurityCritical]
 #endif
-            add {
+            add
+            {
                 // Eagerly prepare each event handler _marked with a reliability contract_, to 
                 // attempt to reduce out of memory exceptions while reporting contract violations.
                 // This only works if the new handler obeys the constraints placed on 
@@ -364,7 +353,8 @@ namespace System.Diagnostics.Contracts.Internal
 #if FEATURE_UNTRUSTED_CALLERS
             [SecurityCritical]
 #endif
-            remove {
+            remove
+            {
                 lock (lockObject)
                 {
                     contractFailedEvent -= value;
@@ -528,8 +518,6 @@ namespace System.Diagnostics.Contracts.Internal
                 }
             }
         }
-
-
     }
 }  // namespace System.Diagnostics.Contracts.Internal
 
