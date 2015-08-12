@@ -1,24 +1,13 @@
-// CodeContracts
-// 
-// Copyright (c) Microsoft Corporation
-// 
-// All rights reserved. 
-// 
-// MIT License
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace Microsoft.Research.DataStructures {
-
+namespace Microsoft.Research.DataStructures
+{
     public static class HashHelpers
     {
         // Table of prime numbers to use as hash table sizes. 
@@ -69,32 +58,32 @@ namespace Microsoft.Research.DataStructures {
 
         public static int CombineHashCodes(int h1, int h2)
         {
-          return ((h1 << 5) + h1) ^ h2; // taken from Syste.Tuple.CombineHashCodes
+            return ((h1 << 5) + h1) ^ h2; // taken from Syste.Tuple.CombineHashCodes
         }
 
         public static int CombineHashCodes(params int[] h)
         {
-          return CombineHashCodes((IEnumerable<int>)h);
+            return CombineHashCodes((IEnumerable<int>)h);
         }
 
         public static int CombineHashCodes(IEnumerable<int> h)
         {
-          return h == null ? 0 : h.Aggregate(0, CombineHashCodes);
+            return h == null ? 0 : h.Aggregate(0, CombineHashCodes);
         }
 
         public static int GetStructuralHashCode<T1, T2>(T1 x1, T2 x2)
         {
-          return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode());
+            return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode());
         }
 
         public static int GetStructuralHashCode<T1, T2, T3>(T1 x1, T2 x2, T3 x3)
         {
-          return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode(), x3.GetHashCode());
+            return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode(), x3.GetHashCode());
         }
 
         public static int GetStructuralHashCode<T1, T2, T3, T4>(T1 x1, T2 x2, T3 x3, T4 x4)
         {
-          return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode(), x3.GetHashCode(), x4.GetHashCode());
+            return CombineHashCodes(x1.GetHashCode(), x2.GetHashCode(), x3.GetHashCode(), x4.GetHashCode());
         }
     }
 }
