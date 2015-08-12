@@ -8320,33 +8320,56 @@ namespace Microsoft.Research.CodeAnalysis
             // special case Decimal methods to operators
             if (mdDecoder.Equal(declaringType, mdDecoder.System_Decimal))
             {
-                Contract.Assume(args.Count >= 2);
                 switch (mdDecoder.Name(method))
                 {
                     case "op_Addition":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Add, dest, args[0], args[1], data);
+
                     case "op_Division":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Div, dest, args[0], args[1], data);
+
                     case "op_Equality":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Ceq, dest, args[0], args[1], data);
+
                     case "op_GreaterThan":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Cgt, dest, args[0], args[1], data);
+
                     case "op_GreaterThanOrEqual":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Cge, dest, args[0], args[1], data);
+
                     case "op_Inequality":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Cne_Un, dest, args[0], args[1], data);
+
                     case "op_LessThan":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Clt, dest, args[0], args[1], data);
+
                     case "op_LessThanOrEqual":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Cle, dest, args[0], args[1], data);
+
                     case "op_Modulus":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Rem, dest, args[0], args[1], data);
+
                     case "op_Multiply":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Mul, dest, args[0], args[1], data);
+
                     case "op_Subtraction":
+                        Contract.Assume(args.Count >= 2);
                         return visitor.Binary(pc, BinaryOperator.Sub, dest, args[0], args[1], data);
+
                     case "op_UnaryNegation":
+                        Contract.Assume(args.Count >= 1);
                         return visitor.Unary(pc, UnaryOperator.Neg, false, false, dest, args[0], data);
+
                     default:
                         break;
                 }
