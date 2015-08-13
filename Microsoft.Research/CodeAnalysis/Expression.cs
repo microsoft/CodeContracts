@@ -4237,7 +4237,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                     UnaryOperator op;
                     ExternalExpression arg;
-                    if (decoder.IsUnaryOperator(exp, out op, out arg))
+                    if (decoder.IsUnaryOperator(this.exp, out op, out arg))
                     {
                         var exp = BoxedExpression.For(arg, decoder);
 
