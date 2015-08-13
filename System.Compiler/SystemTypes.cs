@@ -115,6 +115,9 @@ namespace System.Compiler{
   public sealed class SystemRuntimeWindowsRuntimeAssemblyLocation {
     public static string Location = null;
   }
+  public sealed class SystemCoreAssemblyLocation {
+    public static string Location = null;
+  }
   public sealed class SystemRuntimeWindowsRuntimeUIXamlAssemblyLocation {
     public static string Location = null;
   }
@@ -2531,6 +2534,29 @@ namespace System.Compiler{
       result.typeCode = typeCode;
       return result;
     }
+    public static AssemblyNode/*!*/ GetSystemCoreAssembly(bool doNotLockFile, bool getDebugInfo)
+    {
+        Identifier AssemblyId = Identifier.For("System.Core");
+        AssemblyReference aref = (AssemblyReference)TargetPlatform.AssemblyReferenceFor[AssemblyId.UniqueIdKey];
+        if (aref == null)
+        {
+            aref = new AssemblyReference();
+            aref.Name = "System.Core";
+            // b77a5c561934e089 (got from sn -T System.Core for .NET 4.0 assembly)
+            aref.PublicKeyOrToken = new byte[] { 0xB7, 0x7A, 0x5C, 0x56, 0x19, 0x34, 0xE0, 0x89 };
+            aref.Version = TargetPlatform.TargetVersion;
+            TargetPlatform.AssemblyReferenceFor[AssemblyId.UniqueIdKey] = aref;
+        }
+        if (string.IsNullOrEmpty(SystemCoreAssemblyLocation.Location))
+        {
+            if (aref.Location == null)
+                SystemCoreAssemblyLocation.Location = Path.Combine(Path.GetDirectoryName(SystemAssemblyLocation.Location), "System.Core.dll");
+            else
+                SystemCoreAssemblyLocation.Location = aref.Location;
+        }
+        if (aref.assembly == null) aref.Location = SystemCoreAssemblyLocation.Location;
+        return aref.assembly = AssemblyNode.GetAssembly(aref, doNotLockFile, getDebugInfo, true);
+    }
     private static AssemblyNode/*!*/ GetCollectionsAssembly(bool doNotLockFile, bool getDebugInfo) {
       if (SystemAssembly.Name == "mscorlib") return SystemAssembly;
       Identifier AssemblyId = Identifier.For("System.Collections");
@@ -2660,6 +2686,7 @@ namespace System.Compiler{
       result.typeCode = typeCode;
       return result;
     }
+    
     private static AssemblyNode/*!*/ GetIOAssembly(bool doNotLockFile, bool getDebugInfo) {
       if (SystemAssembly.Name == "mscorlib") return SystemAssembly;
       Identifier AssemblyId = Identifier.For("System.IO");

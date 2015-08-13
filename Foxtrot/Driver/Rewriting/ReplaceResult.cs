@@ -143,14 +143,14 @@ namespace Microsoft.Contracts.Foxtrot
         private int delegateNestingLevel;
         private readonly TypeNode declaringType; // needed to copy anonymous delegates into
 
-        public ReplaceResult(Method containingMethod, Local r, Module assemblyBeingRewritten)
+        public ReplaceResult(Method containingMethod, Local originalLocalForResult, Module assemblyBeingRewritten)
         {
             Contract.Requires(containingMethod != null);
 
             this.assemblyBeingRewritten = assemblyBeingRewritten;
             this.declaringType = containingMethod.DeclaringType;
             this.topLevelMethodFormals = containingMethod.TemplateParameters;
-            this.originalLocalForResult = r;
+            this.originalLocalForResult = originalLocalForResult;
             this.delegateNestingLevel = 0;
         }
 
@@ -163,7 +163,8 @@ namespace Microsoft.Contracts.Foxtrot
         ///        return "42";
         ///    }
         ///
-        /// In this case, caller of this code can decide to emit a warning, because currently resultin 
+        /// In this case, caller of this code can decide to emit a warning, because current behavior
+        /// could lead to issues in multithreaded environment
         /// </summary>
         public bool ContractResultWasCapturedInStaticContext { get; private set; }
 

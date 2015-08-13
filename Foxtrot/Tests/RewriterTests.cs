@@ -66,7 +66,29 @@ namespace Tests
             options.UseTestHarness = true;
             TestDriver.BuildRewriteRun(options);
         }
+
         #endregion
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "AsyncPostconditions", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void TestAsyncPostconditions()
+        {
+            var options = CreateRoslynOptions("VS14RC3");
+            TestDriver.BuildRewriteRun(options);
+        }
+
+        [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "AsyncPostconditions", DataAccessMethod.Sequential)]
+        [TestMethod]
+        [TestCategory("Runtime"), TestCategory("CoreTest"), TestCategory("Roslyn"), TestCategory("VS14")]
+        public void TestAsyncPostconditionsV45()
+        {
+            var options = new Options(this.TestContext);
+            options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+            options.BuildFramework = @".NETFramework\v4.5";
+            options.ContractFramework = @".NETFramework\v4.0";
+            options.UseTestHarness = true;
+            TestDriver.BuildRewriteRun(options);
+        }
 
         #region Roslyn compiler unit tests
         [DeploymentItem("Foxtrot\\Tests\\TestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\TestInputs.xml", "TestFile", DataAccessMethod.Sequential)]

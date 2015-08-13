@@ -11,6 +11,14 @@
      />
 
   <AsyncTests
+     Name="Foxtrot\Tests\AsyncTests\AsyncInGenericClass.cs"
+     FoxtrotOptions=""
+     References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncTests
      Name="Foxtrot\Tests\AsyncTests\AsyncEnsuresWithAbstractClass.cs"
      FoxtrotOptions=""
      References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
@@ -22,6 +30,54 @@
      Name="Foxtrot\Tests\AsyncTests\AsyncEnsuresWithInterface.cs"
      FoxtrotOptions=""
      References="System.dll;System.Core.dll;System.Threading.Tasks.dll"
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\CancelledAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionsInInterface.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\MixedAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\NormalAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditionsNOTIMPLEMENTED
+     Name="Foxtrot\Tests\AsyncPostconditions\CapturingAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
+     BinDir="false"
+     Compiler="CS"
+     />
+
+  <AsyncPostconditions
+     Name="Foxtrot\Tests\AsyncPostconditions\ExceptionalAsyncPostcondition.cs"
+     FoxtrotOptions=""
+     References=""
      BinDir="false"
      Compiler="CS"
      />
