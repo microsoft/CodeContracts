@@ -1761,11 +1761,11 @@ namespace Microsoft.Research.AbstractDomains
             }
 
             Contract.Assert(elements.Count >= 1);
-            Contract.Assert(limits.Count == elements.Count + 1);
+            Contract.Assert(this.limits.Count == elements.Count + 1);
 
             // Fast, syntactic search for the lower bound
             var found = false;
-            for (var i = 0; i < limits.Count - 1; i++)
+            for (var i = 0; i < this.limits.Count - 1; i++)
             {
                 if (limits[i].Contains(lowExp))
                 {
@@ -1779,7 +1779,7 @@ namespace Microsoft.Research.AbstractDomains
                 }
             }
 
-            Contract.Assert(limits.Count == elements.Count + 1);
+            Contract.Assert(this.limits.Count == elements.Count + 1);
 
             // Semantic search
             if (!found)
