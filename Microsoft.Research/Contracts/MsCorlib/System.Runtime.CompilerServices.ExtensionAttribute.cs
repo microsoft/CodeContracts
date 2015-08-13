@@ -16,6 +16,7 @@ using System;
 
 namespace System.Runtime.CompilerServices
 {
+#if NETFRAMEWORK_4_5
   // Summary:
   //     Indicates that a method is an extension method, or that a class or assembly contains
   //     extension methods.
@@ -28,4 +29,5 @@ namespace System.Runtime.CompilerServices
     //     class.
     public ExtensionAttribute() { }
   }
+#endif
 }
