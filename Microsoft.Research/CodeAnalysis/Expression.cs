@@ -3706,9 +3706,9 @@ namespace Microsoft.Research.CodeAnalysis
 
             public override bool Equals(object obj)
             {
-                OldExpression that = obj as OldExpression;
+                ValueAtReturnExpression that = obj as ValueAtReturnExpression;
                 if (that == null) return false;
-                return this.Value.Equals(that.Old);
+                return this.Value.Equals(that.Value);
             }
 
             public override BoxedExpression Substitute<Variable>(Func<Variable, BoxedExpression, BoxedExpression> map)
