@@ -147,12 +147,6 @@
       <Name>AssemblyWithContracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestInputs.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
