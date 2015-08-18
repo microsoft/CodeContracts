@@ -5,11 +5,11 @@ init:
 - ps: Update-AppveyorBuild -Version "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
 build_script:
 - ps: ./buildCC "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
-test: off
-#  assemblies:
+test:
+  assemblies:
+  - '**\FoxtrotTests.dll'
 #  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
 #  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
-#  - '**\Foxtrot\Tests\bin\Debug\FoxtrotTests.dll'
 #  - '**\Foxtrot\Tests\UnitTests\bin\Debug\UnitTests.dll'
 artifacts:
 - path: '**\ManagedContract.Setup\devlab9ts\Microsoft.Contracts.*.nupkg'
