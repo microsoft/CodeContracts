@@ -34,22 +34,21 @@ namespace Tests
 
     private static void Verify(ITestOutputHelper testOutputHelper, string assemblyName, string frameworkPath)
     {
-      var path = Path.Combine(@"..\..\..\Microsoft.Research\Contracts\bin\debug", frameworkPath);
+      var path = Path.Combine(@"..\..\..\..\Microsoft.Research\Contracts\bin\Debug", frameworkPath);
+      string originalPath = Path.Combine(@"..\..\..\..\Microsoft.Research\Imported\ReferenceAssemblies", frameworkPath, assemblyName + ".dll");
 
-      string originalPath = Path.Combine(Path.Combine(@"..\..\..\Microsoft.Research\Imported\ReferenceAssemblies", frameworkPath), assemblyName + ".dll");
-      if (originalPath == null)
-      {
-        Assert.True(false, string.Format("Can't find original assembly {0}", assemblyName));
-        return;
-      }
-      var checker = new CRASanitizer.Checker(Console.Out);
+      StringWriter stringWriter = new StringWriter();
+      var checker = new CRASanitizer.Checker(stringWriter);
 
       var contractAssemblyName = assemblyName + ".Contracts.dll";
       testOutputHelper.WriteLine("Checking {1} {0} for errors...", assemblyName, frameworkPath);
 
+      testOutputHelper.WriteLine("  Contract Path: {0}", Path.GetFullPath(Path.Combine(path, contractAssemblyName)));
+      testOutputHelper.WriteLine("  Original Path: {0}", Path.GetFullPath(originalPath));
 
       var errors = checker.CheckSurface(Path.Combine(path, contractAssemblyName), originalPath);
 
+      testOutputHelper.WriteLine(stringWriter.ToString());
       Assert.Equal(0, errors);
       testOutputHelper.WriteLine("... done.");
     }
@@ -140,66 +139,90 @@ namespace Tests
       Assert.Equal(0, v10errors);
     }
 
-    [Fact]
+    public static IEnumerable<object[]> OOBCAssemblies
+    {
+        get
+        {
+          var cras35 = new[]{ 
+            "Microsoft.VisualBasic", 
+            "Microsoft.VisualBasic.Compatibility",
+            "mscorlib", 
+            "System",
+            "System.Configuration", 
+            "System.Configuration.Install", 
+            "System.Core",
+            "System.Data",
+            "System.Drawing",
+            "System.Security",
+            "System.Web",
+            "System.Windows.Forms",
+            "System.Xml",
+            "System.Xml.Linq",
+            "WindowsBase",
+          };
+          var cras40 = new[] {
+            "System.Numerics"
+          };
+          var silverlight = new[]{ 
+            "Microsoft.VisualBasic", 
+            "mscorlib",
+            "System",
+            "System.Core",
+            "System.Windows",
+            "System.Windows.Browser",
+            "System.Xml",
+            "System.Xml.Linq",
+          };
+
+          var windowsPhone = new[]{ 
+            "mscorlib",
+            "System",
+            "System.Core",
+            "System.Windows",
+            "System.Xml",
+            "System.Xml.Linq",
+          };
+
+          foreach (var assembly in cras35)
+          {
+              yield return new[] { assembly, @"v3.5" };
+          }
+
+          foreach (var assembly in cras35)
+          {
+              yield return new[] { assembly, @".NETFramework\v4.0" };
+          }
+
+          foreach (var assembly in cras40)
+          {
+              yield return new[] { assembly, @".NETFramework\v4.0" };
+          }
+
+          foreach (var assembly in silverlight)
+          {
+              yield return new[] { assembly, @"Silverlight\v3.0" };
+          }
+
+          foreach (var assembly in silverlight)
+          {
+              yield return new[] { assembly, @"Silverlight\v4.0" };
+          }
+
+          foreach (var assembly in windowsPhone)
+          {
+              yield return new[] { assembly, @"Silverlight\v4.0\Profile\WindowsPhone" };
+          }
+        }
+    }
+
+    [Theory]
+    [MemberData("OOBCAssemblies")]
     [Trait("Category", "OOB")]
     [Trait("Category", "CoreTest")]
     [Trait("Category", "Short")]
-    public void CheckOOBCAssemblies()
+    public void CheckOOBCAssemblies(string cra, string basePath)
     {
-      var cras35 = new[]{ 
-        "Microsoft.VisualBasic", 
-        "Microsoft.VisualBasic.Compatibility",
-        "mscorlib", 
-        "System",
-        "System.Configuration", 
-        "System.Configuration.Install", 
-        "System.Core",
-        "System.Data",
-        "System.Drawing",
-        "System.Security",
-        "System.Web",
-        "System.Windows.Forms",
-        "System.Xml",
-        "System.Xml.Linq",
-        "WindowsBase",
-      };
-      var cras40 = new[] {
-        "System.Numerics"
-      };
-      var silverlight = new[]{ 
-        "Microsoft.VisualBasic", 
-        "mscorlib",
-        "System",
-        "System.Core",
-        "System.Windows",
-        "System.Windows.Browser",
-        "System.Xml",
-        "System.Xml.Linq",
-      };
-
-      var windowsPhone = new[]{ 
-        "mscorlib",
-        "System",
-        "System.Core",
-        "System.Windows",
-        "System.Xml",
-        "System.Xml.Linq",
-      };
-
-      VerifyFramework(_testOutputHelper, cras35, @"v3.5");
-      VerifyFramework(_testOutputHelper, cras35, @".NETFramework\v4.0");
-      VerifyFramework(_testOutputHelper, cras40, @".NETFramework\v4.0");
-      VerifyFramework(_testOutputHelper, silverlight, @"Silverlight\v3.0");
-      VerifyFramework(_testOutputHelper, silverlight, @"Silverlight\v4.0");
-      VerifyFramework(_testOutputHelper, windowsPhone, @"Silverlight\v4.0\Profile\WindowsPhone");
-    }
-
-    private static void VerifyFramework(ITestOutputHelper testOutputHelper, string[] cras, string basePath)
-    {
-      foreach (var cra in cras)
-      {
-        Verify(testOutputHelper, cra, basePath);
-      }
+      Verify(_testOutputHelper, cra, basePath);
     }
   }
 }
