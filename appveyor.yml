@@ -5,6 +5,7 @@ init:
 - ps: Update-AppveyorBuild -Version "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
 build_script:
 - ps: ./buildCC "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
+- ps: msbuild "/nologo" "/logger:${env:ProgramFiles}\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "/t:build" "/p:Configuration=Debug" "/p:Platform=Any CPU" "/p:CodeContractsRunCodeAnalysis=false" CodeContracts.sln
 test:
   assemblies:
   - '**\FoxtrotTests.dll'
