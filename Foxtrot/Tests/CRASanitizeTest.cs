@@ -16,55 +16,45 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Xml.Linq;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-  [TestClass]
   public partial class Test
   {
-    private TestContext testContextInstance;
+    private readonly ITestOutputHelper _testOutputHelper;
 
-    /// <summary>
-    ///Gets or sets the test context which provides
-    ///information about and functionality for the current test run.
-    ///</summary>
-    public TestContext TestContext
+    public Test(ITestOutputHelper testOutputHelper)
     {
-      get
-      {
-        return testContextInstance;
-      }
-      set
-      {
-        testContextInstance = value;
-      }
+        _testOutputHelper = testOutputHelper;
     }
 
-    private static void Verify(string assemblyName, string frameworkPath)
+    private static void Verify(ITestOutputHelper testOutputHelper, string assemblyName, string frameworkPath)
     {
       var path = Path.Combine(@"..\..\..\Microsoft.Research\Contracts\bin\debug", frameworkPath);
 
       string originalPath = Path.Combine(Path.Combine(@"..\..\..\Microsoft.Research\Imported\ReferenceAssemblies", frameworkPath), assemblyName + ".dll");
       if (originalPath == null)
       {
-        Assert.Fail("Can't find original assembly {0}", assemblyName);
+        Assert.True(false, string.Format("Can't find original assembly {0}", assemblyName));
         return;
       }
       var checker = new CRASanitizer.Checker(Console.Out);
 
       var contractAssemblyName = assemblyName + ".Contracts.dll";
-      Console.WriteLine("Checking {1} {0} for errors...", assemblyName, frameworkPath);
+      testOutputHelper.WriteLine("Checking {1} {0} for errors...", assemblyName, frameworkPath);
 
 
       var errors = checker.CheckSurface(Path.Combine(path, contractAssemblyName), originalPath);
 
-      Assert.AreEqual(0, errors, "Found {0} errors in contract reference assembly {1}", errors, contractAssemblyName);
-      Console.WriteLine("... done.");
+      Assert.Equal(0, errors);
+      testOutputHelper.WriteLine("... done.");
     }
 
+#if false
     // [TestMethod] no longer needed as we don't use the 2008 solution anymore.
     public void CheckOOBCProjectSources()
     {
@@ -114,6 +104,7 @@ namespace Tests
         CheckSourceFiles(opt.MakeAbsolute(v9Sources[i]), opt.MakeAbsolute(v10Sources[i]));
       }
     }
+#endif
 
     private void CheckSourceFiles(string v9proj, string v10proj)
     {
@@ -132,25 +123,27 @@ namespace Tests
       var onlyInV9 = v9Sources.Where(source => !v10Sources.Contains(source));
       var onlyInV10 = v10Sources.Where(source => !v9Sources.Contains(source));
 
-      Console.WriteLine("Checking project sources {0} vs. {1}", v9proj, v10proj);
+      _testOutputHelper.WriteLine("Checking project sources {0} vs. {1}", v9proj, v10proj);
       var v9errors = onlyInV9.Count();
       foreach (var source in onlyInV9)
       {
-        Console.WriteLine("File {0} only in {1}", source, v9proj);
+        _testOutputHelper.WriteLine("File {0} only in {1}", source, v9proj);
       }
 
       var v10errors = onlyInV10.Count();
       foreach (var source in onlyInV10)
       {
-        Console.WriteLine("File {0} only in {1}", source, v10proj);
+        _testOutputHelper.WriteLine("File {0} only in {1}", source, v10proj);
       }
 
-      Assert.AreEqual(0, v9errors, "Found {0} errors in project file {1}", v9errors, v9proj);
-      Assert.AreEqual(0, v10errors, "Found {0} errors in project file {1}", v10errors, v10proj);
+      Assert.Equal(0, v9errors);
+      Assert.Equal(0, v10errors);
     }
 
-    [TestMethod]
-    [TestCategory("OOB"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact]
+    [Trait("Category", "OOB")]
+    [Trait("Category", "CoreTest")]
+    [Trait("Category", "Short")]
     public void CheckOOBCAssemblies()
     {
       var cras35 = new[]{ 
@@ -193,19 +186,19 @@ namespace Tests
         "System.Xml.Linq",
       };
 
-      VerifyFramework(cras35, @"v3.5");
-      VerifyFramework(cras35, @".NETFramework\v4.0");
-      VerifyFramework(cras40, @".NETFramework\v4.0");
-      VerifyFramework(silverlight, @"Silverlight\v3.0");
-      VerifyFramework(silverlight, @"Silverlight\v4.0");
-      VerifyFramework(windowsPhone, @"Silverlight\v4.0\Profile\WindowsPhone");
+      VerifyFramework(_testOutputHelper, cras35, @"v3.5");
+      VerifyFramework(_testOutputHelper, cras35, @".NETFramework\v4.0");
+      VerifyFramework(_testOutputHelper, cras40, @".NETFramework\v4.0");
+      VerifyFramework(_testOutputHelper, silverlight, @"Silverlight\v3.0");
+      VerifyFramework(_testOutputHelper, silverlight, @"Silverlight\v4.0");
+      VerifyFramework(_testOutputHelper, windowsPhone, @"Silverlight\v4.0\Profile\WindowsPhone");
     }
 
-    private static void VerifyFramework(string[] cras, string basePath)
+    private static void VerifyFramework(ITestOutputHelper testOutputHelper, string[] cras, string basePath)
     {
       foreach (var cra in cras)
       {
-        Verify(cra, basePath);
+        Verify(testOutputHelper, cra, basePath);
       }
     }
   }
