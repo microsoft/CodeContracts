@@ -12,8 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -24,58 +22,33 @@ using Microsoft.Contracts.Foxtrot;
 using System.Reflection;
 using Microsoft.CSharp;
 using SubtypeWithoutContracts;
+using Xunit;
 
 namespace Tests {
-  [TestClass()]
   public class TestSubtypeWithoutContracts : DisableAssertUI {
-    #region Test Management
-    [ClassInitialize]
-    public static void ClassInitialize(TestContext context)
-    {
-    }
-
-    [ClassCleanup]
-    public static void ClassCleanup()
-    {
-    }
-
-    [TestInitialize]
-    public void TestInitialize()
-    {
-    }
-
-    [TestCleanup]
-    public void TestCleanup()
-    {
-    }
-    #endregion Test Management
-
     #region Tests
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     //[DeploymentItem("Foxtrot\\Tests\\AssemblyWithContracts\\bin\\Debug\\v3.5\\AssemblyWithContracts.Contracts.dll")]
     public void SubTypeWithoutContractsPositive()
     {
       new SubtypeWithoutContracts.Subtype1().M(3, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsNegative1()
     {
-      new SubtypeWithoutContracts.Subtype1().M(-3, true);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => new SubtypeWithoutContracts.Subtype1().M(-3, true));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsNegative2()
     {
-      new SubtypeWithoutContracts.Subtype1().M(3, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => new SubtypeWithoutContracts.Subtype1().M(3, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionOnThrowException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsNegative3()
     {
-      new SubtypeWithoutContracts.Subtype1().M(1, false);
+      Assert.Throws<TestRewriterMethods.PostconditionOnThrowException>(() => new SubtypeWithoutContracts.Subtype1().M(1, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsTestConditionNegative1()
     {
       try
@@ -84,11 +57,11 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("0 < x", p.Condition);
-        Assert.AreEqual(null, p.User);
+        Assert.Equal("0 < x", p.Condition);
+        Assert.Equal(null, p.User);
       }
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsTestConditionNegative2()
     {
       try
@@ -97,12 +70,12 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PostconditionException p)
       {
-        Assert.AreEqual("Contract.Result<int>() == -x", p.Condition);
-        Assert.AreEqual(null, p.User);
+        Assert.Equal("Contract.Result<int>() == -x", p.Condition);
+        Assert.Equal(null, p.User);
       }
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsTestConditionNegative3()
     {
       try
@@ -111,19 +84,19 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PostconditionOnThrowException p)
       {
-        Assert.AreEqual("x == 0", p.Condition);
-        Assert.AreEqual(null, p.User);
+        Assert.Equal("x == 0", p.Condition);
+        Assert.Equal(null, p.User);
       }
     }
 
 
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsUserStringsPositive()
     {
       new SubtypeWithoutContracts.Subtype1().WithUserStrings(3, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsUserStringsNegative1()
     {
       try
@@ -132,11 +105,11 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("0 < x", p.Condition);
-        Assert.AreEqual(null, p.User); // user string must be masked here as it is not accessible
+        Assert.Equal("0 < x", p.Condition);
+        Assert.Equal(null, p.User); // user string must be masked here as it is not accessible
       }
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsUserStringsNegative2()
     {
       try
@@ -145,12 +118,12 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PostconditionException p)
       {
-        Assert.AreEqual("Contract.Result<int>() == -x", p.Condition);
-        Assert.AreEqual("result is negated x", p.User);
+        Assert.Equal("Contract.Result<int>() == -x", p.Condition);
+        Assert.Equal("result is negated x", p.User);
       }
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsUserStringsNegative3()
     {
       try
@@ -159,12 +132,12 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PostconditionOnThrowException p)
       {
-        Assert.AreEqual("x == 0", p.Condition);
-        Assert.AreEqual("Throws only if x == 0", p.User);
+        Assert.Equal("x == 0", p.Condition);
+        Assert.Equal("Throws only if x == 0", p.User);
       }
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void SubTypeWithoutContractsUserStringsNegative4()
     {
       try
@@ -173,7 +146,7 @@ namespace Tests {
       }
       catch (ArgumentException arg)
       {
-        Assert.AreEqual("Precondition failed: 1 < x: x must be greater than 1", arg.Message);
+        Assert.Equal("Precondition failed: 1 < x: x must be greater than 1", arg.Message);
       }
     }
 
