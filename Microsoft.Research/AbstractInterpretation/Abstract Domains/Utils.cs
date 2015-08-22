@@ -866,6 +866,12 @@ namespace Microsoft.Research.AbstractDomains
             Contract.Requires(left != null);
             Contract.Requires(right != null);
 
+            // the Roslyn compiler uses cgt.un for comparing references to null; while producing correct
+            // results at runtime, it doesn't match implicit non-null assumptions made by the static checker,
+            // so we detect it here and convert it to an old-style equality comparison
+            if (decoder.IsNull(right))
+                return VisitNotEqual(left, right, original, data);
+
             return DispatchCompare(VisitLessThan_Un, right, left, original, data);
         }
 
