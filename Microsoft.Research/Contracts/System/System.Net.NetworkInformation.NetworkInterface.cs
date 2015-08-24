@@ -292,11 +292,7 @@ namespace System.Net.NetworkInformation {
     //   System.Net.NetworkInformation.NetworkInformationException:
     //     A Windows system function call failed.
     [Pure]
-    public static NetworkInterface[] GetAllNetworkInterfaces()
-    {
-        Contract.Ensures(Contract.Result<NetworkInterface[]>() != null);
-        return default(NetworkInterface[]);
-    }
+    extern public static NetworkInterface[] GetAllNetworkInterfaces();
     //
     // Summary:
     //     Returns an object that describes the configuration of this network interface.
