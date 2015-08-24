@@ -866,6 +866,13 @@ namespace Microsoft.Research.AbstractDomains
             Contract.Requires(left != null);
             Contract.Requires(right != null);
 
+            // Since there is no cne instruction, ECMA-335 §III.1.5 makes a note that cgt.un may
+            // be used instead for the specific case where the right-hand-side is null. If the
+            // right side is null, we treat the instruction as a "not equal" instruction for
+            // improved results from the static checker.
+            if (decoder.IsNull(right))
+                return VisitNotEqual(left, right, original, data);
+
             return DispatchCompare(VisitLessThan_Un, right, left, original, data);
         }
 
