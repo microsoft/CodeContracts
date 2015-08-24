@@ -114,10 +114,6 @@ namespace System.Windows.Forms
                 Contract.Ensures(Contract.Result<string>() != null);
                 return default(string[]);
             }
-            set
-            {
-                
-            }
         }
 
         // <summary>
@@ -243,10 +239,7 @@ namespace System.Windows.Forms
                 Contract.Ensures(Contract.Result<FileDialogCustomPlacesCollection>() != null);
                 return default(FileDialogCustomPlacesCollection);
             }
-            set
-            {
-                
-            }
+           
         }
 
         // <summary>
