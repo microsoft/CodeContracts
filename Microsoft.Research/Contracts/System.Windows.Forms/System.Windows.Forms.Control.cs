@@ -448,18 +448,25 @@ namespace System.Windows.Forms
     ////     A System.Windows.Forms.Cursor that represents the cursor to display when
     ////     the mouse pointer is over the control.
     //[AmbientValue("")]
-    //public virtual Cursor Cursor { get; set; }
+    // public virtual Cursor Cursor { get; set; }
     ////
-    //// Summary:
-    ////     Gets the data bindings for the control.
-    ////
-    //// Returns:
-    ////     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
-    ////     objects for the control.
+    /// Summary:
+    ///     Gets the data bindings for the control.
+    ///
+    /// Returns:
+    ///     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
+    ///     objects for the control.
     //[ParenthesizePropertyName(true)]
     //[RefreshProperties(RefreshProperties.All)]
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    //public ControlBindingsCollection DataBindings { get; }
+    public ControlBindingsCollection DataBindings
+    {
+        get
+        {
+        Contract.Ensures(Contract.Result<ControlBindingsCollection>() != null);
+        return default(ControlBindingsCollection);
+        }
+    }
     ////
     //// Summary:
     ////     Gets the default background color of the control.
@@ -497,7 +504,6 @@ namespace System.Windows.Forms
         return default(Font);
       }
     }
-    
     
     ////
     //// Summary:
@@ -850,14 +856,25 @@ namespace System.Windows.Forms
     ////     A System.Drawing.Point that contains the coordinates of the mouse cursor
     ////     relative to the upper-left corner of the screen.
     //public static System.Drawing.Point MousePosition { get; }
-    ////
-    //// Summary:
-    ////     Gets or sets the name of the control.
-    ////
-    //// Returns:
-    ////     The name of the control. The default is an empty string ("").
-    //[Browsable(false)]
-    //public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name of the control.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// The name of the control. The default is an empty string ("").
+    /// </returns>
+    [Browsable(false)]
+    public string Name
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<string>() != null);
+        return default(string);
+      }
+      set { }
+    }
+    
     ////
     //// Summary:
     ////     Gets or sets padding within the control.
@@ -976,7 +993,7 @@ namespace System.Windows.Forms
     ////     true if child controls will be scaled when the System.Windows.Forms.Control.Scale(System.Single)
     ////     method on this control is called; otherwise, false. The default is true.
     //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //// protected virtualbool ScaleChildren { get; }
+    //// protected virtual bool ScaleChildren { get; }
     ////
     //// Summary:
     ////     Gets a value indicating whether the control should display focus rectangles.
@@ -1432,39 +1449,35 @@ namespace System.Windows.Forms
     //// Summary:
     ////     Occurs when the System.Windows.Forms.Control.Visible property value changes.
     //public event EventHandler VisibleChanged;
-    //
-    // Summary:
-    //     Executes the specified delegate asynchronously on the thread that the control's
-    //     underlying handle was created on.
-    //
-    // Parameters:
-    //   method:
-    //     A delegate to a method that takes no parameters.
-    //
-    // Returns:
-    //     An System.IAsyncResult that represents the result of the System.Windows.Forms.Control.BeginInvoke(System.Delegate)
-    //     operation.
-    //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //public IAsyncResult BeginInvoke(Delegate method);
-    ////
-    //// Summary:
-    ////     Executes the specified delegate asynchronously with the specified arguments,
-    ////     on the thread that the control's underlying handle was created on.
-    ////
-    //// Parameters:
-    ////   method:
-    ////     A delegate to a method that takes parameters of the same number and type
-    ////     that are contained in the args parameter.
-    ////
-    ////   args:
-    ////     An array of objects to pass as arguments to the given method. This can be
-    ////     null if no arguments are needed.
-    ////
-    //// Returns:
-    ////     An System.IAsyncResult that represents the result of the System.Windows.Forms.Control.BeginInvoke(System.Delegate)
-    ////     operation.
-    //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //public IAsyncResult BeginInvoke(Delegate method, params object[] args);
+
+    /// <summary>
+    /// Executes the specified delegate asynchronously on the thread that the control's underlying handle was created on.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// An <see cref="T:System.IAsyncResult"/> that represents the result of the <see cref="M:System.Windows.Forms.Control.BeginInvoke(System.Delegate)"/> operation.
+    /// </returns>
+    /// <param name="method">A delegate to a method that takes no parameters. </param><exception cref="T:System.InvalidOperationException">No appropriate window handle can be found.</exception><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+    public IAsyncResult BeginInvoke(Delegate method)
+    {
+        Contract.Requires(method != null);
+        return default(IAsyncResult);
+    }
+
+    /// <summary>
+    /// Executes the specified delegate asynchronously with the specified arguments, on the thread that the control's underlying handle was created on.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// An <see cref="T:System.IAsyncResult"/> that represents the result of the <see cref="M:System.Windows.Forms.Control.BeginInvoke(System.Delegate)"/> operation.
+    /// </returns>
+    /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the <paramref name="args"/> parameter. </param><param name="args">An array of objects to pass as arguments to the given method. This can be null if no arguments are needed. </param><exception cref="T:System.InvalidOperationException">No appropriate window handle can be found.</exception><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>    
+    public IAsyncResult BeginInvoke(Delegate method, params object[] args)
+    {
+        Contract.Requires(method != null);
+        return default(IAsyncResult);
+    }
+
     ////
     //// Summary:
     ////     Brings the control to the front of the z-order.
@@ -1500,7 +1513,6 @@ namespace System.Windows.Forms
     public Graphics CreateGraphics()
     {
       Contract.Ensures(Contract.Result<Graphics>() != null);
-
       return default(Graphics);
     }
 
@@ -1530,34 +1542,32 @@ namespace System.Windows.Forms
     ////     The bounds within which the control is rendered.
     ////public void DrawToBitmap(System.Drawing.Bitmap bitmap, System.Drawing.Rectangle targetBounds);
     ////
-    //// Summary:
-    ////     Retrieves the return value of the asynchronous operation represented by the
-    ////     System.IAsyncResult passed.
-    ////
-    //// Parameters:
-    ////   asyncResult:
-    ////     The System.IAsyncResult that represents a specific invoke asynchronous operation,
-    ////     returned when calling System.Windows.Forms.Control.BeginInvoke(System.Delegate).
-    ////
-    //// Returns:
-    ////     The System.Object generated by the asynchronous operation.
-    ////
-    //// Exceptions:
-    ////   System.ArgumentNullException:
-    ////     The asyncResult parameter value is null.
-    ////
-    ////   System.ArgumentException:
-    ////     The asyncResult object was not created by a preceding call of the System.Windows.Forms.Control.BeginInvoke(System.Delegate)
-    ////     method from the same control.
+
+    /// <summary>
+    /// Retrieves the return value of the asynchronous operation represented by the <see cref="T:System.IAsyncResult"/> passed.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// The <see cref="T:System.Object"/> generated by the asynchronous operation.
+    /// </returns>
+    /// <param name="asyncResult">The <see cref="T:System.IAsyncResult"/> that represents a specific invoke asynchronous operation, returned when calling <see cref="M:System.Windows.Forms.Control.BeginInvoke(System.Delegate)"/>. </param><exception cref="T:System.ArgumentNullException">The <paramref name="asyncResult"/> parameter value is null. </exception><exception cref="T:System.ArgumentException">The <paramref name="asyncResult"/> object was not created by a preceding call of the <see cref="M:System.Windows.Forms.Control.BeginInvoke(System.Delegate)"/> method from the same control. </exception><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
     //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //public object EndInvoke(IAsyncResult asyncResult);
-    ////
-    //// Summary:
-    ////     Retrieves the form that the control is on.
-    ////
-    //// Returns:
-    ////     The System.Windows.Forms.Form that the control is on.
-    //public Form FindForm();
+    public object EndInvoke(IAsyncResult asyncResult)
+    {
+        Contract.Requires(asyncResult != null);
+        return default(object);
+    }
+
+    // <summary>
+    // Retrieves the form that the control is on.
+    // </summary>
+    // 
+    // <returns>
+    // The <see cref="T:System.Windows.Forms.Form"/> that the control is on.
+    // </returns>
+    // <filterpriority>1</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Window="AllWindows"/></PermissionSet>
+    // public Form FindForm()
+    
     ////
     //// Summary:
     ////     Sets input focus to the control.
@@ -1768,37 +1778,35 @@ namespace System.Windows.Forms
     ////   invalidateChildren:
     ////     true to invalidate the control's child controls; otherwise, false.
     //public void Invalidate(System.Drawing.Region region, bool invalidateChildren);
-    ////
-    //// Summary:
-    ////     Executes the specified delegate on the thread that owns the control's underlying
-    ////     window handle.
-    ////
-    //// Parameters:
-    ////   method:
-    ////     A delegate that contains a method to be called in the control's thread context.
-    ////
-    //// Returns:
-    ////     The return value from the delegate being invoked, or null if the delegate
-    ////     has no return value.
-    //public object Invoke(Delegate method);
-    ////
-    //// Summary:
-    ////     Executes the specified delegate, on the thread that owns the control's underlying
-    ////     window handle, with the specified list of arguments.
-    ////
-    //// Parameters:
-    ////   method:
-    ////     A delegate to a method that takes parameters of the same number and type
-    ////     that are contained in the args parameter.
-    ////
-    ////   args:
-    ////     An array of objects to pass as arguments to the specified method. This parameter
-    ////     can be null if the method takes no arguments.
-    ////
-    //// Returns:
-    ////     An System.Object that contains the return value from the delegate being invoked,
-    ////     or null if the delegate has no return value.
 
+    /// <summary>
+    /// Executes the specified delegate on the thread that owns the control's underlying window handle.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// The return value from the delegate being invoked, or null if the delegate has no return value.
+    /// </returns>
+    /// <param name="method">A delegate that contains a method to be called in the control's thread context. </param><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+    public object Invoke(Delegate method)
+    {
+        Contract.Requires(method != null);
+        return default(object);
+    }
+
+    /// <summary>
+    /// Executes the specified delegate, on the thread that owns the control's underlying window handle, with the specified list of arguments.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// An <see cref="T:System.Object"/> that contains the return value from the delegate being invoked, or null if the delegate has no return value.
+    /// </returns>
+    /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the <paramref name="args"/> parameter. </param><param name="args">An array of objects to pass as arguments to the specified method. This parameter can be null if the method takes no arguments. </param><filterpriority>2</filterpriority><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+    public object Invoke(Delegate method, params object[] args)
+    {
+      Contract.Requires(method != null);
+      return default(object);
+    }
+        
     //
     // Summary:
     //     Determines whether the CAPS LOCK, NUM LOCK, or SCROLL LOCK key is in effect.
@@ -2090,7 +2098,7 @@ namespace System.Windows.Forms
       // Exceptions:
       //   System.ArgumentException:
       //     The key parameter is null or the empty string ("").
-     // [Pure]
+      // [Pure]
       public Control[] Find(string key, bool searchAllChildren)
       {
         Contract.Requires(!string.IsNullOrEmpty(key));
@@ -2114,11 +2122,11 @@ namespace System.Windows.Forms
       // Exceptions:
       //   System.ArgumentException:
       //     The childSystem.Windows.Forms.Control is not in the System.Windows.Forms.Control.ControlCollection.
-     // [Pure]
+      // [Pure]
       public int GetChildIndex(Control child)
       {
         Contract.Ensures(Contract.Result<int>() >= 0);
-
+        
         return default(int);
       }
       //
@@ -2198,754 +2206,757 @@ namespace System.Windows.Forms
         return default(int);
       }
 
-      //
-      // Summary:
-      //     Removes the specified control from the control collection.
-      //
-      // Parameters:
-      //   value:
-      //     The System.Windows.Forms.Control to remove from the System.Windows.Forms.Control.ControlCollection.
-      //public virtual void Remove(Control value);
-      //
-      // Summary:
-      //     Removes a control from the control collection at the specified indexed location.
-      //
-      // Parameters:
-      //   index:
-      //     The index value of the System.Windows.Forms.Control to remove.
-      //public void RemoveAt(int index)
+    //
+    // Summary:
+    //     Removes the specified control from the control collection.
+    //
+    // Parameters:
+    //   value:
+    //     The System.Windows.Forms.Control to remove from the System.Windows.Forms.Control.ControlCollection.
+    //public virtual void Remove(Control value);
+    //
+    // Summary:
+    //     Removes a control from the control collection at the specified indexed location.
+    //
+    // Parameters:
+    //   index:
+    //     The index value of the System.Windows.Forms.Control to remove.
 
-      //
-      // Summary:
-      //     Removes the child control with the specified key.
-      //
-      // Parameters:
-      //   key:
-      //     The name of the child control to remove.
-      //public virtual void RemoveByKey(string key);
-      //
-      // Summary:
-      //     Sets the index of the specified child control in the collection to the specified
-      //     index value.
-      //
-      // Parameters:
-      //   child:
-      //     The childSystem.Windows.Forms.Control to search for.
-      //
-      //   newIndex:
-      //     The new index value of the control.
-      //
-      // Exceptions:
-      //   System.ArgumentException:
-      //     The child control is not in the System.Windows.Forms.Control.ControlCollection.
-      //public virtual void SetChildIndex(Control child, int newIndex);
+    public void RemoveAt(int index)
+    { 
+      Contract.Requires(index >= 0);
+      Contract.Requires(index < this.Count);
+    }
 
-
-      //// protected virtual void OnAutoSizeChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BackColorChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      //// protected virtual void OnBackColorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BackgroundImageChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      //// protected virtual void OnBackgroundImageChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BackgroundImageLayoutChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      //// protected virtual void OnBackgroundImageLayoutChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BindingContextChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnBindingContextChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.CausesValidationChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnCausesValidationChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ChangeUICues event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.UICuesEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnChangeUICues(UICuesEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Click event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnClick(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ClientSizeChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnClientSizeChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ContextMenuChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnContextMenuChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ContextMenuStripChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnContextMenuStripChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ControlAdded event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.ControlEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnControlAdded(ControlEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ControlRemoved event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.ControlEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnControlRemoved(ControlEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.CreateControl() method.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnCreateControl();
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.CursorChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnCursorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DockChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDockChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DoubleClick event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDoubleClick(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DragDrop event.
-      //
-      // Parameters:
-      //   drgevent:
-      //     A System.Windows.Forms.DragEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDragDrop(DragEventArgs drgevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DragEnter event.
-      //
-      // Parameters:
-      //   drgevent:
-      //     A System.Windows.Forms.DragEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDragEnter(DragEventArgs drgevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DragLeave event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDragLeave(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.DragOver event.
-      //
-      // Parameters:
-      //   drgevent:
-      //     A System.Windows.Forms.DragEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnDragOver(DragEventArgs drgevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.EnabledChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnEnabledChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Enter event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnEnter(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.FontChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnFontChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ForeColorChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnForeColorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.GiveFeedback event.
-      //
-      // Parameters:
-      //   gfbevent:
-      //     A System.Windows.Forms.GiveFeedbackEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnGiveFeedback(GiveFeedbackEventArgs gfbevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.GotFocus event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnGotFocus(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.HandleCreated event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnHandleCreated(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.HandleDestroyed event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnHandleDestroyed(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.HelpRequested event.
-      //
-      // Parameters:
-      //   hevent:
-      //     A System.Windows.Forms.HelpEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnHelpRequested(HelpEventArgs hevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ImeModeChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-      // protected virtual void OnImeModeChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Invalidated event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.Windows.Forms.InvalidateEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnInvalidated(InvalidateEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.KeyDown event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.KeyEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnKeyDown(KeyEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.KeyPress event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.KeyPressEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnKeyPress(KeyPressEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.KeyUp event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.KeyEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnKeyUp(KeyEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Layout event.
-      //
-      // Parameters:
-      //   levent:
-      //     A System.Windows.Forms.LayoutEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnLayout(LayoutEventArgs levent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Leave event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnLeave(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.LocationChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnLocationChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.LostFocus event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnLostFocus(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MarginChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.EventArgs that contains the event data.
-      // protected virtual void OnMarginChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseCaptureChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseCaptureChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseClick event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseClick(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseDoubleClick event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseDoubleClick(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseDown event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseDown(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseEnter event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseEnter(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseHover event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseHover(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseLeave event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseLeave(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseMove event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseMove(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseUp event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseUp(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.MouseWheel event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.MouseEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMouseWheel(MouseEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Move event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnMove(EventArgs e);
-      //
-      // Summary:
-      //     Notifies the control of Windows messages.
-      //
-      // Parameters:
-      //   m:
-      //     A System.Windows.Forms.Message that represents the Windows message.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnNotifyMessage(Message m);
-      //
-      // Summary:
-      //     Paints the background of the control.
-      //
-      // Parameters:
-      //   pevent:
-      //     A System.Windows.Forms.PaintEventArgs that contains information about the
-      //     control to paint.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnPaintBackground(PaintEventArgs pevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BackColorChanged event when the System.Windows.Forms.Control.BackColor
-      //     property value of the control's container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentBackColorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BackgroundImageChanged event when
-      //     the System.Windows.Forms.Control.BackgroundImage property value of the control's
-      //     container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentBackgroundImageChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.BindingContextChanged event when
-      //     the System.Windows.Forms.Control.BindingContext property value of the control's
-      //     container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentBindingContextChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ParentChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.CursorChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentCursorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.EnabledChanged event when the System.Windows.Forms.Control.Enabled
-      //     property value of the control's container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentEnabledChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.FontChanged event when the System.Windows.Forms.Control.Font
-      //     property value of the control's container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentFontChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.ForeColorChanged event when the System.Windows.Forms.Control.ForeColor
-      //     property value of the control's container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentForeColorChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.RightToLeftChanged event when the
-      //     System.Windows.Forms.Control.RightToLeft property value of the control's
-      //     container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentRightToLeftChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.VisibleChanged event when the System.Windows.Forms.Control.Visible
-      //     property value of the control's container changes.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnParentVisibleChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.PreviewKeyDown event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.PreviewKeyDownEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnPreviewKeyDown(PreviewKeyDownEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Paint event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.Windows.Forms.PaintEventArgs that contains the event data.
-      //
-      // Exceptions:
-      //   System.ArgumentNullException:
-      //     The e parameter is null.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnPrint(PaintEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.QueryContinueDrag event.
-      //
-      // Parameters:
-      //   qcdevent:
-      //     A System.Windows.Forms.QueryContinueDragEventArgs that contains the event
-      //     data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs qcdevent);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.RegionChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnRegionChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Resize event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnResize(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.RightToLeftChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnRightToLeftChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.SizeChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnSizeChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.StyleChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnStyleChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.SystemColorsChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnSystemColorsChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.TabIndexChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnTabIndexChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.TabStopChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnTabStopChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.TextChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnTextChanged(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Validated event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnValidated(EventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.Validating event.
-      //
-      // Parameters:
-      //   e:
-      //     A System.ComponentModel.CancelEventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnValidating(CancelEventArgs e);
-      //
-      // Summary:
-      //     Raises the System.Windows.Forms.Control.VisibleChanged event.
-      //
-      // Parameters:
-      //   e:
-      //     An System.EventArgs that contains the event data.
-     // [EditorBrowsable(EditorBrowsableState.Advanced)]
-      // protected virtual void OnVisibleChanged(EventArgs e);
+    //
+    // Summary:
+    //     Removes the child control with the specified key.
+    //
+    // Parameters:
+    //   key:
+    //     The name of the child control to remove.
+    //public virtual void RemoveByKey(string key);
+    //
+    // Summary:
+    //     Sets the index of the specified child control in the collection to the specified
+    //     index value.
+    //
+    // Parameters:
+    //   child:
+    //     The childSystem.Windows.Forms.Control to search for.
+    //
+    //   newIndex:
+    //     The new index value of the control.
+    //
+    // Exceptions:
+    //   System.ArgumentException:
+    //     The child control is not in the System.Windows.Forms.Control.ControlCollection.
+    //public virtual void SetChildIndex(Control child, int newIndex);
+    //// protected virtual void OnAutoSizeChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BackColorChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    //// protected virtual void OnBackColorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BackgroundImageChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    //// protected virtual void OnBackgroundImageChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BackgroundImageLayoutChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    //// protected virtual void OnBackgroundImageLayoutChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BindingContextChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnBindingContextChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.CausesValidationChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnCausesValidationChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ChangeUICues event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.UICuesEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnChangeUICues(UICuesEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Click event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnClick(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ClientSizeChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnClientSizeChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ContextMenuChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnContextMenuChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ContextMenuStripChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnContextMenuStripChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ControlAdded event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.ControlEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnControlAdded(ControlEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ControlRemoved event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.ControlEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnControlRemoved(ControlEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.CreateControl() method.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnCreateControl();
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.CursorChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnCursorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DockChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDockChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DoubleClick event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDoubleClick(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DragDrop event.
+    //
+    // Parameters:
+    //   drgevent:
+    //     A System.Windows.Forms.DragEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDragDrop(DragEventArgs drgevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DragEnter event.
+    //
+    // Parameters:
+    //   drgevent:
+    //     A System.Windows.Forms.DragEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDragEnter(DragEventArgs drgevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DragLeave event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDragLeave(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.DragOver event.
+    //
+    // Parameters:
+    //   drgevent:
+    //     A System.Windows.Forms.DragEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnDragOver(DragEventArgs drgevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.EnabledChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnEnabledChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Enter event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnEnter(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.FontChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnFontChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ForeColorChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnForeColorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.GiveFeedback event.
+    //
+    // Parameters:
+    //   gfbevent:
+    //     A System.Windows.Forms.GiveFeedbackEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnGiveFeedback(GiveFeedbackEventArgs gfbevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.GotFocus event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnGotFocus(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.HandleCreated event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnHandleCreated(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.HandleDestroyed event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnHandleDestroyed(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.HelpRequested event.
+    //
+    // Parameters:
+    //   hevent:
+    //     A System.Windows.Forms.HelpEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnHelpRequested(HelpEventArgs hevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ImeModeChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // protected virtual void OnImeModeChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Invalidated event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.Windows.Forms.InvalidateEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnInvalidated(InvalidateEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.KeyDown event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.KeyEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnKeyDown(KeyEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.KeyPress event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.KeyPressEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnKeyPress(KeyPressEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.KeyUp event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.KeyEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnKeyUp(KeyEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Layout event.
+    //
+    // Parameters:
+    //   levent:
+    //     A System.Windows.Forms.LayoutEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnLayout(LayoutEventArgs levent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Leave event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnLeave(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.LocationChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnLocationChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.LostFocus event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnLostFocus(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MarginChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.EventArgs that contains the event data.
+    // protected virtual void OnMarginChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseCaptureChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseCaptureChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseClick event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseClick(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseDoubleClick event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseDoubleClick(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseDown event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseDown(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseEnter event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseEnter(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseHover event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseHover(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseLeave event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseLeave(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseMove event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseMove(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseUp event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseUp(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.MouseWheel event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.MouseEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMouseWheel(MouseEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Move event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnMove(EventArgs e);
+    //
+    // Summary:
+    //     Notifies the control of Windows messages.
+    //
+    // Parameters:
+    //   m:
+    //     A System.Windows.Forms.Message that represents the Windows message.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnNotifyMessage(Message m);
+    //
+    // Summary:
+    //     Paints the background of the control.
+    //
+    // Parameters:
+    //   pevent:
+    //     A System.Windows.Forms.PaintEventArgs that contains information about the
+    //     control to paint.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnPaintBackground(PaintEventArgs pevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BackColorChanged event when the System.Windows.Forms.Control.BackColor
+    //     property value of the control's container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentBackColorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BackgroundImageChanged event when
+    //     the System.Windows.Forms.Control.BackgroundImage property value of the control's
+    //     container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentBackgroundImageChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.BindingContextChanged event when
+    //     the System.Windows.Forms.Control.BindingContext property value of the control's
+    //     container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentBindingContextChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ParentChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.CursorChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentCursorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.EnabledChanged event when the System.Windows.Forms.Control.Enabled
+    //     property value of the control's container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentEnabledChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.FontChanged event when the System.Windows.Forms.Control.Font
+    //     property value of the control's container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentFontChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.ForeColorChanged event when the System.Windows.Forms.Control.ForeColor
+    //     property value of the control's container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentForeColorChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.RightToLeftChanged event when the
+    //     System.Windows.Forms.Control.RightToLeft property value of the control's
+    //     container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentRightToLeftChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.VisibleChanged event when the System.Windows.Forms.Control.Visible
+    //     property value of the control's container changes.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnParentVisibleChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.PreviewKeyDown event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.PreviewKeyDownEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnPreviewKeyDown(PreviewKeyDownEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Paint event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.Windows.Forms.PaintEventArgs that contains the event data.
+    //
+    // Exceptions:
+    //   System.ArgumentNullException:
+    //     The e parameter is null.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnPrint(PaintEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.QueryContinueDrag event.
+    //
+    // Parameters:
+    //   qcdevent:
+    //     A System.Windows.Forms.QueryContinueDragEventArgs that contains the event
+    //     data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs qcdevent);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.RegionChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnRegionChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Resize event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnResize(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.RightToLeftChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnRightToLeftChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.SizeChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnSizeChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.StyleChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnStyleChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.SystemColorsChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnSystemColorsChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.TabIndexChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnTabIndexChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.TabStopChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnTabStopChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.TextChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnTextChanged(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Validated event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnValidated(EventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.Validating event.
+    //
+    // Parameters:
+    //   e:
+    //     A System.ComponentModel.CancelEventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnValidating(CancelEventArgs e);
+    //
+    // Summary:
+    //     Raises the System.Windows.Forms.Control.VisibleChanged event.
+    //
+    // Parameters:
+    //   e:
+    //     An System.EventArgs that contains the event data.
+    // [EditorBrowsable(EditorBrowsableState.Advanced)]
+    // protected virtual void OnVisibleChanged(EventArgs e);
 
     }
   }
