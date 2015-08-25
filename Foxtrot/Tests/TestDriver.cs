@@ -15,10 +15,11 @@
 using System;
 using System.IO;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.Contracts.Foxtrot;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
@@ -30,7 +31,7 @@ namespace Tests
         public const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
 
 
-        internal static object Rewrite(string absoluteSourceDir, string absoluteBinary, Options options, bool alwaysCapture = false)
+        internal static object Rewrite(ITestOutputHelper testOutputHelper, string absoluteSourceDir, string absoluteBinary, Options options, bool alwaysCapture = false)
         {
             string referencedir;
 
@@ -52,7 +53,7 @@ namespace Tests
             var binDir = options.UseBinDir ? Path.Combine(Path.Combine(absoluteSourcedir, "bin"), options.BuildFramework) : absoluteSourcedir;
             var targetfile = Path.Combine(binDir, targetName);
 
-            Console.WriteLine("Rewriting '{0}' to '{1}'", absoluteBinary, targetfile);
+            testOutputHelper.WriteLine("Rewriting '{0}' to '{1}'", absoluteBinary, targetfile);
 
             if (!Directory.Exists(binDir))
             {
@@ -64,16 +65,17 @@ namespace Tests
                 optionString = String.Format("/platform:{0} {1}", absoluteBinary, optionString);
             }
 
-            var capture = RunProcessAndCapture(binDir, options.GetFullExecutablePath(FoxtrotExe), optionString, options.TestName);
+            var capture = RunProcessAndCapture(testOutputHelper, binDir, options.GetFullExecutablePath(FoxtrotExe), optionString, options.TestName);
             if (capture.ExitCode != 0)
             {
                 if (options.MustSucceed)
                 {
                     if (capture.ExitCode != 0)
                     {
-                        Console.WriteLine("");
+                        testOutputHelper.WriteLine("");
                     }
-                    Assert.AreEqual(0, capture.ExitCode, "{0} returned an errorcode of {1}.", FoxtrotExe, capture.ExitCode);
+
+                    Assert.Equal(0, capture.ExitCode);
                 }
                 return capture;
             }
@@ -100,16 +102,16 @@ namespace Tests
             return targetfile;
         }
 
-        private static int PEVerify(string assemblyFile, Options options)
+        private static int PEVerify(ITestOutputHelper testOutputHelper, string assemblyFile, Options options)
         {
             var peVerifyPath = options.GetPEVerifyFullPath(ToolsRoot);
-            Assert.IsTrue(File.Exists(peVerifyPath), string.Format("Can't find peverify.exe at '{0}'", peVerifyPath));
+            Assert.True(File.Exists(peVerifyPath), string.Format("Can't find peverify.exe at '{0}'", peVerifyPath));
 
             var path = Path.GetDirectoryName(assemblyFile);
             var file = Path.GetFileName(assemblyFile);
             if (file == "mscorlib.dll") return -1; // peverify returns 0 for mscorlib without verifying.
 
-            var exitCode = RunProcess(path, peVerifyPath, "/unique \"" + file + "\"", true);
+            var exitCode = RunProcess(testOutputHelper, path, peVerifyPath, "/unique \"" + file + "\"", true);
             return exitCode;
         }
 
@@ -130,7 +132,7 @@ namespace Tests
                     ContractNodes contractNodes = null;
                     Extractor.ExtractContracts(
                         assemblyNode, null, null, null, null, out contractNodes,
-                        e => Assert.Fail(e.ToString()), false);
+                        e => Assert.True(false, e.ToString()), false);
                 });
 
             var assembly = resolver.ProbeForAssembly(
@@ -139,19 +141,19 @@ namespace Tests
                 exts: new string[] { Path.GetExtension(assemblyFile) });
 
             // the assembly must be resolved and have no metadata import errors
-            Assert.IsNotNull(assembly);
-            Assert.IsTrue(assembly.MetadataImportErrors == null || assembly.MetadataImportErrors.Count == 0,
+            Assert.NotNull(assembly);
+            Assert.True(assembly.MetadataImportErrors == null || assembly.MetadataImportErrors.Count == 0,
                           "Parsing back the rewritten assembly produced metadata import errors");
         }
 
-        internal static string RewriteAndVerify(string sourceDir, string binary, Options options)
+        internal static string RewriteAndVerify(ITestOutputHelper testOutputHelper, string sourceDir, string binary, Options options)
         {
             if (!Path.IsPathRooted(sourceDir)) { sourceDir = options.MakeAbsolute(sourceDir); }
             if (!Path.IsPathRooted(binary)) { binary = options.MakeAbsolute(binary); }
-            string target = Rewrite(sourceDir, binary, options) as string;
+            string target = Rewrite(testOutputHelper, sourceDir, binary, options) as string;
             if (target != null)
             {
-                PEVerify(target, options);
+                PEVerify(testOutputHelper, target, options);
 
                 if (options.DeepVerify)
                     ExtractContracts(target, options);
@@ -159,22 +161,22 @@ namespace Tests
             return target;
         }
 
-        private static int RunProcess(string cwd, string tool, string arguments, bool mustSucceed, string writeBatchFile = null)
+        private static int RunProcess(ITestOutputHelper testOutputHelper, string cwd, string tool, string arguments, bool mustSucceed, string writeBatchFile = null)
         {
-            var capture = RunProcessAndCapture(cwd, tool, arguments, writeBatchFile);
+            var capture = RunProcessAndCapture(testOutputHelper, cwd, tool, arguments, writeBatchFile);
             if (mustSucceed && capture.ExitCode != 0)
             {
-                Assert.AreEqual(0, capture.ExitCode, "{0} returned an errorcode of {1}.", tool, capture.ExitCode);
+                Assert.Equal(0, capture.ExitCode);
             }
             
             return capture.ExitCode;
         }
 
-        private static OutputCapture RunProcessAndCapture(string cwd, string tool, string arguments, string writeBatchFile = null)
+        private static OutputCapture RunProcessAndCapture(ITestOutputHelper testOutputHelper, string cwd, string tool, string arguments, string writeBatchFile = null)
         {
             ProcessStartInfo i = new ProcessStartInfo(tool, arguments);
-            Console.WriteLine("Running '{0}'", i.FileName);
-            Console.WriteLine("         {0}", i.Arguments);
+            testOutputHelper.WriteLine("Running '{0}'", i.FileName);
+            testOutputHelper.WriteLine("         {0}", i.Arguments);
             i.RedirectStandardOutput = true;
             i.RedirectStandardError = true;
             i.UseShellExecute = false;
@@ -189,7 +191,7 @@ namespace Tests
                 file.Close();
             }
 
-            var capture = new OutputCapture();
+            var capture = new OutputCapture(testOutputHelper);
 
             using (Process p = Process.Start(i))
             {
@@ -198,15 +200,15 @@ namespace Tests
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
 
-                Assert.IsTrue(p.WaitForExit(200000), String.Format("{0} timed out", i.FileName));
+                Assert.True(p.WaitForExit(200000), String.Format("{0} timed out", i.FileName));
                 capture.ExitCode = p.ExitCode;
                 return capture;
             }
         }
 
-        public static int Run(string targetExe)
+        public static int Run(ITestOutputHelper testOutputHelper, string targetExe)
         {
-            return RunProcess(Environment.CurrentDirectory, targetExe, "", true);
+            return RunProcess(testOutputHelper, Environment.CurrentDirectory, targetExe, "", true);
         }
 
         static string FormLibPaths(string absoluteSourceDir, string contractReferenceDir, Options options)
@@ -243,12 +245,12 @@ namespace Tests
             }
         }
 
-        internal static string Build(Options options, out string absoluteSourceDir)
+        internal static string Build(ITestOutputHelper testOutputHelper, Options options, out string absoluteSourceDir)
         {
             var sourceFile = options.MakeAbsolute(options.SourceFile);
 
             var compilerPath = options.GetCompilerAbsolutePath(ToolsRoot);
-            Assert.IsTrue(File.Exists(compilerPath), string.Format("Can't find compiler at '{0}'", compilerPath));
+            Assert.True(File.Exists(compilerPath), string.Format("Can't find compiler at '{0}'", compilerPath));
 
             var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ReferencesFramework));
             var sourcedir = absoluteSourceDir = Path.GetDirectoryName(sourceFile);
@@ -286,7 +288,7 @@ namespace Tests
                     arguments = "/debug " + arguments;
                 }
 
-                var exitCode = RunProcess(sourcedir, compilerPath, arguments, true);
+                var exitCode = RunProcess(testOutputHelper, sourcedir, compilerPath, arguments, true);
 
                 if (exitCode != 0)
                 {
@@ -314,6 +316,13 @@ namespace Tests
 
         public class OutputCapture
         {
+            private readonly ITestOutputHelper _testOutputHelper;
+
+            public OutputCapture(ITestOutputHelper testOutputHelper)
+            {
+                _testOutputHelper = testOutputHelper;
+            }
+
             public int ExitCode { get; set; }
 
             public readonly List<string> errOut = new List<string>();
@@ -323,14 +332,14 @@ namespace Tests
             {
                 if (e.Data == null) return;
                 this.errOut.Add(e.Data);
-                Console.WriteLine("{0}", e.Data);
+                _testOutputHelper.WriteLine("{0}", e.Data);
             }
 
             internal void OutputDataReceived(object sender, DataReceivedEventArgs e)
             {
                 if (e.Data == null) return;
                 this.stdOut.Add(e.Data);
-                Console.WriteLine("{0}", e.Data);
+                _testOutputHelper.WriteLine("{0}", e.Data);
             }
         }
 
@@ -395,33 +404,33 @@ namespace Tests
             return sb.ToString();
         }
 
-        internal static void BuildRewriteRun(Options options)
+        internal static void BuildRewriteRun(ITestOutputHelper testOutputHelper, Options options)
         {
             string absoluteSourceDir;
-            var target = Build(options, out absoluteSourceDir);
+            var target = Build(testOutputHelper, options, out absoluteSourceDir);
             if (target != null)
             {
-                var rwtarget = RewriteAndVerify(absoluteSourceDir, target, options);
+                var rwtarget = RewriteAndVerify(testOutputHelper, absoluteSourceDir, target, options);
                 if (rwtarget != null)
                 {
-                    Run(rwtarget);
+                    Run(testOutputHelper, rwtarget);
                 }
             }
         }
 
-        internal static void BuildExtractExpectFailureOrWarnings(Options options)
+        internal static void BuildExtractExpectFailureOrWarnings(ITestOutputHelper testOutputHelper, Options options)
         {
             string absoluteSourceDir;
-            var target = Build(options, out absoluteSourceDir);
+            var target = Build(testOutputHelper, options, out absoluteSourceDir);
             if (target != null)
             {
-                RewriteAndExpectFailureOrWarnings(absoluteSourceDir, target, options);
+                RewriteAndExpectFailureOrWarnings(testOutputHelper, absoluteSourceDir, target, options);
             }
         }
 
-        internal static void RewriteAndExpectFailureOrWarnings(string sourceDir, string binary, Options options)
+        internal static void RewriteAndExpectFailureOrWarnings(ITestOutputHelper testOutputHelper, string sourceDir, string binary, Options options)
         {
-            var capture = Rewrite(sourceDir, binary, options, true) as OutputCapture;
+            var capture = Rewrite(testOutputHelper, sourceDir, binary, options, true) as OutputCapture;
 
             CompareExpectedOutput(options, capture);
         }
@@ -439,7 +448,7 @@ namespace Tests
                 if (actual.StartsWith("elapsed time:")) continue;
                 if (expectedIndex >= expected.Length)
                 {
-                    Assert.AreEqual(null, actual);
+                    Assert.Null(actual);
                 }
                 var expectedLine = expected[expectedIndex++];
 
@@ -448,11 +457,11 @@ namespace Tests
                     actual = TrimFilePath(actual, options.SourceFile);
                     expectedLine = TrimFilePath(expectedLine, options.SourceFile);
                 }
-                Assert.AreEqual(expectedLine, actual);
+                Assert.Equal(expectedLine, actual);
             }
             if (expectedIndex < expected.Length)
             {
-                Assert.AreEqual(expected[expectedIndex], null);
+                Assert.Equal(expected[expectedIndex], null);
             }
         }
 
@@ -463,11 +472,11 @@ namespace Tests
             return actual;
         }
 
-        internal static void RewriteBinary(Options options, string sourceDir)
+        internal static void RewriteBinary(ITestOutputHelper testOutputHelper, Options options, string sourceDir)
         {
             var absoluteDir = options.MakeAbsolute(sourceDir);
             var binary = Path.Combine(absoluteDir, options.SourceFile);
-            Rewrite(absoluteDir, binary, options);
+            Rewrite(testOutputHelper, absoluteDir, binary, options);
         }
     }
 }
