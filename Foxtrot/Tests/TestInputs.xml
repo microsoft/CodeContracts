@@ -739,6 +739,17 @@
      BinDir="false"
      Compiler="CS"
      />
+
+  <TestFile
+     Name="Foxtrot\Tests\Sources\DefaultExpression.cs"
+     CompilerOptions=""
+     FoxtrotOptions=""
+     References=""
+     ContractReferenceAssemblies="false"
+     BinDir="false"
+     Compiler="CS"
+     />
+
   <TestFile
      Name="Foxtrot\Tests\Sources\DefaultParameter.cs"
      FoxtrotOptions=""

@@ -7798,6 +7798,25 @@ namespace System.Compiler{
         base.DeclaringType = value;
       }
     }
+
+    private bool isTypeArgument;
+    
+    /// <summary>
+    ///     Gets a value that indicates whether the current type node is a type argument of a generic member.
+    /// </summary>
+    public bool IsTypeArgument
+    {
+        get
+        {
+            return this.IsTypeArgument;
+        }
+    }
+    
+    public void MarkAsTypeArgument()
+    {
+        this.isTypeArgument = true;
+    }
+    
     private TypeFlags flags;
     public TypeFlags Flags{
       get{return this.flags;}
@@ -9568,6 +9587,11 @@ namespace System.Compiler{
       CC.Contract.Assume(declaringType != null || this.DeclaringType == null);
       CC.Contract.Assume(declaringType == null || this.DeclaringType == declaringType || this.DeclaringType == declaringType.Template);
       
+      for (int i = 0; i < consolidatedTemplateArguments.Count; ++i)
+      {
+          consolidatedTemplateArguments[i].MarkAsTypeArgument();
+      }
+
       var duplicator = new Duplicator(module, declaringType);
       duplicator.RecordOriginalAsTemplate = true;
       duplicator.SkipBodies = true;
