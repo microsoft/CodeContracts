@@ -1461,6 +1461,7 @@ namespace System.Windows.Forms
     public IAsyncResult BeginInvoke(Delegate method)
     {
         Contract.Requires(method != null);
+        Contract.Ensures(Contract.Result<IAsyncResult>() != null);
         return default(IAsyncResult);
     }
 
@@ -1475,6 +1476,7 @@ namespace System.Windows.Forms
     public IAsyncResult BeginInvoke(Delegate method, params object[] args)
     {
         Contract.Requires(method != null);
+        Contract.Ensures(Contract.Result<IAsyncResult>() != null);
         return default(IAsyncResult);
     }
 

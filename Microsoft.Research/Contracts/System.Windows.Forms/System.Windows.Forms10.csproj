@@ -192,9 +192,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="System.Windows.Forms.Application.cs" />
-    <Compile Include="System.Windows.Forms.ContainterControl.cs" />
+    <Compile Include="System.Windows.Forms.BaseCollection.cs" />
     <Compile Include="System.Windows.Forms.ComboBox.cs" />
     <Compile Include="System.Windows.Forms.Binding.cs" />
+    <Compile Include="System.Windows.Forms.ContainerControl.cs" />
+    <Compile Include="System.Windows.Forms.BindingsCollection.cs" />
     <Compile Include="System.Windows.Forms.DataSourceUpdateMode.cs" />
     <Compile Include="System.Windows.Forms.ControlBindingsCollection.cs" />
     <Compile Include="System.Windows.Forms.Control.cs">

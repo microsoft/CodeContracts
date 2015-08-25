@@ -73,8 +73,7 @@ namespace System.Windows.Forms
     // <returns>
     // true if the binding is active; otherwise, false.
     // </returns>
-    // <filterpriority>1</filterpriority>
-    public bool IsBinding { get; }
+    // public bool IsBinding { get; }
     
     // <summary>
     // Gets the <see cref="T:System.Windows.Forms.BindingManagerBase"/> for this <see cref="T:System.Windows.Forms.Binding"/>.

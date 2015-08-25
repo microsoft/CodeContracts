@@ -21,7 +21,7 @@ namespace System.Windows.Forms
 {
   // Summary:
   //     Defines the base class for controls, which are components with visual representation.
-  public class ControlBindingsCollection
+  public class ControlBindingsCollection : BindingsCollection
   {
     // <summary>
     // Gets the <see cref="T:System.Windows.Forms.IBindableComponent"/> the binding collection belongs to.
@@ -86,6 +86,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
 
@@ -100,6 +101,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
 
@@ -114,6 +116,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode updateMode)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
 
@@ -128,6 +131,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode updateMode, object nullValue)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
 
@@ -142,6 +146,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode updateMode, object nullValue, string formatString)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
 
@@ -156,6 +161,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode updateMode, object nullValue, string formatString, IFormatProvider formatInfo)
     {
         Contract.Requires(dataSource != null);
+        Contract.Ensures(Contract.Result<Binding>() != null);
         return default(Binding);
     }
         
@@ -180,6 +186,7 @@ namespace System.Windows.Forms
     public new void RemoveAt(int index)
     {
         Contract.Requires(index >= 0);
+        Contract.Requires(index < this.Count);
     }
   }
 }
