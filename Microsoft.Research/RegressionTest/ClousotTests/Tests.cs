@@ -83,7 +83,8 @@ namespace Tests
                     libPaths: new string[0],
                     compilerCode: "CS",
                     skipForCCI2: true,
-                    skipSlicing: false);
+                    skipSlicing: false,
+                    skipForNet35: true);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\MultidimArrays.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull:noobl -show:validations;unreached",
@@ -2001,7 +2002,7 @@ namespace Tests
             var options = GrabTestOptions("Analyze1FromSourcesV35", TestRunData.ElementAt(testIndex));
             options.BuildFramework = @"v3.5";
             options.ContractFramework = @"v3.5";
-            if (!options.Skip)
+            if (!options.Skip && !options.SkipForNet35)
                 TestDriver.BuildAndAnalyze(_testOutputHelper, options);
         }
 

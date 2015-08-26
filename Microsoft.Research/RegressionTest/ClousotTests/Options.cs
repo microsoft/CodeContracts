@@ -34,6 +34,7 @@ namespace Tests
         private string testGroupName;
         public bool SkipForCCI2;
         public bool SkipSlicing;
+        public readonly bool SkipForNet35;
         public bool GenerateUniqueOutputName = false;
         public bool Fast = false;
 
@@ -188,7 +189,8 @@ namespace Tests
             string[] libPaths,
             string compilerCode,
             bool skipForCCI2,
-            bool skipSlicing)
+            bool skipSlicing,
+            bool skipForNet35 = false)
         {
             OutDirectory = Environment.CurrentDirectory;
             this.SourceFile = sourceFile;
@@ -203,6 +205,7 @@ namespace Tests
             this.compilerCode = compilerCode;
             this.SkipForCCI2 = skipForCCI2;
             this.SkipSlicing = skipSlicing;
+            this.SkipForNet35 = skipForNet35;
         }
 
         private GroupInfo GetTestGroup(string testGroupName, string rootDir, out int instance)
