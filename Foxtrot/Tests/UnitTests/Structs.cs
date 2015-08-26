@@ -18,45 +18,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.Diagnostics.Contracts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CodeUnderTest;
+using Xunit;
 
 namespace Tests {
-  [TestClass]
   public class StructTests : DisableAssertUI {
-    #region Test Management
-    [ClassInitialize]
-    public static void ClassInitialize(TestContext context)
-    {
-    }
-
-    [ClassCleanup]
-    public static void ClassCleanup()
-    {
-    }
-
-    [TestInitialize]
-    public void TestInitialize()
-    {
-    }
-
-    [TestCleanup]
-    public void TestCleanup()
-    {
-    }
-    #endregion Test Management
-
     #region Tests
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void StructInheritingFromInterfacePositive1()
     {
       EmptyIndexable<int> empty = new EmptyIndexable<int>();
       int x = empty.Count;
-      Assert.AreEqual(0, x);
+      Assert.Equal(0, x);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void StructInheritingFromInterfaceNegative1()
     {
       EmptyIndexable<int> empty = new EmptyIndexable<int>();
@@ -67,19 +44,19 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("index < this.Count", p.Condition);
+        Assert.Equal("index < this.Count", p.Condition);
       }
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void StructInheritingFromInterfacePositive2()
     {
       var empty = new EmptyIntIndexable();
       int x = empty.Count;
-      Assert.AreEqual(0, x);
+      Assert.Equal(0, x);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void StructInheritingFromInterfaceNegative2()
     {
       var empty = new EmptyIntIndexable();
@@ -90,7 +67,7 @@ namespace Tests {
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("index < this.Count", p.Condition);
+        Assert.Equal("index < this.Count", p.Condition);
       }
     }
 
