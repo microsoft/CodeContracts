@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ClousotTests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
     public class Options
     {
-        private const string RelativeRoot = @"..\..\..\";
+        private const string RelativeRoot = @"..\..\..\..\..\";
         private const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
         private static readonly string RootDirectory;
 
@@ -32,7 +31,7 @@ namespace Tests
         public string ContractFramework = "v3.5";
         public bool UseBinDir = false;
         public bool UseExe = false;
-        public readonly string TestGroupName;
+        private string testGroupName;
         public bool SkipForCCI2;
         public bool SkipSlicing;
         public bool GenerateUniqueOutputName = false;
@@ -163,24 +162,47 @@ namespace Tests
         private static Dictionary<string, GroupInfo> groupInfo = new Dictionary<string, GroupInfo>();
         private int instance;
         public int Instance { get { return instance; } }
-        public readonly GroupInfo Group;
+        public GroupInfo Group;
 
-        public Options(string testGroupName, TestContext context)
+        public string TestGroupName
         {
-            var dataRow = context.DataRow;
-            OutDirectory = context.TestDeploymentDir;
-            this.TestGroupName = testGroupName;
-            this.Group = GetTestGroup(testGroupName, RootDirectory, out instance);
-            this.SourceFile = LoadString(dataRow, "Name");
-            this.ClousotOptions = LoadString(dataRow, "Options");
-            this.UseContractReferenceAssemblies = LoadBool(dataRow, "ContractReferenceAssemblies", false);
-            this.UseExe = LoadBool(dataRow, "Exe", false);
-            compilerOptions = LoadString(dataRow, "CompilerOptions");
-            this.References = LoadList(dataRow, "References", "mscorlib.dll", "System.dll", "ClousotTestHarness.dll");
-            this.LibPaths = LoadList(dataRow, "LibPaths", MakeAbsolute(TestHarnessDirectory));
-            compilerCode = LoadString(dataRow, "Compiler", "CS");
-            this.SkipForCCI2 = LoadBool(dataRow, "SkipCCI2", false);
-            this.SkipSlicing = LoadBool(dataRow, "SkipSlicing", false);
+            get
+            {
+                return this.testGroupName;
+            }
+
+            set
+            {
+                this.testGroupName = value;
+                this.Group = GetTestGroup(testGroupName, RootDirectory, out instance);
+            }
+        }
+
+        public Options(
+            string sourceFile,
+            string clousotOptions,
+            bool useContractReferenceAssemblies,
+            bool useExe,
+            string compilerOptions,
+            string[] references,
+            string[] libPaths,
+            string compilerCode,
+            bool skipForCCI2,
+            bool skipSlicing)
+        {
+            OutDirectory = Environment.CurrentDirectory;
+            this.SourceFile = sourceFile;
+            this.ClousotOptions = clousotOptions;
+            this.UseContractReferenceAssemblies = useContractReferenceAssemblies;
+            this.UseExe = useExe;
+            this.compilerOptions = compilerOptions;
+            this.References = new List<string> { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" };
+            this.References.AddRange(references);
+            this.LibPaths = new List<string> { MakeAbsolute(TestHarnessDirectory) };
+            this.LibPaths.AddRange(libPaths);
+            this.compilerCode = compilerCode;
+            this.SkipForCCI2 = skipForCCI2;
+            this.SkipSlicing = skipSlicing;
         }
 
         private GroupInfo GetTestGroup(string testGroupName, string rootDir, out int instance)
