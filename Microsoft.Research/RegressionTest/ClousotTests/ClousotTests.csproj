@@ -197,6 +197,18 @@
     <None Include="..\TestPostconditionInference\Filtering.cs">
       <Link>Sources\Filtering.cs</Link>
     </None>
+    <None Include="..\Inference\MissingPublicPreconditionsAsWarnings.cs">
+      <Link>Sources\MissingPublicPreconditionsAsWarnings.cs</Link>
+    </None>
+    <None Include="..\Inference\Preconditions-BlogExample.cs">
+      <Link>Sources\Preconditions-BlogExample.cs</Link>
+    </None>
+    <None Include="..\UserRepros\Domino.cs">
+      <Link>Sources\Domino.cs</Link>
+    </None>
+    <None Include="..\UserRepros\JamesAlbert.cs">
+      <Link>Sources\JamesAlbert.cs</Link>
+    </None>
     <Compile Include="Tests.cs" />
     <None Include="..\Containers\TestContainers\ArrayWithNonNullAnalysis.cs">
       <Link>Sources\ArrayWithNonNullAnalysis.cs</Link>
