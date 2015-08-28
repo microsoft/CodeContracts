@@ -73,6 +73,7 @@ namespace System.Windows.Forms
     public void Add(Binding binding)
     {
         Contract.Requires(binding != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
     }
 
     /// <summary>
@@ -87,6 +88,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(dataSource != null);
         Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
 
@@ -102,6 +104,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(dataSource != null);
         Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
 
@@ -117,6 +120,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(dataSource != null);
         Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
 
@@ -132,6 +136,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(dataSource != null);
         Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
 
@@ -147,6 +152,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(dataSource != null);
         Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
 
@@ -161,7 +167,7 @@ namespace System.Windows.Forms
     public Binding Add(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode updateMode, object nullValue, string formatString, IFormatProvider formatInfo)
     {
         Contract.Requires(dataSource != null);
-        Contract.Ensures(Contract.Result<Binding>() != null);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
         return default(Binding);
     }
         
@@ -177,6 +183,7 @@ namespace System.Windows.Forms
     public new void Remove(Binding binding)
     {
         Contract.Requires(binding != null);
+        // Note, the binding may not be part of the collection, so we can't ensure the collection count is reduced.
     }
 
     /// <summary>
@@ -187,6 +194,7 @@ namespace System.Windows.Forms
     {
         Contract.Requires(index >= 0);
         Contract.Requires(index < this.Count);
+        Contract.Ensures(this.Count == Contract.OldValue(this.Count) - 1);
     }
   }
 }

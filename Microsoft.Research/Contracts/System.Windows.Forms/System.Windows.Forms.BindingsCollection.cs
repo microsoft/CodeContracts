@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Diagnostics.Contracts;
 using System.Windows.Forms.Layout;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Forms
 {
@@ -31,15 +32,8 @@ namespace System.Windows.Forms
     /// <returns>
     /// The total number of bindings in the collection.
     /// </returns>  
-    public override int Count
-    {
-        get
-        {
-            Contract.Ensures(Contract.Result<int>() > 0);
-            return default(int);
-        }
-    }
-
+    // public override int Count {get;}
+      
     /// <summary>
     /// Gets the <see cref="T:System.Windows.Forms.Binding"/> at the specified index.
     /// </summary>
@@ -62,10 +56,8 @@ namespace System.Windows.Forms
     /// Adds the specified binding to the collection.
     /// </summary>
     /// <param name="binding">The <see cref="T:System.Windows.Forms.Binding"/> to add to the collection. </param>
-    protected internal void Add(Binding binding)
-    {
-        Contract.Requires(binding != null);
-    }
+    // protected internal void Add(Binding binding)
+   
 
     /// <summary>
     /// Adds a <see cref="T:System.Windows.Forms.Binding"/> to the collection.
@@ -74,6 +66,7 @@ namespace System.Windows.Forms
     protected virtual void AddCore(Binding dataBinding)
     {
        Contract.Requires(dataBinding != null);
+       Contract.Ensures(this.Count == Contract.OldValue(this.Count)+1);
     }
 
     // <summary>
@@ -84,22 +77,28 @@ namespace System.Windows.Forms
     // <summary>
     // Clears the collection of any members.
     // </summary>
-    // protected virtual void ClearCore();
-    
-    /// <summary>
-    /// Deletes the binding from the collection at the specified index.
-    /// </summary>
-    /// <param name="index">The index of the <see cref="T:System.Windows.Forms.Binding"/> to remove. </param>
-    protected internal void RemoveAt(int index)
+    protected virtual void ClearCore()
     {
-        Contract.Requires(index >= 0);
-        Contract.Requires(index < this.Count);
+        Contract.Ensures(this.Count == 0);     
     }
 
-    // <summary>
-    // Removes the specified <see cref="T:System.Windows.Forms.Binding"/> from the collection.
-    // </summary>
-    // <param name="dataBinding">The <see cref="T:System.Windows.Forms.Binding"/> to remove. </param>
-    // protected virtual void RemoveCore(Binding dataBinding);
+        // <summary>
+        // Deletes the binding from the collection at the specified index.
+        // </summary>
+        // <param name="index">The index of the <see cref="T:System.Windows.Forms.Binding"/> to remove. </param>
+        //protected internal void RemoveAt(int index)
+        //{
+        //    Contract.Requires(index >= 0);
+        //    Contract.Requires(index < this.Count);
+        //    Contract.Ensures
+        //}
+
+        // <summary>
+        // Removes the specified <see cref="T:System.Windows.Forms.Binding"/> from the collection.
+        // </summary>
+        // <param name="dataBinding">The <see cref="T:System.Windows.Forms.Binding"/> to remove. </param>
+        // protected virtual void RemoveCore(Binding dataBinding)
+        // Note, the default body of this method doesn't check for null.
+        // Since the dataBinding may not be part of the collection, we can't ensure that the collection will shrink.
   }
 }

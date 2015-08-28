@@ -37,7 +37,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Ensures(Contract.Result<int>() > 0);
+                Contract.Ensures(Contract.Result<int>() >= 0);
                 return default(int);
             }
         }
