@@ -1121,7 +1121,8 @@ namespace Microsoft.Research.CodeAnalysis
 
                     this.ReplayOutput.WriteLine("The reason why the deserialization failed is {0}", e.Message);
                     this.ReplayOutput.WriteLine(
-                        "We remove the incorrect entry from the cache and we replace it with a new one. If the error persists, please report the tool output to logozzo@microsoft.com");
+                        "We remove the incorrect entry from the cache and we replace it with a new one. "
+                        + "If the error persists, please report the tool output at https://github.com/Microsoft/CodeContracts/issues");
 
                     this.cacheAccessor.DeleteMethodModel(methodModel);
                     this.cacheAccessor.SaveChanges(true); // force commit of changes
