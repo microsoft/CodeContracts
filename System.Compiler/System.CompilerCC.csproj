@@ -55,8 +55,6 @@
     <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts;CLOUSOT</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -110,8 +108,6 @@
     <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -126,8 +122,6 @@
     <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -142,9 +136,6 @@
     <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -159,8 +150,6 @@
     <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -174,8 +163,6 @@
     <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts;CLOUSOT</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\System.Compiler.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -195,7 +182,6 @@
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Internal9\System.Compiler.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -213,9 +199,7 @@
     <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>System.Compiler.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>1591;1699</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Devlab9\System.Compiler.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -227,6 +211,16 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!--
+      Make sure any documentation comments which are included in code get checked for syntax during the build, but do
+      not report warnings for missing comments.
+
+      CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+    -->
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn),1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
