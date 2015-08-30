@@ -11,7 +11,7 @@ namespace Tests
     public class Options
     {
         private const string RelativeRoot = @"..\..\..\..\..\";
-        private const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
+        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
         private static readonly string RootDirectory;
 
         static Options()
@@ -227,7 +227,7 @@ namespace Tests
             return result;
         }
 
-        private static string LoadString(System.Data.DataRow dataRow, string name, string defaultValue = "")
+        public static string LoadString(System.Data.DataRow dataRow, string name, string defaultValue = "")
         {
             if (!ColumnExists(dataRow, name))
                 return defaultValue;
@@ -237,7 +237,7 @@ namespace Tests
             return result;
         }
 
-        private static List<string> LoadList(System.Data.DataRow dataRow, string name, params string[] initial)
+        public static List<string> LoadList(System.Data.DataRow dataRow, string name, params string[] initial)
         {
             if (!ColumnExists(dataRow, name)) return new List<string>();
             string listdata = dataRow[name] as string;
@@ -254,7 +254,7 @@ namespace Tests
             return dataRow.Table.Columns.IndexOf(name) >= 0;
         }
 
-        private static bool LoadBool(System.Data.DataRow dataRow, string name, bool defaultValue)
+        public static bool LoadBool(System.Data.DataRow dataRow, string name, bool defaultValue)
         {
             if (!ColumnExists(dataRow, name)) return defaultValue;
             var booloption = dataRow[name] as string;
