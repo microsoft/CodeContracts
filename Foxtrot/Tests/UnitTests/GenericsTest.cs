@@ -15,286 +15,231 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.Contracts;
 using CodeUnderTest;
+using Xunit;
 
 namespace Tests {
   /// <summary>
   /// Summary description for GenericsTest
   /// </summary>
-  [TestClass]
-  public class GenericsTest : DisableAssertUI {
-    public GenericsTest()
+  public class GenericsTest : DisableAssertUI, IClassFixture<GenericsTest.GenericsTestFixture> {
+    public GenericsTest(GenericsTestFixture testFixture)
     {
-      //
-      // TODO: Add constructor logic here
-      //
     }
 
-    private TestContext testContextInstance;
-
-    /// <summary>
-    ///Gets or sets the test context which provides
-    ///information about and functionality for the current test run.
-    ///</summary>
-    public TestContext TestContext
+    public class GenericsTestFixture
     {
-      get
+      public GenericsTestFixture()
       {
-        return testContextInstance;
-      }
-      set
-      {
-        testContextInstance = value;
-      }
-    }
-
-    #region Additional test attributes
-    //
-    // You can use the following additional attributes as you write your tests:
-    //
-    // Use ClassInitialize to run code before running the first test in the class
-    [ClassInitialize()]
-    public static void MyClassInitialize(TestContext testContext)
-    {
-      object[] attrs = typeof(RewrittenInheritanceBase).Assembly.GetCustomAttributes(true);
-      bool found = false;
-      foreach (var a in attrs)
-      {
-        Attribute attr = a as Attribute;
-        if (attr == null) continue;
-        Type ty = attr.TypeId as Type;
-        if (ty == null) continue;
-        if (ty.FullName == "System.Diagnostics.Contracts.RuntimeContractsAttribute")
+        object[] attrs = typeof(RewrittenInheritanceBase).Assembly.GetCustomAttributes(true);
+        bool found = false;
+        foreach (var a in attrs)
         {
-          found = true;
-          break;
+          Attribute attr = a as Attribute;
+          if (attr == null) continue;
+          Type ty = attr.TypeId as Type;
+          if (ty == null) continue;
+          if (ty.FullName == "System.Diagnostics.Contracts.RuntimeContractsAttribute")
+          {
+            found = true;
+            break;
+          }
         }
+        Assert.True(found, "This assembly must have been rewritten before running these tests.  This is usually done in the post build script of the test project.");
       }
-      Assert.IsTrue(found, "This assembly must have been rewritten before running these tests.  This is usually done in the post build script of the test project.");
     }
-    //
-    // Use ClassCleanup to run code after all tests in a class have run
-    // [ClassCleanup()]
-    // public static void MyClassCleanup() { }
-    //
-    // Use TestInitialize to run code before running each test 
-    // [TestInitialize()]
-    // public void MyTestInitialize() { }
-    //
-    // Use TestCleanup to run code after each test has run
-    // [TestCleanup()]
-    // public void MyTestCleanup() { }
-    //
-    #endregion
 
     #region NonGenericExplicitImplementation
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationPositive()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
       j.M("abcd", true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationPreNegative()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
-      j.M(null, true);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => j.M(null, true));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationPostNegative()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
-      j.M("abcd", false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.M("abcd", false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationClosurePostPositive()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
       j.WithStaticClosure(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationClosurePostNegative()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithStaticClosure(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithStaticClosure(x, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationClosure2PostPositive()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
       j.WithClosureObject(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericExplicitImplementationClosure2PostNegative()
     {
       IGenericInterface<string> j = new NonGenericExplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithClosureObject(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithClosureObject(x, false));
     }
     #endregion NonGenericExplicitImplementation
     #region NonGenericImplicitImplementation
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationPositive()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
       j.M("abcd", true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationPreNegative()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
-      j.M(null, true);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => j.M(null, true));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationPostNegative()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
-      j.M("abcd", false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.M("abcd", false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationClosurePostPositive()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
       j.WithStaticClosure(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationClosurePostNegative()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithStaticClosure(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithStaticClosure(x, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationClosure2PostPositive()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
       j.WithClosureObject(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NonGenericImplicitImplementationClosure2PostNegative()
     {
       IGenericInterface<string> j = new NonGenericImplicitImpl();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithClosureObject(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithClosureObject(x, false));
     }
     #endregion NonGenericImplicitImplementation
     #region GenericExplicitImplementation
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationPositive()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
       j.M("abcd", true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationPreNegative()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
-      j.M(null, true);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => j.M(null, true));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationPostNegative()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
-      j.M("abcd", false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.M("abcd", false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationClosurePostPositive()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
       j.WithStaticClosure(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationClosurePostNegative()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithStaticClosure(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithStaticClosure(x, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationClosure2PostPositive()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
       j.WithClosureObject(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericExplicitImplementationClosure2PostNegative()
     {
       IGenericInterface<string> j = new GenericExplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithClosureObject(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithClosureObject(x, false));
     }
     #endregion GenericExplicitImplementation
     #region GenericImplicitImplementation
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationPositive()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
       j.M("abcd", true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationPreNegative()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
-      j.M(null, true);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => j.M(null, true));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationPostNegative()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
-      j.M("abcd", false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.M("abcd", false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationClosurePostPositive()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
       j.WithStaticClosure(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationClosurePostNegative()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithStaticClosure(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithStaticClosure(x, false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationClosure2PostPositive()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
       j.WithClosureObject(x, true);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void GenericImplicitImplementationClosure2PostNegative()
     {
       IGenericInterface<string> j = new GenericImplicitImpl<string>();
       string[] x = new string[] { "abcd", "defg" };
-      j.WithClosureObject(x, false);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => j.WithClosureObject(x, false));
     }
     #endregion GenericImplicitImplementation
   }
