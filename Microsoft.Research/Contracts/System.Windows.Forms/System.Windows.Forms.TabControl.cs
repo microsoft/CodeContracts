@@ -92,6 +92,7 @@ namespace System.Windows.Forms
 
   public class TabControl
   {
+
     // Summary:
     //     Initializes a new instance of the System.Windows.Forms.TabControl class.
     public TabControl()
