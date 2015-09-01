@@ -83,7 +83,7 @@ namespace System.ComponentModel
     // Returns:
     //     true if this converter can perform the conversion; otherwise, false.
     //public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType);
-		//
+    //
     // Summary:
     //     Converts the given value to the type of this converter.
     //
@@ -98,10 +98,10 @@ namespace System.ComponentModel
     //   System.NotSupportedException:
     //     The conversion cannot be performed.
     public object ConvertFrom(object value)
-		{
-			Contract.Ensures(Contract.Result<object>() != null);
-			return default(object);
-		}
+    {
+      Contract.Ensures(Contract.Result<object>() != null);
+      return default(object);
+    }
     
     // Summary:
     //     Converts the given object to the type of this converter, using the specified
