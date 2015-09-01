@@ -336,7 +336,7 @@ namespace System.Windows.Forms
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     //[Browsable(false)]
     //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //public static bool CheckForIllegalCrossThreadCalls { get; set; }
+    public static bool CheckForIllegalCrossThreadCalls { get; set; }
     ////
     //// Summary:
     ////     Gets the rectangle that represents the client area of the control.
@@ -459,7 +459,7 @@ namespace System.Windows.Forms
     //[ParenthesizePropertyName(true)]
     //[RefreshProperties(RefreshProperties.All)]
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    //public ControlBindingsCollection DataBindings { get; }
+    public ControlBindingsCollection DataBindings { get; }
     ////
     //// Summary:
     ////     Gets the default background color of the control.

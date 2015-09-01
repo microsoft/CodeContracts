@@ -16,6 +16,7 @@
 // However, if this is true or not, seems depending on invariants of the Windows API, with which I am not really familiar
 
 using System.Diagnostics.Contracts;
+using System.Threading;
 
 
 namespace System.Windows.Forms
@@ -282,7 +283,10 @@ namespace System.Windows.Forms
     //
     // Returns:
     //     One of the System.Threading.ApartmentState values.
-    //public static ApartmentState OleRequired();
+    public static ApartmentState OleRequired()
+    {
+        return default(ApartmentState); 
+    }
     //
     // Summary:
     //     Raises the System.Windows.Forms.Application.ThreadException event.
