@@ -83,7 +83,7 @@ namespace System.ComponentModel
     // Returns:
     //     true if this converter can perform the conversion; otherwise, false.
     //public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType);
-
+		//
     // Summary:
     //     Converts the given value to the type of this converter.
     //
