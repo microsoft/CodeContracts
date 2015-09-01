@@ -24,8 +24,6 @@ namespace System.Windows.Forms
     /// Represents a text box control that can be hosted in a <see cref="T:System.Windows.Forms.DataGridViewTextBoxCell"/>.
     /// </summary>
     
-    [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public class DataGridViewTextBoxEditingControl : TextBox //, IDataGridViewEditingControl
     {
        

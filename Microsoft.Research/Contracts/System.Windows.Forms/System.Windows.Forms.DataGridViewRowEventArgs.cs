@@ -18,6 +18,7 @@
 // Assembly location: C:\WINDOWS\assembly\GAC_MSIL\System.Windows.Forms\2.0.0.0__b77a5c561934e089\System.Windows.Forms.dll
 
 using System;
+using System.Diagnostics.Contracts;
 
 namespace System.Windows.Forms
 {
@@ -27,8 +28,7 @@ namespace System.Windows.Forms
     
     public class DataGridViewRowEventArgs : EventArgs
     {
-        private DataGridViewRow dataGridViewRow;
-
+       
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridViewRow"/> associated with the event.
         /// </summary>
@@ -41,7 +41,8 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.dataGridViewRow;
+                Contract.Ensures(Contract.Result<DataGridViewRow>() != null);
+                return default(DataGridViewRow);
             }
         }
 
@@ -51,9 +52,7 @@ namespace System.Windows.Forms
         /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that the event occurred for.</param><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewRow"/> is null.</exception>
         public DataGridViewRowEventArgs(DataGridViewRow dataGridViewRow)
         {
-            if (dataGridViewRow == null)
-                throw new ArgumentNullException("dataGridViewRow");
-            this.dataGridViewRow = dataGridViewRow;
+            Contract.Requires(dataGridViewRow != null);
         }
     }
 }

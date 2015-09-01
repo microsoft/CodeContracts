@@ -23,9 +23,6 @@ namespace System.Windows.Forms
     
     public class DataGridViewColumnStateChangedEventArgs : EventArgs
     {
-        private DataGridViewColumn dataGridViewColumn;
-        private DataGridViewElementStates stateChanged;
-
         /// <summary>
         /// Gets the column whose state changed.
         /// </summary>
@@ -34,38 +31,22 @@ namespace System.Windows.Forms
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> whose state changed.
         /// </returns>
         /// 
-        public DataGridViewColumn Column
-        {
-            get
-            {
-                return this.dataGridViewColumn;
-            }
-        }
+        public DataGridViewColumn Column {get;}
 
-        /// <summary>
-        /// Gets the new column state.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.
-        /// </returns>
-        public DataGridViewElementStates StateChanged
-        {
-            get
-            {
-                return this.stateChanged;
-            }
-        }
+        // <summary>
+        // Gets the new column state.
+        // </summary>
+        // 
+        // <returns>
+        // One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.
+        // </returns>
+        // public DataGridViewElementStates StateChanged { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewColumnStateChangedEventArgs"/> class.
-        /// </summary>
-        /// <param name="dataGridViewColumn">The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> whose state has changed.</param><param name="stateChanged">One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</param>
-        public DataGridViewColumnStateChangedEventArgs(DataGridViewColumn dataGridViewColumn, DataGridViewElementStates stateChanged)
-        {
-            this.dataGridViewColumn = dataGridViewColumn;
-            this.stateChanged = stateChanged;
-        }
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewColumnStateChangedEventArgs"/> class.
+        // </summary>
+        // <param name="dataGridViewColumn">The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> whose state has changed.</param><param name="stateChanged">One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</param>
+        // public DataGridViewColumnStateChangedEventArgs(DataGridViewColumn dataGridViewColumn, DataGridViewElementStates stateChanged)
     }
 }
 

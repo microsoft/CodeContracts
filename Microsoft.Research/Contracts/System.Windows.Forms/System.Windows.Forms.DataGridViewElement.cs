@@ -25,14 +25,14 @@ namespace System.Windows.Forms
     public class DataGridViewElement
     {
 
-        /// <summary>
-        /// Gets the user interface (UI) state of the element.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values representing the state.
-        /// </returns>
-        public virtual DataGridViewElementStates State { get; }
+        // <summary>
+        // Gets the user interface (UI) state of the element.
+        // </summary>
+        // 
+        // <returns>
+        // A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values representing the state.
+        // </returns>
+        //public virtual DataGridViewElementStates State { get; }
 
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridView"/> control associated with this element.
@@ -44,50 +44,50 @@ namespace System.Windows.Forms
         /// 
         public DataGridView DataGridView { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewElement"/> class.
-        /// </summary>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewElement"/> class.
+        // </summary>
         // public DataGridViewElement()
 
-        /// <summary>
-        /// Called when the element is associated with a different <see cref="T:System.Windows.Forms.DataGridView"/>.
-        /// </summary>
+        // <summary>
+        // Called when the element is associated with a different <see cref="T:System.Windows.Forms.DataGridView"/>.
+        // </summary>
         // protected virtual void OnDataGridViewChanged()
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.CellClick"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.CellClick"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
         // protected void RaiseCellClick(DataGridViewCellEventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.CellContentClick"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.CellContentClick"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
         // protected void RaiseCellContentClick(DataGridViewCellEventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.CellContentDoubleClick"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.CellContentDoubleClick"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
         // protected void RaiseCellContentDoubleClick(DataGridViewCellEventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.CellValueChanged"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.CellValueChanged"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param>
         // protected void RaiseCellValueChanged(DataGridViewCellEventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewDataErrorEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewDataErrorEventArgs"/> that contains the event data. </param>
         // protected void RaiseDataError(DataGridViewDataErrorEventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseWheel"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.Control.MouseWheel"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
         // protected void RaiseMouseWheel(MouseEventArgs e)
     }
 }

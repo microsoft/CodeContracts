@@ -213,23 +213,23 @@ namespace System.Windows.Forms
         // <exception cref="T:System.InvalidOperationException">The row containing the cell is a shared row.</exception>
         // public bool IsInEditMode {get;}
 
-        // <summary>
-        // Gets the column that contains this cell.
-        // </summary>
-        // 
-        // <returns>
-        // The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> that contains the cell, or null if the cell is not in a column.
-        // </returns>
-        // public DataGridViewColumn OwningColumn { get; }
+        /// <summary>
+        /// Gets the column that contains this cell.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> that contains the cell, or null if the cell is not in a column.
+        /// </returns>
+        public DataGridViewColumn OwningColumn { get; }
     
-        // <summary>
-        // Gets the row that contains this cell.
-        // </summary>
-        // 
-        // <returns>
-        // The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that contains the cell, or null if the cell is not in a row.
-        // </returns>
-        // public DataGridViewRow OwningRow {get;}
+        /// <summary>
+        /// Gets the row that contains this cell.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that contains the cell, or null if the cell is not in a row.
+        /// </returns>
+        public DataGridViewRow OwningRow {get;}
         
         // <summary>
         // Gets the size, in pixels, of a rectangular area into which the cell can fit.
@@ -639,8 +639,8 @@ namespace System.Windows.Forms
         
         public virtual void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
-            DataGridView dataGridView = this.DataGridView;
-            Contract.Requires(this.DataGridView != null || this.DataGridView.EditingControl != null);
+            Contract.Requires(this.DataGridView != null);
+            Contract.Requires(this.DataGridView.EditingControl != null);
         }
 
         /// <summary>

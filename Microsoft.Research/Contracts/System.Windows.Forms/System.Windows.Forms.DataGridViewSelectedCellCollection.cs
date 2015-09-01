@@ -22,18 +22,16 @@ namespace System.Windows.Forms
     /// <summary>
     /// Represents a collection of cells that are selected in a <see cref="T:System.Windows.Forms.DataGridView"/>.
     /// </summary>
-    
-    [ListBindable(false)]
     public class DataGridViewSelectedCellCollection : BaseCollection //,IList, ICollection, IEnumerable
     {
         
-        /// <summary>
-        /// Gets a list of elements in the collection.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An <see cref="T:System.Collections.ArrayList"/> containing the elements of the collection.
-        /// </returns>
+        // <summary>
+        // Gets a list of elements in the collection.
+        // </summary>
+        // 
+        // <returns>
+        // An <see cref="T:System.Collections.ArrayList"/> containing the elements of the collection.
+        // </returns>
         // protected override ArrayList List
         
         /// <summary>
@@ -53,32 +51,32 @@ namespace System.Windows.Forms
             }
         }
         
-        /// <summary>
-        /// Clears the collection.
-        /// </summary>
-        /// <exception cref="T:System.NotSupportedException">Always thrown.</exception>
+        // <summary>
+        // Clears the collection.
+        // </summary>
+        // <exception cref="T:System.NotSupportedException">Always thrown.</exception>
         // public void Clear()
         
-        /// <summary>
-        /// Determines whether the specified cell is contained in the collection.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if <paramref name="dataGridViewCell"/> is in the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>; otherwise, false.
-        /// </returns>
-        /// <param name="dataGridViewCell">The <see cref="T:System.Windows.Forms.DataGridViewCell"/> to locate in the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>.</param>
+        // <summary>
+        // Determines whether the specified cell is contained in the collection.
+        // </summary>
+        // 
+        // <returns>
+        // true if <paramref name="dataGridViewCell"/> is in the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>; otherwise, false.
+        // </returns>
+        // <param name="dataGridViewCell">The <see cref="T:System.Windows.Forms.DataGridViewCell"/> to locate in the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>.</param>
         // public bool Contains(DataGridViewCell dataGridViewCell)
         
-        /// <summary>
-        /// Copies the elements of the collection to the specified <see cref="T:System.Windows.Forms.DataGridViewCell"/> array, starting at the specified index.
-        /// </summary>
-        /// <param name="array">The one-dimensional array of type <see cref="T:System.Windows.Forms.DataGridViewCell"/> that is the destination of the elements copied from the collection. The array must have zero-based indexing.</param><param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param><exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than zero.</exception><exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-The number of elements in the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> is greater than the available space from <paramref name="index"/> to the end of <paramref name="array"/>.</exception><exception cref="T:System.InvalidCastException">The <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> cannot be cast automatically to the type of <paramref name="array"/>.</exception>
+        // <summary>
+        // Copies the elements of the collection to the specified <see cref="T:System.Windows.Forms.DataGridViewCell"/> array, starting at the specified index.
+        // </summary>
+        // <param name="array">The one-dimensional array of type <see cref="T:System.Windows.Forms.DataGridViewCell"/> that is the destination of the elements copied from the collection. The array must have zero-based indexing.</param><param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param><exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than zero.</exception><exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-The number of elements in the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> is greater than the available space from <paramref name="index"/> to the end of <paramref name="array"/>.</exception><exception cref="T:System.InvalidCastException">The <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> cannot be cast automatically to the type of <paramref name="array"/>.</exception>
         // public void CopyTo(DataGridViewCell[] array, int index)
         
-        /// <summary>
-        /// Inserts a cell into the collection.
-        /// </summary>
-        /// <param name="index">The index at which <paramref name="dataGridViewCell"/> should be inserted.</param><param name="dataGridViewCell">The object to be added to the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>.</param><exception cref="T:System.NotSupportedException">Always thrown.</exception>
+        // <summary>
+        // Inserts a cell into the collection.
+        // </summary>
+        // <param name="index">The index at which <paramref name="dataGridViewCell"/> should be inserted.</param><param name="dataGridViewCell">The object to be added to the <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/>.</param><exception cref="T:System.NotSupportedException">Always thrown.</exception>
         // public void Insert(int index, DataGridViewCell dataGridViewCell)
         
     }

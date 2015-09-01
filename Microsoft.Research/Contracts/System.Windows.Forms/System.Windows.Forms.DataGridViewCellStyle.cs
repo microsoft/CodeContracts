@@ -65,13 +65,13 @@ namespace System.Windows.Forms
         // </returns>
         // public Font Font {get; set;}
 
-        /// <summary>
-        /// Gets or sets the foreground color of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
-        /// </returns>
+        // <summary>
+        // Gets or sets the foreground color of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
+        // </returns>
         // public Color ForeColor {get; set;}
        
         /// <summary>
@@ -157,22 +157,22 @@ namespace System.Windows.Forms
         // </returns>
         // public Padding Padding {get; set;}
        
-        /// <summary>
-        /// Gets or sets the background color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Color"/> that represents the background color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
-        /// </returns>
+        // <summary>
+        // Gets or sets the background color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Color"/> that represents the background color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
+        // </returns>
         // public Color SelectionBackColor { get; set; }
         
-        /// <summary>
-        /// Gets or sets the foreground color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
-        /// </returns>
+        // <summary>
+        // Gets or sets the foreground color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
+        // </returns>
         // public Color SelectionForeColor {get; set;}
         
         // <summary>

@@ -26,40 +26,40 @@ namespace System.Windows.Forms
     public class DataGridViewCellPaintingEventArgs : HandledEventArgs
     {
         
-        /// <summary>
-        /// Gets the border style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style of the <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Gets the border style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style of the <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public DataGridViewAdvancedBorderStyle AdvancedBorderStyle {get;}
        
-        /// <summary>
-        /// Get the bounds of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Rectangle"/> that represents the bounds of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Get the bounds of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Rectangle"/> that represents the bounds of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public Rectangle CellBounds {get;}
         
-        /// <summary>
-        /// Gets the cell style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that contains the cell style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Gets the cell style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that contains the cell style of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public DataGridViewCellStyle CellStyle { get; }
         
-        /// <summary>
-        /// Gets the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be repainted.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be repainted.
-        /// </returns>
+        // <summary>
+        // Gets the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be repainted.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be repainted.
+        // </returns>
         // public Rectangle ClipBounds {get;}
         
         /// <summary>
@@ -79,40 +79,40 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets a string that represents an error message for the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A string that represents an error message for the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Gets a string that represents an error message for the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A string that represents an error message for the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public string ErrorText {get;}
       
-        /// <summary>
-        /// Gets the formatted value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The formatted value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Gets the formatted value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // The formatted value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public object FormattedValue {get;}
         
-        /// <summary>
-        /// Gets the <see cref="T:System.Drawing.Graphics"/> used to paint the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The <see cref="T:System.Drawing.Graphics"/> used to paint the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
+        // <summary>
+        // Gets the <see cref="T:System.Drawing.Graphics"/> used to paint the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // The <see cref="T:System.Drawing.Graphics"/> used to paint the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
         // public Graphics Graphics
        
-        /// <summary>
-        /// The cell parts that are to be painted.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values specifying the parts to be painted.
-        /// </returns>
+        // <summary>
+        // The cell parts that are to be painted.
+        // </summary>
+        // 
+        // <returns>
+        // A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values specifying the parts to be painted.
+        // </returns>
         // public DataGridViewPaintParts PaintParts {get;}
         
         /// <summary>
@@ -132,23 +132,23 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets the state of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the cell.
-        /// </returns>
+        // <summary>
+        // Gets the state of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the cell.
+        // </returns>
         // public DataGridViewElementStates State
         
-        /// <summary>
-        /// Gets the value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
-        /// </returns>
-        /// 
+        // <summary>
+        // Gets the value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </summary>
+        // 
+        // <returns>
+        // The value of the current <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
+        // </returns>
+        // 
         // public object Value {get;}
        
 
@@ -161,7 +161,7 @@ namespace System.Windows.Forms
             Contract.Requires(dataGridView != null);
             Contract.Requires(graphics != null);
             Contract.Requires(cellStyle != null);
-            Contract.Requires(!((paintParts & ~DataGridViewPaintParts.All) != DataGridViewPaintParts.None));
+            Contract.Requires((paintParts & ~DataGridViewPaintParts.All) == DataGridViewPaintParts.None);
         }
         
         /// <summary>

@@ -43,23 +43,23 @@ namespace System.Windows.Forms
         /// 
         public int ColumnIndex {get;}
 
-        /// <summary>
-        /// Gets or sets the style applied to the edited cell.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the current style of the cell being edited. The default value is the value of the cell <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/> property.
-        /// </returns>
+        // <summary>
+        // Gets or sets the style applied to the edited cell.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the current style of the cell being edited. The default value is the value of the cell <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/> property.
+        // </returns>
         // public DataGridViewCellStyle InheritedCellStyle {get; set;}
 
-        /// <summary>
-        /// Gets or sets a value indicating whether a cell's value has been successfully parsed.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the cell's value has been successfully parsed; otherwise, false. The default is false.
-        /// </returns>
-        /// 
+        // <summary>
+        // Gets or sets a value indicating whether a cell's value has been successfully parsed.
+        // </summary>
+        // 
+        // <returns>
+        // true if the cell's value has been successfully parsed; otherwise, false. The default is false.
+        // </returns>
+        // 
         // public bool ParsingApplied {get; set;}
 
 

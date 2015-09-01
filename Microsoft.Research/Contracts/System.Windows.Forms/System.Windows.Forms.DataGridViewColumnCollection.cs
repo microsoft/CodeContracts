@@ -149,7 +149,6 @@ namespace System.Windows.Forms
             Contract.Requires(index < this.Count);
             Contract.Requires(array != null);
         }
-        
 
         /// <summary>
         /// Returns the number of columns that meet the given filter requirements.

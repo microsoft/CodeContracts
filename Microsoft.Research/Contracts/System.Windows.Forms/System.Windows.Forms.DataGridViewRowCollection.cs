@@ -56,7 +56,7 @@ namespace System.Windows.Forms
         // protected ArrayList List {get;}
 
         internal ArrayList SharedList { get; }
-        
+
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridView"/> that owns the collection.
         /// </summary>
@@ -83,16 +83,16 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Occurs when the contents of the collection change.
-        /// </summary>
-        /// 
+        // <summary>
+        // Occurs when the contents of the collection change.
+        // </summary>
+        // 
         // public event CollectionChangeEventHandler CollectionChanged
         
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/> class.
-        /// </summary>
-        /// <param name="dataGridView">The <see cref="T:System.Windows.Forms.DataGridView"/> that owns the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/> class.
+        // </summary>
+        // <param name="dataGridView">The <see cref="T:System.Windows.Forms.DataGridView"/> that owns the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param>
         // public DataGridViewRowCollection(DataGridView dataGridView)
         
         /// <summary>
@@ -226,7 +226,6 @@ namespace System.Windows.Forms
         /// Adds the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects to the collection.
         /// </summary>
         /// <param name="dataGridViewRows">An array of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects to be added to the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewRows"/> is null.</exception><exception cref="T:System.ArgumentException"><paramref name="dataGridViewRows"/> contains only one row, and the row it contains has more cells than there are columns in the control.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-At least one entry in the <paramref name="dataGridViewRows"/> array is null.-or-The <see cref="T:System.Windows.Forms.DataGridView"/> has no columns.-or-At least one row in the <paramref name="dataGridViewRows"/> array has a <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property value that is not null.-or-At least one row in the <paramref name="dataGridViewRows"/> array has a <see cref="P:System.Windows.Forms.DataGridViewRow.Selected"/> property value of true.-or-Two or more rows in the <paramref name="dataGridViewRows"/> array are identical.-or-At least one row in the <paramref name="dataGridViewRows"/> array contains one or more cells of a type that is incompatible with the type of the corresponding column in the control.-or-At least one row in the <paramref name="dataGridViewRows"/> array contains more cells than there are columns in the control.-or-This operation would add frozen rows after unfrozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual void AddRange(params DataGridViewRow[] dataGridViewRows)
         {
             Contract.Requires(dataGridViewRows != null);
@@ -246,14 +245,14 @@ namespace System.Windows.Forms
             Contract.Ensures(this.Count == 0);
         }
         
-        /// <summary>
-        /// Determines whether the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the collection.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>; otherwise, false.
-        /// </returns>
-        /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to locate in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param>
+        // <summary>
+        // Determines whether the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the collection.
+        // </summary>
+        // 
+        // <returns>
+        // true if the <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>; otherwise, false.
+        // </returns>
+        // <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to locate in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param>
         // public virtual bool Contains(DataGridViewRow dataGridViewRow)
         
         /// <summary>
@@ -580,10 +579,10 @@ namespace System.Windows.Forms
             Contract.Requires(this.DataGridView.RowTemplate.Cells.Count <= this.DataGridView.Columns.Count);
         }
         
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridViewRowCollection.CollectionChanged"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.ComponentModel.CollectionChangeEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridViewRowCollection.CollectionChanged"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.ComponentModel.CollectionChangeEventArgs"/> that contains the event data. </param>
         // protected virtual void OnCollectionChanged(CollectionChangeEventArgs e)
        
         /// <summary>

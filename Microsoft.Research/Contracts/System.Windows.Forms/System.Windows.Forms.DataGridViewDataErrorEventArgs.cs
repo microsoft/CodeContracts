@@ -60,7 +60,7 @@ namespace System.Windows.Forms
         /// <param name="exception">The exception that occurred.</param><param name="columnIndex">The column index of the cell that raised the <see cref="E:System.Windows.Forms.DataGridView.DataError"/>.</param><param name="rowIndex">The row index of the cell that raised the <see cref="E:System.Windows.Forms.DataGridView.DataError"/>.</param><param name="context">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewDataErrorContexts"/> values indicating the context in which the error occurred. </param>
         public DataGridViewDataErrorEventArgs(Exception exception, int columnIndex, int rowIndex,
             DataGridViewDataErrorContexts context)
-            : base(columnIndex, rowIndex)
+          : base(columnIndex, rowIndex)
         {
             
         }

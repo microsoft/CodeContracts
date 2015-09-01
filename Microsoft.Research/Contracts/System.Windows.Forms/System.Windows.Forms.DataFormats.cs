@@ -26,106 +26,124 @@ namespace System.Windows.Forms
     
     public class DataFormats
     {
-        /// <summary>
-        /// Specifies the standard ANSI text format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Text = "Text";
-        /// <summary>
-        /// Specifies the standard Windows Unicode text format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string UnicodeText = "UnicodeText";
-        /// <summary>
-        /// Specifies the Windows device-independent bitmap (DIB) format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Dib = "DeviceIndependentBitmap";
-        /// <summary>
-        /// Specifies a Windows bitmap format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Bitmap = "Bitmap";
-        /// <summary>
-        /// Specifies the Windows enhanced metafile format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string EnhancedMetafile = "EnhancedMetafile";
-        /// <summary>
-        /// Specifies the Windows metafile format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string MetafilePict = "MetaFilePict";
-        /// <summary>
-        /// Specifies the Windows symbolic link format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string SymbolicLink = "SymbolicLink";
-        /// <summary>
-        /// Specifies the Windows Data Interchange Format (DIF), which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Dif = "DataInterchangeFormat";
-        /// <summary>
-        /// Specifies the Tagged Image File Format (TIFF), which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Tiff = "TaggedImageFileFormat";
-        /// <summary>
-        /// Specifies the standard Windows original equipment manufacturer (OEM) text format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string OemText = "OEMText";
-        /// <summary>
-        /// Specifies the Windows palette format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Palette = "Palette";
-        /// <summary>
-        /// Specifies the Windows pen data format, which consists of pen strokes for handwriting software; Windows Forms does not use this format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string PenData = "PenData";
-        /// <summary>
-        /// Specifies the Resource Interchange File Format (RIFF) audio format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Riff = "RiffAudio";
-        /// <summary>
-        /// Specifies the wave audio format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string WaveAudio = "WaveAudio";
-        /// <summary>
-        /// Specifies the Windows file drop format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string FileDrop = "FileDrop";
-        /// <summary>
-        /// Specifies the Windows culture format, which Windows Forms does not directly use. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Locale = "Locale";
-        /// <summary>
-        /// Specifies text in the HTML Clipboard format. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Html = "HTML Format";
-        /// <summary>
-        /// Specifies text consisting of Rich Text Format (RTF) data. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string Rtf = "Rich Text Format";
-        /// <summary>
-        /// Specifies a comma-separated value (CSV) format, which is a common interchange format used by spreadsheets. This format is not used directly by Windows Forms. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string CommaSeparatedValue = "Csv";
-        /// <summary>
-        /// Specifies the Windows Forms string class format, which Windows Forms uses to store string objects. This static field is read-only.
-        /// </summary>
-        /// 
-        public static readonly string StringFormat = typeof(string).FullName;
+        // <summary>
+        // Specifies the standard ANSI text format. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Text = "Text";
+
+        // <summary>
+        // Specifies the standard Windows Unicode text format. This static field is read-only.
+        // </summary>
+        // 
+        // public static readonly string UnicodeText = "UnicodeText";
+
+        // <summary>
+        // Specifies the Windows device-independent bitmap (DIB) format. This static field is read-only.
+        // </summary>
+        // 
+        // public static readonly string Dib = "DeviceIndependentBitmap";
+
+        // <summary>
+        // Specifies a Windows bitmap format. This static field is read-only.
+        // </summary>
+        // 
+
+        // public static readonly string Bitmap = "Bitmap";
+        // <summary>
+        // Specifies the Windows enhanced metafile format. This static field is read-only.
+        // </summary>
+        // 
+        // public static readonly string EnhancedMetafile = "EnhancedMetafile";
+
+        // <summary>
+        // Specifies the Windows metafile format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        // public static readonly string MetafilePict = "MetaFilePict";
+
+        // <summary>
+        // Specifies the Windows symbolic link format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        // public static readonly string SymbolicLink = "SymbolicLink";
+        // <summary>
+        // Specifies the Windows Data Interchange Format (DIF), which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Dif = "DataInterchangeFormat";
+
+        // <summary>
+        // Specifies the Tagged Image File Format (TIFF), which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Tiff = "TaggedImageFileFormat";
+
+        // <summary>
+        // Specifies the standard Windows original equipment manufacturer (OEM) text format. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string OemText = "OEMText";
+
+        // <summary>
+        // Specifies the Windows palette format. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Palette = "Palette";
+
+        // <summary>
+        // Specifies the Windows pen data format, which consists of pen strokes for handwriting software; Windows Forms does not use this format. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string PenData = "PenData";
+
+        // <summary>
+        // Specifies the Resource Interchange File Format (RIFF) audio format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Riff = "RiffAudio";
+
+        // <summary>
+        // Specifies the wave audio format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string WaveAudio = "WaveAudio";
+
+        // <summary>
+        // Specifies the Windows file drop format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string FileDrop = "FileDrop";
+
+        // <summary>
+        // Specifies the Windows culture format, which Windows Forms does not directly use. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Locale = "Locale";
+
+        // <summary>
+        // Specifies text in the HTML Clipboard format. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Html = "HTML Format";
+
+        // <summary>
+        // Specifies text consisting of Rich Text Format (RTF) data. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string Rtf = "Rich Text Format";
+
+        // <summary>
+        // Specifies a comma-separated value (CSV) format, which is a common interchange format used by spreadsheets. This format is not used directly by Windows Forms. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string CommaSeparatedValue = "Csv";
+
+        // <summary>
+        // Specifies the Windows Forms string class format, which Windows Forms uses to store string objects. This static field is read-only.
+        // </summary>
+        // 
+        //public static readonly string StringFormat = typeof(string).FullName;
 
         // <summary>
         // Specifies a format that encapsulates any type of Windows Forms object. This static field is read-only.

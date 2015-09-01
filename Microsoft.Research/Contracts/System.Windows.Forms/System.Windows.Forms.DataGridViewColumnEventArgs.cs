@@ -23,8 +23,7 @@ namespace System.Windows.Forms
     
     public class DataGridViewColumnEventArgs : EventArgs
     {
-        private DataGridViewColumn dataGridViewColumn;
-
+        
         /// <summary>
         /// Gets the column that the event occurs for.
         /// </summary>
@@ -37,7 +36,8 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.dataGridViewColumn;
+                Contract.Ensures(Contract.Result<DataGridViewColumn>() != null);
+                return default(DataGridViewColumn);
             }
         }
 
@@ -47,9 +47,7 @@ namespace System.Windows.Forms
         /// <param name="dataGridViewColumn">The column that the event occurs for.</param><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewColumn"/> is null.</exception>
         public DataGridViewColumnEventArgs(DataGridViewColumn dataGridViewColumn)
         {
-            if (dataGridViewColumn == null)
-                throw new ArgumentNullException("dataGridViewColumn");
-            this.dataGridViewColumn = dataGridViewColumn;
+            Contract.Requires(dataGridViewColumn != null);
         }
     }
 }

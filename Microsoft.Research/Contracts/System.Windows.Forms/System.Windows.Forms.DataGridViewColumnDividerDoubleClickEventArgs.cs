@@ -14,6 +14,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Runtime.ConstrainedExecution;
 
 namespace System.Windows.Forms
 {
@@ -22,7 +23,6 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataGridViewColumnDividerDoubleClickEventArgs : HandledMouseEventArgs
     {
-        private int columnIndex;
 
         /// <summary>
         /// The index of the column next to the column divider that was double-clicked.
@@ -35,7 +35,8 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.columnIndex;
+                Contract.Ensures(Contract.Result<int>() >= 0);
+                return default(int);
             }
         }
 

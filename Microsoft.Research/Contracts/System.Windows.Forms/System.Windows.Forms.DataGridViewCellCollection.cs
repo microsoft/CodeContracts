@@ -23,7 +23,6 @@ namespace System.Windows.Forms
     /// Represents a collection of cells in a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
     /// </summary>
     
-    [ListBindable(false)]
     public class DataGridViewCellCollection : BaseCollection // IList, ICollection, IEnumerable
     {
     
@@ -58,37 +57,37 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets or sets the cell in the column with the provided name. In C#, this property is the indexer for the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The <see cref="T:System.Windows.Forms.DataGridViewCell"/> stored in the column with the given name.
-        /// </returns>
-        /// <param name="columnName">The name of the column in which to get or set the cell.</param><exception cref="T:System.ArgumentException"><paramref name="columnName"/> does not match the name of any columns in the control.</exception><exception cref="T:System.ArgumentNullException">The specified value when setting this property is null.</exception><exception cref="T:System.InvalidOperationException">The specified cell when setting this property already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-The specified cell when setting this property already belongs to a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</exception>
+        // <summary>
+        // Gets or sets the cell in the column with the provided name. In C#, this property is the indexer for the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
+        // </summary>
+        // 
+        // <returns>
+        // The <see cref="T:System.Windows.Forms.DataGridViewCell"/> stored in the column with the given name.
+        // </returns>
+        // <param name="columnName">The name of the column in which to get or set the cell.</param><exception cref="T:System.ArgumentException"><paramref name="columnName"/> does not match the name of any columns in the control.</exception><exception cref="T:System.ArgumentNullException">The specified value when setting this property is null.</exception><exception cref="T:System.InvalidOperationException">The specified cell when setting this property already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-The specified cell when setting this property already belongs to a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</exception>
         // public DataGridViewCell this[string columnName]
         
-        /// <summary>
-        /// Occurs when the collection is changed.
-        /// </summary>
-        /// 
+        // <summary>
+        // Occurs when the collection is changed.
+        // </summary>
+        // 
         // public event CollectionChangeEventHandler CollectionChanged
         
-            /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
-        /// </summary>
-        /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns the collection.</param>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
+        // </summary>
+        // <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns the collection.</param>
         // public DataGridViewCellCollection(DataGridViewRow dataGridViewRow)
         
 
-        /// <summary>
-        /// Adds a cell to the collection.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The position in which to insert the new element.
-        /// </returns>
-        /// <param name="dataGridViewCell">A <see cref="T:System.Windows.Forms.DataGridViewCell"/> to add to the collection.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<paramref name="dataGridViewCell"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</exception>
+        // <summary>
+        // Adds a cell to the collection.
+        // </summary>
+        // 
+        // <returns>
+        // The position in which to insert the new element.
+        // </returns>
+        // <param name="dataGridViewCell">A <see cref="T:System.Windows.Forms.DataGridViewCell"/> to add to the collection.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<paramref name="dataGridViewCell"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</exception>
         // public virtual int Add(DataGridViewCell dataGridViewCell)
         
         /// <summary>
@@ -100,36 +99,36 @@ namespace System.Windows.Forms
             Contract.Requires(dataGridViewCells != null);
         }
 
-        /// <summary>
-        /// Clears all cells from the collection.
-        /// </summary>
-        /// <exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
+        // <summary>
+        // Clears all cells from the collection.
+        // </summary>
+        // <exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         // public virtual void Clear()
         
-        /// <summary>
-        /// Copies the entire collection of cells into an array at a specified location within the array.
-        /// </summary>
-        /// <param name="array">The destination array to which the contents will be copied.</param><param name="index">The index of the element in <paramref name="array"/> at which to start copying.</param>
+        // <summary>
+        // Copies the entire collection of cells into an array at a specified location within the array.
+        // </summary>
+        // <param name="array">The destination array to which the contents will be copied.</param><param name="index">The index of the element in <paramref name="array"/> at which to start copying.</param>
         // public void CopyTo(DataGridViewCell[] array, int index)
         
-        /// <summary>
-        /// Determines whether the specified cell is contained in the collection.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if <paramref name="dataGridViewCell"/> is in the collection; otherwise, false.
-        /// </returns>
-        /// <param name="dataGridViewCell">A <see cref="T:System.Windows.Forms.DataGridViewCell"/> to locate in the collection.</param>
+        // <summary>
+        // Determines whether the specified cell is contained in the collection.
+        // </summary>
+        // 
+        // <returns>
+        // true if <paramref name="dataGridViewCell"/> is in the collection; otherwise, false.
+        // </returns>
+        // <param name="dataGridViewCell">A <see cref="T:System.Windows.Forms.DataGridViewCell"/> to locate in the collection.</param>
         // public virtual bool Contains(DataGridViewCell dataGridViewCell)
         
-        /// <summary>
-        /// Returns the index of the specified cell.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The zero-based index of the value of <paramref name="dataGridViewCell"/> parameter, if it is found in the collection; otherwise, -1.
-        /// </returns>
-        /// <param name="dataGridViewCell">The cell to locate in the collection.</param>
+        // <summary>
+        // Returns the index of the specified cell.
+        // </summary>
+        // 
+        // <returns>
+        // The zero-based index of the value of <paramref name="dataGridViewCell"/> parameter, if it is found in the collection; otherwise, -1.
+        // </returns>
+        // <param name="dataGridViewCell">The cell to locate in the collection.</param>
         // public int IndexOf(DataGridViewCell dataGridViewCell)
         
         /// <summary>
@@ -141,16 +140,16 @@ namespace System.Windows.Forms
             Contract.Requires(index >= 0);
         }
         
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridViewCellCollection.CollectionChanged"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.ComponentModel.CollectionChangeEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridViewCellCollection.CollectionChanged"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.ComponentModel.CollectionChangeEventArgs"/> that contains the event data. </param>
         // protected void OnCollectionChanged(CollectionChangeEventArgs e)
         
-        /// <summary>
-        /// Removes the specified cell from the collection.
-        /// </summary>
-        /// <param name="cell">The <see cref="T:System.Windows.Forms.DataGridViewCell"/> to remove from the collection.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ArgumentException"><paramref name="cell"/> could not be found in the collection.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        // <summary>
+        // Removes the specified cell from the collection.
+        // </summary>
+        // <param name="cell">The <see cref="T:System.Windows.Forms.DataGridViewCell"/> to remove from the collection.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ArgumentException"><paramref name="cell"/> could not be found in the collection.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public virtual void Remove(DataGridViewCell cell)
         
         /// <summary>

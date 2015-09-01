@@ -23,11 +23,7 @@ namespace System.Windows.Forms
     
     public class DataGridViewCellValueEventArgs : EventArgs
     {
-        private int rowIndex;
-        private int columnIndex;
-        private object val;
-
-        /// <summary>
+      /// <summary>
         /// Gets a value indicating the column index of the cell that the event occurs for.
         /// </summary>
         /// 
@@ -39,7 +35,8 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.columnIndex;
+                Contract.Ensures(Contract.Result<int>() >= -1);
+                return default(int);
             }
         }
 
@@ -55,54 +52,34 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.rowIndex;
+                Contract.Ensures(Contract.Result<int>() >= -1);
+                return default(int);
             }
         }
 
-        /// <summary>
-        /// Gets or sets the value of the cell that the event occurs for.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An <see cref="T:System.Object"/> representing the cell's value.
-        /// </returns>
-        /// 
-        public object Value
-        {
-            get
-            {
-                return this.val;
-            }
-            set
-            {
-                this.val = value;
-            }
-        }
-
-        internal DataGridViewCellValueEventArgs()
-        {
-            this.columnIndex = this.rowIndex = -1;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellValueEventArgs"/> class.
-        /// </summary>
-        /// <param name="columnIndex">The index of the column containing the cell that the event occurs for.</param><param name="rowIndex">The index of the row containing the cell that the event occurs for.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than 0.-or-<paramref name="rowIndex"/> is less than 0.</exception>
+        // <summary>
+        // Gets or sets the value of the cell that the event occurs for.
+        // </summary>
+        // 
+        // <returns>
+        // An <see cref="T:System.Object"/> representing the cell's value.
+        // </returns>
+        // 
+        // public object Value {get; set;}
+        
+        // internal DataGridViewCellValueEventArgs()
+        
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellValueEventArgs"/> class.
+        // </summary>
+        // <param name="columnIndex">The index of the column containing the cell that the event occurs for.</param><param name="rowIndex">The index of the row containing the cell that the event occurs for.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than 0.-or-<paramref name="rowIndex"/> is less than 0.</exception>
         public DataGridViewCellValueEventArgs(int columnIndex, int rowIndex)
         {
-            if (columnIndex < 0)
-                throw new ArgumentOutOfRangeException("columnIndex");
-            if (rowIndex < 0)
-                throw new ArgumentOutOfRangeException("rowIndex");
-            this.rowIndex = rowIndex;
-            this.columnIndex = columnIndex;
+            Contract.Requires(columnIndex >= 0);
+            Contract.Requires(rowIndex >= 0);
         }
 
-        internal void SetProperties(int columnIndex, int rowIndex, object value)
-        {
-            this.columnIndex = columnIndex;
-            this.rowIndex = rowIndex;
-            this.val = value;
-        }
+        // internal void SetProperties(int columnIndex, int rowIndex, object value)
+        
     }
 }

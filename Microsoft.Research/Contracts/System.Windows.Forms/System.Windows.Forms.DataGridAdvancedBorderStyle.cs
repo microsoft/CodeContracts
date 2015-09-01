@@ -90,13 +90,13 @@ namespace System.Windows.Forms
         
         // public override int GetHashCode()
        
-        /// <summary>
-        /// Returns a string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
-        /// </returns>
+        // <summary>
+        // Returns a string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
+        // </summary>
+        // 
+        // <returns>
+        // A string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
+        // </returns>
         // public override string ToString()
     }
 }

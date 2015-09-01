@@ -37,7 +37,6 @@ namespace System.Windows.Forms
         /// The <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> assigned to the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </returns>
         /// 
-        [Browsable(false)]
         public AccessibleObject AccessibilityObject
         {
             get
@@ -63,23 +62,23 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets or sets the shortcut menu for the row.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The <see cref="T:System.Windows.Forms.ContextMenuStrip"/> associated with the current <see cref="T:System.Windows.Forms.DataGridViewRow"/>. The default is null.
-        /// </returns>
-        /// <exception cref="T:System.InvalidOperationException">When getting the value of this property, the row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
+        // <summary>
+        // Gets or sets the shortcut menu for the row.
+        // </summary>
+        // 
+        // <returns>
+        // The <see cref="T:System.Windows.Forms.ContextMenuStrip"/> associated with the current <see cref="T:System.Windows.Forms.DataGridViewRow"/>. The default is null.
+        // </returns>
+        // <exception cref="T:System.InvalidOperationException">When getting the value of this property, the row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
         // public override ContextMenuStrip ContextMenuStrip {get; set;}
         
-        /// <summary>
-        /// Gets the data-bound object that populated the row.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The data-bound <see cref="T:System.Object"/>.
-        /// </returns>
+        // <summary>
+        // Gets the data-bound object that populated the row.
+        // </summary>
+        // 
+        // <returns>
+        // The data-bound <see cref="T:System.Object"/>.
+        // </returns>
         // public object DataBoundItem { get;  }
         
         /// <summary>
@@ -133,14 +132,14 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets or sets the error message text for row-level errors.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.String"/> containing the error message.
-        /// </returns>
-        /// <exception cref="T:System.InvalidOperationException">When getting the value of this property, the row is a shared row in a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
+        // <summary>
+        // Gets or sets the error message text for row-level errors.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.String"/> containing the error message.
+        // </returns>
+        // <exception cref="T:System.InvalidOperationException">When getting the value of this property, the row is a shared row in a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         // public string ErrorText {get; set;}
        
         /// <summary>
@@ -151,7 +150,6 @@ namespace System.Windows.Forms
         /// true if the row is frozen; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        [Browsable(false)]
         public bool Frozen
         {
             get
@@ -165,14 +163,14 @@ namespace System.Windows.Forms
             }
         }
         
-        /// <summary>
-        /// Gets or sets the row's header cell.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewRowHeaderCell"/> that represents the header cell of row.
-        /// </returns>
-        /// <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        // <summary>
+        // Gets or sets the row's header cell.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewRowHeaderCell"/> that represents the header cell of row.
+        // </returns>
+        // <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public DataGridViewRowHeaderCell HeaderCell {get; set;}
         
         /// <summary>
@@ -207,13 +205,13 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the row is the row for new records.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/>, which is used for the entry of a new row of data; otherwise, false.
-        /// </returns>
+        // <summary>
+        // Gets a value indicating whether the row is the row for new records.
+        // </summary>
+        // 
+        // <returns>
+        // true if the row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/>, which is used for the entry of a new row of data; otherwise, false.
+        // </returns>
         // public bool IsNewRow {get;}
         
         /// <summary>
@@ -302,7 +300,7 @@ namespace System.Windows.Forms
         /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values indicating the row state.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public override DataGridViewElementStates State
+        public DataGridViewElementStates State
         {
             get
             {
@@ -333,29 +331,29 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> class without using a template.
-        /// </summary>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> class without using a template.
+        // </summary>
         // public DataGridViewRow()
         
-        /// <summary>
-        /// Modifies an input row header border style according to the specified criteria.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the new border style used.
-        /// </returns>
-        /// <param name="dataGridViewAdvancedBorderStyleInput">A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the row header border style to modify. </param><param name="dataGridViewAdvancedBorderStylePlaceholder">A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that is used to store intermediate changes to the row header border style.</param><param name="singleVerticalBorderAdded">true to add a single vertical border to the result; otherwise, false. </param><param name="singleHorizontalBorderAdded">true to add a single horizontal border to the result; otherwise, false. </param><param name="isFirstDisplayedRow">true if the row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false. </param><param name="isLastVisibleRow">true if the row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has its <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false. </param><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        // <summary>
+        // Modifies an input row header border style according to the specified criteria.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the new border style used.
+        // </returns>
+        // <param name="dataGridViewAdvancedBorderStyleInput">A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the row header border style to modify. </param><param name="dataGridViewAdvancedBorderStylePlaceholder">A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that is used to store intermediate changes to the row header border style.</param><param name="singleVerticalBorderAdded">true to add a single vertical border to the result; otherwise, false. </param><param name="singleHorizontalBorderAdded">true to add a single horizontal border to the result; otherwise, false. </param><param name="isFirstDisplayedRow">true if the row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false. </param><param name="isLastVisibleRow">true if the row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has its <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false. </param><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public virtual DataGridViewAdvancedBorderStyle AdjustRowHeaderBorderStyle(DataGridViewAdvancedBorderStyle dataGridViewAdvancedBorderStyleInput, DataGridViewAdvancedBorderStyle dataGridViewAdvancedBorderStylePlaceholder, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedRow, bool isLastVisibleRow)
         
-        /// <summary>
-        /// Creates an exact copy of this row.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An <see cref="T:System.Object"/> that represents the cloned <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
-        /// </returns>
-        /// <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        // <summary>
+        // Creates an exact copy of this row.
+        // </summary>
+        // 
+        // <returns>
+        // An <see cref="T:System.Object"/> that represents the cloned <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
+        // </returns>
+        // <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public override object Clone()
         
         /// <summary>
@@ -390,13 +388,13 @@ namespace System.Windows.Forms
             Contract.Requires(values != null);
         }
 
-        /// <summary>
-        /// Constructs a new collection of cells based on this row.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The newly created <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/>.
-        /// </returns>
+        // <summary>
+        // Constructs a new collection of cells based on this row.
+        // </summary>
+        // 
+        // <returns>
+        // The newly created <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/>.
+        // </returns>
         // protected virtual DataGridViewCellCollection CreateCellsInstance()
         
         /// <summary>
@@ -468,22 +466,22 @@ namespace System.Windows.Forms
             return default(DataGridViewElementStates);
         }
         
-        /// <summary>
-        /// Paints the current row.
-        /// </summary>
-        /// <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate whether the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate whether the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><exception cref="T:System.ArgumentOutOfRangeException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and <paramref name="rowIndex"/> is less than zero or greater than the number of rows in the control minus one.</exception>
+        // <summary>
+        // Paints the current row.
+        // </summary>
+        // <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate whether the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate whether the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><exception cref="T:System.ArgumentOutOfRangeException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and <paramref name="rowIndex"/> is less than zero or greater than the number of rows in the control minus one.</exception>
         // protected internal virtual void Paint(Graphics graphics, Rectangle clipBounds, Rectangle rowBounds, int rowIndex, DataGridViewElementStates rowState, bool isFirstDisplayedRow, bool isLastVisibleRow)
        
-        /// <summary>
-        /// Paints the cells in the current row.
-        /// </summary>
-        /// <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate whether the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate whether the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><param name="paintParts">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values indicating the parts of the cells to paint.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ArgumentException"><paramref name="paintParts"/> in not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values.</exception>
+        // <summary>
+        // Paints the cells in the current row.
+        // </summary>
+        // <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate whether the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate whether the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><param name="paintParts">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values indicating the parts of the cells to paint.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ArgumentException"><paramref name="paintParts"/> in not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values.</exception>
         // protected internal virtual void PaintCells(Graphics graphics, Rectangle clipBounds, Rectangle rowBounds, int rowIndex, DataGridViewElementStates rowState, bool isFirstDisplayedRow, bool isLastVisibleRow, DataGridViewPaintParts paintParts)
         
-        /// <summary>
-        /// Paints the header cell of the current row.
-        /// </summary>
-        /// <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate that the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate that the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><param name="paintParts">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values indicating the parts of the cells to paint.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="paintParts"/> in not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values.</exception>
+        // <summary>
+        // Paints the header cell of the current row.
+        // </summary>
+        // <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="rowBounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="isFirstDisplayedRow">true to indicate that the current row is the first row displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; otherwise, false.</param><param name="isLastVisibleRow">true to indicate that the current row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/> that has the <see cref="P:System.Windows.Forms.DataGridViewRow.Visible"/> property set to true; otherwise, false.</param><param name="paintParts">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values indicating the parts of the cells to paint.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="paintParts"/> in not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values.</exception>
         // protected internal virtual void PaintHeader(Graphics graphics, Rectangle clipBounds, Rectangle rowBounds, int rowIndex, DataGridViewElementStates rowState, bool isFirstDisplayedRow, bool isLastVisibleRow, DataGridViewPaintParts paintParts)
         
         /// <summary>
@@ -502,14 +500,14 @@ namespace System.Windows.Forms
             return default(bool);
         }
         
-        /// <summary>
-        /// Gets a human-readable string that describes the row.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.String"/> that describes this row.
-        /// </returns>
-        /// 
+        // <summary>
+        // Gets a human-readable string that describes the row.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.String"/> that describes this row.
+        // </returns>
+        // 
         // public override string ToString()
       
         /// <summary>
@@ -567,23 +565,23 @@ namespace System.Windows.Forms
                 set { Contract.Requires(this.Owner == null); }
             }
 
-            /// <summary>
-            /// Gets the parent of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
-            /// </summary>
-            /// 
-            /// <returns>
-            /// The <see cref="T:System.Windows.Forms.DataGridView.DataGridViewAccessibleObject"/> that belongs to the <see cref="T:System.Windows.Forms.DataGridView"/>.
-            /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
+            // <summary>
+            // Gets the parent of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
+            // </summary>
+            // 
+            // <returns>
+            // The <see cref="T:System.Windows.Forms.DataGridView.DataGridViewAccessibleObject"/> that belongs to the <see cref="T:System.Windows.Forms.DataGridView"/>.
+            // </returns>
+            // <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
             // public override AccessibleObject Parent {get;}
            
-            /// <summary>
-            /// Gets the role of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
-            /// </summary>
-            /// 
-            /// <returns>
-            /// The <see cref="F:System.Windows.Forms.AccessibleRole.Row"/> value.
-            /// </returns>
+            // <summary>
+            // Gets the role of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
+            // </summary>
+            // 
+            // <returns>
+            // The <see cref="F:System.Windows.Forms.AccessibleRole.Row"/> value.
+            // </returns>
             // public override AccessibleRole Role {get;}
             
             /// <summary>
@@ -620,15 +618,15 @@ namespace System.Windows.Forms
                 }
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> class without setting the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property.
-            /// </summary>
+            // <summary>
+            // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> class without setting the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property.
+            // </summary>
             // public DataGridViewRowAccessibleObject()
             
-            /// <summary>
-            /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> class, setting the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property to the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
-            /// </summary>
-            /// <param name="owner">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/></param>
+            // <summary>
+            // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> class, setting the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property to the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
+            // </summary>
+            // <param name="owner">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/></param>
             // public DataGridViewRowAccessibleObject(DataGridViewRow owner)
             
             /// <summary>
@@ -660,14 +658,14 @@ namespace System.Windows.Forms
                 return default(int);
             }
 
-            /// <summary>
-            /// Gets an accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects.
-            /// </summary>
-            /// 
-            /// <returns>
-            /// An accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects in the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
-            /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
+            // <summary>
+            // Gets an accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects.
+            // </summary>
+            // 
+            // <returns>
+            // An accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects in the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
+            // </returns>
+            // <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
             // public override AccessibleObject GetSelected()
             
             /// <summary>

@@ -23,27 +23,30 @@ namespace System.Windows.Forms {
   //     Provides data for the System.Windows.Forms.TreeView.NodeMouseClick and System.Windows.Forms.TreeView.NodeMouseDoubleClick
   //     events.
   public class TreeNodeMouseClickEventArgs : MouseEventArgs {
-    // Summary:
-    //     Initializes a new instance of the System.Windows.Forms.TreeNodeMouseClickEventArgs
-    //     class.
-    //
-    // Parameters:
-    //   node:
-    //     The node that was clicked.
-    //
-    //   button:
-    //     One of the System.Windows.Forms.MouseButtons members.
-    //
-    //   clicks:
-    //     The number of clicks that occurred.
-    //
-    //   x:
-    //     The x-coordinate where the click occurred.
-    //
-    //   y:
-    //     The y-coordinate where the click occurred.
-    //public TreeNodeMouseClickEventArgs(TreeNode node, MouseButtons button, int clicks, int x, int y);
-
+      /// Summary:
+      ///     Initializes a new instance of the System.Windows.Forms.TreeNodeMouseClickEventArgs
+      ///     class.
+      ///
+      /// Parameters:
+      ///   node:
+      ///     The node that was clicked.
+      ///
+      ///   button:
+      ///     One of the System.Windows.Forms.MouseButtons members.
+      ///
+      ///   clicks:
+      ///     The number of clicks that occurred.
+      ///
+      ///   x:
+      ///     The x-coordinate where the click occurred.
+      ///
+      ///   y:
+      ///     The y-coordinate where the click occurred.
+      public TreeNodeMouseClickEventArgs(TreeNode node, MouseButtons button, int clicks, int x, int y)
+          : base(button, clicks, x, y, 0)
+      {
+          
+      }
     // Summary:
     //     Gets the node that was clicked.
     //

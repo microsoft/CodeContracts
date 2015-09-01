@@ -23,13 +23,13 @@ namespace System.Windows.Forms
     
     public class DataGridViewCellFormattingEventArgs : ConvertEventArgs
     {
-       /// <summary>
-        /// Gets or sets the style of the cell that is being formatted.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the display style of the cell being formatted. The default is the value of the cell's <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/> property.
-        /// </returns>
+        // <summary>
+        // Gets or sets the style of the cell that is being formatted.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the display style of the cell being formatted. The default is the value of the cell's <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/> property.
+        // </returns>
         // public DataGridViewCellStyle CellStyle { get; set; }
         
         /// <summary>
@@ -48,13 +48,13 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the cell value has been successfully formatted.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the formatting for the cell value has been handled; otherwise, false. The default value is false.
-        /// </returns>
+        // <summary>
+        // Gets or sets a value indicating whether the cell value has been successfully formatted.
+        // </summary>
+        // 
+        // <returns>
+        // true if the formatting for the cell value has been handled; otherwise, false. The default value is false.
+        // </returns>
         // public bool FormattingApplied
        
         /// <summary>

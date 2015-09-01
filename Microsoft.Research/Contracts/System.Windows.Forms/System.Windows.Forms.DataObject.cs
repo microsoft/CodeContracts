@@ -36,81 +36,81 @@ namespace System.Windows.Forms
 
     public class DataObject // : IDataObject, System.Runtime.InteropServices.ComTypes.IDataObject 
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class.
-        /// </summary>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class.
+        // </summary>
         // public DataObject()
         
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class and adds the specified object to it.
-        /// </summary>
-        /// <param name="data">The data to store. </param>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class and adds the specified object to it.
+        // </summary>
+        // <param name="data">The data to store. </param>
         // public DataObject(object data)
         
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class and adds the specified object in the specified format.
-        /// </summary>
-        /// <param name="format">The format of the specified data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats.</param><param name="data">The data to store. </param>
+        // <summary>
+        // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataObject"/> class and adds the specified object in the specified format.
+        // </summary>
+        // <param name="format">The format of the specified data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats.</param><param name="data">The data to store. </param>
         // public DataObject(string format, object data)
         
-        /// <summary>
-        /// Returns the data associated with the specified data format, using an automated conversion parameter to determine whether to convert the data to the format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The data associated with the specified format, or null.
-        /// </returns>
-        /// <param name="format">The format of the data to retrieve. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to the convert data to the specified format; otherwise, false. </param>
+        // <summary>
+        // Returns the data associated with the specified data format, using an automated conversion parameter to determine whether to convert the data to the format.
+        // </summary>
+        // 
+        // <returns>
+        // The data associated with the specified format, or null.
+        // </returns>
+        // <param name="format">The format of the data to retrieve. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to the convert data to the specified format; otherwise, false. </param>
         // public virtual object GetData(string format, bool autoConvert)
         
-        /// <summary>
-        /// Returns the data associated with the specified data format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The data associated with the specified format, or null.
-        /// </returns>
-        /// <param name="format">The format of the data to retrieve. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param>
+        // <summary>
+        // Returns the data associated with the specified data format.
+        // </summary>
+        // 
+        // <returns>
+        // The data associated with the specified format, or null.
+        // </returns>
+        // <param name="format">The format of the data to retrieve. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param>
         // public virtual object GetData(string format)
         
-        /// <summary>
-        /// Returns the data associated with the specified class type format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The data associated with the specified format, or null.
-        /// </returns>
-        /// <param name="format">A <see cref="T:System.Type"/> representing the format of the data to retrieve. </param>
+        // <summary>
+        // Returns the data associated with the specified class type format.
+        // </summary>
+        // 
+        // <returns>
+        // The data associated with the specified format, or null.
+        // </returns>
+        // <param name="format">A <see cref="T:System.Type"/> representing the format of the data to retrieve. </param>
         // public virtual object GetData(System.Type format)
         
-        /// <summary>
-        /// Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
-        /// </returns>
-        /// <param name="format">A <see cref="T:System.Type"/> representing the format to check for. </param>
+        // <summary>
+        // Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
+        // </summary>
+        // 
+        // <returns>
+        // true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
+        // </returns>
+        // <param name="format">A <see cref="T:System.Type"/> representing the format to check for. </param>
         // public virtual bool GetDataPresent(System.Type format)
         
-        /// <summary>
-        /// Determines whether this <see cref="T:System.Windows.Forms.DataObject"/> contains data in the specified format or, optionally, contains data that can be converted to the specified format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data is in, or can be converted to, the specified format; otherwise, false.
-        /// </returns>
-        /// <param name="format">The format to check for. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to determine whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> can be converted to the specified format; false to check whether the data is in the specified format. </param>
+        // <summary>
+        // Determines whether this <see cref="T:System.Windows.Forms.DataObject"/> contains data in the specified format or, optionally, contains data that can be converted to the specified format.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data is in, or can be converted to, the specified format; otherwise, false.
+        // </returns>
+        // <param name="format">The format to check for. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to determine whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> can be converted to the specified format; false to check whether the data is in the specified format. </param>
         // public virtual bool GetDataPresent(string format, bool autoConvert)
         
-        /// <summary>
-        /// Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
-        /// </returns>
-        /// <param name="format">The format to check for. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param>
+        // <summary>
+        // Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
+        // </summary>
+        // 
+        // <returns>
+        // true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
+        // </returns>
+        // <param name="format">The format to check for. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param>
         //public virtual bool GetDataPresent(string format)
         
         /// <summary>
@@ -141,104 +141,103 @@ namespace System.Windows.Forms
             return default(string[]);
         }
 
-        /// <summary>
-        /// Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data object contains audio data; otherwise, false.
-        /// </returns>
-        /// 
+        // <summary>
+        // Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data object contains audio data; otherwise, false.
+        // </returns>
+        // 
         // public virtual bool ContainsAudio()
         
-        /// <summary>
-        /// Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data object contains a file drop list; otherwise, false.
-        /// </returns>
-        /// 
+        // <summary>
+        // Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data object contains a file drop list; otherwise, false.
+        // </returns>
+        // 
         // public virtual bool ContainsFileDropList()
         
-        /// <summary>
-        /// Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data object contains image data; otherwise, false.
-        /// </returns>
-        /// 
+        // <summary>
+        // Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data object contains image data; otherwise, false.
+        // </returns>
+        // 
         // public virtual bool ContainsImage()
         
-        /// <summary>
-        /// Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data object contains text data; otherwise, false.
-        /// </returns>
-        /// 
+        // <summary>
+        // Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data object contains text data; otherwise, false.
+        // </returns>
+        // 
         // public virtual bool ContainsText()
         
-        /// <summary>
-        /// Indicates whether the data object contains text data in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the data object contains text data in the specified format; otherwise, false.
-        /// </returns>
-        /// <param name="format">One of the <see cref="T:System.Windows.Forms.TextDataFormat"/> values.</param><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="format"/> is not a valid <see cref="T:System.Windows.Forms.TextDataFormat"/> value.</exception>
+        // <summary>
+        // Indicates whether the data object contains text data in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
+        // </summary>
+        // 
+        // <returns>
+        // true if the data object contains text data in the specified format; otherwise, false.
+        // </returns>
+        // <param name="format">One of the <see cref="T:System.Windows.Forms.TextDataFormat"/> values.</param><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="format"/> is not a valid <see cref="T:System.Windows.Forms.TextDataFormat"/> value.</exception>
         // public virtual bool ContainsText(TextDataFormat format)
         
-        /// <summary>
-        /// Retrieves an audio stream from the data object.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.IO.Stream"/> containing audio data or null if the data object does not contain any data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
-        /// </returns>
-        /// 
+        // <summary>
+        // Retrieves an audio stream from the data object.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.IO.Stream"/> containing audio data or null if the data object does not contain any data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
+        // </returns>
+        // 
         // public virtual Stream GetAudioStream()
         
-        /// <summary>
-        /// Retrieves a collection of file names from the data object.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Collections.Specialized.StringCollection"/> containing file names or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
-        /// </returns>
-        /// 
+        // <summary>
+        // Retrieves a collection of file names from the data object.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Collections.Specialized.StringCollection"/> containing file names or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
+        // </returns>
+        // 
         // public virtual StringCollection GetFileDropList()
         
-        /// <summary>
-        /// Retrieves an image from the data object.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An <see cref="T:System.Drawing.Image"/> representing the image data in the data object or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
-        /// </returns>
-        /// 
+        // <summary>
+        // Retrieves an image from the data object.
+        // </summary>
+        // 
+        // <returns>
+        // An <see cref="T:System.Drawing.Image"/> representing the image data in the data object or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
+        // </returns>
+        // 
         // public virtual Image GetImage()
         
-        /// <summary>
-        /// Retrieves text data from the data object in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
-        /// </returns>
-        /// 
+        // <summary>
+        // Retrieves text data from the data object in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
+        // </summary>
+        // 
+        // <returns>
+        // The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
+        // </returns>
         // public virtual string GetText()
         
-        /// <summary>
-        /// Retrieves text data from the data object in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the specified format.
-        /// </returns>
-        /// <param name="format">One of the <see cref="T:System.Windows.Forms.TextDataFormat"/> values.</param><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="format"/> is not a valid <see cref="T:System.Windows.Forms.TextDataFormat"/> value.</exception>
+        // <summary>
+        // Retrieves text data from the data object in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
+        // </summary>
+        // 
+        // <returns>
+        // The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the specified format.
+        // </returns>
+        // <param name="format">One of the <see cref="T:System.Windows.Forms.TextDataFormat"/> values.</param><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="format"/> is not a valid <see cref="T:System.Windows.Forms.TextDataFormat"/> value.</exception>
         // public virtual string GetText(TextDataFormat format)
         
         /// <summary>
@@ -295,28 +294,29 @@ namespace System.Windows.Forms
             Contract.Requires(textData != null);
         }
 
-        /// <summary>
-        /// Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified format and indicating whether the data can be converted to another format.
-        /// </summary>
-        /// <param name="format">The format associated with the data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to allow the data to be converted to another format; otherwise, false. </param><param name="data">The data to store. </param>
+        // <summary>
+        // Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified format and indicating whether the data can be converted to another format.
+        // </summary>
+        // <param name="format">The format associated with the data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="autoConvert">true to allow the data to be converted to another format; otherwise, false. </param><param name="data">The data to store. </param>
         // public virtual void SetData(string format, bool autoConvert, object data)
 
-        /// <summary>
-        /// Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified format.
-        /// </summary>
-        /// <param name="format">The format associated with the data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="data">The data to store. </param>
+        // <summary>
+        // Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified format.
+        // </summary>
+        // <param name="format">The format associated with the data. See <see cref="T:System.Windows.Forms.DataFormats"/> for predefined formats. </param><param name="data">The data to store. </param>
         // public virtual void SetData(string format, object data)
-        /// <summary>
-        /// Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified type as the format.
-        /// </summary>
-        /// <param name="format">A <see cref="T:System.Type"/> representing the format associated with the data. </param><param name="data">The data to store. </param>
+        
+        // <summary>
+        // Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified type as the format.
+        // </summary>
+        // <param name="format">A <see cref="T:System.Type"/> representing the format associated with the data. </param><param name="data">The data to store. </param>
         // 
         // public virtual void SetData(System.Type format, object data)
         
-        /// <summary>
-        /// Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the object type as the data format.
-        /// </summary>
-        /// <param name="data">The data to store. </param>
+        // <summary>
+        // Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the object type as the data format.
+        // </summary>
+        // <param name="data">The data to store. </param>
         // public virtual void SetData(object data)
     }
 }

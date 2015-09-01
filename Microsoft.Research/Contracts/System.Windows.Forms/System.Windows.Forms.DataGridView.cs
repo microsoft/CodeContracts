@@ -180,14 +180,14 @@ namespace System.Windows.Forms
         // <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The specified value when setting this property is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnsMode"/> value. </exception><exception cref="T:System.InvalidOperationException">The specified value when setting this property is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader"/>, column headers are hidden, and at least one visible column has an <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property value of <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet"/>.-or-The specified value when setting this property is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill"/> and at least one visible column with an <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property value of <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet"/> is frozen.</exception>
         // public DataGridViewAutoSizeColumnsMode AutoSizeColumnsMode {get; set;}
 
-        /// <summary>
-        /// Gets or sets a value indicating how row heights are determined.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value indicating the sizing mode. The default is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.None"/>.
-        /// </returns>
-        /// <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The specified value when setting this property is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value. </exception><exception cref="T:System.InvalidOperationException">The specified value when setting this property is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders"/> or <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders"/> and row headers are hidden. </exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        // <summary>
+        // Gets or sets a value indicating how row heights are determined.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value indicating the sizing mode. The default is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.None"/>.
+        // </returns>
+        // <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The specified value when setting this property is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value. </exception><exception cref="T:System.InvalidOperationException">The specified value when setting this property is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders"/> or <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders"/> and row headers are hidden. </exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public DataGridViewAutoSizeRowsMode AutoSizeRowsMode {get; set;}
 
         /// <summary>
@@ -211,20 +211,20 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Drawing.Color"/> that represents the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>. The default is <see cref="P:System.Drawing.SystemColors.AppWorkspace"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">The specified value when setting this property is <see cref="F:System.Drawing.Color.Empty"/>. -or-The specified value when setting this property has a <see cref="P:System.Drawing.Color.A"/> property value that is less that 255.</exception><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        public System.Drawing.Color BackgroundColor
-        {
-            get { return default(System.Drawing.Color); }
-            set
-            {
-                Contract.Requires(value.IsEmpty == false);
-                Contract.Requires((int) value.A < (int) byte.MaxValue);
-            }
-        }
+        // 
+        // <returns>
+        // A <see cref="T:System.Drawing.Color"/> that represents the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>. The default is <see cref="P:System.Drawing.SystemColors.AppWorkspace"/>.
+        // </returns>
+        // <exception cref="T:System.ArgumentException">The specified value when setting this property is <see cref="F:System.Drawing.Color.Empty"/>. -or-The specified value when setting this property has a <see cref="P:System.Drawing.Color.A"/> property value that is less that 255.</exception><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        //public System.Drawing.Color BackgroundColor
+        //{
+        //    get { return default(System.Drawing.Color); }
+        //    set
+        //    {
+        //        Contract.Requires(value.IsEmpty == false);
+        //        Contract.Requires((int) value.A < (int) byte.MaxValue);
+        //    }
+        //}
 
         // <summary>
         // Gets or sets the background image displayed in the control.

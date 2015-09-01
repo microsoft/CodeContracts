@@ -72,11 +72,6 @@ namespace System.Windows.Forms
             }
         }
 
-        internal DataGridViewCellValidatingEventArgs(int columnIndex, int rowIndex, object formattedValue)
-        {
-            this.rowIndex = rowIndex;
-            this.columnIndex = columnIndex;
-            this.formattedValue = formattedValue;
-        }
+        //internal DataGridViewCellValidatingEventArgs(int columnIndex, int rowIndex, object formattedValue)
     }
 }
