@@ -34,7 +34,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the New Folder button is shown in the dialog box; otherwise, false. The default is true.
         // </returns>
-
         // [DefaultValue(true)]
         // public bool ShowNewFolderButton {get; set;}
         
@@ -59,7 +58,6 @@ namespace System.Windows.Forms
         // <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="T:System.Environment.SpecialFolder"/> values. </exception><filterpriority>1</filterpriority>
         // [DefaultValue(Environment.SpecialFolder.Desktop)]
         // public Environment.SpecialFolder RootFolder { get; set; }
-        
 
         /// <summary>
         /// Gets or sets the descriptive text displayed above the tree view control in the dialog box.
@@ -72,7 +70,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(Contract.Result<string>() != null);
+                Contract.Ensures(Contract.Result<string>() != null);
                 return default(string);
             }
             set

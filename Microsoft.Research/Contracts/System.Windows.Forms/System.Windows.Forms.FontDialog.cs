@@ -86,7 +86,7 @@ namespace System.Windows.Forms
         // <returns>
         // true if only fixed-pitch fonts can be selected; otherwise, false. The default value is false.
         // </returns>
-        //[DefaultValue(false)]
+        // [DefaultValue(false)]
         // public bool FixedPitchOnly {get; set;}
         
         /// <summary>
@@ -269,7 +269,6 @@ namespace System.Windows.Forms
         // <returns>
         // A string that includes the name of the currently selected font.
         // </returns>
-        
         // public override string ToString()
     }
 }

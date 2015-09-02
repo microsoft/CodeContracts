@@ -29,7 +29,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the Current Page option button is displayed.
         // </summary>
-        // 
         // <returns>
         // true if the Current Page option button is displayed; otherwise, false. The default is false.
         // </returns>
@@ -39,7 +38,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the Pages option button is enabled.
         // </summary>
-        // 
         // <returns>
         // true if the Pages option button is enabled; otherwise, false. The default is false.
         // </returns>
@@ -58,30 +56,26 @@ namespace System.Windows.Forms
         
         // <summary>
         // Gets or sets a value indicating whether the Selection option button is enabled.
-        // </summary>
-        // 
+        // </summary> 
         // <returns>
         // true if the Selection option button is enabled; otherwise, false. The default is false.
         // </returns>
-        
         // [DefaultValue(false)]
         // public bool AllowSelection { get; set; }
         
         // <summary>
         // Gets or sets a value indicating the <see cref="T:System.Drawing.Printing.PrintDocument"/> used to obtain <see cref="T:System.Drawing.Printing.PrinterSettings"/>.
         // </summary>
-        // 
+
         // <returns>
         // The <see cref="T:System.Drawing.Printing.PrintDocument"/> used to obtain <see cref="T:System.Drawing.Printing.PrinterSettings"/>. The default is null.
         // </returns>
-        
         // [DefaultValue(null)]
         // public PrintDocument Document { get; set; }
         
         // <summary>
         // Gets or sets the printer settings the dialog box modifies.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Drawing.Printing.PrinterSettings"/> the dialog box modifies.
         // </returns>
@@ -90,7 +84,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the Print to file check box is selected.
         // </summary>
-        // 
         // <returns>
         // true if the Print to file check box is selected; otherwise, false. The default is false.
         // </returns>
@@ -100,7 +93,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the Help button is displayed.
         // </summary>
-        // 
         // <returns>
         // true if the Help button is displayed; otherwise, false. The default is false.
         // </returns>
@@ -110,7 +102,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the Network button is displayed.
         // </summary>
-        // 
         // <returns>
         // true if the Network button is displayed; otherwise, false. The default is true.
         // </returns>
@@ -120,7 +111,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the dialog should be shown in the Windows XP style for systems running Windows XP Home Edition, Windows XP Professional, Windows Server 2003 or later.
         // </summary>
-        // 
         // <returns>
         // true to indicate the dialog should be shown with the Windows XP style, otherwise false. The default is false.
         // </returns>
@@ -130,8 +120,7 @@ namespace System.Windows.Forms
         // <summary>
         // Initializes a new instance of the <see cref="T:System.Windows.Forms.PrintDialog"/> class.
         // </summary>
-        // public PrintDialog()
-        
+        // public PrintDialog();
         // <summary>
         // Resets all options, the last selected printer, and the page settings to their default values.
         // </summary>

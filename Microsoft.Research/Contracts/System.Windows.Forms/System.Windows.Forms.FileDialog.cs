@@ -25,10 +25,6 @@ namespace System.Windows.Forms
     public abstract class FileDialog : CommonDialog
     {
         // <summary>
-        // Owns the <see cref="E:System.Windows.Forms.FileDialog.FileOk"/> event.
-        // </summary>
-
-        // <summary>
         // Gets or sets a value indicating whether the dialog box automatically adds an extension to a file name if the user omits the extension.
         // </summary>
         // 
@@ -54,8 +50,8 @@ namespace System.Windows.Forms
         // <returns>
         // true if the dialog box displays a warning when the user specifies a path that does not exist; otherwise, false. The default value is true.
         // </returns>
-        //
         // public bool CheckPathExists {get; set;}
+
         // <summary>
         // Gets or sets the default file name extension.
         // </summary>
@@ -63,7 +59,6 @@ namespace System.Windows.Forms
         // <returns>
         // The default file name extension. The returned string does not include the period. The default value is an empty string ("").
         // </returns>
-        //
         // public string DefaultExt {get; set;}
 
         // <summary>
@@ -119,7 +114,6 @@ namespace System.Windows.Forms
         // <returns>
         // A value containing the index of the filter currently selected in the file dialog box. The default value is 1.
         // </returns>
-        //
         // [DefaultValue(1)]
         // public int FilterIndex {get; set;}
 
@@ -130,7 +124,6 @@ namespace System.Windows.Forms
         // <returns>
         // The initial directory displayed by the file dialog box. The default is an empty string ("").
         // </returns>
-        //
         // [DefaultValue("")]
         public string InitialDirectory
         {
@@ -177,7 +170,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the dialog box includes a help button; otherwise, false. The default value is false.
         // </returns>
-        //
         // [DefaultValue(false)]
         // public bool ShowHelp {get; set;}
 
@@ -199,7 +191,7 @@ namespace System.Windows.Forms
         /// The file dialog box title. The default value is an empty string ("").
         /// </returns>
         ///
-        // [DefaultValue("")]
+        /// [DefaultValue("")]
         public string Title
         {
             get
@@ -217,7 +209,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the dialog box accepts only valid Win32 file names; otherwise, false. The default value is true.
         // </returns>
-        //
         // [DefaultValue(true)]
         // public bool ValidateNames { get; set; }
 
@@ -243,7 +234,6 @@ namespace System.Windows.Forms
         // <summary>
         // Occurs when the user clicks on the Open or Save button on a file dialog box.
         // </summary>
-        //
         // public event CancelEventHandler FileOk
 
         // <summary>

@@ -30,7 +30,7 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the user can use the dialog box to define custom colors.
         // </summary>
-        // 
+        //
         // <returns>
         // true if the user can define custom colors; otherwise, false. The default is true.
         // </returns>
@@ -40,17 +40,15 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the dialog box displays all available colors in the set of basic colors.
         // </summary>
-        // 
         // <returns>
         // true if the dialog box displays all available colors in the set of basic colors; otherwise, false. The default value is false.
         // </returns>
-
         // public virtual bool AnyColor {get; set;}
        
         // <summary>
         // Gets or sets the color selected by the user.
         // </summary>
-        // 
+        //
         // <returns>
         // The color selected by the user. If a color is not selected, the default value is black.
         // </returns>
@@ -95,7 +93,6 @@ namespace System.Windows.Forms
         // An <see cref="T:System.IntPtr"/> that contains the HINSTANCE value of the window handle.
         // </returns>
         // protected virtual IntPtr Instance {get;}
-        
 
         // <summary>
         // Gets values to initialize the <see cref="T:System.Windows.Forms.ColorDialog"/>.

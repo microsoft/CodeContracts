@@ -47,7 +47,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the orientation section of the dialog box is enabled; otherwise, false. The default is true.
         // </returns>
-
         // [DefaultValue(true)]
         // public bool AllowOrientation {get; set;}
         
@@ -68,7 +67,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the Printer button is enabled; otherwise, false. The default is true.
         // </returns>
-
         // [DefaultValue(true)]
         // public bool AllowPrinter {get; set;}
        
@@ -79,7 +77,6 @@ namespace System.Windows.Forms
         // <returns>
         // The <see cref="T:System.Drawing.Printing.PrintDocument"/> to get page settings from. The default is null.
         // </returns>
-
         // [DefaultValue(null)]
         // public PrintDocument Document {get; set;}
        
@@ -151,7 +148,6 @@ namespace System.Windows.Forms
         // <returns>
         // true if the Network button is visible; otherwise, false. The default is true.
         // </returns>
-
         // [DefaultValue(true)]
         // public bool ShowNetwork {get; set;}
        
@@ -163,12 +159,11 @@ namespace System.Windows.Forms
         // <summary>
         // Resets all options to their default values.
         // </summary>
-
         // public override void Reset()
         
         protected bool RunDialog(IntPtr hwndOwner)
         {
-            Contract.Requires(this.PageSettings != null);
+            Contract.Requires(PageSettings != null);
             return default(bool);
         }
     }
