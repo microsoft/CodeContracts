@@ -192,7 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="System.Windows.Forms.Application.cs" />
-    <Compile Include="System.Windows.Forms.BaseCollection.cs" />
     <Compile Include="System.Windows.Forms.ColorDialog.cs">
       <SubType>Component</SubType>
     </Compile>
