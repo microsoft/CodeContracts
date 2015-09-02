@@ -109,15 +109,18 @@ namespace System.Windows.Forms
         // Initializes a new instance of the <see cref="T:System.Windows.Forms.Cursor"/> class from the specified file.
         // </summary>
         // <param name="fileName">The cursor file to load. </param>
-        // public Cursor(string fileName)
-        
+        public Cursor(string fileName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(fileName));
+        }
+
         // <summary>
         // Initializes a new instance of the <see cref="T:System.Windows.Forms.Cursor"/> class from the specified resource with the specified resource type.
         // </summary>
         // <param name="type">The resource <see cref="T:System.Type"/>. </param><param name="resource">The name of the resource. </param>
         // public Cursor(System.Type type, string resource)
         //  : this(type.Module.Assembly.GetManifestResourceStream(type, resource))
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Windows.Forms.Cursor"/> class from the specified data stream.
         /// </summary>
@@ -154,8 +157,7 @@ namespace System.Windows.Forms
         // <returns>
         // An <see cref="T:System.IntPtr"/> that represents the cursor's handle.
         // </returns>
-        // public IntPtr CopyHandle()
-        
+        // public IntPtr CopyHandle()     
         
         // <summary>
         // Releases all resources used by the <see cref="T:System.Windows.Forms.Cursor"/>.

@@ -43,7 +43,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(index >= 0 && index < this.Count);
+                Contract.Requires(index >= 0 && index < Count);
                 return default(DataGridViewColumn);
             }
         }

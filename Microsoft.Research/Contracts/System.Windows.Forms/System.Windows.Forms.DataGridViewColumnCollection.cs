@@ -48,7 +48,7 @@ namespace System.Windows.Forms
             get
             {
                 Contract.Requires(index >= 0);
-                Contract.Requires(index < this.Count);
+                Contract.Requires(index < Count);
                 return default(DataGridViewColumn);
             }
         }
@@ -146,7 +146,7 @@ namespace System.Windows.Forms
         public void CopyTo(DataGridViewColumn[] array, int index)
         {
             Contract.Requires(index >= 0);
-            Contract.Requires(index < this.Count);
+            Contract.Requires(index < Count);
             Contract.Requires(array != null);
         }
 
@@ -281,7 +281,7 @@ namespace System.Windows.Forms
         public virtual void RemoveAt(int index)
         {
             Contract.Requires(index >= 0);
-            Contract.Requires(index < this.Count);
+            Contract.Requires(index < Count);
         }
     }
 }

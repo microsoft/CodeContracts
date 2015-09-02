@@ -170,8 +170,8 @@ namespace System.Windows.Forms
         /// <param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that specifies the area of the <see cref="T:System.Windows.Forms.DataGridView"/> to be painted.</param><param name="paintParts">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewPaintParts"/> values specifying the parts to paint.</param><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.RowIndex"/> is less than -1 or greater than or equal to the number of rows in the <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.ColumnIndex"/> is less than -1 or greater than or equal to the number of columns in the <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         public void Paint(Rectangle clipBounds, DataGridViewPaintParts paintParts)
         {
-            Contract.Requires(!(this.RowIndex < -1));
-            Contract.Requires(!(this.ColumnIndex < -1));
+            Contract.Requires(!(RowIndex < -1));
+            Contract.Requires(!(ColumnIndex < -1));
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace System.Windows.Forms
         /// <param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that specifies the area of the <see cref="T:System.Windows.Forms.DataGridView"/> to be painted.</param><param name="cellsPaintSelectionBackground">true to paint the background of the specified bounds with the color of the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.SelectionBackColor"/> property of the <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/>; false to paint the background of the specified bounds with the color of the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.BackColor"/> property of the <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/>.</param><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.RowIndex"/> is less than -1 or greater than or equal to the number of rows in the <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.ColumnIndex"/> is less than -1 or greater than or equal to the number of columns in the <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         public void PaintBackground(Rectangle clipBounds, bool cellsPaintSelectionBackground)
         {
-            Contract.Requires(!(this.RowIndex < -1));
-            Contract.Requires(!(this.ColumnIndex < -1));
+            Contract.Requires(!(RowIndex < -1));
+            Contract.Requires(!(ColumnIndex < -1));
         }
 
         /// <summary>
@@ -190,8 +190,8 @@ namespace System.Windows.Forms
         /// <param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that specifies the area of the <see cref="T:System.Windows.Forms.DataGridView"/> to be painted.</param><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.RowIndex"/> is less than -1 or greater than or equal to the number of rows in the <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.ColumnIndex"/> is less than -1 or greater than or equal to the number of columns in the <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         public void PaintContent(Rectangle clipBounds)
         {
-            Contract.Requires(!(this.RowIndex < -1));
-            Contract.Requires(!(this.ColumnIndex < -1));
+            Contract.Requires(!(RowIndex < -1));
+            Contract.Requires(!(ColumnIndex < -1));
         }
     }
 }

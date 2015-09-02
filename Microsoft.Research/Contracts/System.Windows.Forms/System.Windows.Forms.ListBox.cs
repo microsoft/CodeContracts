@@ -585,7 +585,7 @@ namespace System.Windows.Forms
     public int FindString(string s, int startIndex)
     {
       Contract.Requires(startIndex >= -1);
-      Contract.Requires(startIndex < this.Items.Count);
+      Contract.Requires(startIndex < Items.Count);
       
       Contract.Ensures(Contract.Result<int>() >= -1);
 
@@ -634,7 +634,7 @@ namespace System.Windows.Forms
     public int FindStringExact(string s, int startIndex)
     {
       Contract.Requires(startIndex >= -1);
-      Contract.Requires(startIndex < this.Items.Count);
+      Contract.Requires(startIndex < Items.Count);
 
       Contract.Ensures(Contract.Result<int>() >= -1);
 
@@ -658,7 +658,7 @@ namespace System.Windows.Forms
     public int GetItemHeight(int index)
     {
       Contract.Requires(index >= 0);
-      Contract.Requires(index <= this.Items.Count); // F: it seems that == is allowed from the documentation above
+      Contract.Requires(index <= Items.Count); // F: it seems that == is allowed from the documentation above
 
       Contract.Ensures(Contract.Result<int>() >= 0);
 
@@ -723,7 +723,7 @@ namespace System.Windows.Forms
     public bool GetSelected(int index)
     {
         Contract.Requires(index >= 0);
-        Contract.Requires(index < this.Items.Count);
+        Contract.Requires(index < Items.Count);
 
         return default(bool);
     }
@@ -940,7 +940,7 @@ namespace System.Windows.Forms
     public void SetSelected(int index, bool value)
     {
       Contract.Requires(index >= 0);
-      Contract.Requires(index < this.Items.Count);
+      Contract.Requires(index < Items.Count);
 
     }
     //

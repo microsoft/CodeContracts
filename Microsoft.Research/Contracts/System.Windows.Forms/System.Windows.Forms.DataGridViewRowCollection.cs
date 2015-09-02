@@ -78,7 +78,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(index >= 0 && index < this.Count);
+                Contract.Requires(index >= 0 && index < Count);
                 return default(DataGridViewRow);
             }
         }
@@ -120,10 +120,10 @@ namespace System.Windows.Forms
         // [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual int Add()
         {
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
+            Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
         }
         
@@ -139,11 +139,11 @@ namespace System.Windows.Forms
         public virtual int Add(params object[] values)
         {
             Contract.Requires(values != null);
-            Contract.Requires(this.DataGridView.VirtualMode == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.VirtualMode == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
+            Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
         }
 
@@ -157,11 +157,11 @@ namespace System.Windows.Forms
         /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to add to the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-The <see cref="T:System.Windows.Forms.DataGridView"/> has no columns.-or-The <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property of the <paramref name="dataGridViewRow"/> is not null.-or-<paramref name="dataGridViewRow"/> has a <see cref="P:System.Windows.Forms.DataGridViewRow.Selected"/> property value of true. -or-This operation would add a frozen row after unfrozen rows.</exception><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewRow"/> is null.</exception><exception cref="T:System.ArgumentException"><paramref name="dataGridViewRow"/> has more cells than there are columns in the control.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual int Add(DataGridViewRow dataGridViewRow)
         {
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
+            Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
         }
 
@@ -177,12 +177,12 @@ namespace System.Windows.Forms
         public virtual int Add(int count)
         {
             Contract.Requires(count >= 1);
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.RowTemplate.Cells.Count <= this.DataGridView.Columns.Count);
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.RowTemplate.Cells.Count <= DataGridView.Columns.Count);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
+            Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
         }
         
@@ -196,11 +196,11 @@ namespace System.Windows.Forms
         /// <param name="indexSource">The index of the row on which to base the new row.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexSource"/> is less than zero or greater than or equal to the number of rows in the collection.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-This operation would add a frozen row after unfrozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual int AddCopy(int indexSource)
         {   
-            Contract.Requires(indexSource >= 0 && indexSource < this.Count);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(indexSource >= 0 && indexSource < Count);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + 1);
+            Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
         }
         
@@ -214,11 +214,11 @@ namespace System.Windows.Forms
         /// <param name="indexSource">The index of the row on which to base the new rows.</param><param name="count">The number of rows to add to the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexSource"/> is less than zero or greater than or equal to the number of rows in the control.-or-<paramref name="count"/> is less than zero.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-This operation would add a frozen row after unfrozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual int AddCopies(int indexSource, int count)
         {
-            Contract.Requires(indexSource >= 0 && indexSource < this.Count);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(indexSource >= 0 && indexSource < Count);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + count);
+            Contract.Ensures(Count == Contract.OldValue(Count) + count);
             return default(int);
         }
         
@@ -229,10 +229,10 @@ namespace System.Windows.Forms
         public virtual void AddRange(params DataGridViewRow[] dataGridViewRows)
         {
             Contract.Requires(dataGridViewRows != null);
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Ensures(Contract.Result<int>() >= 0);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + dataGridViewRows.Length);
+            Contract.Ensures(Count == Contract.OldValue(Count) + dataGridViewRows.Length);
         }
 
         /// <summary>
@@ -241,8 +241,8 @@ namespace System.Windows.Forms
         /// <exception cref="T:System.InvalidOperationException">The collection is data bound and the underlying data source does not support clearing the row data.-or-The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents the row collection from being modified:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/></exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void Clear()
         {
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Ensures(this.Count == 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Ensures(Count == 0);
         }
         
         // <summary>
@@ -262,7 +262,7 @@ namespace System.Windows.Forms
         public void CopyTo(DataGridViewRow[] array, int index)
         {
             Contract.Requires(array != null);
-            Contract.Requires(index >= 0 && index <= this.Count);
+            Contract.Requires(index >= 0 && index <= Count);
         }
         
         /// <summary>
@@ -389,7 +389,7 @@ namespace System.Windows.Forms
         /// <param name="indexStart">The index of the row where the method should begin to look for the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="includeFilter">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexStart"/> is greater than the number of rows in the collection.</exception><exception cref="T:System.ArgumentException"><paramref name="includeFilter"/> is not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</exception>
         public int GetPreviousRow(int indexStart, DataGridViewElementStates includeFilter)
         {
-            Contract.Requires(indexStart <= this.Count);
+            Contract.Requires(indexStart <= Count);
             Contract.Requires(
                 !((includeFilter &
                   ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
@@ -410,7 +410,7 @@ namespace System.Windows.Forms
         /// <param name="indexStart">The index of the row where the method should begin to look for the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="includeFilter">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</param><param name="excludeFilter">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexStart"/> is greater than the number of rows in the collection.</exception><exception cref="T:System.ArgumentException">One or both of the specified filter values is not a valid bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.</exception>
         public int GetPreviousRow(int indexStart, DataGridViewElementStates includeFilter, DataGridViewElementStates excludeFilter)
         {
-            Contract.Requires(indexStart <= this.Count);
+            Contract.Requires(indexStart <= Count);
             Contract.Requires(
                !((includeFilter &
                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
@@ -477,7 +477,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is less than zero and greater than the number of rows in the collection minus one.</exception>
         public virtual DataGridViewElementStates GetRowState(int rowIndex)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Count);
             return default(DataGridViewElementStates);
         }
 
@@ -502,13 +502,13 @@ namespace System.Windows.Forms
         public virtual void Insert(int rowIndex, params object[] values)
         {
             Contract.Requires(values != null);
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Count);
-            Contract.Requires(!(this.DataGridView.NewRowIndex != -1 && rowIndex == this.Count));
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.VirtualMode == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(values.Length <= this.DataGridView.Columns.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Count);
+            Contract.Requires(!(DataGridView.NewRowIndex != -1 && rowIndex == Count));
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.VirtualMode == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(values.Length <= DataGridView.Columns.Count);
         }
 
         /// <summary>
@@ -518,13 +518,13 @@ namespace System.Windows.Forms
         public virtual void Insert(int rowIndex, DataGridViewRow dataGridViewRow)
         {
             Contract.Requires(dataGridViewRow != null);
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Count);
-            Contract.Requires(!(this.DataGridView.NewRowIndex != -1 && rowIndex == this.Count));
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.VirtualMode == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(dataGridViewRow.Cells.Count <= this.DataGridView.Columns.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Count);
+            Contract.Requires(!(DataGridView.NewRowIndex != -1 && rowIndex == Count));
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.VirtualMode == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(dataGridViewRow.Cells.Count <= DataGridView.Columns.Count);
         }
 
         /// <summary>
@@ -533,14 +533,14 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The position at which to insert the rows.</param><param name="count">The number of rows to insert into the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is less than zero or greater than the number of rows in the collection. -or-<paramref name="count"/> is less than 1.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-The <see cref="T:System.Windows.Forms.DataGridView"/> has no columns.-or-<paramref name="rowIndex"/> is equal to the number of rows in the collection and the <see cref="P:System.Windows.Forms.DataGridView.AllowUserToAddRows"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is set to true.-or-The row returned by the <see cref="P:System.Windows.Forms.DataGridView.RowTemplate"/> property has more cells than there are columns in the control. -or-This operation would insert a frozen row after unfrozen rows or an unfrozen row before frozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void Insert(int rowIndex, int count)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Count);
             Contract.Requires(count > 0);
-            Contract.Requires(!(this.DataGridView.NewRowIndex != -1 && rowIndex == this.Count));
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.VirtualMode == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.RowTemplate.Cells.Count <= this.DataGridView.Columns.Count);
+            Contract.Requires(!(DataGridView.NewRowIndex != -1 && rowIndex == Count));
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.VirtualMode == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.RowTemplate.Cells.Count <= DataGridView.Columns.Count);
         }
         
         /// <summary>
@@ -549,7 +549,7 @@ namespace System.Windows.Forms
         /// <param name="indexSource">The index of the row on which to base the new row.</param><param name="indexDestination">The position at which to insert the row.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexSource"/> is less than zero or greater than the number of rows in the collection minus one.-or-<paramref name="indexDestination"/> is less than zero or greater than the number of rows in the collection.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-<paramref name="indexDestination"/> is equal to the number of rows in the collection and <see cref="P:System.Windows.Forms.DataGridView.AllowUserToAddRows"/> is true. -or-This operation would insert a frozen row after unfrozen rows or an unfrozen row before frozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void InsertCopy(int indexSource, int indexDestination)
         {
-            this.InsertCopies(indexSource, indexDestination, 1);
+            InsertCopies(indexSource, indexDestination, 1);
         }
 
         /// <summary>
@@ -558,8 +558,8 @@ namespace System.Windows.Forms
         /// <param name="indexSource">The index of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> on which to base the new rows.</param><param name="indexDestination">The position at which to insert the rows.</param><param name="count">The number of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects to add to the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="indexSource"/> is less than zero or greater than the number of rows in the collection minus one.-or-<paramref name="indexDestination"/> is less than zero or greater than the number of rows in the collection.-or-<paramref name="count"/> is less than 1.</exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-<paramref name="indexDestination"/> is equal to the number of rows in the collection and <see cref="P:System.Windows.Forms.DataGridView.AllowUserToAddRows"/> is true.-or-This operation would insert frozen rows after unfrozen rows or unfrozen rows before frozen rows.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void InsertCopies(int indexSource, int indexDestination, int count)
         {
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Requires(count > 0);
         }
         
@@ -570,13 +570,13 @@ namespace System.Windows.Forms
         public virtual void InsertRange(int rowIndex, params DataGridViewRow[] dataGridViewRows)
         {
             Contract.Requires(dataGridViewRows != null);
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Count);
-            Contract.Requires(!(this.DataGridView.NewRowIndex != -1 && rowIndex == this.Count));
-            Contract.Requires(this.DataGridView.Columns.Count > 0);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.VirtualMode == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
-            Contract.Requires(this.DataGridView.RowTemplate.Cells.Count <= this.DataGridView.Columns.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Count);
+            Contract.Requires(!(DataGridView.NewRowIndex != -1 && rowIndex == Count));
+            Contract.Requires(DataGridView.Columns.Count > 0);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.VirtualMode == false);
+            Contract.Requires(DataGridView.DataSource == null);
+            Contract.Requires(DataGridView.RowTemplate.Cells.Count <= DataGridView.Columns.Count);
         }
         
         // <summary>
@@ -592,11 +592,11 @@ namespace System.Windows.Forms
         public virtual void Remove(DataGridViewRow dataGridViewRow)
         {
             Contract.Requires(dataGridViewRow != null);
-            Contract.Requires(dataGridViewRow.DataGridView == this.DataGridView);
-            Contract.Requires(dataGridViewRow.Index >= 0 && dataGridViewRow.Index < this.Count);
-            Contract.Requires(this.DataGridView.NewRowIndex != dataGridViewRow.Index);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
+            Contract.Requires(dataGridViewRow.DataGridView == DataGridView);
+            Contract.Requires(dataGridViewRow.Index >= 0 && dataGridViewRow.Index < Count);
+            Contract.Requires(DataGridView.NewRowIndex != dataGridViewRow.Index);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.DataSource == null);
         }
 
         /// <summary>
@@ -605,10 +605,10 @@ namespace System.Windows.Forms
         /// <param name="index">The position of the row to remove.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than zero and greater than the number of rows in the collection minus one. </exception><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-<paramref name="index"/> is equal to the number of rows in the collection and the <see cref="P:System.Windows.Forms.DataGridView.AllowUserToAddRows"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is set to true.-or-The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is bound to an <see cref="T:System.ComponentModel.IBindingList"/> implementation with <see cref="P:System.ComponentModel.IBindingList.AllowRemove"/> and <see cref="P:System.ComponentModel.IBindingList.SupportsChangeNotification"/> property values that are not both true.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void RemoveAt(int index)
         {
-            Contract.Requires(index >= 0 && index < this.Count);
-            Contract.Requires(this.DataGridView.NewRowIndex != index);
-            Contract.Requires(this.DataGridView.NoDimensionChangeAllowed == false);
-            Contract.Requires(this.DataGridView.DataSource == null);
+            Contract.Requires(index >= 0 && index < Count);
+            Contract.Requires(DataGridView.NewRowIndex != index);
+            Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.DataSource == null);
         }
     }
 }

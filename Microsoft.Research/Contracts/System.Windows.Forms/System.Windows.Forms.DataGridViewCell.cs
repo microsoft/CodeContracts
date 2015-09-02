@@ -220,8 +220,14 @@ namespace System.Windows.Forms
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> that contains the cell, or null if the cell is not in a column.
         /// </returns>
-        public DataGridViewColumn OwningColumn { get; }
-    
+        public DataGridViewColumn OwningColumn
+        {
+            get
+            {
+                return default(DataGridViewColumn);
+            }
+        }
+
         /// <summary>
         /// Gets the row that contains this cell.
         /// </summary>
@@ -229,7 +235,13 @@ namespace System.Windows.Forms
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that contains the cell, or null if the cell is not in a row.
         /// </returns>
-        public DataGridViewRow OwningRow {get;}
+        public DataGridViewRow OwningRow
+        {
+            get
+            {
+                return default(DataGridViewRow);
+            }
+        }
         
         // <summary>
         // Gets the size, in pixels, of a rectangular area into which the cell can fit.
@@ -483,8 +495,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the cell's parent row.</param><exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="rowIndex"/> is less than 0 or greater than the number of rows in the control minus 1. </exception><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCell.ColumnIndex"/> is less than 0, indicating that the cell is a row header cell.</exception>
         public Rectangle GetContentBounds(int rowIndex)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
             return default(Rectangle);
         }
 
@@ -508,8 +519,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The row index of the cell.</param><param name="context">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewDataErrorContexts"/> values that specifies the data error context.</param><exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="rowIndex"/> is less than 0 or greater than the number of rows in the control minus 1. </exception><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCell.ColumnIndex"/> is less than 0, indicating that the cell is a row header cell.</exception><exception cref="T:System.Exception">Formatting failed and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event of the <see cref="T:System.Windows.Forms.DataGridView"/> control or the handler set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. The exception object can typically be cast to type <see cref="T:System.FormatException"/>.</exception>
         public object GetEditedFormattedValue(int rowIndex, DataGridViewDataErrorContexts context)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
             return default(object);
         }
 
@@ -553,9 +563,8 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The row index of the current cell.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property of the cell is not null and the specified <paramref name="rowIndex"/> is less than 0 or greater than the number of rows in the control minus 1. </exception><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridViewCell.ColumnIndex"/> is less than 0, indicating that the cell is a row header cell.</exception>
         public virtual ContextMenuStrip GetInheritedContextMenuStrip(int rowIndex)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
-            Contract.Requires(this.ColumnIndex < 0);
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
+            Contract.Requires(ColumnIndex < 0);
             return default(ContextMenuStrip);
         }
 
@@ -569,8 +578,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row containing the cell.</param><exception cref="T:System.ArgumentException">The cell is not contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control and <paramref name="rowIndex"/> is not -1.-or-<paramref name="rowIndex"/> is not the index of the row containing this cell.</exception><exception cref="T:System.ArgumentOutOfRangeException">The cell is contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control and <paramref name="rowIndex"/> is outside the valid range of 0 to the number of rows in the control minus 1.</exception>
         public virtual DataGridViewElementStates GetInheritedState(int rowIndex)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
             return default(DataGridViewElementStates);
         }
 
@@ -585,9 +593,9 @@ namespace System.Windows.Forms
         public virtual DataGridViewCellStyle GetInheritedStyle(DataGridViewCellStyle inheritedCellStyle, int rowIndex,
             bool includeColors)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
-            Contract.Requires(this.ColumnIndex < 0);
+            Contract.Requires(DataGridView != null);
+            Contract.Requires(rowIndex >= 0 || rowIndex < DataGridView.Rows.Count);
+            Contract.Requires(ColumnIndex < 0);
             return default(DataGridViewCellStyle);
         }
 
@@ -625,9 +633,8 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the cell's parent row.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property of the cell is not null and <paramref name="rowIndex"/> is less than 0 or greater than or equal to the number of rows in the parent <see cref="T:System.Windows.Forms.DataGridView"/>.</exception><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property of the cell is not null and the value of the <see cref="P:System.Windows.Forms.DataGridViewCell.ColumnIndex"/> property is less than 0, indicating that the cell is a row header cell.</exception>
         protected virtual object GetValue(int rowIndex)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < this.DataGridView.Rows.Count);
-            Contract.Requires(this.ColumnIndex < 0);
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
+            Contract.Requires(ColumnIndex < 0);
             return default(object);
             
         }
@@ -639,8 +646,8 @@ namespace System.Windows.Forms
         
         public virtual void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
-            Contract.Requires(this.DataGridView != null);
-            Contract.Requires(this.DataGridView.EditingControl != null);
+            Contract.Requires(DataGridView != null);
+            Contract.Requires(DataGridView.EditingControl != null);
         }
 
         /// <summary>
@@ -988,7 +995,7 @@ namespace System.Windows.Forms
         /// <param name="setLocation">true to have the control placed as specified by the other arguments; false to allow the control to place itself.</param><param name="setSize">true to specify the size; false to allow the control to size itself. </param><param name="cellBounds">A <see cref="T:System.Drawing.Rectangle"/> that defines the cell bounds. </param><param name="cellClip">The area that will be used to paint the editing control.</param><param name="cellStyle">A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the style of the cell being edited.</param><param name="singleVerticalBorderAdded">true to add a vertical border to the cell; otherwise, false.</param><param name="singleHorizontalBorderAdded">true to add a horizontal border to the cell; otherwise, false.</param><param name="isFirstDisplayedColumn">true if the hosting cell is in the first visible column; otherwise, false.</param><param name="isFirstDisplayedRow">true if the hosting cell is in the first visible row; otherwise, false.</param><exception cref="T:System.InvalidOperationException">The cell is not contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void PositionEditingControl(bool setLocation, bool setSize, Rectangle cellBounds, Rectangle cellClip, DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
         {
-            Contract.Requires(this.DataGridView != null);
+            Contract.Requires(DataGridView != null);
         }
 
         /// <summary>
@@ -1003,7 +1010,7 @@ namespace System.Windows.Forms
             DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded,
             bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
         {
-            Contract.Requires(this.DataGridView != null);
+            Contract.Requires(DataGridView != null);
             return default(Rectangle);
         }
 
@@ -1054,7 +1061,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     Contract.Ensures(Contract.Result<string>() != null);
                     return default(string);
                 }
@@ -1088,7 +1095,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     Contract.Ensures(Contract.Result<string>() != null);
                     return default(string);
                 }
@@ -1105,7 +1112,7 @@ namespace System.Windows.Forms
             public DataGridViewCell Owner
             {
                 get { return default(DataGridViewCell); }
-                set { Contract.Requires(this.Owner == null); } 
+                set { Contract.Requires(Owner == null); } 
             }
 
             /// <summary>
@@ -1120,7 +1127,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(AccessibleObject);
                 }
             }
@@ -1146,7 +1153,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(AccessibleStates);
                 }
             }
@@ -1163,7 +1170,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(string);
                 }
                 set
@@ -1189,7 +1196,7 @@ namespace System.Windows.Forms
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is null.-or-The value of the <see cref="T:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject"/> property is not null and the <see cref="P:System.Windows.Forms.DataGridViewCell.RowIndex"/> property of the <see cref="T:System.Windows.Forms.DataGridViewCell"/> returned by the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is equal to -1.</exception>
             public void DoDefaultAction()
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
             }
             
             /// <summary>
@@ -1202,7 +1209,7 @@ namespace System.Windows.Forms
             /// <param name="index">The zero-based index of the child accessible object.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is null.</exception>
             public override AccessibleObject GetChild(int index)
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(AccessibleObject);
             }
 
@@ -1216,7 +1223,7 @@ namespace System.Windows.Forms
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is null.</exception>
             public int GetChildCount()
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(int);
             }
 
@@ -1248,7 +1255,7 @@ namespace System.Windows.Forms
             /// <param name="navigationDirection">One of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is null.</exception>
             public AccessibleObject Navigate(AccessibleNavigation navigationDirection)
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(AccessibleObject);
             }
             
@@ -1258,7 +1265,7 @@ namespace System.Windows.Forms
             /// <param name="flags">One of the <see cref="T:System.Windows.Forms.AccessibleSelection"/> values.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject.Owner"/> property is null.</exception>
             public void Select(AccessibleSelection flags)
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
             }
         }
     }

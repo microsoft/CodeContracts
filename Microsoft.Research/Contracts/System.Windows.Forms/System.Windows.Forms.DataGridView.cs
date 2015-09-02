@@ -305,7 +305,7 @@ namespace System.Windows.Forms
             set
             {
                 Contract.Requires(value >= 0);
-                Contract.Requires(this.DataSource == null);
+                Contract.Requires(DataSource == null);
             }
         }
 
@@ -548,14 +548,14 @@ namespace System.Windows.Forms
             get
             {
                 Contract.Ensures(Contract.Result<int>() < 0 ||
-                                 (Contract.Result<int>()) >= 0 && Contract.Result<int>() < this.Columns.Count);
+                                 (Contract.Result<int>()) >= 0 && Contract.Result<int>() < Columns.Count);
                 return default(int);
             }
             set
             {
-                Contract.Requires(value >= 0 && value < this.Columns.Count);
-                Contract.Assume(this.Columns[value] != null);
-                // Contract.Requires(this.Columns[value].Visible && !this.Columns[value].Frozen);
+                Contract.Requires(value >= 0 && value < Columns.Count);
+                Contract.Assume(Columns[value] != null);
+                // Contract.Requires(Columns[value].Visible && !Columns[value].Frozen);
             }
         }
 
@@ -572,19 +572,19 @@ namespace System.Windows.Forms
             get
             {
                 Contract.Ensures(Contract.Result<int>() < 0 ||
-                                 (Contract.Result<int>()) >= 0 && Contract.Result<int>() < this.Rows.Count);
+                                 (Contract.Result<int>()) >= 0 && Contract.Result<int>() < Rows.Count);
                 return default(int);
 
             }
             set
             {
-                Contract.Assume(this.Rows != null);
-                Contract.Requires(value >= 0 && value < this.Rows.Count);
+                Contract.Assume(Rows != null);
+                Contract.Requires(value >= 0 && value < Rows.Count);
                 Contract.Requires(
-                    !((this.Rows.GetRowState(value) & DataGridViewElementStates.Visible) ==
+                    !((Rows.GetRowState(value) & DataGridViewElementStates.Visible) ==
                       DataGridViewElementStates.None));
                 Contract.Requires(
-                    !((this.Rows.GetRowState(value) & DataGridViewElementStates.Frozen) ==
+                    !((Rows.GetRowState(value) & DataGridViewElementStates.Frozen) ==
                       DataGridViewElementStates.None));
             }
         }
@@ -714,7 +714,7 @@ namespace System.Windows.Forms
             get
             {
                 Contract.Ensures(Contract.Result<int>() == -1 ||
-                                 (Contract.Result<int>() >= 0 && Contract.Result<int>() <= this.Rows.Count));
+                                 (Contract.Result<int>() >= 0 && Contract.Result<int>() <= Rows.Count));
                 return default(int);
             }
         }
@@ -757,8 +757,8 @@ namespace System.Windows.Forms
             }
             set
             {
-                Contract.Requires((this.AllowUserToAddRows && value >= 1) || value >= 0);
-                Contract.Requires(this.DataSource == null);
+                Contract.Requires((AllowUserToAddRows && value >= 1) || value >= 0);
+                Contract.Requires(DataSource == null);
             }
         }
 
@@ -1044,8 +1044,8 @@ namespace System.Windows.Forms
         {
             get
             {  
-                Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
-                Contract.Requires(columnIndex >= 0 && columnIndex < this.Rows[rowIndex].Cells.Count);
+                Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
+                Contract.Requires(columnIndex >= 0 && columnIndex < Rows[rowIndex].Cells.Count);
                 return default(DataGridViewCell);
             }
             set { }
@@ -1064,7 +1064,7 @@ namespace System.Windows.Forms
             get
             {
                 Contract.Requires(columnName != null);
-                Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+                Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
                 return default(DataGridViewCell);
             }
             set { }
@@ -1142,8 +1142,8 @@ namespace System.Windows.Forms
         /// <param name="cellAddress">A <see cref="T:System.Drawing.Point"/> indicating the row and column indexes of the new current cell.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Drawing.Point.X"/> property of <paramref name="cellAddress"/> is less than 0 or greater than the number of columns in the control minus 1. -or-The value of the <see cref="P:System.Drawing.Point.Y"/> property of <paramref name="cellAddress"/> is less than 0 or greater than the number of rows in the control minus 1.</exception>
         protected virtual void AccessibilityNotifyCurrentCellChanged(Point cellAddress)
         {
-            Contract.Requires(cellAddress.X >= 0 || cellAddress.X < this.Columns.Count);
-            Contract.Requires(cellAddress.Y >= 0 || cellAddress.Y < this.Columns.Count);
+            Contract.Requires(cellAddress.X >= 0 || cellAddress.X < Columns.Count);
+            Contract.Requires(cellAddress.Y >= 0 || cellAddress.Y < Columns.Count);
         }
 
         // <summary>
@@ -1172,7 +1172,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column to resize.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1. </exception>
         public void AutoResizeColumn(int columnIndex)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         /// <summary>
@@ -1181,7 +1181,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column to resize. </param><param name="autoSizeColumnMode">One of the <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnMode"/> values. </param><exception cref="T:System.InvalidOperationException"><paramref name="autoSizeColumnMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader"/> and <see cref="P:System.Windows.Forms.DataGridView.ColumnHeadersVisible"/> is false. </exception><exception cref="T:System.ArgumentException"><paramref name="autoSizeColumnMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet"/>, <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.None"/>, or <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill"/>. </exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1. </exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="autoSizeColumnMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnMode"/> value.</exception>
         public void AutoResizeColumn(int columnIndex, DataGridViewAutoSizeColumnMode autoSizeColumnMode)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         /// <summary>
@@ -1191,13 +1191,13 @@ namespace System.Windows.Forms
         protected void AutoResizeColumn(int columnIndex, DataGridViewAutoSizeColumnMode autoSizeColumnMode,
             bool fixedHeight)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
             Contract.Requires(
                 !(autoSizeColumnMode == DataGridViewAutoSizeColumnMode.NotSet ||
                   autoSizeColumnMode == DataGridViewAutoSizeColumnMode.None ||
                   autoSizeColumnMode == DataGridViewAutoSizeColumnMode.Fill));
             Contract.Requires(
-                !(autoSizeColumnMode == DataGridViewAutoSizeColumnMode.ColumnHeader && !this.ColumnHeadersVisible));
+                !(autoSizeColumnMode == DataGridViewAutoSizeColumnMode.ColumnHeader && !ColumnHeadersVisible));
         }
 
         // <summary>
@@ -1211,7 +1211,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column containing the header with the changed content.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1.</exception>
         public void AutoResizeColumnHeadersHeight(int columnIndex)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         // <summary>
@@ -1226,7 +1226,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column header whose contents should be used to determine new height.</param><param name="fixedRowHeadersWidth">true to calculate the new height based on the current width of the row headers; false to calculate the height with the expectation that the row headers width will also be adjusted.</param><param name="fixedColumnWidth">true to calculate the new height based on the current width of the specified column; false to calculate the height with the expectation that the column width will also be adjusted.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1. </exception>
         protected void AutoResizeColumnHeadersHeight(int columnIndex, bool fixedRowHeadersWidth, bool fixedColumnWidth)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         // <summary>
@@ -1252,7 +1252,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row to resize.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows minus 1. </exception>
         public void AutoResizeRow(int rowIndex)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1261,7 +1261,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row to resize. </param><param name="autoSizeRowMode">One of the <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> values. </param><exception cref="T:System.InvalidOperationException"><paramref name="autoSizeRowMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowMode.RowHeader"/> and <see cref="P:System.Windows.Forms.DataGridView.RowHeadersVisible"/> is false. </exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="autoSizeRowMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> value. </exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows minus 1.</exception>
         public void AutoResizeRow(int rowIndex, DataGridViewAutoSizeRowMode autoSizeRowMode)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1270,9 +1270,9 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row to resize. </param><param name="autoSizeRowMode">One of the <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> values. </param><param name="fixedWidth">true to calculate the new height based on the current width of the columns; false to calculate the height with the expectation that the column widths will also be adjusted.</param><exception cref="T:System.InvalidOperationException"><paramref name="autoSizeRowMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowMode.RowHeader"/> and <see cref="P:System.Windows.Forms.DataGridView.RowHeadersVisible"/> is false. </exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="autoSizeRowMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> value. </exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows minus 1.</exception>
         protected void AutoResizeRow(int rowIndex, DataGridViewAutoSizeRowMode autoSizeRowMode, bool fixedWidth)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
             // Contract.Requires(!(autoSizeRowMode & (DataGridViewAutoSizeRowMode) -4) != (DataGridViewAutoSizeRowMode) 0));
-            Contract.Requires(!((autoSizeRowMode == DataGridViewAutoSizeRowMode.RowHeader && !this.RowHeadersVisible)));
+            Contract.Requires(!((autoSizeRowMode == DataGridViewAutoSizeRowMode.RowHeader && !RowHeadersVisible)));
         }
 
         // <summary>
@@ -1302,7 +1302,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row header with the changed content.</param><param name="rowHeadersWidthSizeMode">One of the <see cref="T:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode"/> values.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows minus 1. </exception><exception cref="T:System.ArgumentException"><paramref name="rowHeadersWidthSizeMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.EnableResizing"/> or <see cref="F:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing"/></exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="rowHeadersWidthSizeMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode"/> value. </exception>
         public void AutoResizeRowHeadersWidth(int rowIndex, DataGridViewRowHeadersWidthSizeMode rowHeadersWidthSizeMode)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1313,7 +1313,7 @@ namespace System.Windows.Forms
             DataGridViewRowHeadersWidthSizeMode rowHeadersWidthSizeMode, bool fixedColumnHeadersHeight,
             bool fixedRowHeight)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
             Contract.Requires(
                 !(rowHeadersWidthSizeMode == DataGridViewRowHeadersWidthSizeMode.EnableResizing ||
                   rowHeadersWidthSizeMode == DataGridViewRowHeadersWidthSizeMode.DisableResizing));
@@ -1344,7 +1344,7 @@ namespace System.Windows.Forms
             Contract.Requires(autoSizeRowsMode != DataGridViewAutoSizeRowsMode.DisplayedCells ||
                               !((autoSizeRowsMode == DataGridViewAutoSizeRowsMode.AllHeaders ||
                                  autoSizeRowsMode == DataGridViewAutoSizeRowsMode.DisplayedHeaders) &&
-                                !this.RowHeadersVisible));
+                                !RowHeadersVisible));
 
         }
 
@@ -1356,7 +1356,7 @@ namespace System.Windows.Forms
             bool fixedWidth)
         {
             // Contract.Requires(!(autoSizeRowMode & (DataGridViewAutoSizeRowMode) -4) != (DataGridViewAutoSizeRowMode) 0));
-            Contract.Requires(!(autoSizeRowMode == DataGridViewAutoSizeRowMode.RowHeader && !this.RowHeadersVisible));
+            Contract.Requires(!(autoSizeRowMode == DataGridViewAutoSizeRowMode.RowHeader && !RowHeadersVisible));
             Contract.Requires(rowsCount >= 0);
             Contract.Requires(rowIndexStart >= 0);
         }
@@ -1383,10 +1383,10 @@ namespace System.Windows.Forms
         /// <param name="columnIndexException">The column index to exclude.</param><param name="rowIndexException">The row index to exclude.</param><param name="selectExceptionElement">true to select the excluded cell, row, or column; false to retain its original state.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndexException"/> is greater than the highest column index.-or-<paramref name="columnIndexException"/> is less than -1 when <see cref="P:System.Windows.Forms.DataGridView.SelectionMode"/> is <see cref="F:System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect"/>; otherwise, <paramref name="columnIndexException"/> is less than 0.-or- <paramref name="rowIndexException"/> is greater than the highest row index.-or-<paramref name="rowIndexException"/> is less than -1 when <see cref="P:System.Windows.Forms.DataGridView.SelectionMode"/> is <see cref="F:System.Windows.Forms.DataGridViewSelectionMode.FullColumnSelect"/>; otherwise, <paramref name="rowIndexException"/> is less than 0.</exception>
         protected void ClearSelection(int columnIndexException, int rowIndexException, bool selectExceptionElement)
         {
-            Contract.Requires((this.SelectionMode != DataGridViewSelectionMode.RowHeaderSelect ||
-                               this.SelectionMode != DataGridViewSelectionMode.ColumnHeaderSelect) ||
-                              (columnIndexException >= 0 && columnIndexException < this.Columns.Count) &&
-                              (rowIndexException >= 0 && rowIndexException < this.Rows.Count));
+            Contract.Requires((SelectionMode != DataGridViewSelectionMode.RowHeaderSelect ||
+                               SelectionMode != DataGridViewSelectionMode.ColumnHeaderSelect) ||
+                              (columnIndexException >= 0 && columnIndexException < Columns.Count) &&
+                              (rowIndexException >= 0 && rowIndexException < Rows.Count));
         }
 
         // <summary>
@@ -1531,8 +1531,8 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The column index for the desired cell. </param><param name="rowIndex">The row index for the desired cell. </param><param name="cutOverflow">true to return the displayed portion of the cell only; false to return the entire cell bounds. </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than -1 or greater than the number of columns in the control minus 1.-or-<paramref name="rowIndex"/> is less than -1 or greater than the number of rows in the control minus 1. </exception>
         public Rectangle GetCellDisplayRectangle(int columnIndex, int rowIndex, bool cutOverflow)
         {
-            Contract.Requires(!(columnIndex < -1 || columnIndex >= this.Columns.Count));
-            Contract.Requires(!(rowIndex < -1 || rowIndex >= this.Rows.Count));
+            Contract.Requires(!(columnIndex < -1 || columnIndex >= Columns.Count));
+            Contract.Requires(!(rowIndex < -1 || rowIndex >= Rows.Count));
             return default(Rectangle);
         }
 
@@ -1546,7 +1546,7 @@ namespace System.Windows.Forms
         // <exception cref="T:System.NotSupportedException"><see cref="P:System.Windows.Forms.DataGridView.ClipboardCopyMode"/> is set to <see cref="F:System.Windows.Forms.DataGridViewClipboardCopyMode.Disable"/>.</exception>
         public virtual DataObject GetClipboardContent()
         {
-            Contract.Requires(this.ClipboardCopyMode != DataGridViewClipboardCopyMode.Disable);
+            Contract.Requires(ClipboardCopyMode != DataGridViewClipboardCopyMode.Disable);
             return default(DataObject);
         }
 
@@ -1560,7 +1560,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The column index for the desired cell. </param><param name="cutOverflow">true to return the column rectangle visible in the <see cref="T:System.Windows.Forms.DataGridView"/> bounds; false to return the entire column rectangle. </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1. </exception>
         public Rectangle GetColumnDisplayRectangle(int columnIndex, bool cutOverflow)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
             return default(Rectangle);
         }
 
@@ -1589,8 +1589,8 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The column index of the cell to invalidate.</param><param name="rowIndex">The row index of the cell to invalidate. </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than -1 or greater than the number of columns in the control minus 1.-or-<paramref name="rowIndex"/> is less than -1 or greater than the number of rows in the control minus 1. </exception>
         public void InvalidateCell(int columnIndex, int rowIndex)
         {
-            Contract.Requires(!(columnIndex < -1 || columnIndex >= this.Columns.Count));
-            Contract.Requires(!(rowIndex < -1 || rowIndex >= this.Rows.Count));
+            Contract.Requires(!(columnIndex < -1 || columnIndex >= Columns.Count));
+            Contract.Requires(!(rowIndex < -1 || rowIndex >= Rows.Count));
         }
 
         /// <summary>
@@ -1599,7 +1599,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column to invalidate. </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is not in the valid range of 0 to the number of columns minus 1. </exception>
         public void InvalidateColumn(int columnIndex)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         /// <summary>
@@ -1608,7 +1608,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row to invalidate. </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows minus 1. </exception>
         public void InvalidateRow(int rowIndex)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         // <summary>
@@ -1690,7 +1690,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnsModeEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentNullException">The value of the <see cref="P:System.Windows.Forms.DataGridViewAutoSizeColumnsModeEventArgs.PreviousModes"/> property of <paramref name="e"/> is null.</exception><exception cref="T:System.ArgumentException">The number of entries in the array returned by the <see cref="P:System.Windows.Forms.DataGridViewAutoSizeColumnsModeEventArgs.PreviousModes"/> property of <paramref name="e"/> is not equal to the number of columns in the control.</exception>
         protected virtual void OnAutoSizeColumnsModeChanged(DataGridViewAutoSizeColumnsModeEventArgs e)
         {
-            Contract.Requires(e != null && e.PreviousModes != null && e.PreviousModes.Length == this.Columns.Count);
+            Contract.Requires(e != null && e.PreviousModes != null && e.PreviousModes.Length == Columns.Count);
         }
 
         /// <summary>
@@ -1733,8 +1733,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellBeginEdit(DataGridViewCellCancelEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         // <summary>
@@ -1750,8 +1750,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellClick(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1761,8 +1761,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellContentClick(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1772,8 +1772,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellContentDoubleClick(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1783,8 +1783,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellContextMenuStripChanged(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1794,8 +1794,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellContextMenuStripNeeded(DataGridViewCellContextMenuStripNeededEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1805,8 +1805,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellDoubleClick(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1816,8 +1816,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellEndEdit(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1827,8 +1827,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellEnter(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1838,8 +1838,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellErrorTextChanged(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1849,8 +1849,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellErrorTextNeeded(DataGridViewCellErrorTextNeededEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1860,8 +1860,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1871,8 +1871,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellLeave(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1882,8 +1882,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseClick(DataGridViewCellMouseEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1893,8 +1893,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseDoubleClick(DataGridViewCellMouseEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1904,8 +1904,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1915,8 +1915,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseEnter(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1926,8 +1926,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseLeave(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1937,8 +1937,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseMove(DataGridViewCellMouseEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1948,8 +1948,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellMouseUp(DataGridViewCellMouseEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
 
@@ -1960,8 +1960,8 @@ namespace System.Windows.Forms
         protected internal virtual void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1971,8 +1971,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellParsing(DataGridViewCellParsingEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1991,8 +1991,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellStyleChanged(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2011,8 +2011,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellToolTipTextChanged(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2022,8 +2022,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2033,8 +2033,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellValidated(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2044,8 +2044,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellValidating(DataGridViewCellValidatingEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2055,8 +2055,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2066,8 +2066,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellValueNeeded(DataGridViewCellValueEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex >= 0 && e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex >= 0 && e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex >= 0 && e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex >= 0 && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2077,8 +2077,8 @@ namespace System.Windows.Forms
         protected virtual void OnCellValuePushed(DataGridViewCellValueEventArgs e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < this.Columns.Count);
-            Contract.Requires(e.RowIndex < this.Rows.Count);
+            Contract.Requires(e.ColumnIndex < Columns.Count);
+            Contract.Requires(e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -3061,8 +3061,8 @@ namespace System.Windows.Forms
             bool validateCurrentCell, bool throughMouseClick)
         {
             Contract.Requires(
-                !(columnIndex < -1 || columnIndex >= 0 && rowIndex == -1 || columnIndex >= this.Columns.Count));
-            Contract.Requires(!(rowIndex < -1 || columnIndex == -1 && rowIndex >= 0 || rowIndex >= this.Rows.Count));
+                !(columnIndex < -1 || columnIndex >= 0 && rowIndex == -1 || columnIndex >= Columns.Count));
+            Contract.Requires(!(rowIndex < -1 || columnIndex == -1 && rowIndex >= 0 || rowIndex >= Rows.Count));
             return default(bool);
         }
 
@@ -3082,8 +3082,8 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column containing the cell.</param><param name="rowIndex">The index of the row containing the cell.</param><param name="selected">true to select the cell; false to cancel the selection of the cell.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than 0 or greater than the number of columns in the control minus 1.-or-<paramref name="rowIndex"/> is less than 0 or greater than the number of rows in the control minus 1.</exception>
         protected virtual void SetSelectedCellCore(int columnIndex, int rowIndex, bool selected)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -3092,7 +3092,7 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The index of the column.</param><param name="selected">true to select the column; false to cancel the selection of the column.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than 0 or greater than the number of columns in the control minus 1.</exception>
         protected virtual void SetSelectedColumnCore(int columnIndex, bool selected)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
         }
 
         /// <summary>
@@ -3101,7 +3101,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row.</param><param name="selected">true to select the row; false to cancel the selection of the row.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is less than 0 or greater than the number of rows in the control minus 1.</exception>
         protected virtual void SetSelectedRowCore(int rowIndex, bool selected)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -3112,7 +3112,7 @@ namespace System.Windows.Forms
         {
             Contract.Requires(dataGridViewColumn != null);
             Contract.Requires(dataGridViewColumn.DataGridView == this);
-            Contract.Requires(!(this.VirtualMode && !dataGridViewColumn.IsDataBound));
+            Contract.Requires(!(VirtualMode && !dataGridViewColumn.IsDataBound));
         }
 
         /// <summary>
@@ -3122,8 +3122,8 @@ namespace System.Windows.Forms
         public virtual void Sort(IComparer comparer)
         {
             Contract.Requires(comparer != null);
-            Contract.Requires(!this.VirtualMode);
-            Contract.Requires(this.DataSource == null);
+            Contract.Requires(!VirtualMode);
+            Contract.Requires(DataSource == null);
         }
 
         /// <summary>
@@ -3132,8 +3132,8 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The column index of the cell to update, or -1 to indicate a row header cell.</param><param name="rowIndex">The row index of the cell to update, or -1 to indicate a column header cell.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than -1 or greater than the number of columns in the control minus 1.-or-<paramref name="rowIndex"/> is less than -1 or greater than the number of rows in the control minus 1.</exception>
         public void UpdateCellErrorText(int columnIndex, int rowIndex)
         {
-            Contract.Requires(!(columnIndex < -1 || columnIndex >= this.Columns.Count));
-            Contract.Requires(!(rowIndex < -1 || rowIndex >= this.Rows.Count));
+            Contract.Requires(!(columnIndex < -1 || columnIndex >= Columns.Count));
+            Contract.Requires(!(rowIndex < -1 || rowIndex >= Rows.Count));
         }
 
         /// <summary>
@@ -3142,8 +3142,8 @@ namespace System.Windows.Forms
         /// <param name="columnIndex">The zero-based column index of the cell with the new value.</param><param name="rowIndex">The zero-based row index of the cell with the new value.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than zero or greater than the number of columns in the control minus one.-or-<paramref name="rowIndex"/> is less than zero or greater than the number of rows in the control minus one.</exception>
         public void UpdateCellValue(int columnIndex, int rowIndex)
         {
-            Contract.Requires(columnIndex >= 0 && columnIndex < this.Columns.Count);
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(columnIndex >= 0 && columnIndex < Columns.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -3152,7 +3152,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The zero-based index of the row to update.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is not in the valid range of 0 to the number of rows in the control minus 1.</exception>
         public void UpdateRowErrorText(int rowIndex)
         {
-            Contract.Requires(rowIndex >= 0 && rowIndex < this.Rows.Count);
+            Contract.Requires(rowIndex >= 0 && rowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -3161,8 +3161,8 @@ namespace System.Windows.Forms
         /// <param name="rowIndexStart">The zero-based index of the first row in the set of rows to update.</param><param name="rowIndexEnd">The zero-based index of the last row in the set of rows to update.</param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndexStart"/> is not in the valid range of 0 to the number of rows in the control minus 1.-or-<paramref name="rowIndexEnd"/> is not in the valid range of 0 to the number of rows in the control minus 1.-or-<paramref name="rowIndexEnd"/> is less than <paramref name="rowIndexStart"/>.</exception>
         public void UpdateRowErrorText(int rowIndexStart, int rowIndexEnd)
         {
-            Contract.Requires(!(rowIndexStart < 0 || rowIndexStart >= this.Rows.Count));
-            Contract.Requires(!(rowIndexEnd < 0 || rowIndexEnd >= this.Rows.Count));
+            Contract.Requires(!(rowIndexStart < 0 || rowIndexStart >= Rows.Count));
+            Contract.Requires(!(rowIndexEnd < 0 || rowIndexEnd >= Rows.Count));
             Contract.Requires(!(rowIndexEnd < rowIndexStart));
         }
 
@@ -3173,7 +3173,7 @@ namespace System.Windows.Forms
         public void UpdateRowHeightInfo(int rowIndex, bool updateToEnd)
         {
             Contract.Requires(
-                !(updateToEnd && rowIndex < 0 || !updateToEnd && rowIndex < -1 || rowIndex >= this.Rows.Count));
+                !(updateToEnd && rowIndex < 0 || !updateToEnd && rowIndex < -1 || rowIndex >= Rows.Count));
         }
 
         // <summary>

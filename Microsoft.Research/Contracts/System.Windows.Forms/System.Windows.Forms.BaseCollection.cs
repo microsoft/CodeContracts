@@ -88,8 +88,7 @@ namespace System.Windows.Forms
         public void CopyTo(Array ar, int index)
         {
             Contract.Requires(ar != null);
-            Contract.Requires(index >= 0);
-            Contract.Requires(index <= this.Count);
+            Contract.Requires(index >= 0 && index <= Count);
         }
 
         /// <summary>

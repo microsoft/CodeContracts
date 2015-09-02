@@ -129,10 +129,10 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row containing the cell or -1 if the cell is not a row header cell or is not contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control.</param><exception cref="T:System.ArgumentException">The cell is a row header cell, the cell is not contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control, and <paramref name="rowIndex"/> is not -1.- or -The cell is a row header cell, the cell is contained within a <see cref="T:System.Windows.Forms.DataGridView"/> control, and <paramref name="rowIndex"/> is outside the valid range of 0 to the number of rows in the control minus 1.- or -The cell is a row header cell and <paramref name="rowIndex"/> is not the index of the row containing this cell.</exception><exception cref="T:System.ArgumentOutOfRangeException">The cell is a column header cell or the control's <see cref="P:System.Windows.Forms.DataGridView.TopLeftHeaderCell"/>  and <paramref name="rowIndex"/> is not -1.</exception>
         public override DataGridViewElementStates GetInheritedState(int rowIndex)
         { 
-            Contract.Requires(this.OwningRow == null ||
-                              !((this.DataGridView == null && rowIndex != -1 ||
-                                 this.DataGridView != null && (rowIndex < 0 || rowIndex >= this.DataGridView.Rows.Count))));
-            Contract.Requires(this.OwningColumn == null || this.DataGridView == null || rowIndex == -1);
+            Contract.Requires(OwningRow == null ||
+                              !((DataGridView == null && rowIndex != -1 ||
+                                 DataGridView != null && (rowIndex < 0 || rowIndex >= DataGridView.Rows.Count))));
+            Contract.Requires(OwningColumn == null || DataGridView == null || rowIndex == -1);
 
             return default(DataGridViewElementStates);
         }
@@ -147,10 +147,10 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The row index of the header cell.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property for this cell is null and <paramref name="rowIndex"/> does not equal -1. -or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.OwningColumn"/> property for this cell is not null and <paramref name="rowIndex"/> does not equal -1. -or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.OwningRow"/> property for this cell is not null and <paramref name="rowIndex"/> is less than zero or greater than or equal to the number of rows in the control.-or-The values of the <see cref="P:System.Windows.Forms.DataGridViewCell.OwningColumn"/> and <see cref="P:System.Windows.Forms.DataGridViewCell.OwningRow"/> properties of this cell are both null and <paramref name="rowIndex"/> does not equal -1.</exception><exception cref="T:System.ArgumentException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCell.OwningRow"/> property for this cell is not null and <paramref name="rowIndex"/> indicates a row other than the <see cref="P:System.Windows.Forms.DataGridViewCell.OwningRow"/>.</exception>
         protected override Size GetSize(int rowIndex)
         {
-            Contract.Requires(this.OwningRow == null ||
-                              !((this.DataGridView == null && rowIndex != -1 ||
-                                 this.DataGridView != null && (rowIndex < 0 || rowIndex >= this.DataGridView.Rows.Count))));
-            Contract.Requires(this.OwningColumn == null || this.DataGridView == null || rowIndex == -1);
+            Contract.Requires(OwningRow == null ||
+                              !((DataGridView == null && rowIndex != -1 ||
+                                 DataGridView != null && (rowIndex < 0 || rowIndex >= DataGridView.Rows.Count))));
+            Contract.Requires(OwningColumn == null || DataGridView == null || rowIndex == -1);
             return default(Size);
         }
         

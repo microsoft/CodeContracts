@@ -1998,7 +1998,7 @@ namespace System.Windows.Forms
         get
         {
           Contract.Requires(index >= 0);
-          Contract.Requires(index < this.Count);
+          Contract.Requires(index < Count);
 
           return default(Control);
         }

@@ -39,12 +39,12 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(index >= 0  && index < this.Count);
+                Contract.Requires(index >= 0 && index < Count);
                 return default(string);
             }
             set
             {
-                Contract.Requires(index >= 0 && index < this.Count);
+                Contract.Requires(index >= 0 && index < Count);
             }
         }
 
@@ -138,7 +138,7 @@ namespace System.Windows.Forms
         /// <param name="value">The <see cref="T:System.String"/> to add to the collection.</param>
         public int Add(string value)
         {
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count)+1);
+            Contract.Ensures(Count == Contract.OldValue(Count)+1);
             Contract.Ensures(Contract.Result<int>() >= 0);
             return default(int);
         }
@@ -150,7 +150,7 @@ namespace System.Windows.Forms
         public void AddRange(string[] value)
         {
             Contract.Requires(value != null);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count) + value.Length);
+            Contract.Ensures(Count == Contract.OldValue(Count) + value.Length);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace System.Windows.Forms
         /// </summary>
         public void Clear()
         {
-            Contract.Ensures(this.Count == 0);
+            Contract.Ensures(Count == 0);
         }
 
         // <summary>
@@ -178,7 +178,7 @@ namespace System.Windows.Forms
         public void CopyTo(string[] array, int index)
         {
             Contract.Requires(array != null);
-            Contract.Requires(index >= 0 && index <= this.Count);
+            Contract.Requires(index >= 0 && index <= Count);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace System.Windows.Forms
         /// <param name="index">The position at which to insert the string.</param><param name="value">The string to insert.</param>
         public void Insert(int index, string value)
         {
-            Contract.Requires(index >= 0 && index <= this.Count);
+            Contract.Requires(index >= 0 && index <= Count);
         }
 
         // <summary>
@@ -216,8 +216,8 @@ namespace System.Windows.Forms
         // <param name="index">The zero-based index of the string to remove.</param>
         public void RemoveAt(int index)
         {
-            Contract.Requires(index >= 0 && index < this.Count);
-            Contract.Ensures(this.Count == Contract.OldValue(this.Count)-1);
+            Contract.Requires(index >= 0 && index < Count);
+            Contract.Ensures(Count == Contract.OldValue(Count)-1);
         }
         
         // <summary>

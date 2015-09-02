@@ -38,7 +38,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.columnIndex;
+                return columnIndex;
             }
         }
 
@@ -53,7 +53,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.formattedValue;
+                return formattedValue;
             }
         }
 
@@ -68,7 +68,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                return this.rowIndex;
+                return rowIndex;
             }
         }
 

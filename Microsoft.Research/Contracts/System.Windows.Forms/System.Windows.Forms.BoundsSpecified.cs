@@ -23,6 +23,7 @@ namespace System.Windows.Forms
     [Flags]
     public enum BoundsSpecified
     {
+        None = 0,
         X = 1,
         Y = 2,
         Width = 4,
@@ -30,6 +31,5 @@ namespace System.Windows.Forms
         Location = Y | X,
         Size = Height | Width,
         All = Size | Location,
-        None = 0,
     }
 }

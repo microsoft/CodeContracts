@@ -94,7 +94,7 @@ namespace System.Windows.Forms
             get { return default(DataGridViewCellStyle); }
             set
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
             }
         }
 
@@ -110,7 +110,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(bool);
             }
         }
@@ -128,7 +128,7 @@ namespace System.Windows.Forms
             get { return default(int); }
             set
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
             }
         }
 
@@ -154,12 +154,12 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(bool);
             }
             set
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
             }
         }
         
@@ -185,7 +185,7 @@ namespace System.Windows.Forms
         public int Height
         {
             get { return default(int); }
-            set { Contract.Requires(!(this.DataGridView != null && this.Index == -1)); }
+            set { Contract.Requires(!(DataGridView != null && Index == -1)); }
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(this.Index >= 0);
+                Contract.Requires(Index >= 0);
                 return default(DataGridViewCellStyle);
             }
         }
@@ -225,7 +225,7 @@ namespace System.Windows.Forms
         public int MinimumHeight
         {
             get { return default(int); }
-            set { Contract.Requires(!(this.DataGridView != null && this.Index == -1)); }
+            set { Contract.Requires(!(DataGridView != null && Index == -1)); }
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(bool);
             }
             set
@@ -262,7 +262,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(DataGridViewTriState);
             }
             set
@@ -283,7 +283,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(bool);
             }
             set
@@ -304,7 +304,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(DataGridViewElementStates);
             }
         }
@@ -322,12 +322,12 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
                 return default(bool);
             }
             set
             {
-                Contract.Requires(!(this.DataGridView != null && this.Index == -1));
+                Contract.Requires(!(DataGridView != null && Index == -1));
             }
         }
 
@@ -403,7 +403,7 @@ namespace System.Windows.Forms
         /// <param name="graphics">The <see cref="T:System.Drawing.Graphics"/> used to paint the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</param><param name="clipBounds">A <see cref="T:System.Drawing.Rectangle"/> that represents the area of the <see cref="T:System.Windows.Forms.DataGridView"/> that needs to be painted.</param><param name="bounds">A <see cref="T:System.Drawing.Rectangle"/> that contains the bounds of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> that is being painted.</param><param name="rowIndex">The row index of the cell that is being painted.</param><param name="rowState">A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values that specifies the state of the row.</param><param name="cellStyle">The <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> used to paint the focus rectangle.</param><param name="cellsPaintSelectionBackground">true to use the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.SelectionBackColor"/> property of <paramref name="cellStyle"/> as the color of the focus rectangle; false to use the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.BackColor"/> property of <paramref name="cellStyle"/> as the color of the focus rectangle.</param><exception cref="T:System.InvalidOperationException">The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><exception cref="T:System.ArgumentNullException"><paramref name="graphics"/> is null.-or-<paramref name="cellStyle"/> is null.</exception>
         protected internal virtual void DrawFocus(Graphics graphics, Rectangle clipBounds, Rectangle bounds, int rowIndex, DataGridViewElementStates rowState, DataGridViewCellStyle cellStyle, bool cellsPaintSelectionBackground)
         {
-            Contract.Requires(this.DataGridView != null);
+            Contract.Requires(DataGridView != null);
             Contract.Requires(graphics != null);
             Contract.Requires(cellStyle != null);
         }
@@ -418,7 +418,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the current row.</param><exception cref="T:System.InvalidOperationException"><paramref name="rowIndex"/> is -1.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndex"/> is less than zero or greater than or equal to the number of rows in the control minus one.</exception>
         public ContextMenuStrip GetContextMenuStrip(int rowIndex)
         {
-            Contract.Requires(this.DataGridView == null || (rowIndex >= 0 && rowIndex < this.DataGridView.Rows.Count));
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 && rowIndex < DataGridView.Rows.Count));
             return default(ContextMenuStrip);
         }
 
@@ -432,7 +432,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the row that contains the error.</param><exception cref="T:System.InvalidOperationException">The row belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><exception cref="T:System.ArgumentOutOfRangeException">The row belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control and <paramref name="rowIndex"/> is less than zero or greater than the number of rows in the control minus one. </exception>
         public string GetErrorText(int rowIndex)
         {
-            Contract.Requires(this.DataGridView == null || (rowIndex >= 0 && rowIndex < this.DataGridView.Rows.Count));
+            Contract.Requires(DataGridView == null || (rowIndex >= 0 && rowIndex < DataGridView.Rows.Count));
             return default(string);
         }
         
@@ -447,7 +447,7 @@ namespace System.Windows.Forms
         public virtual int GetPreferredHeight(int rowIndex, DataGridViewAutoSizeRowMode autoSizeRowMode, bool fixedWidth)
         {
             // Contract.Requires(!((autoSizeRowMode & (DataGridViewAutoSizeRowMode) -4) != (DataGridViewAutoSizeRowMode)0));
-            Contract.Requires(!(this.DataGridView != null && (rowIndex < 0 || rowIndex >= this.DataGridView.Rows.Count)));
+            Contract.Requires(!(DataGridView != null && (rowIndex < 0 || rowIndex >= DataGridView.Rows.Count)));
             return default(int);
         }
         
@@ -462,7 +462,7 @@ namespace System.Windows.Forms
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual DataGridViewElementStates GetState(int rowIndex)
         {
-            Contract.Requires(!(this.DataGridView != null && (rowIndex < 0 || rowIndex >= this.DataGridView.Rows.Count)));
+            Contract.Requires(!(DataGridView != null && (rowIndex < 0 || rowIndex >= DataGridView.Rows.Count)));
             return default(DataGridViewElementStates);
         }
         
@@ -495,8 +495,8 @@ namespace System.Windows.Forms
         public bool SetValues(params object[] values)
         {
             Contract.Requires(values != null);
-            Contract.Requires(this.DataGridView == null || this.DataGridView.VirtualMode);
-            Contract.Requires(this.DataGridView == null || this.Index >= 0);
+            Contract.Requires(DataGridView == null || DataGridView.VirtualMode);
+            Contract.Requires(DataGridView == null || Index >= 0);
             return default(bool);
         }
         
@@ -529,7 +529,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(Rectangle);
                 }
             }
@@ -546,7 +546,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(string);
                 }
             }
@@ -562,7 +562,7 @@ namespace System.Windows.Forms
             public DataGridViewRow Owner
             {
                 get { return default(DataGridViewRow); }
-                set { Contract.Requires(this.Owner == null); }
+                set { Contract.Requires(Owner == null); }
             }
 
             // <summary>
@@ -596,7 +596,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(AccessibleStates);
                 }
             }
@@ -613,7 +613,7 @@ namespace System.Windows.Forms
             {
                 get
                 {
-                    Contract.Requires(this.Owner != null);
+                    Contract.Requires(Owner != null);
                     return default(string);
                 }
             }
@@ -640,7 +640,7 @@ namespace System.Windows.Forms
             public override AccessibleObject GetChild(int index)
             {
                 Contract.Requires(index >= 0);
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(AccessibleObject);
             }
 
@@ -654,7 +654,7 @@ namespace System.Windows.Forms
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
             public int GetChildCount()
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(int);
             }
 
@@ -678,7 +678,7 @@ namespace System.Windows.Forms
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
             public AccessibleObject GetFocused()
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(AccessibleObject);
             }
 
@@ -693,7 +693,7 @@ namespace System.Windows.Forms
             [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
             public AccessibleObject Navigate(AccessibleNavigation navigationDirection)
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
                 return default(AccessibleObject);
             }
 
@@ -703,7 +703,7 @@ namespace System.Windows.Forms
             /// <param name="flags">One of the <see cref="T:System.Windows.Forms.AccessibleSelection"/> values.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
             public void Select(AccessibleSelection flags)
             {
-                Contract.Requires(this.Owner != null);
+                Contract.Requires(Owner != null);
             }
         }
     }
