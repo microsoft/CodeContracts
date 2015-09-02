@@ -195,6 +195,9 @@
     <Compile Include="System.Windows.Forms.BaseCollection.cs" />
     <Compile Include="System.Windows.Forms.Binding.cs" />
     <Compile Include="System.Windows.Forms.BindingsCollection.cs" />
+    <Compile Include="System.Windows.Forms.ColorDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="System.Windows.Forms.CommonDialog.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -209,6 +212,12 @@
     <Compile Include="System.Windows.Forms.DragEventArgs.cs" />
     <Compile Include="System.Windows.Forms.DrawTreeNodeEventArgs.cs" />
     <Compile Include="System.Windows.Forms.FileDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="System.Windows.Forms.FolderBrowserDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="System.Windows.Forms.FontDialog.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="System.Windows.Forms.Form.cs" />
@@ -235,8 +244,14 @@
     <Compile Include="System.Windows.Forms.MenuItem.cs" />
     <Compile Include="System.Windows.Forms.MouseEventArgs.cs" />
     <Compile Include="System.Windows.Forms.NodeLabelEditEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.PageSetupDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="System.Windows.Forms.PaintEventArgs.cs" />
     <Compile Include="System.Windows.Forms.PreviewKeyDownEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.PrintDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="System.Windows.Forms.QueryContinueDragEventArgs.cs" />
     <Compile Include="System.Windows.Forms.Screen.cs" />
     <Compile Include="System.Windows.Forms.Shortcut.cs" />
