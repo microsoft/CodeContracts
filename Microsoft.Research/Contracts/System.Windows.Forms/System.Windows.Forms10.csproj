@@ -193,8 +193,6 @@
   <ItemGroup>
     <Compile Include="System.Windows.Forms.Application.cs" />
     <Compile Include="System.Windows.Forms.BaseCollection.cs" />
-    <Compile Include="System.Windows.Forms.Binding.cs" />
-    <Compile Include="System.Windows.Forms.BindingsCollection.cs" />
     <Compile Include="System.Windows.Forms.ColorDialog.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -205,7 +203,6 @@
     <Compile Include="System.Windows.Forms.ComboBox.cs" />
     <Compile Include="System.Windows.Forms.Control.cs">
     </Compile>
-    <Compile Include="System.Windows.Forms.ControlBindingCollection.cs" />
     <Compile Include="System.Windows.Forms.ControlEventArgs.cs" />
     <Compile Include="System.Windows.Forms.DialogResult.cs" />
     <Compile Include="System.Windows.Forms.DomainUpDown.cs" />
@@ -224,7 +221,6 @@
     <Compile Include="System.Windows.Forms.FormCollection.cs" />
     <Compile Include="System.Windows.Forms.GiveFeedbackEventArgs.cs" />
     <Compile Include="System.Windows.Forms.HelpEventArgs.cs" />
-    <Compile Include="System.Windows.Forms.IBindableComponent.cs" />
     <Compile Include="System.Windows.Forms.ImageList.cs" />
     <Compile Include="System.Windows.Forms.InvalidateEventArgs.cs" />
     <Compile Include="System.Windows.Forms.ItemDragEventArgs.cs" />
@@ -240,7 +236,6 @@
     <Compile Include="System.Windows.Forms.ListViewItem.cs" />
     <Compile Include="System.Windows.Forms.Menu.cs">
     </Compile>
-    <Compile Include="System.Windows.Forms.Menu.MenuItemCollection.cs" />
     <Compile Include="System.Windows.Forms.MenuItem.cs" />
     <Compile Include="System.Windows.Forms.MouseEventArgs.cs" />
     <Compile Include="System.Windows.Forms.NodeLabelEditEventArgs.cs" />

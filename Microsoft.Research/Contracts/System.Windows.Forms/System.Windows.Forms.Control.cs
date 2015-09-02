@@ -459,7 +459,7 @@ namespace System.Windows.Forms
     //[ParenthesizePropertyName(true)]
     //[RefreshProperties(RefreshProperties.All)]
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ControlBindingsCollection DataBindings { get; }
+    // public ControlBindingsCollection DataBindings { get; }
     ////
     //// Summary:
     ////     Gets the default background color of the control.
