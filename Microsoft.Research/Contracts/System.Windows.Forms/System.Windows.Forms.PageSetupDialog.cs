@@ -128,7 +128,7 @@ namespace System.Windows.Forms
         // The <see cref="T:System.Drawing.Printing.PrinterSettings"/> to modify when the user clicks the Printer button. The default is null.
         // </returns>
 
-        [DefaultValue(null)]
+        // [DefaultValue(null)]
         // public PrinterSettings PrinterSettings {get; set;}
         
         // <summary>
