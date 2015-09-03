@@ -126,8 +126,11 @@ namespace System.Windows.Forms
         // </summary>
         
         // public override void Reset()
-        
-        // protected override bool RunDialog(IntPtr hwndOwner)
+
+        protected override bool RunDialog(IntPtr hwndOwner)
+        {
+            return default(bool);
+        }
     }
 }
 

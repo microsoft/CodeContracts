@@ -261,7 +261,7 @@ namespace System.Windows.Forms
         /// true if the file could be opened; otherwise, false.
         /// </returns>
         /// <param name="hWndOwner">A value that represents the window handle of the owner window for the common dialog box. </param>
-        protected bool RunDialog(IntPtr hWndOwner)
+        protected override bool RunDialog(IntPtr hWndOwner)
         {
             Contract.Requires(!Control.CheckForIllegalCrossThreadCalls ||
                               Application.OleRequired() == ApartmentState.STA);

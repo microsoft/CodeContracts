@@ -970,6 +970,9 @@ namespace System.Windows.Forms
         // A <see cref="T:System.Drawing.Size"/> that indicates the default width for menu-bar buttons, in pixels, and the height of a menu bar, in pixels.
         // </returns>
         // public static Size MenuBarButtonSize { get; }
+
+        private SystemInformation()
+        { }
     }
 }
 

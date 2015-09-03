@@ -75,15 +75,15 @@ namespace System.Windows.Forms
         // //
         // public abstract void Reset();
 
-        // <summary>
-        // When overridden in a derived class, specifies a common dialog box.
-        // </summary>
-        // 
-        // <returns>
-        // true if the dialog box was successfully run; otherwise, false.
-        // </returns>
-        // <param name="hwndOwner">A value that represents the window handle of the owner window for the common dialog box. </param>
-        // protected abstract bool RunDialog(IntPtr hwndOwner);
+        /// <summary>
+        /// When overridden in a derived class, specifies a common dialog box.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// true if the dialog box was successfully run; otherwise, false.
+        /// </returns>
+        /// <param name="hwndOwner">A value that represents the window handle of the owner window for the common dialog box. </param>
+        protected abstract bool RunDialog(IntPtr hwndOwner);
 
         // <summary>
         // Runs a common dialog box with a default owner.

@@ -161,7 +161,7 @@ namespace System.Windows.Forms
         // </summary>
         // public override void Reset()
         
-        protected bool RunDialog(IntPtr hwndOwner)
+        protected override bool RunDialog(IntPtr hwndOwner)
         {
             Contract.Requires(PageSettings != null);
             return default(bool);

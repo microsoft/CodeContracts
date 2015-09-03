@@ -251,16 +251,19 @@ namespace System.Windows.Forms
         // Resets all dialog box options to their default values.
         // </summary>
         // public override void Reset()
-        
-        // <summary>
-        // Specifies a file dialog box.
-        // </summary>
-        // 
-        // <returns>
-        // true if the dialog box was successfully run; otherwise, false.
-        // </returns>
-        // <param name="hWndOwner">The window handle of the owner window for the common dialog box.</param>
-        // protected override bool RunDialog(IntPtr hWndOwner)
+
+        /// <summary>
+        /// Specifies a file dialog box.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// true if the dialog box was successfully run; otherwise, false.
+        /// </returns>
+        /// <param name="hWndOwner">The window handle of the owner window for the common dialog box.</param>
+        protected override bool RunDialog(IntPtr hWndOwner)
+        {
+            return default(bool);
+        }
         
         // <summary>
         // Retrieves a string that includes the name of the current font selected in the dialog box.

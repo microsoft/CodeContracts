@@ -133,12 +133,15 @@ namespace System.Windows.Forms
         // </summary>
 
         // public override void Reset()
-        
-        // <returns>
-        // true if the dialog box was successfully run; otherwise, false.
-        // </returns>
-        // <param name="hwndOwner">A value that represents the window handle of the owner window for the common dialog box. </param>
-        // protected override bool RunDialog(IntPtr hwndOwner)
+
+        /// <returns>
+        /// true if the dialog box was successfully run; otherwise, false.
+        /// </returns>
+        /// <param name="hwndOwner">A value that represents the window handle of the owner window for the common dialog box. </param>
+        protected override bool RunDialog(IntPtr hwndOwner)
+        {
+            return default(bool);
+        }
         
         // <summary>
         // Returns a string that represents the <see cref="T:System.Windows.Forms.ColorDialog"/>.
