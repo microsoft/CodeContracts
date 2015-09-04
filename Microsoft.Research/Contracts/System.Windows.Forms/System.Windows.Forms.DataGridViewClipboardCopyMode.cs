@@ -20,7 +20,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Defines constants that indicate whether content is copied from a <see cref="T:System.Windows.Forms.DataGridView"/> control to the Clipboard.
     /// </summary>
-    
     public enum DataGridViewClipboardCopyMode
     {
         Disable,

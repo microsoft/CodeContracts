@@ -20,38 +20,31 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event.
     /// </summary>
-    
     public class DataGridViewDataErrorEventArgs : DataGridViewCellCancelEventArgs
     {
-
-        /// <summary>
-        /// Gets details about the state of the <see cref="T:System.Windows.Forms.DataGridView"/> when the error occurred.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewDataErrorContexts"/> values that specifies the context in which the error occurred.
-        /// </returns>
-        /// 
+        // <summary>
+        // Gets details about the state of the <see cref="T:System.Windows.Forms.DataGridView"/> when the error occurred.
+        // </summary>
+        // <returns>
+        // A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewDataErrorContexts"/> values that specifies the context in which the error occurred.
+        // </returns>
         // public DataGridViewDataErrorContexts Context {get;}
 
-        /// <summary>
-        /// Gets the exception that represents the error.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An <see cref="T:System.Exception"/> that represents the error.
-        /// </returns>
-        /// 
+        // <summary>
+        // Gets the exception that represents the error.
+        // </summary>
+        // <returns>
+        // An <see cref="T:System.Exception"/> that represents the error.
+        // </returns>
         // public Exception Exception {get;}
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to throw the exception after the <see cref="T:System.Windows.Forms.DataGridViewDataErrorEventHandler"/> delegate is finished with it.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// true if the exception should be thrown; otherwise, false. The default is false.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">When setting this property to true, the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.Exception"/> property value is null.</exception>
+        // <summary>
+        // Gets or sets a value indicating whether to throw the exception after the <see cref="T:System.Windows.Forms.DataGridViewDataErrorEventHandler"/> delegate is finished with it.
+        // </summary>
+        // <returns>
+        // true if the exception should be thrown; otherwise, false. The default is false.
+        // </returns>
+        // <exception cref="T:System.ArgumentException">When setting this property to true, the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.Exception"/> property value is null.</exception>
         // public bool ThrowException { get; set; }
 
         /// <summary>

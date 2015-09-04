@@ -25,14 +25,12 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides basic functionality for the <see cref="T:System.Windows.Forms.ContextMenuStrip"/> control. Although <see cref="T:System.Windows.Forms.ToolStripDropDownMenu"/> and <see cref="T:System.Windows.Forms.ToolStripDropDown"/> replace and add functionality to the <see cref="T:System.Windows.Forms.Menu"/> control of previous versions, <see cref="T:System.Windows.Forms.Menu"/> is retained for both backward compatibility and future use if you choose.
     /// </summary>
-    
     public class ToolStripDropDownMenu : ToolStripDropDown
     {
 
         // <summary>
         // Gets the internal spacing, in pixels, of the control.
         // </summary>
-        // 
         // <returns>
         // A Padding object representing the spacing.
         // </returns>
@@ -41,7 +39,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the rectangle that represents the display area of the <see cref="T:System.Windows.Forms.ToolStripDropDownMenu"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Rectangle"/> that represents the display area.
         // </returns>
@@ -51,7 +48,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating how the items of <see cref="T:System.Windows.Forms.ContextMenuStrip"/> are displayed.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ToolStripLayoutStyle"/> values. The default is <see cref="F:System.Windows.Forms.ToolStripLayoutStyle.Flow"/>.
         // </returns>
@@ -61,7 +57,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the maximum height and width, in pixels, of the <see cref="T:System.Windows.Forms.ContextMenuStrip"/>.
         // </summary>
-        // 
         // <returns>
         // A Size object representing the height and width of the control, in pixels.
         // </returns>
@@ -70,7 +65,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether space for an image is shown on the left edge of the <see cref="T:System.Windows.Forms.ToolStripMenuItem"/>.
         // </summary>
-        // 
         // <returns>
         // true if the image margin is shown; otherwise, false. The default is true.
         // </returns>
@@ -80,11 +74,9 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether space for a check mark is shown on the left edge of the <see cref="T:System.Windows.Forms.ToolStripMenuItem"/>.
         // </summary>
-        // 
         // <returns>
         // true if the check margin is shown; otherwise, false. The default is false.
         // </returns>
-        // 
         // public bool ShowCheckMargin {get; set;}
         
         // <summary>
@@ -95,7 +87,6 @@ namespace System.Windows.Forms
         // <summary>
         // Creates a default <see cref="T:System.Windows.Forms.ToolStripMenuItem"/> with the specified text, image, and event handler on a new <see cref="T:System.Windows.Forms.ToolStripDropDownMenu"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.ToolStripMenuItem"/>, or a <see cref="T:System.Windows.Forms.ToolStripSeparator"/> if the <paramref name="text"/> parameter is a hyphen (-).
         // </returns>

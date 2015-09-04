@@ -16,7 +16,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the column with the <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property that changed.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> with the <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property that changed.
         /// </returns>
@@ -31,7 +30,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the previous value of the <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property of the column.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnMode"/> value representing the previous value of the <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> property of the <see cref="P:System.Windows.Forms.DataGridViewAutoSizeColumnModeEventArgs.Column"/>.
         // </returns>

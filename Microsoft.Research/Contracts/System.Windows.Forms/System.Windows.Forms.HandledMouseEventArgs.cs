@@ -20,13 +20,11 @@ namespace System.Windows.Forms
     /// <summary>
     /// Allows a custom control to prevent the <see cref="E:System.Windows.Forms.Control.MouseWheel"/> event from being sent to its parent container.
     /// </summary>
-    
     public class HandledMouseEventArgs : MouseEventArgs
     {
         /// <summary>
         /// Gets or sets whether this event should be forwarded to the control's parent container.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the mouse event should go to the parent control; otherwise, false.
         /// </returns>

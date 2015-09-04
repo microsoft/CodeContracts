@@ -20,13 +20,11 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.CellFormatting"/> event of a <see cref="T:System.Windows.Forms.DataGridView"/>.
     /// </summary>
-    
     public class DataGridViewCellFormattingEventArgs : ConvertEventArgs
     {
         // <summary>
         // Gets or sets the style of the cell that is being formatted.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the display style of the cell being formatted. The default is the value of the cell's <see cref="P:System.Windows.Forms.DataGridViewCell.InheritedStyle"/> property.
         // </returns>
@@ -35,7 +33,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the column index of the cell that is being formatted.
         /// </summary>
-        /// 
         /// <returns>
         /// The column index of the cell that is being formatted.
         /// </returns>
@@ -51,7 +48,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the cell value has been successfully formatted.
         // </summary>
-        // 
         // <returns>
         // true if the formatting for the cell value has been handled; otherwise, false. The default value is false.
         // </returns>
@@ -60,7 +56,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the row index of the cell that is being formatted.
         /// </summary>
-        /// 
         /// <returns>
         /// The row index of the cell that is being formatted.
         /// </returns>

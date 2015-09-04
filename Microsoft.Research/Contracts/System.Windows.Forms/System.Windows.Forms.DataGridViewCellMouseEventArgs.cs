@@ -20,14 +20,12 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for mouse events raised by a <see cref="T:System.Windows.Forms.DataGridView"/> whenever the mouse is moved within a <see cref="T:System.Windows.Forms.DataGridViewCell"/>.
     /// </summary>
-    
     public class DataGridViewCellMouseEventArgs : MouseEventArgs
     {
        
         /// <summary>
         /// Gets the zero-based column index of the cell.
         /// </summary>
-        /// 
         /// <returns>
         /// An integer specifying the column index.
         /// </returns>
@@ -43,7 +41,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the zero-based row index of the cell.
         /// </summary>
-        /// 
         /// <returns>
         /// An integer specifying the row index.
         /// </returns>
@@ -64,7 +61,7 @@ namespace System.Windows.Forms
         public DataGridViewCellMouseEventArgs(int columnIndex, int rowIndex, int localX, int localY, MouseEventArgs e)
           : base(e.Button, e.Clicks, localX, localY, e.Delta)
         {
-
+            Contract.Requires(e != null);
             Contract.Requires(columnIndex >= -1);
             Contract.Requires(rowIndex >= -1);
         }

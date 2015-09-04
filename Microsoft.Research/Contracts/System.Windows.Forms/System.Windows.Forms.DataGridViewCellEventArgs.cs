@@ -20,14 +20,12 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for <see cref="T:System.Windows.Forms.DataGridView"/> events related to cell and row operations.
     /// </summary>
-    
     public class DataGridViewCellEventArgs : EventArgs
     {
       
         /// <summary>
         /// Gets a value indicating the column index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the column containing the cell that the event occurs for.
         /// </returns>
@@ -43,7 +41,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets a value indicating the row index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the row containing the cell that the event occurs for.
         /// </returns>
@@ -55,7 +52,12 @@ namespace System.Windows.Forms
                 return default(int);
             }
         }
-        
+
+        //internal DataGridViewCellEventArgs(DataGridViewCell dataGridViewCell)
+        //    : this(dataGridViewCell.ColumnIndex, dataGridViewCell.RowIndex)
+        //{
+        //}
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> class.
         /// </summary>

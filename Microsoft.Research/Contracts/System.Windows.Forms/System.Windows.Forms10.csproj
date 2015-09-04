@@ -210,7 +210,6 @@
     <Compile Include="System.Windows.Forms.ConvertEventArgs.cs" />
     <Compile Include="System.Windows.Forms.CreateParams.cs" />
     <Compile Include="System.Windows.Forms.Cursor.cs" />
-    <Compile Include="System.Windows.Forms.DataFormats.cs" />
     <Compile Include="System.Windows.Forms.DataGridAdvancedBorderStyle.cs" />
     <Compile Include="System.Windows.Forms.DataGridView.cs" />
     <Compile Include="System.Windows.Forms.DataGridViewAutoSizeColumnMode.cs" />

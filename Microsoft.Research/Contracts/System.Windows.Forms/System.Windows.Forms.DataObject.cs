@@ -33,7 +33,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Implements a basic data transfer mechanism.
     /// </summary>
-
     public class DataObject // : IDataObject, System.Runtime.InteropServices.ComTypes.IDataObject 
     {
         // <summary>
@@ -56,7 +55,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns the data associated with the specified data format, using an automated conversion parameter to determine whether to convert the data to the format.
         // </summary>
-        // 
         // <returns>
         // The data associated with the specified format, or null.
         // </returns>
@@ -66,7 +64,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns the data associated with the specified data format.
         // </summary>
-        // 
         // <returns>
         // The data associated with the specified format, or null.
         // </returns>
@@ -76,7 +73,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns the data associated with the specified class type format.
         // </summary>
-        // 
         // <returns>
         // The data associated with the specified format, or null.
         // </returns>
@@ -86,7 +82,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
         // </summary>
-        // 
         // <returns>
         // true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
         // </returns>
@@ -96,7 +91,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether this <see cref="T:System.Windows.Forms.DataObject"/> contains data in the specified format or, optionally, contains data that can be converted to the specified format.
         // </summary>
-        // 
         // <returns>
         // true if the data is in, or can be converted to, the specified format; otherwise, false.
         // </returns>
@@ -106,7 +100,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format.
         // </summary>
-        // 
         // <returns>
         // true if data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with, or can be converted to, the specified format; otherwise, false.
         // </returns>
@@ -116,7 +109,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns a list of all formats that data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with or can be converted to, using an automatic conversion parameter to determine whether to retrieve only native data formats or all formats that the data can be converted to.
         /// </summary>
-        /// 
         /// <returns>
         /// An array of type <see cref="T:System.String"/>, containing a list of all formats that are supported by the data stored in this object.
         /// </returns>
@@ -130,7 +122,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns a list of all formats that data stored in this <see cref="T:System.Windows.Forms.DataObject"/> is associated with or can be converted to.
         /// </summary>
-        /// 
         /// <returns>
         /// An array of type <see cref="T:System.String"/>, containing a list of all formats that are supported by the data stored in this object.
         /// </returns>
@@ -144,47 +135,38 @@ namespace System.Windows.Forms
         // <summary>
         // Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
         // </summary>
-        // 
         // <returns>
         // true if the data object contains audio data; otherwise, false.
         // </returns>
-        // 
         // public virtual bool ContainsAudio()
         
         // <summary>
         // Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
         // </summary>
-        // 
         // <returns>
         // true if the data object contains a file drop list; otherwise, false.
         // </returns>
-        // 
         // public virtual bool ContainsFileDropList()
         
         // <summary>
         // Indicates whether the data object contains data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
         // </summary>
-        // 
         // <returns>
         // true if the data object contains image data; otherwise, false.
         // </returns>
-        // 
         // public virtual bool ContainsImage()
         
         // <summary>
         // Indicates whether the data object contains data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
         // </summary>
-        // 
         // <returns>
         // true if the data object contains text data; otherwise, false.
         // </returns>
-        // 
         // public virtual bool ContainsText()
         
         // <summary>
         // Indicates whether the data object contains text data in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
         // </summary>
-        // 
         // <returns>
         // true if the data object contains text data in the specified format; otherwise, false.
         // </returns>
@@ -194,37 +176,30 @@ namespace System.Windows.Forms
         // <summary>
         // Retrieves an audio stream from the data object.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.IO.Stream"/> containing audio data or null if the data object does not contain any data in the <see cref="F:System.Windows.Forms.DataFormats.WaveAudio"/> format.
         // </returns>
-        // 
         // public virtual Stream GetAudioStream()
         
         // <summary>
         // Retrieves a collection of file names from the data object.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Collections.Specialized.StringCollection"/> containing file names or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.FileDrop"/> format or can be converted to that format.
         // </returns>
-        // 
         // public virtual StringCollection GetFileDropList()
         
         // <summary>
         // Retrieves an image from the data object.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Drawing.Image"/> representing the image data in the data object or null if the data object does not contain any data that is in the <see cref="F:System.Windows.Forms.DataFormats.Bitmap"/> format or can be converted to that format.
         // </returns>
-        // 
         // public virtual Image GetImage()
         
         // <summary>
         // Retrieves text data from the data object in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
         // </summary>
-        // 
         // <returns>
         // The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the <see cref="F:System.Windows.Forms.TextDataFormat.UnicodeText"/> format.
         // </returns>
@@ -233,7 +208,6 @@ namespace System.Windows.Forms
         // <summary>
         // Retrieves text data from the data object in the format indicated by the specified <see cref="T:System.Windows.Forms.TextDataFormat"/> value.
         // </summary>
-        // 
         // <returns>
         // The text data in the data object or <see cref="F:System.String.Empty"/> if the data object does not contain data in the specified format.
         // </returns>
@@ -310,7 +284,6 @@ namespace System.Windows.Forms
         // Adds the specified object to the <see cref="T:System.Windows.Forms.DataObject"/> using the specified type as the format.
         // </summary>
         // <param name="format">A <see cref="T:System.Type"/> representing the format associated with the data. </param><param name="data">The data to store. </param>
-        // 
         // public virtual void SetData(System.Type format, object data)
         
         // <summary>

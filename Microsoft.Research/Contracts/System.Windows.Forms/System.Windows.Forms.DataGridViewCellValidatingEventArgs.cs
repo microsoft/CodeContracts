@@ -23,53 +23,34 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataGridViewCellValidatingEventArgs : CancelEventArgs
     {
-        private int rowIndex;
-        private int columnIndex;
-        private object formattedValue;
-
         /// <summary>
         /// Gets the column index of the cell that needs to be validated.
         /// </summary>
-        /// 
         /// <returns>
         /// A zero-based integer that specifies the column index of the cell that needs to be validated.
         /// </returns>
         public int ColumnIndex
         {
-            get
-            {
-                return columnIndex;
-            }
+            get { return default(int); }
         }
 
-        /// <summary>
-        /// Gets the formatted contents of the cell that needs to be validated.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A reference to the formatted value.
-        /// </returns>
-        public object FormattedValue
-        {
-            get
-            {
-                return formattedValue;
-            }
-        }
-
+        // <summary>
+        // Gets the formatted contents of the cell that needs to be validated.
+        // </summary>
+        // <returns>
+        // A reference to the formatted value.
+        // </returns>
+        //public object FormattedValue {get;}
+        
         /// <summary>
         /// Gets the row index of the cell that needs to be validated.
         /// </summary>
-        /// 
         /// <returns>
         /// A zero-based integer that specifies the row index of the cell that needs to be validated.
         /// </returns>
-        public int RowIndex
+        public int RowIndex 
         {
-            get
-            {
-                return rowIndex;
-            }
+            get { return default(int); }
         }
 
         //internal DataGridViewCellValidatingEventArgs(int columnIndex, int rowIndex, object formattedValue)

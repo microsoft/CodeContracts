@@ -20,13 +20,11 @@ namespace System.Windows.Forms
     /// <summary>
     /// Used to group collections of controls.
     /// </summary>
-    /// 
     public class Panel : ScrollableControl
     {
         // <summary>
         // Gets or sets a value that indicates whether the control resizes based on its contents.
         // </summary>
-        // 
         // <returns>
         // true if the control automatically resizes based on its contents; otherwise, false. The default is true.
         // </returns>
@@ -35,7 +33,6 @@ namespace System.Windows.Forms
         // <summary>
         // Indicates the automatic sizing behavior of the control.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.AutoSizeMode"/> values.
         // </returns>
@@ -45,7 +42,6 @@ namespace System.Windows.Forms
         // <summary>
         // Indicates the border style for the control.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.BorderStyle"/> values. The default is BorderStyle.None.
         // </returns>
@@ -55,7 +51,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the required creation parameters when the control handle is created.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.CreateParams"/> that contains the required creation parameters when the handle to the control is created.
         // </returns>
@@ -64,7 +59,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the default size of the control.
         // </summary>
-        // 
         // <returns>
         // The default <see cref="T:System.Drawing.Size"/> of the control.
         // </returns>
@@ -73,7 +67,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
         // </summary>
-        // 
         // <returns>
         // true if the user can give the focus to the control using the TAB key; otherwise, false. The default is false.
         // </returns>
@@ -84,7 +77,6 @@ namespace System.Windows.Forms
         // <summary>
         // This member is not meaningful for this control.
         // </summary>
-        // 
         // <returns>
         // The text associated with this control.
         // </returns>
@@ -99,25 +91,21 @@ namespace System.Windows.Forms
         // <summary>
         // This member is not meaningful for this control.
         // </summary>
-        // 
         // public new event KeyEventHandler KeyUp
         
         // <summary>
         // This member is not meaningful for this control.
         // </summary>
-        // 
         // public new event KeyEventHandler KeyDown
         
         // <summary>
         // This member is not meaningful for this control.
         // </summary>
-        // 
         // public new event KeyPressEventHandler KeyPress
         
         // <summary>
         // This member is not meaningful for this control.
         // </summary>
-        // 
         // public new event EventHandler TextChanged
         
         // <summary>
@@ -134,7 +122,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns a string representation for this control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.String"/> representation of the control.
         // </returns>

@@ -21,19 +21,16 @@ namespace System.Windows.Forms
     /// <summary>
     /// Represents a collection of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects that are selected in a <see cref="T:System.Windows.Forms.DataGridView"/>.
     /// </summary>
-    
     public class DataGridViewSelectedRowCollection : BaseCollection // IList, ICollection, IEnumerable
     {
-        
-        /// <returns>
-        /// An <see cref="T:System.Collections.ArrayList"/> containing the elements of the collection. This property returns null unless overridden in a derived class.
-        /// </returns>
+        // <returns>
+        // An <see cref="T:System.Collections.ArrayList"/> containing the elements of the collection. This property returns null unless overridden in a derived class.
+        // </returns>
         // protected override ArrayList List {get;}
        
         /// <summary>
         /// Gets the row at the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewRow"/> at the current index.
         /// </returns>
@@ -56,7 +53,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the specified row is contained in the collection.
         // </summary>
-        // 
         // <returns>
         // true if <paramref name="dataGridViewRow"/> is in the collection; otherwise, false.
         // </returns>
@@ -74,5 +70,7 @@ namespace System.Windows.Forms
         // </summary>
         // <param name="index">The zero-based index at which <paramref name="dataGridViewRow"/> should be inserted. </param><param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to insert into the <see cref="T:System.Windows.Forms.DataGridViewSelectedRowCollection"/>.</param><exception cref="T:System.NotSupportedException">Always thrown.</exception>
         // public void Insert(int index, DataGridViewRow dataGridViewRow)
+        internal DataGridViewSelectedRowCollection()
+        { }
     }
 }

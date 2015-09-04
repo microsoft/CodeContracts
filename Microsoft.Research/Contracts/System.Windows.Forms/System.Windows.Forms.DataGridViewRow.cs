@@ -32,7 +32,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> assigned to the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> assigned to the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </returns>
@@ -49,7 +48,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the collection of cells that populate the row.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> that contains all of the cells in the row.
         /// </returns>
@@ -65,7 +63,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the shortcut menu for the row.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.ContextMenuStrip"/> associated with the current <see cref="T:System.Windows.Forms.DataGridViewRow"/>. The default is null.
         // </returns>
@@ -75,7 +72,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the data-bound object that populated the row.
         // </summary>
-        // 
         // <returns>
         // The data-bound <see cref="T:System.Object"/>.
         // </returns>
@@ -84,12 +80,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the default styles for the row, which are used to render cells in the row unless the styles are overridden.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> to be applied as the default style.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">When setting this property, the row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        public DataGridViewCellStyle DefaultCellStyle
+        public override DataGridViewCellStyle DefaultCellStyle
         {
             get { return default(DataGridViewCellStyle); }
             set
@@ -101,12 +96,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets a value indicating whether this row is displayed on the screen.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the row is currently displayed on the screen; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public bool Displayed 
+        public override bool Displayed 
         {
             get
             {
@@ -118,7 +112,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the height, in pixels, of the row divider.
         /// </summary>
-        /// 
         /// <returns>
         /// The height, in pixels, of the divider (the row's bottom margin).
         /// </returns>
@@ -135,7 +128,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the error message text for row-level errors.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.String"/> containing the error message.
         // </returns>
@@ -145,12 +137,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the row is frozen.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the row is frozen; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        public bool Frozen
+        public override bool Frozen
         {
             get
             {
@@ -166,7 +157,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the row's header cell.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewRowHeaderCell"/> that represents the header cell of row.
         // </returns>
@@ -176,12 +166,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the current height of the row.
         /// </summary>
-        /// 
         /// <returns>
         /// The height, in pixels, of the row. The default is the height of the default font plus 9 pixels.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">When setting this property, the row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        [DefaultValue(22)]
+        /// [DefaultValue(22)]
         public int Height
         {
             get { return default(int); }
@@ -191,12 +180,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the cell style in effect for the row.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that specifies the formatting and style information for the cells in the row.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public DataGridViewCellStyle InheritedStyle
+        public override DataGridViewCellStyle InheritedStyle
         {
             get
             {
@@ -208,7 +196,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the row is the row for new records.
         // </summary>
-        // 
         // <returns>
         // true if the row is the last row in the <see cref="T:System.Windows.Forms.DataGridView"/>, which is used for the entry of a new row of data; otherwise, false.
         // </returns>
@@ -217,7 +204,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the minimum height of the row.
         /// </summary>
-        /// 
         /// <returns>
         /// The minimum row height in pixels, ranging from 2 to <see cref="F:System.Int32.MaxValue"/>. The default is 3.
         /// </returns>
@@ -231,13 +217,12 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the row is read-only.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the row is read-only; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        [DefaultValue(false)]
-        public bool ReadOnly
+        /// [DefaultValue(false)]
+        public override bool ReadOnly
         {
             get
             {
@@ -253,12 +238,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether users can resize the row or indicating that the behavior is inherited from the <see cref="P:System.Windows.Forms.DataGridView.AllowUserToResizeRows"/> property.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewTriState"/> value that indicates whether the row can be resized or whether it can be resized only when the <see cref="P:System.Windows.Forms.DataGridView.AllowUserToResizeRows"/> property is set to true.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public DataGridViewTriState Resizable
+        public override DataGridViewTriState Resizable
         {
             get
             {
@@ -274,12 +258,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the row is selected.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the row is selected; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public bool Selected
+        public override bool Selected
         {
             get
             {
@@ -295,12 +278,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the current state of the row.
         /// </summary>
-        /// 
         /// <returns>
         /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values indicating the row state.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception>
-        public DataGridViewElementStates State
+        public override DataGridViewElementStates State
         {
             get
             {
@@ -312,13 +294,12 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the row is visible.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the row is visible; otherwise, false.
         /// </returns>
         /// <exception cref="T:System.InvalidOperationException">The row is in a <see cref="T:System.Windows.Forms.DataGridView"/> control and is a shared row.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         [Browsable(false)]
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -339,7 +320,6 @@ namespace System.Windows.Forms
         // <summary>
         // Modifies an input row header border style according to the specified criteria.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the new border style used.
         // </returns>
@@ -349,7 +329,6 @@ namespace System.Windows.Forms
         // <summary>
         // Creates an exact copy of this row.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Object"/> that represents the cloned <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         // </returns>
@@ -359,7 +338,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates a new accessible object for the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A new <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> for the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </returns>
@@ -391,7 +369,6 @@ namespace System.Windows.Forms
         // <summary>
         // Constructs a new collection of cells based on this row.
         // </summary>
-        // 
         // <returns>
         // The newly created <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/>.
         // </returns>
@@ -411,7 +388,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the shortcut menu for the row.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.ContextMenuStrip"/> that belongs to the <see cref="T:System.Windows.Forms.DataGridViewRow"/> at the specified index.
         /// </returns>
@@ -425,7 +401,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the error text for the row at the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// A string that describes the error of the row at the specified index.
         /// </returns>
@@ -439,7 +414,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Calculates the ideal height of the specified row based on the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The ideal height of the row, in pixels.
         /// </returns>
@@ -454,12 +428,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns a value indicating the current state of the row.
         /// </summary>
-        /// 
         /// <returns>
         /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values indicating the row state.
         /// </returns>
         /// <param name="rowIndex">The index of the row.</param><exception cref="T:System.ArgumentOutOfRangeException">The row has been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control, but the <paramref name="rowIndex"/> value is not in the valid range of 0 to the number of rows in the control minus 1.</exception><exception cref="T:System.ArgumentException">The row is not a shared row, but the <paramref name="rowIndex"/> value does not match the row's <see cref="P:System.Windows.Forms.DataGridViewBand.Index"/> property value.-or-The row has not been added to a <see cref="T:System.Windows.Forms.DataGridView"/> control, but the <paramref name="rowIndex"/> value does not match the row's <see cref="P:System.Windows.Forms.DataGridViewBand.Index"/> property value.</exception>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        /// [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual DataGridViewElementStates GetState(int rowIndex)
         {
             Contract.Requires(!(DataGridView != null && (rowIndex < 0 || rowIndex >= DataGridView.Rows.Count)));
@@ -487,7 +460,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Sets the values of the row's cells.
         /// </summary>
-        /// 
         /// <returns>
         /// true if all values have been set; otherwise, false.
         /// </returns>
@@ -503,29 +475,25 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a human-readable string that describes the row.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.String"/> that describes this row.
         // </returns>
-        // 
         // public override string ToString()
       
         /// <summary>
         /// Provides information about a <see cref="T:System.Windows.Forms.DataGridViewRow"/> to accessibility client applications.
         /// </summary>
-        [ComVisible(true)]
+        /// [ComVisible(true)]
         protected class DataGridViewRowAccessibleObject : AccessibleObject
         {
-      
             /// <summary>
             /// Gets the location and size of the accessible object.
             /// </summary>
-            /// 
             /// <returns>
             /// A <see cref="T:System.Drawing.Rectangle"/> that represents the bounds of the accessible object.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public Rectangle Bounds
+            public override Rectangle Bounds
             {
                 get
                 {
@@ -537,12 +505,11 @@ namespace System.Windows.Forms
             /// <summary>
             /// Gets the name of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </summary>
-            /// 
             /// <returns>
             /// The name of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public string Name
+            public override string Name
             {
                 get
                 {
@@ -554,7 +521,6 @@ namespace System.Windows.Forms
             /// <summary>
             /// Gets or sets the <see cref="T:System.Windows.Forms.DataGridViewRow"/> to which this <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> applies.
             /// </summary>
-            /// 
             /// <returns>
             /// The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns this <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </returns>
@@ -568,7 +534,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets the parent of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             // </summary>
-            // 
             // <returns>
             // The <see cref="T:System.Windows.Forms.DataGridView.DataGridViewAccessibleObject"/> that belongs to the <see cref="T:System.Windows.Forms.DataGridView"/>.
             // </returns>
@@ -578,7 +543,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets the role of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             // </summary>
-            // 
             // <returns>
             // The <see cref="F:System.Windows.Forms.AccessibleRole.Row"/> value.
             // </returns>
@@ -587,12 +551,11 @@ namespace System.Windows.Forms
             /// <summary>
             /// Gets the state of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </summary>
-            /// 
             /// <returns>
             /// A bitwise combination of <see cref="T:System.Windows.Forms.AccessibleStates"/> values. The default is the bitwise combination of the <see cref="F:System.Windows.Forms.AccessibleStates.Selectable"/> and <see cref="F:System.Windows.Forms.AccessibleStates.Focusable"/> values.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public AccessibleStates State
+            public override AccessibleStates State
             {
                 get
                 {
@@ -604,12 +567,11 @@ namespace System.Windows.Forms
             /// <summary>
             /// Gets the value of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </summary>
-            /// 
             /// <returns>
             /// The value of the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/>.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public string Value
+            public override string Value
             {
                 get
                 {
@@ -632,7 +594,6 @@ namespace System.Windows.Forms
             /// <summary>
             /// Returns the accessible child corresponding to the specified index.
             /// </summary>
-            /// 
             /// <returns>
             /// A <see cref="T:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject"/> that represents the <see cref="T:System.Windows.Forms.DataGridViewCell"/> corresponding to the specified index.
             /// </returns>
@@ -647,12 +608,11 @@ namespace System.Windows.Forms
             /// <summary>
             /// Returns the number of children belonging to the accessible object.
             /// </summary>
-            /// 
             /// <returns>
             /// The number of child accessible objects that belong to the <see cref="T:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject"/> corresponds to the number of visible columns in the <see cref="T:System.Windows.Forms.DataGridView"/>. If the <see cref="P:System.Windows.Forms.DataGridView.RowHeadersVisible"/> property is true, the <see cref="M:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.GetChildCount"/> method includes the <see cref="T:System.Windows.Forms.DataGridViewRowHeaderCell"/> in the count of child accessible objects.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public int GetChildCount()
+            public override int GetChildCount()
             {
                 Contract.Requires(Owner != null);
                 return default(int);
@@ -661,7 +621,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets an accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects.
             // </summary>
-            // 
             // <returns>
             // An accessible object that represents the currently selected <see cref="T:System.Windows.Forms.DataGridViewCell"/> objects in the <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
             // </returns>
@@ -671,12 +630,11 @@ namespace System.Windows.Forms
             /// <summary>
             /// Returns the accessible object that has keyboard focus.
             /// </summary>
-            /// 
             /// <returns>
             /// A <see cref="T:System.Windows.Forms.DataGridViewCell.DataGridViewCellAccessibleObject"/> if the cell indicated by the <see cref="P:System.Windows.Forms.DataGridView.CurrentCell"/> property has keyboard focus and is in the current <see cref="T:System.Windows.Forms.DataGridViewRow"/>; otherwise, null.
             /// </returns>
             /// <exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public AccessibleObject GetFocused()
+            public override AccessibleObject GetFocused()
             {
                 Contract.Requires(Owner != null);
                 return default(AccessibleObject);
@@ -685,13 +643,12 @@ namespace System.Windows.Forms
             /// <summary>
             /// Navigates to another accessible object.
             /// </summary>
-            /// 
             /// <returns>
             /// An <see cref="T:System.Windows.Forms.AccessibleObject"/> that represents an object in the specified direction.
             /// </returns>
             /// <param name="navigationDirection">One of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
-            public AccessibleObject Navigate(AccessibleNavigation navigationDirection)
+            /// [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+            public override AccessibleObject Navigate(AccessibleNavigation navigationDirection)
             {
                 Contract.Requires(Owner != null);
                 return default(AccessibleObject);
@@ -701,7 +658,7 @@ namespace System.Windows.Forms
             /// Modifies the selection or moves the keyboard focus of the accessible object.
             /// </summary>
             /// <param name="flags">One of the <see cref="T:System.Windows.Forms.AccessibleSelection"/> values.</param><exception cref="T:System.InvalidOperationException">The value of the <see cref="P:System.Windows.Forms.DataGridViewRow.DataGridViewRowAccessibleObject.Owner"/> property is null.</exception>
-            public void Select(AccessibleSelection flags)
+            public override void Select(AccessibleSelection flags)
             {
                 Contract.Requires(Owner != null);
             }

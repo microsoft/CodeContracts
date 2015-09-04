@@ -29,15 +29,18 @@ namespace System.Windows.Forms
         /// <returns>
         /// The changed <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/>.
         /// </returns>
-        public DataGridViewCellStyle CellStyle { get; }
-        
-        /// <summary>
-        /// Gets the scope that is affected by the changed cell style.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyleScopes"/> that indicates which <see cref="T:System.Windows.Forms.DataGridView"/> entity owns the cell style that changed.
-        /// </returns>
+        public DataGridViewCellStyle CellStyle
+        {
+            get { return default(DataGridViewCellStyle); }
+        }
+               
+        // <summary>
+        // Gets the scope that is affected by the changed cell style.
+        // </summary>
+        // 
+        // <returns>
+        // A <see cref="T:System.Windows.Forms.DataGridViewCellStyleScopes"/> that indicates which <see cref="T:System.Windows.Forms.DataGridView"/> entity owns the cell style that changed.
+        // </returns>
         // public DataGridViewCellStyleScopes CellStyleScope {get;}
     }
 }

@@ -32,18 +32,15 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether pressing ENTER in a multiline <see cref="T:System.Windows.Forms.TextBox"/> control creates a new line of text in the control or activates the default button for the form.
         // </summary>
-        // 
         // <returns>
         // true if the ENTER key creates a new line of text in a multiline version of the control; false if the ENTER key activates the default button for the form. The default is false.
         // </returns>
-        // 
         // [DefaultValue(false)]
         // public bool AcceptsReturn {get; set;}
         
         // <summary>
         // Gets or sets an option that controls how automatic completion works for the <see cref="T:System.Windows.Forms.TextBox"/>.
         // </summary>
-        // 
         // <returns>
         // One of the values of <see cref="T:System.Windows.Forms.AutoCompleteMode"/>. The following are the values. <see cref="F:System.Windows.Forms.AutoCompleteMode.Append"/>Appends the remainder of the most likely candidate string to the existing characters, highlighting the appended characters.<see cref="F:System.Windows.Forms.AutoCompleteMode.Suggest"/>Displays the auxiliary drop-down list associated with the edit control. This drop-down is populated with one or more suggested completion strings.<see cref="F:System.Windows.Forms.AutoCompleteMode.SuggestAppend"/>Appends both Suggest and Append options.<see cref="F:System.Windows.Forms.AutoCompleteMode.None"/>Disables automatic completion. This is the default.
         // </returns>
@@ -54,7 +51,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value specifying the source of complete strings used for automatic completion.
         // </summary>
-        // 
         // <returns>
         // One of the values of <see cref="T:System.Windows.Forms.AutoCompleteSource"/>. The options are AllSystemSources, AllUrl, FileSystem, HistoryList, RecentlyUsedList, CustomSource, and None. The default is None.
         // </returns>
@@ -64,7 +60,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a custom <see cref="T:System.Collections.Specialized.StringCollection"/> to use when the <see cref="P:System.Windows.Forms.TextBox.AutoCompleteSource"/> property is set to CustomSource.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Collections.Specialized.StringCollection"/> to use with <see cref="P:System.Windows.Forms.TextBox.AutoCompleteSource"/>.
         /// </returns>
@@ -76,16 +71,12 @@ namespace System.Windows.Forms
                 Contract.Ensures(Contract.Result<AutoCompleteStringCollection>() != null);
                 return default(AutoCompleteStringCollection);
             }
-            set
-            {
-               
-            }
+            set { }
         }
 
         // <summary>
         // Gets or sets whether the <see cref="T:System.Windows.Forms.TextBox"/> control modifies the case of characters as they are typed.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.CharacterCasing"/> enumeration values that specifies whether the <see cref="T:System.Windows.Forms.TextBox"/> control modifies the case of characters. The default is CharacterCasing.Normal.
         // </returns>
@@ -95,7 +86,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether this is a multiline <see cref="T:System.Windows.Forms.TextBox"/> control.
         // </summary>
-        // 
         // <returns>
         // true if the control is a multiline <see cref="T:System.Windows.Forms.TextBox"/> control; otherwise, false. The default is false.
         // </returns>
@@ -105,7 +95,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the required creation parameters when the control handle is created.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.CreateParams"/> that contains the required creation parameters when the handle to the control is created.
         // </returns>
@@ -114,7 +103,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the character used to mask characters of a password in a single-line <see cref="T:System.Windows.Forms.TextBox"/> control.
         // </summary>
-        // 
         // <returns>
         // The character used to mask characters entered in a single-line <see cref="T:System.Windows.Forms.TextBox"/> control. Set the value of this property to 0 (character value) if you do not want the control to mask characters as they are typed. Equals 0 (character value) by default.
         // </returns>
@@ -124,7 +112,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets which scroll bars should appear in a multiline <see cref="T:System.Windows.Forms.TextBox"/> control.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ScrollBars"/> enumeration values that indicates whether a multiline <see cref="T:System.Windows.Forms.TextBox"/> control appears with no scroll bars, a horizontal scroll bar, a vertical scroll bar, or both. The default is ScrollBars.None.
         // </returns>
@@ -135,7 +122,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the current text in the <see cref="T:System.Windows.Forms.TextBox"/>.
         // </summary>
-        // 
         // <returns>
         // The text displayed in the control.
         // </returns>
@@ -144,7 +130,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets how text is aligned in a <see cref="T:System.Windows.Forms.TextBox"/> control.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.HorizontalAlignment"/> enumeration values that specifies how text is aligned in the control. The default is HorizontalAlignment.Left.
         // </returns>
@@ -154,7 +139,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the text in the <see cref="T:System.Windows.Forms.TextBox"/> control should appear as the default password character.
         // </summary>
-        // 
         // <returns>
         // true if the text in the <see cref="T:System.Windows.Forms.TextBox"/> control should appear as the default password character; otherwise, false.
         // </returns>
@@ -165,7 +149,6 @@ namespace System.Windows.Forms
         // <summary>
         // Occurs when the value of the <see cref="P:System.Windows.Forms.TextBox.TextAlign"/> property has changed.
         // </summary>
-        // 
         // public event EventHandler TextAlignChanged
         
         // <summary>

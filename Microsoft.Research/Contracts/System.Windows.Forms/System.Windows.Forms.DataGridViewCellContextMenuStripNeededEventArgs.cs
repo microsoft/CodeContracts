@@ -22,13 +22,12 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataGridViewCellContextMenuStripNeededEventArgs : DataGridViewCellEventArgs
     {
-        /// <summary>
-        /// Gets or sets the shortcut menu for the cell that raised the <see cref="E:System.Windows.Forms.DataGridView.CellContextMenuStripNeeded"/> event.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The <see cref="T:System.Windows.Forms.ContextMenuStrip"/> for the cell.
-        /// </returns>
+        // <summary>
+        // Gets or sets the shortcut menu for the cell that raised the <see cref="E:System.Windows.Forms.DataGridView.CellContextMenuStripNeeded"/> event.
+        // </summary>
+        // <returns>
+        // The <see cref="T:System.Windows.Forms.ContextMenuStrip"/> for the cell.
+        // </returns>
         // public ContextMenuStrip ContextMenuStrip {get; set;}
         
         /// <summary>

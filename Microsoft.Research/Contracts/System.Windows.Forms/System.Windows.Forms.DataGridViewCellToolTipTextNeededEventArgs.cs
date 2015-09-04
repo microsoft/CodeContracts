@@ -25,7 +25,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the ToolTip text.
         /// </summary>
-        /// 
         /// <returns>
         /// The current ToolTip text.
         /// </returns>
@@ -34,8 +33,7 @@ namespace System.Windows.Forms
         internal DataGridViewCellToolTipTextNeededEventArgs(int columnIndex, int rowIndex, string toolTipText)
             : base(columnIndex, rowIndex)
         {
-            Contract.Requires(columnIndex >= -1);
-            Contract.Requires(rowIndex >= -1);
+            
         }
 
     }

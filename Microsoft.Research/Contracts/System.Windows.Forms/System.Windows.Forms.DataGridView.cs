@@ -23,13 +23,11 @@ namespace System.Windows.Forms
     /// <summary>
     /// Displays data in a customizable grid.
     /// </summary>
-
     public class DataGridView : Control // ,ISupportInitialize
     {
         /// <summary>
         /// Gets the border style for the upper-left cell in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the style of the border of the upper-left cell in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -46,7 +44,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the border style of the cells in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style of the cells in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -62,7 +59,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the border style of the column header cells in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style of the <see cref="T:System.Windows.Forms.DataGridViewColumnHeaderCell"/> objects in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -78,7 +74,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the border style of the row header cells in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style of the <see cref="T:System.Windows.Forms.DataGridViewRowHeaderCell"/> objects in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -94,7 +89,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the option to add rows is displayed to the user.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the add-row option is displayed to the user; otherwise false. The default is true.
         /// </returns>
@@ -104,7 +98,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the user is allowed to delete rows from the <see cref="T:System.Windows.Forms.DataGridView"/>.
         // </summary>
-        // 
         // <returns>
         // true if the user can delete rows; otherwise, false. The default is true.
         // </returns>
@@ -113,7 +106,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether manual column repositioning is enabled.
         // </summary>
-        // 
         // <returns>
         // true if the user can change the column order; otherwise, false. The default is false.
         // </returns>
@@ -122,7 +114,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether users can resize columns.
         // </summary>
-        // 
         // <returns>
         // true if users can resize columns; otherwise, false. The default is true.
         // </returns>
@@ -131,7 +122,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether users can resize rows.
         // </summary>
-        // 
         // <returns>
         // true if all the rows are resizable; otherwise, false. The default is true.
         // </returns>
@@ -140,7 +130,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the default cell style applied to odd-numbered rows of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> to apply to the odd-numbered rows.
         /// </returns>
@@ -158,7 +147,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether columns are created automatically when the <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> or <see cref="P:System.Windows.Forms.DataGridView.DataMember"/> properties are set.
         // </summary>
-        // 
         // <returns>
         // true if the columns should be created automatically; otherwise, false. The default is true.
         // </returns>
@@ -173,7 +161,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating how column widths are determined.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnsMode"/> value. The default is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None"/>.
         // </returns>
@@ -183,7 +170,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating how row heights are determined.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value indicating the sizing mode. The default is <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.None"/>.
         // </returns>
@@ -193,12 +179,11 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Drawing.Color"/> that represents the background color of the control. The default is the value of the <see cref="P:System.Windows.Forms.Control.DefaultBackColor"/> property.
         /// </returns>
         /// <PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        public System.Drawing.Color BackColor
+        public override System.Drawing.Color BackColor
         {
             get
             {
@@ -208,10 +193,9 @@ namespace System.Windows.Forms
             set { }
         }
 
-        /// <summary>
-        /// Gets or sets the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>.
-        /// </summary>
-        // 
+        // <summary>
+        // Gets or sets the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>.
+        // </summary>
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the background color of the <see cref="T:System.Windows.Forms.DataGridView"/>. The default is <see cref="P:System.Drawing.SystemColors.AppWorkspace"/>.
         // </returns>
@@ -229,7 +213,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the background image displayed in the control.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Drawing.Image"/> that represents the image to display in the background of the control.
         // </returns>
@@ -238,7 +221,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the background image layout as defined in the <see cref="T:System.Windows.Forms.ImageLayout"/> enumeration.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Windows.Forms.ImageLayout"/> value indicating the background image layout. The default is <see cref="F:System.Windows.Forms.ImageLayout.Tile"/>.
         // </returns>
@@ -247,7 +229,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the border style for the <see cref="T:System.Windows.Forms.DataGridView"/>.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.BorderStyle"/> values. The default is <see cref="F:System.Windows.Forms.BorderStyle.FixedSingle"/>.
         // </returns>
@@ -257,7 +238,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the <see cref="P:System.Windows.Forms.Control.ImeMode"/> property can be set to an active value, to enable IME support.
         // </summary>
-        // 
         // <returns>
         // true if there is an editable cell selected; otherwise, false.
         // </returns>
@@ -266,7 +246,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the cell border style for the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewCellBorderStyle"/> that represents the border style of the cells contained in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -280,7 +259,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value that indicates whether users can copy cell text values to the <see cref="T:System.Windows.Forms.Clipboard"/> and whether row and column header text is included.
         /// </summary>
-        /// 
         /// <returns>
         /// One of the <see cref="T:System.Windows.Forms.DataGridViewClipboardCopyMode"/> values. The default is <see cref="F:System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithAutoHeaderText"/>.
         /// </returns>
@@ -290,7 +268,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the number of columns displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of columns displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -312,7 +289,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the border style applied to the column headers.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewHeaderBorderStyle"/> values.
         // </returns>
@@ -322,7 +298,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the default column header style.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the default column header style.
         // </returns>
@@ -333,7 +308,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the height, in pixels, of the column headers row
         /// </summary>
-        /// 
         /// <returns>
         /// The height, in pixels, of the row that contains the column headers. The default is 23.
         /// </returns>
@@ -351,7 +325,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the height of the column headers is adjustable and whether it can be adjusted by the user or is automatically adjusted to fit the contents of the headers.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode"/> value indicating the mode by which the height of the column headers row can be adjusted. The default is <see cref="F:System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing"/>.
         // </returns>
@@ -361,7 +334,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the column header row is displayed.
         // </summary>
-        // 
         // <returns>
         // true if the column headers are displayed; otherwise, false. The default is true.
         // </returns>
@@ -371,7 +343,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets a collection that contains all the columns in the control.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumnCollection"/> that contains all the columns in the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         /// </returns>
@@ -387,7 +358,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the currently active cell.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.DataGridViewCell"/> that represents the current cell, or null if there is no current cell. The default is the first cell in the first column or null if there are no cells in the control.
         // </returns>
@@ -397,7 +367,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the row and column indexes of the currently active cell.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Point"/> that represents the row and column indexes of the currently active cell.
         // </returns>
@@ -406,7 +375,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the row containing the current cell.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that represents the row containing the current cell, or null if there is no current cell.
         // </returns>
@@ -415,7 +383,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the name of the list or table in the data source for which the <see cref="T:System.Windows.Forms.DataGridView"/> is displaying data.
         // </summary>
-        // 
         // <returns>
         // The name of the table or list in the <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> for which the <see cref="T:System.Windows.Forms.DataGridView"/> is displaying data. The default is <see cref="F:System.String.Empty"/>.
         // </returns>
@@ -425,7 +392,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the data source that the <see cref="T:System.Windows.Forms.DataGridView"/> is displaying data for.
         /// </summary>
-        /// 
         /// <returns>
         /// The object that contains data for the <see cref="T:System.Windows.Forms.DataGridView"/> to display.
         /// </returns>
@@ -435,7 +401,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the default cell style to be applied to the cells in the <see cref="T:System.Windows.Forms.DataGridView"/> if no other cell style properties are set.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> to be applied as the default style.
         /// </returns>
@@ -453,7 +418,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the default initial size of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Size"/> representing the initial size of the control, which is 240 pixels wide by 150 pixels high.
         // </returns>
@@ -462,7 +426,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the rectangle that represents the display area of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Rectangle"/> that represents the display area of the control.
         // </returns>
@@ -471,7 +434,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating how to begin editing a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewEditMode"/> values. The default is <see cref="F:System.Windows.Forms.DataGridViewEditMode.EditOnKeystrokeOrF2"/>.
         // </returns>
@@ -481,16 +443,14 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the control hosted by the current cell, if a cell with an editing control is in edit mode.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.Control"/> hosted by the current cell.
         /// </returns>
-        public Control EditingControl { get; }
+        public Control EditingControl { get { return default(Control); } }
 
         /// <summary>
         /// Gets the panel that contains the <see cref="P:System.Windows.Forms.DataGridView.EditingControl"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.Panel"/> that contains the <see cref="P:System.Windows.Forms.DataGridView.EditingControl"/>.
         /// </returns>
@@ -508,7 +468,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether row and column headers use the visual styles of the user's current theme if visual styles are enabled for the application.
         // </summary>
-        // 
         // <returns>
         // true if visual styles are enabled for the headers; otherwise, false. The default value is true.
         // </returns>
@@ -518,7 +477,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the first cell currently displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>; typically, this cell is in the upper left corner.
         // </summary>
-        // 
         // <returns>
         // The first <see cref="T:System.Windows.Forms.DataGridViewCell"/> currently displayed in the control.
         // </returns>
@@ -528,7 +486,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the width of the portion of the column that is currently scrolled out of view..
         // </summary>
-        // 
         // <returns>
         // The width of the portion of the column that is scrolled out of view.
         // </returns>
@@ -538,7 +495,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the index of the column that is the first column displayed on the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the column that is the first column displayed on the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -554,15 +510,13 @@ namespace System.Windows.Forms
             set
             {
                 Contract.Requires(value >= 0 && value < Columns.Count);
-                Contract.Assume(Columns[value] != null);
-                // Contract.Requires(Columns[value].Visible && !Columns[value].Frozen);
+                Contract.Requires(Columns[value].Visible && !Columns[value].Frozen);
             }
         }
 
         /// <summary>
         /// Gets or sets the index of the row that is the first row displayed on the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the row that is the first row displayed on the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -578,8 +532,7 @@ namespace System.Windows.Forms
             }
             set
             {
-                Contract.Assume(Rows != null);
-                Contract.Requires(value >= 0 && value < Rows.Count);
+                Contract.Requires(Rows != null && value >= 0 && value < Rows.Count);
                 Contract.Requires(
                     !((Rows.GetRowState(value) & DataGridViewElementStates.Visible) ==
                       DataGridViewElementStates.None));
@@ -592,7 +545,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the foreground color of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the foreground color of the <see cref="T:System.Windows.Forms.DataGridView"/>. The default is the value of the <see cref="P:System.Windows.Forms.Control.DefaultForeColor"/> property.
         // </returns>
@@ -602,7 +554,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the font of the text displayed by the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Drawing.Font"/> to apply to the text displayed by the control. The default is the value of the <see cref="P:System.Windows.Forms.Control.DefaultFont"/> property.
         /// </returns>
@@ -620,7 +571,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the color of the grid lines separating the cells of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Drawing.Color"/> or <see cref="T:System.Drawing.SystemColors"/> that represents the color of the grid lines. The default is <see cref="F:System.Drawing.KnownColor.ControlDarkDark"/>.
         /// </returns>
@@ -641,7 +591,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the horizontal scroll bar of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.ScrollBar"/> representing the horizontal scroll bar.
         // </returns>
@@ -650,7 +599,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the number of pixels by which the control is scrolled horizontally.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of pixels by which the control is scrolled horizontally.
         /// </returns>
@@ -665,10 +613,11 @@ namespace System.Windows.Forms
             set { Contract.Requires(value >= 0); }
         }
 
+        internal bool InDisplayIndexAdjustments { get; set; }
+
         // <summary>
         // Gets a value indicating whether the current cell has uncommitted changes.
         // </summary>
-        // 
         // <returns>
         // true if the current cell has uncommitted changes; otherwise, false.
         // </returns>
@@ -677,7 +626,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the currently active cell is being edited.
         // </summary>
-        // 
         // <returns>
         // true if the current cell is being edited; otherwise, false.
         // </returns>
@@ -705,7 +653,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the index of the row for new records.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the row for new records, or -1 if <see cref="P:System.Windows.Forms.DataGridView.AllowUserToAddRows"/> is false.
         /// </returns>    
@@ -719,12 +666,14 @@ namespace System.Windows.Forms
             }
         }
 
-        internal bool NoDimensionChangeAllowed { get; }
-        
+        internal bool NoDimensionChangeAllowed
+        {
+            get { return default(bool); }
+        }
+
         // <summary>
         // This property is not relevant for this control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.Padding"/> instance.
         // </returns>
@@ -733,7 +682,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the user can edit the cells of the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         // </summary>
-        // 
         // <returns>
         // true if the user cannot edit the cells of the <see cref="T:System.Windows.Forms.DataGridView"/> control; otherwise, false. The default is false.
         // </returns>
@@ -743,7 +691,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the number of rows displayed in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of rows to display in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -765,7 +712,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the border style of the row header cells.
         /// </summary>
-        /// 
         /// <returns>
         /// One of the <see cref="T:System.Windows.Forms.DataGridViewHeaderBorderStyle"/> values.
         /// </returns>
@@ -797,7 +743,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating whether the column that contains row headers is displayed.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the column that contains row headers is displayed; otherwise, false. The default is true.
         /// </returns>
@@ -808,7 +753,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the width, in pixels, of the column that contains the row headers.
         /// </summary>
-        /// 
         /// <returns>
         /// The width, in pixels, of the column that contains row headers. The default is 43.
         /// </returns>
@@ -826,7 +770,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the width of the row headers is adjustable and whether it can be adjusted by the user or is automatically adjusted to fit the contents of the headers.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode"/> value indicating the mode by which the width of the row headers can be adjusted. The default is <see cref="F:System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.EnableResizing"/>.
         // </returns>
@@ -836,7 +779,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets a collection that contains all the rows in the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/> that contains all the rows in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -853,7 +795,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the default style applied to the row cells of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> to apply to the row cells of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -871,7 +812,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the row that represents the template for all the rows in the control.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewRow"/> representing the row template.
         /// </returns>
@@ -889,7 +829,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the type of scroll bars to display for the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ScrollBars"/> values. The default is <see cref="F:System.Windows.Forms.ScrollBars.Both"/>.
         // </returns>
@@ -899,7 +838,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the collection of cells selected by the user.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewSelectedCellCollection"/> that represents the cells selected by the user.
         /// </returns>
@@ -916,11 +854,9 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the collection of columns selected by the user.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewSelectedColumnCollection"/> that represents the columns selected by the user.
         /// </returns>
-        /// 
         public DataGridViewSelectedColumnCollection SelectedColumns
         {
             get
@@ -933,7 +869,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the collection of rows selected by the user.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewSelectedRowCollection"/> that contains the rows selected by the user.
         /// </returns>
@@ -950,7 +885,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets a value indicating how the cells of the <see cref="T:System.Windows.Forms.DataGridView"/> can be selected.
         /// </summary>
-        /// 
         /// <returns>
         /// One of the <see cref="T:System.Windows.Forms.DataGridViewSelectionMode"/> values. The default is <see cref="F:System.Windows.Forms.DataGridViewSelectionMode.RowHeaderSelect"/>.
         /// </returns>
@@ -960,7 +894,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether to show cell errors.
         // </summary>
-        // 
         // <returns>
         // true if a red glyph will appear in a cell that fails validation; otherwise, false. The default is true.
         // </returns>
@@ -970,7 +903,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether or not ToolTips will show when the mouse pointer pauses on a cell.
         // </summary>
-        // 
         // <returns>
         // true if cell ToolTips are enabled; otherwise, false.
         // </returns>
@@ -980,7 +912,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether or not the editing glyph is visible in the row header of the cell being edited.
         // </summary>
-        // 
         // <returns>
         // true if the editing glyph is visible; otherwise, false. The default is true.
         // </returns>
@@ -989,7 +920,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether row headers will display error glyphs for each row that contains a data entry error.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.DataGridViewRow"/> indicates there is an error; otherwise, false. The default is true.
         // </returns>
@@ -999,7 +929,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the column by which the <see cref="T:System.Windows.Forms.DataGridView"/> contents are currently sorted.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> by which the <see cref="T:System.Windows.Forms.DataGridView"/> contents are currently sorted.
         // </returns> 
@@ -1008,7 +937,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the items in the <see cref="T:System.Windows.Forms.DataGridView"/> control are sorted in ascending or descending order, or are not sorted.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.SortOrder"/> values.
         // </returns>
@@ -1017,7 +945,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the TAB key moves the focus to the next control in the tab order rather than moving focus to the next cell in the control.
         // </summary>
-        // 
         // <returns>
         // true if the TAB key moves the focus to the next control in the tab order; otherwise, false.
         // </returns>
@@ -1026,7 +953,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the text associated with the control.
         // </summary>
-        // 
         // <returns>
         // The text associated with the control.
         // </returns>
@@ -1035,7 +961,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Provides an indexer to get or set the cell located at the intersection of the column and row with the specified indexes.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCell"/> at the specified location.
         /// </returns>
@@ -1054,7 +979,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Provides an indexer to get or set the cell located at the intersection of the row with the specified index and the column with the specified name.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCell"/> at the specified location.
         /// </returns>
@@ -1073,7 +997,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the header cell located in the upper left corner of the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewHeaderCell"/> located at the upper left corner of the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
@@ -1090,7 +1013,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the default or user-specified value of the <see cref="P:System.Windows.Forms.Control.Cursor"/> property.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.Cursor"/> representing the normal value of the <see cref="P:System.Windows.Forms.Control.Cursor"/> property.
         /// </returns>
@@ -1106,25 +1028,22 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the vertical scroll bar of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.ScrollBar"/> representing the vertical scroll bar.
         // </returns>
         // protected ScrollBar VerticalScrollBar {get;}
 
-        /// <summary>
-        /// Gets the number of pixels by which the control is scrolled vertically.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The number of pixels by which the control is scrolled vertically.
-        /// </returns>
+        // <summary>
+        // Gets the number of pixels by which the control is scrolled vertically.
+        // </summary>
+        // <returns>
+        // The number of pixels by which the control is scrolled vertically.
+        // </returns>
         // public int VerticalScrollingOffset {get;}
 
         /// <summary>
         /// Gets or sets a value indicating whether you have provided your own data-management operations for the <see cref="T:System.Windows.Forms.DataGridView"/> control.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the <see cref="T:System.Windows.Forms.DataGridView"/> uses data-management operations that you provide; otherwise, false. The default is false.
         /// </returns>
@@ -1149,7 +1068,6 @@ namespace System.Windows.Forms
         // <summary>
         // Adjusts the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> for a column header cell of a <see cref="T:System.Windows.Forms.DataGridView"/> that is currently being painted.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> that represents the border style for the current column header.
         // </returns>
@@ -1159,7 +1077,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns a value indicating whether all the <see cref="T:System.Windows.Forms.DataGridView"/> cells are currently selected.
         // </summary>
-        // 
         // <returns>
         // true if all cells (or all visible cells) are selected or if there are no cells (or no visible cells); otherwise, false.
         // </returns>
@@ -1345,17 +1262,16 @@ namespace System.Windows.Forms
                               !((autoSizeRowsMode == DataGridViewAutoSizeRowsMode.AllHeaders ||
                                  autoSizeRowsMode == DataGridViewAutoSizeRowsMode.DisplayedHeaders) &&
                                 !RowHeadersVisible));
-
         }
 
         /// <summary>
         /// Adjusts the heights of the specified rows using the specified size mode, optionally calculating the heights with the expectation that column widths will subsequently be adjusted.
         /// </summary>
-        /// <param name="rowIndexStart">The index of the first row to resize. </param><param name="rowsCount">The number of rows to resize. </param><param name="autoSizeRowMode">One of the <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> values. </param><param name="fixedWidth">true to calculate the new heights based on the current column widths; false to calculate the heights with the expectation that the column widths will also be adjusted.</param><exception cref="T:System.InvalidOperationException"><paramref name="autoSizeRowsMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders"/> or <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders"/>, and <see cref="P:System.Windows.Forms.DataGridView.RowHeadersVisible"/> is false. </exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="autoSizeRowsMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value. </exception><exception cref="T:System.ArgumentException"><paramref name="autoSizeRowsMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.None"/>.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndexStart"/> is less than 0.-or-<paramref name="rowsCount"/> is less than 0.</exception>
+        /// <param name="rowIndexStart">The index of the first row to resize. </param><param name="rowsCount">The number of rows to resize. </param><param name="autoSizeRowMode">One of the <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowMode"/> values. </param><param name="fixedWidth">true to calculate the new heights based on the current column widths; false to calculate the heights with the expectation that the column widths will also be adjusted.</param><exception cref="T:System.InvalidOperationException"><paramref name="autoSizeRowMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders"/> or <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders"/>, and <see cref="P:System.Windows.Forms.DataGridView.RowHeadersVisible"/> is false. </exception><exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="autoSizeRowMode"/> is not a valid <see cref="T:System.Windows.Forms.DataGridViewAutoSizeRowsMode"/> value. </exception><exception cref="T:System.ArgumentException"><paramref name="autoSizeRowMode"/> has the value <see cref="F:System.Windows.Forms.DataGridViewAutoSizeRowsMode.None"/>.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="rowIndexStart"/> is less than 0.-or-<paramref name="rowsCount"/> is less than 0.</exception>
         protected void AutoResizeRows(int rowIndexStart, int rowsCount, DataGridViewAutoSizeRowMode autoSizeRowMode,
             bool fixedWidth)
         {
-            // Contract.Requires(!(autoSizeRowMode & (DataGridViewAutoSizeRowMode) -4) != (DataGridViewAutoSizeRowMode) 0));
+            // Contract.Requires(!(autoSizeRowMode & (DataGridViewAutoSizeRowMode) - 4) != (DataGridViewAutoSizeRowMode)0));
             Contract.Requires(!(autoSizeRowMode == DataGridViewAutoSizeRowMode.RowHeader && !RowHeadersVisible));
             Contract.Requires(rowsCount >= 0);
             Contract.Requires(rowIndexStart >= 0);
@@ -1364,13 +1280,12 @@ namespace System.Windows.Forms
         // <summary>
         // Puts the current cell in edit mode.
         // </summary>
-        // 
         // <returns>
         // true if the current cell is already in edit mode or successfully enters edit mode; otherwise, false.
         // </returns>
         // <param name="selectAll">true to select all the cell's contents; false to not select any contents.</param><exception cref="T:System.InvalidOperationException"><see cref="P:System.Windows.Forms.DataGridView.CurrentCell"/> is not set to a valid cell.-or-This method was called in a handler for the <see cref="E:System.Windows.Forms.DataGridView.CellBeginEdit"/> event.</exception><exception cref="T:System.InvalidCastException">The type indicated by the cell's <see cref="P:System.Windows.Forms.DataGridViewCell.EditType"/> property does not derive from the <see cref="T:System.Windows.Forms.Control"/> type.-or-The type indicated by the cell's <see cref="P:System.Windows.Forms.DataGridViewCell.EditType"/> property does not implement the <see cref="T:System.Windows.Forms.IDataGridViewEditingControl"/> interface.</exception><exception cref="T:System.Exception">Initialization of the editing cell value failed and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. The exception object can typically be cast to type <see cref="T:System.FormatException"/>.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public virtual bool BeginEdit(bool selectAll)
-        
+
         // <summary>
         // Clears the current selection by unselecting all selected cells.
         // </summary>
@@ -1392,7 +1307,6 @@ namespace System.Windows.Forms
         // <summary>
         // Commits changes in the current cell to the data cache without ending edit mode.
         // </summary>
-        // 
         // <returns>
         // true if the changes were committed; otherwise false.
         // </returns>
@@ -1402,11 +1316,10 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates a new accessible object for the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A new <see cref="T:System.Windows.Forms.DataGridView.DataGridViewAccessibleObject"/> for the <see cref="T:System.Windows.Forms.DataGridView"/>.
         /// </returns>
-        protected AccessibleObject CreateAccessibilityInstance()
+        protected override AccessibleObject CreateAccessibilityInstance()
         {
             Contract.Ensures(Contract.Result<AccessibleObject>() != null);
             return default(AccessibleObject);
@@ -1415,11 +1328,10 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates and returns a new <see cref="T:System.Windows.Forms.Control.ControlCollection"/> that can be cast to type <see cref="T:System.Windows.Forms.DataGridView.DataGridViewControlCollection"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// An empty <see cref="T:System.Windows.Forms.Control.ControlCollection"/>.
         /// </returns>
-        protected Control.ControlCollection CreateControlsInstance()
+        protected override Control.ControlCollection CreateControlsInstance()
         {
             Contract.Ensures(Contract.Result<Control.ControlCollection>() != null);
             return default(Control.ControlCollection);
@@ -1428,7 +1340,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates and returns a new <see cref="T:System.Windows.Forms.DataGridViewColumnCollection"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// An empty <see cref="T:System.Windows.Forms.DataGridViewColumnCollection"/>.
         /// </returns>
@@ -1441,7 +1352,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates and returns a new <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// An empty <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.
         /// </returns>
@@ -1454,7 +1364,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the number of columns displayed to the user.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of columns displayed to the user.
         /// </returns>
@@ -1468,7 +1377,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the number of rows displayed to the user.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of rows displayed to the user.
         /// </returns>
@@ -1485,7 +1393,6 @@ namespace System.Windows.Forms
         // <summary>
         // Commits and ends the edit operation on the current cell using the default error context.
         // </summary>
-        // 
         // <returns>
         // true if the edit operation is committed and ended; otherwise, false.
         // </returns>
@@ -1505,7 +1412,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the number of cells that satisfy the provided filter.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of cells that match the <paramref name="includeFilter"/> parameter.
         /// </returns>
@@ -1513,18 +1419,16 @@ namespace System.Windows.Forms
         public int GetCellCount(DataGridViewElementStates includeFilter)
         {
             Contract.Requires(
-                !((includeFilter &
-                   ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                     DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                     DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                  DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             return default(int);
         }
 
         /// <summary>
         /// Returns the rectangle that represents the display area for a cell.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Drawing.Rectangle"/> that represents the display rectangle of the cell.
         /// </returns>
@@ -1536,14 +1440,13 @@ namespace System.Windows.Forms
             return default(Rectangle);
         }
 
-        // <summary>
-        // Retrieves the formatted values that represent the contents of the selected cells for copying to the <see cref="T:System.Windows.Forms.Clipboard"/>.
-        // </summary>
-        // 
-        // <returns>
-        // A <see cref="T:System.Windows.Forms.DataObject"/> that represents the contents of the selected cells.
-        // </returns>
-        // <exception cref="T:System.NotSupportedException"><see cref="P:System.Windows.Forms.DataGridView.ClipboardCopyMode"/> is set to <see cref="F:System.Windows.Forms.DataGridViewClipboardCopyMode.Disable"/>.</exception>
+        /// <summary>
+        /// Retrieves the formatted values that represent the contents of the selected cells for copying to the <see cref="T:System.Windows.Forms.Clipboard"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Windows.Forms.DataObject"/> that represents the contents of the selected cells.
+        /// </returns>
+        /// <exception cref="T:System.NotSupportedException"><see cref="P:System.Windows.Forms.DataGridView.ClipboardCopyMode"/> is set to <see cref="F:System.Windows.Forms.DataGridViewClipboardCopyMode.Disable"/>.</exception>
         public virtual DataObject GetClipboardContent()
         {
             Contract.Requires(ClipboardCopyMode != DataGridViewClipboardCopyMode.Disable);
@@ -1553,7 +1456,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the rectangle that represents the display area for a column, as determined by the column index.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Drawing.Rectangle"/> that represents the display rectangle of the column.
         /// </returns>
@@ -1567,7 +1469,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns location information, such as row and column indices, given x- and y-coordinates.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.DataGridView.HitTestInfo"/> that contains the location information.
         // </returns>
@@ -1614,7 +1515,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether a character is an input character that the <see cref="T:System.Windows.Forms.DataGridView"/> recognizes.
         // </summary>
-        // 
         // <returns>
         // true if the character is recognized as an input character; otherwise, false.
         // </returns>
@@ -1732,9 +1632,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellCancelEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellCancelEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellCancelEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellBeginEdit(DataGridViewCellCancelEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         // <summary>
@@ -1749,9 +1647,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellClick(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1760,9 +1656,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains information regarding the cell whose content was clicked.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellContentClick(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1771,9 +1665,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellContentDoubleClick(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1782,9 +1674,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellContextMenuStripChanged(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1793,9 +1683,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellContextMenuStripNeeded(DataGridViewCellContextMenuStripNeededEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1804,9 +1692,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellDoubleClick(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1815,9 +1701,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellEndEdit(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1826,9 +1710,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellEnter(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1837,9 +1719,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is less than -1 or greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is less than -1 or greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellErrorTextChanged(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1848,9 +1728,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellErrorTextNeededEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellErrorTextNeeded(DataGridViewCellErrorTextNeededEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1859,9 +1737,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellFormattingEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellFormattingEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellFormattingEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1870,9 +1746,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellLeave(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1881,9 +1755,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellMouseEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseClick(DataGridViewCellMouseEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1892,9 +1764,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellMouseEventArgs"/> that contains the event data.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseDoubleClick(DataGridViewCellMouseEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1903,9 +1773,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellMouseEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception><exception cref="T:System.Exception">This action would commit a cell value or enter edit mode, but an error in the data source prevents the action and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. </exception>
         protected virtual void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1914,9 +1782,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseEnter(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1925,9 +1791,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseLeave(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1936,9 +1800,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellMouseEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseMove(DataGridViewCellMouseEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1947,11 +1809,8 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellMouseEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellMouseEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellMouseUp(DataGridViewCellMouseEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
-
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.DataGridView.CellPainting"/> event.
@@ -1959,9 +1818,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellPaintingEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellPaintingEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected internal virtual void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1970,9 +1827,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellParsingEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellParsingEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellParsingEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellParsing(DataGridViewCellParsingEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -1990,9 +1845,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellStyleChanged(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2010,9 +1863,7 @@ namespace System.Windows.Forms
         /// <param name="e">An <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains information about the cell.</param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellToolTipTextChanged(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2021,9 +1872,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellToolTipTextNeededEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2032,9 +1881,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellValidated(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2043,9 +1890,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellValidatingEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValidatingEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValidatingEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellValidating(DataGridViewCellValidatingEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2054,9 +1899,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.ColumnIndex"/> property of <paramref name="e"/> is greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellEventArgs.RowIndex"/> property of <paramref name="e"/> is greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2065,9 +1908,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellValueEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValueEventArgs.ColumnIndex"/> property of <paramref name="e"/> is less than zero or greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValueEventArgs.RowIndex"/> property of <paramref name="e"/> is less than zero or greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellValueNeeded(DataGridViewCellValueEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex >= 0 && e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex >= 0 && e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2076,9 +1917,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewCellValueEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentOutOfRangeException">The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValueEventArgs.ColumnIndex"/> property of <paramref name="e"/> is less than zero or greater than the number of columns in the control minus one.-or-The value of the <see cref="P:System.Windows.Forms.DataGridViewCellValueEventArgs.RowIndex"/> property of <paramref name="e"/> is less than zero or greater than the number of rows in the control minus one.</exception>
         protected virtual void OnCellValuePushed(DataGridViewCellValueEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.ColumnIndex < Columns.Count);
-            Contract.Requires(e.RowIndex < Rows.Count);
+            Contract.Requires(e != null && e.ColumnIndex < Columns.Count && e.RowIndex < Rows.Count);
         }
 
         /// <summary>
@@ -2087,8 +1926,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnAdded(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView == this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2097,8 +1935,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnContextMenuStripChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2107,8 +1944,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnDataPropertyNameChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2117,8 +1953,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnDefaultCellStyleChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2127,8 +1962,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2146,8 +1980,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnDividerWidthChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2156,8 +1989,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnHeaderCellChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2208,8 +2040,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnMinimumWidthChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView == this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2218,14 +2049,13 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnNameChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView == this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.ColumnRemoved"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.ColumnRemoved"/> event.
+        // </summary>
+        // <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param>
         // protected virtual void OnColumnRemoved(DataGridViewColumnEventArgs e)
 
         /// <summary>
@@ -2234,8 +2064,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnSortModeChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView == this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2244,8 +2073,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnStateChangedEventArgs"/> that contains the event data. </param><exception cref="T:System.InvalidCastException">The column changed from read-only to read/write, enabling the current cell to enter edit mode, but the <see cref="P:System.Windows.Forms.DataGridViewCell.EditType"/> property of the current cell does not indicate a class that derives from <see cref="T:System.Windows.Forms.Control"/> and implements <see cref="T:System.Windows.Forms.IDataGridViewEditingControl"/>.</exception>
         protected virtual void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView == this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2254,8 +2082,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains information about the column.</param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnToolTipTextChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         /// <summary>
@@ -2264,8 +2091,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewColumnEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The column indicated by the <see cref="P:System.Windows.Forms.DataGridViewColumnEventArgs.Column"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Column != null && e.Column.DataGridView != this);
+            Contract.Requires(e != null && e.Column != null && e.Column.DataGridView == this);
         }
 
         // <summary>
@@ -2389,7 +2215,7 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.KeyDown"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data. </param><exception cref="T:System.Exception">This action would cause the control to enter edit mode but initialization of the editing cell value failed and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. The exception object can typically be cast to type <see cref="T:System.FormatException"/>.</exception>
-        protected void OnKeyDown(KeyEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -2398,7 +2224,7 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.KeyPress"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyPressEventArgs"/> that contains the event data. </param>
-        protected void OnKeyPress(KeyPressEventArgs e)
+        protected override void OnKeyPress(KeyPressEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -2407,7 +2233,7 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.KeyUp"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data. </param>
-        protected void OnKeyUp(KeyEventArgs e)
+        protected override void OnKeyUp(KeyEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -2461,7 +2287,7 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
-        protected void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -2470,13 +2296,13 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
-        protected void OnMouseUp(MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             Contract.Requires(e != null);
         }
 
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
-        protected void OnMouseWheel(MouseEventArgs e)
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -2493,8 +2319,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnNewRowNeeded(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         /// <summary>
@@ -2527,8 +2352,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowContextMenuStripChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2543,8 +2367,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowDefaultCellStyleChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2565,8 +2388,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowDividerHeightChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2581,8 +2403,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowErrorTextChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2597,8 +2418,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowHeaderCellChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2619,10 +2439,10 @@ namespace System.Windows.Forms
         // <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data. </param>
         // protected virtual void OnRowHeadersBorderStyleChanged(EventArgs e)
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.DataGridView.RowHeadersDefaultCellStyleChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data. </param>
+        // <summary>
+        // Raises the <see cref="E:System.Windows.Forms.DataGridView.RowHeadersDefaultCellStyleChanged"/> event.
+        // </summary>
+        // <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data. </param>
         // protected virtual void OnRowHeadersDefaultCellStyleChanged(EventArgs e)
 
         // <summary>
@@ -2643,8 +2463,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowHeightChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2671,8 +2490,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowMinimumHeightChanged(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2720,8 +2538,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnRowUnshared(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2766,8 +2583,7 @@ namespace System.Windows.Forms
         /// <param name="e">A <see cref="T:System.Windows.Forms.DataGridViewRowEventArgs"/> that contains the event data. </param><exception cref="T:System.ArgumentException">The row indicated by the <see cref="P:System.Windows.Forms.DataGridViewRowEventArgs.Row"/> property of <paramref name="e"/> does not belong to this <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception>
         protected virtual void OnUserAddedRow(DataGridViewRowEventArgs e)
         {
-            Contract.Requires(e != null);
-            Contract.Requires(e.Row != null && e.Row.DataGridView == this);
+            Contract.Requires(e != null && e.Row != null && e.Row.DataGridView == this);
         }
 
         // <summary>
@@ -2788,7 +2604,7 @@ namespace System.Windows.Forms
         // <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs"/> that contains the event data. </param><exception cref="T:System.Exception">Validation failed and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. The exception object can typically be cast to type <see cref="T:System.FormatException"/>.</exception>
         // protected override void OnValidating(CancelEventArgs e)
 
-        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data. </param>
+        // <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data. </param>
         // protected override void OnVisibleChanged(EventArgs e)
 
         // <summary>
@@ -2800,7 +2616,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the A key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2811,7 +2626,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the DELETE key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2822,7 +2636,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes keys, such as the TAB, ESCAPE, ENTER, and ARROW keys, used to control dialog boxes.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2833,7 +2646,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the DOWN ARROW key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2844,7 +2656,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the END key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2855,7 +2666,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the ENTER key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2866,7 +2676,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the ESC key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2877,7 +2686,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the F2 key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2888,7 +2696,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the HOME key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2899,7 +2706,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the INSERT key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2910,7 +2716,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes a key message and generates the appropriate control events.
         // </summary>
-        // 
         // <returns>
         // true if the message was processed; otherwise, false.
         // </returns>
@@ -2921,7 +2726,6 @@ namespace System.Windows.Forms
         // <summary>
         // Previews a keyboard message.
         // </summary>
-        // 
         // <returns>
         // true if the message was processed; otherwise, false.
         // </returns>
@@ -2932,7 +2736,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the LEFT ARROW key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2943,7 +2746,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the PAGE DOWN key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2954,7 +2756,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the PAGE UP key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2965,7 +2766,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the RIGHT ARROW key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2976,7 +2776,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the SPACEBAR.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2987,7 +2786,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the TAB key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -2998,7 +2796,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes keys used for navigating in the <see cref="T:System.Windows.Forms.DataGridView"/>.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -3009,7 +2806,6 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the UP ARROW key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
@@ -3020,18 +2816,16 @@ namespace System.Windows.Forms
         // <summary>
         // Processes the 0 key.
         // </summary>
-        // 
         // <returns>
         // true if the key was processed; otherwise, false.
         // </returns>
-        /// <param name="keyData">A bitwise combination of <see cref="T:System.Windows.Forms.Keys"/> values that represents the key or keys to process.</param><exception cref="T:System.InvalidCastException">The 0 key would cause the control to enter edit mode, but the <see cref="P:System.Windows.Forms.DataGridViewCell.EditType"/> property of the current cell does not indicate a class that derives from <see cref="T:System.Windows.Forms.Control"/> and implements <see cref="T:System.Windows.Forms.IDataGridViewEditingControl"/>.</exception><exception cref="T:System.Exception">This action would cause the control to enter edit mode, but an error in the data source prevents the action and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. </exception>
+        // <param name="keyData">A bitwise combination of <see cref="T:System.Windows.Forms.Keys"/> values that represents the key or keys to process.</param><exception cref="T:System.InvalidCastException">The 0 key would cause the control to enter edit mode, but the <see cref="P:System.Windows.Forms.DataGridViewCell.EditType"/> property of the current cell does not indicate a class that derives from <see cref="T:System.Windows.Forms.Control"/> and implements <see cref="T:System.Windows.Forms.IDataGridViewEditingControl"/>.</exception><exception cref="T:System.Exception">This action would cause the control to enter edit mode, but an error in the data source prevents the action and either there is no handler for the <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event or the handler has set the <see cref="P:System.Windows.Forms.DataGridViewDataErrorEventArgs.ThrowException"/> property to true. </exception>
         // [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         // protected bool ProcessZeroKey(Keys keyData)
 
         // <summary>
         // Refreshes the value of the current cell with the underlying cell value when the cell is in edit mode, discarding any previous value.
         // </summary>
-        // 
         // <returns>
         // true if successful; false if a <see cref="E:System.Windows.Forms.DataGridView.DataError"/> event occurred.
         // </returns>
@@ -3052,7 +2846,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Sets the currently active cell.
         /// </summary>
-        /// 
         /// <returns>
         /// true if the current cell was successfully set; otherwise, false.
         /// </returns>
@@ -3070,7 +2863,7 @@ namespace System.Windows.Forms
         /// This member overrides <see cref="M:System.Windows.Forms.Control.SetBoundsCore(System.Int32,System.Int32,System.Int32,System.Int32,System.Windows.Forms.BoundsSpecified)"/>.
         /// </summary>
         /// <param name="x">The new <see cref="P:System.Windows.Forms.Control.Left"/> property value of the control. </param><param name="y">The new <see cref="P:System.Windows.Forms.Control.Top"/> property value of the control. </param><param name="width">The new <see cref="P:System.Windows.Forms.Control.Width"/> property value of the control. </param><param name="height">The new <see cref="P:System.Windows.Forms.Control.Height"/> property value of the control. </param><param name="specified">A bitwise combination of the <see cref="T:System.Windows.Forms.BoundsSpecified"/> values. </param><exception cref="T:System.ArgumentOutOfRangeException">One or both of the width or height values exceeds the maximum value of 8,388,607. </exception>
-        protected void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
+        protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
             Contract.Requires(!((specified & BoundsSpecified.Width) == BoundsSpecified.Width && width > 8388607));
             Contract.Requires(!((specified & BoundsSpecified.Height) == BoundsSpecified.Height && height > 8388607));
@@ -3110,9 +2903,9 @@ namespace System.Windows.Forms
         /// <param name="dataGridViewColumn">The column by which to sort the contents of the <see cref="T:System.Windows.Forms.DataGridView"/>. </param><param name="direction">One of the <see cref="T:System.ComponentModel.ListSortDirection"/> values. </param><exception cref="T:System.ArgumentException">The specified column is not part of this <see cref="T:System.Windows.Forms.DataGridView"/>.-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property has been set and the <see cref="P:System.Windows.Forms.DataGridViewColumn.IsDataBound"/> property of the specified column returns false.</exception><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewColumn"/> is null.</exception><exception cref="T:System.InvalidOperationException">The <see cref="P:System.Windows.Forms.DataGridView.VirtualMode"/> property is set to true and the <see cref="P:System.Windows.Forms.DataGridViewColumn.IsDataBound"/> property of the specified column returns false.-or-The object specified by the <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property does not implement the <see cref="T:System.ComponentModel.IBindingList"/> interface.-or-The object specified by the <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property has a <see cref="P:System.ComponentModel.IBindingList.SupportsSorting"/> property value of false.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void Sort(DataGridViewColumn dataGridViewColumn, ListSortDirection direction)
         {
-            Contract.Requires(dataGridViewColumn != null);
-            Contract.Requires(dataGridViewColumn.DataGridView == this);
-            Contract.Requires(!(VirtualMode && !dataGridViewColumn.IsDataBound));
+            Contract.Requires(dataGridViewColumn != null 
+                && dataGridViewColumn.DataGridView == this 
+                && !(VirtualMode && !dataGridViewColumn.IsDataBound));
         }
 
         /// <summary>

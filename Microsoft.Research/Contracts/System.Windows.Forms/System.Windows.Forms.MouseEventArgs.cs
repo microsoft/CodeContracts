@@ -54,7 +54,7 @@ namespace System.Windows.Forms {
     ///
     /// Returns:
     ///     One of the System.Windows.Forms.MouseButtons values.
-    public MouseButtons Button { get; }
+    public MouseButtons Button { get { return default(MouseButtons); } }
     
     ///
     /// Summary:
@@ -63,7 +63,7 @@ namespace System.Windows.Forms {
     /// Returns:
     ///     An System.Int32 containing the number of times the mouse button was pressed
     ///     and released.
-    public int Clicks { get; }
+    public int Clicks { get { return default(int); } }
    
     
     /// Summary:
@@ -72,7 +72,7 @@ namespace System.Windows.Forms {
     ///
     /// Returns:
     ///     A signed count of the number of detents the mouse wheel has rotated.
-    public int Delta { get; }
+    public int Delta { get { return default(int); } }
     
     //
     // Summary:
@@ -89,13 +89,13 @@ namespace System.Windows.Forms {
     ///
     /// Returns:
     ///     The x-coordinate of the mouse, in pixels.
-    public int X { get; }
+    public int X { get { return default(int); } }
     
     /// Summary:
     ///     Gets the y-coordinate of the mouse during the generating mouse event.
     ///
     /// Returns:
     ///     The y-coordinate of the mouse, in pixels.
-    public int Y { get; }
+    public int Y { get { return default(int); } }
   }
 }

@@ -26,24 +26,20 @@ namespace System.Windows.Forms
     /// <summary>
     /// Defines a base class for controls that support auto-scrolling behavior.
     /// </summary>
-    
     public class ScrollableControl : Control // , IArrangedElement, IComponent, IDisposable
     {
         // <summary>
         // Gets or sets a value indicating whether the container enables the user to scroll to any controls placed outside of its visible boundaries.
         // </summary>
-        // 
         // <returns>
         // true if the container enables auto-scrolling; otherwise, false. The default value is false.
         // </returns>
-        // 
         // [DefaultValue(false)]
         // public virtual bool AutoScroll {get; set;}
         
         /// <summary>
         /// Gets or sets the size of the auto-scroll margin.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Drawing.Size"/> that represents the height and width of the auto-scroll margin in pixels.
         /// </returns>
@@ -60,7 +56,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the location of the auto-scroll position.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Point"/> that represents the auto-scroll position in pixels.
         // </returns>
@@ -70,11 +65,9 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the minimum size of the auto-scroll.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Size"/> that determines the minimum size of the virtual area through which the user can scroll.
         // </returns>
-        // 
         // public Size AutoScrollMinSize {get; set;}
         
         // <returns>
@@ -85,17 +78,14 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the rectangle that represents the virtual display area of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Rectangle"/> that represents the display area of the control.
         // </returns>
-        // 
         // public override Rectangle DisplayRectangle { get; }
         
         // <summary>
         // Gets or sets a value indicating whether the horizontal scroll bar is visible.
         // </summary>
-        // 
         // <returns>
         // true if the horizontal scroll bar is visible; otherwise, false.
         // </returns>
@@ -104,17 +94,14 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the characteristics associated with the horizontal scroll bar.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.HScrollProperties"/> that contains information about the horizontal scroll bar.
         // </returns>
-        // 
         // public HScrollProperties HorizontalScroll {get;}
         
         // <summary>
         // Gets or sets a value indicating whether the vertical scroll bar is visible.
         // </summary>
-        // 
         // <returns>
         // true if the vertical scroll bar is visible; otherwise, false.
         // </returns>
@@ -123,7 +110,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the characteristics associated with the vertical scroll bar.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.VScrollProperties"/> that contains information about the vertical scroll bar.
         // </returns>
@@ -133,17 +119,14 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the dock padding settings for all edges of the control.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.ScrollableControl.DockPaddingEdges"/> that represents the padding for all the edges of a docked control.
         // </returns>
-        // 
         // public ScrollableControl.DockPaddingEdges DockPadding {get;}
        
         // <summary>
         // Occurs when the user or code scrolls through the client area.
         // </summary>
-        // 
         // public event ScrollEventHandler Scroll
         
         // <summary>
@@ -160,7 +143,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the specified flag has been set.
         // </summary>
-        // 
         // <returns>
         // true if the specified flag has been set; otherwise, false.
         // </returns>
@@ -168,7 +150,7 @@ namespace System.Windows.Forms
         // protected bool GetScrollState(int bit)
        
         /// <param name="levent">A <see cref="T:System.Windows.Forms.LayoutEventArgs"/> that contains the event data. </param>
-        protected void OnLayout(LayoutEventArgs levent)
+        protected override void OnLayout(LayoutEventArgs levent)
         {
             Contract.Requires(levent != null);
         }
@@ -177,7 +159,7 @@ namespace System.Windows.Forms
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseWheel"/> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected void OnMouseWheel(MouseEventArgs e)
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
             Contract.Requires(e != null);
         }
@@ -206,7 +188,6 @@ namespace System.Windows.Forms
         // <param name="factor">The factor by which the height and width of the control will be scaled.</param><param name="specified">A <see cref="T:System.Windows.Forms.BoundsSpecified"/> value that specifies the bounds of the control to use when defining its size and position.</param>
         // protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
         
-        
         // <summary>
         // Positions the display window to the specified value.
         // </summary>
@@ -222,7 +203,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Calculates the scroll offset to the specified child control.
         /// </summary>
-        /// 
         /// <returns>
         /// The upper-left hand <see cref="T:System.Drawing.Point"/> of the display area relative to the client area required to scroll the control into view.
         /// </returns>
@@ -262,7 +242,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets or sets the padding width for all edges of a docked control.
             // </summary>
-            // 
             // <returns>
             // The padding width, in pixels.
             // </returns>
@@ -271,7 +250,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets or sets the padding width for the bottom edge of a docked control.
             // </summary>
-            // 
             // <returns>
             // The padding width, in pixels.
             // </returns>
@@ -280,7 +258,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets or sets the padding width for the left edge of a docked control.
             // </summary>
-            // 
             // <returns>
             // The padding width, in pixels.
             // </returns>
@@ -289,7 +266,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets or sets the padding width for the right edge of a docked control.
             // </summary>
-            // 
             // <returns>
             // The padding width, in pixels.
             // </returns>
@@ -298,7 +274,6 @@ namespace System.Windows.Forms
             // <summary>
             // Gets or sets the padding width for the top edge of a docked control.
             // </summary>
-            // 
             // <returns>
             // The padding width, in pixels.
             // </returns>
@@ -317,7 +292,6 @@ namespace System.Windows.Forms
             // <summary>
             // Returns an empty string.
             // </summary>
-            // 
             // <returns>
             // An empty string.
             // </returns>
@@ -332,7 +306,6 @@ namespace System.Windows.Forms
             // <summary>
             // Returns a collection of properties for the type of array specified by the value parameter, using the specified context and attributes.
             // </summary>
-            // 
             // <returns>
             // A <see cref="T:System.ComponentModel.PropertyDescriptorCollection"/> with the properties that are exposed for the <see cref="T:System.Windows.Forms.ScrollableControl"/>.
             // </returns>
@@ -342,7 +315,6 @@ namespace System.Windows.Forms
             // <summary>
             // Returns whether the current object supports properties, using the specified context.
             // </summary>
-            // 
             // <returns>
             // true in all cases.
             // </returns>

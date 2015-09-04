@@ -56,7 +56,7 @@ namespace System.Windows.Forms
         /// The number of items in the <see cref="T:System.Windows.Forms.AutoCompleteStringCollection"/>.
         /// </returns>
         /// 
-        public int Count
+        public virtual int Count
         {
             get
             {
@@ -90,7 +90,7 @@ namespace System.Windows.Forms
         /// false in all cases.
         /// </returns>
         
-        public bool IsSynchronized
+        public virtual bool IsSynchronized
         {
             get
             {
@@ -107,7 +107,7 @@ namespace System.Windows.Forms
         /// Returns this <see cref="T:System.Windows.Forms.AutoCompleteStringCollection"/>.
         /// </returns>
         /// 
-        public object SyncRoot
+        public virtual object SyncRoot
         {
             // [HostProtection(SecurityAction.LinkDemand, Synchronization = true)]
             get
@@ -156,7 +156,7 @@ namespace System.Windows.Forms
         /// <summary>
         /// Removes all strings from the collection.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             Contract.Ensures(Count == 0);
         }
@@ -214,7 +214,7 @@ namespace System.Windows.Forms
         // Removes the string at the specified index.
         // </summary>
         // <param name="index">The zero-based index of the string to remove.</param>
-        public void RemoveAt(int index)
+        public virtual void RemoveAt(int index)
         {
             Contract.Requires(index >= 0 && index < Count);
             Contract.Ensures(Count == Contract.OldValue(Count)-1);
@@ -227,7 +227,7 @@ namespace System.Windows.Forms
         // <returns>
         // An enumerator that iterates through the collection.
         // </returns>
-        public IEnumerator GetEnumerator()
+        public virtual IEnumerator GetEnumerator()
         {
             Contract.Ensures(Contract.Result<IEnumerator>() != null);
             return default(IEnumerator);

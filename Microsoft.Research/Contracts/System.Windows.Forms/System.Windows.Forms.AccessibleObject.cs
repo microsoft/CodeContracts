@@ -14,7 +14,9 @@
 
 // using Accessibility;
 using System;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Forms
@@ -25,25 +27,25 @@ namespace System.Windows.Forms
     public class AccessibleObject : StandardOleMarshalObject
         // IReflect, IAccessible, UnsafeNativeMethods.IEnumVariant, UnsafeNativeMethods.IOleWindow
     {
-        // <summary>
-        // Gets the location and size of the accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // A <see cref="T:System.Drawing.Rectangle"/> that represents the bounds of the accessible object.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The bounds of control cannot be retrieved. </exception>
-        // public virtual Rectangle Bounds { get; }
+        /// <summary>
+        /// Gets the location and size of the accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A <see cref="T:System.Drawing.Rectangle"/> that represents the bounds of the accessible object.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The bounds of control cannot be retrieved. </exception>
+        public virtual Rectangle Bounds { get { return default(Rectangle); } }
         
-        // <summary>
-        // Gets a string that describes the default action of the object. Not all objects have a default action.
-        // </summary>
-        // 
-        // <returns>
-        // A description of the default action for an object, or null if this object has no default action.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The default action for the control cannot be retrieved. </exception>
-        // public virtual string DefaultAction {get;}
+        /// <summary>
+        /// Gets a string that describes the default action of the object. Not all objects have a default action.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A description of the default action for an object, or null if this object has no default action.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The default action for the control cannot be retrieved. </exception>
+         public virtual string DefaultAction {get { return default(string); } }
         
         // <summary>
         // Gets a string that describes the visual appearance of the specified object. Not all objects have a description.
@@ -55,15 +57,15 @@ namespace System.Windows.Forms
         // <exception cref="T:System.Runtime.InteropServices.COMException">The description for the control cannot be retrieved. </exception>
         // public virtual string Description { get; }
         
-        // <summary>
-        // Gets a description of what the object does or how the object is used.
-        // </summary>
-        // 
-        // <returns>
-        // A <see cref="T:System.String"/> that contains the description of what the object does or how the object is used. Returns null if no help is defined.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The help string for the control cannot be retrieved. </exception>
-        // public virtual string Help {get;}
+        /// <summary>
+        /// Gets a description of what the object does or how the object is used.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A <see cref="T:System.String"/> that contains the description of what the object does or how the object is used. Returns null if no help is defined.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The help string for the control cannot be retrieved. </exception>
+        public virtual string Help {get { return default(string); } }
         
         // <summary>
         // Gets the shortcut key or access key for the accessible object.
@@ -75,25 +77,28 @@ namespace System.Windows.Forms
         // <exception cref="T:System.Runtime.InteropServices.COMException">The shortcut for the control cannot be retrieved. </exception>
         // public virtual string KeyboardShortcut {get;}
         
-        // <summary>
-        // Gets or sets the object name.
-        // </summary>
-        // 
-        // <returns>
-        // The object name, or null if the property has not been set.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The name of the control cannot be retrieved or set. </exception>
-        // public virtual string Name {get; set;}
-        
-        // <summary>
-        // Gets the parent of an accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // An <see cref="T:System.Windows.Forms.AccessibleObject"/> that represents the parent of an accessible object, or null if there is no parent object.
-        // </returns>
-        // <PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
-        // public virtual AccessibleObject Parent { get; }
+        /// <summary>
+        /// Gets or sets the object name.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The object name, or null if the property has not been set.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The name of the control cannot be retrieved or set. </exception>
+        public virtual string Name {get; set;}
+
+        /// <summary>
+        /// Gets the parent of an accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// An <see cref="T:System.Windows.Forms.AccessibleObject"/> that represents the parent of an accessible object, or null if there is no parent object.
+        /// </returns>
+        /// <PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
+        public virtual AccessibleObject Parent
+        {
+            get { return default(AccessibleObject); }
+        }
         
         // <summary>
         // Gets the role of this accessible object.
@@ -104,24 +109,24 @@ namespace System.Windows.Forms
         // </returns>
         // public virtual AccessibleRole Role { get; }
         
-        // <summary>
-        // Gets the state of this accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // One of the <see cref="T:System.Windows.Forms.AccessibleStates"/> values, or <see cref="F:System.Windows.Forms.AccessibleStates.None"/>, if no state has been set.
-        // </returns>
-        // public virtual AccessibleStates State {get;}
+        /// <summary>
+        /// Gets the state of this accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// One of the <see cref="T:System.Windows.Forms.AccessibleStates"/> values, or <see cref="F:System.Windows.Forms.AccessibleStates.None"/>, if no state has been set.
+        /// </returns>
+        public virtual AccessibleStates State { get { return default(AccessibleStates); } }
        
-        // <summary>
-        // Gets or sets the value of an accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // The value of an accessible object, or null if the object has no value set.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The value cannot be set or retrieved. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
-        // public virtual string Value {get; set;}
+        /// <summary>
+        /// Gets or sets the value of an accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The value of an accessible object, or null if the object has no value set.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The value cannot be set or retrieved. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
+        public virtual string Value {get; set;}
         
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Windows.Forms.AccessibleObject"/> class.
@@ -144,25 +149,30 @@ namespace System.Windows.Forms
             return default(AccessibleObject);
         }
 
-        // <summary>
-        // Retrieves the number of children belonging to an accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // The number of children belonging to an accessible object.
-        // </returns>
-        // public virtual int GetChildCount()
+        /// <summary>
+        /// Retrieves the number of children belonging to an accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The number of children belonging to an accessible object.
+        /// </returns>
+        public virtual int GetChildCount()
+        {
+            return default(int);
+        }
         
-        
-        // <summary>
-        // Retrieves the object that has the keyboard focus.
-        // </summary>
-        // 
-        // <returns>
-        // An <see cref="T:System.Windows.Forms.AccessibleObject"/> that specifies the currently focused child. This method returns the calling object if the object itself is focused. Returns null if no object has focus.
-        // </returns>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The control cannot be retrieved. </exception>
-        // public virtual AccessibleObject GetFocused()
+        /// <summary>
+        /// Retrieves the object that has the keyboard focus.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// An <see cref="T:System.Windows.Forms.AccessibleObject"/> that specifies the currently focused child. This method returns the calling object if the object itself is focused. Returns null if no object has focus.
+        /// </returns>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The control cannot be retrieved. </exception>
+        public virtual AccessibleObject GetFocused()
+        {
+            return default(AccessibleObject);
+        }
         
         // <summary>
         // Gets an identifier for a Help topic identifier and the path to the Help file associated with this accessible object.
@@ -194,27 +204,30 @@ namespace System.Windows.Forms
         // <param name="x">The horizontal screen coordinate. </param><param name="y">The vertical screen coordinate. </param><exception cref="T:System.Runtime.InteropServices.COMException">The control cannot be hit tested. </exception>
         // public virtual AccessibleObject HitTest(int x, int y)
         
-        // <summary>
-        // Performs the default action associated with this accessible object.
-        // </summary>
-        // <exception cref="T:System.Runtime.InteropServices.COMException">The default action for the control cannot be performed. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
-        // public virtual void DoDefaultAction()
+        /// <summary>
+        /// Performs the default action associated with this accessible object.
+        /// </summary>
+        /// <exception cref="T:System.Runtime.InteropServices.COMException">The default action for the control cannot be performed. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
+        public virtual void DoDefaultAction() { }
         
-        // <summary>
-        // Navigates to another accessible object.
-        // </summary>
-        // 
-        // <returns>
-        // An <see cref="T:System.Windows.Forms.AccessibleObject"/> that represents one of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values.
-        // </returns>
-        // <param name="navdir">One of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values. </param><exception cref="T:System.Runtime.InteropServices.COMException">The navigation attempt fails. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
-        // public virtual AccessibleObject Navigate(AccessibleNavigation navdir)
+        /// <summary>
+        /// Navigates to another accessible object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// An <see cref="T:System.Windows.Forms.AccessibleObject"/> that represents one of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values.
+        /// </returns>
+        /// <param name="navdir">One of the <see cref="T:System.Windows.Forms.AccessibleNavigation"/> values. </param><exception cref="T:System.Runtime.InteropServices.COMException">The navigation attempt fails. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
+        public virtual AccessibleObject Navigate(AccessibleNavigation navdir)
+        {
+            return default(AccessibleObject);
+        }
         
-        // <summary>
-        // Modifies the selection or moves the keyboard focus of the accessible object.
-        // </summary>
-        // <param name="flags">One of the <see cref="T:System.Windows.Forms.AccessibleSelection"/> values. </param><exception cref="T:System.Runtime.InteropServices.COMException">The selection cannot be performed. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
-        // public virtual void Select(AccessibleSelection flags)
+        /// <summary>
+        /// Modifies the selection or moves the keyboard focus of the accessible object.
+        /// </summary>
+        /// <param name="flags">One of the <see cref="T:System.Windows.Forms.AccessibleSelection"/> values. </param><exception cref="T:System.Runtime.InteropServices.COMException">The selection cannot be performed. </exception><PermissionSet><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/></PermissionSet>
+        public virtual void Select(AccessibleSelection flags) { }
         
         // <summary>
         // Associates an object with an instance of an <see cref="T:System.Windows.Forms.AccessibleObject"/> based on the handle of the object.

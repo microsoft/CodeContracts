@@ -25,7 +25,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the border style for all of the borders of a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewAdvancedCellBorderStyle"/> values.
         // </returns>
@@ -35,7 +34,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the style for the bottom border of a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewAdvancedCellBorderStyle"/> values.
         // </returns>
@@ -45,7 +43,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the style for the left border of a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewAdvancedCellBorderStyle"/> values.
         // </returns>
@@ -55,7 +52,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the style for the right border of a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewAdvancedCellBorderStyle"/> values.
         // </returns>
@@ -65,7 +61,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the style for the top border of a cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewAdvancedCellBorderStyle"/> values.
         // </returns>
@@ -81,7 +76,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the specified object is equal to the current <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
         // </summary>
-        // 
         // <returns>
         // true if <paramref name="other"/> is a <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/> and the values for the <see cref="P:System.Windows.Forms.DataGridViewAdvancedBorderStyle.Top"/>, <see cref="P:System.Windows.Forms.DataGridViewAdvancedBorderStyle.Bottom"/>, <see cref="P:System.Windows.Forms.DataGridViewAdvancedBorderStyle.Left"/>, and <see cref="P:System.Windows.Forms.DataGridViewAdvancedBorderStyle.Right"/> properties are equal to their counterpart in the current <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>; otherwise, false.
         // </returns>
@@ -93,7 +87,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns a string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
         // </summary>
-        // 
         // <returns>
         // A string that represents the <see cref="T:System.Windows.Forms.DataGridViewAdvancedBorderStyle"/>.
         // </returns>

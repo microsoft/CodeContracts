@@ -21,28 +21,24 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides the base class for elements of a <see cref="T:System.Windows.Forms.DataGridView"/> control.
     /// </summary>
-    
     public class DataGridViewElement
     {
 
-        // <summary>
-        // Gets the user interface (UI) state of the element.
-        // </summary>
-        // 
-        // <returns>
-        // A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values representing the state.
-        // </returns>
-        //public virtual DataGridViewElementStates State { get; }
+        /// <summary>
+        /// Gets the user interface (UI) state of the element.
+        /// </summary>
+        /// <returns>
+        /// A bitwise combination of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values representing the state.
+        /// </returns>
+        public virtual DataGridViewElementStates State { get { return default(DataGridViewElementStates); } }
 
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridView"/> control associated with this element.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridView"/> control that contains this element. The default is null.
         /// </returns>
-        /// 
-        public DataGridView DataGridView { get; }
+        public DataGridView DataGridView { get { return default(DataGridView); } }
 
         // <summary>
         // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewElement"/> class.

@@ -20,17 +20,14 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.CellValueNeeded"/> and <see cref="E:System.Windows.Forms.DataGridView.CellValuePushed"/> events of the <see cref="T:System.Windows.Forms.DataGridView"/> control.
     /// </summary>
-    
     public class DataGridViewCellValueEventArgs : EventArgs
     {
-      /// <summary>
+        /// <summary>
         /// Gets a value indicating the column index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the column containing the cell that the event occurs for.
         /// </returns>
-        /// 
         public int ColumnIndex
         {
             get
@@ -43,11 +40,9 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets a value indicating the row index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the row containing the cell that the event occurs for.
         /// </returns>
-        /// 
         public int RowIndex
         {
             get
@@ -60,14 +55,17 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the value of the cell that the event occurs for.
         // </summary>
-        // 
         // <returns>
         // An <see cref="T:System.Object"/> representing the cell's value.
         // </returns>
         // 
         // public object Value {get; set;}
-        
+
+        // Note, this is why the row index and column index contracts are only >= -1, not > -1.
         // internal DataGridViewCellValueEventArgs()
+        //{
+        //    this.columnIndex = this.rowIndex = -1;
+        //}
         
         // <summary>
         // Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellValueEventArgs"/> class.
@@ -80,6 +78,5 @@ namespace System.Windows.Forms
         }
 
         // internal void SetProperties(int columnIndex, int rowIndex, object value)
-        
     }
 }

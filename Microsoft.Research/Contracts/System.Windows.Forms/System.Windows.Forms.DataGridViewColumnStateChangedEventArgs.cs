@@ -20,23 +20,20 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.ColumnStateChanged"/> event.
     /// </summary>
-    
     public class DataGridViewColumnStateChangedEventArgs : EventArgs
     {
         /// <summary>
         /// Gets the column whose state changed.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> whose state changed.
         /// </returns>
         /// 
-        public DataGridViewColumn Column {get;}
+        public DataGridViewColumn Column {get { return default(DataGridViewColumn); } }
 
         // <summary>
         // Gets the new column state.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values.
         // </returns>

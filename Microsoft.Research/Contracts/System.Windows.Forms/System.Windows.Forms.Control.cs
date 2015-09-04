@@ -208,7 +208,7 @@ namespace System.Windows.Forms
     ////     The default is the value of the System.Windows.Forms.Control.DefaultBackColor
     ////     property.
     //[DispId(-501)]
-    //public virtual System.Drawing.Color BackColor { get; set; }
+    public virtual System.Drawing.Color BackColor { get; set; }
     ////
     //// Summary:
     ////     Gets or sets the background image displayed in the control.
@@ -1481,16 +1481,33 @@ namespace System.Windows.Forms
     //// Returns:
     ////     true if the specified control is a child of the control; otherwise, false.
     //public bool Contains(Control ctl);
-    ////
-    //// Summary:
-    ////     Creates a new accessibility object for the control.
-    ////
-    //// Returns:
-    ////     A new System.Windows.Forms.AccessibleObject for the control.
-    //[EditorBrowsable(EditorBrowsableState.Advanced)]
-    //// protected virtualAccessibleObject CreateAccessibilityInstance();
-    ////
-
+    
+    /// <summary>
+    /// Creates a new accessibility object for the control.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// A new <see cref="T:System.Windows.Forms.AccessibleObject"/> for the control.
+    /// </returns>
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual AccessibleObject CreateAccessibilityInstance()
+    {
+        return default(AccessibleObject);
+    }
+    
+    /// <summary>
+    /// Creates a new instance of the control collection for the control.
+    /// </summary>
+    /// 
+    /// <returns>
+    /// A new instance of <see cref="T:System.Windows.Forms.Control.ControlCollection"/> assigned to the control.
+    /// </returns>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual Control.ControlCollection CreateControlsInstance()
+    {
+        return default(Control.ControlCollection);
+    }
+    
     //
     // Summary:
     //     Creates the System.Drawing.Graphics for the control.
@@ -1843,6 +1860,55 @@ namespace System.Windows.Forms
     ////     A System.Drawing.Rectangle representing the area to invalidate.
     //[EditorBrowsable(EditorBrowsableState.Advanced)]
 
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.KeyDown"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnKeyDown(KeyEventArgs e) { }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.KeyPress"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.KeyPressEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnKeyPress(KeyPressEventArgs e) { }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.KeyUp"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnKeyUp(KeyEventArgs e) { }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.Layout"/> event.
+    /// </summary>
+    /// <param name="levent">A <see cref="T:System.Windows.Forms.LayoutEventArgs"/> that contains the event data. </param>
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnLayout(LayoutEventArgs levent) { }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnMouseMove(MouseEventArgs e) { }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnMouseUp(MouseEventArgs e) { }
+    
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.Control.MouseWheel"/> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data. </param>
+    /// [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnMouseWheel(MouseEventArgs e) { }
+    
     //
     // Summary:
     //     Raises the System.Windows.Forms.Control.PaddingChanged event.
@@ -1954,6 +2020,13 @@ namespace System.Windows.Forms
     //// Returns:
     ////     true if the character was processed by the control; otherwise, false.
 
+    /// <summary>
+    /// Performs the work of setting the specified bounds of this control.
+    /// </summary>
+    /// <param name="x">The new <see cref="P:System.Windows.Forms.Control.Left"/> property value of the control. </param><param name="y">The new <see cref="P:System.Windows.Forms.Control.Top"/> property value of the control. </param><param name="width">The new <see cref="P:System.Windows.Forms.Control.Width"/> property value of the control. </param><param name="height">The new <see cref="P:System.Windows.Forms.Control.Height"/> property value of the control. </param><param name="specified">A bitwise combination of the <see cref="T:System.Windows.Forms.BoundsSpecified"/> values. </param>
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified) { }
+
     // Summary:
     //     Represents a collection of System.Windows.Forms.Control objects.
     //[ComVisible(false)]
@@ -1997,8 +2070,7 @@ namespace System.Windows.Forms
       {
         get
         {
-          Contract.Requires(index >= 0);
-          Contract.Requires(index < Count);
+          Contract.Requires(index >= 0 && index < Count);
 
           return default(Control);
         }

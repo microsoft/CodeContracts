@@ -56,7 +56,7 @@ namespace System.Windows.Forms
         /// <returns>
         /// This property always returns false.
         /// </returns>
-        public bool IsSynchronized
+        public virtual bool IsSynchronized
         {
             get
             {
@@ -72,7 +72,7 @@ namespace System.Windows.Forms
         // <returns>
         // An object that can be used to synchronize the <see cref="T:System.Windows.Forms.BaseCollection"/>.
         // </returns>
-        public object SyncRoot
+        public virtual object SyncRoot
         {
             get
             {
@@ -85,7 +85,7 @@ namespace System.Windows.Forms
         /// Copies all the elements of the current one-dimensional <see cref="T:System.Array"/> to the specified one-dimensional <see cref="T:System.Array"/> starting at the specified destination <see cref="T:System.Array"/> index.
         /// </summary>
         /// <param name="ar">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from the current Array. </param><param name="index">The zero-based relative index in <paramref name="ar"/> at which copying begins. </param>
-        public void CopyTo(Array ar, int index)
+        public virtual void CopyTo(Array ar, int index)
         {
             Contract.Requires(ar != null);
             Contract.Requires(index >= 0 && index <= Count);
@@ -98,7 +98,7 @@ namespace System.Windows.Forms
         /// <returns>
         /// An object that implements the <see cref="T:System.Collections.IEnumerator"/> interface.
         /// </returns>
-        public IEnumerator GetEnumerator()
+        public virtual IEnumerator GetEnumerator()
         {
             Contract.Ensures(Contract.Result<IEnumerator>() != null);
             return default(IEnumerator);

@@ -20,6 +20,7 @@ namespace System.Windows.Forms
     /// <summary>
     /// Represents the state of a data-bound <see cref="T:System.Windows.Forms.DataGridView"/> control when a data error occurred.
     /// </summary>
+    [Flags]
     public enum DataGridViewDataErrorContexts
     {
         Formatting = 1,

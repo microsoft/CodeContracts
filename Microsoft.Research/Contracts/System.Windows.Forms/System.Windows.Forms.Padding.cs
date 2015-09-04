@@ -30,63 +30,51 @@ namespace System.Windows.Forms
         // <summary>
         // Provides a <see cref="T:System.Windows.Forms.Padding"/> object with no padding.
         // </summary>
-        // 
         // public static readonly Padding Empty = new Padding(0);
 
         // <summary>
         // Gets or sets the padding value for all the edges.
         // </summary>
-        // 
         // <returns>
         // The padding, in pixels, for all edges if the same; otherwise, -1.
         // </returns>
-        // 
         // public int All {get; set;}
        
         // <summary>
         // Gets or sets the padding value for the bottom edge.
         // </summary>
-        // 
         // <returns>
         // The padding, in pixels, for the bottom edge.
         // </returns>
-        // 
         // public int Bottom { get; set; }
         
         // <summary>
         // Gets or sets the padding value for the left edge.
         // </summary>
-        // 
         // <returns>
         // The padding, in pixels, for the left edge.
         // </returns>
-        // 
         // public int Left {get; set;}
        
         // <summary>
         // Gets or sets the padding value for the right edge.
         // </summary>
-        // 
         // <returns>
         // The padding, in pixels, for the right edge.
         // </returns>
-        // 
         // public int Right {get; set;}
         
         // <summary>
         // Gets or sets the padding value for the top edge.
         // </summary>
-        // 
         // <returns>
         // The padding, in pixels, for the top edge.
         // </returns>
-        // 
         // public int Top {get; set;}
         
         // <summary>
         // Gets the combined padding for the right and left edges.
         // </summary>
-        // 
         // <returns>
         // Gets the sum, in pixels, of the <see cref="P:System.Windows.Forms.Padding.Left"/> and <see cref="P:System.Windows.Forms.Padding.Right"/> padding values.
         // </returns>
@@ -95,21 +83,17 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the combined padding for the top and bottom edges.
         // </summary>
-        // 
         // <returns>
         // Gets the sum, in pixels, of the <see cref="P:System.Windows.Forms.Padding.Top"/> and <see cref="P:System.Windows.Forms.Padding.Bottom"/> padding values.
         // </returns>
-        // 
         // public int Vertical {get;}
         
         // <summary>
         // Gets the padding information in the form of a <see cref="T:System.Drawing.Size"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Size"/> containing the padding information.
         // </returns>
-        // 
         // public Size Size {get;}
         
         // <summary>
@@ -127,7 +111,6 @@ namespace System.Windows.Forms
         // <summary>
         // Performs vector addition on the two specified <see cref="T:System.Windows.Forms.Padding"/> objects, resulting in a new <see cref="T:System.Windows.Forms.Padding"/>.
         // </summary>
-        // 
         // <returns>
         // A new <see cref="T:System.Windows.Forms.Padding"/> that results from adding <paramref name="p1"/> and <paramref name="p2"/>.
         // </returns>
@@ -137,7 +120,6 @@ namespace System.Windows.Forms
         // <summary>
         // Performs vector subtraction on the two specified <see cref="T:System.Windows.Forms.Padding"/> objects, resulting in a new <see cref="T:System.Windows.Forms.Padding"/>.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.Padding"/> result of subtracting <paramref name="p2"/> from <paramref name="p1"/>.
         // </returns>
@@ -147,7 +129,6 @@ namespace System.Windows.Forms
         // <summary>
         // Tests whether two specified <see cref="T:System.Windows.Forms.Padding"/> objects are equivalent.
         // </summary>
-        // 
         // <returns>
         // true if the two <see cref="T:System.Windows.Forms.Padding"/> objects are equal; otherwise, false.
         // </returns>
@@ -157,7 +138,6 @@ namespace System.Windows.Forms
         // <summary>
         // Tests whether two specified <see cref="T:System.Windows.Forms.Padding"/> objects are not equivalent.
         // </summary>
-        // 
         // <returns>
         // true if the two <see cref="T:System.Windows.Forms.Padding"/> objects are different; otherwise, false.
         // </returns>
@@ -167,7 +147,6 @@ namespace System.Windows.Forms
         // <summary>
         // Computes the sum of the two specified <see cref="T:System.Windows.Forms.Padding"/> values.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.Padding"/> that contains the sum of the two specified <see cref="T:System.Windows.Forms.Padding"/> values.
         // </returns>
@@ -177,7 +156,6 @@ namespace System.Windows.Forms
         // <summary>
         // Subtracts one specified <see cref="T:System.Windows.Forms.Padding"/> value from another.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.Padding"/> that contains the result of the subtraction of one specified <see cref="T:System.Windows.Forms.Padding"/> value from another.
         // </returns>
@@ -187,7 +165,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the value of the specified object is equivalent to the current <see cref="T:System.Windows.Forms.Padding"/>.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.Padding"/> objects are equivalent; otherwise, false.
         // </returns>
@@ -197,21 +174,17 @@ namespace System.Windows.Forms
         // <summary>
         // Generates a hash code for the current <see cref="T:System.Windows.Forms.Padding"/>.
         // </summary>
-        // 
         // <returns>
         // A 32-bit signed integer hash code.
         // </returns>
-        // 
         // public override int GetHashCode()
         
         // <summary>
         // Returns a string that represents the current <see cref="T:System.Windows.Forms.Padding"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.String"/> that represents the current <see cref="T:System.Windows.Forms.Padding"/>.
         // </returns>
-        // 
         // public override string ToString()
     }
 }

@@ -20,14 +20,12 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for column-related events of a <see cref="T:System.Windows.Forms.DataGridView"/>.
     /// </summary>
-    
     public class DataGridViewColumnEventArgs : EventArgs
     {
         
         /// <summary>
         /// Gets the column that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewColumn"/> that the event occurs for.
         /// </returns>

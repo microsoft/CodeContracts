@@ -25,14 +25,11 @@ namespace System.Windows.Forms
     /// <summary>
     /// A collection of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects.
     /// </summary>
-    
     public class DataGridViewRowCollection // : IList, ICollection, IEnumerable
     {
-        
         /// <summary>
         /// Gets the number of rows in the collection.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of rows in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.
         /// </returns>
@@ -46,25 +43,26 @@ namespace System.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// Gets an array of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// An array of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects.
-        /// </returns>
+        // <summary>
+        // Gets an array of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects.
+        // </summary>
+        // <returns>
+        // An array of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects.
+        // </returns>
         // protected ArrayList List {get;}
 
-        internal ArrayList SharedList { get; }
+        internal ArrayList SharedList { get { return default(ArrayList); } }
 
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridView"/> that owns the collection.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridView"/> that owns the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.
         /// </returns>
-        protected DataGridView DataGridView {get;}
+        protected DataGridView DataGridView
+        {
+            get { return default(DataGridView); }
+        }
 
         /// <summary>
         /// Gets the <see cref="T:System.Windows.Forms.DataGridViewRow"/> at the specified index.
@@ -86,7 +84,6 @@ namespace System.Windows.Forms
         // <summary>
         // Occurs when the contents of the collection change.
         // </summary>
-        // 
         // public event CollectionChangeEventHandler CollectionChanged
         
         // <summary>
@@ -98,7 +95,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the <see cref="T:System.Windows.Forms.DataGridViewRow"/> at the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewRow"/> positioned at the specified index.
         /// </returns>
@@ -112,7 +108,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds a new row to the collection.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the new row.
         /// </returns>
@@ -130,7 +125,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds a new row to the collection, and populates the cells with the specified objects.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the new row.
         /// </returns>
@@ -142,6 +136,8 @@ namespace System.Windows.Forms
             Contract.Requires(DataGridView.VirtualMode == false);
             Contract.Requires(DataGridView.DataSource == null);
             Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(DataGridView.Columns.Count > 0);
+           
             Contract.Ensures(Contract.Result<int>() >= 0);
             Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
@@ -150,16 +146,17 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/> to the collection.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the new <see cref="T:System.Windows.Forms.DataGridViewRow"/>.
         /// </returns>
         /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to add to the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param><exception cref="T:System.InvalidOperationException">The associated <see cref="T:System.Windows.Forms.DataGridView"/> control is performing one of the following actions that temporarily prevents new rows from being added:Selecting all cells in the control.Clearing the selection.-or-This method is being called from a handler for one of the following <see cref="T:System.Windows.Forms.DataGridView"/> events:<see cref="E:System.Windows.Forms.DataGridView.CellEnter"/><see cref="E:System.Windows.Forms.DataGridView.CellLeave"/><see cref="E:System.Windows.Forms.DataGridView.CellValidating"/><see cref="E:System.Windows.Forms.DataGridView.CellValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowEnter"/><see cref="E:System.Windows.Forms.DataGridView.RowLeave"/><see cref="E:System.Windows.Forms.DataGridView.RowValidated"/><see cref="E:System.Windows.Forms.DataGridView.RowValidating"/>-or-The <see cref="P:System.Windows.Forms.DataGridView.DataSource"/> property of the <see cref="T:System.Windows.Forms.DataGridView"/> is not null.-or-The <see cref="T:System.Windows.Forms.DataGridView"/> has no columns.-or-The <see cref="P:System.Windows.Forms.DataGridViewElement.DataGridView"/> property of the <paramref name="dataGridViewRow"/> is not null.-or-<paramref name="dataGridViewRow"/> has a <see cref="P:System.Windows.Forms.DataGridViewRow.Selected"/> property value of true. -or-This operation would add a frozen row after unfrozen rows.</exception><exception cref="T:System.ArgumentNullException"><paramref name="dataGridViewRow"/> is null.</exception><exception cref="T:System.ArgumentException"><paramref name="dataGridViewRow"/> has more cells than there are columns in the control.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual int Add(DataGridViewRow dataGridViewRow)
         {
-            Contract.Requires(DataGridView.Columns.Count > 0);
+
             Contract.Requires(DataGridView.DataSource == null);
             Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
+            Contract.Requires(dataGridViewRow.Cells.Count <= this.DataGridView.Columns.Count);
+            Contract.Requires(DataGridView.Columns.Count > 0);
             Contract.Ensures(Contract.Result<int>() >= 0);
             Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
@@ -168,7 +165,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds the specified number of new rows to the collection.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the last row that was added.
         /// </returns>
@@ -177,10 +173,10 @@ namespace System.Windows.Forms
         public virtual int Add(int count)
         {
             Contract.Requires(count >= 1);
-            Contract.Requires(DataGridView.Columns.Count > 0);
             Contract.Requires(DataGridView.DataSource == null);
             Contract.Requires(DataGridView.NoDimensionChangeAllowed == false);
             Contract.Requires(DataGridView.RowTemplate.Cells.Count <= DataGridView.Columns.Count);
+            Contract.Requires(DataGridView.Columns.Count > 0);
             Contract.Ensures(Contract.Result<int>() >= 0);
             Contract.Ensures(Count == Contract.OldValue(Count) + 1);
             return default(int);
@@ -189,7 +185,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds a new row based on the row at the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the new row.
         /// </returns>
@@ -207,7 +202,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Adds the specified number of rows to the collection based on the row at the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the last row that was added.
         /// </returns>
@@ -248,7 +242,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the specified <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the collection.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.DataGridViewRow"/> is in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>; otherwise, false.
         // </returns>
@@ -268,7 +261,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the first <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the first <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -276,11 +268,10 @@ namespace System.Windows.Forms
         public int GetFirstRow(DataGridViewElementStates includeFilter)
         {
             Contract.Requires(
-                !((includeFilter &
-                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -288,7 +279,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the first <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified inclusion and exclusion criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the first <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>, and does not have the attributes specified by <paramref name="excludeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -296,17 +286,15 @@ namespace System.Windows.Forms
         public int GetFirstRow(DataGridViewElementStates includeFilter, DataGridViewElementStates excludeFilter)
         {
             Contract.Requires(
-                !((includeFilter &
+                (includeFilter &
                   ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
                     DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Requires(excludeFilter == DataGridViewElementStates.None ||
-                !((excludeFilter &
-                    ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (excludeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -314,7 +302,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the last <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the last <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -322,11 +309,10 @@ namespace System.Windows.Forms
         public int GetLastRow(DataGridViewElementStates includeFilter)
         {
             Contract.Requires(
-               !((includeFilter &
+               (includeFilter &
                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-               DataGridViewElementStates.None));
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -334,7 +320,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the next <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the first <see cref="T:System.Windows.Forms.DataGridViewRow"/> after <paramref name="indexStart"/> that has the attributes specified by <paramref name="includeFilter"/>, or -1 if no row is found.
         /// </returns>
@@ -343,11 +328,10 @@ namespace System.Windows.Forms
         {
             Contract.Requires(indexStart < -1);
             Contract.Requires(
-                !((includeFilter &
-                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -355,7 +339,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the next <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified inclusion and exclusion criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the next <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>, and does not have the attributes specified by <paramref name="excludeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -364,17 +347,15 @@ namespace System.Windows.Forms
         {
             Contract.Requires(indexStart < -1);
             Contract.Requires(
-                !((includeFilter &
-                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Requires(excludeFilter == DataGridViewElementStates.None ||
-                !((excludeFilter &
-                    ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (excludeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -382,7 +363,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -391,11 +371,10 @@ namespace System.Windows.Forms
         {
             Contract.Requires(indexStart <= Count);
             Contract.Requires(
-                !((includeFilter &
-                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -403,7 +382,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/> that meets the specified inclusion and exclusion criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the previous <see cref="T:System.Windows.Forms.DataGridViewRow"/> that has the attributes specified by <paramref name="includeFilter"/>, and does not have the attributes specified by <paramref name="excludeFilter"/>; -1 if no row is found.
         /// </returns>
@@ -412,17 +390,15 @@ namespace System.Windows.Forms
         {
             Contract.Requires(indexStart <= Count);
             Contract.Requires(
-               !((includeFilter &
+               (includeFilter &
+                ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                  DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                  DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
+            Contract.Requires(excludeFilter == DataGridViewElementStates.None ||
+                (excludeFilter &
                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-               DataGridViewElementStates.None));
-            Contract.Requires(excludeFilter == DataGridViewElementStates.None ||
-                !((excludeFilter &
-                    ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= -1);
             return default(int);
         }
@@ -430,7 +406,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the number of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects in the collection that meet the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The number of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/> that have the attributes specified by <paramref name="includeFilter"/>.
         /// </returns>
@@ -438,11 +413,10 @@ namespace System.Windows.Forms
         public int GetRowCount(DataGridViewElementStates includeFilter)
         {
             Contract.Requires(
-                !((includeFilter &
-                  ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                    DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                    DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-                DataGridViewElementStates.None));
+                (includeFilter &
+                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= 0);
             return default(int);
         }
@@ -450,7 +424,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the cumulative height of the <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects that meet the specified criteria.
         /// </summary>
-        /// 
         /// <returns>
         /// The cumulative height of <see cref="T:System.Windows.Forms.DataGridViewRow"/> objects in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/> that have the attributes specified by <paramref name="includeFilter"/>.
         /// </returns>
@@ -458,11 +431,10 @@ namespace System.Windows.Forms
         public int GetRowsHeight(DataGridViewElementStates includeFilter)
         {
             Contract.Requires(
-               !((includeFilter &
-                 ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
-                   DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
-                   DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) !=
-               DataGridViewElementStates.None));
+               (includeFilter &
+                ~(DataGridViewElementStates.Displayed | DataGridViewElementStates.Frozen |
+                  DataGridViewElementStates.ReadOnly | DataGridViewElementStates.Resizable |
+                  DataGridViewElementStates.Selected | DataGridViewElementStates.Visible)) == DataGridViewElementStates.None);
             Contract.Ensures(Contract.Result<int>() >= 0);
             return default(int);
         }
@@ -470,7 +442,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the state of the row with the specified index.
         /// </summary>
-        /// 
         /// <returns>
         /// A bitwise combination of <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values indicating the state of the specified row.
         /// </returns>
@@ -484,9 +455,8 @@ namespace System.Windows.Forms
         /// <summary>
         /// Returns the index of a specified item in the collection.
         /// </summary>
-        /// 
         /// <returns>
-        /// The index of <paramref name="value"/> if it is a <see cref="T:System.Windows.Forms.DataGridViewRow"/> found in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>; otherwise, -1.
+        /// The index of <paramref name="dataGridViewRow"/> if it is a <see cref="T:System.Windows.Forms.DataGridViewRow"/> found in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>; otherwise, -1.
         /// </returns>
         /// <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> to locate in the <see cref="T:System.Windows.Forms.DataGridViewRowCollection"/>.</param>
         public int IndexOf(DataGridViewRow dataGridViewRow)

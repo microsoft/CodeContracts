@@ -20,7 +20,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Specifies the formats used with text-related methods of the <see cref="T:System.Windows.Forms.Clipboard"/> and <see cref="T:System.Windows.Forms.DataObject"/> classes.
     /// </summary>
-    
     public enum TextDataFormat
     {
         Text,

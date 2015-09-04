@@ -22,16 +22,15 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataGridViewCellErrorTextNeededEventArgs : DataGridViewCellEventArgs
     {
-        /// <summary>
-        /// Gets or sets the message that is displayed when the cell is selected.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The error message.
-        /// </returns>
+        // <summary>
+        // Gets or sets the message that is displayed when the cell is selected.
+        // </summary>
+        // <returns>
+        // The error message.
+        // </returns>
         // public string ErrorText {get; set;}
 
-        public DataGridViewCellErrorTextNeededEventArgs(int columnIndex, int rowIndex) : base(columnIndex, rowIndex)
+        internal DataGridViewCellErrorTextNeededEventArgs(int columnIndex, int rowIndex) : base(columnIndex, rowIndex)
         {
             Contract.Requires(columnIndex >= -1);
             Contract.Requires(rowIndex >= -1);

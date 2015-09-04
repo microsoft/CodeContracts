@@ -20,30 +20,25 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.CellStateChanged"/> event.
     /// </summary>
-    
     public class DataGridViewCellStateChangedEventArgs : EventArgs
     {
        
         // <summary>
         // Gets the <see cref="T:System.Windows.Forms.DataGridViewCell"/> that has a changed state.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.DataGridViewCell"/> whose state has changed.
         // </returns>
-        // 
         // public DataGridViewCell Cell {get;}
        
         // <summary>
         // Gets the state that has changed on the cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewElementStates"/> values indicating the state that has changed on the cell.
         // </returns>
         // public DataGridViewElementStates StateChanged {get;}
        
-
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Windows.Forms.DataGridViewCellStateChangedEventArgs"/> class.
         /// </summary>

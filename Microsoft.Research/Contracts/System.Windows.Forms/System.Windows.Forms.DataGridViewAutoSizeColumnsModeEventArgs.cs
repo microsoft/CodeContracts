@@ -25,7 +25,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets an array of the previous values of the column <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> properties.
         /// </summary>
-        /// 
         /// <returns>
         /// An array of <see cref="T:System.Windows.Forms.DataGridViewAutoSizeColumnMode"/> values representing the previous values of the column <see cref="P:System.Windows.Forms.DataGridViewColumn.AutoSizeMode"/> properties.
         /// </returns>

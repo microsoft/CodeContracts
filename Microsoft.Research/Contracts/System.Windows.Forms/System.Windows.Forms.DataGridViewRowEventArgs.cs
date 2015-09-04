@@ -25,7 +25,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for row-related <see cref="T:System.Windows.Forms.DataGridView"/> events.
     /// </summary>
-    
     public class DataGridViewRowEventArgs : EventArgs
     {
        

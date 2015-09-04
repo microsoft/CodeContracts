@@ -24,8 +24,8 @@ namespace System.Windows.Forms
   //[DefaultProperty("Items")]
   //[ClassInterface(ClassInterfaceType.AutoDispatch)]
   //[Designer("System.Windows.Forms.Design.ToolStripDesigner, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-  public class ToolStrip 
-  {
+  public class ToolStrip : ScrollableControl //,IArrangedElement, IComponent, IDisposable, ISupportToolStripPanel
+    {
     // Summary:
     //     Initializes a new instance of the System.Windows.Forms.ToolStrip class.
     public ToolStrip() { }
@@ -655,7 +655,10 @@ namespace System.Windows.Forms
     // Returns:
     //     A new System.Windows.Forms.AccessibleObject for the System.Windows.Forms.ToolStrip
     //     item.
-    // protected override AccessibleObject CreateAccessibilityInstance();
+    protected override AccessibleObject CreateAccessibilityInstance()
+    {
+        return default(AccessibleObject);
+    }
     //
     // protected override Control.ControlCollection CreateControlsInstance();
     //

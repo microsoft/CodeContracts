@@ -23,11 +23,9 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataGridViewColumnDividerDoubleClickEventArgs : HandledMouseEventArgs
     {
-
         /// <summary>
         /// The index of the column next to the column divider that was double-clicked.
         /// </summary>
-        /// 
         /// <returns>
         /// The index of the column next to the divider.
         /// </returns>
@@ -47,8 +45,8 @@ namespace System.Windows.Forms
         public DataGridViewColumnDividerDoubleClickEventArgs(int columnIndex, HandledMouseEventArgs e)
           : base(e.Button, e.Clicks, e.X, e.Y, e.Delta, e.Handled)
         {
+            Contract.Requires(e != null);
             Contract.Requires(columnIndex >= 0);
-           
         }
     }
 }

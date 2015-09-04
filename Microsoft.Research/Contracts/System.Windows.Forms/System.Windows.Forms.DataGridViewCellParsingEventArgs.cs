@@ -20,7 +20,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Provides data for the <see cref="E:System.Windows.Forms.DataGridView.CellParsing"/> event of a <see cref="T:System.Windows.Forms.DataGridView"/> control.
     /// </summary>
-    
     public class DataGridViewCellParsingEventArgs : ConvertEventArgs
     {
         /// <summary>
@@ -31,7 +30,7 @@ namespace System.Windows.Forms
         /// The row index of the cell that was changed.
         /// </returns>
         /// 
-        public int RowIndex {get;}
+        public int RowIndex {get { return default(int); } }
 
         /// <summary>
         /// Gets the column index of the cell data that requires parsing.
@@ -41,7 +40,7 @@ namespace System.Windows.Forms
         /// The column index of the cell that was changed.
         /// </returns>
         /// 
-        public int ColumnIndex {get;}
+        public int ColumnIndex {get { return default(int); } }
 
         // <summary>
         // Gets or sets the style applied to the edited cell.

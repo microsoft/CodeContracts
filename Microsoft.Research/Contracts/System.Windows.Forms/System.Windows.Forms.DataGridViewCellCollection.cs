@@ -25,20 +25,17 @@ namespace System.Windows.Forms
     
     public class DataGridViewCellCollection : BaseCollection // IList, ICollection, IEnumerable
     {
-    
-        /// <summary>
-        /// Gets an <see cref="T:System.Collections.ArrayList"/> containing <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> objects.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// <see cref="T:System.Collections.ArrayList"/>.
-        /// </returns>
+        // <summary>
+        // Gets an <see cref="T:System.Collections.ArrayList"/> containing <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> objects.
+        // </summary>
+        // <returns>
+        // <see cref="T:System.Collections.ArrayList"/>.
+        // </returns>
         // protected override ArrayList List
         
         /// <summary>
         /// Gets or sets the cell at the provided index location. In C#, this property is the indexer for the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
         /// </summary>
-        /// 
         /// <returns>
         /// The <see cref="T:System.Windows.Forms.DataGridViewCell"/> stored at the given index.
         /// </returns>
@@ -52,15 +49,14 @@ namespace System.Windows.Forms
             }
             set
             {
-                Contract.Requires(value != null);
-                Contract.Requires(value.DataGridView != null);
+                Contract.Requires(index >= 0 && index <= Count);
+                Contract.Requires(value != null && value.DataGridView != null && value.OwningRow != null);
             }
         }
 
         // <summary>
         // Gets or sets the cell in the column with the provided name. In C#, this property is the indexer for the <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> class.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.DataGridViewCell"/> stored in the column with the given name.
         // </returns>
@@ -70,7 +66,6 @@ namespace System.Windows.Forms
         // <summary>
         // Occurs when the collection is changed.
         // </summary>
-        // 
         // public event CollectionChangeEventHandler CollectionChanged
         
         // <summary>
@@ -78,12 +73,10 @@ namespace System.Windows.Forms
         // </summary>
         // <param name="dataGridViewRow">The <see cref="T:System.Windows.Forms.DataGridViewRow"/> that owns the collection.</param>
         // public DataGridViewCellCollection(DataGridViewRow dataGridViewRow)
-        
-
+     
         // <summary>
         // Adds a cell to the collection.
         // </summary>
-        // 
         // <returns>
         // The position in which to insert the new element.
         // </returns>
@@ -114,7 +107,6 @@ namespace System.Windows.Forms
         // <summary>
         // Determines whether the specified cell is contained in the collection.
         // </summary>
-        // 
         // <returns>
         // true if <paramref name="dataGridViewCell"/> is in the collection; otherwise, false.
         // </returns>
@@ -124,7 +116,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns the index of the specified cell.
         // </summary>
-        // 
         // <returns>
         // The zero-based index of the value of <paramref name="dataGridViewCell"/> parameter, if it is found in the collection; otherwise, -1.
         // </returns>
@@ -137,7 +128,7 @@ namespace System.Windows.Forms
         /// <param name="index">The zero-based index at which to place <paramref name="dataGridViewCell"/>.</param><param name="dataGridViewCell">The <see cref="T:System.Windows.Forms.DataGridViewCell"/> to insert.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.-or-<paramref name="dataGridViewCell"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridViewRow"/>.</exception>
         public virtual void Insert(int index, DataGridViewCell dataGridViewCell)
         {
-            Contract.Requires(index >= 0);
+            Contract.Requires(index >= 0 && index <= Count);
         }
         
         // <summary>

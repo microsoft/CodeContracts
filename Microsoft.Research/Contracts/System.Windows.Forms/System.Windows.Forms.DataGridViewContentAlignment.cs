@@ -20,7 +20,7 @@ namespace System.Windows.Forms
     /// <summary>
     /// Defines constants that indicate the alignment of content within a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
     /// </summary>
-    
+    // This seems to be a set of flags, but no flags attribute seems to be on this enum.
     public enum DataGridViewContentAlignment
     {
         NotSet = 0,

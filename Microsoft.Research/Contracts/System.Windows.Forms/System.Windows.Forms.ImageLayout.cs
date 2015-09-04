@@ -20,7 +20,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Specifies the position of the image on the control.
     /// </summary>
-    
     public enum ImageLayout
     {
         None,

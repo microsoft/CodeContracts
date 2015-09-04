@@ -26,7 +26,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the column index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The column index of the <see cref="T:System.Windows.Forms.DataGridViewCell"/> that the event occurs for.
         /// </returns>
@@ -42,7 +41,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the row index of the cell that the event occurs for.
         /// </summary>
-        /// 
         /// <returns>
         /// The row index of the <see cref="T:System.Windows.Forms.DataGridViewCell"/> that the event occurs for.
         /// </returns>

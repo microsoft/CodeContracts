@@ -30,7 +30,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating the position of the cell content within a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewContentAlignment"/> values. The default is <see cref="F:System.Windows.Forms.DataGridViewContentAlignment.NotSet"/>.
         // </returns>
@@ -40,7 +39,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the background color of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the background color of a cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
         // </returns>
@@ -50,7 +48,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the value saved to the data source when the user enters a null value into a cell.
         // </summary>
-        // 
         // <returns>
         // The value saved to the data source when the user specifies a null cell value. The default is <see cref="F:System.DBNull.Value"/>.
         // </returns>
@@ -59,7 +56,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the font applied to the textual content of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Drawing.Font"/> applied to the cell text. The default is null.
         // </returns>
@@ -68,7 +64,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the foreground color of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
         // </returns>
@@ -77,7 +72,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the format string applied to the textual content of a <see cref="T:System.Windows.Forms.DataGridView"/> cell.
         /// </summary>
-        /// 
         /// <returns>
         /// A string that indicates the format of the cell value. The default is <see cref="F:System.String.Empty"/>.
         /// </returns>
@@ -94,7 +88,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the object used to provide culture-specific formatting of <see cref="T:System.Windows.Forms.DataGridView"/> cell values.
         /// </summary>
-        /// 
         /// <returns>
         /// An <see cref="T:System.IFormatProvider"/> used for cell formatting. The default is <see cref="P:System.Globalization.CultureInfo.CurrentUICulture"/>.
         /// </returns>
@@ -115,7 +108,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.DataSourceNullValue"/> property has been set.
         // </summary>
-        // 
         // <returns>
         // true if the value of the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.DataSourceNullValue"/> property is the default value; otherwise, false.
         // </returns>
@@ -124,7 +116,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value that indicates whether the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.FormatProvider"/> property has been set.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.FormatProvider"/> property is the default value; otherwise, false.
         // </returns>
@@ -133,7 +124,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.NullValue"/> property has been set.
         // </summary>
-        // 
         // <returns>
         // true if the value of the <see cref="P:System.Windows.Forms.DataGridViewCellStyle.NullValue"/> property is the default value; otherwise, false.
         // </returns>
@@ -142,7 +132,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the <see cref="T:System.Windows.Forms.DataGridView"/> cell display value corresponding to a cell value of <see cref="F:System.DBNull.Value"/> or null.
         // </summary>
-        // 
         // <returns>
         // The object used to indicate a null value in a cell. The default is <see cref="F:System.String.Empty"/>.
         // </returns>
@@ -151,7 +140,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the space between the edge of a <see cref="T:System.Windows.Forms.DataGridViewCell"/> and its content.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.Padding"/> that represents the space between the edge of a <see cref="T:System.Windows.Forms.DataGridViewCell"/> and its content.
         // </returns>
@@ -160,7 +148,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the background color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the background color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
         // </returns>
@@ -169,7 +156,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the foreground color used by a <see cref="T:System.Windows.Forms.DataGridView"/> cell when it is selected.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Color"/> that represents the foreground color of a selected cell. The default is <see cref="F:System.Drawing.Color.Empty"/>.
         // </returns>
@@ -178,7 +164,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets an object that contains additional data related to the <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/>.
         // </summary>
-        // 
         // <returns>
         // An object that contains additional data. The default is null.
         // </returns>
@@ -187,7 +172,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether textual content in a <see cref="T:System.Windows.Forms.DataGridView"/> cell is wrapped to subsequent lines or truncated when it is too long to fit on a single line.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DataGridViewTriState"/> values. The default is <see cref="F:System.Windows.Forms.DataGridViewTriState.NotSet"/>.
         // </returns>
@@ -220,7 +204,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates an exact copy of this <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents an exact copy of this cell style.
         /// </returns>
@@ -233,7 +216,6 @@ namespace System.Windows.Forms
         // <summary>
         // Returns a value indicating whether this instance is equivalent to the specified object.
         // </summary>
-        // 
         // <returns>
         // true if <paramref name="o"/> is a <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> and has the same property values as this instance; otherwise, false.
         // </returns>
@@ -243,13 +225,11 @@ namespace System.Windows.Forms
         // <returns>
         // A hash code for the current object.
         // </returns>
-        // 
         // public override int GetHashCode();
         
         // <summary>
         // Returns a string indicating the current property settings of the <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/>.
         // </summary>
-        // 
         // <returns>
         // A string indicating the current property settings of the <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/>.
         // </returns>

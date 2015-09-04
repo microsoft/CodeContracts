@@ -20,7 +20,6 @@ namespace System.Windows.Forms
     /// <summary>
     /// Defines values for specifying one of three possible states.
     /// </summary>
-    
     public enum DataGridViewTriState
     {
         NotSet,

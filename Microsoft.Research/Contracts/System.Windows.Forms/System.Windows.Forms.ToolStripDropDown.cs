@@ -35,7 +35,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // true to enable item reordering; otherwise, false.
         // </returns>
@@ -44,7 +43,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the <see cref="P:System.Windows.Forms.ToolStripDropDown.Opacity"/> of the form can be adjusted.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="P:System.Windows.Forms.ToolStripDropDown.Opacity"/> of the form can be adjusted; otherwise, false.
         // </returns>
@@ -53,7 +51,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.AnchorStyles"/> values.
         // </returns>
@@ -62,7 +59,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> automatically adjusts its size when the form is resized.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> control automatically resizes; otherwise, false. The default is true.
         // </returns>
@@ -73,7 +69,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> control should automatically close when it has lost activation.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> control automatically closes; otherwise, false. The default is true.
         // </returns>
@@ -83,7 +78,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the items in a <see cref="T:System.Windows.Forms.ToolStripDropDown"/> can be sent to an overflow menu.
         // </summary>
-        // 
         // <returns>
         // true to send <see cref="T:System.Windows.Forms.ToolStripDropDown"/> items to an overflow menu; otherwise, false. The default is false.
         // </returns>
@@ -94,7 +88,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The shortcut menu associated with the control.
         // </returns>
@@ -103,7 +96,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The shortcut menu associated with the control.
         // </returns>
@@ -112,13 +104,11 @@ namespace System.Windows.Forms
         // <summary>
         // Gets parameters of a new window.
         // </summary>
-        // 
         // <returns>
         // An object of type <see cref="T:System.Windows.Forms.CreateParams"/> used when creating a new window.
         // </returns>
         // protected override CreateParams CreateParams {get;}
         
-
         // protected override Padding DefaultPadding {get;}
         
         // protected override bool DefaultShowItemToolTips {get;}
@@ -128,7 +118,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the direction in which the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is displayed relative to the <see cref="T:System.Windows.Forms.ToolStrip"/>.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ToolStripDropDownDirection"/> values.
         // </returns>
@@ -137,7 +126,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.DockStyle"/> values.
         // </returns>
@@ -148,7 +136,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether a three-dimensional shadow effect appears when the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is displayed.
         // </summary>
-        // 
         // <returns>
         // true to enable the shadow effect; otherwise, false.
         // </returns>
@@ -158,7 +145,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the font of the text displayed on the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Drawing.Font"/> to apply to the text displayed by the control.
         // </returns>
@@ -167,7 +153,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // One of <see cref="T:System.Windows.Forms.ToolStripGripDisplayStyle"/> the values.
         // </returns>
@@ -176,7 +161,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The boundaries of the ToolStrip move handle.
         // </returns>
@@ -185,7 +169,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Windows.Forms.Padding"/> value.
         // </returns>
@@ -194,7 +177,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ToolStripGripStyle"/> values.
         // </returns>
@@ -205,18 +187,15 @@ namespace System.Windows.Forms
         // <summary>
         // Gets a value indicating whether this <see cref="T:System.Windows.Forms.ToolStripDropDown"/> was automatically generated.
         // </summary>
-        // 
         // <returns>
         // true if this <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is generated automatically; otherwise, false.
         // </returns>
-        // 
         // public bool IsAutoGenerated {get;}
         
         
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The coordinates of the upper-left corner of the control relative to the upper-left corner of its container.
         // </returns>
@@ -225,7 +204,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets the maximum height and width, in pixels, of the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </summary>
-        // 
         // <returns>
         // A <see cref="T:System.Drawing.Size"/> representing the height and width of the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>, in pixels.
         // </returns>
@@ -234,11 +212,10 @@ namespace System.Windows.Forms
         /// <summary>
         /// Determines the opacity of the form.
         /// </summary>
-        /// 
         /// <returns>
         /// The level of opacity for the form. The default is 1.00.
         /// </returns>
-        [DefaultValue(1.0)]
+        /// [DefaultValue(1.0)]
         public double Opacity
         {
             get
@@ -254,7 +231,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The ToolStripItem that is the overflow button for a ToolStrip with overflow enabled.
         // </returns>
@@ -263,7 +239,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the <see cref="T:System.Windows.Forms.ToolStripItem"/> that is the owner of this <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.ToolStripItem"/> that is the owner of this <see cref="T:System.Windows.Forms.ToolStripDropDown"/>. The default value is null.
         // </returns>
@@ -273,7 +248,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets the window region associated with the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </summary>
-        // 
         // <returns>
         // The window <see cref="T:System.Drawing.Region"/> associated with the control.
         // </returns>
@@ -284,7 +258,6 @@ namespace System.Windows.Forms
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // true to enable stretching; otherwise, false.
         // </returns>
@@ -293,7 +266,6 @@ namespace System.Windows.Forms
         // <summary>
         // Specifies the direction in which to draw the text on the item.
         // </summary>
-        // 
         // <returns>
         // One of the <see cref="T:System.Windows.Forms.ToolStripTextDirection"/> values. The default is <see cref="F:System.Windows.Forms.ToolStripTextDirection.Horizontal"/>.
         // </returns>
@@ -302,7 +274,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the form should be displayed as a topmost form.
         // </summary>
-        // 
         // <returns>
         // true in all cases.
         // </returns>
@@ -311,18 +282,15 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is a top-level control.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is a top-level control; otherwise, false.
         // </returns>
         // <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         // public bool TopLevel {get; set;}
         
-
         // <summary>
         // This property is not relevant to this class.
         // </summary>
-        // 
         // <returns>
         // The tab order of the control within its container.
         // </returns>
@@ -331,7 +299,6 @@ namespace System.Windows.Forms
         // <summary>
         // Gets or sets a value indicating whether the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is visible or hidden.
         // </summary>
-        // 
         // <returns>
         // true if the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is visible; otherwise, false. The default is false.
         // </returns>
@@ -375,7 +342,6 @@ namespace System.Windows.Forms
         // <summary>
         // Occurs when the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is closed.
         // </summary>
-        // 
         // public event ToolStripDropDownClosedEventHandler Closed
         
         // <summary>
@@ -438,10 +404,9 @@ namespace System.Windows.Forms
         // </summary>
         // public event CancelEventHandler Opening
         
-        /// <summary>
-        /// Occurs when the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is opened.
-        /// </summary>
-        /// 
+        // <summary>
+        // Occurs when the <see cref="T:System.Windows.Forms.ToolStripDropDown"/> is opened.
+        // </summary> 
         // public event EventHandler Opened
         
         // <summary>
@@ -477,7 +442,7 @@ namespace System.Windows.Forms
         // <summary>
         // This event is not relevant for this class.
         // </summary>
-        //  public new event EventHandler Validated
+        // public new event EventHandler Validated
         
         // <summary>
         // This event is not relevant for this class.
@@ -498,11 +463,10 @@ namespace System.Windows.Forms
         /// <summary>
         /// Creates a new accessibility object for the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         /// </summary>
-        /// 
         /// <returns>
         /// A new <see cref="T:System.Windows.Forms.AccessibleObject"/> for the control.
         /// </returns>
-        protected AccessibleObject CreateAccessibilityInstance()
+        protected override AccessibleObject CreateAccessibilityInstance()
         {
             Contract.Ensures(Contract.Result<AccessibleObject>() != null);
             return default(AccessibleObject);
@@ -511,7 +475,6 @@ namespace System.Windows.Forms
         // <summary>
         // Applies various layout options to the <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </summary>
-        // 
         // <returns>
         // The <see cref="T:System.Windows.Forms.LayoutSettings"/> for this <see cref="T:System.Windows.Forms.ToolStripDropDown"/>.
         // </returns>
@@ -707,23 +670,20 @@ namespace System.Windows.Forms
         /// </summary>
         public class ToolStripDropDownAccessibleObject : ToolStrip.ToolStripAccessibleObject
         {
-
-            /// <summary>
-            /// Gets or sets the name of the <see cref="T:System.Windows.Forms.ToolStripDropDown.ToolStripDropDownAccessibleObject"/>.
-            /// </summary>
-            /// 
-            /// <returns>
-            /// The string representing the name.
-            /// </returns>
+            // <summary>
+            // Gets or sets the name of the <see cref="T:System.Windows.Forms.ToolStripDropDown.ToolStripDropDownAccessibleObject"/>.
+            // </summary>
+            // <returns>
+            // The string representing the name.
+            // </returns>
             // public override string Name {get; set;}
 
-            /// <summary>
-            /// Gets the role of the <see cref="T:System.Windows.Forms.ToolStripDropDown.ToolStripDropDownAccessibleObject"/>.
-            /// </summary>
-            /// 
-            /// <returns>
-            /// The <see cref="F:System.Windows.Forms.AccessibleRole.Table"/> value.
-            /// </returns>
+            // <summary>
+            // Gets the role of the <see cref="T:System.Windows.Forms.ToolStripDropDown.ToolStripDropDownAccessibleObject"/>.
+            // </summary>
+            // <returns>
+            // The <see cref="F:System.Windows.Forms.AccessibleRole.Table"/> value.
+            // </returns>
             // public override AccessibleRole Role {get;}
 
             /// <summary>

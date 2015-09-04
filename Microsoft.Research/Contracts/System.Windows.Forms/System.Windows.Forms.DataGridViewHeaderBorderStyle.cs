@@ -19,8 +19,7 @@ namespace System.Windows.Forms
 {
     /// <summary>
     /// Specifies the border style that can be applied to the <see cref="P:System.Windows.Forms.DataGridView.ColumnHeadersBorderStyle"/> and <see cref="P:System.Windows.Forms.DataGridView.RowHeadersBorderStyle"/> properties of a <see cref="T:System.Windows.Forms.DataGridView"/> control.
-    /// </summary>
-    
+    /// </summary> 
     public enum DataGridViewHeaderBorderStyle
     {
         Custom,
