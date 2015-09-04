@@ -530,8 +530,7 @@ namespace System.Windows.Forms
         public virtual DataGridViewCellStyle GetInheritedStyle(DataGridViewCellStyle inheritedCellStyle, int rowIndex,
             bool includeColors)
         {
-            Contract.Requires(DataGridView != null);
-            Contract.Requires(rowIndex >= 0 || rowIndex < DataGridView.Rows.Count);
+            Contract.Requires(DataGridView != null && (rowIndex >= 0 || rowIndex < DataGridView.Rows.Count));
             Contract.Requires(ColumnIndex < 0);
             return default(DataGridViewCellStyle);
         }
@@ -554,7 +553,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The index of the cell's parent row.</param><exception cref="T:System.InvalidOperationException"><paramref name="rowIndex"/> is -1</exception>
         protected virtual Size GetSize(int rowIndex)
         {
-            Contract.Requires(rowIndex != -1);
+            Contract.Requires(DataGridView == null && rowIndex != -1);
             return default(Size);
         }
         
@@ -579,8 +578,7 @@ namespace System.Windows.Forms
         /// <param name="rowIndex">The zero-based row index of the cell's location.</param><param name="initialFormattedValue">An <see cref="T:System.Object"/> that represents the value displayed by the cell when editing is started.</param><param name="dataGridViewCellStyle">A <see cref="T:System.Windows.Forms.DataGridViewCellStyle"/> that represents the style of the cell.</param><exception cref="T:System.InvalidOperationException">There is no associated <see cref="T:System.Windows.Forms.DataGridView"/> or if one is present, it does not have an associated editing control. </exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
-            Contract.Requires(DataGridView != null);
-            Contract.Requires(DataGridView.EditingControl != null);
+            Contract.Requires(DataGridView != null && DataGridView.EditingControl != null);
         }
 
         // <summary>
@@ -640,7 +638,7 @@ namespace System.Windows.Forms
             Contract.Requires(graphics != null);
             Contract.Requires(font != null);
             Contract.Requires(maxWidth > 0);
-            // Contract.Requires(DataGridViewUtilities.ValidTextFormatFlags(flags));
+            Contract.Requires(DataGridViewUtilities.ValidTextFormatFlags(flags));
             return default(int);
         }
 
@@ -875,7 +873,7 @@ namespace System.Windows.Forms
             DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle,
             DataGridViewPaintParts paintParts)
         {
-            
+            Contract.Requires(graphics != null);
         }
 
         /// <summary>
