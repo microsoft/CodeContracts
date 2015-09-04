@@ -149,7 +149,7 @@ namespace System.Windows.Forms
         /// <param name="index">The zero-based index of the <see cref="T:System.Windows.Forms.DataGridViewCell"/> to be removed.</param><exception cref="T:System.InvalidOperationException">The row that owns this <see cref="T:System.Windows.Forms.DataGridViewCellCollection"/> already belongs to a <see cref="T:System.Windows.Forms.DataGridView"/> control.</exception><PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
         public virtual void RemoveAt(int index)
         {
-            Contract.Requires(index >= 0);
+            Contract.Requires(index >= 0 && index <= Count);
         }
     }
 }

@@ -87,10 +87,7 @@ namespace System.Windows.Forms
         public override DataGridViewCellStyle DefaultCellStyle
         {
             get { return default(DataGridViewCellStyle); }
-            set
-            {
-                Contract.Requires(!(DataGridView != null && Index == -1));
-            }
+            set { Contract.Requires(DataGridView == null || Index != -1); }
         }
 
         /// <summary>
@@ -104,7 +101,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(bool);
             }
         }
@@ -121,7 +118,7 @@ namespace System.Windows.Forms
             get { return default(int); }
             set
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
             }
         }
 
@@ -145,12 +142,12 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(bool);
             }
             set
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
             }
         }
         
@@ -174,7 +171,7 @@ namespace System.Windows.Forms
         public int Height
         {
             get { return default(int); }
-            set { Contract.Requires(!(DataGridView != null && Index == -1)); }
+            set { Contract.Requires(DataGridView == null || Index != -1); }
         }
 
         /// <summary>
@@ -211,7 +208,7 @@ namespace System.Windows.Forms
         public int MinimumHeight
         {
             get { return default(int); }
-            set { Contract.Requires(!(DataGridView != null && Index == -1)); }
+            set { Contract.Requires(DataGridView == null || Index != -1); }
         }
 
         /// <summary>
@@ -226,7 +223,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(bool);
             }
             set
@@ -246,7 +243,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(DataGridViewTriState);
             }
             set
@@ -266,7 +263,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(bool);
             }
             set
@@ -286,7 +283,7 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(DataGridViewElementStates);
             }
         }
@@ -303,12 +300,12 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
                 return default(bool);
             }
             set
             {
-                Contract.Requires(!(DataGridView != null && Index == -1));
+                Contract.Requires(DataGridView == null || Index != -1);
             }
         }
 

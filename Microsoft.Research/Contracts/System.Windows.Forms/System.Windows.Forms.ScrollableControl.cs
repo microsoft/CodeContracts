@@ -49,7 +49,7 @@ namespace System.Windows.Forms
             get { return default(Size); }
             set
             {
-                Contract.Requires(value.Width >= 0 && value.Height >=0);
+                Contract.Requires(value.Width >= 0 && value.Height >= 0);
             }
         }
 
