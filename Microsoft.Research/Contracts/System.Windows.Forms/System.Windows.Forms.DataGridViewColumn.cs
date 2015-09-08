@@ -151,6 +151,7 @@ namespace System.Windows.Forms
         /// </returns>
         public bool IsDataBound {get { return default(bool); } }
 
+        public const int MinimumWidthMinimumValue = 2;
         /// <summary>
         /// Gets or sets the minimum width, in pixels, of the column.
         /// </summary>
@@ -163,10 +164,10 @@ namespace System.Windows.Forms
         {
             get
             {
-                Contract.Ensures(Contract.Result<int>() >= 2);
+                Contract.Ensures(Contract.Result<int>() >= MinimumWidthMinimumValue);
                 return default(int);
             }
-            set { Contract.Requires(value >= 2); }
+            set { Contract.Requires(value >= MinimumWidthMinimumValue); }
         }
 
         // <summary>
@@ -242,6 +243,7 @@ namespace System.Windows.Forms
         // [DefaultValue(true)]
         public override bool Visible { get; set; }
 
+        public const int MaximumWidth = 65535;
         /// <summary>
         /// Gets or sets the current width of the column.
         /// </summary>
@@ -252,7 +254,7 @@ namespace System.Windows.Forms
         public int Width
         {
             get { return default(int); }
-            set { Contract.Requires(value <= 65536); }
+            set { Contract.Requires(value <= MaximumWidth); }
         }
 
         // <summary>
