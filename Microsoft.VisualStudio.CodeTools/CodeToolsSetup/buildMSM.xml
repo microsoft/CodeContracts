@@ -55,6 +55,10 @@
     <Platform>Mixed Platforms</Platform>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '14.0'">
+    <SolutionName>CodeTools14.sln</SolutionName>
+  </PropertyGroup>
+
   <Target Name="BuildSolutionConfig"
     DependsOnTargets="Validate">
     <MsBuild
