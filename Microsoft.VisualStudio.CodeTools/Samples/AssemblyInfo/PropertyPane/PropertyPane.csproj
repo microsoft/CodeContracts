@@ -39,7 +39,6 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IPropertyPane, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45d902a1b2562755, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -60,6 +59,12 @@
     <EmbeddedResource Include="PropertyPane.resx">
       <DependentUpon>PropertyPane.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane10.csproj">
+      <Project>{85f039c4-3cca-487d-8538-748dc38f03c6}</Project>
+      <Name>Microsoft.VisualStudio.CodeTools.IPropertyPane10</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
