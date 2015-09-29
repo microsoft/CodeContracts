@@ -55,11 +55,16 @@
     <Platform>Mixed Platforms</Platform>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(VisualStudioVersion)'==''">
+    <VisualStudioVersion Condition="'$(MSBuildToolsVersion)'=='14.0'">14.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(MSBuildToolsVersion)'!='14.0'">12.0</VisualStudioVersion>
+  </PropertyGroup>
+
   <Target Name="BuildSolutionConfig"
     DependsOnTargets="Validate">
     <MsBuild
       Projects="$(SolutionDir)$(SolutionName)"
-      Properties='Configuration=$(BuildConfig);Platform=$(Platform)'
+      Properties='Configuration=$(BuildConfig);Platform=$(Platform);VisualStudioVersion=$(VisualStudioVersion)'
       Targets="Rebuild"
       />
 
