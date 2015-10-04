@@ -832,6 +832,17 @@ namespace Tests
                     useExe: true,
                     mustSucceed: true);
                 yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\Sources\DefaultExpression.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new string[0],
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+                yield return new Options(
                     sourceFile: @"Foxtrot\Tests\Sources\InheritGenericAbstractClass.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,
