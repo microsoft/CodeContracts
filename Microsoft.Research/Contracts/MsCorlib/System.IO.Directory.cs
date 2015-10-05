@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace System.IO
 {
-#if !SILVERLIGHT_4_0_WP
+#if !SILVERLIGHT_3_0
   // Summary:
   //     Specifies whether to search the current directory, or the current directory
   //     and all subdirectories.
@@ -91,7 +91,21 @@ namespace System.IO
     }
 #endif
 
-#if !SILVERLIGHT_4_0 && !SILVERLIGHT_5_0
+#if !SILVERLIGHT
+    public static String[] GetFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
+    {
+      Contract.Requires(!String.IsNullOrEmpty(path));
+      Contract.Requires(searchPattern != null);
+      Contract.Requires(searchOption == SearchOption.AllDirectories || searchOption == SearchOption.TopDirectoryOnly);
+      Contract.Ensures(Contract.Result<string[]>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<string[]>(), file => file != null));
+      Contract.EnsuresOnThrow<System.IO.IOException>(true, @"path is a file name.");
+      Contract.EnsuresOnThrow<System.IO.PathTooLongException>(true, @"The specified path, file name, or both exceed the system-defined maximum length.");
+      Contract.EnsuresOnThrow<System.IO.DirectoryNotFoundException>(true, @"The specified path is invalid (for example, it is on an unmapped drive.");
+
+      return default(String[]);
+    }
+#endif
     public static String[] GetFileSystemEntries(string path, string searchPattern)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -116,6 +130,21 @@ namespace System.IO
 
       return default(String[]);
     }
+#if !SILVERLIGHT
+    public static String[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
+    {
+      Contract.Requires(!String.IsNullOrEmpty(path));
+      Contract.Requires(searchPattern != null);
+      Contract.Requires(searchOption == SearchOption.AllDirectories || searchOption == SearchOption.TopDirectoryOnly);
+      Contract.Ensures(Contract.Result<string[]>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<string[]>(), dir => dir != null));
+      Contract.EnsuresOnThrow<System.IO.IOException>(true, @"path is a file name.");
+      Contract.EnsuresOnThrow<System.IO.PathTooLongException>(true, @"The specified path, file name, or both exceed the system-defined maximum length.");
+      Contract.EnsuresOnThrow<System.IO.DirectoryNotFoundException>(true, @"The specified path is invalid (for example, it is on an unmapped drive.");
+
+      return default(String[]);
+    }
+#endif
     public static String[] GetDirectories(string path, string searchPattern)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -139,6 +168,21 @@ namespace System.IO
 
       return default(String[]);
     }
+#if !SILVERLIGHT
+    public static String[] GetFiles(string path, string searchPattern, SearchOption searchOption)
+    {
+      Contract.Requires(!String.IsNullOrEmpty(path));
+      Contract.Requires(searchPattern != null);
+      Contract.Requires(searchOption == SearchOption.AllDirectories || searchOption == SearchOption.TopDirectoryOnly);
+      Contract.Ensures(Contract.Result<string[]>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<string[]>(), file => file != null));
+      Contract.EnsuresOnThrow<System.IO.IOException>(true, @"path is a file name.");
+      Contract.EnsuresOnThrow<System.IO.PathTooLongException>(true, @"The specified path, file name, or both exceed the system-defined maximum length.");
+      Contract.EnsuresOnThrow<System.IO.DirectoryNotFoundException>(true, @"The specified path is invalid (for example, it is on an unmapped drive.");
+
+      return default(String[]);
+    }
+#endif
     public static String[] GetFiles(string path, string searchPattern)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -161,7 +205,6 @@ namespace System.IO
       Contract.EnsuresOnThrow<System.IO.DirectoryNotFoundException>(true, @"The specified path is invalid (for example, it is on an unmapped drive.");
       return default(String[]);
     }
-#endif
 
 #if !SILVERLIGHT
     public static DateTime GetLastAccessTimeUtc(string path)
