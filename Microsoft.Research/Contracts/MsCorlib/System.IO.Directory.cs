@@ -92,6 +92,7 @@ namespace System.IO
 #endif
 
 #if !SILVERLIGHT
+#if !NETFRAMEWORK_3_5
     public static String[] GetFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -130,7 +131,6 @@ namespace System.IO
 
       return default(String[]);
     }
-#if !SILVERLIGHT
     public static String[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -144,7 +144,6 @@ namespace System.IO
 
       return default(String[]);
     }
-#endif
     public static String[] GetDirectories(string path, string searchPattern)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -168,7 +167,6 @@ namespace System.IO
 
       return default(String[]);
     }
-#if !SILVERLIGHT
     public static String[] GetFiles(string path, string searchPattern, SearchOption searchOption)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -182,7 +180,6 @@ namespace System.IO
 
       return default(String[]);
     }
-#endif
     public static String[] GetFiles(string path, string searchPattern)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
@@ -205,8 +202,6 @@ namespace System.IO
       Contract.EnsuresOnThrow<System.IO.DirectoryNotFoundException>(true, @"The specified path is invalid (for example, it is on an unmapped drive.");
       return default(String[]);
     }
-
-#if !SILVERLIGHT
     public static DateTime GetLastAccessTimeUtc(string path)
     {
       Contract.Requires(!String.IsNullOrEmpty(path));
