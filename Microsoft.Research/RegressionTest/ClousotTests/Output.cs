@@ -5,31 +5,44 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Xunit.Abstractions;
 
 namespace Tests
 {
     public class Output : Microsoft.Research.DataStructures.IVerySimpleLineWriterWithEncoding, Microsoft.Research.DataStructures.ISimpleLineWriterWithEncoding
     {
+        private readonly ITestOutputHelper testOutputHelper;
         private readonly string name;
         private readonly TextWriter textWriter;
 
         // Do not use a static ConsoleOutput because the Visual Studio test environment
         // uses a different Console for each test case
 
-        public static readonly Output Ignore = new Output("Ignore");
+        private static Output ignore;
 
-        public static Output ConsoleOutputFor(string name)
+        public static Output Ignore(ITestOutputHelper testOutputHelper)
         {
-            return new Output(String.Format("Console::{0}", name), Console.Out);
+            if (ignore == null)
+                ignore = new Output(testOutputHelper, "Ignore");
+
+            return ignore;
         }
 
-        private Output(string name)
+        public static Tuple<Output, StringWriter> ConsoleOutputFor(ITestOutputHelper testOutputHelper, string name)
         {
+            StringWriter writer = new StringWriter();
+            Output output = new Output(testOutputHelper, String.Format("Console::{0}", name), writer);
+            return Tuple.Create(output, writer);
+        }
+
+        private Output(ITestOutputHelper testOutputHelper, string name)
+        {
+            this.testOutputHelper = testOutputHelper;
             this.name = name;
         }
 
-        public Output(string name, TextWriter textWriter)
-          : this(name)
+        public Output(ITestOutputHelper testOutputHelper, string name, TextWriter textWriter)
+          : this(testOutputHelper, name)
         {
             this.textWriter = textWriter;
         }
@@ -44,8 +57,8 @@ namespace Tests
             }
             catch (Exception e)
             {
-                //Console.WriteLine(value);
-                Console.WriteLine("[{0}] '{1}' writing '{2}'", name, e.Message, value);
+                //testOutputHelper.WriteLine(value);
+                testOutputHelper.WriteLine("[{0}] '{1}' writing '{2}'", name, e.Message, value);
             }
         }
 
@@ -59,8 +72,8 @@ namespace Tests
             }
             catch (Exception e)
             {
-                //Console.WriteLine(value ?? "", arg);
-                Console.WriteLine("[{0}] '{1}' writing '{2}'", name, e.Message, String.Format(value ?? "", arg));
+                //testOutputHelper.WriteLine(value ?? "", arg);
+                testOutputHelper.WriteLine("[{0}] '{1}' writing '{2}'", name, e.Message, String.Format(value ?? "", arg));
             }
         }
 

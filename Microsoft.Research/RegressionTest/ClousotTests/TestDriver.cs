@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
@@ -36,7 +37,7 @@ namespace Tests
             {
                 output.WriteLine("Calling CCI1Driver.Main with: {0}", args);
                 // Use output to avoid Clousot from closing the Console
-                Assert.AreEqual(0, Microsoft.Research.CodeAnalysis.CCI1Driver.Main(args.Split(' '), output));
+                Assert.Equal(0, Microsoft.Research.CodeAnalysis.CCI1Driver.Main(args.Split(' '), output));
             }
             else
                 RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(ClousotExe), args, output, options.TestName);
@@ -54,7 +55,7 @@ namespace Tests
             {
                 output.WriteLine("Calling CCI2Driver.Main with: {0}", args);
                 // Use output to avoid Clousot2 from closing the Console
-                Assert.AreEqual(0, Microsoft.Research.CodeAnalysis.CCI2Driver.Main(args.Split(' '), output));
+                Assert.Equal(0, Microsoft.Research.CodeAnalysis.CCI2Driver.Main(args.Split(' '), output));
             }
             else
                 RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(Clousot2Exe), args, output);
@@ -80,7 +81,7 @@ namespace Tests
             {
                 output.WriteLine("Calling NewCCI2Driver.Main with: {0}", args);
                 // Use output to avoid Clousot from closing the Console
-                Assert.AreEqual(0, Microsoft.Research.CodeAnalysis.NewCCI2Driver.Main(args.Split(' '), output));
+                Assert.Equal(0, Microsoft.Research.CodeAnalysis.NewCCI2Driver.Main(args.Split(' '), output));
             }
             else
                 RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(Clousot2SlicingExe), args, output);
@@ -97,14 +98,14 @@ namespace Tests
             {
                 output.WriteLine("Calling NewCCI2Driver.Main with: {0}", args);
                 // Use output to avoid Clousot2 from closing the Console
-                Assert.AreEqual(0, Microsoft.Research.CodeAnalysis.NewCCI2Driver.Main(args.Split(' '), output));
+                Assert.Equal(0, Microsoft.Research.CodeAnalysis.NewCCI2Driver.Main(args.Split(' '), output));
             }
             else
                 RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(Clousot2SlicingExe), args, output);
         }
-        internal static void Clousot2S(string absoluteSourceDir, string absoluteBinary, Options options, Output output)
+        internal static void Clousot2S(ITestOutputHelper testOutputHelper, string absoluteSourceDir, string absoluteBinary, Options options, Output output)
         {
-            EnsureService(options);
+            EnsureService(testOutputHelper, options);
             var referencedir = options.MakeAbsolute(Path.Combine(ReferenceDirRoot, options.BuildFramework));
             var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ContractFramework));
             var absoluteBinaryDir = Path.GetDirectoryName(absoluteBinary);
@@ -115,7 +116,7 @@ namespace Tests
             {
                 output.WriteLine("Calling SDriver.Main with: {0}", args);
                 // Use output to avoid Clousot2S from closing the Console
-                Assert.AreEqual(0, Microsoft.Research.CodeAnalysis.SDriver.Main(args.Split(' '), output));
+                Assert.Equal(0, Microsoft.Research.CodeAnalysis.SDriver.Main(args.Split(' '), output));
             }
             else
                 RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(Clousot2SExe), args, output);
@@ -146,10 +147,10 @@ namespace Tests
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
 
-                Assert.IsTrue(p.WaitForExit(200000), "{0} timed out", i.FileName);
+                Assert.True(p.WaitForExit(200000), string.Format("{0} timed out", i.FileName));
                 if (p.ExitCode != 0)
                 {
-                    Assert.AreEqual(0, p.ExitCode, "{0} returned an errorcode of {1}.", i.FileName, p.ExitCode);
+                    Assert.Equal(0, p.ExitCode);
                 }
                 return p.ExitCode;
             }
@@ -280,27 +281,42 @@ namespace Tests
             return sb.ToString();
         }
 
-        public static void BuildAndAnalyze(Options options)
+        public static void BuildAndAnalyze(ITestOutputHelper testOutputHelper, Options options)
         {
-            var output = Output.ConsoleOutputFor(options.TestName);
+            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
 
-            string absoluteSourceDir;
-            var target = Build(options, "/d:CLOUSOT1", output, out absoluteSourceDir);
-            if (target != null)
+            try
             {
-                Clousot(absoluteSourceDir, target, options, output);
+                string absoluteSourceDir;
+                var target = Build(options, "/d:CLOUSOT1", output.Item1, out absoluteSourceDir);
+                if (target != null)
+                {
+                    Clousot(absoluteSourceDir, target, options, output.Item1);
+                }
+            }
+            finally
+            {
+                testOutputHelper.WriteLine(output.Item2.ToString());
             }
         }
 
-        public static void BuildAndAnalyze2(Options options)
+        public static void BuildAndAnalyze2(ITestOutputHelper testOutputHelper, Options options)
         {
             if (options.SkipForCCI2)
                 return;
 
-            BuildAndAnalyze2(options, Output.ConsoleOutputFor(options.TestName));
+            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
+            try
+            {
+                BuildAndAnalyze2(testOutputHelper, options, output.Item1);
+            }
+            finally
+            {
+                testOutputHelper.WriteLine(output.Item2.ToString());
+            }
         }
 
-        private static void BuildAndAnalyze2(Options options, Output output)
+        private static void BuildAndAnalyze2(ITestOutputHelper testOutputHelper, Options options, Output output)
         {
             string absoluteSourceDir;
             var target = Build(options, "/d:CLOUSOT2", output, out absoluteSourceDir);
@@ -309,26 +325,42 @@ namespace Tests
                 Clousot2(absoluteSourceDir, target, options, output);
         }
 
-        public static void BuildAndAnalyze2S(Options options)
+        public static void BuildAndAnalyze2S(ITestOutputHelper testOutputHelper, Options options)
         {
             if (options.SkipForCCI2)
                 return;
 
-            BuildAndAnalyze2S(options, Output.ConsoleOutputFor(options.TestName));
+            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
+            try
+            {
+                BuildAndAnalyze2S(testOutputHelper, options, output.Item1);
+            }
+            finally
+            {
+                testOutputHelper.WriteLine(output.Item2.ToString());
+            }
         }
 
-        private static void BuildAndAnalyze2S(Options options, Output output)
+        private static void BuildAndAnalyze2S(ITestOutputHelper testOutputHelper, Options options, Output output)
         {
             string absoluteSourceDir;
             var target = Build(options, "/d:CLOUSOT2", output, out absoluteSourceDir);
 
             if (target != null)
-                Clousot2S(absoluteSourceDir, target, options, output);
+                Clousot2S(testOutputHelper, absoluteSourceDir, target, options, output);
         }
 
-        public static void BuildAndAnalyze1Slicing(Options options)
+        public static void BuildAndAnalyze1Slicing(ITestOutputHelper testOutputHelper, Options options)
         {
-            BuildAndAnalyze1Slicing(options, Output.ConsoleOutputFor(options.TestName));
+            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
+            try
+            {
+                BuildAndAnalyze1Slicing(options, output.Item1);
+            }
+            finally
+            {
+                testOutputHelper.WriteLine(output.Item2.ToString());
+            }
         }
 
         private static void BuildAndAnalyze1Slicing(Options options, Output output)
@@ -340,7 +372,7 @@ namespace Tests
                 Clousot1Slicing(absoluteSourceDir, target, options, output);
         }
 
-        public static void BuildAndAnalyze2Slicing(Options options)
+        public static void BuildAndAnalyze2Slicing(ITestOutputHelper testOutputHelper, Options options)
         {
             if (options.SkipForCCI2)
                 return;
@@ -348,7 +380,15 @@ namespace Tests
             if (options.SkipSlicing)
                 return;
 
-            BuildAndAnalyze2Slicing(options, Output.ConsoleOutputFor(options.TestName));
+            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
+            try
+            {
+                BuildAndAnalyze2Slicing(options, output.Item1);
+            }
+            finally
+            {
+                testOutputHelper.WriteLine(output.Item2.ToString());
+            }
         }
 
         private static void BuildAndAnalyze2Slicing(Options options, Output output)
@@ -365,8 +405,24 @@ namespace Tests
         private const string DefaultBeginMessage = "Build and analysis launched. Look at End results.";
         private static bool SkipForCCI2(Options options) { return options.SkipForCCI2; }
 
-        public static readonly AsyncTestDriver AsyncFast2 = new AsyncTestDriver(BuildAndAnalyze2, SkipForCCI2, AsyncTestDriver.MaxWaitHandles_AllButOne) { BeginMessage = DefaultBeginMessage };
-        public static readonly AsyncTestDriver Async2S = new AsyncTestDriver(BuildAndAnalyze2S, SkipForCCI2) { BeginMessage = DefaultBeginMessage };
+        private static AsyncTestDriver asyncFast2;
+        private static AsyncTestDriver async2S;
+
+        public static AsyncTestDriver AsyncFast2(ITestOutputHelper testOutputHelper)
+        {
+            if (asyncFast2 == null)
+                asyncFast2 = new AsyncTestDriver(testOutputHelper, BuildAndAnalyze2, SkipForCCI2, AsyncTestDriver.MaxWaitHandles_AllButOne) { BeginMessage = DefaultBeginMessage };
+
+            return asyncFast2;
+        }
+
+        public static AsyncTestDriver Async2S(ITestOutputHelper testOutputHelper)
+        {
+            if (async2S == null)
+                async2S = new AsyncTestDriver(testOutputHelper, BuildAndAnalyze2S, SkipForCCI2) { BeginMessage = DefaultBeginMessage };
+
+            return async2S;
+        }
 
         #endregion
 
@@ -375,17 +431,17 @@ namespace Tests
         private static Process serviceProcess;
         private static Object serviceProcessLock = new Object();
 
-        private static void EnsureService(Options options)
+        private static void EnsureService(ITestOutputHelper testOutputHelper, Options options)
         {
             lock (serviceProcessLock) // prevent the service to be run twice at the same time
             {
                 if (serviceProcess == null)
-                    StartService(options);
-                Assert.IsFalse(serviceProcess.HasExited, "Service needed but service process already exited");
+                    StartService(testOutputHelper, options);
+                Assert.False(serviceProcess.HasExited, "Service needed but service process already exited");
             }
         }
 
-        private static void StartService(Options options)
+        private static void StartService(ITestOutputHelper testOutputHelper, Options options)
         {
             if (serviceProcess != null)
                 StopService();
@@ -401,7 +457,7 @@ namespace Tests
             var serviceHostDir = options.MakeAbsolute(Path.GetDirectoryName(ClousotServiceHostExe));
 
             // note: we do not want to use ClousotServiceHostExe from the deployment directory because the app.config will be missing
-            serviceProcess = StartServiceProcess(serviceHostDir, options.MakeAbsolute(ClousotServiceHostExe), "", Output.Ignore);
+            serviceProcess = StartServiceProcess(serviceHostDir, options.MakeAbsolute(ClousotServiceHostExe), "", Output.Ignore(testOutputHelper));
         }
 
         public static void Cleanup()
@@ -434,10 +490,10 @@ namespace Tests
                     if (!serviceProcess.WaitForExit(2000))
                     {
                         serviceProcess.Kill();
-                        Assert.IsTrue(serviceProcess.WaitForExit(2000), "{0} did not want to exit");
+                        Assert.True(serviceProcess.WaitForExit(2000), "{0} did not want to exit");
                     }
                 }
-                Assert.AreEqual(0, serviceProcess.ExitCode, "{0} returned an errorcode of {1}.", serviceProcess.StartInfo.FileName, serviceProcess.ExitCode);
+                Assert.Equal(0, serviceProcess.ExitCode);
                 serviceProcess.Dispose();
                 serviceProcess = null;
             }
@@ -469,7 +525,7 @@ namespace Tests
             p.BeginOutputReadLine();
             p.BeginErrorReadLine();
 
-            Assert.IsFalse(p.WaitForExit(1000), "{0} exited too quickly", i.FileName);
+            Assert.False(p.WaitForExit(1000), string.Format("{0} exited too quickly", i.FileName));
 
             return p;
         }

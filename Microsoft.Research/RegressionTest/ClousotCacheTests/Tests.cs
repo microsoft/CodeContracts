@@ -4,6 +4,7 @@
 using System;
 using ClousotTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ITestOutputHelper = Xunit.Abstractions.ITestOutputHelper;
 
 namespace Tests
 {
@@ -75,7 +76,7 @@ namespace Tests
             options.BuildFramework = @"v3.5";
             options.ContractFramework = @"v3.5";
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze(options);
+                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options);
         }
 
         [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Cache")]
@@ -87,7 +88,7 @@ namespace Tests
             options.BuildFramework = @"v3.5";
             options.ContractFramework = @"v3.5";
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze2(options);
+                TestDriver.BuildAndAnalyze2(ConsoleTestOutputHelper.Instance, options);
         }
 
         [TestCategory("StaticChecker"), TestCategory("Clousot1"), TestCategory("Cache")]
@@ -99,7 +100,7 @@ namespace Tests
             options.BuildFramework = @".NETFramework\v4.0";
             options.ContractFramework = @".NETFramework\v4.0";
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze(options);
+                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options);
         }
 
         [TestCategory("StaticChecker"), TestCategory("Clousot1"), TestCategory("Cache")]
@@ -111,7 +112,7 @@ namespace Tests
             options.BuildFramework = @".NETFramework\v4.0";
             options.ContractFramework = @"v3.5";
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze(options);
+                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options);
         }
 
         [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Service"), TestCategory("Cache")]
@@ -123,7 +124,7 @@ namespace Tests
             options.BuildFramework = @".NETFramework\v4.0";
             options.ContractFramework = @".NETFramework\v4.0";
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze2S(options);
+                TestDriver.BuildAndAnalyze2S(ConsoleTestOutputHelper.Instance, options);
         }
 
         [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Service"), TestCategory("Cache"), TestCategory("Short")]
@@ -136,7 +137,7 @@ namespace Tests
             options.ContractFramework = @".NETFramework\v4.0";
             options.Fast = true;
             if (!options.Skip)
-                TestDriver.BuildAndAnalyze2(options);
+                TestDriver.BuildAndAnalyze2(ConsoleTestOutputHelper.Instance, options);
         }
 
         [AssemblyCleanup] // Automatically called at the end of ClousotCacheTests
@@ -147,11 +148,50 @@ namespace Tests
 
         private Options GrabTestOptions(string testGroupName)
         {
-            var options = new Options(testGroupName, TestContext);
+            var dataRow = TestContext.DataRow;
+            var sourceFile = Options.LoadString(dataRow, "Name");
+            var clousotOptions = Options.LoadString(dataRow, "Options");
+            var useContractReferenceAssemblies = Options.LoadBool(dataRow, "ContractReferenceAssemblies", false);
+            var useExe = Options.LoadBool(dataRow, "Exe", false);
+            var compilerOptions = Options.LoadString(dataRow, "CompilerOptions");
+            var references = Options.LoadList(dataRow, "References");
+            var libPaths = Options.LoadList(dataRow, "LibPaths");
+            var compilerCode = Options.LoadString(dataRow, "Compiler", "CS");
+            var skipForCCI2 = Options.LoadBool(dataRow, "SkipCCI2", false);
+            var skipSlicing = Options.LoadBool(dataRow, "SkipSlicing", false);
+
+            var options = new Options(
+                sourceFile: sourceFile,
+                clousotOptions: clousotOptions,
+                useContractReferenceAssemblies: useContractReferenceAssemblies,
+                useExe: useExe,
+                compilerOptions: compilerOptions,
+                references: references.ToArray(),
+                libPaths: libPaths.ToArray(),
+                compilerCode: compilerCode,
+                skipForCCI2: skipForCCI2,
+                skipSlicing: skipSlicing,
+                skipForNet35: false);
+            options.TestGroupName = testGroupName;
             CurrentGroupInfo = options.Group;
             return options;
         }
 
         private static GroupInfo CurrentGroupInfo;
+
+        private sealed class ConsoleTestOutputHelper : ITestOutputHelper
+        {
+            public static readonly ConsoleTestOutputHelper Instance = new ConsoleTestOutputHelper();
+
+            public void WriteLine(string format, params object[] args)
+            {
+                Console.WriteLine(format, args);
+            }
+
+            public void WriteLine(string message)
+            {
+                Console.WriteLine(message);
+            }
+        }
     }
 }
