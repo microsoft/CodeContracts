@@ -1,7 +1,7 @@
 @echo off
 
 rem Make sure NuGet packages are restored before proceeding with the build
-..\..\.nuget\NuGet.exe restore ..\CodeTools10.sln
+..\..\.nuget\NuGet.exe restore ..\CodeTools.sln
 if errorlevel 1 exit /b 1
 
 rem Also need to restore packages from the top-level solution before building CodeTools
