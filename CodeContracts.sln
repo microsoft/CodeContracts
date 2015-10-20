@@ -119,7 +119,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCI2.CodeProvider", "Micros
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCRefGenAttributes", "Microsoft.Research\ManagedContract.Setup\CCRefGenAttributes\CCRefGenAttributes.csproj", "{4787BD38-E0AB-4D60-8593-1382C4266CBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedContractsVSPropertyPane10", "Microsoft.Research\ManagedContractsVSPropertyPane\ManagedContractsVSPropertyPane10.csproj", "{2944AB9F-A2A6-4F31-8476-88C4EB5229A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedContractsVSPropertyPane", "Microsoft.Research\ManagedContractsVSPropertyPane\ManagedContractsVSPropertyPane.csproj", "{2944AB9F-A2A6-4F31-8476-88C4EB5229A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsBuildCodeContracts10", "Microsoft.Research\MsBuildCodeContracts\MsBuildCodeContracts10.csproj", "{160F3F9C-1A20-44F2-832C-DBAA269BD0C6}"
 EndProject
