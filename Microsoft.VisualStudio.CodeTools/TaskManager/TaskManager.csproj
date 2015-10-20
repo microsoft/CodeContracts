@@ -170,9 +170,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ITaskManager\Microsoft.VisualStudio.CodeTools.ITaskManager10.csproj">
+    <ProjectReference Include="..\ITaskManager\Microsoft.VisualStudio.CodeTools.ITaskManager.csproj">
       <Project>{770EFFDC-F67A-4838-A3EC-52C7363DAE00}</Project>
-      <Name>Microsoft.VisualStudio.CodeTools.ITaskManager10</Name>
+      <Name>Microsoft.VisualStudio.CodeTools.ITaskManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -61,9 +61,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane10.csproj">
+    <ProjectReference Include="..\..\..\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane.csproj">
       <Project>{85f039c4-3cca-487d-8538-748dc38f03c6}</Project>
-      <Name>Microsoft.VisualStudio.CodeTools.IPropertyPane10</Name>
+      <Name>Microsoft.VisualStudio.CodeTools.IPropertyPane</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,9 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PropertyPageUI", "PropertyP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPage", "PropertyPage\PropertyPage.csproj", "{D3D148E1-56EF-4D6C-A9F3-1B20C763D852}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.IPropertyPane", "IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane10.csproj", "{85F039C4-3CCA-487D-8538-748DC38F03C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.IPropertyPane", "IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane.csproj", "{85F039C4-3CCA-487D-8538-748DC38F03C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.ITaskManager", "ITaskManager\Microsoft.VisualStudio.CodeTools.ITaskManager10.csproj", "{770EFFDC-F67A-4838-A3EC-52C7363DAE00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.ITaskManager", "ITaskManager\Microsoft.VisualStudio.CodeTools.ITaskManager.csproj", "{770EFFDC-F67A-4838-A3EC-52C7363DAE00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeToolsUpdate", "CodeToolsUpdate\CodeToolsUpdate.csproj", "{622B28B5-A522-4B43-89F3-4D8F123531CC}"
 EndProject

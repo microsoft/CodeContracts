@@ -225,9 +225,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane10.csproj">
+    <ProjectReference Include="..\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane.csproj">
       <Project>{85F039C4-3CCA-487D-8538-748DC38F03C6}</Project>
-      <Name>Microsoft.VisualStudio.CodeTools.IPropertyPane10</Name>
+      <Name>Microsoft.VisualStudio.CodeTools.IPropertyPane</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
