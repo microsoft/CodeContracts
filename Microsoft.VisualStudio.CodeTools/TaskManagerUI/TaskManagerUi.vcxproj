@@ -14,14 +14,6 @@
     <ProjectName>TaskManagerUI</ProjectName>
     <ProjectGuid>{BED6C8D0-4339-4177-A7AD-7F5DA8DD8830}</ProjectGuid>
     <RootNamespace>TaskManagerUI</RootNamespace>
-    <SccProjectName>
-    </SccProjectName>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccProvider>
-    </SccProvider>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

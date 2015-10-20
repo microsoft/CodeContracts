@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeProviders", "CodeProviders", "{76F9B10B-70B6-40FF-B5A7-3562734BF8E4}"
 EndProject
@@ -323,6 +323,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.CSharp.14", "Microsoft.Research\ContractAdornments\CSharp.Roslyn\ContractAdornments.CSharp.14.csproj", "{7FB60D9A-CF16-46C0-8154-696D85F8D451}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.Interfaces", "Microsoft.Research\ContractAdornments\Interfaces\ContractAdornments.Interfaces.csproj", "{B0C91C82-C1D8-4697-B07E-18E17D11EB41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.IPropertyPane", "Microsoft.VisualStudio.CodeTools\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane.csproj", "{85F039C4-3CCA-487D-8538-748DC38F03C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2424,6 +2426,38 @@ Global
 		{B0C91C82-C1D8-4697-B07E-18E17D11EB41}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B0C91C82-C1D8-4697-B07E-18E17D11EB41}.Release|Win32.ActiveCfg = Release|Any CPU
 		{B0C91C82-C1D8-4697-B07E-18E17D11EB41}.Release|x86.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|Win32.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Any CPU.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Any CPU.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Mixed Platforms.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Win32.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|Win32.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|x86.ActiveCfg = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Devlab9|x86.Build.0 = Debug|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Any CPU.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Any CPU.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Mixed Platforms.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Win32.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|Win32.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|x86.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Internal9|x86.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|Win32.Build.0 = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{85F039C4-3CCA-487D-8538-748DC38F03C6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2528,6 +2562,7 @@ Global
 		{9C55B970-24B3-4623-9BA2-2D0F070E31A0} = {7A308E8B-00AB-4ACF-8563-BF457A379EF1}
 		{7FB60D9A-CF16-46C0-8154-696D85F8D451} = {7A308E8B-00AB-4ACF-8563-BF457A379EF1}
 		{B0C91C82-C1D8-4697-B07E-18E17D11EB41} = {7A308E8B-00AB-4ACF-8563-BF457A379EF1}
+		{85F039C4-3CCA-487D-8538-748DC38F03C6} = {A0993B69-3726-45E5-9C81-DE5655B2E2DA}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CodeContracts10.vsmdi
