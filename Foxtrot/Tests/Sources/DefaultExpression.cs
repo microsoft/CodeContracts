@@ -17,13 +17,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
 
-#if NETFRAMEWORK_3_5
-namespace System.Diagnostics.Contracts
-{
-    public class ContractAbbreviatorAttribute : Attribute
-    {
-    }
-}
+#if !NETFRAMEWORK_4_5 
+  public class ContractAbbreviatorAttribute : Attribute
+  {
+  }
 #endif
 
 namespace Tests.Sources
