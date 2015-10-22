@@ -268,6 +268,17 @@ namespace Microsoft.Contracts.Foxtrot.Driver
 
                 // Check to see if any metadata errors were reported
 
+                if (assemblyNode.MetadataImportWarnings != null && assemblyNode.MetadataImportWarnings.Count > 0)
+                {
+                    string msg = "\tThere were warnings reported in " + assemblyNode.Name + "'s metadata.\n";
+                    foreach (Exception e in assemblyNode.MetadataImportWarnings)
+                    {
+                        msg += "\t" + e.Message;
+                    }
+
+                    Console.WriteLine(msg);
+                }
+
                 if (assemblyNode.MetadataImportErrors != null && assemblyNode.MetadataImportErrors.Count > 0)
                 {
                     string msg = "\tThere were errors reported in " + assemblyNode.Name + "'s metadata.\n";
@@ -1587,6 +1598,15 @@ namespace Microsoft.Contracts.Foxtrot.Driver
         private static bool CheckForMetaDataErrors(AssemblyNode aref)
         {
             Contract.Requires(aref != null);
+
+            if (aref.MetadataImportWarnings != null && aref.MetadataImportWarnings.Count > 0)
+            {
+                Console.WriteLine("Assembly '{0}' from '{1}' was skipped due to non-critical warnings.", aref.Name, aref.Location);
+                foreach (Exception e in aref.MetadataImportWarnings)
+                {
+                    Console.WriteLine("\t" + e.Message);
+                }
+            }
 
             bool result = false;
             if (aref.MetadataImportErrors != null && aref.MetadataImportErrors.Count > 0)

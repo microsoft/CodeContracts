@@ -5609,6 +5609,19 @@ namespace System.Compiler{
       get{return this.metadataImportErrors;}
       set{this.metadataImportErrors = value;}
     }
+      
+    private ArrayList metadataImportWarnings;
+    /// <summary>
+    /// Holds information about non-critical errors.
+    /// For instance, lack of /names stream in the PDB is not a critical error and should be handled
+    /// gracefully.
+    /// </summary>
+    public ArrayList MetadataImportWarnings {
+      get { return this.metadataImportWarnings; }
+      set { this.metadataImportWarnings = value; }
+    }
+
+
 #endif
     protected AttributeList attributes;
     /// <summary>
