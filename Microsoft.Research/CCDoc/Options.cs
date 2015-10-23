@@ -19,12 +19,13 @@ using System.Text;
 using System.IO;
 using System.Diagnostics.Contracts;
 using System.Xml;
-using Microsoft.Research.DataStructures;
 using System.Diagnostics;
 
 namespace CCDoc
 {
-  /// <summary>
+    using Microsoft.Cci;
+
+    /// <summary>
   /// The custom options used by CCDoc.
   /// </summary>
   class Options : OptionParsing
