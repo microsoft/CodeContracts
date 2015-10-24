@@ -20,6 +20,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -34,8 +36,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -393,18 +393,6 @@
     <Compile Include="XContract.cs" />
     <Compile Include="XmlTraverser.cs" />
     <Compile Include="XmlTraverserBase.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataStructures\DataStructures10.csproj">
-      <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
-      <Name>DataStructures10</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)' == 'Debug' or '$(Configuration)' == 'Internal9' ">
-    <ProjectReference Include="..\ContractMSInternal\ContractMSInternal.csproj">
-      <Project>{7CCC33DE-F461-4918-88CF-69A096C87A0D}</Project>
-      <Name>ContractMSInternal</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
