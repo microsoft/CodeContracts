@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 
@@ -247,6 +248,23 @@ namespace Tests
             this.MustSucceed = mustSucceed;
 
             this.RootDirectory = Path.GetFullPath(RelativeRoot);
+        }
+
+        public Options WithSourceFile(string sourceFile)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(sourceFile));
+
+            return new Options(
+                    sourceFile: sourceFile,
+                    foxtrotOptions: FoxtrotOptions,
+                    useContractReferenceAssemblies: UseContractReferenceAssemblies,
+                    compilerOptions: CompilerOptions,
+                    references: References.ToArray(),
+                    libPaths: LibPaths.ToArray(),
+                    compilerCode: compilerCode,
+                    useBinDir: UseBinDir,
+                    useExe: UseExe,
+                    mustSucceed: MustSucceed);
         }
 
         public bool ReleaseMode { get; set; }

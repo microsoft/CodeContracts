@@ -17,7 +17,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Tests
+namespace Tests.ExtractorTests
 {
     /// <summary>
     /// Unit tests for ExtractorTests
