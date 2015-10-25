@@ -39,7 +39,7 @@ namespace Microsoft.Cci.Pdb
   /// The exception that is thrown when pdb does not contains /names stream.
   /// </summary>
   /// <remarks>
-  /// Not all pdb-s contains all possible streams required for debugging. For instnace, 'stripped pdb' (see /PDBSTRIPPED at msdn)
+  /// Not all pdb-s contains all possible streams required for debugging. For instance, 'stripped pdb' (see /PDBSTRIPPED at msdn)
   /// does not have /names stream and should be handled the same way if the pdb is absent.
   /// </remarks>
   public class NoNameStreamPdbException : PdbDebugException
