@@ -322,7 +322,7 @@ namespace Microsoft.Research.CodeAnalysis
               try
               {
 #if DEBUG
-                var stopWatch = new Stopwatch();
+                var stopWatch = new CustomStopwatch();
                 stopWatch.Start();
                 Console.WriteLine("[NUMERICAL] Running a refined analysis");
 #endif

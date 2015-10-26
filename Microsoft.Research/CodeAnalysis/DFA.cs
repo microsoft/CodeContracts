@@ -442,6 +442,9 @@ namespace Microsoft.Research.CodeAnalysis
 
                     state = Transfer(current, state);
 
+                    // TODO(wuestholz): Probably add this in other places as well.
+                    timeCounter.SpendSymbolicTime(1);
+
                     if (Options.Trace)
                     {
                         Console.WriteLine("State after {0}", current);
@@ -1307,7 +1310,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private enum State { Stopped, Running }
 
-        private readonly Stopwatch stopWatch;
+        private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
         private readonly CancellationToken cancellationToken;
         readonly private int timeout;                                    // The seconds for the timeout
@@ -1327,7 +1330,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
             Contract.Requires(seconds >= 0);
 
-            stopWatch = new Stopwatch();
+            stopWatch = new CustomStopwatch();
             totalElapsed = new TimeSpan();
             if (start)
             {
