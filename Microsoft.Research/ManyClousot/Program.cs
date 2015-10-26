@@ -36,7 +36,7 @@ namespace ManyClousot
     static void Main(string[] args)
     {
       var start = DateTime.Now;
-      var stopWatch = new Stopwatch();
+      var stopWatch = new CustomStopwatch();
       stopWatch.Start();
 
       var tasks = new Task<int>[args.Length];
