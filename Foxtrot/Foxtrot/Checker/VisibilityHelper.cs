@@ -12,6 +12,7 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Compiler;
 using System.Diagnostics.Contracts;
 
@@ -23,6 +24,9 @@ namespace Microsoft.Contracts.Foxtrot
     [ContractVerification(true)]
     internal class VisibilityHelper : InspectorIncludingClosures
     {
+        private static readonly Lazy<TypeNode> systemAttributeType = new Lazy<TypeNode>(() =>
+                HelperMethods.FindType(SystemTypes.SystemAssembly, StandardIds.System, Identifier.For("Attribute")));
+
         private Member memberInErrorFound;
 
         /// <summary>
@@ -37,6 +41,22 @@ namespace Microsoft.Contracts.Foxtrot
             this.AsThisMember = asThisMember;
         }
 
+        private static bool IsAttribute(TypeNode declaringType)
+        {
+            if (declaringType == null || declaringType.BaseType == null)
+            {
+                return false;
+            }
+
+            if (declaringType == systemAttributeType.Value || declaringType.BaseType == systemAttributeType.Value)
+            {
+                return true;
+            }
+            
+
+            return IsAttribute(declaringType.BaseType);
+        }
+
         /// <summary>
         /// Checks for less-than-visible member references in an expression.
         /// </summary>
@@ -47,6 +67,11 @@ namespace Microsoft.Contracts.Foxtrot
             Member mem = binding.BoundMember;
             if (mem != null)
             {
+                // Member visiting includes also all attributes for the method.
+                // But from Code Contracts perspective public method can have less visible attributes
+                // because they're not part of the precondition.
+                if (IsAttribute(mem.DeclaringType)) return;
+
                 Field f = mem as Field;
                 bool specPublic = false;
 
