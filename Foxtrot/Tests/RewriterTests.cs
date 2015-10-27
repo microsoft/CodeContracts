@@ -1137,6 +1137,16 @@ namespace Tests
             get
             {
                 yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ConstructorWithCapturingLambda.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);yield return new Options(
                     sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ExpressionsInRequires.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,
