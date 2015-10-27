@@ -271,10 +271,13 @@ namespace CodeToolsUpdate
                     // special logic for FSharp. For vs2010 we need to remove it from the user 10.0_Config too
                     if (tool.VsVersion >= 10.0 && new Guid(project) == fsharpProject)
                     {
-                        RegistryKey fsharpPropPagesKey = Registry.CurrentUser.OpenSubKey(tool.VsRoot + "_Config\\Projects\\" + project + "\\" + category, true);
-                        if (fsharpPropPagesKey != null)
+                        using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
+                        using (RegistryKey fsharpPropPagesKey = baseKey.OpenSubKey(tool.VsRoot + "_Config\\Projects\\" + project + "\\" + category, true))
                         {
-                            fsharpPropPagesKey.DeleteSubKeyTree(pageid.ToString("B"));
+                            if (fsharpPropPagesKey != null)
+                            {
+                                fsharpPropPagesKey.DeleteSubKeyTree(pageid.ToString("B"));
+                            }
                         }
                     }
                 }
@@ -389,7 +392,10 @@ namespace CodeToolsUpdate
                 // special logic for FSharp. Somehow for vs2010 we need to put it in the user 10.0_Config too
                 if (tool.VsVersion >= 10.0 && new Guid(project) == fsharpProject)
                 {
-                    Registry.CurrentUser.CreateSubKey(tool.VsRoot + "_Config\\Projects\\" + project + "\\" + category + "\\" + pageid.ToString("B"));
+                    using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
+                    {
+                        baseKey.CreateSubKey(tool.VsRoot + "_Config\\Projects\\" + project + "\\" + category + "\\" + pageid.ToString("B"));
+                    }
                 }
 
 

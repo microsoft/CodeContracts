@@ -61,13 +61,19 @@ namespace CodeToolsUpdate
         // magically to HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\10.0_Config
         public static RegistryKey GetLocalRegistryRoot(string vsRoot, string subKey, bool forWrite)
         {
-            return OpenKey(Registry.LocalMachine, vsRoot + "\\" + subKey, forWrite);
+            using (RegistryKey root = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+            {
+                return OpenKey(root, vsRoot + "\\" + subKey, forWrite);
+            }
         }
 
         // The user VS registry root: HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\10.0
         internal static RegistryKey GetUserRegistryRoot(string vsRoot, string subKey, bool forWrite)
         {
-            return OpenKey(Registry.CurrentUser, vsRoot + "\\" + subKey, forWrite);
+            using (RegistryKey root = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
+            {
+                return OpenKey(root, vsRoot + "\\" + subKey, forWrite);
+            }
         }
         #endregion
     }
