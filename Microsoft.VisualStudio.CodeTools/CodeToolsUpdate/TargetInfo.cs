@@ -133,14 +133,17 @@ namespace CodeToolsUpdate
             List<string> buildVersions = new List<string>();
             if (versions == null || versions.Length == 0)
             {
-                RegistryKey msbuild = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\MSBuild");
-                if (msbuild != null)
+                using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                using (RegistryKey msbuild = baseKey.OpenSubKey(@"Software\Microsoft\MSBuild"))
                 {
-                    foreach (string ver in msbuild.GetSubKeyNames())
+                    if (msbuild != null)
                     {
-                        if (ver != null && ver.Length > 0 && Char.IsDigit(ver[0]))
+                        foreach (string ver in msbuild.GetSubKeyNames())
                         {
-                            buildVersions.Add(ver);
+                            if (ver != null && ver.Length > 0 && Char.IsDigit(ver[0]))
+                            {
+                                buildVersions.Add(ver);
+                            }
                         }
                     }
                 }
