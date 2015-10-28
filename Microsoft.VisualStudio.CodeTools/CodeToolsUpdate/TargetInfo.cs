@@ -222,7 +222,7 @@ namespace CodeToolsUpdate
         #region Install for a specific msbuild version
         private string TargetsFile(string msbuildVersion)
         {
-            string msbuildRoot = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\MSBuild\\";
+            string msbuildRoot = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\MSBuild\\";
 
             if (CompareVersion(msbuildVersion, "4.0") < 0)
             {
