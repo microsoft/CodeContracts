@@ -43,18 +43,18 @@ namespace Microsoft.Contracts.Foxtrot
 
         private static bool IsAttribute(TypeNode declaringType)
         {
-            if (declaringType == null || declaringType.BaseType == null)
+            var currentType = declaringType;
+            while (currentType != null)
             {
-                return false;
+                if (currentType == systemAttributeType.Value)
+                {
+                    return true;
+                }
+
+                currentType = currentType.BaseType;
             }
 
-            if (declaringType == systemAttributeType.Value || declaringType.BaseType == systemAttributeType.Value)
-            {
-                return true;
-            }
-            
-
-            return IsAttribute(declaringType.BaseType);
+            return false;
         }
 
         /// <summary>
