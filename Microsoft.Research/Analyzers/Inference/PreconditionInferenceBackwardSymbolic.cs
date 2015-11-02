@@ -864,7 +864,7 @@ namespace Microsoft.Research.CodeAnalysis
         return pre;
       }
 
-      [ContractVerification(true)]
+      [ContractVerification(false)]
       override public Precondition Assume(APC pc, string tag, Variable condition, object provenance, Precondition pre)
       {
         BreakHere(pc, pre, "assume " + tag);

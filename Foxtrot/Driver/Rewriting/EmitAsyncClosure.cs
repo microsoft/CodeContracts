@@ -388,6 +388,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
         }
 
+        [ContractVerification(false)]
         private void AddAsyncPost(List<Ensures> asyncPostconditions)
         {
             var origBody = new Block(this.checkPostBody);

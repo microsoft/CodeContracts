@@ -1497,6 +1497,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region IWidenStrategy Members
 
+        [ContractVerification(false)]
         public bool WantToWiden(APC from, APC to, bool IsBackEdge)
         {
             if (!IsBackEdge)

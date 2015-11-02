@@ -564,6 +564,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       get { return this.cachename; }
     }
 
+    [ContractVerification(false)]
     protected void DetachDeletedDb(string connection)
     {
       // If anyone has manually deleted the cache file, it might be still registered with LocalDB. 

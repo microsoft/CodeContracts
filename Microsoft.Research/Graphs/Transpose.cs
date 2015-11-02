@@ -133,6 +133,7 @@ namespace Microsoft.Research.Graphs
 
       private void Ignore(object o) { }
 
+      [ContractVerification(false)]
       private List<Edge>/*!*/ Edges(Node node)
       {
         Contract.Ensures(Contract.Result<List<Edge>>() != null);

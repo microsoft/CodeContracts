@@ -587,6 +587,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         #region IAbstractDomainWithRenaming<NonRelationalValueAbstraction<Variable,Expression>,Variable> Members
 
         [Pure]
+        [ContractVerification(false)]
         public NonRelationalValueAbstraction<Variable, Expression> Rename(Dictionary<Variable, FList<Variable>> renaming)
         {
             // Rename the symbolic conditions

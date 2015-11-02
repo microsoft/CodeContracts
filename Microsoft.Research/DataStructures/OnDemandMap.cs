@@ -149,6 +149,7 @@ namespace Microsoft.Research.DataStructures
             return dictionary;
         }
 
+        [ContractVerification(false)]
         public void Add(Key key, Value value)
         {
             var dict = Ensure();
@@ -156,6 +157,7 @@ namespace Microsoft.Research.DataStructures
             LimitCapacity(dict);
         }
 
+        [ContractVerification(false)]
         private void LimitCapacity(Dictionary<Key, Value> dict)
         {
             Contract.Requires(dict != null);
@@ -189,7 +191,7 @@ namespace Microsoft.Research.DataStructures
             }
         }
 #endif
-
+        [ContractVerification(false)]
         public bool TryGetValue(Key key, out Value value)
         {
             if (dictionary == null)
@@ -214,6 +216,7 @@ namespace Microsoft.Research.DataStructures
             }
         }
 
+        [ContractVerification(false)]
         public bool ContainsKey(Key key)
         {
             if (dictionary == null) return false;
