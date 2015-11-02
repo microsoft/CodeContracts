@@ -645,7 +645,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             Contract.Assume(exp != null);
 
 #if TRACE_PERFORMANCE
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 #endif
             // Such a common situation that we want to short cut it

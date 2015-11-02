@@ -372,7 +372,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         private IntervalEnvironment<Variable, Expression> RunBasisExploration(
           IntervalEnvironment<Variable, Expression> initialBounds, SubPolyhedra.ReductionAlgorithm algorithm)
         {
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             SparseRationalArray row;
@@ -692,7 +692,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         private IntervalEnvironment<Variable, Expression> RunSimplexInternal(IntervalEnvironment<Variable, Expression> initialBounds, int MaxVariables)
         {
 #if TRACE_PERFORMANCE
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 #endif
 

@@ -308,7 +308,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 
         private IAbstractDomain JoinInternal(IAbstractDomain a)
         {
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
 #if TRACEJOIN
