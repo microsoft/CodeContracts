@@ -180,6 +180,7 @@ namespace Microsoft.Research.AbstractDomains
             return CheckOutcome.Top;
         }
 
+        [ContractVerification(false)]
         public override void AssignInParallel(Dictionary<Variable, FList<Variable>> sourcesToTargets, Converter<Variable, Expression> convert)
         {
             var newMaps = this.Factory();

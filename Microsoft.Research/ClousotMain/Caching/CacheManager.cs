@@ -206,6 +206,7 @@ namespace Microsoft.Research.CodeAnalysis
             return res;
         }
 
+        [ContractVerification(false)]
         private int GetOrCreateReferencedTypeLocalId(Type typ)
         {
             int res;

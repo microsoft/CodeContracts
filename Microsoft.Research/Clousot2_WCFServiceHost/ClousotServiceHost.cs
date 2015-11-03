@@ -58,6 +58,7 @@ namespace Microsoft.Research.Cloudot
 
     // This is the equivalent of App.Config. 
     // It is best to do it programmatically, to avoid having an App.Config for each project
+    [ContractVerification(false)]
     private void AddMainEndpoint(Uri baseUri)
     {
       Contract.Requires(baseUri != null);

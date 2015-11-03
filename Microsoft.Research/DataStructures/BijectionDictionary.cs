@@ -17,6 +17,7 @@ namespace System.Collections.Generic
     {
         #region Object Invariant
         [Pure]
+        [ContractVerification(false)]
         public bool IsConsistent()
         {
             if (directMap.Count != inverseMap.Count)
@@ -88,6 +89,7 @@ namespace System.Collections.Generic
         #region IBijectiveMap<TKey,TValue> Members
 
         /// <returns>The key associated with <code>value</code></returns>
+        [ContractVerification(false)]
         public TKey KeyForValue(TValue value)
         {
             return inverseMap[value];
@@ -96,6 +98,7 @@ namespace System.Collections.Generic
         /// <returns>
         /// <code>true</code> iff the co-domain of the map contains the value <code>value</code>
         /// </returns>
+        [ContractVerification(false)]
         public bool ContainsValue(TValue value)
         {
             return inverseMap.ContainsKey(value);
@@ -127,6 +130,7 @@ namespace System.Collections.Generic
             }
         }
 
+        [ContractVerification(false)]
         public BijectiveMap<TKey, TValue> Duplicate()
         {
             var result = new BijectiveMap<TKey, TValue>();
@@ -146,6 +150,7 @@ namespace System.Collections.Generic
         /// <summary>
         /// Add the pair <code>(key, value)</code> to the map
         /// </summary>
+        [ContractVerification(false)]
         public void Add(TKey key, TValue value)
         {
             directMap.Add(key, value);
@@ -175,6 +180,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <returns>true if the element is successfully removed; otherwise, false. This method also returns false if key was not found in the IDictionary</returns> 
         // [SuppressMessage("Microsoft.Contracts", "Ensures-31-220")] // It seems we can prove it now
+        [ContractVerification(false)]
         public bool Remove(TKey key)
         {
             Contract.Ensures(!Contract.Result<bool>() || this.Count == Contract.OldValue(this.Count) - 1);
@@ -203,6 +209,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <returns>true if the object that implements IDictionary contains an element with the specified key; otherwise, false. </returns>
         [SuppressMessage("Microsoft.Contracts", "Ensures-Contract.Result<bool>() == @this.ContainsKey(key)")]
+        [ContractVerification(false)]
         public bool TryGetValue(TKey key, out TValue value)
         {
             return directMap.TryGetValue(key, out value);
@@ -224,6 +231,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
+        [ContractVerification(false)]
         public TValue this[TKey key]
         {
             get
@@ -256,6 +264,7 @@ namespace System.Collections.Generic
         /// <summary>
         /// Add the KeyValuePair <code>item</code>
         /// </summary>
+        [ContractVerification(false)]
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             this[item.Key] = item.Value;
@@ -273,6 +282,7 @@ namespace System.Collections.Generic
         /// <summary>
         /// Does this map contain the <code>item</code>?
         /// </summary>
+        [ContractVerification(false)]
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
             TValue val;
@@ -324,6 +334,7 @@ namespace System.Collections.Generic
         /// <summary>
         /// Remove the <code>item</code> from the collection
         /// </summary>
+        [ContractVerification(false)]
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             var b1 = directMap.Remove(item.Key);
@@ -364,6 +375,7 @@ namespace System.Collections.Generic
             return string.Format("{0}" + Environment.NewLine + "({1}, {2})", consistent, direct, indirect);
         }
 
+        [ContractVerification(false)]
         static private string ToString<A, B>(IDictionary<A, B> s)
         {
             Contract.Requires(s != null);
