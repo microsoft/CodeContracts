@@ -15,6 +15,7 @@
 // File System.Windows.Data.MultiBinding.cs
 // Automatically generated contract file.
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Diagnostics.Contracts;
@@ -69,6 +70,7 @@ namespace System.Windows.Data
     {
       get
       {
+        Contract.Ensures(Contract.Result<Collection<BindingBase>>() != null);
         return default(System.Collections.ObjectModel.Collection<BindingBase>);
       }
     }
