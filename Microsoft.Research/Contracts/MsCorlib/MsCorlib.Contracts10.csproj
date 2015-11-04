@@ -30,7 +30,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NoWarn>0660 0661 0626 824 649 626</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -88,7 +88,7 @@
     <CodeContractsExtraRewriteOptions />
     <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-    <NoWarn>0660 0661 0626 824 649 626 1591 8021</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,7 +132,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Academic9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -176,7 +176,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Internal9|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -220,7 +220,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9ro|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -264,7 +264,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -282,7 +282,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Internal64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -300,7 +300,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -318,7 +318,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
+    <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.cs">
