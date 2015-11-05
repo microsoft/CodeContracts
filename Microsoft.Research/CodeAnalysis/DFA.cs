@@ -31,15 +31,22 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         public int Timeout { get; set; }
 
+        /// <summary>
+        /// Symbolic timeout expressed in symbolic ticks for the fixpoint computation
+        /// </summary>
+        public long SymbolicTimeout { get; set; }
+
         public DFAOptions()
         {
             Timeout = Int32.MaxValue;
+            SymbolicTimeout = long.MaxValue;
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(Timeout >= 0);
+            Contract.Invariant(SymbolicTimeout >= 0);
         }
     }
 
@@ -49,17 +56,19 @@ namespace Microsoft.Research.CodeAnalysis
         #region Constants
 
         public const int DefaultTimeOut = 180;
+        public const int DefaultSymbolicTimeOut = 7; // todo(mchri): Decide which value makes sense
 
         #endregion
 
         #region TimeOut
-        static public TimeOutChecker StartTimeOut(int time, CancellationToken cancellationToken)
+        static public TimeOutChecker StartTimeOut(int time, long symbolicTime, CancellationToken cancellationToken)
         {
             Contract.Requires(time > 0);
+            Contract.Requires(symbolicTime > 0);
 
             Contract.Ensures(Contract.Result<TimeOutChecker>() != null);
 
-            timeout = new TimeOutChecker(time, cancellationToken);
+            timeout = new TimeOutChecker(time, symbolicTime, cancellationToken);
 
             return timeout;
         }
@@ -76,7 +85,7 @@ namespace Microsoft.Research.CodeAnalysis
                 // just to make the code more robust
                 if (timeout == null)
                 {
-                    timeout = new TimeOutChecker(DefaultTimeOut, new CancellationToken());
+                    timeout = new TimeOutChecker(DefaultTimeOut, DefaultSymbolicTimeOut, new CancellationToken());
                 }
 
                 return timeout;
@@ -441,9 +450,6 @@ namespace Microsoft.Research.CodeAnalysis
                     }
 
                     state = Transfer(current, state);
-
-                    // TODO(wuestholz): Probably add this in other places as well.
-                    timeCounter.SpendSymbolicTime(1);
 
                     if (Options.Trace)
                     {
@@ -1147,6 +1153,8 @@ namespace Microsoft.Research.CodeAnalysis
 
             this.TraceMemoryUsageIfEnabled("after instruction", pc);
 
+            timeCounter.SpendSymbolicTime(1);
+
             return postState;
         }
 
@@ -1314,21 +1322,24 @@ namespace Microsoft.Research.CodeAnalysis
         private TimeSpan totalElapsed;
         private readonly CancellationToken cancellationToken;
         readonly private int timeout;                                    // The seconds for the timeout
+        readonly private long symbolicTimeout;                           // The ticks for the symbolic timeout
         private TimeoutExceptionFixpointComputation exception;  // We want to throw one exception per TimeOutChecker instance
         private State state;
 
         #endregion
 
-        public TimeOutChecker(int seconds, bool start = true)
-          : this(seconds, new CancellationToken(), start)
+        public TimeOutChecker(int seconds, long symbolicTicks, bool start = true)
+          : this(seconds, symbolicTicks, new CancellationToken(), start)
         {
             Contract.Requires(seconds >= 0);
+            Contract.Requires(symbolicTicks >= 0);
         }
 
-        /// <param name="seconds"> The timeout in seconds</param>    
-        public TimeOutChecker(int seconds, CancellationToken cancellationToken, bool start = true)
+        /// <param name="seconds"> The timeout in seconds and symbolic ticks</param>    
+        public TimeOutChecker(int seconds, long symbolicTicks, CancellationToken cancellationToken, bool start = true)
         {
             Contract.Requires(seconds >= 0);
+            Contract.Requires(symbolicTicks >= 0);
 
             stopWatch = new CustomStopwatch();
             totalElapsed = new TimeSpan();
@@ -1342,6 +1353,7 @@ namespace Microsoft.Research.CodeAnalysis
                 state = State.Stopped;
             }
             timeout = seconds;
+            symbolicTimeout = symbolicTicks;
             this.cancellationToken = cancellationToken;
             exception = null;
         }
@@ -1421,7 +1433,7 @@ namespace Microsoft.Research.CodeAnalysis
             stopWatch.Start();
 
             // If we've reached a timeout, we throw an exception, and we abort the fixpoint computation
-            if (totalElapsed.TotalSeconds >= timeout
+            if (totalElapsed.TotalSeconds >= timeout || stopWatch.ElapsedSymbolic >= symbolicTimeout
 #if DEBUG
  && !System.Diagnostics.Debugger.IsAttached
 #endif

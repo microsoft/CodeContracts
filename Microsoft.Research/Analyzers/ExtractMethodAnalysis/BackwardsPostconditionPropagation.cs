@@ -42,6 +42,7 @@ namespace Microsoft.Research.CodeAnalysis
       #region Constants
 
       private const int TIMEOUT = 2;
+      private const int SymbolicTimeout = 1; // todo(mchri): Decide which value makes sense
 
       #endregion
 
@@ -76,7 +77,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         this.Facts = facts;
         this.MDriver = mdriver;
-        this.timeout = new TimeOutChecker(TIMEOUT, false); // we do not start the timeout, because we want to do it only for effective computations
+        this.timeout = new TimeOutChecker(TIMEOUT, SymbolicTimeout, false); // we do not start the timeout, because we want to do it only for effective computations
       }
 
       #endregion

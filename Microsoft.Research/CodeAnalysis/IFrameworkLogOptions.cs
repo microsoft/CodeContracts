@@ -151,6 +151,11 @@ namespace Microsoft.Research.CodeAnalysis
         int Timeout { get; }
 
         /// <summary>
+        /// The symbolic timeout, expressed in symbolic ticks, to stop the analysis
+        /// </summary>
+        long SymbolicTimeout { get; }
+
+        /// <summary>
         /// How many joins before widening ?
         /// </summary>
         int IterationsBeforeWidening { get; }
@@ -293,6 +298,16 @@ namespace Microsoft.Research.CodeAnalysis
             get
             {
                 Contract.Ensures(Contract.Result<int>() >= 0);
+
+                throw new NotImplementedException();
+            }
+        }
+
+        public long SymbolicTimeout
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<long>() >= 0);
 
                 throw new NotImplementedException();
             }

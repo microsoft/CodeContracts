@@ -1578,7 +1578,9 @@ namespace Microsoft.Research.CodeAnalysis
       internal void AnalyzeMethod(Method method)
       {
         // Very first thing: Let's put the timeout to zero at each new method analysis, and let's share it with the WPs
-        WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut, this.cancellationToken);
+        WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut,
+          this.options.SymbolicTimeout > 0 ? this.options.SymbolicTimeout : DFARoot.DefaultSymbolicTimeOut,
+          this.cancellationToken);
 
         if (!driver.MetaDataDecoder.HasBody(method))
         {
@@ -2245,7 +2247,8 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (shouldSearchForAWitness)
           {
-            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, this.cancellationToken));              
+            // todo(mchri): Decide which value makes sense for the symbolic timeout
+            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, 7, this.cancellationToken));
 #if DEBUG
             if (mayReturnNull)
             {
