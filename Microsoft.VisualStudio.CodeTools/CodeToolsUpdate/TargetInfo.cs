@@ -242,7 +242,7 @@ namespace CodeToolsUpdate
             }
             else
             {
-                return Path.Combine(msbuildRoot, msbuildVersion, "Microsoft.Common.Targets", kind, tool.ToolName + targetName + ".targets";
+                return Path.Combine(msbuildRoot, msbuildVersion, "Microsoft.Common.Targets", kind, tool.ToolName + targetName + ".targets");
             }
         }
 
