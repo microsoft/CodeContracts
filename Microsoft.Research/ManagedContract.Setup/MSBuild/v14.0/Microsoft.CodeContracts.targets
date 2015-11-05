@@ -67,10 +67,10 @@
         </When>        
         <When Condition="'$(TargetFrameworkVersion)' == 'v4.6'">
           <PropertyGroup>
-            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.5</CodeContractsReferenceAssemblyLibPath>
+            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.6</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>
-        </When>        
-				<Otherwise>
+        </When>
+        <Otherwise>
           <PropertyGroup>
             <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\v3.5</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>

@@ -256,8 +256,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
