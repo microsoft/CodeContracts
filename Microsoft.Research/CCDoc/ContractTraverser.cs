@@ -22,7 +22,6 @@ using Microsoft.Cci.MutableContracts;
 using System.IO;
 using System.Diagnostics.Contracts;
 using System.Xml;
-using Microsoft.Research.DataStructures;
 using Microsoft.Cci.ILToCodeModel;
 using System.Diagnostics.CodeAnalysis;
 
