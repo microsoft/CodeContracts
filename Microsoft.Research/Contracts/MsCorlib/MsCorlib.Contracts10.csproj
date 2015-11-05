@@ -320,6 +320,9 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <NoWarn>0660 0661 0626 824 649 626 1591 1691</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn Condition=" '$(BuildingInsideVisualStudio)' == 'true' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' > '13.0'">$(NoWarn);8021</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.cs">
       <Link>Sources\AssemblyInfo.cs</Link>
