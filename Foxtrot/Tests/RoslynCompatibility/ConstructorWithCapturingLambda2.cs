@@ -23,31 +23,39 @@ namespace Tests.Sources
 {
     public sealed class CodeContractsCracker
     {
-        private List<Action> _actions = new List<Action>();
-
-        public CodeContractsCracker(Action action)
+        public CodeContractsCracker(string a)
         {
-            Contract.Requires(action != null);
+            Contract.Requires(a != null);
 
-            this._actions.Add(() => action());
+            Delayed(() => Process(a));
         }
+
+        private void Delayed(Action action)
+        {
+        }
+
+        private static void Process(string s)
+        {
+        }
+
+        public bool Flag = true;
     }
 
-  partial class TestMain
-  {
-    partial void Run()
+    partial class TestMain
     {
-      if (behave)
-      {
-          new CodeContractsCracker(() => { });
-      }
-      else
-      {
-        new CodeContractsCracker(null);
-      }
-    }
+        partial void Run()
+        {
+            if (behave)
+            {
+                new CodeContractsCracker("foo");
+            }
+            else
+            {
+                new CodeContractsCracker(null);
+            }
+        }
 
-    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
-    public string NegativeExpectedCondition = "action != null";
-  }
+        public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
+        public string NegativeExpectedCondition = "a != null";
+    }
 }

@@ -21,33 +21,33 @@ using System.Threading;
 
 namespace Tests.Sources
 {
-    public sealed class CodeContractsCracker
+    class A
     {
-        private List<Action> _actions = new List<Action>();
+        object c = new object();
 
-        public CodeContractsCracker(Action action)
+        public A(object o)
         {
-            Contract.Requires(action != null);
+            Contract.Requires(o != null);
 
-            this._actions.Add(() => action());
+            Action a = () => o.ToString();
         }
     }
 
-  partial class TestMain
-  {
-    partial void Run()
+    partial class TestMain
     {
-      if (behave)
-      {
-          new CodeContractsCracker(() => { });
-      }
-      else
-      {
-        new CodeContractsCracker(null);
-      }
-    }
+        partial void Run()
+        {
+            if (behave)
+            {
+                new A("foo");
+            }
+            else
+            {
+                new A(null);
+            }
+        }
 
-    public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
-    public string NegativeExpectedCondition = "action != null";
-  }
+        public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
+        public string NegativeExpectedCondition = "o != null";
+    }
 }
