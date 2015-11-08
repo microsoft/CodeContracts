@@ -268,12 +268,12 @@ namespace System.Threading.Tasks
     //     The default System.Threading.Tasks.TaskFactory for the current task.
     public static TaskFactory Factory 
     { 
-    get
-{
-Contract.Ensures(Contract.Result<TaskFactory>() != null);
-return null;
-} 
-}
+      get
+      {
+        Contract.Ensures(Contract.Result<TaskFactory>() != null);
+        return null;
+      }
+    }
     //
     // Summary:
     //     Gets a unique ID for this System.Threading.Tasks.Task instance.
@@ -1545,7 +1545,123 @@ return null;
       return null;
 
     }
-    
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed successfully with the
+    //     specified result.
+    //
+    // Parameters:
+    //   result:
+    //     The result to store into the completed task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The successfully completed task.
+    public static Task<TResult> FromResult<TResult>(TResult result)
+    {
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+
+      return default(Task<TResult>);
+    }
+#endif
+
+#if NETFRAMEWORK_4_6
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task that's completed due to cancellation with
+    //     a specified cancellation token.
+    //
+    // Parameters:
+    //   cancellationToken:
+    //     The cancellation token with which to complete the task.
+    //
+    // Returns:
+    //     The canceled task.
+    public static Task FromCanceled(CancellationToken cancellationToken)
+    {
+      Contract.Requires(cancellationToken.IsCancellationRequested);
+      Contract.Ensures(Contract.Result<Task>() != null);
+
+      return default(Task);
+    }
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed due to cancellation
+    //     with a specified cancellation token.
+    //
+    // Parameters:
+    //   cancellationToken:
+    //     The cancellation token with which to complete the task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The canceled task.
+    public static Task<TResult> FromCanceled<TResult>(CancellationToken cancellationToken)
+    {
+      Contract.Requires(cancellationToken.IsCancellationRequested);
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+
+      return default(Task<TResult>);
+    }
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task that has completed with a specified exception.
+    //
+    // Parameters:
+    //   exception:
+    //     The exception with which to complete the task.
+    //
+    // Returns:
+    //     The faulted task.
+    public static Task FromException(Exception exception)
+	{
+	  Contract.Requires(exception != null);
+	  Contract.Ensures(Contract.Result<Task>() != null);
+
+	  return default(Task);
+	}
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed with a specified exception.
+    //
+    // Parameters:
+    //   exception:
+    //     The exception with which to complete the task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The faulted task.
+    public static Task<TResult> FromException<TResult>(Exception exception)
+    {
+      Contract.Requires(exception != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+
+      return default(Task<TResult>);
+    }
+    //
+    // Summary:
+    //     Gets a task that has already completed successfully.
+    //
+    // Returns:
+    //     The successfully completed task.
+    public static Task CompletedTask
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<Task>() != null);
+
+        return default(Task);
+      }
+    }
 #endif
   }
 
