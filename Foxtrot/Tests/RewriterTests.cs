@@ -126,6 +126,18 @@ namespace Tests
             get
             {
                 yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\AsyncPostconditions\SynchronousPostcondition.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new[] { @"System.dll", @"System.Core.dll", @"System.Threading.Tasks.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+
+                yield return new Options(
                     sourceFile: @"Foxtrot\Tests\AsyncPostconditions\CancelledAsyncPostcondition.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,
