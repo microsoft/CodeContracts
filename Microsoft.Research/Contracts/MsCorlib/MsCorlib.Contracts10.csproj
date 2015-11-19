@@ -893,6 +893,7 @@ Include="System.Security.Principal.WindowsPrincipal.cs" /> -->
     <Compile Include="System.Threading.Tasks.TaskCreationAction.cs" />
     <Compile Include="System.Threading.Tasks.TaskFactory.cs" />
     <Compile Include="System.Threading.Tasks.TaskScheduler.cs" />
+    <Compile Include="System.Threading.Tasks.TaskStatus.cs" />
     <Compile Include="System.TimeZoneInfo.cs" />
     <Compile Include="System.Tuple.cs" />
     <Compile Include="System.Type.cs" />

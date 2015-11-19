@@ -258,7 +258,7 @@ namespace System.Threading.Tasks
     // Returns:
     //     The System.AggregateException that caused the System.Threading.Tasks.Task
     //     to end prematurely.
-    //public AggregateException Exception { get; }
+    public AggregateException Exception { get; }
     //
     // Summary:
     //     Provides access to factory methods for creating System.Threading.Tasks.Task
@@ -288,14 +288,14 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     true if the task has completed due to being canceled; otherwise false.
-    //public bool IsCanceled { get; }
+    public bool IsCanceled { get; }
     //
     // Summary:
     //     Gets whether this System.Threading.Tasks.Task has completed.
     //
     // Returns:
     //     true if the task has completed; otherwise false.
-    //public bool IsCompleted { get; }
+    public bool IsCompleted { get; }
     //
     // Summary:
     //     Gets whether the System.Threading.Tasks.Task completed due to an unhandled
@@ -303,14 +303,14 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     true if the task has thrown an unhandled exception; otherwise false.
-    //public bool IsFaulted { get; }
+    public bool IsFaulted { get; }
     //
     // Summary:
     //     Gets the System.Threading.Tasks.TaskStatus of this Task.
     //
     // Returns:
     //     The current System.Threading.Tasks.TaskStatus of this task instance.
-    //public TaskStatus Status { get; }
+    public TaskStatus Status { get; }
 
     // Summary:
     //     Creates a continuation that executes when the target System.Threading.Tasks.Task
@@ -1946,7 +1946,7 @@ namespace System.Threading.Tasks
     //     The result value of this System.Threading.Tasks.Task<TResult>, which is the
     //     same type as the task's type parameter.
     //[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    //public TResult Result { get; internal set; }
+    public TResult Result { get; internal set; }
 
     // Summary:
     //     Creates a continuation that executes when the target System.Threading.Tasks.Task<TResult>
