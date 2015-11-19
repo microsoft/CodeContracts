@@ -14,7 +14,6 @@
 
 
 #if NETFRAMEWORK_4_0
-using System;
 
 namespace System.Threading.Tasks
 {

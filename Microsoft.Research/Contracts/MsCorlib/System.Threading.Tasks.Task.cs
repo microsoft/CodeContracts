@@ -258,7 +258,13 @@ namespace System.Threading.Tasks
     // Returns:
     //     The System.AggregateException that caused the System.Threading.Tasks.Task
     //     to end prematurely.
-    public AggregateException Exception { get; }
+    public AggregateException Exception
+    {
+      get
+      {
+        return default(AggregateException);
+      }
+    }
     //
     // Summary:
     //     Provides access to factory methods for creating System.Threading.Tasks.Task
@@ -288,14 +294,26 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     true if the task has completed due to being canceled; otherwise false.
-    public bool IsCanceled { get; }
+    public bool IsCanceled
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets whether this System.Threading.Tasks.Task has completed.
     //
     // Returns:
     //     true if the task has completed; otherwise false.
-    public bool IsCompleted { get; }
+    public bool IsCompleted
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets whether the System.Threading.Tasks.Task completed due to an unhandled
@@ -303,15 +321,26 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     true if the task has thrown an unhandled exception; otherwise false.
-    public bool IsFaulted { get; }
+    public bool IsFaulted
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets the System.Threading.Tasks.TaskStatus of this Task.
     //
     // Returns:
     //     The current System.Threading.Tasks.TaskStatus of this task instance.
-    public TaskStatus Status { get; }
-
+    public TaskStatus Status
+    {
+      get
+      {
+        return default(TaskStatus);
+      }
+    }
     // Summary:
     //     Creates a continuation that executes when the target System.Threading.Tasks.Task
     //     completes.
@@ -1569,7 +1598,6 @@ namespace System.Threading.Tasks
       Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
       Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
       Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.RanToCompletion);
-      Contract.Ensures(Contract.Result<Task<TResult>>().Result == result);
 
       return default(Task<TResult>);
     }

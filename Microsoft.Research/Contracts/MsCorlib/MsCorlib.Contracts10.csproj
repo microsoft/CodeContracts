@@ -353,6 +353,7 @@
     <Compile Include="Sources\System.OperatingSystem.cs" />
     <Compile Include="Sources\System.Version.cs" />
     <Compile Include="System.Action.cs" />
+    <Compile Include="System.AggregateException.cs" />
     <Compile Include="System.ArgumentException.cs" />
     <Compile Include="System.ArgumentNullException.cs" />
     <Compile Include="System.Array.cs" />
