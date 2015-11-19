@@ -1597,6 +1597,7 @@ namespace System.Threading.Tasks
       Contract.Ensures(Contract.Result<Task>().IsCompleted);
       Contract.Ensures(!Contract.Result<Task>().IsFaulted);
       Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.Canceled);
+      Contract.EnsuresOnThrow<ArgumentOutOfRangeException>(true, "Cancellation has not been requested for cancellationToken; its IsCancellationRequested property is false.");
 
       return default(Task);
     }
@@ -1625,6 +1626,7 @@ namespace System.Threading.Tasks
       Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
       Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
       Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.Canceled);
+      Contract.EnsuresOnThrow<ArgumentOutOfRangeException>(true, "Cancellation has not been requested for cancellationToken; its IsCancellationRequested property is false.");
 
       return default(Task<TResult>);
     }
