@@ -57,7 +57,7 @@ namespace System
       get
       {
         Contract.Ensures(!string.IsNullOrWhitespace(Contract.Result<string>()));
-        return default(Version);
+        return default(string);
       }
     }
 
