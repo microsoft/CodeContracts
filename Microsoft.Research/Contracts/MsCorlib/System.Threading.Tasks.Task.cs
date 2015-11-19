@@ -1560,9 +1560,16 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     The successfully completed task.
+    [Pure]
     public static Task<TResult> FromResult<TResult>(TResult result)
     {
       Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == null);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.RanToCompletion);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Result == result);
 
       return default(Task<TResult>);
     }
@@ -1580,10 +1587,16 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     The canceled task.
+    [Pure]
     public static Task FromCanceled(CancellationToken cancellationToken)
     {
       Contract.Requires(cancellationToken.IsCancellationRequested);
       Contract.Ensures(Contract.Result<Task>() != null);
+      Contract.Ensures(Contract.Result<Task>().Exception == null);
+      Contract.Ensures(Contract.Result<Task>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.Canceled);
 
       return default(Task);
     }
@@ -1602,10 +1615,16 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     The canceled task.
+    [Pure]
     public static Task<TResult> FromCanceled<TResult>(CancellationToken cancellationToken)
     {
       Contract.Requires(cancellationToken.IsCancellationRequested);
       Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.Canceled);
 
       return default(Task<TResult>);
     }
@@ -1619,13 +1638,19 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     The faulted task.
+    [Pure]
     public static Task FromException(Exception exception)
-	{
-	  Contract.Requires(exception != null);
-	  Contract.Ensures(Contract.Result<Task>() != null);
+    {
+      Contract.Requires(exception != null);
+      Contract.Ensures(Contract.Result<Task>() != null);
+      Contract.Ensures(Contract.Result<Task>().Exception == exception);
+      Contract.Ensures(!Contract.Result<Task>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task>().IsCompleted);
+      Contract.Ensures(Contract.Result<Task>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.Faulted);
 
-	  return default(Task);
-	}
+      return default(Task);
+    }
     //
     // Summary:
     //     Creates a System.Threading.Tasks.Task`1 that's completed with a specified exception.
@@ -1640,10 +1665,17 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     The faulted task.
+    [Pure]
     public static Task<TResult> FromException<TResult>(Exception exception)
     {
       Contract.Requires(exception != null);
       Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == exception);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.Faulted);
+
 
       return default(Task<TResult>);
     }
@@ -1655,9 +1687,15 @@ namespace System.Threading.Tasks
     //     The successfully completed task.
     public static Task CompletedTask
     {
+      [Pure]
       get
       {
         Contract.Ensures(Contract.Result<Task>() != null);
+        Contract.Ensures(Contract.Result<Task>().Exception == null);
+        Contract.Ensures(!Contract.Result<Task>().IsCanceled);
+        Contract.Ensures(Contract.Result<Task>().IsCompleted);
+        Contract.Ensures(!Contract.Result<Task>().IsFaulted);
+        Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.RanToCompletion);
 
         return default(Task);
       }
