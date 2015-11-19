@@ -23,12 +23,41 @@ namespace System
 
     public PlatformID Platform
     {
-      get { return default(PlatformID); }
+      [Pure]
+      get
+      {
+        Contract.Ensures(Contract.Result<PlatformID>() >= PlatformID.Win32S);
+        Contract.Ensures(Contract.Result<PlatformID>() <= PlatformID.MacOSX);
+        return default(PlatformID);
+      }
+    }
+
+    public string ServicePack
+    {
+      get
+      {
+        Contract.Ensures(Contract.Result<string>() != null);
+        return default(string);
+      }
     }
 
     public Version Version
     {
-      get { return default(Version); }
+      [Pure]
+      get
+      {
+        Contract.Ensures(Contract.Result<Version>() != null);
+        return default(Version);
+      }
+    }
+
+    public string VersionString
+    {
+      get
+      {
+        Contract.Ensures(!string.IsNullOrWhitespace(Contract.Result<string>()));
+        return default(Version);
+      }
     }
 
     public object Clone()
@@ -36,9 +65,14 @@ namespace System
 
       return default(object);
     }
+
     public OperatingSystem(PlatformID platform, Version version)
     {
+      Contract.Requires(platform >= PlatformID.Win32S)
+      Contract.Requires(platform <= PlatformID.MacOSX)
       Contract.Requires(version != null);
+      Contract.EnsuresOnThrow<ArgumentException>(true, "platform is not a PlatformID enumeration value.")
+      Contract.EnsuresOnThrow<ArgumentNullException>(true, "version is null.")
     }
   }
 }
