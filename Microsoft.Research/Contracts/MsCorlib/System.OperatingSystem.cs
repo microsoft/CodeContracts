@@ -34,6 +34,7 @@ namespace System
 
     public string ServicePack
     {
+      [Pure]
       get
       {
         Contract.Ensures(Contract.Result<string>() != null);
