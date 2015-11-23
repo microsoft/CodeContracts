@@ -2248,7 +2248,7 @@ namespace Microsoft.Research.CodeAnalysis
           if (shouldSearchForAWitness)
           {
             // todo(mchri): Decide which value makes sense for the symbolic timeout
-            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, 7, this.cancellationToken));
+            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, 1, this.cancellationToken));
 #if DEBUG
             if (mayReturnNull)
             {

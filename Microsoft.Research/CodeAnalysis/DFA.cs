@@ -56,7 +56,7 @@ namespace Microsoft.Research.CodeAnalysis
         #region Constants
 
         public const int DefaultTimeOut = 180;
-        public const int DefaultSymbolicTimeOut = 7; // todo(mchri): Decide which value makes sense
+        public const int DefaultSymbolicTimeOut = 1; // todo(mchri): Decide which value makes sense
 
         #endregion
 
@@ -450,6 +450,8 @@ namespace Microsoft.Research.CodeAnalysis
                     }
 
                     state = Transfer(current, state);
+
+                    timeout.SpendSymbolicTime(1);
 
                     if (Options.Trace)
                     {
@@ -1153,8 +1155,6 @@ namespace Microsoft.Research.CodeAnalysis
 
             this.TraceMemoryUsageIfEnabled("after instruction", pc);
 
-            timeCounter.SpendSymbolicTime(1);
-
             return postState;
         }
 
@@ -1320,6 +1320,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
+        private long totalElapsedSymbolic;
         private readonly CancellationToken cancellationToken;
         readonly private int timeout;                                    // The seconds for the timeout
         readonly private long symbolicTimeout;                           // The ticks for the symbolic timeout
@@ -1343,6 +1344,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             stopWatch = new CustomStopwatch();
             totalElapsed = new TimeSpan();
+            totalElapsedSymbolic = 0;
             if (start)
             {
                 stopWatch.Start();
@@ -1356,6 +1358,11 @@ namespace Microsoft.Research.CodeAnalysis
             symbolicTimeout = symbolicTicks;
             this.cancellationToken = cancellationToken;
             exception = null;
+        }
+
+        public void SpendSymbolicTime(long amount)
+        {
+            stopWatch.SpendSymbolicTime(amount);
         }
 
         public void Start()
@@ -1392,6 +1399,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                         stopWatch.Stop();
                         totalElapsed += stopWatch.Elapsed;
+                        totalElapsedSymbolic += stopWatch.ElapsedSymbolic;
                         stopWatch.Reset();
                     }
                     break;
@@ -1428,12 +1436,13 @@ namespace Microsoft.Research.CodeAnalysis
             stopWatch.Stop();
 
             totalElapsed += stopWatch.Elapsed;
+            totalElapsedSymbolic += stopWatch.ElapsedSymbolic;
 
             stopWatch.Reset();
             stopWatch.Start();
 
             // If we've reached a timeout, we throw an exception, and we abort the fixpoint computation
-            if (totalElapsed.TotalSeconds >= timeout || stopWatch.ElapsedSymbolic >= symbolicTimeout
+            if (totalElapsed.TotalSeconds >= timeout || totalElapsedSymbolic >= symbolicTimeout
 #if DEBUG
  && !System.Diagnostics.Debugger.IsAttached
 #endif

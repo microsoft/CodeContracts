@@ -18,6 +18,18 @@ namespace Microsoft.Research.DataStructures
         {
             System.Threading.Interlocked.Add(ref elapsedSymbolic, amount);
         }
+
+        public new void Reset()
+        {
+            System.Threading.Interlocked.Exchange(ref elapsedSymbolic, 0);
+            base.Reset();
+        }
+
+        public new void Restart()
+        {
+            System.Threading.Interlocked.Exchange(ref elapsedSymbolic, 0);
+            base.Restart();
+        }
     }
 
     /// <summary>

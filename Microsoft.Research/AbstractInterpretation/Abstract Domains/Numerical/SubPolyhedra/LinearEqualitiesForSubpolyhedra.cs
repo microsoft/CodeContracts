@@ -558,7 +558,8 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 
             while (comb.MoveNext())
             {
-                if (watch.Elapsed.Minutes >= 5)
+                // todo(mchri): Decide which value makes sense for the symbolic timeout
+                if (watch.Elapsed.Minutes >= 5 || watch.ElapsedSymbolic > 1)
                 {
                     throw new TimeoutExceptionFixpointComputation();
                 }
