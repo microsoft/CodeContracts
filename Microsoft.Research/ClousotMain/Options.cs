@@ -502,7 +502,7 @@ namespace Microsoft.Research.CodeAnalysis
     public int timeout = 180;
 
     [OptionDescription("Analysis timeout per method (in symbolic ticks)")]
-    public long symbolicTimeout = 1; // todo(mchri): Decide which value makes sense
+    public long symbolicTimeout = Int64.MaxValue; // todo(mchri): Decide which value makes sense
 
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
     public bool adaptive = false;

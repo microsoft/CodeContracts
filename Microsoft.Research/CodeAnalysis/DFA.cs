@@ -56,7 +56,7 @@ namespace Microsoft.Research.CodeAnalysis
         #region Constants
 
         public const int DefaultTimeOut = 180;
-        public const int DefaultSymbolicTimeOut = 1; // todo(mchri): Decide which value makes sense
+        public const long DefaultSymbolicTimeOut = Int64.MaxValue; // todo(mchri): Decide which value makes sense
 
         #endregion
 

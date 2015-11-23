@@ -42,7 +42,7 @@ namespace Microsoft.Research.CodeAnalysis
       #region Constants
 
       private const int TIMEOUT = 2;
-      private const int SymbolicTimeout = 1; // todo(mchri): Decide which value makes sense
+      private const long SymbolicTimeout = Int64.MaxValue; // todo(mchri): Decide which value makes sense
 
       #endregion
 

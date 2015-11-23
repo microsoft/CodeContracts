@@ -559,7 +559,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             while (comb.MoveNext())
             {
                 // todo(mchri): Decide which value makes sense for the symbolic timeout
-                if (watch.Elapsed.Minutes >= 5 || watch.ElapsedSymbolic > 1)
+                if (watch.Elapsed.Minutes >= 5 || watch.ElapsedSymbolic == Int64.MaxValue)
                 {
                     throw new TimeoutExceptionFixpointComputation();
                 }

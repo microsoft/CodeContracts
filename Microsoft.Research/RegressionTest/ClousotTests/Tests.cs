@@ -1516,6 +1516,17 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull  -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 1337 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Collections.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest arrayrequires -suggest arraypurity -nonnull -bounds -arrays -show validations -show unreached -show progress ",
                     useContractReferenceAssemblies: true,
@@ -1983,7 +1994,7 @@ namespace Tests
         #region Regular tests
 
         //[MemberData("TestRun")]
-        //[Theory]
+        [Theory(Skip = "This test fails")]
         public void Analyze1Z3FromSourcesV35(int testIndex)
         {
             var options = GrabTestOptions("Analyze1Z3FromSourcesV35", TestRunData.ElementAt(testIndex));
@@ -2018,8 +2029,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]
         public void Analyze1FromSourcesV40(int testIndex)
         {
@@ -2046,8 +2057,8 @@ namespace Tests
 
         #region Fast Tests
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Parallel")]
         public void Analyze2FastBeginParallelFromSourcesV40(int testIndex)
         {
@@ -2060,8 +2071,8 @@ namespace Tests
                 TestDriver.AsyncFast2(_testOutputHelper).BeginTest(options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Parallel")]
         public void Analyze2FastEndParallelFromSourcesV40(int testIndex)
         {
@@ -2078,8 +2089,8 @@ namespace Tests
 
         #region Service tests
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Service")]
         public void Analyze2ServiceSequentialFromSourcesV40(int testIndex)
         {
@@ -2090,8 +2101,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2S(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Service"), Trait("Category", "Parallel")]
         public void Analyze2ServiceBeginParallelFromSourcesV40(int testIndex)
         {
@@ -2103,8 +2114,8 @@ namespace Tests
                 TestDriver.Async2S(_testOutputHelper).BeginTest(options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Service"), Trait("Category", "Parallel")]
         public void Analyze2ServiceEndParallelFromSourcesV40(int testIndex)
         {
@@ -2120,8 +2131,8 @@ namespace Tests
 
         #region Slicing tests
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer")]
         public void Slice2SequentialFromSourcesV40(int testIndex)
         {
@@ -2133,8 +2144,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2Slicing(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer")]
         public void Slice2FastSequentialFromSourcesV40(int testIndex)
         {
@@ -2147,8 +2158,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2Slicing(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Slicer")]
         public void Slice2Analyze1SequentialFromSourcesV40(int testIndex)
         {
@@ -2173,8 +2184,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2Slicing(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer")]
         public void Slice2Analyze2SequentialFromSourcesV40WithDiskCache(int testIndex)
         {
@@ -2187,8 +2198,8 @@ namespace Tests
         }
 
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer")]
         public void Slice2Analyze2FastSequentialFromSourcesV40(int testIndex)
         {
@@ -2201,7 +2212,7 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2Slicing(_testOutputHelper, options);
         }
 
-        //[Theory(Skip = "This test fails")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer")]
         public void Slice2Analyze2FastSequentialFromSourcesV40WithDiskCache(int testIndex)
         {
@@ -2215,8 +2226,8 @@ namespace Tests
         }
 
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Slicer"), Trait("Category", "Parallel")]
         public void Slice2Analyze1ParallelFromSourcesV40(int testIndex)
         {
@@ -2228,8 +2239,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze1Slicing(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer"), Trait("Category", "Parallel")]
         public void Slice2Analyze2ParallelFromSourcesV40(int testIndex)
         {
@@ -2241,8 +2252,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze2Slicing(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot2"), Trait("Category", "Slicer"), Trait("Category", "Parallel")]
         public void Slice2Analyze2FastParallelFromSourcesV40(int testIndex)
         {
