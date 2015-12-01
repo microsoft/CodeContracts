@@ -2034,7 +2034,15 @@ namespace Microsoft.Research.CodeAnalysis
 
           phasecount = RunFactsDiscoveryAnalyses(method, phasecount, methodFullName, cdriver, mdriver, results, obligations, factQuery);
 
-          phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
+          DFARoot.TimeOut.Pause();
+          try
+          {
+            phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
+          }
+          finally
+          {
+            DFARoot.TimeOut.Resume();
+          }
 
           phasecount = RunExtractMethodLogic(phasecount, mdriver, factQuery);
 
@@ -2621,12 +2629,20 @@ namespace Microsoft.Research.CodeAnalysis
               RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
             }
           }
-          catch (TimeoutExceptionFixpointComputation)
+          catch (TimeoutExceptionFixpointComputation e)
           {
             output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
               this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
               this.driver.MetaDataDecoder.FullName(method),
               analysis.Name);
+
+            var result = e.Result as IMethodResult<SymbolicValue>;
+            if (result != null)
+            {
+              results.Add(result);
+              factQuery.Add(result.FactQuery);
+              RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
+            }
 
             break; // we are done
           }

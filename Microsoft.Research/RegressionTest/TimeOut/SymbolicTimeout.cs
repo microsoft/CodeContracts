@@ -50,5 +50,59 @@ namespace SymbolicTimeoutTest
                 b = t;
             }
         }
+
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 11, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 25, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 39, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 53, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 67, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 81, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 95, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 109, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 123, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 137, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 151, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 165, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 179, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 193, MethodILOffset = 0)]
+        private void Test1(int x)
+        {
+          int y = x;
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(y < x);
+          x += 1;
+          Contract.Assert(x < y);
+        }
     }
 }

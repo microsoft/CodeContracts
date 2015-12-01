@@ -1517,7 +1517,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull  -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 1337 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 900 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",

@@ -404,7 +404,7 @@ namespace Microsoft.Research.CodeAnalysis
         }
 
 
-        protected virtual void ComputeFixpoint()
+        protected virtual void ComputeFixpoint(object result)
         {
             var timeout = TimeOut;
 
@@ -468,7 +468,7 @@ namespace Microsoft.Research.CodeAnalysis
                     this.TraceMemoryUsageIfEnabled("after instruction", current);
 
                     // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
-                    timeout.CheckTimeOut("fixpoint computation");
+                    timeout.CheckTimeOut("fixpoint computation", result);
 
                     alreadyCached = false;
                 } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
@@ -480,7 +480,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                     PushState(current, succ, state);
                 }
-                timeout.CheckTimeOut("fixpoint computation");
+                timeout.CheckTimeOut("fixpoint computation", result);
 
             nextPending:
                 ;
@@ -822,11 +822,11 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// State state must be immutable.
         /// </summary>
-        public void Run(AState startState)
+        public void Run(AState startState, object result = null)
         {
             Seed(cfg.Entry, startState);
 
-            ComputeFixpoint();
+            ComputeFixpoint(result);
         }
 
         #region Forward specific overrides
@@ -892,7 +892,7 @@ namespace Microsoft.Research.CodeAnalysis
             base.Seed(cfg.NormalExit, normalExit);
             base.Seed(cfg.ExceptionExit, exceptionExit);
 
-            ComputeFixpoint();
+            ComputeFixpoint(null);
         }
 
         #region Backward specific overrides
@@ -1316,7 +1316,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Private state
 
-        private enum State { Stopped, Running }
+        private enum State { Stopped, Running, Paused }
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
@@ -1362,7 +1362,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void SpendSymbolicTime(long amount)
         {
-            stopWatch.SpendSymbolicTime(amount);
+            if (state == State.Running)
+            {
+                Contract.Assert(stopWatch.IsRunning);
+                stopWatch.SpendSymbolicTime(amount);
+            }
         }
 
         public void Start()
@@ -1417,6 +1421,22 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
+        public void Pause()
+        {
+          Contract.Requires(state == State.Running);
+
+          stopWatch.Stop();
+          state = State.Paused;
+        }
+
+        public void Resume()
+        {
+          Contract.Requires(state == State.Paused);
+
+          stopWatch.Start();
+          state = State.Running;
+        }
+
         public bool HasAlreadyTimeOut
         {
             get
@@ -1429,8 +1449,10 @@ namespace Microsoft.Research.CodeAnalysis
         /// Check that we did not timed out.
         /// If the timeout was not started, starts it
         /// </summary>
-        public void CheckTimeOut(string reason = "")
+        public void CheckTimeOut(string reason = "", object result = null)
         {
+            if (state == State.Stopped || state == State.Paused) { return; }
+
             this.Start();
 
             stopWatch.Stop();
@@ -1456,7 +1478,8 @@ namespace Microsoft.Research.CodeAnalysis
 #endif
                 if (exception == null)
                 {
-                    exception = new TimeoutExceptionFixpointComputation();
+                    // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites.
+                    exception = new TimeoutExceptionFixpointComputation(result);
                 }
                 throw exception;
             }
@@ -1473,6 +1496,8 @@ namespace Microsoft.Research.CodeAnalysis
         [ThreadStatic]
         private static uint count;
 
+        public object Result;
+
         static public uint ThrownExceptions
         {
             get
@@ -1481,9 +1506,10 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public TimeoutExceptionFixpointComputation()
+        public TimeoutExceptionFixpointComputation(object result = null)
         {
             count++;
+            this.Result = result;
         }
     }
 

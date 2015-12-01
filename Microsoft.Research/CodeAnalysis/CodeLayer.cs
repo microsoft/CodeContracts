@@ -133,7 +133,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
             var solver = ForwardAnalysisSolver<AnalysisState, Type, EdgeData>.Make(ildecoder, analysis, this.Printer);
             solver.Options = options;
-            return (initialState) => { solver.Run(initialState); return solver; };
+            return (initialState) => { solver.Run(initialState, analysis); return solver; };
         }
 
         #endregion
