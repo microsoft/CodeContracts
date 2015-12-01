@@ -25,37 +25,55 @@ namespace System
         [Pure]
         public int Minor
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= 0);
+              return default(int);
+            }
         }
 
         [Pure]
         public int Major
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= 0);
+              return default(int);
+            }
         }
 
         [Pure]
         public int Revision
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
         }
 
         [Pure]
         public int Build
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
         }
 
         [Pure]
         public int MajorRevision
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
         }
 
         [Pure]
         public int MinorRevision
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
         }
 
         [Pure][Reads(ReadsAttribute.Reads.Nothing)]
