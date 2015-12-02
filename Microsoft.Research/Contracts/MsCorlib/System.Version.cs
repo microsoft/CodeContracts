@@ -59,20 +59,20 @@ namespace System
         }
 
         [Pure]
-        public int MajorRevision
+        public short MajorRevision
         {
             get {
-              Contract.Ensures(Contract.Result<int>() >= -1);
-              return default(int);
+              Contract.Ensures(Contract.Result<short>() >= -1);
+              return default(short);
             }
         }
 
         [Pure]
-        public int MinorRevision
+        public short MinorRevision
         {
             get {
-              Contract.Ensures(Contract.Result<int>() >= -1);
-              return default(int);
+              Contract.Ensures(Contract.Result<short>() >= -1);
+              return default(short);
             }
         }
 
