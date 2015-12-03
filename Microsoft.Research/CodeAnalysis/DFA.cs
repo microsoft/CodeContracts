@@ -1423,7 +1423,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Pause()
         {
-          Contract.Requires(state == State.Running);
+          //Contract.Requires(state == State.Running);
 
           stopWatch.Stop();
           state = State.Paused;
@@ -1431,7 +1431,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Resume()
         {
-          Contract.Requires(state == State.Paused);
+          //Contract.Requires(state == State.Paused);
 
           stopWatch.Start();
           state = State.Running;
@@ -1593,4 +1593,48 @@ namespace Microsoft.Research.CodeAnalysis
             return new Pair<APC, APC>(from, to);
         }
     }
+
+    public class AnalysisController
+    {
+        public void ReachedStart()
+        { }
+
+        // ReachedCall should pause the analysis when the maximum number of calls is hit.
+        // All errors detected until that point should be emitted.
+        // The user should be given the option to stop or continue for another slot of calls.
+        public void ReachedCall()
+        { }
+
+        public void ReachedJoin()
+        { }
+
+        // ReachedTimeout should pause the analysis when any timeout is hit.
+        // All errors detected until that point should be emitted.
+        // The user should be given the option to stop or continue for another time slot.
+        public void ReachedTimeout()
+        { }
+
+        public void ReachedWidening()
+        { }
+
+        public void ReachedEnd()
+        { }
+
+        protected void ReportErrors()
+        { }
+
+        protected void ContinueAnalysis()
+        { }
+
+        protected void PauseAnalysis()
+        { }
+
+        protected void TerminateAnalysis()
+        {
+            throw new TerminationException();
+        }
+    }
+
+    public class TerminationException : SystemException
+    { }
 }
