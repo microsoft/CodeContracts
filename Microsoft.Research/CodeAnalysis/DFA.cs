@@ -1596,6 +1596,33 @@ namespace Microsoft.Research.CodeAnalysis
 
     public class AnalysisController
     {
+        private int symbolicTimeSlots;
+        private int symbolicTimeSlotsCounter;
+
+        private int callDepth;
+        private int callDepthCounter;
+
+        private int joinDepth;
+        private int joinDepthCounter;
+
+        private int wideningDepth;
+        private int wideningDepthCounter;
+
+        public AnalysisController(int sts, int cd, int jd, int wd)
+        {
+            symbolicTimeSlots = sts;
+            symbolicTimeSlotsCounter = 0;
+
+            callDepth = cd;
+            callDepthCounter = 0;
+
+            joinDepth = jd;
+            joinDepthCounter = 0;
+
+            wideningDepth = wd;
+            wideningDepthCounter = 0;
+        }
+
         public void ReachedStart()
         { }
 
@@ -1603,30 +1630,48 @@ namespace Microsoft.Research.CodeAnalysis
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another slot of calls.
         public void ReachedCall()
-        { }
+        {
+            callDepthCounter++;
+            if (callDepthCounter == callDepth)
+            {
+                TerminateAnalysis();
+            }
+        }
 
         public void ReachedJoin()
-        { }
+        {
+            joinDepthCounter++;
+            if (joinDepthCounter == joinDepth)
+            {
+                TerminateAnalysis();
+            }
+        }
 
         // ReachedTimeout should pause the analysis when any timeout is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another time slot.
         public void ReachedTimeout()
-        { }
+        {
+            symbolicTimeSlotsCounter++;
+            if (symbolicTimeSlotsCounter == symbolicTimeSlots)
+            {
+                TerminateAnalysis();
+            }
+        }
 
         public void ReachedWidening()
-        { }
+        {
+            wideningDepthCounter++;
+            if (wideningDepthCounter == wideningDepth)
+            {
+                TerminateAnalysis();
+            }
+        }
 
         public void ReachedEnd()
         { }
 
         protected void ReportErrors()
-        { }
-
-        protected void ContinueAnalysis()
-        { }
-
-        protected void PauseAnalysis()
         { }
 
         protected void TerminateAnalysis()

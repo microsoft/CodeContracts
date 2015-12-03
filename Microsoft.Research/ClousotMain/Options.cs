@@ -504,6 +504,18 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Analysis timeout per method (in symbolic ticks)")]
     public long symbolicTimeout = Int64.MaxValue; // todo(mchri): Decide which value makes sense
 
+    [OptionDescription("Allowed symbolic time slots per method")]
+    public int symbolicTimeSlots = 1;
+
+    [OptionDescription("Allowed call depth per method")]
+    public int callDepth = Int32.MaxValue;
+
+    [OptionDescription("Allowed join depth per method")]
+    public int joinDepth = Int32.MaxValue;
+
+    [OptionDescription("Allowed widening depth per method")]
+    public int wideningDepth = Int32.MaxValue;
+
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
     public bool adaptive = false;
 
@@ -709,6 +721,10 @@ namespace Microsoft.Research.CodeAnalysis
     public bool PrintIL { get { return this.show.Contains(ShowOptions.il); } }
     public int Timeout { get { return this.timeout; } }
     public long SymbolicTimeout { get { return this.symbolicTimeout; } }
+    public int SymbolicTimeSlots { get { return this.symbolicTimeSlots; } }
+    public int CallDepth { get { return this.callDepth; } }
+    public int JoinDepth { get { return this.joinDepth; } }
+    public int WideningDepth { get { return this.wideningDepth; } }
     public int AnalyzeTo { get { return this.analyzeTo; } }
     public int AnalyzeFrom { get { return this.analyzeFrom; } }
     public int IterationsBeforeWidening { get { return this.joinsBeforeWiden; } }

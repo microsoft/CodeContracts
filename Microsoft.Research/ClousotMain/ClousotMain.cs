@@ -2026,6 +2026,8 @@ namespace Microsoft.Research.CodeAnalysis
           var factQuery = new ComposedFactQuery<SymbolicValue>(mdriver.BasicFacts.IsUnreachable);
           var falseObligations = (IEnumerable<MinimalProofObligation>)null;
 
+          var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth);
+
           methodStats = new AnalysisStatistics();
 
           phasecount = RunAdaptiveMethodAnalysis(phasecount, mdriver);
