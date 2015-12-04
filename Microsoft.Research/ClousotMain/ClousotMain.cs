@@ -2010,6 +2010,9 @@ namespace Microsoft.Research.CodeAnalysis
         out AnalysisStatistics methodStats,
         out ContractDensity methodContractDensity)
       {
+        // Initialize analysis controller
+        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth);
+        DFARoot.AnalysisControls = analysisController;
 
         // keep density stats
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
@@ -2025,8 +2028,6 @@ namespace Microsoft.Research.CodeAnalysis
           var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
           var factQuery = new ComposedFactQuery<SymbolicValue>(mdriver.BasicFacts.IsUnreachable);
           var falseObligations = (IEnumerable<MinimalProofObligation>)null;
-
-          var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth);
 
           methodStats = new AnalysisStatistics();
 
@@ -2631,22 +2632,44 @@ namespace Microsoft.Research.CodeAnalysis
               RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
             }
           }
-          catch (TimeoutExceptionFixpointComputation e)
+          catch (Exception e)
           {
-            output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
-              this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-              this.driver.MetaDataDecoder.FullName(method),
-              analysis.Name);
+              if (e is TimeoutExceptionFixpointComputation || e is TerminationException)
+              {
+                  IMethodResult<SymbolicValue> result = null;
 
-            var result = e.Result as IMethodResult<SymbolicValue>;
-            if (result != null)
-            {
-              results.Add(result);
-              factQuery.Add(result.FactQuery);
-              RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
-            }
+                  if (e is TimeoutExceptionFixpointComputation)
+                  {
+                      output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
+                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                        this.driver.MetaDataDecoder.FullName(method),
+                        analysis.Name);
 
-            break; // we are done
+                      result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
+                  }
+                  else if (e is TerminationException)
+                  {
+                      output.WriteLine("{3} Analysis terminated for method #{1} {2}. The reason is {0}",
+                        ((TerminationException)e).Reason.ToString(),
+                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                        this.driver.MetaDataDecoder.FullName(method),
+                        analysis.Name);
+
+                      result = ((TerminationException)e).Result as IMethodResult<SymbolicValue>;
+                  }
+                  if (result != null)
+                  {
+                      results.Add(result);
+                      factQuery.Add(result.FactQuery);
+                      RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
+                  }
+
+                  break; // we are done
+              }
+              else
+              {
+                  throw e;
+              }
           }
 
           #endregion

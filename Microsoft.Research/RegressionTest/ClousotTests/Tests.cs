@@ -1527,6 +1527,17 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 300 -symbolictimeslots 3 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Collections.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest arrayrequires -suggest arraypurity -nonnull -bounds -arrays -show validations -show unreached -show progress ",
                     useContractReferenceAssemblies: true,

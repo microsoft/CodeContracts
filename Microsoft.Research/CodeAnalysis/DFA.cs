@@ -119,6 +119,10 @@ namespace Microsoft.Research.CodeAnalysis
         }
 
         #endregion
+
+        #region Analysis Controller
+        static public AnalysisController AnalysisControls;
+        #endregion
     }
 
     #region DFARoot<AState, Type> contract binding
@@ -1437,6 +1441,11 @@ namespace Microsoft.Research.CodeAnalysis
           state = State.Running;
         }
 
+        public void ResetSymbolic()
+        {
+            totalElapsedSymbolic = 0;
+        }
+
         public bool HasAlreadyTimeOut
         {
             get
@@ -1476,12 +1485,16 @@ namespace Microsoft.Research.CodeAnalysis
                     Console.WriteLine("Timeout hit: Reason {0}", reason);
                 }
 #endif
-                if (exception == null)
+                if (totalElapsedSymbolic >= symbolicTimeout)
                 {
                     // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites.
-                    exception = new TimeoutExceptionFixpointComputation(result);
+                    DFARoot.AnalysisControls.ReachedTimeout(this, result);
                 }
-                throw exception;
+                else
+                {
+                        exception = new TimeoutExceptionFixpointComputation(result);
+                        throw exception;
+                }
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -1629,42 +1642,46 @@ namespace Microsoft.Research.CodeAnalysis
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another slot of calls.
-        public void ReachedCall()
+        public void ReachedCall(object result)
         {
             callDepthCounter++;
             if (callDepthCounter == callDepth)
             {
-                TerminateAnalysis();
+                TerminateAnalysis(result, TerminationReason.ReachedCallDepth);
             }
         }
 
-        public void ReachedJoin()
+        public void ReachedJoin(object result)
         {
             joinDepthCounter++;
             if (joinDepthCounter == joinDepth)
             {
-                TerminateAnalysis();
+                TerminateAnalysis(result, TerminationReason.ReachedJoinDepth);
             }
         }
 
         // ReachedTimeout should pause the analysis when any timeout is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another time slot.
-        public void ReachedTimeout()
+        public void ReachedTimeout(TimeOutChecker checker, object result)
         {
             symbolicTimeSlotsCounter++;
             if (symbolicTimeSlotsCounter == symbolicTimeSlots)
             {
-                TerminateAnalysis();
+                TerminateAnalysis(result, TerminationReason.ReachedSymbolicTimeSlots);
+            }
+            else
+            {
+                checker.ResetSymbolic();
             }
         }
 
-        public void ReachedWidening()
+        public void ReachedWidening(object result)
         {
             wideningDepthCounter++;
             if (wideningDepthCounter == wideningDepth)
             {
-                TerminateAnalysis();
+                TerminateAnalysis(result, TerminationReason.ReachedWideningDepth);
             }
         }
 
@@ -1674,12 +1691,29 @@ namespace Microsoft.Research.CodeAnalysis
         protected void ReportErrors()
         { }
 
-        protected void TerminateAnalysis()
+        protected void TerminateAnalysis(object result, TerminationReason reason)
         {
-            throw new TerminationException();
+            throw new TerminationException(result, reason);
         }
     }
 
+    public enum TerminationReason
+    {
+        ReachedSymbolicTimeSlots,
+        ReachedCallDepth,
+        ReachedJoinDepth,
+        ReachedWideningDepth
+    };
+
     public class TerminationException : SystemException
-    { }
+    {
+        public object Result;
+        public TerminationReason Reason;
+
+        public TerminationException(object result, TerminationReason reason)
+        {
+            this.Result = result;
+            this.Reason = reason;
+        }
+    }
 }
