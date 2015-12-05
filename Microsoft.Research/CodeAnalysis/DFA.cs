@@ -300,6 +300,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (RequiresJoining(next))
             {
+                DFARoot.AnalysisControls.ReachedJoin(null); // todo(mchri): Pass in the right results
                 Pair<APC, APC> edge = new Pair<APC, APC>(current, next);
                 if (JoinStateAtBlock(edge, state))
                 {
@@ -1492,8 +1493,8 @@ namespace Microsoft.Research.CodeAnalysis
                 }
                 else
                 {
-                        exception = new TimeoutExceptionFixpointComputation(result);
-                        throw exception;
+                    exception = new TimeoutExceptionFixpointComputation(result);
+                    throw exception;
                 }
             }
 
@@ -1645,7 +1646,7 @@ namespace Microsoft.Research.CodeAnalysis
         public void ReachedCall(object result)
         {
             callDepthCounter++;
-            if (callDepthCounter == callDepth)
+            if (callDepth <= callDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedCallDepth);
             }
@@ -1654,7 +1655,7 @@ namespace Microsoft.Research.CodeAnalysis
         public void ReachedJoin(object result)
         {
             joinDepthCounter++;
-            if (joinDepthCounter == joinDepth)
+            if (joinDepth <= joinDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedJoinDepth);
             }
@@ -1666,7 +1667,7 @@ namespace Microsoft.Research.CodeAnalysis
         public void ReachedTimeout(TimeOutChecker checker, object result)
         {
             symbolicTimeSlotsCounter++;
-            if (symbolicTimeSlotsCounter == symbolicTimeSlots)
+            if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedSymbolicTimeSlots);
             }
@@ -1679,7 +1680,7 @@ namespace Microsoft.Research.CodeAnalysis
         public void ReachedWidening(object result)
         {
             wideningDepthCounter++;
-            if (wideningDepthCounter == wideningDepth)
+            if (wideningDepth <= wideningDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedWideningDepth);
             }

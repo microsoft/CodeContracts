@@ -1538,6 +1538,28 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth0.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 0",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Collections.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest arrayrequires -suggest arraypurity -nonnull -bounds -arrays -show validations -show unreached -show progress ",
                     useContractReferenceAssemblies: true,

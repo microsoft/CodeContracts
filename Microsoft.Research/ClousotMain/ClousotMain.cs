@@ -1528,6 +1528,13 @@ namespace Microsoft.Research.CodeAnalysis
         {
           output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
         }
+        catch (TerminationException e)
+        {
+          output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
+                        ((TerminationException)e).Reason.ToString(),
+                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                        this.driver.MetaDataDecoder.FullName(method));
+        }
 
 #if EXPERIMENTAL
         catch (Exception)
@@ -1545,6 +1552,14 @@ namespace Microsoft.Research.CodeAnalysis
           if (ae.InnerExceptions.All(exc => exc is TimeoutExceptionFixpointComputation))
           {
             output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
+          }
+          else if (ae.InnerExceptions.All(exc => exc is TerminationException))
+          {
+            var exceptions = ae.InnerExceptions.Where(exc => exc is TerminationException);
+            output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
+                          ((TerminationException)exceptions.First()).Reason.ToString(),
+                          this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                          this.driver.MetaDataDecoder.FullName(method));
           }
           else
           {
@@ -1930,6 +1945,10 @@ namespace Microsoft.Research.CodeAnalysis
               MethodAnalysisNonCached(method, ref analysisFlags, ref phasecount, methodFullName, cdriver, mdriver, out methodStats, out methodContractDensity);
             }
             catch (TimeoutException)
+            {
+              throw;
+            }
+            catch (TerminationException)
             {
               throw;
             }
