@@ -293,14 +293,14 @@ namespace Microsoft.Research.CodeAnalysis
         /// a) it is a join point and requires a join
         /// b) whether to just cache the state
         /// </summary>
-        public virtual void PushState(APC current, APC next, AState state)
+        public virtual void PushState(APC current, APC next, AState state, object result)
         {
             // since we store this away, we need to get an immutable version
             state = ImmutableVersion(state, next);
 
             if (RequiresJoining(next))
             {
-                DFARoot.AnalysisControls.ReachedJoin(null); // todo(mchri): Pass in the right results
+                DFARoot.AnalysisControls.ReachedJoin(result);
                 Pair<APC, APC> edge = new Pair<APC, APC>(current, next);
                 if (JoinStateAtBlock(edge, state))
                 {
@@ -483,7 +483,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                     if (IsBottom(succ, state)) continue;
 
-                    PushState(current, succ, state);
+                    PushState(current, succ, state, result);
                 }
                 timeout.CheckTimeOut("fixpoint computation", result);
 
@@ -1032,7 +1032,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <param name="edge"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public override void PushState(APC pc, APC next, AState state)
+        public override void PushState(APC pc, APC next, AState state, object result)
         {
             var edgeData = edgeDataGetter(pc, next);
             if (this.Options.Trace)
@@ -1062,7 +1062,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
             this.TraceMemoryUsageIfEnabled("after renaming", null);
 
-            base.PushState(pc, next, transformed);
+            base.PushState(pc, next, transformed, result);
         }
 
         protected override bool TryRename(APC prev, APC next, AState currState, out AState renamed)
@@ -1200,10 +1200,13 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void PushExceptionState(APC atThrow, AState state)
         {
+            throw new NotImplementedException();
+            /*
             foreach (APC target in this.cfg.ExceptionHandlers<Type, object>(atThrow, null, null))
             {
                 PushState(atThrow, target, state);
             }
+            */
         }
 
         public bool TryAStateForPostCondition(AState initialState, out AState exitState)

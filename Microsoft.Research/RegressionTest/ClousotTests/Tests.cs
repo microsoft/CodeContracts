@@ -1549,7 +1549,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth0.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepthWithLimit0.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 0",
                     useContractReferenceAssemblies: false,
                     useExe: false,

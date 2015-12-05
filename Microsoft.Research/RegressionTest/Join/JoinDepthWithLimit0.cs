@@ -18,7 +18,7 @@ using Microsoft.Research.ClousotRegression;
 
 namespace JoinDepthTest
 {
-    public class JoinDepth
+    public class JoinDepthWithLimit0
     {
         [ClousotRegressionTest]
         private void Test0(int x)
