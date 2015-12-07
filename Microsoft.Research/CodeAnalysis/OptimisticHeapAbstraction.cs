@@ -732,6 +732,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                 private int idgen;
 
+                [ContractVerification(false)]
                 private Constructor.Wrapper<T> For<T>(T value, Dictionary<T, Constructor.Wrapper<T>> cache)
                 {
                     Contract.Ensures(Contract.Result<Constructor.Wrapper<T>>() != null);
@@ -793,6 +794,7 @@ namespace Microsoft.Research.CodeAnalysis
                 /// <summary>
                 /// Returns true if the symbolic constant represents a program constant
                 /// </summary>
+                [ContractVerification(false)]
                 public bool IsConstantOrMethod(Constructor c)
                 {
                     Constructor.Wrapper<object> cwrapper = c as Constructor.Wrapper<object>;
@@ -817,6 +819,7 @@ namespace Microsoft.Research.CodeAnalysis
                 /// <summary>
                 /// Returns true if the symbolic constant represents a program constant
                 /// </summary>
+                [ContractVerification(false)]
                 public bool IsConstant(Constructor c, out Type type, out object value)
                 {
                     Constructor.Wrapper<object> cwrapper = c as Constructor.Wrapper<object>;
@@ -6175,6 +6178,7 @@ namespace Microsoft.Research.CodeAnalysis
                     return false;
                 }
 
+                [ContractVerification(false)]
                 private bool ReInitCachedDelegate(ESymValue fieldAddr, Field field, Domain data)
                 {
                     if (!IsCachedDelegate(field))

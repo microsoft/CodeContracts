@@ -2265,9 +2265,10 @@ namespace Microsoft.Contracts.Foxtrot
                     {
                         // F: no idea why this is != null
                         Contract.Assume(assignment.Target.Type != null);
+
                         if (ue.Operand is Local &&
-                            (assignment.Target.Type.IsPrimitive || assignment.Target.Type is Struct ||
-                             assignment.Target.Type.IsStructural))
+                            (assignment.Target.Type.IsPrimitive || assignment.Target.Type.IsStructural || assignment.Target.Type.IsTypeArgument ||
+                             assignment.Target.Type is Struct || assignment.Target.Type is EnumNode))
                         {
                             targetIsLocal = true;
                         }

@@ -239,6 +239,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         /// <summary>
         /// Add or materialize the map entry and add the value
         /// </summary>
+        [ContractVerification(false)]
         static internal void AddUpperBound(Variable key, Variable upperBound, Dictionary<Variable, Set<Variable>> map)
         {
             Contract.Requires(map != null);
@@ -1113,6 +1114,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             }
         }
 
+        [ContractVerification(false)]
         public void RemoveVariable(Variable var)
         {
             var toUpdate = new Dictionary<Variable, SetOfConstraints<Variable>>(this.Count);

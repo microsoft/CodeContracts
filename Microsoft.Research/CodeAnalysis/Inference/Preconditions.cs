@@ -289,7 +289,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public bool TryInferConditions(ProofObligation obl, ICodeFixesManager codefixesManager, out InferredConditions preConditions)
         {
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
             var result = inner.TryInferConditions(obl, codefixesManager, out preConditions);
             watch.Stop();

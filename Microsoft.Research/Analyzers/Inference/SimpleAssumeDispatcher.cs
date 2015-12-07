@@ -81,6 +81,7 @@ namespace Microsoft.Research.CodeAnalysis
       base.GenericAddPreconditions(obl, assumes, ProofOutcome.Top, this.entryAssumptions, this.True);
     }
 
+    [ContractVerification(false)]
     public IEnumerable<WarningContext> AddCalleeAssumes(ProofObligation obl, IEnumerable<IInferredCondition> calleeAssumes)
     {
       var md = this.mdriver;
@@ -167,6 +168,7 @@ namespace Microsoft.Research.CodeAnalysis
       return count;
     }
 
+    [ContractVerification(false)]
     public int SuggestCalleeAssumes(bool suggestCalleeAssumes, bool suggestNecessaryPostconditions, bool includeDisjunctions)
     {
       var entryPC = this.mdriver.Context.MethodContext.CFG.Entry;

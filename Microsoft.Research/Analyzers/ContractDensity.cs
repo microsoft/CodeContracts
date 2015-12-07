@@ -19,6 +19,7 @@ using System.Text;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.DataStructures;
 
+
 namespace Microsoft.Research.CodeAnalysis
 {
 

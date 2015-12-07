@@ -62,7 +62,8 @@ namespace Microsoft.Contracts.Foxtrot
         /// the extraction --- it does *not* guarantee that any contracts were found in the assembly.)
         /// </returns>
         /// </summary>
-        /// 
+        ///
+        [ContractVerification(false)]
         public static bool ExtractContracts(AssemblyNode /*!*/ assembly,
             AssemblyNode /*?*/ referenceAssembly,
             ContractNodes /*?*/ contracts,

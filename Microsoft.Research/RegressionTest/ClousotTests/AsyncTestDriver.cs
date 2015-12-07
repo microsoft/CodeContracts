@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
@@ -18,7 +19,8 @@ namespace Tests
 
         private static readonly int SingleTestMaxWait = 200000;
 
-        private readonly Action<Options, Output> action;
+        private readonly ITestOutputHelper testOutputHelper;
+        private readonly Action<ITestOutputHelper, Options, Output> action;
         private readonly IsolatedAction<Options> actionDelegate;
         private readonly Func<Options, bool> skipTest;
         private Dictionary<string, IAsyncResult> testAsyncResults;
@@ -30,14 +32,15 @@ namespace Tests
 
         public string BeginMessage;
 
-        public AsyncTestDriver(Action<Options, Output> action, Func<Options, bool> skipTest)
-          : this(action, skipTest, MaxWaitHandles_Default)
+        public AsyncTestDriver(ITestOutputHelper testOutputHelper, Action<ITestOutputHelper, Options, Output> action, Func<Options, bool> skipTest)
+          : this(testOutputHelper, action, skipTest, MaxWaitHandles_Default)
         { }
 
-        public AsyncTestDriver(Action<Options, Output> action, Func<Options, bool> skipTest, uint maxWaitHandles)
+        public AsyncTestDriver(ITestOutputHelper testOutputHelper, Action<ITestOutputHelper, Options, Output> action, Func<Options, bool> skipTest, uint maxWaitHandles)
         {
+            this.testOutputHelper = testOutputHelper;
             this.action = action;
-            actionDelegate = this.ActionAsIsolated;
+            this.actionDelegate = this.ActionAsIsolated;
             this.skipTest = skipTest;
             this.maxWaitHandles = maxWaitHandles;
         }
@@ -86,7 +89,7 @@ namespace Tests
                 if (index == waitHandles.Length)
                 {
                     index = WaitHandle.WaitAny(waitHandles, waitHandles.Length * SingleTestMaxWait);
-                    Assert.AreNotEqual(index, WaitHandle.WaitTimeout, "Previous tests timed out");
+                    Assert.NotEqual(index, WaitHandle.WaitTimeout);
                     nbWaitHandles--;
                 }
 
@@ -97,36 +100,36 @@ namespace Tests
                 waitHandles[index] = asyncResult.AsyncWaitHandle;
                 nbWaitHandles++;
 
-                Console.WriteLine(this.BeginMessage);
+                testOutputHelper.WriteLine(this.BeginMessage);
             }
             catch (Exception e)
             {
-                Console.WriteLine("EXCEPTION: {0}", e.Message);
-                Assert.Fail("Exception caught");
+                testOutputHelper.WriteLine("EXCEPTION: {0}", e.Message);
+                Assert.True(false, "Exception caught");
             }
         }
 
         private void EndTestInternal(Options options)
         {
-            Assert.IsNotNull(testAsyncResults, "Begin part of the test not selected");
+            Assert.NotNull(testAsyncResults);
 
             IAsyncResult asyncResult;
             if (!testAsyncResults.TryGetValue(options.TestName, out asyncResult))
-                Assert.Fail("Begin part of the test not run");
+                Assert.True(false, "Begin part of the test not run");
 
             testAsyncResults.Remove(options.TestName);
 
-            Assert.IsTrue(asyncResult.AsyncWaitHandle.WaitOne(SingleTestMaxWait), "Test timed out");
+            Assert.True(asyncResult.AsyncWaitHandle.WaitOne(SingleTestMaxWait), "Test timed out");
 
             Exception exceptionThrown;
             string dataReceived;
             actionDelegate.EndInvoke(out exceptionThrown, out dataReceived, asyncResult);
 
-            Console.WriteLine();
-            Console.WriteLine("This test case was performed {0}synchronously", asyncResult.CompletedSynchronously ? "" : "a");
-            Console.WriteLine();
+            testOutputHelper.WriteLine(string.Empty);
+            testOutputHelper.WriteLine("This test case was performed {0}synchronously", asyncResult.CompletedSynchronously ? "" : "a");
+            testOutputHelper.WriteLine(string.Empty);
 
-            Console.Write(dataReceived);
+            testOutputHelper.WriteLine(dataReceived);
             if (exceptionThrown != null)
                 throw exceptionThrown;
         }
@@ -137,11 +140,11 @@ namespace Tests
         {
             using (var stringWriter = new StringWriter())
             {
-                var output = new Output(String.Format("Isolated::{0}", options.TestName), stringWriter);
+                var output = new Output(testOutputHelper, String.Format("Isolated::{0}", options.TestName), stringWriter);
                 exceptionThrown = null;
                 try
                 {
-                    action(options, output);
+                    action(testOutputHelper, options, output);
                 }
                 catch (Exception e)
                 {

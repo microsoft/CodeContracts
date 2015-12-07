@@ -33,6 +33,7 @@ namespace Microsoft.Research.CodeAnalysis
             statisticsTime = new List<MethodAnalysisTimeStatistics>();
         }
 
+        [ContractVerification(false)]
         public void Add(object method, AnalysisStatistics stat, MethodClassification methodKind)
         {
             totalStatistics[method] = stat;
