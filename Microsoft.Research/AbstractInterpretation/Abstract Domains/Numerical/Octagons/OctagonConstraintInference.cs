@@ -63,7 +63,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 
         public void Assign(Expression x, Expression/*!*/ exp, INumericalAbstractDomainQuery<Variable, Expression> preState)
         {
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             CheckConsistency();

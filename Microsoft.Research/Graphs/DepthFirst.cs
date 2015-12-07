@@ -151,6 +151,7 @@ namespace Microsoft.Research.Graphs
         }
       }
 
+      [ContractVerification(false)]
       internal virtual void VisitEdge(Info<Node> sourceInfo, Node source, Edge info, Node targetNode)
       {
         Contract.Requires(sourceInfo != null);
@@ -181,6 +182,7 @@ namespace Microsoft.Research.Graphs
       /// <summary>
       /// Non-recursive version
       /// </summary>
+      [ContractVerification(false)]
       internal virtual void VisitEdgeNonRecursive(Info<Node> sourceInfo, Node source, Edge info, Node targetNode)
       {
         Contract.Requires(sourceInfo != null);
@@ -213,6 +215,7 @@ namespace Microsoft.Research.Graphs
         VisitSubGraph(node, default(Node));
       }
 
+      [ContractVerification(false)]
       public virtual void VisitSubGraph(Node node, Node parent)
       {
         if (history.ContainsKey(node)) return;
@@ -248,6 +251,7 @@ namespace Microsoft.Research.Graphs
       /// <summary>
       /// Non-recursive version
       /// </summary>
+      [ContractVerification(false)]
       public virtual void ScheduleNode(Node node, Node parent)
       {
         if (history.ContainsKey(node)) return;
@@ -311,11 +315,13 @@ namespace Microsoft.Research.Graphs
         }
       }
 
+      [ContractVerification(false)]
       public bool IsVisited(Node node)
       {
         return this.history.ContainsKey(node);
       }
 
+      [ContractVerification(false)]
       public Info<Node>/*!*/ DepthFirstInfo(Node node)
       {
         Contract.Ensures(Contract.Result<Info<Node>>() != null);

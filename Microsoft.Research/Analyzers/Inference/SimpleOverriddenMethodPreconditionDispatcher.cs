@@ -84,6 +84,7 @@ namespace Microsoft.Research.CodeAnalysis
       return i;
     }
 
+    [ContractVerification(false)]
     public int SuggestPotentialPreconditionsFor(IOutput output, APC pc, Method m)
     {
       if(output == null)

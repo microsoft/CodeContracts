@@ -12,8 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -25,26 +23,25 @@ using System.Reflection;
 using Microsoft.CSharp;
 using OutOfBand;
 using SubtypeWithoutContracts;
+using Xunit;
 
 namespace Tests {
-  [TestClass()]
   public class OutOfBandTest : DisableAssertUI {
 
     #region Tests
 
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void PositiveOutOfBandInc()
     {
       new OutOfBand.C().Inc(3);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandInc()
     {
-      new OutOfBand.C().Inc(27);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => new OutOfBand.C().Inc(27));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandInc2()
     {
       try
@@ -56,10 +53,10 @@ namespace Tests {
         // Since we are not running asmmeta on OutOfBand.Contracts and we use call-site-requires
         // we don't get the string here.
         // Assert.AreEqual("y >= 0", p.Condition);
-        Assert.AreEqual("y must be non-negative", p.User);
+        Assert.Equal("y must be non-negative", p.User);
       }
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandInc3()
     {
       try
@@ -71,76 +68,70 @@ namespace Tests {
         // Since we are not running asmmeta on OutOfBand.Contracts and we use call-site-requires
         // we don't get the string here.
         // Assert.AreEqual("y == 3", p.Condition);
-        Assert.AreEqual(null, p.User);
+        Assert.Equal(null, p.User);
       }
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void PositiveOutOfBandInvariant()
     {
       new OutOfBand.C();
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.InvariantException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandInvariant()
     {
-      new OutOfBand.C(false);
+      Assert.Throws<TestRewriterMethods.InvariantException>(() => new OutOfBand.C(false));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void PositiveOutOfBandRequires()
     {
       var c = new OutOfBand.C();
       var foo = new OutOfBand.Foo(1);
       c.FooMethodTakingTypeFromSameAssembly(foo);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PreconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandRequires1()
     {
       var c = new OutOfBand.C();
-      c.FooMethodTakingTypeFromSameAssembly(null);
+      Assert.Throws<TestRewriterMethods.PreconditionException>(() => c.FooMethodTakingTypeFromSameAssembly(null));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.PostconditionException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandRequires2()
     {
       var c = new OutOfBand.C();
       var foo = new OutOfBand.Foo(-1);
-      c.FooMethodTakingTypeFromSameAssembly(foo);
+      Assert.Throws<TestRewriterMethods.PostconditionException>(() => c.FooMethodTakingTypeFromSameAssembly(foo));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void PositiveOutOfBandRequiresWithException()
     {
       var c = new OutOfBand.C();
       c.TestRequiresWithException(1);
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(IndexOutOfRangeException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandRequiresWithException1()
     {
       var c = new OutOfBand.C();
-      c.TestRequiresWithException(-1);
+      Assert.Throws<IndexOutOfRangeException>(() => c.TestRequiresWithException(-1));
     }
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeOutOfBandRequiresWithException2()
     {
       var c = new OutOfBand.C();
-      c.TestRequiresWithException(10);
+      Assert.Throws<ArgumentOutOfRangeException>(() => c.TestRequiresWithException(10));
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void PositiveInheritedOOBInvariant()
     {
       var c = new DerivedOutOfBandC();
       c.ViolateBaseInvariant(true);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
-    [ExpectedException(typeof(TestRewriterMethods.InvariantException))]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void NegativeInheritedOOBInvariant()
     {
       var c = new DerivedOutOfBandC();
-      c.ViolateBaseInvariant(false);
+      Assert.Throws<TestRewriterMethods.InvariantException>(() => c.ViolateBaseInvariant(false));
     }
     #endregion Tests
   }

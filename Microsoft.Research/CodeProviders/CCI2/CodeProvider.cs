@@ -163,6 +163,7 @@ namespace Microsoft.Cci.Analysis
     }
 
     [Pure]
+    [ContractVerification(false)]
     private ThreeValued CheckIfClousotOption(IEnumerable<ICustomAttribute> attributes)
     {
       Contract.Requires(attributes != null);
@@ -4472,14 +4473,14 @@ namespace Microsoft.Cci.Analysis
               case PrimitiveTypeCode.UInt64: op = UnaryOperator.Conv_u8; break;
               case PrimitiveTypeCode.UInt8: op = UnaryOperator.Conv_u1; break;
               default:
-                Contract.Assume(false, "Not expected to happen. Please notify hermanv@microsoft.com with a way to reproduce this.");
+                  Contract.Assume(false, "Not expected to happen. Please create an issue at https://github.com/Microsoft/CodeContracts/issues with a way to reproduce this.");
                 break;
             }
           } else if (!sourceType.IsValueType) {
             this.result = visitor.Unboxany(pc, CciILCodeProvider.Adapt(sourceType), Unit.Value, Unit.Value, data);
             return;
           } else {
-            Contract.Assume(false, "Not expected to happen. Please notify hermanv@microsoft.com with a way to reproduce this.");
+              Contract.Assume(false, "Not expected to happen. Please create an issue at https://github.com/Microsoft/CodeContracts/issues with a way to reproduce this.");
           }
           break;
       }
@@ -9903,6 +9904,7 @@ namespace Microsoft.Cci.Analysis
       return sourceLocationProvider;
     }
 
+    [ContractVerification(false)]
     public void RegisterSourceLocationProvider(IUnitReference unit, ISourceLocationProvider sourceLocationProvider)
     {
       this.unit2SourceLocationProvider.Add(unit, sourceLocationProvider);

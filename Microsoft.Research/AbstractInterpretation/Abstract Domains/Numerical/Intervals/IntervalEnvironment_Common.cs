@@ -341,6 +341,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         /// First, it evaluates all the expressions in the current state (evaluation is side effect free).
         /// Then, it updates the values
         /// </summary>
+        [ContractVerification(false)]
         public virtual void AssignInParallel(Dictionary<Variable, FList<Variable>> sourcesToTargets, Converter<Variable, Expression> convert)
         {
             var result = NewInstance(expManager);
@@ -645,7 +646,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             Contract.Assume(exp != null);
 
 #if TRACE_PERFORMANCE
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 #endif
             // Such a common situation that we want to short cut it
@@ -2540,6 +2541,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                     duplicated = new List<Variable>();
                 }
 
+                [ContractVerification(false)]
                 public void Add(Variable v)
                 {
                     int count;
@@ -2610,6 +2612,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                     cache = new Dictionary<Variable, IType>();
                 }
 
+                [ContractVerification(false)]
                 public bool TryGetFromCache(int version, Variable v, out IType result)
                 {
                     if (version == currversion && cache.TryGetValue(v, out result))
@@ -2621,6 +2624,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                     return false;
                 }
 
+                [ContractVerification(false)]
                 public void Set(int version, Variable v, IType value)
                 {
                     if (currversion == version)

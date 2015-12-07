@@ -19,7 +19,7 @@ using System.Text;
 using System.IO;
 using System.Diagnostics.Contracts;
 using System.Xml;
-using Microsoft.Research.DataStructures;
+using Microsoft.Cci;
 using System.Diagnostics;
 
 namespace CCDoc

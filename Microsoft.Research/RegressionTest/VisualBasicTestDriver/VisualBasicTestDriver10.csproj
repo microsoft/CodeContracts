@@ -109,10 +109,6 @@
       <Project>{83e81339-dfb4-46a7-b0bf-21098b862aef}</Project>
       <Name>Microsoft.VisualBasic10</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualBasicTests\VisualBasicTests10.vbproj">
-      <Project>{94BD25EB-D608-4B82-8B07-CFF490525BCF}</Project>
-      <Name>VisualBasicTests10</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dummy.cs" />

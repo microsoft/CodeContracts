@@ -5609,6 +5609,19 @@ namespace System.Compiler{
       get{return this.metadataImportErrors;}
       set{this.metadataImportErrors = value;}
     }
+      
+    private ArrayList metadataImportWarnings;
+    /// <summary>
+    /// Holds information about non-critical errors.
+    /// For instance, lack of /names stream in the PDB is not a critical error and should be handled
+    /// gracefully.
+    /// </summary>
+    public ArrayList MetadataImportWarnings {
+      get { return this.metadataImportWarnings; }
+      set { this.metadataImportWarnings = value; }
+    }
+
+
 #endif
     protected AttributeList attributes;
     /// <summary>
@@ -7798,6 +7811,25 @@ namespace System.Compiler{
         base.DeclaringType = value;
       }
     }
+
+    private bool isTypeArgument;
+    
+    /// <summary>
+    ///     Gets a value that indicates whether the current type node is a type argument of a generic member.
+    /// </summary>
+    public bool IsTypeArgument
+    {
+      get
+      {
+        return this.isTypeArgument;
+      }
+    }
+    
+    public void MarkAsTypeArgument()
+    {
+      this.isTypeArgument = true;
+    }
+
     private TypeFlags flags;
     public TypeFlags Flags{
       get{return this.flags;}
@@ -9567,7 +9599,12 @@ namespace System.Compiler{
       CC.Contract.Assume(declaringType == null || this.DeclaringType != null);
       CC.Contract.Assume(declaringType != null || this.DeclaringType == null);
       CC.Contract.Assume(declaringType == null || this.DeclaringType == declaringType || this.DeclaringType == declaringType.Template);
-      
+
+      for (int i = 0; i < consolidatedTemplateArguments.Count; ++i)
+      {
+        consolidatedTemplateArguments[i].MarkAsTypeArgument();
+      }
+
       var duplicator = new Duplicator(module, declaringType);
       duplicator.RecordOriginalAsTemplate = true;
       duplicator.SkipBodies = true;

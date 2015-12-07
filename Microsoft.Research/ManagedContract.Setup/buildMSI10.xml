@@ -863,7 +863,7 @@
     <WixBaseDirs Include="
       .\$(TmpDir);
       .\VSIX;
-      ..\ManagedContractsVSPropertyPane\$(BinDir);
+      ..\ManagedContractsVSPropertyPane\bin\Release;
       ..\MsBuildCodeContracts\$(BinDir);
       $(CLOUSOT);
       $(FOXTROT);

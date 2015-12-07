@@ -16,66 +16,65 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests;
 using CodeUnderTest;
+using Xunit;
 
 namespace ManualInheritanceChain
 {
-  [TestClass]
   public class TestClass : DisableAssertUI
   {
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestBasePositive()
     {
       new BaseOfChain().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Positive()
     {
       new Level1().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive1()
     {
       new Level3().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive2()
     {
       new Level3().Test("foo");
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive3()
     {
       bool result = new Level3().TestIsNonEmpty("foo");
-      Assert.IsTrue(result);
+      Assert.True(result);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive4()
     {
       bool result = new Level3().TestIsNonEmpty("");
-      Assert.IsFalse(result);
+      Assert.False(result);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Positive1()
     {
       new Level4().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Positive2()
     {
       new Level4().Test("foo");
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestBaseNegative()
     {
       try
@@ -84,13 +83,13 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
+        Assert.Equal("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Negative()
     {
       try
@@ -99,13 +98,13 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
+        Assert.Equal("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative1()
     {
       try
@@ -114,13 +113,13 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
+        Assert.Equal("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative2()
     {
       try
@@ -129,13 +128,13 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: s != null", a.Message);
+        Assert.Equal("Precondition failed: s != null", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative3()
     {
       try
@@ -144,13 +143,13 @@ namespace ManualInheritanceChain
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("s != null", p.Condition);
+        Assert.Equal("s != null", p.Condition);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Negative1()
     {
       try
@@ -159,13 +158,13 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
+        Assert.Equal("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Negative2()
     {
       try
@@ -174,7 +173,7 @@ namespace ManualInheritanceChain
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: s != null", a.Message);
+        Assert.Equal("Precondition failed: s != null", a.Message);
         return;
       }
       throw new Exception();
@@ -186,78 +185,77 @@ namespace ManualInheritanceChain
 
 namespace ManualInheritanceChainWithHelpers
 {
-  [TestClass]
   public class TestClass : DisableAssertUI
   {
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestBasePositive()
     {
       new ManualInheritanceChain.BaseOfChain().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Positive1()
     {
       new Level1().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Positive2()
     {
       new Level1().TestDouble(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive1()
     {
       new Level3().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive2()
     {
       new Level3().Test("foo");
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive3()
     {
       bool result = new Level3().TestIsNonEmpty("foo");
-      Assert.IsTrue(result);
+      Assert.True(result);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive4()
     {
       bool result = new Level3().TestIsNonEmpty("");
-      Assert.IsFalse(result);
+      Assert.False(result);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Positive5()
     {
       new Level3().TestDouble(0);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Positive1()
     {
       new Level4().Test(1);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Positive2()
     {
       new Level4().Test("foo");
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Positive3()
     {
       new Level4().TestDouble(0);
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestBaseNegative()
     {
       try
@@ -266,13 +264,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
+        Assert.Equal("Precondition failed: x > 0: x must be positive\r\nParameter name: x must be positive", a.Message);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Negative1()
     {
       try
@@ -281,13 +279,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("x must be positive", a.ParamName);
+        Assert.Equal("x must be positive", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel1Negative2()
     {
       try
@@ -296,13 +294,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentOutOfRangeException a)
       {
-        Assert.AreEqual("d", a.ParamName);
+        Assert.Equal("d", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative1()
     {
       try
@@ -311,13 +309,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("x must be positive", a.ParamName);
+        Assert.Equal("x must be positive", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative2()
     {
       try
@@ -326,13 +324,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("s", a.ParamName);
+        Assert.Equal("s", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative3()
     {
       try
@@ -341,13 +339,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (TestRewriterMethods.PreconditionException p)
       {
-        Assert.AreEqual("s != null", p.Condition);
+        Assert.Equal("s != null", p.Condition);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel3Negative4()
     {
       try
@@ -356,13 +354,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentOutOfRangeException p)
       {
-        Assert.AreEqual("d", p.ParamName);
+        Assert.Equal("d", p.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Negative1()
     {
       try
@@ -371,13 +369,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentException a)
       {
-        Assert.AreEqual("x must be positive", a.ParamName);
+        Assert.Equal("x must be positive", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Negative2()
     {
       try
@@ -386,13 +384,13 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentNullException a)
       {
-        Assert.AreEqual("s", a.ParamName);
+        Assert.Equal("s", a.ParamName);
         return;
       }
       throw new Exception();
     }
 
-    [TestMethod, TestCategory("Runtime"), TestCategory("V4.0"), TestCategory("CoreTest"), TestCategory("Short")]
+    [Fact, Trait("Category", "Runtime"), Trait("Category", "V4.0"), Trait("Category", "CoreTest"), Trait("Category", "Short")]
     public void TestLevel4Negative3()
     {
       try
@@ -401,7 +399,7 @@ namespace ManualInheritanceChainWithHelpers
       }
       catch (ArgumentOutOfRangeException p)
       {
-        Assert.AreEqual("d", p.ParamName);
+        Assert.Equal("d", p.ParamName);
         return;
       }
       throw new Exception();
