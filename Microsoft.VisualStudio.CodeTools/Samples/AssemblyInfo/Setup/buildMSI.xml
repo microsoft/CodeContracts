@@ -92,11 +92,11 @@
     />
     <Error
       Condition="'$(ReleaseConfig)'==''"
-      Text="Please set ReleaseConfig to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+      Text="Please set ReleaseConfig to one of debug or release using /p:ReleaseConfig=xxx"
     />
     <Error
       Condition="'$(InvalidRelease)'=='true'"
-      Text="$(ReleaseConfig) is an invalid config: Please set to one of devlab9ts, devlab9std, msr9, msft9 using /p:ReleaseConfig=xxx"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of debug or release using /p:ReleaseConfig=xxx"
     />
     <Message
         Importance="high"

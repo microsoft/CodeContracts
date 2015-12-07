@@ -142,6 +142,7 @@ namespace Microsoft.Research.AbstractDomains
         #endregion
 
         #region AssignInParallel
+        [ContractVerification(false)]
         public SegmentLimit<Variable> AssignInParallel<Expression>(Dictionary<Variable, FList<Variable>> sourceToTargets, Converter<Variable, Expression> convert,
           IExpressionDecoder<Variable, Expression> decoder)
         {

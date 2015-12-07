@@ -5,14 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ClousotTests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
     public class Options
     {
-        private const string RelativeRoot = @"..\..\..\";
-        private const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
+        private const string RelativeRoot = @"..\..\..\..\..\";
+        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
         private static readonly string RootDirectory;
 
         static Options()
@@ -32,9 +31,10 @@ namespace Tests
         public string ContractFramework = "v3.5";
         public bool UseBinDir = false;
         public bool UseExe = false;
-        public readonly string TestGroupName;
+        private string testGroupName;
         public bool SkipForCCI2;
         public bool SkipSlicing;
+        public readonly bool SkipForNet35;
         public bool GenerateUniqueOutputName = false;
         public bool Fast = false;
 
@@ -163,24 +163,49 @@ namespace Tests
         private static Dictionary<string, GroupInfo> groupInfo = new Dictionary<string, GroupInfo>();
         private int instance;
         public int Instance { get { return instance; } }
-        public readonly GroupInfo Group;
+        public GroupInfo Group;
 
-        public Options(string testGroupName, TestContext context)
+        public string TestGroupName
         {
-            var dataRow = context.DataRow;
-            OutDirectory = context.TestDeploymentDir;
-            this.TestGroupName = testGroupName;
-            this.Group = GetTestGroup(testGroupName, RootDirectory, out instance);
-            this.SourceFile = LoadString(dataRow, "Name");
-            this.ClousotOptions = LoadString(dataRow, "Options");
-            this.UseContractReferenceAssemblies = LoadBool(dataRow, "ContractReferenceAssemblies", false);
-            this.UseExe = LoadBool(dataRow, "Exe", false);
-            compilerOptions = LoadString(dataRow, "CompilerOptions");
-            this.References = LoadList(dataRow, "References", "mscorlib.dll", "System.dll", "ClousotTestHarness.dll");
-            this.LibPaths = LoadList(dataRow, "LibPaths", MakeAbsolute(TestHarnessDirectory));
-            compilerCode = LoadString(dataRow, "Compiler", "CS");
-            this.SkipForCCI2 = LoadBool(dataRow, "SkipCCI2", false);
-            this.SkipSlicing = LoadBool(dataRow, "SkipSlicing", false);
+            get
+            {
+                return this.testGroupName;
+            }
+
+            set
+            {
+                this.testGroupName = value;
+                this.Group = GetTestGroup(testGroupName, RootDirectory, out instance);
+            }
+        }
+
+        public Options(
+            string sourceFile,
+            string clousotOptions,
+            bool useContractReferenceAssemblies,
+            bool useExe,
+            string compilerOptions,
+            string[] references,
+            string[] libPaths,
+            string compilerCode,
+            bool skipForCCI2,
+            bool skipSlicing,
+            bool skipForNet35 = false)
+        {
+            OutDirectory = Environment.CurrentDirectory;
+            this.SourceFile = sourceFile;
+            this.ClousotOptions = clousotOptions;
+            this.UseContractReferenceAssemblies = useContractReferenceAssemblies;
+            this.UseExe = useExe;
+            this.compilerOptions = compilerOptions;
+            this.References = new List<string> { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" };
+            this.References.AddRange(references);
+            this.LibPaths = new List<string> { MakeAbsolute(TestHarnessDirectory) };
+            this.LibPaths.AddRange(libPaths);
+            this.compilerCode = compilerCode;
+            this.SkipForCCI2 = skipForCCI2;
+            this.SkipSlicing = skipSlicing;
+            this.SkipForNet35 = skipForNet35;
         }
 
         private GroupInfo GetTestGroup(string testGroupName, string rootDir, out int instance)
@@ -202,7 +227,7 @@ namespace Tests
             return result;
         }
 
-        private static string LoadString(System.Data.DataRow dataRow, string name, string defaultValue = "")
+        public static string LoadString(System.Data.DataRow dataRow, string name, string defaultValue = "")
         {
             if (!ColumnExists(dataRow, name))
                 return defaultValue;
@@ -212,7 +237,7 @@ namespace Tests
             return result;
         }
 
-        private static List<string> LoadList(System.Data.DataRow dataRow, string name, params string[] initial)
+        public static List<string> LoadList(System.Data.DataRow dataRow, string name, params string[] initial)
         {
             if (!ColumnExists(dataRow, name)) return new List<string>();
             string listdata = dataRow[name] as string;
@@ -229,7 +254,7 @@ namespace Tests
             return dataRow.Table.Columns.IndexOf(name) >= 0;
         }
 
-        private static bool LoadBool(System.Data.DataRow dataRow, string name, bool defaultValue)
+        public static bool LoadBool(System.Data.DataRow dataRow, string name, bool defaultValue)
         {
             if (!ColumnExists(dataRow, name)) return defaultValue;
             var booloption = dataRow[name] as string;

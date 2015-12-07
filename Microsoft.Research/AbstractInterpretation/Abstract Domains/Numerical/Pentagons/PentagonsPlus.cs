@@ -61,6 +61,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             right.Left.AssignInParallel(sourcesToTargets, convert);
         }
 
+        [ContractVerification(false)]
         private void AssignInParallel
           (WeakUpperBoundsEqual<Variable, Expression> wubeq, WeakUpperBounds<Variable, Expression> wub,
           Dictionary<Variable, FList<Variable>> sourcesToTargets, INumericalAbstractDomain<Variable, Expression> oracleDomain)
@@ -109,6 +110,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             AssignInParallelWUBEQSpecific(wubeq, sourcesToTargets, oldToNewMap);
         }
 
+        [ContractVerification(false)]
         private void AssignInParallelWUBSpecific(WeakUpperBounds<Variable, Expression> wub, Dictionary<Variable, FList<Variable>> oldToNewMap)
         {
             Contract.Requires(wub != null);
@@ -184,6 +186,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             wub.SetElements(newConstraints);
         }
 
+        [ContractVerification(false)]
         private void AssignInParallelWUBEQSpecific(
           WeakUpperBoundsEqual<Variable, Expression> wubeq, Dictionary<Variable, FList<Variable>> sourcesToTargets,
           Dictionary<Variable, FList<Variable>> oldToNewMap)
@@ -281,7 +284,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             wubeq.SetElements(result);
         }
 
-
+        [ContractVerification(false)]
         static internal void AddUpperBound(Variable key, Variable upperBound,
           Dictionary<Variable, List<Variable>> map)
         {

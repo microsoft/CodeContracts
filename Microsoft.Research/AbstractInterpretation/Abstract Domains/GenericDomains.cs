@@ -93,6 +93,7 @@ namespace Microsoft.Research.AbstractDomains
             elements = value;
         }
 
+        [ContractVerification(false)]
         public void SetElements(List<Pair<Domain, Codomain>> value)
         {
             Contract.Requires(value != null);
@@ -116,6 +117,7 @@ namespace Microsoft.Research.AbstractDomains
             other.elements = null;
         }
 
+        [ContractVerification(false)]
         public void RemoveElement(Domain key)
         {
             version++;
@@ -123,6 +125,7 @@ namespace Microsoft.Research.AbstractDomains
         }
 
         //[SuppressMessage("Microsoft.Contracts", "Ensures-27-45")]
+        [ContractVerification(false)]
         virtual public bool TryGetValue(Domain key, out Codomain value)
         {
             Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn<Codomain>(out value) != null);
@@ -137,6 +140,7 @@ namespace Microsoft.Research.AbstractDomains
             elements.Clear();
         }
 
+        [ContractVerification(false)]
         public void AddElement(Domain key, Codomain value)
         {
             version++;
@@ -245,6 +249,7 @@ namespace Microsoft.Research.AbstractDomains
         /// <summary>
         /// The pointwise extension of the order on the elements in the codomain
         /// </summary>
+        [ContractVerification(false)]
         virtual public bool LessEqual(This right)
         {
             Contract.Requires(right != null);
@@ -336,6 +341,7 @@ namespace Microsoft.Research.AbstractDomains
             return this.Join((This)a);
         }
 
+        [ContractVerification(false)]
         public virtual This Join(This other)
         {
             Contract.Requires(other != null);
@@ -401,6 +407,7 @@ namespace Microsoft.Research.AbstractDomains
             return this.Meet((This)a);
         }
 
+        [ContractVerification(false)]
         public virtual This Meet(This right)
         {
             Contract.Requires(right != null);
@@ -442,6 +449,7 @@ namespace Microsoft.Research.AbstractDomains
         /// If not, i.e. the cardinality of the domain increases then it may not terminate.
         /// If you are in this 2nd case, please contact me (logozzo)
         /// </summary>
+        [ContractVerification(false)]
         public virtual This Widening(This right)
         {
             Contract.Requires(right != null);
@@ -493,6 +501,7 @@ namespace Microsoft.Research.AbstractDomains
         private static int MaxSize;
 #endif
 
+        [ContractVerification(false)]
         virtual public Codomain this[Domain index]
         {
             set
@@ -558,6 +567,7 @@ namespace Microsoft.Research.AbstractDomains
             }
         }
 
+        [ContractVerification(false)]
         public bool ContainsKey(Domain d)
         {
             return elements.ContainsKey(d);
@@ -678,6 +688,7 @@ namespace Microsoft.Research.AbstractDomains
         #endregion
 
         #region Add
+        [ContractVerification(false)]
         public SimpleImmutableFunctional<Domain, Codomain> Add(Domain x, Codomain y)
         {
             Contract.Ensures(Contract.Result<SimpleImmutableFunctional<Domain, Codomain>>() != null);
@@ -2882,6 +2893,7 @@ namespace Microsoft.Research.AbstractDomains
 
         #region IAbstractDomainWithRenaming<SetOfConstraints<Elements>,Elements> Members
 
+        [ContractVerification(false)]
         public SetOfConstraints<Elements> Rename(Dictionary<Elements, FList<Elements>> renaming)
         {
             if (this.IsNormal())

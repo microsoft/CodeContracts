@@ -58,7 +58,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       args = RemoveArgs(args); // To make cccheck.exe happy
 
-      var watch = new Stopwatch();
+      var watch = new CustomStopwatch();
       watch.Start();
 
       var executor = new BucketExecutor();
@@ -281,7 +281,7 @@ namespace Microsoft.Research.CodeAnalysis
 
     private int RunOneAnalysis(int id, string[] args, string selectedMethods)
     {
-      var watch = new Stopwatch(); watch.Start();
+      var watch = new CustomStopwatch(); watch.Start();
       var idStr = string.Format("[{0}] ", id);
       try
       {

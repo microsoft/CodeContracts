@@ -84,6 +84,7 @@ namespace Microsoft.Research.Graphs
       Ignore(Edges(node));
     }
 
+    [ContractVerification(false)]
     public void AddEdge(Node source, Info info, Node target)
     {
       Dictionary<Node, Edge> edges = Edges(source);
@@ -123,6 +124,7 @@ namespace Microsoft.Research.Graphs
       return result;
     }
 
+    [ContractVerification(false)]
     private Dictionary<Node, Edge>/*!*/ Edges(Node node)
     {
       Contract.Ensures(Contract.Result<Dictionary<Node, Edge>>() != null);
@@ -149,6 +151,7 @@ namespace Microsoft.Research.Graphs
       get { return this.edgemap.Keys; }
     }
 
+    [ContractVerification(false)]
     public bool Contains(Node node)
     {
       return this.edgemap.ContainsKey(node);

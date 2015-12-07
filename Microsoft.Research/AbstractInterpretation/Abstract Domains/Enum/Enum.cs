@@ -150,6 +150,7 @@ namespace Microsoft.Research.AbstractDomains
 
         #region IAbstractDomainWithRenaming<Enum<Variable, Expression>,Variable> Members
 
+        [ContractVerification(false)]
         public EnumDefined<Variable, Type, Expression> Rename(Dictionary<Variable, FList<Variable>> renaming)
         {
             if (!this.IsNormal())

@@ -3058,6 +3058,7 @@ namespace Microsoft.Research.CodeAnalysis.OutputPrettyCS
             return mCm.LookupNamespaceByName(GetNamespaceFromClass(type));
         }
 
+        [ContractVerification(false)]
         public Class ConstructClassFromMetaDataDecoder(Type type)
         {
             string name = mdDecoder.Name(type);
@@ -4507,6 +4508,7 @@ namespace Microsoft.Research.CodeAnalysis.OutputPrettyCS
               );
         }
 
+        [ContractVerification(false)]
         public Class LookupClass(Type type, bool bVisitNested)
         {
             if (!mClassesLookup.ContainsKey(type))
@@ -4523,6 +4525,7 @@ namespace Microsoft.Research.CodeAnalysis.OutputPrettyCS
             return mClassesLookup[type];
         }
 
+        [ContractVerification(false)]
         public Method LookupMethod(MethodExt mMethod)
         {
             // Ensures the declaring type has been registered
@@ -4535,6 +4538,7 @@ namespace Microsoft.Research.CodeAnalysis.OutputPrettyCS
                 return null;
         }
 
+        [ContractVerification(false)]
         public Property LookupProperty(PropertyExt prop)
         {
             // Ensures the declaring type has been registered
@@ -4547,6 +4551,7 @@ namespace Microsoft.Research.CodeAnalysis.OutputPrettyCS
                 return null;
         }
 
+        [ContractVerification(false)]
         public Class AddClass(Type type, bool bVisitNested)
         {
             Class newcl = ConstructClassFromMetaDataDecoder(type);
