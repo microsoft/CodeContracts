@@ -23,6 +23,7 @@ using Microsoft.Research.DataStructures;
 
 namespace Microsoft.Contracts.Foxtrot
 {
+    [ContractVerification(false)]
     internal class ExtractorVisitor : StandardVisitor
     {
         // Private Fields
@@ -76,7 +77,7 @@ namespace Microsoft.Contracts.Foxtrot
         /// 
         /// </summary>
         /// <param name="ultimateTargetAssembly">specify X if extracting from X.Contracts.dll, otherwise null</param>
-        [ContractVerification(true)]
+        [ContractVerification(false)]
         public ExtractorVisitor(ContractNodes /*!*/ contractNodes,
             AssemblyNode ultimateTargetAssembly,
             AssemblyNode realAssembly,

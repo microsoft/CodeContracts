@@ -388,6 +388,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
         }
 
+        [ContractVerification(false)]
         private void AddAsyncPost(List<Ensures> asyncPostconditions)
         {
             var origBody = new Block(this.checkPostBody);
@@ -591,7 +592,7 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(checkMethodTaskType != null);
             Contract.Ensures(Contract.Result<Member>() != null);
 
-            Contract.Assume(TaskExtensionsTypeNode != null, "Can't find System.Threading.Tasks.TaskExtensions type");
+            Contract.Assert(TaskExtensionsTypeNode != null, "Can't find System.Threading.Tasks.TaskExtensions type");
 
             var unwrapCandidates = TaskExtensionsTypeNode.GetMembersNamed(Identifier.For("Unwrap"));
 

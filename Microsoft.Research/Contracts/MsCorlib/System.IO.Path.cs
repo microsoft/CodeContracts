@@ -217,6 +217,7 @@ namespace System.IO
     public static string GetTempFileName()
     {
       Contract.Ensures(Contract.Result<string>() != null);
+      Contract.Ensures(Contract.Result<string>().Length >= 4, @" length >= 4 since file name must end with '.TMP'");
       Contract.EnsuresOnThrow<System.IO.IOException>(true, @"An I/O error occurs, such as no unique temporary file name is available. - or - This method was unable to create a temporary file.");
       return default(string);
     }

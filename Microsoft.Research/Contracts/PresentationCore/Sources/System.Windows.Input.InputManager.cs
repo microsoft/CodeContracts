@@ -14,6 +14,7 @@
 
 // File System.Windows.Input.InputManager.cs
 // Automatically generated contract file.
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -64,6 +65,7 @@ namespace System.Windows.Input
     {
       get
       {
+          Contract.Ensures(Contract.Result<InputManager>() != null);
         return default(System.Windows.Input.InputManager);
       }
     }
@@ -72,7 +74,8 @@ namespace System.Windows.Input
     {
       get
       {
-        return default(System.Collections.ICollection);
+          Contract.Ensures(Contract.Result<ICollection>() != null);
+          return default(System.Collections.ICollection);
       }
     }
 
@@ -99,7 +102,8 @@ namespace System.Windows.Input
     {
       get
       {
-        return default(KeyboardDevice);
+          Contract.Ensures(Contract.Result<KeyboardDevice>() != null);
+          return default(KeyboardDevice);
       }
     }
 
@@ -107,7 +111,8 @@ namespace System.Windows.Input
     {
       get
       {
-        return default(MouseDevice);
+          Contract.Ensures(Contract.Result<MouseDevice>() != null);
+          return default(MouseDevice);
       }
     }
     #endregion

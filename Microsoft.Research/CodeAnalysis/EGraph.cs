@@ -1163,6 +1163,7 @@ namespace Microsoft.Research.CodeAnalysis
             return result;
         }
 
+        [ContractVerification(false)]
         public EGraph<Constant, AbstractValue> Join(EGraph<Constant, AbstractValue> eg2, out IMergeInfo mergeInfo, bool widen)
         {
             Contract.Ensures(Contract.ValueAtReturn(out mergeInfo) != null);

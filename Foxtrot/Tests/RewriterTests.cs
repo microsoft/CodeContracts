@@ -95,6 +95,31 @@ namespace Tests
             }
         }
 
+        public static IEnumerable<object> PreconditionVisibilityTests
+        {
+            get
+            {
+                return Enumerable.Range(0, PreconditionVisibilityTestData.Count()).Select(i => new object[] { i });
+            }
+        }
+
+        private static IEnumerable<Options> PreconditionVisibilityTestData
+        {
+            get
+            {
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\Sources\AttributesAndPreconditions.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new string[0],
+                    libPaths: new[] {@"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug"},
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+            }
+        }
 
         private static IEnumerable<Options> AsyncPostconditionsData
         {
@@ -822,6 +847,17 @@ namespace Tests
                     mustSucceed: true);
                 yield return new Options(
                     sourceFile: @"Foxtrot\Tests\Sources\DefaultParameter.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new string[0],
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\Sources\DefaultExpression.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,
                     compilerOptions: null,
@@ -2004,6 +2040,19 @@ namespace Tests
         public void BuildRewriteRunRoslynTestCasesWithV45(int testIndex)
         {
             Options options = RoslynCompatibilityData.ElementAt(testIndex);
+            options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+            options.BuildFramework = @".NETFramework\v4.5";
+            options.ContractFramework = @".NETFramework\v4.0";
+            options.UseTestHarness = true;
+            TestDriver.BuildRewriteRun(_testOutputHelper, options);
+        }
+        
+        [Theory]
+        [MemberData("PreconditionVisibilityTests")]
+        [Trait("Category", "Runtime"), Trait("Category", "CoreTest"), Trait("Category", "V4.5")]
+        public void PreconditionVisibilityTests45(int testIndex)
+        {
+            Options options = PreconditionVisibilityTestData.ElementAt(testIndex);
             options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
             options.BuildFramework = @".NETFramework\v4.5";
             options.ContractFramework = @".NETFramework\v4.0";

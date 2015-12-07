@@ -1419,6 +1419,7 @@ namespace Microsoft.Research.CodeAnalysis
             assumeCache = new AssumeCache(this);
         }
 
+        [ContractVerification(false)]
         public ICFG GetCFG(Method method)
         {
             Contract.Ensures(Contract.Result<ICFG>() != null);
@@ -1493,6 +1494,7 @@ namespace Microsoft.Research.CodeAnalysis
             return invariantCache.Get(type);
         }
 
+        [ContractVerification(false)]
         public Subroutine GetRedundantInvariant(Subroutine existingInvariant, Type type)
         {
             Subroutine result;
@@ -1575,6 +1577,7 @@ namespace Microsoft.Research.CodeAnalysis
                 this.MethodCache = methodCache;
             }
 
+            [ContractVerification(false)]
             public Subroutine Get(Key key)
             {
                 if (cache.ContainsKey(key))
@@ -1588,6 +1591,7 @@ namespace Microsoft.Research.CodeAnalysis
                 return result;
             }
 
+            [ContractVerification(false)]
             public void Install(Key key, Subroutine sr)
             {
                 if (cache.ContainsKey(key))
@@ -1597,6 +1601,7 @@ namespace Microsoft.Research.CodeAnalysis
                 cache[key] = sr;
             }
 
+            [ContractVerification(false)]
             public bool Remove(Key key)
             {
                 if (cache.ContainsKey(key))
@@ -4371,6 +4376,7 @@ namespace Microsoft.Research.CodeAnalysis
                 return GetBlock(label);
             }
 
+            [ContractVerification(false)]
             internal BlockWithLabels<Label> GetBlock(Label label)
             {
                 Contract.Ensures(Contract.Result<BlockWithLabels<Label>>() != null);
@@ -5832,7 +5838,7 @@ namespace Microsoft.Research.CodeAnalysis
                 return ProtectingHandlersList(block).GetEnumerable();
             }
 
-
+            [ContractVerification(false)]
             internal BlockWithLabels<Label> CreateCatchFilterHeader(Handler handler, Label label)
             {
                 BlockWithLabels<Label> newBlock;
@@ -7129,8 +7135,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-
-
+        [ContractVerification(false)]
         public bool AddWitness(Method method, bool mayReturnNull)
         {
             methodWitnesses[method] = mayReturnNull;
@@ -7141,6 +7146,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// At the moment, we only say if a method may return null. TODO: expand to witnesses
         /// </summary>
+        [ContractVerification(false)]
         public bool GetWitnessForMayReturnNull(Method method)
         {
             bool mayReturnNull;
@@ -7296,6 +7302,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// We assume that we only call this on methods under analysis (never on methods from other assemblies)
         /// </summary>
+        [ContractVerification(false)]
         internal IEnumerable<Field> GetModifies(Method method)
         {
             Contract.Ensures(Contract.Result<IEnumerable<Field>>() != null);
@@ -7318,6 +7325,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// We assume that we only call this on methods under analysis (never on methods from other assemblies)
         /// </summary>
+        [ContractVerification(false)]
         internal IEnumerable<Field> GetReads(Method method)
         {
             // make sure we computed the modifies info
@@ -7337,6 +7345,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// We assume that we only call this on fields of types under analysis (never on fields from other assemblies)
         /// </summary>
+        [ContractVerification(false)]
         internal IEnumerable<Method> GetAffectedGetters(Field field)
         {
             Contract.Ensures(Contract.Result<IEnumerable<Method>>() != null);
@@ -7351,6 +7360,8 @@ namespace Microsoft.Research.CodeAnalysis
 
             return emptyMethods;
         }
+
+        [ContractVerification(false)]
         private Set<Field> ModifiesSet(Method method)
         {
             Contract.Ensures(Contract.Result<Set<Field>>() != null);
@@ -7365,6 +7376,7 @@ namespace Microsoft.Research.CodeAnalysis
             return result;
         }
 
+        [ContractVerification(false)]
         private Set<Field> ReadSet(Method method)
         {
             Contract.Ensures(Contract.Result<Set<Field>>() != null);
@@ -7378,6 +7390,7 @@ namespace Microsoft.Research.CodeAnalysis
             return result;
         }
 
+        [ContractVerification(false)]
         private Set<Method> PropertySet(Field field)
         {
             Contract.Ensures(Contract.Result<Set<Method>>() != null);
@@ -7413,6 +7426,7 @@ namespace Microsoft.Research.CodeAnalysis
             this.PropertySet(field).Add(method);
         }
 
+        [ContractVerification(false)]
         public void RemoveContractsFor(Method method)
         {
             if (methodCache.ContainsKey(method))

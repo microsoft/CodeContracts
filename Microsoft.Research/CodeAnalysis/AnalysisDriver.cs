@@ -286,6 +286,7 @@ namespace Microsoft.Research.CodeAnalysis
           bool removeInferredPrecondition = false);
 
         #region Class driver
+        [ContractVerification(false)]
         public IClassDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, LogOptions, MethodResult> ClassDriver(Type type, bool inferInvariantsJustForReadonlyFields = true)
         {
             WeakReference reference;
@@ -324,6 +325,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public int MaxClassDriversCount { get { return mMaxClassDriversCount; } }
 
+        [ContractVerification(false)]
         public void RemoveClassDriver(IClassDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, LogOptions, MethodResult> cdriver)
         {
             Contract.Requires(cdriver != null);
@@ -518,6 +520,7 @@ namespace Microsoft.Research.CodeAnalysis
                   });
             }
 
+            [ContractVerification(false)]
             public void MethodHasBeenAnalyzed(
               string analyze_name,
               MethodResult result,
@@ -536,6 +539,7 @@ namespace Microsoft.Research.CodeAnalysis
                 mas.AddMethodResult(analyze_name, result);
             }
 
+            [ContractVerification(false)]
             public void MethodHasBeenFullyAnalyzed(Method method)
             {
                 var isStatic = this.MetaDataDecoder.IsStatic(method);
@@ -631,6 +635,7 @@ namespace Microsoft.Research.CodeAnalysis
                 return --Pending;
             }
 
+            [ContractVerification(false)]
             public void ConstructorAnalyzed(IMethodAnalysisStatus<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, LogOptions, MethodResult> mas)
             {
                 if (!AnalysesResults.ContainsKey(mas.MethodObj)) // protect in case we analyze twice the same method
@@ -666,6 +671,7 @@ namespace Microsoft.Research.CodeAnalysis
                 Results = new Dictionary<string, MethodResult>();
             }
 
+            [ContractVerification(false)]
             public void AddMethodResult(string analyze_name, MethodResult result)
             {
                 if (!Results.ContainsKey(analyze_name))

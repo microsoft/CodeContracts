@@ -63,21 +63,24 @@ namespace CodeToolsUpdate
                 }
 
                 string vs = @"Software\Microsoft\VisualStudio";
-                RegistryKey vsKey = Registry.LocalMachine.OpenSubKey(vs);
-                if (vsKey != null)
+                using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                using (RegistryKey vsKey = baseKey.OpenSubKey(vs))
                 {
-                    foreach (string version in vsKey.GetSubKeyNames())
+                    if (vsKey != null)
                     {
-                        string vsRoot = vs + "\\" + version;
-                        if (Common.GetLocalRegistryRoot(vsRoot, "CodeTools") != null)
+                        foreach (string version in vsKey.GetSubKeyNames())
                         {
-                            if (listMode)
+                            string vsRoot = vs + "\\" + version;
+                            if (Common.GetLocalRegistryRoot(vsRoot, "CodeTools") != null)
                             {
-                                Listing(toolNames, vsRoot);
-                            }
-                            else
-                            {
-                                Update(updateMode, toolNames, vsRoot);
+                                if (listMode)
+                                {
+                                    Listing(toolNames, vsRoot);
+                                }
+                                else
+                                {
+                                    Update(updateMode, toolNames, vsRoot);
+                                }
                             }
                         }
                     }

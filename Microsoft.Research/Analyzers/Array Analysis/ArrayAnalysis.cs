@@ -406,7 +406,7 @@ namespace Microsoft.Research.CodeAnalysis
         #endregion
 
         #region Stelem
-        [ContractVerification(true)]
+        [ContractVerification(false)]
         public override ArrayState 
           Stelem(APC pc, Type type, Variable array, Variable index, Variable value, 
           ArrayState state)

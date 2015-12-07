@@ -257,6 +257,7 @@ namespace Microsoft.Research.Slicing
       }
     }
 
+    [ContractVerification(false)]
     private void Touch(Type type)
     {
       // lazyly touch types to avoid cyclic recursivity
@@ -264,12 +265,15 @@ namespace Microsoft.Research.Slicing
       if (!this.cachedTouchedTypes.ContainsKey(type))
         this.typesToTouchLater.Add(type);
     }
+
+    [ContractVerification(false)]
     private void Touch(Method method)
     {
       if (!this.cachedTouchedMethods.ContainsKey(method))
         this.methodsToTouchLater.Add(method);
     }
 
+    [ContractVerification(false)]
     private TypeChain GetTypeChain(Type type)
     {
       TypeChain chain;
@@ -442,6 +446,8 @@ namespace Microsoft.Research.Slicing
         }
       }
     }
+
+    [ContractVerification(false)]
     private MethodChain GetMethodChain(Method method)
     {
       MethodChain chain;
@@ -532,6 +538,7 @@ namespace Microsoft.Research.Slicing
       this.TouchMethodBody(method);
     }
 
+    [ContractVerification(false)]
     public Slice<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> ComputeSlice(Func<Method, ByteArray> getMethodHash)
     {
       Contract.Requires(getMethodHash != null);

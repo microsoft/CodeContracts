@@ -748,6 +748,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         /// <summary>
         /// Add or materialize the map entry and add the value
         /// </summary>
+        [ContractVerification(false)]
         static internal void AddUpperBound(Variable key, Variable upperBound,
           Dictionary<Variable, Set<Variable>> map, Dictionary<Variable, SetOfConstraints<Variable>> newCostraints)
         {

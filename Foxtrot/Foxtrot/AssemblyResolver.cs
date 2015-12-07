@@ -228,7 +228,7 @@ namespace Microsoft.Contracts.Foxtrot
                         string pdbFullName;
                         if (String.IsNullOrEmpty(ext))
                         {
-                            pdbFullName = Path.Combine(directory, Path.GetFileNameWithoutExtension(assemblyName) + ".pdb");
+                            pdbFullName = Path.ChangeExtension(fullName, ".pdb");
                         }
                         else
                         {

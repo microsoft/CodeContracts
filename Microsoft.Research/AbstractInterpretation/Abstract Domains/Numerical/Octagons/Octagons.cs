@@ -436,7 +436,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
         ///</summary>
         virtual public CoreOctagon Duplicate()
         {
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             CoreOctagon octCopy = Factory(dimensions, false);
@@ -467,7 +467,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                 return; /* There is nothing to do */
             }
 
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             var n2 = dimensions * 2;
@@ -1301,7 +1301,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 
                 countDomainOperationsInvocations++;
 
-                var watch = new Stopwatch();
+                var watch = new CustomStopwatch();
                 watch.Start();
 #endif
 
@@ -1323,7 +1323,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 #if TRACE_AD_PERFORMANCES
                 countDomainOperationsInvocations++;
 
-                var watch = new Stopwatch();
+                var watch = new CustomStopwatch();
                 watch.Start();
 #endif
 
@@ -1357,7 +1357,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 #if TRACE_AD_PERFORMANCES
                 countDomainOperationsInvocations++;
 
-                var watch = new Stopwatch();
+                var watch = new CustomStopwatch();
                 watch.Start();
 #endif
                 if (this.state == OctagonState.BOTTOM)
@@ -1399,7 +1399,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                 return result;
             }
 
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             result = HelperForLessEqual(right);
@@ -1427,7 +1427,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                 return result;
             }
 
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
 
             HelperForBinaryDomainOperation(BinaryOperationType.Join, Rational.Max, right, out result);
@@ -1455,7 +1455,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                 return result;
             }
 
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
             HelperForBinaryDomainOperation(BinaryOperationType.Meet, Rational.Min, right, out result);
 #if TRACE_AD_PERFORMANCES
@@ -1489,7 +1489,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
                 return result;
             }
 
-            var watch = new Stopwatch();
+            var watch = new CustomStopwatch();
             watch.Start();
             HelperForBinaryDomainOperation(BinaryOperationType.Widening, pointwiseWidening, prev, out result);
 

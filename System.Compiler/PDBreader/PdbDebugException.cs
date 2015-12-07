@@ -27,11 +27,25 @@ using System.IO;
 
 namespace Microsoft.Cci.Pdb
 {
-  internal class PdbDebugException : IOException
+  public class PdbDebugException : IOException
   {
     internal PdbDebugException(String format, params object[] args)
       : base(String.Format(format, args))
     {
     }
+  }
+
+  /// <summary>
+  /// The exception that is thrown when pdb does not contains /names stream.
+  /// </summary>
+  /// <remarks>
+  /// Not all pdb-s contains all possible streams required for debugging. For instance, 'stripped pdb' (see /PDBSTRIPPED at msdn)
+  /// does not have /names stream and should be handled the same way if the pdb is absent.
+  /// </remarks>
+  public class NoNameStreamPdbException : PdbDebugException
+  {
+    internal NoNameStreamPdbException()
+     : base("No '/names' stream was found in the specified pdb")
+    {}
   }
 }

@@ -4669,12 +4669,14 @@ namespace Microsoft.Research.CodeAnalysis
         }
 
         [Pure]
+        [ContractVerification(false)]
         static public bool TryInferredPureParametersMask(string methodName, out long mask)
         {
             return AdditionalPurityInfo.TryGetValue(methodName, out mask);
         }
 
         [Pure]
+        [ContractVerification(false)]
         static public void SetPureParametersMask(string methodName, long mask)
         {
             AdditionalPurityInfo[methodName] = mask;
