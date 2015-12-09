@@ -1625,6 +1625,14 @@ namespace Microsoft.Research.CodeAnalysis
         private int wideningDepth;
         private int wideningDepthCounter;
 
+        private Status status;
+
+        private enum Status
+        {
+            Paused,
+            Running
+        };
+
         public AnalysisController(int sts, int cd, int jd, int wd)
         {
             symbolicTimeSlots = sts;
@@ -1638,6 +1646,8 @@ namespace Microsoft.Research.CodeAnalysis
 
             wideningDepth = wd;
             wideningDepthCounter = 0;
+
+            status = Status.Paused;
         }
 
         public void ReachedStart()
@@ -1648,6 +1658,8 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another slot of calls.
         public void ReachedCall(object result)
         {
+            if (status == Status.Paused) { return; }
+
             callDepthCounter++;
             if (callDepth <= callDepthCounter)
             {
@@ -1657,6 +1669,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedJoin(object result)
         {
+            if (status == Status.Paused) { return; }
+
             joinDepthCounter++;
             if (joinDepth <= joinDepthCounter)
             {
@@ -1669,6 +1683,8 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another time slot.
         public void ReachedTimeout(TimeOutChecker checker, object result)
         {
+            if (status == Status.Paused) { return; }
+
             symbolicTimeSlotsCounter++;
             if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
             {
@@ -1682,6 +1698,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedWidening(object result)
         {
+            if (status == Status.Paused) { return; }
+
             wideningDepthCounter++;
             if (wideningDepth <= wideningDepthCounter)
             {
@@ -1689,11 +1707,15 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void ReachedEnd()
-        { }
+        public void Pause()
+        {
+            status = Status.Paused;
+        }
 
-        protected void ReportErrors()
-        { }
+        public void Resume()
+        {
+            status = Status.Running;
+        }
 
         protected void TerminateAnalysis(object result, TerminationReason reason)
         {

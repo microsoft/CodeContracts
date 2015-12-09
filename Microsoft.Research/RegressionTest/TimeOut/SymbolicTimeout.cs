@@ -63,22 +63,10 @@ namespace SymbolicTimeoutTest
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 123, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 137, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 151, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 165, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 179, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 193, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 165, MethodILOffset = 0)]
         private void Test1(int x)
         {
           int y = x;
-          x += 1;
-          Contract.Assert(y < x);
-          x += 1;
-          Contract.Assert(y < x);
-          x += 1;
-          Contract.Assert(y < x);
-          x += 1;
-          Contract.Assert(y < x);
-          x += 1;
-          Contract.Assert(y < x);
           x += 1;
           Contract.Assert(y < x);
           x += 1;

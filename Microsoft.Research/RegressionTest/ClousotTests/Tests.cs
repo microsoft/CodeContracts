@@ -1517,7 +1517,29 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 900 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 50 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout0.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 40 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout1.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 45 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1528,7 +1550,29 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 300 -symbolictimeslots 3 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 10 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots0.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 8 -show progress",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots1.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 9 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1549,8 +1593,52 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepthWithLimit0.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 0",
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth0.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 1",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth1.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 2",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth2.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 3",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth3.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 4",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth4.cs",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 5",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/unsafe",

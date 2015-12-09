@@ -16,11 +16,12 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace JoinDepthTest
+namespace JoinDepth
 {
-    public class JoinDepthWithLimit0
+    public class JoinDepth
     {
         [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 29, MethodILOffset = 0)]
         private void Test0(int x)
         {
             string s = "non-null";
@@ -29,6 +30,25 @@ namespace JoinDepthTest
                 s = null;
             }
             Contract.Assert(s != null);
+        }
+
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 35, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 63, MethodILOffset = 0)]
+        private void Test1(int x, int y)
+        {
+            string s0 = "non-null";
+            string s1 = "non-null";
+            if (x < 0)
+            {
+                s0 = null;
+            }
+            Contract.Assert(s0 != null);
+            if (y < 0)
+            {
+                s1 = null;
+            }
+            Contract.Assert(s1 != null);
         }
     }
 }

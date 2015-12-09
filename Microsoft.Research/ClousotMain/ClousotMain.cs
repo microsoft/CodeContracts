@@ -1596,6 +1596,7 @@ namespace Microsoft.Research.CodeAnalysis
         WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut,
           this.options.SymbolicTimeout > 0 ? this.options.SymbolicTimeout : DFARoot.DefaultSymbolicTimeOut,
           this.cancellationToken);
+        WeakestPreconditionProver.Timeout.Pause();
 
         if (!driver.MetaDataDecoder.HasBody(method))
         {
@@ -2056,15 +2057,7 @@ namespace Microsoft.Research.CodeAnalysis
 
           phasecount = RunFactsDiscoveryAnalyses(method, phasecount, methodFullName, cdriver, mdriver, results, obligations, factQuery);
 
-          DFARoot.TimeOut.Pause();
-          try
-          {
-            phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
-          }
-          finally
-          {
-            DFARoot.TimeOut.Resume();
-          }
+          phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
 
           phasecount = RunExtractMethodLogic(phasecount, mdriver, factQuery);
 
@@ -2635,15 +2628,26 @@ namespace Microsoft.Research.CodeAnalysis
               if (obl != null) obligations.Add(obl);
 
               IMethodResult<SymbolicValue> result;
-              if (factory != null)
+              try
               {
-                var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
-                result = iteratorAnalysis.Analyze();
+                DFARoot.TimeOut.Resume();
+                DFARoot.AnalysisControls.Resume();
+                if (factory != null)
+                {
+                  var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
+                  result = iteratorAnalysis.Analyze();
+                }
+                else
+                {
+                  result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery);
+                }
               }
-              else
+              finally
               {
-                result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery);
+                DFARoot.TimeOut.Pause();
+                DFARoot.AnalysisControls.Pause();
               }
+
               results.Add(result);
 
               factQuery.Add(result.FactQuery);
