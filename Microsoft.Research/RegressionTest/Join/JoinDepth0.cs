@@ -21,7 +21,7 @@ namespace JoinDepth
     public class JoinDepth
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 29, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 29, MethodILOffset = 0)]
         private void Test0(int x)
         {
             string s = "non-null";
@@ -33,7 +33,7 @@ namespace JoinDepth
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 35, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 35, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 63, MethodILOffset = 0)]
         private void Test1(int x, int y)
         {

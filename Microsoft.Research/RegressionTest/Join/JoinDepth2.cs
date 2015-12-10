@@ -34,7 +34,7 @@ namespace JoinDepth
 
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 35, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 63, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 63, MethodILOffset = 0)]
         private void Test1(int x, int y)
         {
             string s0 = "non-null";

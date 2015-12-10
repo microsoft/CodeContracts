@@ -16,39 +16,37 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace JoinDepth
+namespace WideningDepth
 {
-    public class JoinDepth
+    public class WideningDepth
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 29, MethodILOffset = 0)]
-        private void Test0(int x)
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 76, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 25, MethodILOffset = 82)]
+        public static long Exp_Reflector(long x, long y)
         {
-            string s = "non-null";
-            if (x < 0)
-            {
-                s = null;
-            }
-            Contract.Assert(s != null);
-        }
+            Contract.Requires(y >= 0L);
 
-        [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 35, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 63, MethodILOffset = 0)]
-        private void Test1(int x, int y)
-        {
-            string s0 = "non-null";
-            string s1 = "non-null";
-            if (x < 0)
+            Contract.Ensures(Contract.Result<long>() >= 0L);
+
+            long num = 1L;
+
+            while (y > 0L)
             {
-                s0 = null;
+                if ((y % 2L) == 0L)
+                {
+                    x *= x;
+                    y /= 2L;
+                }
+                else
+                {
+                    num *= x;
+                    y -= 1L;
+                }
             }
-            Contract.Assert(s0 != null);
-            if (y < 0)
-            {
-                s1 = null;
-            }
-            Contract.Assert(s1 != null);
+            Contract.Assert(y == 0L);
+
+            return num;
         }
     }
 }

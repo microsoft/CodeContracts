@@ -16,39 +16,22 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace JoinDepth
+namespace WideningDepth
 {
-    public class JoinDepth
+    public class WideningDepth
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 29, MethodILOffset = 0)]
-        private void Test0(int x)
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 13, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 33, MethodILOffset = 0)]
+        private void Test0(int x, int N)
         {
-            string s = "non-null";
-            if (x < 0)
+            int y = x;
+            while (y <= x && x <= N)
             {
-                s = null;
+                x += 1;
+                Contract.Assert(y < x);
             }
-            Contract.Assert(s != null);
-        }
-
-        [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 35, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 63, MethodILOffset = 0)]
-        private void Test1(int x, int y)
-        {
-            string s0 = "non-null";
-            string s1 = "non-null";
-            if (x < 0)
-            {
-                s0 = null;
-            }
-            Contract.Assert(s0 != null);
-            if (y < 0)
-            {
-                s1 = null;
-            }
-            Contract.Assert(s1 != null);
+            Contract.Assert(y <= x);
         }
     }
 }

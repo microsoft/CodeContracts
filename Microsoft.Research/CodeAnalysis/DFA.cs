@@ -300,9 +300,8 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (RequiresJoining(next))
             {
-                DFARoot.AnalysisControls.ReachedJoin(result);
                 Pair<APC, APC> edge = new Pair<APC, APC>(current, next);
-                if (JoinStateAtBlock(edge, state))
+                if (JoinStateAtBlock(edge, state, result))
                 {
                     this.pending.Add(next);
                 }
@@ -351,7 +350,7 @@ namespace Microsoft.Research.CodeAnalysis
 #endif
         #endregion
 
-        protected virtual bool JoinStateAtBlock(Pair<APC, APC> edge, AState state)
+        protected virtual bool JoinStateAtBlock(Pair<APC, APC> edge, AState state, object result)
         {
             AState/*?*/ existing;
 
@@ -361,6 +360,15 @@ namespace Microsoft.Research.CodeAnalysis
 
                 Contract.Assume(widenStrategy != null, "At this point, the widening strategy has already been set");
                 bool widen = widenStrategy.WantToWiden(edge.One, edge.Two, this.IsBackEdge(edge.One, edge.Two));
+
+                if (widen)
+                {
+                    DFARoot.AnalysisControls.ReachedWidening(result);
+                }
+                else
+                {
+                    DFARoot.AnalysisControls.ReachedJoin(result);
+                }
 
                 bool changed = Join(edge, state, existing, out joined, widen);
 
