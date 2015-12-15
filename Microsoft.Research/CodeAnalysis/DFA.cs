@@ -14,6 +14,7 @@ namespace Microsoft.Research.CodeAnalysis
     using SubroutineContext = FList<Microsoft.Research.DataStructures.STuple<CFGBlock, CFGBlock, string>>;
     using System.Diagnostics.Contracts;
     using System.Threading;
+    using System.Linq;
 
     public class DFAOptions
     {
@@ -1633,6 +1634,9 @@ namespace Microsoft.Research.CodeAnalysis
         private int wideningDepth;
         private int wideningDepthCounter;
 
+        private long imprecisionCounter;
+        private Dictionary<string, long> imprecisions = new Dictionary<string, long>();
+
         private Status status;
 
         private enum Status
@@ -1669,10 +1673,33 @@ namespace Microsoft.Research.CodeAnalysis
             if (status == Status.Paused) { return; }
 
             callDepthCounter++;
+
+            ReachedPossibleImprecision(result, "call");
+
             if (callDepth <= callDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedCallDepth);
             }
+        }
+
+        public void ReachedPossibleImprecision(object result, string source)
+        {
+          Contract.Requires(source != null);
+
+          imprecisionCounter++;
+          imprecisions[source]++;
+        }
+
+        public void PrintStatisticsAsCSV(TextWriter wr, IEnumerable<string> sources, bool printHeader = true)
+        {
+          Contract.Requires(wr != null && sources != null);
+
+          var keys = imprecisions.Keys;
+          if (printHeader)
+          {
+            wr.WriteLine(string.Join(", ", sources));
+          }
+          wr.WriteLine(string.Join(", ", sources.Select(k => { long v; if (imprecisions.TryGetValue(k, out v)) { return v; } else { return 0; } })));
         }
 
         public void ReachedJoin(object result)
@@ -1680,6 +1707,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (status == Status.Paused) { return; }
 
             joinDepthCounter++;
+
+            ReachedPossibleImprecision(result, "join");
+
             if (joinDepth <= joinDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedJoinDepth);
@@ -1709,6 +1739,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (status == Status.Paused) { return; }
 
             wideningDepthCounter++;
+
+            ReachedPossibleImprecision(result, "widening");
+
             if (wideningDepth <= wideningDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedWideningDepth);
