@@ -3494,7 +3494,6 @@ namespace Microsoft.Contracts.Foxtrot
 
                 // now we have an auto prop
                 // make sure we have a setter too
-
                 Property prop = getter.DeclaringMember as Property;
                 if (prop == null) return;
 
