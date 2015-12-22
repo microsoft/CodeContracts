@@ -36,7 +36,7 @@ namespace Microsoft.Research.CodeAnalysis
 
   public enum SuggestionsAsWarnings { requires, propertyensures, methodensures, nonnullreturn, necessaryensures, arrayrequires, arraypurity, objectinvariants, objectinvariantsforward, assumes, codefixes, codefixesshort, readonlyfields, requiresbase, callinvariants, calleeassumes, redundantassume, unusedsuppress, asserttocontracts }  
 
-  public enum StatOptions { valid, time, mem, perMethod, arithmetic, asserts, methodasserts, slowmethods, abstractdomains, program, egraph, phases, inference, timeperMethod }
+  public enum StatOptions { valid, time, mem, perMethod, arithmetic, asserts, methodasserts, slowmethods, abstractdomains, program, egraph, phases, inference, timeperMethod, controller }
 
   public enum CheckOptions { assertions, exists, assumptions, falseassumptions, inferredrequires, conditionsvalidity, falsepostconditions, entrycontradictions }
 
@@ -215,7 +215,7 @@ namespace Microsoft.Research.CodeAnalysis
     public List<ShowOptions> show = new List<ShowOptions>(new ShowOptions[] { ShowOptions.errors });
 
     [DoNotHashInCache]
-    public List<StatOptions> stats = new List<StatOptions>(new StatOptions[]{StatOptions.valid, StatOptions.time, StatOptions.inference});
+    public List<StatOptions> stats = new List<StatOptions>(new StatOptions[]{StatOptions.valid, StatOptions.time, StatOptions.inference});  // TODO(wuestholz): Maybe include 'StatOptions.controller' here.
 
     #region Inference options
 
@@ -1221,6 +1221,7 @@ namespace Microsoft.Research.CodeAnalysis
     public bool PrintEGraphStats { get { return this.stats.Contains(StatOptions.egraph); } }
     public bool PrintPhaseStats { get { return this.stats.Contains(StatOptions.phases); } }
     public bool PrintInferenceStats { get { return this.stats.Contains(StatOptions.inference); } }
+    public bool PrintControllerStats { get { return this.stats.Contains(StatOptions.controller); } }
 
     #endregion
 

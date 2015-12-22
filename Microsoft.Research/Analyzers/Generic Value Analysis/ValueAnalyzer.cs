@@ -44,6 +44,8 @@ namespace Microsoft.Research.CodeAnalysis
 
       abstract public string Name { get; }
 
+      public Func<object, int> FailingObligations { get; set; }
+
       public bool ObligationsEnabled
       {
         get

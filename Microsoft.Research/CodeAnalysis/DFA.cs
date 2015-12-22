@@ -16,6 +16,7 @@ namespace Microsoft.Research.CodeAnalysis
     using SubroutineContext = FList<Microsoft.Research.DataStructures.STuple<CFGBlock, CFGBlock, string>>;
     using System.Diagnostics.Contracts;
     using System.Threading;
+    using System.Linq;
 
     public class DFAOptions
     {
@@ -418,98 +419,106 @@ namespace Microsoft.Research.CodeAnalysis
             return MutableVersion(state, pc);
         }
 
+        protected bool FixpointComputed;
 
         protected virtual void ComputeFixpoint(object result)
         {
-            var timeout = TimeOut;
-
-            if (this.Options.EnforceFairJoin)
+            try
             {
-                widenStrategy = new EdgeBasedWidening(this.Options.IterationsBeforeWidening);
-            }
-            else
-            {
-                widenStrategy = new BlockBasedWidening(this.Options.IterationsBeforeWidening);
-            }
-
-            while (pending.Count > 0)
-            {
-                var next = pending.Pull();
-                var state = MutableVersion(joinState[next], next);
-                var alreadyCached = true;
-                APC current;
-
-                if (Options.Trace)
+                var timeout = TimeOut;
+               
+                if (this.Options.EnforceFairJoin)
                 {
-                    Console.WriteLine("State before {0}", next);
-                    Dump(state);
+                    widenStrategy = new EdgeBasedWidening(this.Options.IterationsBeforeWidening);
                 }
-
-                if (this.Options.TraceTimePerInstruction)
+                else
                 {
-                    this.timeCounter.Start();
+                    widenStrategy = new BlockBasedWidening(this.Options.IterationsBeforeWidening);
                 }
-
-                do
+               
+                while (pending.Count > 0)
                 {
-                    current = next;
-
-                    if (IsBottom(current, state))
-                    {
-                        goto nextPending;
-                    }
-
-                    if (!alreadyCached && this.CacheThisPC(current))
-                    {
-                        state = this.Cache(current, state);
-                    }
-
-                    Method calledMethod;
-                    bool isNewObj, isVirtual;
-                    if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
-                    {
-                        DFARoot.AnalysisControls.ReachedCall(result);
-                    }
-                    state = Transfer(current, state);
-
-                    timeout.SpendSymbolicTime(1);
-
+                    var next = pending.Pull();
+                    var state = MutableVersion(joinState[next], next);
+                    var alreadyCached = true;
+                    APC current;
+               
                     if (Options.Trace)
                     {
-                        Console.WriteLine("State after {0}", current);
+                        Console.WriteLine("State before {0}", next);
                         Dump(state);
                     }
-
+               
                     if (this.Options.TraceTimePerInstruction)
                     {
-                        this.timeCounter.Stop();
-                        Console.WriteLine("Elapsed time for {0} : {1}", current, timeCounter);
+                        this.timeCounter.Start();
                     }
-
-                    this.TraceMemoryUsageIfEnabled("after instruction", current);
-
-                    // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
+               
+                    do
+                    {
+                        current = next;
+               
+                        if (IsBottom(current, state))
+                        {
+                            goto nextPending;
+                        }
+               
+                        if (!alreadyCached && this.CacheThisPC(current))
+                        {
+                            state = this.Cache(current, state);
+                        }
+               
+                        Method calledMethod;
+                        bool isNewObj, isVirtual;
+                        if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
+                        {
+                            DFARoot.AnalysisControls.ReachedCall(result);
+                        }
+                        state = Transfer(current, state);
+               
+                        timeout.SpendSymbolicTime(1);
+               
+                        if (Options.Trace)
+                        {
+                            Console.WriteLine("State after {0}", current);
+                            Dump(state);
+                        }
+               
+                        if (this.Options.TraceTimePerInstruction)
+                        {
+                            this.timeCounter.Stop();
+                            Console.WriteLine("Elapsed time for {0} : {1}", current, timeCounter);
+                        }
+               
+                        this.TraceMemoryUsageIfEnabled("after instruction", current);
+               
+                        // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
+                        timeout.CheckTimeOut("fixpoint computation", result);
+               
+                        alreadyCached = false;
+                    } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
+               
+               
+                    foreach (APC succ in this.Successors(current).AssumeNotNull())
+                    {
+                        if (IsBottom(succ, state)) continue;
+               
+                        PushState(current, succ, state, result);
+                    }
                     timeout.CheckTimeOut("fixpoint computation", result);
-
-                    alreadyCached = false;
-                } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
-
-
-                foreach (APC succ in this.Successors(current).AssumeNotNull())
-                {
-                    if (IsBottom(succ, state)) continue;
-
-                    PushState(current, succ, state, result);
+               
+                nextPending:
+                    ;
                 }
-                timeout.CheckTimeOut("fixpoint computation", result);
-
-            nextPending:
-                ;
+               
+                if (Options.Trace)
+                {
+                    Console.WriteLine("DFA done");
+                }
             }
-
-            if (Options.Trace)
+            finally
             {
-                Console.WriteLine("DFA done");
+                FixpointComputed = true;
             }
         }
 
@@ -637,7 +646,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         virtual protected void CachePreState(APC apc, AState value)
         {
-            preStateCache.Add(apc, value);
+            Debug.Assert(FixpointComputed, "fixpoint not yet computed");
+            if (FixpointComputed)
+            {
+                preStateCache.Add(apc, value);
+            }
         }
 
         /// <summary>
@@ -830,8 +843,12 @@ namespace Microsoft.Research.CodeAnalysis
                 result = MutableVersion(preState, apc);
                 result = this.Transfer(apc, result);
             }
-            // cache
-            postState.Add(apc, result);
+            Debug.Assert(FixpointComputed, "fixpoint not yet computed");
+            if (FixpointComputed)
+            {
+                // cache
+                postState.Add(apc, result);
+            }
             return true;
         }
 
@@ -1340,7 +1357,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Private state
 
-        private enum State { Stopped, Running, Paused }
+        public enum State { Stopped, Running, Paused }
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
@@ -1349,7 +1366,7 @@ namespace Microsoft.Research.CodeAnalysis
         readonly private int timeout;                                    // The seconds for the timeout
         readonly private long symbolicTimeout;                           // The ticks for the symbolic timeout
         private TimeoutExceptionFixpointComputation exception;  // We want to throw one exception per TimeOutChecker instance
-        private State state;
+        public State CurrentState;
 
         #endregion
 
@@ -1372,11 +1389,11 @@ namespace Microsoft.Research.CodeAnalysis
             if (start)
             {
                 stopWatch.Start();
-                state = State.Running;
+                CurrentState = State.Running;
             }
             else
             {
-                state = State.Stopped;
+                CurrentState = State.Stopped;
             }
             timeout = seconds;
             symbolicTimeout = symbolicTicks;
@@ -1386,7 +1403,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void SpendSymbolicTime(long amount)
         {
-            if (state == State.Running)
+            if (CurrentState == State.Running)
             {
                 Contract.Assert(stopWatch.IsRunning);
                 stopWatch.SpendSymbolicTime(amount);
@@ -1395,11 +1412,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Start()
         {
-            switch (state)
+            switch (CurrentState)
             {
                 case State.Stopped:
                     {
-                        state = State.Running;
+                        CurrentState = State.Running;
                         stopWatch.Start();
                     }
                     break;
@@ -1419,11 +1436,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Stop()
         {
-            switch (state)
+            switch (CurrentState)
             {
                 case State.Running:
                     {
-                        state = State.Stopped;
+                        CurrentState = State.Stopped;
 
                         stopWatch.Stop();
                         totalElapsed += stopWatch.Elapsed;
@@ -1450,7 +1467,7 @@ namespace Microsoft.Research.CodeAnalysis
           //Contract.Requires(state == State.Running);
 
           stopWatch.Stop();
-          state = State.Paused;
+          CurrentState = State.Paused;
         }
 
         public void Resume()
@@ -1458,7 +1475,7 @@ namespace Microsoft.Research.CodeAnalysis
           //Contract.Requires(state == State.Paused);
 
           stopWatch.Start();
-          state = State.Running;
+          CurrentState = State.Running;
         }
 
         public void ResetSymbolic()
@@ -1480,7 +1497,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         public void CheckTimeOut(string reason = "", object result = null)
         {
-            if (state == State.Stopped || state == State.Paused) { return; }
+            if (CurrentState == State.Stopped || CurrentState == State.Paused) { return; }
 
             this.Start();
 
@@ -1641,15 +1658,28 @@ namespace Microsoft.Research.CodeAnalysis
         private int wideningDepth;
         private int wideningDepthCounter;
 
-        private Status status;
+        private long imprecisionCounter;
+        private Dictionary<string, long> imprecisionsPerSource = new Dictionary<string, long>();
 
-        private enum Status
+        struct Imprecision
+        {
+          public string Source;
+          public int ErrorsBefore;
+        }
+        
+        private Dictionary<long, Imprecision> imprecisions = new Dictionary<long, Imprecision>();
+
+        private Func<object, int> failingObligations;
+
+        public State CurrentState;
+
+        public enum State
         {
             Paused,
             Running
         };
 
-        public AnalysisController(int sts, int cd, int jd, int wd)
+        public AnalysisController(int sts, int cd, int jd, int wd, Func<object, int> fo)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
@@ -1663,7 +1693,9 @@ namespace Microsoft.Research.CodeAnalysis
             wideningDepth = wd;
             wideningDepthCounter = 0;
 
-            status = Status.Paused;
+            failingObligations = fo;
+
+            CurrentState = State.Paused;
         }
 
         public void ReachedStart()
@@ -1674,20 +1706,78 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another slot of calls.
         public void ReachedCall(object result)
         {
-            if (status == Status.Paused) { return; }
+            if (CurrentState == State.Paused) { return; }
 
             callDepthCounter++;
+
+            ReachedPossibleImprecision(result, "call");
+
             if (callDepth <= callDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedCallDepth);
             }
         }
 
+        public void ReachedPossibleImprecision(object result, string source)
+        {
+          Contract.Requires(source != null);
+
+          if (CurrentState == State.Paused) { return; }
+
+          imprecisionCounter++;
+          long v;
+          if (imprecisionsPerSource.TryGetValue(source, out v))
+          {
+            imprecisionsPerSource[source] = v + 1;
+          }
+          else
+          {
+            imprecisionsPerSource[source] = 1;
+          }
+
+          if (failingObligations != null)
+          {
+            var impr = new Imprecision();
+            impr.Source = source;
+            // TODO(wuestholz): Uncomment the following line.
+            // impr.ErrorsBefore = failingObligations(result);
+            imprecisions[imprecisionCounter] = impr;
+          }
+        }
+
+        public void PrintStatisticsAsCSV(ISimpleLineWriter wr, IEnumerable<string> sources, bool printHeader = true)
+        {
+          Contract.Requires(wr != null && sources != null);
+
+          var keys = imprecisionsPerSource.Keys;
+          if (printHeader)
+          {
+            wr.WriteLine(string.Join(", ", sources));
+          }
+          wr.WriteLine(string.Join(", ", sources.Select(k => { long v; if (imprecisionsPerSource.TryGetValue(k, out v)) { return v; } else { return 0; } })));
+
+          wr.WriteLine("");
+          if (printHeader)
+          {
+            wr.WriteLine(string.Format("{0}, {1}, {2}", "step", "errors", "source"));
+          }
+          var steps = imprecisions.Keys.ToList();
+          steps.Sort();
+          foreach (var step in steps)
+          {
+            var impr = imprecisions[step];
+            wr.WriteLine(string.Format("{0}, {1}, {2}", step, impr.ErrorsBefore, impr.Source));
+          }
+        }
+
         public void ReachedJoin(object result)
         {
-            if (status == Status.Paused) { return; }
+            if (CurrentState == State.Paused) { return; }
 
             joinDepthCounter++;
+
+            ReachedPossibleImprecision(result, "join");
+
             if (joinDepth <= joinDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedJoinDepth);
@@ -1699,7 +1789,7 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another time slot.
         public void ReachedTimeout(TimeOutChecker checker, object result)
         {
-            if (status == Status.Paused) { return; }
+            if (CurrentState == State.Paused) { return; }
 
             symbolicTimeSlotsCounter++;
             if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
@@ -1714,9 +1804,12 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedWidening(object result)
         {
-            if (status == Status.Paused) { return; }
+            if (CurrentState == State.Paused) { return; }
 
             wideningDepthCounter++;
+
+            ReachedPossibleImprecision(result, "widening");
+
             if (wideningDepth <= wideningDepthCounter)
             {
                 TerminateAnalysis(result, TerminationReason.ReachedWideningDepth);
@@ -1725,12 +1818,12 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Pause()
         {
-            status = Status.Paused;
+            CurrentState = State.Paused;
         }
 
         public void Resume()
         {
-            status = Status.Running;
+            CurrentState = State.Running;
         }
 
         protected void TerminateAnalysis(object result, TerminationReason reason)
