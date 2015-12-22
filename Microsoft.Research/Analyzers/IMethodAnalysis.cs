@@ -28,6 +28,8 @@ namespace Microsoft.Research.CodeAnalysis
 
     double Validate(IOutputResults output, ContractInferenceManager inferenceManager, IFactQuery<HighLevelExpression, Variable> query);
 
+    void ResetCachedOutcomes();
+
     bool PCWithProofObligation(APC pc);
 
     /// <summary>
@@ -60,6 +62,11 @@ namespace Microsoft.Research.CodeAnalysis
       Contract.Requires(inferenceManager != null);
       Contract.Requires(query != null);
 
+      throw new NotImplementedException();
+    }
+
+    public void ResetCachedOutcomes()
+    {
       throw new NotImplementedException();
     }
 
@@ -107,6 +114,8 @@ namespace Microsoft.Research.CodeAnalysis
   {
     string Name { get; }
     bool ObligationsEnabled { get; }
+
+    Func<object, int> FailingObligations { get; set; }
 
     /// <summary>
     /// Return false if options or args were wrong and initialization failed

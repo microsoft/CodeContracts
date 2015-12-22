@@ -1137,6 +1137,11 @@ namespace Microsoft.Research.CodeAnalysis
             this.cacheManager.DumpStatistics(output, options);
           }
         }
+
+        if (options.PrintControllerStats)
+        {
+          DFARoot.AnalysisControls.PrintStatisticsAsCSV(output, new List<string> { "join", "widening", "call" });
+        }
       }
 
       private int ComputeReturnCode()
@@ -2030,8 +2035,11 @@ namespace Microsoft.Research.CodeAnalysis
         out AnalysisStatistics methodStats,
         out ContractDensity methodContractDensity)
       {
+        var results = new List<IMethodResult<SymbolicValue>>(options.Analyses.Count);
+        var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
+
         // Initialize analysis controller
-        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth);
+        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); });
         DFARoot.AnalysisControls = analysisController;
 
         // keep density stats
@@ -2044,12 +2052,12 @@ namespace Microsoft.Research.CodeAnalysis
 
         try
         {
-          var results = new List<IMethodResult<SymbolicValue>>(options.Analyses.Count);
-          var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
           var factQuery = new ComposedFactQuery<SymbolicValue>(mdriver.BasicFacts.IsUnreachable);
           var falseObligations = (IEnumerable<MinimalProofObligation>)null;
 
           methodStats = new AnalysisStatistics();
+
+          cachedExplicitAssertions = null;  // Invalidate the cache.
 
           phasecount = RunAdaptiveMethodAnalysis(phasecount, mdriver);
 
@@ -2514,6 +2522,48 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
+      private int FailingObligations(
+          IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
+          List<IMethodResult<SymbolicValue>> results,
+          List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
+          IOutputFullResults<Method, Assembly> output)
+      {
+        int errors = 0;
+        
+        AssertionStatistics dummy;
+        var explicitAssertions = ExplicitAssertions(mdriver, out dummy);
+
+        var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
+
+        // Create the contract inference manager
+        var inferenceManager = CreateContractInferenceManager(MergeIntoAFlatList(obligations, explicitAssertions), facts, mdriver, output);
+
+        obligations.ForEach(obl => obl.ResetCachedOutcomes());
+        
+        // validate implicit obligations
+        foreach (var obl in obligations)
+        {
+          obl.Validate(output, inferenceManager, facts);
+
+          if (0 < obl.Statistics.False || 0 < obl.Statistics.Top)
+          {
+            errors++;
+          }
+        }
+
+        if (options.CheckAssertions)
+        {
+          var stats = AssertionFinder.ValidateAssertions(explicitAssertions, facts, inferenceManager, mdriver, output);
+
+          if (0 < stats.False || 0 < stats.Top)
+          {
+            errors++;
+          }
+        }
+
+        return errors;
+      }
+
       // Check the proof obligations
       private int RunProofObligationsChecking(
           int phasecount,
@@ -2529,12 +2579,14 @@ namespace Microsoft.Research.CodeAnalysis
         falseObligations = null;
 
         // Collect explicit obligations - we need them for precondition inference
-        var explicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
+        var explicitAssertions = ExplicitAssertions(mdriver, out localAssertStats);
 
         var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
 
         // Create the contract inference manager
         inferenceManager = CreateContractInferenceManager(MergeIntoAFlatList(obligations, explicitAssertions), facts, mdriver, output);
+
+        obligations.ForEach(obl => obl.ResetCachedOutcomes());
 
         // validate implicit obligations
         foreach (var obl in obligations)
@@ -2565,6 +2617,43 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
+      AssertionFinder.AssertionObligations<SymbolicValue> cachedExplicitAssertions;
+      AssertionStatistics cachedLocalAssertStats;
+
+      private AssertionFinder.AssertionObligations<SymbolicValue> ExplicitAssertions(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, out AssertionStatistics localAssertStats)
+      {
+        if (cachedExplicitAssertions != null)
+        {
+          localAssertStats = cachedLocalAssertStats;
+          return cachedExplicitAssertions;
+        }
+        try
+        {
+          if (DFARoot.TimeOut.CurrentState == TimeOutChecker.State.Running)
+          {
+            DFARoot.TimeOut.Pause();
+          }
+          if (DFARoot.AnalysisControls.CurrentState == AnalysisController.State.Running)
+          {
+            DFARoot.AnalysisControls.Pause();
+          }
+          cachedExplicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
+        }
+        finally
+        {
+          if (DFARoot.TimeOut.CurrentState == TimeOutChecker.State.Paused)
+          {
+            DFARoot.TimeOut.Resume();
+          }
+          if (DFARoot.AnalysisControls.CurrentState == AnalysisController.State.Paused)
+          {
+            DFARoot.AnalysisControls.Resume();
+          }
+        }
+        cachedLocalAssertStats = localAssertStats;
+        return cachedExplicitAssertions;
+      }
+
       private int RunFactsDiscoveryAnalyses(
           Method method,
           int phasecount,
@@ -2573,7 +2662,8 @@ namespace Microsoft.Research.CodeAnalysis
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
           List<IMethodResult<SymbolicValue>> results,
           List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
-          ComposedFactQuery<SymbolicValue> factQuery)
+          ComposedFactQuery<SymbolicValue> factQuery,
+          Func<object, int> failingObligations = null)
       {
         var moveNextStartState = mdriver.MetaDataDecoder.MoveNextStartState(method);
 
@@ -2639,6 +2729,7 @@ namespace Microsoft.Research.CodeAnalysis
                 }
                 else
                 {
+                  analysis.FailingObligations = failingObligations;
                   result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery);
                 }
               }

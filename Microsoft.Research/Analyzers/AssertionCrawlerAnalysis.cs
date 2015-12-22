@@ -1191,6 +1191,14 @@ skip:
         return 0.0;
       }
 
+      public void ResetCachedOutcomes()
+      {
+        foreach (var obl in this.assertions)
+        {
+          obl.ResetCachedOutcome();
+        }
+      }
+
       public bool PCWithProofObligation(APC pc)
       {
         foreach (var obl in this.assertions)
