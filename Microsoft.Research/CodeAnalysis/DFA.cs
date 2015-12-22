@@ -9,6 +9,8 @@ using System.IO;
 
 using Microsoft.Research.DataStructures;
 
+using System.Compiler;
+
 namespace Microsoft.Research.CodeAnalysis
 {
     using SubroutineContext = FList<Microsoft.Research.DataStructures.STuple<CFGBlock, CFGBlock, string>>;
@@ -462,6 +464,12 @@ namespace Microsoft.Research.CodeAnalysis
                         state = this.Cache(current, state);
                     }
 
+                    Method calledMethod;
+                    bool isNewObj, isVirtual;
+                    if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
+                    {
+                        DFARoot.AnalysisControls.ReachedCall(result);
+                    }
                     state = Transfer(current, state);
 
                     timeout.SpendSymbolicTime(1);

@@ -302,6 +302,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+      <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
+      <Name>System.CompilerCC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AnalysisTypes\AnalysisTypes.csproj">
       <Project>{EA595150-C741-411A-940E-4A9D5FDAE4FA}</Project>
       <Name>AnalysisTypes</Name>
