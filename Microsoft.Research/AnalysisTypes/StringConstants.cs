@@ -10,8 +10,6 @@ namespace Microsoft.Research.CodeAnalysis
 {
     public static class StringConstants
     {
-        public const string ClousotWait = "wait";
-
         public const string StringSeparator = "$%^";
 
         public static class Contract
