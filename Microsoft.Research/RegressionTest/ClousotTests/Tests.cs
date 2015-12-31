@@ -48,9 +48,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\AssumeInvariant.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show unreached -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -59,9 +57,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Herman.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -70,9 +66,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\Domino.cs",
                     clousotOptions: @"-infer autopropertiesensures -show unreached -arrays -NonNull -Bounds -bounds:type=subpolyhedra,reduction=simplex,noObl -show progress -arithmetic:obl=intOverflow -adaptive -enum -check assumptions -suggest asserttocontracts -check conditionsvalidity -missingPublicRequiresAreErrors -suggest necessaryensures -suggest readonlyfields  -infer requires -infer methodensures -infer objectinvariants -premode:combined -warnifsuggest requires -suggest codefixes -show progress ",
@@ -82,8 +76,6 @@ namespace Tests
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false,
                     skipForNet35: true);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\MultidimArrays.cs",
@@ -93,9 +85,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\NonNull1.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
@@ -104,9 +94,7 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\NonNullNoWP.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -wp:false -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
@@ -115,9 +103,7 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new[] { @"System.ComponentModel.Composition.dll", @"Microsoft.CSharp.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\NonNull.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -126,9 +112,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestIntervals\IntervalsTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow",
@@ -137,9 +121,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -define karronly -bounds:type:Karr,diseq=false -missingPublicRequiresAreErrors=true",
@@ -148,9 +130,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestKarr\KarrTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -define karrothers -bounds:type:PentagonsKarrLeq  -missingPublicRequiresAreErrors=true",
@@ -159,9 +139,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\ExpressionSimplification\SimplifyExpression.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull",
@@ -170,9 +148,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestBinarySearch\TestBinarySearch.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -Bounds:type=PentagonsKarrLeqOctagons",
@@ -181,9 +157,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\BrianScenario\BrianScenario.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds  -nonnull -show progress",
@@ -192,9 +166,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\BrianScenario\Protocols.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds  -nonnull -show progress",
@@ -203,9 +175,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\IfaceImplicitlyImplementedBug.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -regression -show progress -nonnull",
@@ -214,9 +184,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
                     libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\DoubleZero.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -regression -show progress -nonnull",
@@ -225,9 +193,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
                     libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\OperatorOverloading.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations  -show progress -nonnull -bounds",
@@ -236,9 +202,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
                     libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\EnumerableAll.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show progress",
@@ -247,9 +211,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\ArrayForAll.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show progress",
@@ -258,9 +220,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\TypeSpecializations.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull:noobl -bounds:noobl -show progress -show validations",
@@ -269,9 +229,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\HeapCrash.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show progress",
@@ -280,9 +238,7 @@ namespace Tests
                     compilerOptions: @"/optimize /r:System.Configuration.dll",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\ForAll.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show progress",
@@ -291,9 +247,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Mulder.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -show progress",
@@ -302,9 +256,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\IOperations.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -show:validations;unreached",
@@ -313,9 +265,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\BrianStrelioff.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached",
@@ -324,9 +274,7 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\Inference.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -show validations;unreached -define infer -infer:requires;propertyensures;methodensures -missingPublicRequiresAreErrors=true",
@@ -335,9 +283,7 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\SimpleArrayAccesses\SimpleArrayAccesses.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -Bounds:type=PentagonsKarrLeqOctagons -wp=false -timeout 100",
@@ -346,9 +292,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestUnsafe\BasicTests.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -buffers:type=subpolyhedra,fastcheck=false  -show validations -wp=false -show progress -timeout 60 -missingPublicRequiresAreErrors=true",
@@ -357,9 +301,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestUnsafe\ExamplesFromMscorlib.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -buffers:type=subpolyhedra,fastcheck=false  -show validations -wp=false",
@@ -368,9 +310,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestUnsafe\ExamplesFromRedhawk.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -buffers:type=subpolyhedra,fastcheck=false  -show validations -wp=false",
@@ -379,9 +319,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestUnsafe\SafeWrapper.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -buffers:type=subpolyhedra,fastcheck=false  -show validations -wp=false",
@@ -390,9 +328,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestUnsafe\Unsafe.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -buffers:type=subpolyhedra,fastcheck=false  -show validations -wp=false -timeout 60 -missingPublicRequiresAreErrors=true",
@@ -401,9 +337,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestCollections\List.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull:noObl -bounds:type=subpolyhedra",
@@ -412,9 +346,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestCollections\Stack.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull:noObl -bounds:type=subpolyhedra,reduction=simplex -timeout 200",
@@ -423,9 +355,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\FrameworkTests\BitArray.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -define bitarray -nonnull -bounds -bounds:type=subpolyhedra,diseq=false",
@@ -434,9 +364,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestContractsWithClousot\TestContractsWithClousot\Contracts.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show progress;validations -bounds",
@@ -445,9 +373,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestContractsWithClousot\TestContractsWithClousot\ExamplesFromPapers.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show progress;validations -bounds",
@@ -456,9 +382,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestNumericalDisequalities\SimpleBranching.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -arithmetic:obl=intOverflow -wp=false -bounds:noobl -missingPublicRequiresAreErrors=false",
@@ -467,9 +391,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\WeakestPreconditionTests\Paths.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -bounds",
@@ -478,9 +400,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\WeakestPreconditionTests\Disjuncts.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -bounds",
@@ -489,9 +409,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\WeakestPreconditionTests\RichardCook.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -bounds",
@@ -500,9 +418,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\WeakestPreconditionTests\ADomainsInterface.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -bounds",
@@ -511,9 +427,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\AssertOverloads.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -522,9 +436,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\ContractVerificationAttribute.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -533,9 +445,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\CompilerGeneratedAttribute.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull -show progress -missingPublicRequiresAreErrors=true",
@@ -544,9 +454,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\Disjunctions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -555,9 +463,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\EnsuresOnOutByRef.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -566,9 +472,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\Expressions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -577,9 +481,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\GenericTests.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -588,9 +490,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\HeapAnalysis.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -599,9 +499,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\InterfaceContracts.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -610,9 +508,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\Inference.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull:noObl -define inference -infer requires -infer propertyensures -infer methodensures",
@@ -621,9 +517,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\Invariants.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -632,9 +526,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\Iterators.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -arrays -define regular -show progress",
@@ -643,9 +535,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\LegacyRequires.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -654,9 +544,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\OldTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress -assemblyMode=standard",
@@ -665,9 +553,7 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\ParameterInEnsures.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -676,9 +562,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\PureFunction.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -687,9 +571,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\ReceiverHavoc.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -698,9 +580,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\RecursiveSubroutines.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -709,9 +589,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\BasicInfrastructure\StructTests.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -nonnull -define regular -show progress",
@@ -720,9 +598,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestSubpolyhedra\TestSubPolyhedra.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull  -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -timeout 100 -show progress",
@@ -731,9 +607,7 @@ namespace Tests
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestSubpolyhedra\TestSubPolyhedra.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:SubPolyhedra,reduction=fast,diseq:false,ch,infOct -define fast -wp=false  -enforcefairJoin=true -joinsbeforewiden 1 -timeout 100 -show progress",
@@ -742,9 +616,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestSubpolyhedra\TestSubPolyhedra.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:SubPolyhedra,diseq:false,infOct,reduction=simplex -define simplex -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -timeout 100 -show progress",
@@ -753,9 +625,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestSubpolyhedra\TestSubPolyhedra.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:SubPolyhedra,reduction=fast,diseq:false -define fastnooptions -define fastnooptions_cci1 -wp=false -joinsbeforewiden=1 -enforcefairjoin -timeout 100 -show progress",
@@ -764,9 +634,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ChunkerTest\ChunkerTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -bounds -steps=2",
@@ -775,9 +643,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ChunkerTest\ChunkerTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -bounds:type=subpolyhedra,reduction=complete",
@@ -786,9 +652,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\PostconditionInferenceNonNull.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull -infer methodensures -infer requires -define nonnull -prefrompost=false",
@@ -797,9 +661,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\PostconditionInferenceNonNull.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull -infer nonnullreturn -define nonnullreturn -prefrompost=false",
@@ -808,9 +670,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\PostconditionInferenceSymbolicReturn.cs",
                     clousotOptions: @"-infer autopropertiesensures -includesuggestionsinregression -suggest requires  -show validations -nonnull:noobl -bounds:noobl -suggest methodensures -infer symbolicreturn -prefrompost=false",
@@ -819,9 +679,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\PostconditionInference.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -check falsepostconditions  -show progress -bounds -infer methodensures -infer requires -prefrompost=true -show validations -nonnull:noobl",
@@ -830,9 +688,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new[] { @"System.core.dll", @"Microsoft.Csharp.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\Filtering.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -show progress -bounds -nonnull -suggest methodensures -show validations",
@@ -841,9 +697,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\PostOnly.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -define postonly -bounds -infer methodensures -show validations -nonnull:noobl",
@@ -852,9 +706,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestArithmetics\TestArithmetic.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -bounds:noobl -arithmetic:obl=divOverflow,obl=intOverflow,obl=floatOverflow  -assemblyMode=standard",
@@ -863,9 +715,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPreconditionInference\PreconditionInference.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds -infer= -infer requires -infer propertyensures -infer methodensures",
@@ -874,9 +724,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestIterativeDomainApplication\IterativeDomainApplication.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:intervals -bounds:type:pentagons -bounds",
@@ -885,9 +733,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\TestOctagons\OctagonsTests.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type=Octagons -wp=false",
@@ -896,9 +742,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestWarningMasking.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -show validations -bounds -nonnull -wp=false -suggest assumes -suggest requiresbase -show unreached",
@@ -907,9 +751,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScore.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel low -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes",
@@ -918,9 +760,7 @@ namespace Tests
                     compilerOptions: @"/define:LOW /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScore.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel mediumlow -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes",
@@ -929,9 +769,7 @@ namespace Tests
                     compilerOptions: @"/define:MEDIUMLOW /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScore.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel medium -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes",
@@ -940,9 +778,7 @@ namespace Tests
                     compilerOptions: @"/define:MEDIUM /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScore.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel full -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes ",
@@ -951,9 +787,7 @@ namespace Tests
                     compilerOptions: @"/define:FULL /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScoreMissingPre.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel low -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes -missingPublicRequiresAreErrors",
@@ -962,9 +796,7 @@ namespace Tests
                     compilerOptions: @"/define:LOW /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScoreMissingPre.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel mediumlow -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes -missingPublicRequiresAreErrors",
@@ -973,9 +805,7 @@ namespace Tests
                     compilerOptions: @"/define:MEDIUMLOW /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScoreMissingPre.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel medium -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes -missingPublicRequiresAreErrors",
@@ -984,9 +814,7 @@ namespace Tests
                     compilerOptions: @"/define:MEDIUM /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScoreMissingPre.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel full -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes -missingPublicRequiresAreErrors",
@@ -995,9 +823,7 @@ namespace Tests
                     compilerOptions: @"/define:FULL /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFindCommonRoot.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull -wp=false",
@@ -1006,9 +832,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\IteratorAnalysis\Iterators.cs",
                     clousotOptions: @"-infer autopropertiesensures -show progress -analyze:movenext -nonnull -show validations -bounds:noobl,type=subpolyhedra,reduction=simplex,diseq=false",
@@ -1017,9 +841,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\IteratorAnalysis\IteratorSimpleContract\IteratorSimpleContract.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -analyze:movenext  -nonnull:noobl -show validations -bounds:noobl,type=subpolyhedra,reduction=simplex,diseq=false -arrays",
@@ -1028,9 +850,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\BasicContainersTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -bounds:noObl,diseq=false -show progress  -show validations;unreached -wp=false -define Intervals",
@@ -1039,9 +859,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\ArrayWithNonNullAnalysis.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds:noObl -show progress  -show validations;unreached -wp=false -define NonNull",
@@ -1050,9 +868,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\SymbolicElementsTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds -show progress -show validations;unreached -wp=false",
@@ -1061,9 +877,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\Enumerables.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds:noObl -show progress  -show validations;unreached -wp=false",
@@ -1072,9 +886,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\UserRepros.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds:noObl -show progress  -show validations;unreached -wp=true",
@@ -1083,9 +895,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\Ernst.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds:noObl -show progress  -show validations;unreached -wp=false",
@@ -1094,9 +904,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\vstte.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest arrayrequires -suggest methodensures -suggest requires -nonnull -bounds -arrays:arraypurity -check exists  -show unreached -show progress",
@@ -1105,9 +913,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\BuiltInFunctions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull -bounds -show progress  -show unreached -wp=false",
@@ -1116,9 +922,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestBooleanConnectives\TestDisjunctions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -bounds -bounds:type=subpolyhedra,reduction=simplex -nonnull -wp=false -show progress -sortwarns=false  -show validations",
@@ -1127,9 +931,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\Array.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1138,9 +940,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\Environment.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1149,9 +949,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\General.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1160,9 +958,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\JoelBaranick.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1171,9 +967,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\Math.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1182,9 +976,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\Purity.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -1193,9 +985,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\Strings.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -1204,9 +994,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\UserFeedback.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow -assemblyMode=standard",
@@ -1215,9 +1003,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Web.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\ReferenceToAllOOBC.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=simplex,noObl  -show progress -arithmetic:obl=intOverflow",
@@ -1226,9 +1012,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Windows.Forms.dll", @"System.Web.dll", @"WindowsBase.dll", @"System.Xml.Linq.dll", @"System.Web.dll", @"System.Security.dll", @"System.Drawing.dll", @"System.Configuration.dll", @"System.Configuration.Install.dll", @"System.Data.dll", @"Microsoft.VisualBasic.dll", @"Microsoft.VisualBasic.Compatibility.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\General.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow -define infer -infer requires",
@@ -1237,9 +1021,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\OutOfBand\Client\Client.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show progress -bounds:type=subpolyhedra,reduction=fast,noObl",
@@ -1248,9 +1030,7 @@ namespace Tests
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
                     libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\Allen.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress  -assemblyMode=standard",
@@ -1259,9 +1039,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Data.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\XML.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress  -assemblyMode=standard",
@@ -1270,9 +1048,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Data.dll", @"System.Xml.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\PeterGolde.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress ",
@@ -1281,9 +1057,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Data.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\Misc.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress  -assemblyMode=standard",
@@ -1292,9 +1066,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Data.dll", @"System.Xml.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\Strilan.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress ",
@@ -1303,9 +1075,7 @@ namespace Tests
                     compilerOptions: @"/rootnamespace:VisualBasicTests /optimize",
                     references: new[] { @"System.Data.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\Wurz.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -bounds -nonnull  -show validations -show progress -regression -assemblyMode=standard",
@@ -1314,9 +1084,7 @@ namespace Tests
                     compilerOptions: @"/rootnamespace:VisualBasicTests /optimize ExtraWurz.vb",
                     references: new[] { @"System.Deployment.dll", @"System.Configuration.dll", @"System.Drawing.dll", @"System.Windows.Forms.dll", @"System.Data.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "VB",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "VB");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\ClassWithProtocolFinal.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -assemblyMode=standard -show:validations -bounds -nonnull:noobl -show progress",
@@ -1325,9 +1093,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Abbreviators.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull:noobl -bounds:noobl -show:validations",
@@ -1336,9 +1102,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\NoUpHavocMethods.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull:noobl -bounds:noobl -show:validations",
@@ -1347,9 +1111,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\JPGrk.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arithmetic:obl=intOverflow -show:validations",
@@ -1358,9 +1120,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\Herman.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show:validations;unreached",
@@ -1369,9 +1129,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\EmileVanGerwen.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -bounds:type=octagons,diseq=false -show:validations;unreached -timeout 300",
@@ -1380,9 +1138,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: true,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\VictorDerks.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -bounds:type=octagons,diseq=false -show:validations;unreached -timeout 3",
@@ -1391,9 +1147,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\Dluk.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -show:validations;unreached",
@@ -1402,9 +1156,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\Strilanc.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -show:validations;unreached",
@@ -1413,9 +1165,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\AlexeyR.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -show:validations;unreached",
@@ -1424,9 +1174,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\JonathanTapicer.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -bounds:type=subpolyhedra,reduction=simplex -show:validations;unreached",
@@ -1435,9 +1183,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\JamesAlbert.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:noobl -arrays -show:unreached -check conditionsvalidity",
@@ -1446,9 +1192,7 @@ namespace Tests
                     compilerOptions: @"/optimize /unsafe",
                     references: new[] { @"System.Core.dll", @"System.Net.Http", @"System.Web.http", @"System.XML.dll", @"System.Xml.Linq.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWebExamples\PexForFun.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex -arrays -arithmetic:obl=intOverflow -show:validations;unreached -timeout 300 -show progress",
@@ -1457,9 +1201,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWebExamples\BagOfNonNegative.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex -arrays -check exists -arithmetic:obl=intOverflow -show:unreached -timeout 300 -show progress",
@@ -1468,9 +1210,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestMemoryConsumption\CausingOutOfMemory.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires   -bounds -define outofmem -show validations -timeout 3600 -show progress -adaptive",
@@ -1479,9 +1219,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Enum\EnumTest.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays  -nonnull:noobl -arrays -enum -bounds -show validations -show unreached -timeout 3600 -show progress ",
@@ -1490,9 +1228,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Enum\Switch.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -arrays -nonnull:noobl -arrays -enum -bounds -premode:combined -show validations -show unreached -timeout 3600 -show progress ",
@@ -1501,9 +1237,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\TimeOut.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -bounds:crashWithTimeOut -show validations -show unreached -show progress ",
@@ -1512,9 +1246,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Collections.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest arrayrequires -suggest arraypurity -nonnull -bounds -arrays -show validations -show unreached -show progress ",
@@ -1523,9 +1255,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Purity.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest arrayrequires -suggest arraypurity -infer arraypurity -nonnull -bounds -arrays -show validations -show unreached -show progress ",
@@ -1534,9 +1264,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Preconditions-AllPaths.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -premode allPaths -suggest requires -nonnull -bounds -show validations -show unreached -show progress ",
@@ -1545,9 +1273,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Preconditions-Backwards.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -throwArgExceptionAsAssert -premode backwards -suggest requires -infer requires -nonnull -bounds -arithmetic:obl=intOverflow -show=!! -show progress -suggest assumes -suggest codefixes -maskverifiedrepairs=false",
@@ -1556,9 +1282,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Preconditions-BlogExample.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -throwArgExceptionAsAssert -premode backwards -suggest requires -infer requires -nonnull -bounds -show=!! -show progress -show errors -suggest assumes -suggest codefixes -maskverifiedrepairs=false  -missingPublicRequiresAreErrors  -suggest calleeassumes -suggest assumes -suggest requires -suggest necessaryensures -suggest readonlyfields  -infer requires -infer methodensures",
@@ -1567,9 +1291,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\SimplePreconditionPropagation.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -throwArgExceptionAsAssert -premode combined -suggest requires -infer requires -nonnull -bounds -show validations -show unreached -show progress ",
@@ -1578,9 +1300,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\RedundantAssumptions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -premode allPaths -suggest requires -nonnull -bounds -show validations -show unreached -show progress -check assumptions -infer methodensures",
@@ -1589,9 +1309,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\AssertToContracts.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -premode combined -suggest requires -nonnull -bounds -show unreached -show progress -check assumptions -infer methodensures -suggest asserttocontracts",
@@ -1600,9 +1318,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\AssertToContracts.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -premode combined -suggest requires -nonnull -bounds -show unreached -show progress -check assumptions -infer methodensures -suggest asserttocontracts -inferencemode=aggressive",
@@ -1611,9 +1327,7 @@ namespace Tests
                     compilerOptions: @"/optimize /define:AGGRESSIVEINFERENCE",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Exist.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds:noobl -arrays -suggest arrayrequires -suggest methodensures -infer methodensures -prefrompost -show progress",
@@ -1622,9 +1336,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\ForAll.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds:noobl -nonnull:noobl -arrays:arraypurity  -suggest methodensures  -show progress",
@@ -1633,9 +1345,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\ObjectInvariants.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -suggest methodensures  -show progress -suggest objectinvariants -infer objectinvariants -inferencemode aggressive -suggest assumes -disableForwardObjectInvariantInference",
@@ -1644,9 +1354,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\PodelskiEtAl.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -show progress -missingPublicRequiresAreErrors -infer objectinvariants -infer requires",
@@ -1655,9 +1363,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\ObjectInvariants_FromConstructor.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -suggest methodensures  -show progress -suggest objectinvariants -infer objectinvariants -inferencemode aggressive -suggest assumes -suggest necessaryensures -suggest readonlyfields",
@@ -1666,9 +1372,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\ObjectInvariants_Forward.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -suggest methodensures  -show progress -suggest objectinvariants -infer objectinvariants -suggest assumes -suggest necessaryensures -suggest readonlyfields",
@@ -1677,9 +1381,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Assume.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -suggest methodensures  -show progress -suggest objectinvariants -suggest requiresbase -suggest assumes -suggest codefixes -maskverifiedrepairs=false",
@@ -1688,9 +1390,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\Assume.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arrays:arraypurity  -suggest methodensures  -show progress -suggest objectinvariants -suggest requiresbase -suggest assumes -premode backwards -suggest codefixes -maskverifiedrepairs=false",
@@ -1699,9 +1399,7 @@ namespace Tests
                     compilerOptions: @"/optimize /define:CODEFIXES",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\CalleeAssume.cs",
                     clousotOptions: @" -includesuggestionsinregression -bounds -nonnull -suggest calleeassumes -show progress  -premode:combined",
@@ -1710,9 +1408,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\NecessaryEnsures.cs",
                     clousotOptions: @" -includesuggestionsinregression -bounds -nonnull -suggest necessaryensures -show progress  -premode:combined",
@@ -1721,9 +1417,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\Existential.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest arrayrequires -nonnull:noobl -bounds:noobl -arrays:arraypurity -check exists -show validations -show unreached -show progress",
@@ -1732,9 +1426,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: true);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\Markers.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -extractmethodmode=true -includesuggestionsinregression -suggest arrayrequires -nonnull:noobl -bounds:noobl -arrays:arraypurity -show unreached -show progress",
@@ -1743,9 +1435,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\RefinePrecondition.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -nonnull -bounds -arrays:arraypurity -show unreached -show progress -suggest methodensures -extractmethodmoderefine TestArray",
@@ -1754,9 +1444,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\RefinePrecondition.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -nonnull -bounds -arrays:arraypurity -show unreached -show progress -suggest methodensures -extractmethodmoderefine TestIf",
@@ -1765,9 +1453,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\RefinePrecondition.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -nonnull -bounds -arrays:arraypurity -arithmetic:obl=intOverflow -show unreached -show progress -suggest methodensures -extractmethodmoderefine TestLoop",
@@ -1776,9 +1462,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\RefinePrecondition.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -nonnull -bounds -arrays:arraypurity -arithmetic:obl=intOverflow -show unreached -show progress -suggest methodensures -extractmethodmoderefine ExtractFromLinearSearch",
@@ -1787,9 +1471,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ExtractMethod\RefinePrecondition.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -nonnull -bounds -arrays:arraypurity -arithmetic:obl=intOverflow -show unreached -show progress -suggest methodensures -extractmethodmoderefine ExtractFromMax",
@@ -1798,9 +1480,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\CodeFixes\CodeFixes.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arithmetic -suggest codefixes -maskverifiedrepairs=false -suggest methodensures -show progress -suggest objectinvariants -infer objectinvariants -suggest assumes -premode backwards -check falsepostconditions",
@@ -1809,9 +1489,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\CodeFixes\CodeFixes.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression  -bounds -nonnull -arithmetic -suggest codefixesshort -maskverifiedrepairs=false -suggest methodensures -show progress -suggest objectinvariants -infer objectinvariants -suggest assumes -premode backwards -check falsepostconditions",
@@ -1820,9 +1498,7 @@ namespace Tests
                     compilerOptions: @"/optimize  /define:SHORTCODEFIXES",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\CountFiltering.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -show progress -bounds -nonnull -suggest methodensures -infer methodensures -infer requires -prefrompost=true -show unreached  -check falsepostconditions",
@@ -1831,9 +1507,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPostconditionInference\CheckFalsePostconditions.cs",
                     clousotOptions: @"-infer autopropertiesensures -includesuggestionsinregression -show progress -bounds -nonnull  -check falsepostconditions",
@@ -1842,9 +1516,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Containers\TestContainers\vstte.demo.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest arrayrequires -suggest methodensures -suggest requires -suggest codefixes -maskverifiedrepairs=false -premode combined -nonnull -bounds -arrays:arraypurity -check exists  -show unreached -show progress",
@@ -1853,9 +1525,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Strings\SimpleStrings.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest arrayrequires -suggest methodensures -suggest requires -suggest codefixes -maskverifiedrepairs=false -premode combined -nonnull -bounds -arrays:arraypurity -check exists  -show unreached -show progress",
@@ -1864,9 +1534,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\GroupActions\GroupActions.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest requires -suggest assumes -suggest codefixes -maskverifiedrepairs=false  -bounds -nonnull -sortwarns=false -show progress -groupactions=true -premode combined   ",
@@ -1875,9 +1543,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestPreconditionInference\InferenceTrace.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -show validations -bounds -nonnull -arrays -infer= -infer requires -infer propertyensures -infer methodensures -infer objectinvariants -show inferencetrace -repairs -premode combined",
@@ -1886,9 +1552,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\CallInvariants.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -bounds -nonnull -arrays -infer= -suggest callinvariants",
@@ -1897,9 +1561,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Cloudot\Basics.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -bounds -nonnull -arrays -infer methodensures",
@@ -1908,9 +1570,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Inference\MissingPublicPreconditionsAsWarnings.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest=!! -bounds -nonnull -infer requires -missingPublicRequiresAreErrors",
@@ -1919,9 +1579,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Basic\SuggestionsAsWarnings\SuggestionsAsWarns.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -includesuggestionsinregression -suggest=!! -bounds -nonnull -infer requires -suggest readonlyfields -check assumptions -warnIfSuggest readonlyfields -warnifSuggest redundantassume",
@@ -1930,9 +1588,7 @@ namespace Tests
                     compilerOptions: @"/optimize",
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS",
-                    skipForCCI2: false,
-                    skipSlicing: false);
+                    compilerCode: "CS");
                 //yield return new Options(
                 //    sourceFile: @"Microsoft.Research\RegressionTest\TestMemoryConsumption\CausingOutOfMemory.cs",
                 //    clousotOptions: @"-suggest requires  -bounds -define outofmem -show validations -timeout 3600 -show progress",
@@ -2006,8 +1662,8 @@ namespace Tests
                 TestDriver.BuildAndAnalyze(_testOutputHelper, options);
         }
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]
         public void Analyze1FromSourcesV40(int testIndex)
         {

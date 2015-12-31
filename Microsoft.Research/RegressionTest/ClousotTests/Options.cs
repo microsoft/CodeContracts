@@ -32,8 +32,6 @@ namespace Tests
         public bool UseBinDir = false;
         public bool UseExe = false;
         private string testGroupName;
-        public bool SkipForCCI2;
-        public bool SkipSlicing;
         public readonly bool SkipForNet35;
         public bool GenerateUniqueOutputName = false;
         public bool Fast = false;
@@ -188,8 +186,6 @@ namespace Tests
             string[] references,
             string[] libPaths,
             string compilerCode,
-            bool skipForCCI2,
-            bool skipSlicing,
             bool skipForNet35 = false)
         {
             OutDirectory = Environment.CurrentDirectory;
@@ -203,8 +199,6 @@ namespace Tests
             this.LibPaths = new List<string> { MakeAbsolute(TestHarnessDirectory) };
             this.LibPaths.AddRange(libPaths);
             this.compilerCode = compilerCode;
-            this.SkipForCCI2 = skipForCCI2;
-            this.SkipSlicing = skipSlicing;
             this.SkipForNet35 = skipForNet35;
         }
 

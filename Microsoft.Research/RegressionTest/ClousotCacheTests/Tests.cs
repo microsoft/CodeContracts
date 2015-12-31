@@ -119,8 +119,6 @@ namespace Tests
             var references = Options.LoadList(dataRow, "References");
             var libPaths = Options.LoadList(dataRow, "LibPaths");
             var compilerCode = Options.LoadString(dataRow, "Compiler", "CS");
-            var skipForCCI2 = Options.LoadBool(dataRow, "SkipCCI2", false);
-            var skipSlicing = Options.LoadBool(dataRow, "SkipSlicing", false);
 
             var options = new Options(
                 sourceFile: sourceFile,
@@ -131,8 +129,6 @@ namespace Tests
                 references: references.ToArray(),
                 libPaths: libPaths.ToArray(),
                 compilerCode: compilerCode,
-                skipForCCI2: skipForCCI2,
-                skipSlicing: skipSlicing,
                 skipForNet35: false);
             options.TestGroupName = testGroupName;
             CurrentGroupInfo = options.Group;
