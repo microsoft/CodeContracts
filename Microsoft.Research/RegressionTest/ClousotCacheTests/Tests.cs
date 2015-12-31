@@ -79,18 +79,6 @@ namespace Tests
                 TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options);
         }
 
-        [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Cache")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze2FromSourcesV35Cache()
-        {
-            var options = GrabTestOptions("Analyze2FromSourcesV35Cache");
-            options.BuildFramework = @"v3.5";
-            options.ContractFramework = @"v3.5";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze2(ConsoleTestOutputHelper.Instance, options);
-        }
-
         [TestCategory("StaticChecker"), TestCategory("Clousot1"), TestCategory("Cache")]
         [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
         //[TestMethod] -- fails
@@ -115,35 +103,9 @@ namespace Tests
                 TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options);
         }
 
-        [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Service"), TestCategory("Cache")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze2ServiceSequentialFromSourcesV40Cache()
-        {
-            var options = GrabTestOptions("Analyze2ServiceSequentialFromSourcesV40Cache");
-            options.BuildFramework = @".NETFramework\v4.0";
-            options.ContractFramework = @".NETFramework\v4.0";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze2S(ConsoleTestOutputHelper.Instance, options);
-        }
-
-        [TestCategory("StaticChecker"), TestCategory("Clousot2"), TestCategory("Service"), TestCategory("Cache"), TestCategory("Short")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze2FastSequentialFromSourcesV40Cache()
-        {
-            var options = GrabTestOptions("Analyze2FastSequentialFromSourcesV40Cache");
-            options.BuildFramework = @".NETFramework\v4.0";
-            options.ContractFramework = @".NETFramework\v4.0";
-            options.Fast = true;
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze2(ConsoleTestOutputHelper.Instance, options);
-        }
-
         [AssemblyCleanup] // Automatically called at the end of ClousotCacheTests
         public static void AssemblyCleanup()
         {
-            TestDriver.Cleanup();
         }
 
         private Options GrabTestOptions(string testGroupName)

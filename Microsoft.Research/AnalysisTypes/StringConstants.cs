@@ -11,8 +11,6 @@ namespace Microsoft.Research.CodeAnalysis
     public static class StringConstants
     {
         public const string ClousotWait = "wait";
-        public const string Cloudot = "cloudot";
-        public const string DoNotUseCloudot = "+cloudot";
 
         public const string StringSeparator = "$%^";
 

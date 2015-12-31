@@ -41,7 +41,6 @@
       $(BuildConfig)
       $(Feature_Unsafe)
       $(Feature_Pex)
-      $(ClousotVersion)
       $(CheckCpx)
       $(Flavor)            : displayed in installer
       $(IncludePDBs)
@@ -54,7 +53,6 @@
         <Feature_Unsafe>false</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(devlabs_TS)</Flavor>
         <IncludePDBs>false</IncludePDBs>
@@ -69,7 +67,6 @@
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>true</Feature_Leaderboard>
         <Feature_LeaderboardXML>true</Feature_LeaderboardXML>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(internal)</Flavor>
         <IncludePDBs>true</IncludePDBs>
@@ -82,7 +79,6 @@
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(debug)</Flavor>
         <IncludePDBs>true</IncludePDBs>
@@ -787,12 +783,7 @@
   </Target>
 
   <Target Name="ILMergeClousot"
-    DependsOnTargets="ILMergeClousot1;ILMergeClousot2"
-  />
-
-  <Target Name="ILMergeClousot1"
     DependsOnTargets="MakeDirs"
-    Condition="'$(ClousotVersion)'=='1'"
     Inputs="@(Clousot1MergeBinaries);$(CCCheckConfig)"
     Outputs="$(CCCheckBinary);$(CCCheckBinary).config">
     <Message Text="ILmerge cccheck Clousot1"/>
@@ -806,19 +797,6 @@
        DestinationFiles="$(CCCheckBinary).config"
        />
     <Touch Files="$(CCCheckBinary).config"/>
-  </Target>
-
-  <Target Name="ILMergeClousot2"
-    DependsOnTargets="MakeDirs"
-    Condition="'$(ClousotVersion)'=='2'"
-    Inputs="@(Clousot2MergeBinaries)"
-    Outputs="$(CCCheckBinary)">
-    <Message Text="ILmerge cccheck Clousot2"/>
-
-    <Exec
-       Command="$(ILMergeExeV40) -allowDup /copyattrs /allowMultiple /keepFirst /keyfile:%(ContractsKeyRel.FullPath) /internalize:ClousotILMerge.internexceptions /closed /out:$(CCCheckBinary) @(Clousot2MergeBinaries, ' ')"
-       WorkingDirectory="."
-    />
   </Target>
 
   <!--==========================================================
@@ -847,9 +825,7 @@
     ==========================================================-->
 
   <PropertyGroup>
-    <CLOUSOT Condition="'$(ClousotVersion)'=='1'">..\Clousot\$(BinDir)</CLOUSOT>
-    <CLOUSOT
-    Condition="'$(ClousotVersion)'=='2'">..\Clousot2\$(BinDir)</CLOUSOT>
+    <CLOUSOT>..\Clousot\$(BinDir)</CLOUSOT>
     <FOXTROTBASE>..\..\Foxtrot</FOXTROTBASE>
     <FOXTROT>$(FOXTROTBASE)\Driver\$(BinDir)</FOXTROT>
     <SAMPLES>..\..\Foxtrot\Samples</SAMPLES>

@@ -424,14 +424,6 @@ namespace Microsoft.Research.CodeAnalysis
 
     #endregion
 
-    #region Cloudot
-
-    [OptionDescription("Run the analysis on the server")]
-    [DoNotHashInCache]
-    public bool cloudot = false;
-
-    #endregion
-
     #region Method selection
 
     [OptionDescription("Build the call graph, and use it to determine analysis order")]
@@ -1459,64 +1451,6 @@ namespace Microsoft.Research.CodeAnalysis
       }
 
       return result;
-    }
-  }
-
-
-  public static class OptionsHelper
-  {
-    public static bool UseCloudot(string[] args)
-    {
-      if (args == null || args.Length == 0)
-      {
-        return false;
-      }
-      if (args.Contains(StringConstants.DoNotUseCloudot))
-      {
-        return false;
-      }
-      foreach(var arg in args)
-      {
-        if (arg.Length == 0)
-        {
-          continue;
-        }
-        if (arg[0] == '/' || arg[0] == '-')
-        {
-          var str = arg.Substring(1, arg.Length-1).ToLower();
-          if(str == StringConstants.Cloudot)
-          {
-            return true;
-          }
-        }
-        else if (arg[0] == '@')
-        {
-          var responseFile = arg.Substring(1, arg.Length-1);
-          if (!File.Exists(responseFile))
-          {
-            return false;
-          }
-          try
-          {
-            var lines = File.ReadAllLines(responseFile);
-            for (int i = 0; i < lines.Length; i++)
-            {
-              var line = lines[i];
-              if (line.Length == 0 || line[0] == '#') continue;
-
-              if (UseCloudot(line.Split(' ')))
-              {
-                return true;
-              }
-            }
-          }
-          catch
-          {
-            return false;
-          }
-        }
-      }
-      return false;
     }
   }
 }

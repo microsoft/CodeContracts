@@ -233,26 +233,6 @@
     <Compile Include="TestDriver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Clousot2S\Clousot2S.csproj">
-      <Project>{8BFE806B-E697-4350-8A08-1E596702C202}</Project>
-      <Name>Clousot2S</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Clousot2\Clousot2.csproj">
-      <Project>{FF028F2F-4F87-473F-983F-E0B6FEB083A7}</Project>
-      <Name>Clousot2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Clousot2_Queue\Clousot2_Queue.csproj">
-      <Project>{55971D2B-B8F0-49AD-ACAD-D65E96EC8F2F}</Project>
-      <Name>Clousot2_Queue</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Clousot2_viaWCFService\Clousot2_viaWCFService.csproj">
-      <Project>{D5430A34-66E5-4689-89F0-9A7554366194}</Project>
-      <Name>Clousot2_viaWCFService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Clousot2_WCFServiceHost\CloudotHost.csproj">
-      <Project>{9601D6E7-37C1-4DD3-8AB2-6592584F153C}</Project>
-      <Name>CloudotHost</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Clousot\Clousot.csproj">
       <Project>{EF464FE4-C110-41A8-8FE3-CF7C5355D854}</Project>
       <Name>Clousot</Name>
