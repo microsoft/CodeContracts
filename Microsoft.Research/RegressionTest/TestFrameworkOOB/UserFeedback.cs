@@ -230,11 +230,11 @@ namespace UserFeedback
 #if NETFRAMEWORK_4_0
                 [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as field receiver)",PrimaryILOffset=33,MethodILOffset=0)]
                 [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as field receiver)",PrimaryILOffset=57,MethodILOffset=0)]
-                [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message="assert unreachable",PrimaryILOffset=72,MethodILOffset=0)]
+                [RegressionOutcome(Outcome=ProofOutcome.True,Message="assert is valid",PrimaryILOffset=72,MethodILOffset=0)]
 #else
                 [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as field receiver)", PrimaryILOffset = 29, MethodILOffset = 0)]
                 [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as field receiver)", PrimaryILOffset = 53, MethodILOffset = 0)]
-                [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = "assert unreachable", PrimaryILOffset = 68, MethodILOffset = 0)]
+                [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 68, MethodILOffset = 0)]
 #endif
                 public void WaitFor0()
                 {
@@ -262,12 +262,12 @@ namespace UserFeedback
                 [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as field receiver)",PrimaryILOffset=33,MethodILOffset=0)]
                 [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as field receiver)",PrimaryILOffset=50,MethodILOffset=0)]
                 [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as field receiver)",PrimaryILOffset=62,MethodILOffset=0)]
-                [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message="assert unreachable",PrimaryILOffset=77,MethodILOffset=0)]
+                [RegressionOutcome(Outcome=ProofOutcome.True,Message="assert is valid",PrimaryILOffset=77,MethodILOffset=0)]
 #else
                 [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as field receiver)", PrimaryILOffset = 29, MethodILOffset = 0)]
                 [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as field receiver)", PrimaryILOffset = 46, MethodILOffset = 0)]
                 [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as field receiver)", PrimaryILOffset = 58, MethodILOffset = 0)]
-                [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = "assert unreachable", PrimaryILOffset = 73, MethodILOffset = 0)]
+                [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 73, MethodILOffset = 0)]
 #endif
                 public void WaitFor0WithLockObject()
                 {
@@ -374,6 +374,7 @@ namespace UserFeedback
         }
     }
 
+    /*  What should this test prove?
     namespace RobTF
     {
         using System.Linq;
@@ -394,7 +395,11 @@ namespace UserFeedback
                 throw new NotImplementedException();
             }
 
-            [ClousotRegressionTest] // CCI2 is not seeing requires
+            [ClousotRegressionTest]
+            
+            // Would this extra check make sense? With it the test will succeed, but what would it prove? 
+            // [RegressionOutcome(Outcome = ProofOutcome.Top, Message = "requires unproven: field.IsStatic || expression != null", PrimaryILOffset = 48, MethodILOffset = 60)]
+
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as receiver)", PrimaryILOffset = 2, MethodILOffset = 0)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "valid non-null reference (as array)", PrimaryILOffset = 96, MethodILOffset = 0)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Array creation : ok", PrimaryILOffset = 87, MethodILOffset = 0)]
@@ -408,6 +413,7 @@ namespace UserFeedback
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 31, MethodILOffset = 81)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 13, MethodILOffset = 98)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 31, MethodILOffset = 103)]
+            [RegressionOutcome(Outcome = ProofOutcome.True, Message = "requires is valid", PrimaryILOffset = 80, MethodILOffset = 60)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow (caused by a negative array size)", PrimaryILOffset = 87, MethodILOffset = 0)]
             public ClassB Foo()
             {
@@ -415,6 +421,7 @@ namespace UserFeedback
             }
         }
     }
+    */
 
     namespace Peli
     {

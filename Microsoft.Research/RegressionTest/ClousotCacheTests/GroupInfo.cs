@@ -1,14 +1,11 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
-namespace ClousotTests
+namespace ClousotCacheTests
 {
     public class GroupInfo
     {
@@ -27,8 +24,6 @@ namespace ClousotTests
             currentInstance++;
             instance = currentInstance;
         }
-
-        private int Instance { get { return currentInstance; } }
 
         public void WriteFailure()
         {

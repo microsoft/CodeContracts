@@ -20,28 +20,32 @@ namespace Tests
 
         private static readonly Random randGenerator = new Random();
 
-        internal static void Clousot(string absoluteSourceDir, string absoluteBinary, Options options, Output output)
+        internal static void Clousot(string absoluteSourceDir, string absoluteBinary, Options options, string testName, int testindex, Output output)
         {
             var referencedir = options.MakeAbsolute(Path.Combine(ReferenceDirRoot, options.BuildFramework));
             var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ContractFramework));
             var absoluteBinaryDir = Path.GetDirectoryName(absoluteBinary);
             var absoluteSource = absoluteBinary;
             var libPathsString = FormLibPaths(contractreferencedir, options);
-            var args = String.Format("{0} /regression /define:cci1only;clousot1 -framework:{4} -libpaths:{2} {3} {1}", options.ClousotOptions, absoluteSource, referencedir, libPathsString, options.Framework);
-            WriteRSPFile(absoluteBinaryDir, options, args);
-            if (options.Fast || System.Diagnostics.Debugger.IsAttached)
+            var args = string.Format("{0} /regression /define:cci1only;clousot1 -framework:{4} -libpaths:{2} {3} {1}", options.ClousotOptions, absoluteSource, referencedir, libPathsString, options.Framework);
+
+            WriteRSPFile(absoluteBinaryDir, testName, args);
+            
+            if (options.Fast || Debugger.IsAttached)
             {
                 output.WriteLine("Calling CCI1Driver.Main with: {0}", args);
                 // Use output to avoid Clousot from closing the Console
                 Assert.Equal(0, Microsoft.Research.CodeAnalysis.CCI1Driver.Main(args.Split(' '), output));
             }
             else
-                RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(ClousotExe), args, output, options.TestName);
+            {
+                RunProcess(absoluteBinaryDir, options.GetFullExecutablePath(ClousotExe), args, output, testName);
+            }
         }
 
-        private static void WriteRSPFile(string dir, Options options, string args)
+        private static void WriteRSPFile(string dir, string testName, string args)
         {
-            using (var file = new StreamWriter(Path.Combine(dir, options.TestName + ".rsp")))
+            using (var file = new StreamWriter(Path.Combine(dir, testName + ".rsp")))
             {
                 file.WriteLine(args);
                 file.Close();
@@ -108,7 +112,7 @@ namespace Tests
         }
 
 
-        internal static string Build(Options options, string extraCompilerOptions, Output output, out string absoluteSourceDir)
+        internal static string Build(Options options, int testIndex, string extraCompilerOptions, Output output, out string absoluteSourceDir)
         {
             var sourceFile = options.MakeAbsolute(options.SourceFile);
             var compilerpath = options.MakeAbsolute(Path.Combine(ToolsRoot, options.BuildFramework, options.Compiler));
@@ -117,7 +121,7 @@ namespace Tests
             var outputdir = Path.Combine(sourcedir, "bin", options.BuildFramework);
             var extension = options.UseExe ? ".exe" : ".dll";
             var targetKind = options.UseExe ? "exe" : "library";
-            var suffix = "_" + options.TestInstance;
+            var suffix = "_" + testIndex;
             if (options.GenerateUniqueOutputName)
                 suffix += "." + randGenerator.Next(0x10000).ToString("X4"); // enables concurrent tests on the same source file
             var targetfile = Path.Combine(outputdir, Path.GetFileNameWithoutExtension(sourceFile) + suffix + extension);
@@ -207,17 +211,17 @@ namespace Tests
             return sb.ToString();
         }
 
-        public static void BuildAndAnalyze(ITestOutputHelper testOutputHelper, Options options)
+        public static void BuildAndAnalyze(ITestOutputHelper testOutputHelper, Options options, string testName, int testIndex)
         {
-            var output = Output.ConsoleOutputFor(testOutputHelper, options.TestName);
+            var output = Output.ConsoleOutputFor(testOutputHelper, testName);
 
             try
             {
                 string absoluteSourceDir;
-                var target = Build(options, "/d:CLOUSOT1", output.Item1, out absoluteSourceDir);
+                var target = Build(options, testIndex, "/d:CLOUSOT1", output.Item1, out absoluteSourceDir);
                 if (target != null)
                 {
-                    Clousot(absoluteSourceDir, target, options, output.Item1);
+                    Clousot(absoluteSourceDir, target, options, testName, testIndex, output.Item1);
                 }
             }
             finally

@@ -4,43 +4,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClousotTests;
+using System.IO;
+
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Tests
 {
-    /// <summary>
-    /// Summary description for RewriterTests
-    /// </summary>
-    [Collection("Clousot")]
-    public class ClousotTests : IDisposable
+    public class ClousotTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly ClousotFixture _clousotFixture;
 
-        public ClousotTests(ITestOutputHelper testOutputHelper, ClousotFixture clousotFixture)
+        public ClousotTests(ITestOutputHelper testOutputHelper)
         {
-            this._testOutputHelper = testOutputHelper;
-            this._clousotFixture = clousotFixture;
-        }
-
-        public void Dispose()
-        {
-            //if (TestContext.CurrentTestOutcome != UnitTestOutcome.Passed && CurrentGroupInfo != null && !System.Diagnostics.Debugger.IsAttached)
-            //{
-            //    // record failing case
-            //    CurrentGroupInfo.WriteFailure();
-            //}
+            _testOutputHelper = testOutputHelper;
         }
 
         #region Test data
 
-        private static IEnumerable<Options> TestRunData
+        private static IEnumerable<Options> TestRunDataSource
         {
             get
             {
-                yield return new Options(
+                yield return new Options( // #0
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Decimal.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show unreached -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
                     useContractReferenceAssemblies: true,
@@ -49,7 +35,7 @@ namespace Tests
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #1
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\AssumeInvariant.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show unreached -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
                     useContractReferenceAssemblies: true,
@@ -58,7 +44,7 @@ namespace Tests
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #2
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Herman.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
                     useContractReferenceAssemblies: true,
@@ -67,7 +53,7 @@ namespace Tests
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #3
                     sourceFile: @"Microsoft.Research\RegressionTest\UserRepros\Domino.cs",
                     clousotOptions: @"-infer autopropertiesensures -show unreached -arrays -NonNull -Bounds -bounds:type=subpolyhedra,reduction=simplex,noObl -show progress -arithmetic:obl=intOverflow -adaptive -enum -check assumptions -suggest asserttocontracts -check conditionsvalidity -missingPublicRequiresAreErrors -suggest necessaryensures -suggest readonlyfields  -infer requires -infer methodensures -infer objectinvariants -premode:combined -warnifsuggest requires -suggest codefixes -show progress ",
                     useContractReferenceAssemblies: true,
@@ -76,8 +62,8 @@ namespace Tests
                     references: new[] { @"System.Xml.Linq.dll", @"System.Xml.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS",
-                    skipForNet35: true);
-                yield return new Options(
+                    skipFor: TestRuns.V40AgainstV35Contracts);
+                yield return new Options( // #4
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\MultidimArrays.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull:noobl -show:validations;unreached",
                     useContractReferenceAssemblies: true,
@@ -86,7 +72,7 @@ namespace Tests
                     references: new string[0],
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #5
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\NonNull1.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
                     useContractReferenceAssemblies: false,
@@ -95,7 +81,7 @@ namespace Tests
                     references: new string[0],
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #6
                     sourceFile: @"Microsoft.Research\RegressionTest\NonNullTests\NonNullNoWP.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -wp:false -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
                     useContractReferenceAssemblies: true,
@@ -103,7 +89,8 @@ namespace Tests
                     compilerOptions: @"/unsafe",
                     references: new[] { @"System.ComponentModel.Composition.dll", @"Microsoft.CSharp.dll", @"System.Core.dll" },
                     libPaths: new string[0],
-                    compilerCode: "CS");
+                    compilerCode: "CS",
+                    skipFor: TestRuns.V40AgainstV35Contracts);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\NonNull.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",
@@ -815,7 +802,7 @@ namespace Tests
                     references: new string[0],
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #86
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFilteringWithScoreMissingPre.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show progress -bounds -nonnull -wp=false -warninglevel full -premode combined -suggest codefixes -maskverifiedrepairs=false -suggest assumes -missingPublicRequiresAreErrors",
                     useContractReferenceAssemblies: true,
@@ -823,8 +810,9 @@ namespace Tests
                     compilerOptions: @"/define:FULL /optimize",
                     references: new string[0],
                     libPaths: new string[0],
-                    compilerCode: "CS");
-                yield return new Options(
+                    compilerCode: "CS",
+                    skipFor: TestRuns.V40AgainstV35Contracts);
+                yield return new Options( // #87
                     sourceFile: @"Microsoft.Research\RegressionTest\TestWarningMasking\TestFindCommonRoot.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -nonnull -wp=false",
                     useContractReferenceAssemblies: true,
@@ -995,7 +983,7 @@ namespace Tests
                     references: new[] { @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "CS");
-                yield return new Options(
+                yield return new Options( // #106
                     sourceFile: @"Microsoft.Research\RegressionTest\TestFrameworkOOB\UserFeedback.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations;unreached -NonNull -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl  -show progress -arithmetic:obl=intOverflow -assemblyMode=standard",
                     useContractReferenceAssemblies: true,
@@ -1058,7 +1046,7 @@ namespace Tests
                     references: new[] { @"System.Data.dll", @"System.Xml.Linq.dll", @"System.Core.dll" },
                     libPaths: new string[0],
                     compilerCode: "VB");
-                yield return new Options(
+                yield return new Options( // #113
                     sourceFile: @"Microsoft.Research\RegressionTest\VisualBasicTests\Misc.vb",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -bounds -nonnull  -show validations -show progress  -assemblyMode=standard",
                     useContractReferenceAssemblies: true,
@@ -1626,108 +1614,48 @@ namespace Tests
             }
         }
 
+        private static readonly Options[] TestRunData = TestRunDataSource.ToArray();
+
         public static IEnumerable<object> TestRun
         {
             get
             {
-                return Enumerable.Range(0, TestRunData.Count()).Select(i => new object[] { i });
+                return TestRunData.Select((options, index) => new object[] { index.ToString("00000"), index, Path.GetFileNameWithoutExtension(options.SourceFile) + "_" + index});
             }
         }
 
         #endregion Test data
 
-        #region Regular tests
+        #region Tests
 
-        //[MemberData("TestRun")]
-        //[Theory]
-        public void Analyze1Z3FromSourcesV35(int testIndex)
-        {
-            var options = GrabTestOptions("Analyze1Z3FromSourcesV35", TestRunData.ElementAt(testIndex));
-            options.BuildFramework = @"v3.5";
-            options.ContractFramework = @"v3.5";
-            options.ClousotOptions += " -useZ3";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(_testOutputHelper, options);
-        }
-
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
+        [MemberData("TestRun")]
+        [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]
-        public void Analyze1FromSourcesV35(int testIndex)
+        public void V40(string sortKey, int testIndex, string testName)
         {
-            var options = GrabTestOptions("Analyze1FromSourcesV35", TestRunData.ElementAt(testIndex));
-            options.BuildFramework = @"v3.5";
-            options.ContractFramework = @"v3.5";
-            if (!options.Skip && !options.SkipForNet35)
-                TestDriver.BuildAndAnalyze(_testOutputHelper, options);
+            var options = TestRunData[testIndex];
+
+            options.BuildFramework = @".NETFramework\v4.0";
+            options.ContractFramework = @".NETFramework\v4.0";
+            
+            if (!options.SkipFor.HasFlag(TestRuns.V40))
+                TestDriver.BuildAndAnalyze(_testOutputHelper, options, testName, testIndex);
         }
 
         [MemberData("TestRun")]
         [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]
-        public void Analyze1FromSourcesV40(int testIndex)
+        public void V40AgainstV35Contracts(string sortKey, int testIndex, string testName)
         {
-            var options = GrabTestOptions("Analyze1FromSourcesV40", TestRunData.ElementAt(testIndex));
-            options.BuildFramework = @".NETFramework\v4.0";
-            options.ContractFramework = @".NETFramework\v4.0";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(_testOutputHelper, options);
-        }
+            var options = TestRunData[testIndex];
 
-        //[MemberData("TestRun")]
-        [Theory(Skip = "This test fails")]
-        [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]
-        public void Analyze1FromSourcesV40AgainstV35Contracts(int testIndex)
-        {
-            var options = GrabTestOptions("Analyze1FromSourcesV40AgainstV35Contracts", TestRunData.ElementAt(testIndex));
             options.BuildFramework = @".NETFramework\v4.0";
             options.ContractFramework = @"v3.5";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(_testOutputHelper, options);
+            
+            if (!options.SkipFor.HasFlag(TestRuns.V40AgainstV35Contracts))
+                TestDriver.BuildAndAnalyze(_testOutputHelper, options, testName, testIndex);
         }
 
         #endregion
-
-        public sealed class ClousotFixture : IDisposable
-        {
-            public void Dispose()
-            {
-            }
-        }
-
-        [CollectionDefinition("Clousot")]
-        public class ClousotCollectionDefinition : ICollectionFixture<ClousotFixture>
-        {
-        }
-
-        private Options GrabTestOptions(string testGroupName, Options originalOptions)
-        {
-            originalOptions.TestGroupName = testGroupName;
-            CurrentGroupInfo = originalOptions.Group;
-            return originalOptions;
-        }
-
-        private static GroupInfo currentGroupInfo;
-
-        private static GroupInfo CurrentGroupInfo
-        {
-            get
-            {
-                return currentGroupInfo;
-            }
-            set
-            {
-                // see if the group has changed and if so, delete the failure file
-                if (!System.Diagnostics.Debugger.IsAttached)
-                {
-                    if (currentGroupInfo == null || currentGroupInfo.TestGroupName != value.TestGroupName)
-                    {
-                        // new group, delete the old file
-                        value.DeleteFailureFile();
-                    }
-                }
-                currentGroupInfo = value;
-            }
-        }
     }
 }
