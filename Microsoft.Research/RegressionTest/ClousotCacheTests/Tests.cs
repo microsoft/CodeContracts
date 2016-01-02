@@ -1,296 +1,263 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ITestOutputHelper = Xunit.Abstractions.ITestOutputHelper;
-
-namespace Tests
+namespace ClousotCacheTests
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
-    using global::ClousotCacheTests;
+    using Tests;
+
+    using Xunit;
+    using Xunit.Abstractions;
+    using Xunit.Sdk;
+
+    public class ChacheTestOrderer : ITestCaseOrderer
+    {
+        public IEnumerable<TTestCase> OrderTestCases<TTestCase>(IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
+        {
+            return testCases;
+        }
+    }
 
     /// <summary>
-    /// Summary description for RewriterTests
+    /// Cache tests for 
     /// </summary>
-    [TestClass]
+    /// <remarks>
+    /// For XUnit there is no way to guarantee the test order of [MemberData] driven tests - however for these tests the order is important.
+    /// Workaround: use [Fact] instead of [Theory]+[MemberData] and execute all cases within one test.
+    /// </remarks>
     public class ClousotCacheTests
     {
-        public ClousotCacheTests()
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public ClousotCacheTests(ITestOutputHelper testOutputHelper)
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            _testOutputHelper = testOutputHelper;
         }
 
-        private TestContext testContextInstance;
+        #region Test data
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        private static IEnumerable<Options> TestRunDataSource
         {
             get
             {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
+                // These 4 TestRun must be run together in that order !
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test.cs",
+                    compilerOptions: @"/optimize /d:FIRST",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test2.cs",
+                    compilerOptions: @"/optimize /d:FIRST",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test.cs",
+                    compilerOptions: @"/optimize",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Test2.cs",
+                    compilerOptions: @"/optimize",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                // The remaining TestRun's are paired. Each pair must be run in that order
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestQuantifiers.cs",
+                    compilerOptions: @"/optimize /d:FIRST",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -arrays -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer=""""  -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestQuantifiers.cs",
+                    compilerOptions: @"/optimize",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -arrays -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\DB.cs",
+                    compilerOptions: @"/optimize /d:FIRST /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\DB.cs",
+                    compilerOptions: @"/optimize /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Serialization.cs",
+                    compilerOptions: @"/optimize /d:FIRST /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\Serialization.cs",
+                    compilerOptions: @"/optimize /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SerializationInferred.cs",
+                    compilerOptions: @"/optimize /d:FIRST /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-includesuggestionsinregression -suggest requires -suggest methodensures -infer methodensures -infer requires -nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -clearCache -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SerializationInferred.cs",
+                    compilerOptions: @"/optimize /debug-",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-includesuggestionsinregression -suggest requires -suggest methodensures  -infer methodensures -infer requires -nonnull -bounds -show progress -cache -emitErrorOnCacheLookup -cacheServer="""" -cacheName:Test",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SemanticBaseliningTests.cs",
+                    compilerOptions: @"/optimize /d:FIRST",
+                    libPaths: new string[0],
+                    references: new string[0],
+                    clousotOptions: @"-show progress,validations -emitErrorOnCacheLookup -clearCache -cache -cacheServer="""" -cacheName:Test -infer methodensures -suggest methodensures -suggest assumes -suggest requires -nonnull -bounds -repairs -premode combined -saveSemanticBaseline:semanticTest",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerCode: "CS"
+                    );
+                yield return new Options(
+                   sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\SemanticBaseliningTests.cs",
+                   compilerOptions: @"/optimize",
+                   libPaths: new string[0],
+                   references: new string[0],
+                   clousotOptions: @"-show progress,validations -emitErrorOnCacheLookup -cache -cacheServer="""" -cacheName:Test -infer methodensures -suggest methodensures -suggest assumes -suggest requires -nonnull -bounds -repairs -premode combined -useSemanticBaseline:semanticTest -skipIdenticalMethods=false",
+                   useContractReferenceAssemblies: true,
+                   useExe: false,
+                   compilerCode: "CS"
+                   );
+                /*
+                yield return new Options(
+                        sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestPurity.cs",
+                        compilerOptions: @"/optimize /d:FIRST",
+                        libPaths: new string[0],
+                        references: new string[0],
+                        clousotOptions: @"-nonnull:noobl -bounds:noobl -arrays:arraypurity -infer arraypurity -suggest arraypurity -show progress -cache -emitErrorOnCacheLookup -cacheName:Test"
+                        useContractReferenceAssemblies: true,
+                        useExe: false,
+                        compilerCode: "CS"
+                        SkipCCI2="true"
+                    );
+
+                yield return new Options(
+                        sourceFile: @"Microsoft.Research\RegressionTest\ClousotCacheTests\Sources\TestPurity.cs",
+                        compilerOptions: @"/optimize",
+                        libPaths: new string[0],
+                        references: new string[0],
+                        clousotOptions: @"-nonnull:noobl -bounds:noobl -arrays:arraypurity -infer arraypurity -suggest arraypurity -show progress -cache -emitErrorOnCacheLookup -cacheName:Test"
+                        useContractReferenceAssemblies: true,
+                        useExe: false,
+                        compilerCode: "CS"
+                        SkipCCI2="true"
+                    );
+                */
             }
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        //Use TestCleanup to run code after each test has run
-        [TestCleanup()]
-        public void MyTestCleanup()
-        {
-            if (TestContext.CurrentTestOutcome != UnitTestOutcome.Passed && CurrentGroupInfo != null && !System.Diagnostics.Debugger.IsAttached)
-            {
-                // record failing case
-                CurrentGroupInfo.WriteFailure();
-            }
-        }
+        private static readonly Options[] TestRunData = TestRunDataSource.ToArray();
+
         #endregion
 
-        [TestCategory("StaticChecker"), TestCategory("Clousot1")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze1FromSourcesV35Cache()
+        [Fact]
+        [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Cache")]
+        public void V35Cache()
         {
-            var options = GrabTestOptions("Analyze1FromSourcesV35Cache");
-            options.BuildFramework = @"v3.5";
-            options.ContractFramework = @"v3.5";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options, options.TestName, options.TestInstance);
+            Execute(@"v3.5", @"v3.5");
         }
 
-        [TestCategory("StaticChecker"), TestCategory("Clousot1"), TestCategory("Cache")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze1FromSourcesV40Cache()
+        [Fact]
+        [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Cache")]
+        public void V40Cache()
         {
-            var options = GrabTestOptions("Analyze1FromSourcesV40Cache");
-            options.BuildFramework = @".NETFramework\v4.0";
-            options.ContractFramework = @".NETFramework\v4.0";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options, options.TestName, options.TestInstance);
+            Execute(@".NETFramework\v4.0", @".NETFramework\v4.0");
         }
 
-        [TestCategory("StaticChecker"), TestCategory("Clousot1"), TestCategory("Cache")]
-        [DeploymentItem(@"Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTestInputs.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\ClousotCacheTestInputs.xml", "TestRun", DataAccessMethod.Sequential)]
-        //[TestMethod] -- fails
-        public void Analyze1FromSourcesV40AgainstV35ContractsCache()
+        [Fact]
+        [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Cache")]
+        public void V40AgainstV35ContractsCache()
         {
-            var options = GrabTestOptions("Analyze1FromSourcesV40AgainstV35ContractsCache");
-            options.BuildFramework = @".NETFramework\v4.0";
-            options.ContractFramework = @"v3.5";
-            if (!options.Skip)
-                TestDriver.BuildAndAnalyze(ConsoleTestOutputHelper.Instance, options, options.TestName, options.TestInstance);
+            Execute( @".NETFramework\v4.0", @"v3.5");
         }
 
-        [AssemblyCleanup] // Automatically called at the end of ClousotCacheTests
-        public static void AssemblyCleanup()
+        private void Execute(string buildFramework, string contractFramework)
         {
-        }
-
-
-        class LegacyOptions : Options
-        {
-            private static Dictionary<string, GroupInfo> groupInfo = new Dictionary<string, GroupInfo>();
-            private int instance;
-            public int Instance { get { return instance; } }
-            private string testGroupName;
-
-            public GroupInfo Group;
-
-            public LegacyOptions(
-                string sourceFile,
-                string clousotOptions,
-                bool useContractReferenceAssemblies,
-                bool useExe,
-                string compilerOptions,
-                string[] references,
-                string[] libPaths,
-                string compilerCode,
-                TestRuns skipFor = TestRuns.None)
-                : base(sourceFile,
-                    clousotOptions,
-                    useContractReferenceAssemblies,
-                    useExe,
-                    compilerOptions,
-                    references,
-                    libPaths,
-                    compilerCode,
-                    skipFor)
+            foreach (var testIndex in Enumerable.Range(0, TestRunData.Length))
             {
-            }
+                var options = TestRunData[testIndex];
+                var testName = Path.GetFileNameWithoutExtension(options.SourceFile) + "_" + testIndex;
 
-            private GroupInfo GetTestGroup(string testGroupName, string rootDir, out int instance)
-            {
-                if (testGroupName == null)
-                {
-                    instance = 0;
-                    return new GroupInfo(null, rootDir);
-                }
-                GroupInfo result;
-                if (groupInfo.TryGetValue(testGroupName, out result))
-                {
-                    result.Increment(out instance);
-                    return result;
-                }
-                instance = 0;
-                result = new GroupInfo(testGroupName, rootDir);
-                groupInfo.Add(testGroupName, result);
-                return result;
-            }
-
-            public static string LoadString(System.Data.DataRow dataRow, string name, string defaultValue = "")
-            {
-                if (!ColumnExists(dataRow, name))
-                    return defaultValue;
-                var result = dataRow[name] as string;
-                if (String.IsNullOrEmpty(result))
-                    return defaultValue;
-                return result;
-            }
-
-            public static List<string> LoadList(System.Data.DataRow dataRow, string name, params string[] initial)
-            {
-                if (!ColumnExists(dataRow, name)) return new List<string>();
-                string listdata = dataRow[name] as string;
-                var result = new List<string>(initial);
-                if (!string.IsNullOrEmpty(listdata))
-                {
-                    result.AddRange(listdata.Split(';'));
-                }
-                return result;
-            }
-
-            private static bool ColumnExists(System.Data.DataRow dataRow, string name)
-            {
-                return dataRow.Table.Columns.IndexOf(name) >= 0;
-            }
-
-            public static bool LoadBool(System.Data.DataRow dataRow, string name, bool defaultValue)
-            {
-                if (!ColumnExists(dataRow, name)) return defaultValue;
-                var booloption = dataRow[name] as string;
-                if (!string.IsNullOrEmpty(booloption))
-                {
-                    bool result;
-                    if (bool.TryParse(booloption, out result))
-                    {
-                        return result;
-                    }
-                }
-                return defaultValue;
-            }
-
-            public string TestName
-            {
-                get
-                {
-                    if (SourceFile != null)
-                        return Path.GetFileNameWithoutExtension(SourceFile) + "_" + Instance;
-
-                    return Instance.ToString();
-                }
-            }
-
-            public string TestGroupName
-            {
-                get
-                {
-                    return this.testGroupName;
-                }
-
-                set
-                {
-                    this.testGroupName = value;
-                    this.Group = GetTestGroup(testGroupName, RootDirectory, out instance);
-                }
-            }
-
-            public int TestInstance { get { return this.Instance; } }
-
-            public bool Skip
-            {
-                get
-                {
-                    if (Group == null)
-                        return false;
-
-                    if (!System.Diagnostics.Debugger.IsAttached)
-                        return false;
-
-                    // use only the previously failed file indices
-                    return !Group.Selected;
-                }
+                Execute(testIndex, testName, buildFramework, contractFramework);
             }
         }
 
-        private LegacyOptions GrabTestOptions(string testGroupName)
+        private void Execute(int testIndex, string testName, string buildFramework, string contractFramework)
         {
-            var dataRow = TestContext.DataRow;
-            var sourceFile = LegacyOptions.LoadString(dataRow, "Name");
-            var clousotOptions = LegacyOptions.LoadString(dataRow, "Options");
-            var useContractReferenceAssemblies = LegacyOptions.LoadBool(dataRow, "ContractReferenceAssemblies", false);
-            var useExe = LegacyOptions.LoadBool(dataRow, "Exe", false);
-            var compilerOptions = LegacyOptions.LoadString(dataRow, "CompilerOptions");
-            var references = LegacyOptions.LoadList(dataRow, "References");
-            var libPaths = LegacyOptions.LoadList(dataRow, "LibPaths");
-            var compilerCode = LegacyOptions.LoadString(dataRow, "Compiler", "CS");
+            var options = TestRunData[testIndex];
 
-            var options = new LegacyOptions(
-                sourceFile: sourceFile,
-                clousotOptions: clousotOptions,
-                useContractReferenceAssemblies: useContractReferenceAssemblies,
-                useExe: useExe,
-                compilerOptions: compilerOptions,
-                references: references.ToArray(),
-                libPaths: libPaths.ToArray(),
-                compilerCode: compilerCode);
+            options.BuildFramework = buildFramework;
+            options.ContractFramework = contractFramework;
 
-            options.TestGroupName = testGroupName;
-            CurrentGroupInfo = options.Group;
-            return options;
-        }
-
-        private static GroupInfo CurrentGroupInfo;
-
-        private sealed class ConsoleTestOutputHelper : ITestOutputHelper
-        {
-            public static readonly ConsoleTestOutputHelper Instance = new ConsoleTestOutputHelper();
-
-            public void WriteLine(string format, params object[] args)
-            {
-                Console.WriteLine(format, args);
-            }
-
-            public void WriteLine(string message)
-            {
-                Console.WriteLine(message);
-            }
+            TestDriver.BuildAndAnalyze(_testOutputHelper, options, testName, testIndex);
         }
     }
 }
