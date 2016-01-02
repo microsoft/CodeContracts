@@ -3,7 +3,6 @@
 
 namespace ClousotCacheTests
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -12,15 +11,6 @@ namespace ClousotCacheTests
 
     using Xunit;
     using Xunit.Abstractions;
-    using Xunit.Sdk;
-
-    public class ChacheTestOrderer : ITestCaseOrderer
-    {
-        public IEnumerable<TTestCase> OrderTestCases<TTestCase>(IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
-        {
-            return testCases;
-        }
-    }
 
     /// <summary>
     /// Cache tests for 
