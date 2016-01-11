@@ -56,6 +56,8 @@ namespace Microsoft.Contracts.Foxtrot
         public static readonly Identifier RaiseContractFailedEventName = Identifier.For("RaiseContractFailedEvent");
         public static readonly Identifier TriggerFailureName = Identifier.For("TriggerFailure");
         public static readonly Identifier ReportFailureName = Identifier.For("ReportFailure");
+        public static readonly Identifier AssertName = Identifier.For("Assert");
+        public static readonly Identifier AssumeName = Identifier.For("Assume");
         public static readonly Identifier RequiresName = Identifier.For("Requires");
         public static readonly Identifier RequiresAlwaysName = Identifier.For("RequiresAlways");
         public static readonly Identifier EnsuresName = Identifier.For("Ensures");
@@ -66,6 +68,7 @@ namespace Microsoft.Contracts.Foxtrot
         public static readonly Identifier ValueAtReturnName = Identifier.For("ValueAtReturn");
         public static readonly Identifier ForallName = Identifier.For("ForAll");
         public static readonly Identifier ExistsName = Identifier.For("Exists");
+        public static readonly Identifier EndContractBlockName = Identifier.For("EndContractBlock");
         public static readonly Identifier ValidatorAttributeName = Identifier.For("ContractArgumentValidatorAttribute");
         public static readonly Identifier AbbreviatorAttributeName = Identifier.For("ContractAbbreviatorAttribute");
         public static readonly Identifier ContractOptionAttributeName = Identifier.For("ContractOptionAttribute");

@@ -1472,6 +1472,9 @@ namespace Microsoft.Contracts.Foxtrot.Driver
 
                 rewriter.Verbose = 0 < options.verbose;
                 rewriter.Visit(assemblyNode);
+
+                PostRewriteChecker checker = new PostRewriteChecker();
+                checker.Visit(assemblyNode);
             }
 
             //Console.WriteLine(">>>Finished Rewriting<<<");
