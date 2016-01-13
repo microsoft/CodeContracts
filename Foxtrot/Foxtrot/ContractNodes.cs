@@ -235,7 +235,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Look for each member of the contract class
 
-            var requiresMethods = ContractClass.GetMethods(Identifier.For("Requires"), SystemTypes.Boolean);
+            var requiresMethods = ContractClass.GetMethods(RequiresName, SystemTypes.Boolean);
             for (int i = 0; i < requiresMethods.Count; i++)
             {
                 var method = requiresMethods[i];
@@ -260,7 +260,7 @@ namespace Microsoft.Contracts.Foxtrot
                 return;
             }
 
-            var requiresMethodsWithMsg = ContractClass.GetMethods(Identifier.For("Requires"), SystemTypes.Boolean, SystemTypes.String);
+            var requiresMethodsWithMsg = ContractClass.GetMethods(RequiresName, SystemTypes.Boolean, SystemTypes.String);
             for (int i = 0; i < requiresMethodsWithMsg.Count; i++)
             {
                 var method = requiresMethodsWithMsg[i];
@@ -276,20 +276,20 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
-            EnsuresMethod = ContractClass.GetMethod(Identifier.For("Ensures"), SystemTypes.Boolean);
+            EnsuresMethod = ContractClass.GetMethod(EnsuresName, SystemTypes.Boolean);
             
-            EnsuresWithMsgMethod = ContractClass.GetMethod(Identifier.For("Ensures"), SystemTypes.Boolean, SystemTypes.String);
-            EnsuresOnThrowTemplate = ContractClass.GetMethod(Identifier.For("EnsuresOnThrow"), SystemTypes.Boolean);
-            EnsuresOnThrowWithMsgTemplate = ContractClass.GetMethod(Identifier.For("EnsuresOnThrow"), SystemTypes.Boolean, SystemTypes.String);
+            EnsuresWithMsgMethod = ContractClass.GetMethod(EnsuresName, SystemTypes.Boolean, SystemTypes.String);
+            EnsuresOnThrowTemplate = ContractClass.GetMethod(EnsuresOnThrowName, SystemTypes.Boolean);
+            EnsuresOnThrowWithMsgTemplate = ContractClass.GetMethod(EnsuresOnThrowName, SystemTypes.Boolean, SystemTypes.String);
 
-            InvariantMethod = ContractClass.GetMethod(Identifier.For("Invariant"), SystemTypes.Boolean);
-            InvariantWithMsgMethod = ContractClass.GetMethod(Identifier.For("Invariant"), SystemTypes.Boolean, SystemTypes.String);
+            InvariantMethod = ContractClass.GetMethod(InvariantName, SystemTypes.Boolean);
+            InvariantWithMsgMethod = ContractClass.GetMethod(InvariantName, SystemTypes.Boolean, SystemTypes.String);
 
-            AssertMethod = ContractClass.GetMethod(Identifier.For("Assert"), SystemTypes.Boolean);
-            AssertWithMsgMethod = ContractClass.GetMethod(Identifier.For("Assert"), SystemTypes.Boolean, SystemTypes.String);
+            AssertMethod = ContractClass.GetMethod(AssertName, SystemTypes.Boolean);
+            AssertWithMsgMethod = ContractClass.GetMethod(AssertName, SystemTypes.Boolean, SystemTypes.String);
 
-            AssumeMethod = ContractClass.GetMethod(Identifier.For("Assume"), SystemTypes.Boolean);
-            AssumeWithMsgMethod = ContractClass.GetMethod(Identifier.For("Assume"), SystemTypes.Boolean, SystemTypes.String);
+            AssumeMethod = ContractClass.GetMethod(AssumeName, SystemTypes.Boolean);
+            AssumeWithMsgMethod = ContractClass.GetMethod(AssumeName, SystemTypes.Boolean, SystemTypes.String);
 
             ResultTemplate = ContractClass.GetMethod(ResultName);
 
@@ -318,16 +318,16 @@ namespace Microsoft.Contracts.Foxtrot
                             assemblyContainingContractClass.GetType(Identifier.For("System.Collections.Generic"),
                                 Identifier.For("IEnumerable" + TargetPlatform.GenericTypeNamesMangleChar + "1"));
 
-                        ForAllGenericTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), genericIEnum, GenericPredicate);
-                        ExistsGenericTemplate = ContractClass.GetMethod(Identifier.For("Exists"), genericIEnum, GenericPredicate);
+                        ForAllGenericTemplate = ContractClass.GetMethod(ForallName, genericIEnum, GenericPredicate);
+                        ExistsGenericTemplate = ContractClass.GetMethod(ExistsName, genericIEnum, GenericPredicate);
                     }
                 }
 
                 TypeNode PredicateOfInt = GenericPredicate.GetTemplateInstance(ContractClass, SystemTypes.Int32);
                 if (PredicateOfInt != null)
                 {
-                    ForAllTemplate = ContractClass.GetMethod(Identifier.For("ForAll"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
-                    ExistsTemplate = ContractClass.GetMethod(Identifier.For("Exists"), SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
+                    ForAllTemplate = ContractClass.GetMethod(ForallName, SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
+                    ExistsTemplate = ContractClass.GetMethod(ExistsName, SystemTypes.Int32, SystemTypes.Int32, PredicateOfInt);
                 }
             }
 
@@ -355,7 +355,7 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
-            EndContract = ContractClass.GetMethod(Identifier.For("EndContractBlock"));
+            EndContract = ContractClass.GetMethod(EndContractBlockName);
             if (this.ContractFailureKind != null)
             {
                 if (ContractHelperClass != null)
@@ -434,9 +434,9 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Check that ContractFailureKind is okay
 
-            if (this.ContractFailureKind.GetField(Identifier.For("Assert")) == null
-                || this.ContractFailureKind.GetField(Identifier.For("Assume")) == null
-                || this.ContractFailureKind.GetField(Identifier.For("Invariant")) == null
+            if (this.ContractFailureKind.GetField(AssertName) == null
+                || this.ContractFailureKind.GetField(AssumeName) == null
+                || this.ContractFailureKind.GetField(InvariantName) == null
                 || this.ContractFailureKind.GetField(Identifier.For("Postcondition")) == null
                 || this.ContractFailureKind.GetField(Identifier.For("Precondition")) == null
                 )
