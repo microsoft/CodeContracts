@@ -13,7 +13,7 @@ namespace ClousotCacheTests
     using Xunit.Abstractions;
 
     /// <summary>
-    /// Cache tests for 
+    /// Cache tests for the static checker.
     /// </summary>
     /// <remarks>
     /// For XUnit there is no way to guarantee the test order of [MemberData] driven tests - however for these tests the order is important.
