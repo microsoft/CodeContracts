@@ -1533,13 +1533,6 @@ namespace Microsoft.Research.CodeAnalysis
         {
           output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
         }
-        catch (TerminationException e)
-        {
-          output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
-                        ((TerminationException)e).Reason.ToString(),
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method));
-        }
 
 #if EXPERIMENTAL
         catch (Exception)
@@ -1557,14 +1550,6 @@ namespace Microsoft.Research.CodeAnalysis
           if (ae.InnerExceptions.All(exc => exc is TimeoutExceptionFixpointComputation))
           {
             output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
-          }
-          else if (ae.InnerExceptions.All(exc => exc is TerminationException))
-          {
-            var exceptions = ae.InnerExceptions.Where(exc => exc is TerminationException);
-            output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
-                          ((TerminationException)exceptions.First()).Reason.ToString(),
-                          this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                          this.driver.MetaDataDecoder.FullName(method));
           }
           else
           {
@@ -2718,10 +2703,16 @@ namespace Microsoft.Research.CodeAnalysis
               if (obl != null) obligations.Add(obl);
 
               IMethodResult<SymbolicValue> result;
+              bool resumed = false;
               try
               {
-                DFARoot.TimeOut.Resume();
-                DFARoot.AnalysisControls.Resume();
+                if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
+                {
+                  resumed = true;
+                  DFARoot.TimeOut.Resume();
+                  DFARoot.AnalysisControls.ReachedStart(analysis.Name);
+                  DFARoot.AnalysisControls.Resume();
+                }
                 if (factory != null)
                 {
                   var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
@@ -2735,8 +2726,11 @@ namespace Microsoft.Research.CodeAnalysis
               }
               finally
               {
-                DFARoot.TimeOut.Pause();
-                DFARoot.AnalysisControls.Pause();
+                if (resumed)
+                {
+                  DFARoot.TimeOut.Pause();
+                  DFARoot.AnalysisControls.Pause();
+                }
               }
 
               results.Add(result);
@@ -2748,29 +2742,15 @@ namespace Microsoft.Research.CodeAnalysis
           }
           catch (Exception e)
           {
-              if (e is TimeoutExceptionFixpointComputation || e is TerminationException)
+              if (e is TimeoutExceptionFixpointComputation)
               {
-                  IMethodResult<SymbolicValue> result = null;
+                  IMethodResult<SymbolicValue> result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
+                  
+                  output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
+                    this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                    this.driver.MetaDataDecoder.FullName(method),
+                    analysis.Name);
 
-                  if (e is TimeoutExceptionFixpointComputation)
-                  {
-                      output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method),
-                        analysis.Name);
-
-                      result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
-                  }
-                  else if (e is TerminationException)
-                  {
-                      output.WriteLine("{3} Analysis terminated for method #{1} {2}. The reason is {0}",
-                        ((TerminationException)e).Reason.ToString(),
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method),
-                        analysis.Name);
-
-                      result = ((TerminationException)e).Result as IMethodResult<SymbolicValue>;
-                  }
                   if (result != null)
                   {
                       results.Add(result);

@@ -25,7 +25,7 @@ namespace SymbolicTimeoutTest
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Lower bound access ok", PrimaryILOffset = 25, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"Upper bound access ok", PrimaryILOffset = 25, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"This array access is unreached", PrimaryILOffset = 28, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"This array access is unreached", PrimaryILOffset = 42, MethodILOffset = 0)]
         private void Test0(int N, int[] K)
         {
             Contract.Requires(K.Length == N);
@@ -38,7 +38,9 @@ namespace SymbolicTimeoutTest
                 t = 0;
                 while (j <= b - 1)
                 {
-                    if (K[j - 1] > K[j])
+                    int tmp = K[j - 1];
+                    if (tmp < 0) { tmp++; tmp--; }
+                    if (tmp > K[j])
                     {
                         // exchange j and j + 1; no side effects
                         t = j;
