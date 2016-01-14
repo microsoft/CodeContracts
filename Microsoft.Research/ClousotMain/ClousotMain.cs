@@ -2730,6 +2730,13 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                   DFARoot.TimeOut.Pause();
                   DFARoot.AnalysisControls.Pause();
+                  if (options.TraceSuspended)
+                  {
+                    if (0 < DFARoot.AnalysisControls.SuspendedAPCs.Count)
+                    {
+                      Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", DFARoot.AnalysisControls.SuspendedAPCs));
+                    }
+                  }
                 }
               }
 

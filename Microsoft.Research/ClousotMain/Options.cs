@@ -42,7 +42,7 @@ namespace Microsoft.Research.CodeAnalysis
 
   public enum AnalyzeOptions { closures, movenext, compilergenerated }
 
-  public enum TraceOptions { dfa, heap, expressions, egraph, assumptions, partitions, wp, arrays, numerical, timings, memory, cache, checks, inference, loading, cachehashing, warningcontexts, movenext }
+  public enum TraceOptions { dfa, heap, expressions, egraph, assumptions, partitions, wp, arrays, numerical, timings, memory, cache, checks, inference, loading, cachehashing, warningcontexts, movenext, suspended }
 
   public enum ShowOptions { progress, il, errors, validations, unreached, progressnum, progressbar, obligations, paths, invariants, warnranks, analysisphases, scores, inferencetrace, externallyvisiblemembersonly, cachemisses }
 
@@ -709,7 +709,8 @@ namespace Microsoft.Research.CodeAnalysis
     public bool TraceArrayAnalysis { get { return this.trace.Contains(TraceOptions.arrays); } }
     public bool TraceCache { get { return this.trace.Contains(TraceOptions.cache); } }
     public bool TraceCacheHashing { get { return this.trace.Contains(TraceOptions.cachehashing); } }
-   
+    public bool TraceSuspended { get { return this.trace.Contains(TraceOptions.suspended); } }
+
     //public bool TraceCacheHashing(int methodNumber) { return this.trace.Contains(TraceOptions.cachehashing) || methodNumber == this.focusHash; }
     public bool TraceInference { get { return this.trace.Contains(TraceOptions.inference); } }
     public bool TraceLoading { get { return this.trace.Contains(TraceOptions.loading); } }

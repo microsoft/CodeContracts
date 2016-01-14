@@ -122,6 +122,7 @@ namespace Microsoft.Research.CodeAnalysis
         #endregion
 
         #region Analysis Controller
+        // TODO(wuestholz): Make this non-static.
         static public AnalysisController AnalysisControls;
         #endregion
     }
@@ -513,7 +514,7 @@ namespace Microsoft.Research.CodeAnalysis
             finally
             {
                 FixpointComputed = (suspended.Count == 0);
-                // TODO(wuestholz): Make this information available to callers.
+                DFARoot.AnalysisControls.ReachedEnd(result, suspended);
             }
         }
 
@@ -1658,6 +1659,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         private string analysisName;
 
+        public ISet<APC> SuspendedAPCs { get; private set; }
+
         struct Imprecision
         {
           public string Source;
@@ -1702,6 +1705,7 @@ namespace Microsoft.Research.CodeAnalysis
             joinDepthCounter = 0;
             wideningDepthCounter = 0;
             symbolicTimeSlotsCounter = 0;
+            SuspendedAPCs = null;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
@@ -1825,6 +1829,11 @@ namespace Microsoft.Research.CodeAnalysis
             {
                 SuspendAPC(pc, suspended, SuspensionReason.ReachedWideningDepth);
             }
+        }
+
+        public void ReachedEnd(object result, ISet<APC> suspended)
+        {
+            SuspendedAPCs = suspended;
         }
 
         protected void SuspendAPC(APC pc, ISet<APC> suspended, SuspensionReason reason)
