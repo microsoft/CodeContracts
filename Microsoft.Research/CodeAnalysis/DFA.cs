@@ -475,8 +475,9 @@ namespace Microsoft.Research.CodeAnalysis
                         bool isNewObj, isVirtual;
                         if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
                         {
-                            DFARoot.AnalysisControls.ReachedCall(result);
+                            DFARoot.AnalysisControls.ReachedCall(result, current, suspended);
                         }
+
                         state = Transfer(current, state);
                
                         timeout.SpendSymbolicTime(1);
