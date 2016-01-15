@@ -22,7 +22,7 @@ namespace WideningDepth
     {
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 13, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 33, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 33, MethodILOffset = 0)]
         private void Test0(int x, int N)
         {
             int y = x;

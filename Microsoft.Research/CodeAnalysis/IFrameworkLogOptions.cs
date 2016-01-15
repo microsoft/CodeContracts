@@ -68,6 +68,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         bool TraceMoveNext { get; }
 
+        bool TraceSuspended { get; }
+
         /// <summary>
         /// True if analysis framework should print IL of CFGs
         /// </summary>
@@ -344,6 +346,11 @@ namespace Microsoft.Research.CodeAnalysis
         }
 
         public bool TraceInference
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool TraceSuspended
         {
             get { throw new NotImplementedException(); }
         }

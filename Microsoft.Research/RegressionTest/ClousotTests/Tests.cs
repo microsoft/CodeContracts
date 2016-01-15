@@ -1528,7 +1528,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout0.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 40 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 35 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1539,7 +1539,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeout1.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 45 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 40 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1561,7 +1561,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots0.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 8 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 7 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1572,7 +1572,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\TimeOut\SymbolicTimeSlots1.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 9 -show progress",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -symbolictimeout 5 -symbolictimeslots 8 -show progress",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1672,6 +1672,17 @@ namespace Tests
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth4.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -wideningdepth 10",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth5.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joindepth 1 -wideningdepth 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",

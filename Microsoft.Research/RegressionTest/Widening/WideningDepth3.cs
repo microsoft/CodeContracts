@@ -22,7 +22,7 @@ namespace WideningDepth
     {
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 76, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 25, MethodILOffset = 82)]
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"ensures unproven: Contract.Result<long>() >= 0L", PrimaryILOffset = 25, MethodILOffset = 82)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 38, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "Division by zero ok", PrimaryILOffset = 51, MethodILOffset = 0)]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"No overflow", PrimaryILOffset = 51, MethodILOffset = 0)]

@@ -1137,11 +1137,6 @@ namespace Microsoft.Research.CodeAnalysis
             this.cacheManager.DumpStatistics(output, options);
           }
         }
-
-        if (options.PrintControllerStats)
-        {
-          DFARoot.AnalysisControls.PrintStatisticsAsCSV(output, new List<string> { "join", "widening", "call" });
-        }
       }
 
       private int ComputeReturnCode()
@@ -1533,13 +1528,6 @@ namespace Microsoft.Research.CodeAnalysis
         {
           output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
         }
-        catch (TerminationException e)
-        {
-          output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
-                        ((TerminationException)e).Reason.ToString(),
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method));
-        }
 
 #if EXPERIMENTAL
         catch (Exception)
@@ -1557,14 +1545,6 @@ namespace Microsoft.Research.CodeAnalysis
           if (ae.InnerExceptions.All(exc => exc is TimeoutExceptionFixpointComputation))
           {
             output.WriteLine("Analysis timed out for method {0}", this.driver.MetaDataDecoder.FullName(method));
-          }
-          else if (ae.InnerExceptions.All(exc => exc is TerminationException))
-          {
-            var exceptions = ae.InnerExceptions.Where(exc => exc is TerminationException);
-            output.WriteLine("Analysis terminated for method #{1} {2}. The reason is {0}",
-                          ((TerminationException)exceptions.First()).Reason.ToString(),
-                          this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                          this.driver.MetaDataDecoder.FullName(method));
           }
           else
           {
@@ -2039,8 +2019,14 @@ namespace Microsoft.Research.CodeAnalysis
         var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
 
         // Initialize analysis controller
-        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); });
+        bool fileExists;
+        var tw = CreateCSVOutputWriter(out fileExists);
+        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, tw);
         DFARoot.AnalysisControls = analysisController;
+        if (options.PrintControllerStats && !fileExists)
+        {
+          analysisController.PrintStatisticsCSVHeader();
+        }
 
         // keep density stats
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
@@ -2136,6 +2122,20 @@ namespace Microsoft.Research.CodeAnalysis
 
         // Tell driver we are done with it so it can bulk add inferred contracts
         mdriver.EndAnalysis();
+      }
+
+      private StreamWriter CreateCSVOutputWriter(out bool fileExists)
+      {
+        StreamWriter result = null;
+        var fn = string.Format("imprecisions.{0}.csv", Thread.CurrentThread.ManagedThreadId);
+        fileExists = false;
+        if (options.PrintControllerStats)
+        {
+          fileExists = File.Exists(fn);
+          result = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
+          result.AutoFlush = true;
+        }
+        return result;
       }
 
       private int RunCodeFixesSuggestion(int phasecount, Method method, IEnumerable<MinimalProofObligation> falseObligations,
@@ -2718,10 +2718,17 @@ namespace Microsoft.Research.CodeAnalysis
               if (obl != null) obligations.Add(obl);
 
               IMethodResult<SymbolicValue> result;
+              bool resumed = false;
               try
               {
-                DFARoot.TimeOut.Resume();
-                DFARoot.AnalysisControls.Resume();
+                if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
+                {
+                  // TODO(wuestholz): Should we enable this for more analyses?
+                  resumed = true;
+                  DFARoot.TimeOut.Resume();
+                  DFARoot.AnalysisControls.ReachedStart(analysis.Name, methodFullName);
+                  DFARoot.AnalysisControls.Resume();
+                }
                 if (factory != null)
                 {
                   var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
@@ -2735,8 +2742,18 @@ namespace Microsoft.Research.CodeAnalysis
               }
               finally
               {
-                DFARoot.TimeOut.Pause();
-                DFARoot.AnalysisControls.Pause();
+                if (resumed)
+                {
+                  DFARoot.TimeOut.Pause();
+                  DFARoot.AnalysisControls.Pause();
+                  if (options.TraceSuspended)
+                  {
+                    if (DFARoot.AnalysisControls.SuspendedAPCs != null && 0 < DFARoot.AnalysisControls.SuspendedAPCs.Count)
+                    {
+                      Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", DFARoot.AnalysisControls.SuspendedAPCs));
+                    }
+                  }
+                }
               }
 
               results.Add(result);
@@ -2748,29 +2765,15 @@ namespace Microsoft.Research.CodeAnalysis
           }
           catch (Exception e)
           {
-              if (e is TimeoutExceptionFixpointComputation || e is TerminationException)
+              if (e is TimeoutExceptionFixpointComputation)
               {
-                  IMethodResult<SymbolicValue> result = null;
+                  IMethodResult<SymbolicValue> result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
+                  
+                  output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
+                    this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                    this.driver.MetaDataDecoder.FullName(method),
+                    analysis.Name);
 
-                  if (e is TimeoutExceptionFixpointComputation)
-                  {
-                      output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method),
-                        analysis.Name);
-
-                      result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
-                  }
-                  else if (e is TerminationException)
-                  {
-                      output.WriteLine("{3} Analysis terminated for method #{1} {2}. The reason is {0}",
-                        ((TerminationException)e).Reason.ToString(),
-                        this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                        this.driver.MetaDataDecoder.FullName(method),
-                        analysis.Name);
-
-                      result = ((TerminationException)e).Result as IMethodResult<SymbolicValue>;
-                  }
                   if (result != null)
                   {
                       results.Add(result);
