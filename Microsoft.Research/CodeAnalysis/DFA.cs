@@ -1746,22 +1746,8 @@ namespace Microsoft.Research.CodeAnalysis
           if (CurrentState == State.Paused) { return; }
 
           imprecisionCounter++;
-          
-          int errors = -1;
-          if (failingObligations != null)
-          {
-            // TODO(wuestholz): Uncomment the following lines.
-            // try
-            // {
-            //   Pause();
-            //   errors = failingObligations(result);
-            // }
-            // finally
-            // {
-            //   Resume();
-            // }
-          }
-          PrintStatisticsCSVData(methodName, analysisName, imprecisionCounter, errors, source);
+
+          PrintStatisticsCSVData(result, source);
         }
 
         public void PrintStatisticsCSVHeader()
@@ -1772,11 +1758,28 @@ namespace Microsoft.Research.CodeAnalysis
           }
         }
 
-        public void PrintStatisticsCSVData(string methodName, string analysisName, long step, int errors, string source)
+        public void PrintStatisticsCSVData(object result, string source)
         {
+          Contract.Requires(source != null);
+          Contract.Requires(CurrentState == State.Running);
+
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, step, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
+            int errors = -1;
+            if (failingObligations != null)
+            {
+              try
+              {
+                Pause();
+                // TODO(wuestholz): Make sure that this always works and does not interfere with the analysis.
+                errors = failingObligations(result);
+              }
+              finally
+              {
+                Resume();
+              }
+            }
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, imprecisionCounter, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
           }
         }
 
