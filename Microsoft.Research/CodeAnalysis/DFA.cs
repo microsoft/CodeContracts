@@ -475,6 +475,7 @@ namespace Microsoft.Research.CodeAnalysis
                         bool isNewObj, isVirtual;
                         if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
                         {
+                            // TODO(wuestholz): Make sure that the call actually led to imprecision by comparing with the pre-state.
                             DFARoot.AnalysisControls.ReachedCall(result, current, suspended);
                         }
 
