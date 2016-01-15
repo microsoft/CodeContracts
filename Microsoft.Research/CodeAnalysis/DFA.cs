@@ -1666,6 +1666,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         private Func<object, int> failingObligations;
 
+        private DateTime startTime;
+
         public State CurrentState;
 
         public enum State
@@ -1693,6 +1695,8 @@ namespace Microsoft.Research.CodeAnalysis
             CurrentState = State.Paused;
 
             output = ou;
+
+            startTime = DateTime.UtcNow;
         }
 
         public void ReachedStart(string analysisName, string methodName)
@@ -1753,7 +1757,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}, {1}, {2}, {3}, {4}", "method", "analysis", "step", "errors", "source"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", "method", "analysis", "step", "errors", "source", "ms"));
           }
         }
 
@@ -1761,7 +1765,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}, {1}, {2}, {3}, {4}", methodName, analysisName, step, errors, source));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, step, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
           }
         }
 
