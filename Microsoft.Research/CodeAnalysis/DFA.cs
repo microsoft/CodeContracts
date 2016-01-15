@@ -1709,6 +1709,7 @@ namespace Microsoft.Research.CodeAnalysis
             symbolicTimeSlotsCounter = 0;
             SuspendedAPCs = null;
             imprecisionCounter = 0;
+            startTime = DateTime.UtcNow;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
