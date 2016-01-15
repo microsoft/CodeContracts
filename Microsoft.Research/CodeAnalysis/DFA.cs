@@ -122,7 +122,7 @@ namespace Microsoft.Research.CodeAnalysis
         #endregion
 
         #region Analysis Controller
-        // TODO(wuestholz): Make this non-static.
+        // TODO(wuestholz): Maybe this should be non-static.
         static public AnalysisController AnalysisControls;
         #endregion
     }
@@ -1655,19 +1655,14 @@ namespace Microsoft.Research.CodeAnalysis
         private int wideningDepthCounter;
 
         private long imprecisionCounter;
-        private Dictionary<string, long> imprecisionsPerSource = new Dictionary<string, long>();
 
         private string analysisName;
 
-        public ISet<APC> SuspendedAPCs { get; private set; }
+        private string methodName;
 
-        struct Imprecision
-        {
-          public string Source;
-          public int ErrorsBefore;
-        }
-        
-        private Dictionary<long, Imprecision> imprecisions = new Dictionary<long, Imprecision>();
+        private TextWriter output;
+
+        public ISet<APC> SuspendedAPCs { get; private set; }
 
         private Func<object, int> failingObligations;
 
@@ -1679,7 +1674,7 @@ namespace Microsoft.Research.CodeAnalysis
             Running
         };
 
-        public AnalysisController(int sts, int cd, int jd, int wd, Func<object, int> fo)
+        public AnalysisController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
@@ -1696,22 +1691,26 @@ namespace Microsoft.Research.CodeAnalysis
             failingObligations = fo;
 
             CurrentState = State.Paused;
+
+            output = ou;
         }
 
-        public void ReachedStart(string analysisName)
+        public void ReachedStart(string analysisName, string methodName)
         {
             this.analysisName = analysisName;
+            this.methodName = methodName;
             callDepthCounter = 0;
             joinDepthCounter = 0;
             wideningDepthCounter = 0;
             symbolicTimeSlotsCounter = 0;
             SuspendedAPCs = null;
+            imprecisionCounter = 0;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another slot of calls.
-        public void ReachedCall(object result, APC pc, ISet<APC> suspended)
+        public void ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
             if (CurrentState == State.Paused) { return; }
 
@@ -1721,7 +1720,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (callDepth <= callDepthCounter)
             {
-                SuspendAPC(pc, suspended, SuspensionReason.ReachedCallDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedCallDepth);
             }
         }
 
@@ -1732,60 +1731,41 @@ namespace Microsoft.Research.CodeAnalysis
           if (CurrentState == State.Paused) { return; }
 
           imprecisionCounter++;
-          long v;
-          if (imprecisionsPerSource.TryGetValue(source, out v))
-          {
-            imprecisionsPerSource[source] = v + 1;
-          }
-          else
-          {
-            imprecisionsPerSource[source] = 1;
-          }
-
+          
+          int errors = -1;
           if (failingObligations != null)
           {
-            var impr = new Imprecision();
-            impr.Source = source;
             // TODO(wuestholz): Uncomment the following lines.
             // try
             // {
             //   Pause();
-            //   impr.ErrorsBefore = failingObligations(result);
+            //   errors = failingObligations(result);
             // }
             // finally
             // {
             //   Resume();
             // }
-            imprecisions[imprecisionCounter] = impr;
           }
+          PrintStatisticsCSVData(methodName, analysisName, imprecisionCounter, errors, source);
         }
 
-        public void PrintStatisticsAsCSV(ISimpleLineWriter wr, IEnumerable<string> sources, bool printHeader = true)
+        public void PrintStatisticsCSVHeader()
         {
-          Contract.Requires(wr != null && sources != null);
-
-          var keys = imprecisionsPerSource.Keys;
-          if (printHeader)
+          if (output != null)
           {
-            wr.WriteLine(string.Join(", ", sources));
-          }
-          wr.WriteLine(string.Join(", ", sources.Select(k => { long v; if (imprecisionsPerSource.TryGetValue(k, out v)) { return v; } else { return 0; } })));
-
-          wr.WriteLine("");
-          if (printHeader)
-          {
-            wr.WriteLine(string.Format("{0}, {1}, {2}", "step", "errors", "source"));
-          }
-          var steps = imprecisions.Keys.ToList();
-          steps.Sort();
-          foreach (var step in steps)
-          {
-            var impr = imprecisions[step];
-            wr.WriteLine(string.Format("{0}, {1}, {2}", step, impr.ErrorsBefore, impr.Source));
+            output.WriteLine(string.Format("{0}, {1}, {2}, {3}, {4}", "method", "analysis", "step", "errors", "source"));
           }
         }
 
-        public void ReachedJoin(object result, APC pc, ISet<APC> suspended)
+        public void PrintStatisticsCSVData(string methodName, string analysisName, long step, int errors, string source)
+        {
+          if (output != null)
+          {
+            output.WriteLine(string.Format("{0}, {1}, {2}, {3}, {4}", methodName, analysisName, step, errors, source));
+          }
+        }
+
+        public void ReachedJoin(object result, APC apc, ISet<APC> suspended)
         {
             if (CurrentState == State.Paused) { return; }
 
@@ -1795,21 +1775,21 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (joinDepth <= joinDepthCounter)
             {
-                SuspendAPC(pc, suspended, SuspensionReason.ReachedJoinDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedJoinDepth);
             }
         }
 
         // ReachedTimeout should pause the analysis when any timeout is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another time slot.
-        public void ReachedTimeout(TimeOutChecker checker, object result, APC pc, ISet<APC> suspended)
+        public void ReachedTimeout(TimeOutChecker checker, object result, APC apc, ISet<APC> suspended)
         {
             if (CurrentState == State.Paused) { return; }
 
             symbolicTimeSlotsCounter++;
             if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
             {
-                SuspendAPC(pc, suspended, SuspensionReason.ReachedSymbolicTimeSlots);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedSymbolicTimeSlots);
             }
             else
             {
@@ -1817,7 +1797,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void ReachedWidening(object result, APC pc, ISet<APC> suspended)
+        public void ReachedWidening(object result, APC apc, ISet<APC> suspended)
         {
             if (CurrentState == State.Paused) { return; }
 
@@ -1827,7 +1807,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             if (wideningDepth <= wideningDepthCounter)
             {
-                SuspendAPC(pc, suspended, SuspensionReason.ReachedWideningDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedWideningDepth);
             }
         }
 
@@ -1836,10 +1816,9 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = suspended;
         }
 
-        protected void SuspendAPC(APC pc, ISet<APC> suspended, SuspensionReason reason)
+        protected void SuspendAPC(APC apc, ISet<APC> suspended, SuspensionReason reason)
         {
-            // Console.WriteLine("Suspended APC {0} (reason: {1}, analysis: {2})", pc, reason, analysisName);
-            if (suspended != null) { suspended.Add(pc); }
+            if (suspended != null) { suspended.Add(apc); }
         }
 
         public void Pause()

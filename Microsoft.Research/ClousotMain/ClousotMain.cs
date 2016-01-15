@@ -1137,11 +1137,6 @@ namespace Microsoft.Research.CodeAnalysis
             this.cacheManager.DumpStatistics(output, options);
           }
         }
-
-        if (options.PrintControllerStats)
-        {
-          DFARoot.AnalysisControls.PrintStatisticsAsCSV(output, new List<string> { "join", "widening", "call" });
-        }
       }
 
       private int ComputeReturnCode()
@@ -2024,8 +2019,14 @@ namespace Microsoft.Research.CodeAnalysis
         var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
 
         // Initialize analysis controller
-        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); });
+        bool fileExists;
+        var tw = CreateCSVOutputWriter(out fileExists);
+        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, tw);
         DFARoot.AnalysisControls = analysisController;
+        if (options.PrintControllerStats && !fileExists)
+        {
+          analysisController.PrintStatisticsCSVHeader();
+        }
 
         // keep density stats
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
@@ -2121,6 +2122,20 @@ namespace Microsoft.Research.CodeAnalysis
 
         // Tell driver we are done with it so it can bulk add inferred contracts
         mdriver.EndAnalysis();
+      }
+
+      private StreamWriter CreateCSVOutputWriter(out bool fileExists)
+      {
+        StreamWriter result = null;
+        var fn = string.Format("imprecisions.{0}.csv", Thread.CurrentThread.ManagedThreadId);
+        fileExists = false;
+        if (options.PrintControllerStats)
+        {
+          fileExists = File.Exists(fn);
+          result = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
+          result.AutoFlush = true;
+        }
+        return result;
       }
 
       private int RunCodeFixesSuggestion(int phasecount, Method method, IEnumerable<MinimalProofObligation> falseObligations,
@@ -2708,9 +2723,10 @@ namespace Microsoft.Research.CodeAnalysis
               {
                 if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
                 {
+                  // TODO(wuestholz): Should we enable this for more analyses?
                   resumed = true;
                   DFARoot.TimeOut.Resume();
-                  DFARoot.AnalysisControls.ReachedStart(analysis.Name);
+                  DFARoot.AnalysisControls.ReachedStart(analysis.Name, methodFullName);
                   DFARoot.AnalysisControls.Resume();
                 }
                 if (factory != null)

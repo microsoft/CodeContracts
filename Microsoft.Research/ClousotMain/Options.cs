@@ -215,7 +215,7 @@ namespace Microsoft.Research.CodeAnalysis
     public List<ShowOptions> show = new List<ShowOptions>(new ShowOptions[] { ShowOptions.errors });
 
     [DoNotHashInCache]
-    public List<StatOptions> stats = new List<StatOptions>(new StatOptions[]{StatOptions.valid, StatOptions.time, StatOptions.inference});  // TODO(wuestholz): Maybe include 'StatOptions.controller' here.
+    public List<StatOptions> stats = new List<StatOptions>(new StatOptions[]{StatOptions.valid, StatOptions.time, StatOptions.inference});
 
     #region Inference options
 
