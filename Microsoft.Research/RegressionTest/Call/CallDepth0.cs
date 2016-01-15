@@ -23,9 +23,9 @@ namespace CallDepth
     public class CallDepth
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 14, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 23, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 36, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 13, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 21, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 34, MethodILOffset = 0)]
         private void Test0(int x)
         {
             string s = "non-null";
@@ -44,11 +44,11 @@ namespace CallDepth
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 14, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 23, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 36, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"reference use unreached", PrimaryILOffset = 45, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 58, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 13, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 21, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 34, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"reference use unreached", PrimaryILOffset = 42, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 55, MethodILOffset = 0)]
         private void Test1(int x, int y)
         {
             string s = "non-null";
