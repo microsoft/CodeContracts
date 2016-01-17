@@ -70,7 +70,7 @@ namespace Microsoft.Research.CodeAnalysis
         public ContractDensity DoIt(
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver)
         {
-          base.Run(driver.RawLayer);
+          base.Run(driver.RawLayer, null);
 
           return new ContractDensity(this.methodInstructions, this.contractInstructions, this.contracts);
         }

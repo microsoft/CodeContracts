@@ -124,8 +124,7 @@ namespace Microsoft.Research.CodeAnalysis
         #endregion
 
         #region Analysis Controller
-        // TODO(wuestholz): Maybe this should be non-static.
-        static public AnalysisController AnalysisControls;
+        internal DFAController Controller;
         #endregion
     }
 
@@ -369,11 +368,11 @@ namespace Microsoft.Research.CodeAnalysis
 
                 if (widen)
                 {
-                    if (changed) { DFARoot.AnalysisControls.ReachedWidening(result, edge.Two, suspended); }
+                    if (changed && Controller != null) { Controller.ReachedWidening(result, edge.Two, suspended); }
                 }
                 else
                 {
-                    if (changed) { DFARoot.AnalysisControls.ReachedJoin(result, edge.Two, suspended); }
+                    if (changed && Controller != null) { Controller.ReachedJoin(result, edge.Two, suspended); }
                 }
 
                 if (changed && !suspended.Contains(edge.Two))
@@ -473,10 +472,10 @@ namespace Microsoft.Research.CodeAnalysis
                
                         Method calledMethod;
                         bool isNewObj, isVirtual;
-                        if (current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
+                        if (Controller != null && current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
                         {
                             // TODO(wuestholz): Make sure that the call actually led to imprecision by comparing with the pre-state.
-                            DFARoot.AnalysisControls.ReachedCall(result, current, suspended);
+                            Controller.ReachedCall(result, current, suspended);
                         }
 
                         state = Transfer(current, state);
@@ -498,7 +497,7 @@ namespace Microsoft.Research.CodeAnalysis
                         this.TraceMemoryUsageIfEnabled("after instruction", current);
                
                         // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
-                        timeout.CheckTimeOut("fixpoint computation", result, current, suspended);
+                        timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
                
                         alreadyCached = false;
                     } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
@@ -510,7 +509,7 @@ namespace Microsoft.Research.CodeAnalysis
                
                         PushState(current, succ, state, result, suspended);
                     }
-                    timeout.CheckTimeOut("fixpoint computation", result, current, suspended);
+                    timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
                
                 nextPending:
                     ;
@@ -524,7 +523,7 @@ namespace Microsoft.Research.CodeAnalysis
             finally
             {
                 FixpointComputed = (suspended.Count == 0);
-                DFARoot.AnalysisControls.ReachedEnd(result, suspended);
+                if (Controller != null) { Controller.ReachedEnd(result, suspended); }
             }
         }
 
@@ -1501,7 +1500,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// Check that we did not timed out.
         /// If the timeout was not started, starts it
         /// </summary>
-        public void CheckTimeOut(string reason = "", object result = null, APC pc = default(APC), ISet<APC> suspended = null)
+        public void CheckTimeOut(string reason = "", object result = null, APC pc = default(APC), ISet<APC> suspended = null, DFAController controller = null)
         {
             if (CurrentState == State.Stopped || CurrentState == State.Paused) { return; }
 
@@ -1531,7 +1530,7 @@ namespace Microsoft.Research.CodeAnalysis
                 if (totalElapsedSymbolic >= symbolicTimeout)
                 {
                     // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites.
-                    DFARoot.AnalysisControls.ReachedTimeout(this, result, pc, suspended);
+                    if (controller != null) { controller.ReachedTimeout(this, result, pc, suspended); }
                 }
                 else
                 {
@@ -1650,7 +1649,7 @@ namespace Microsoft.Research.CodeAnalysis
         }
     }
 
-    public class AnalysisController
+    public class DFAController
     {
         private int symbolicTimeSlots;
         private int symbolicTimeSlotsCounter;
@@ -1674,19 +1673,19 @@ namespace Microsoft.Research.CodeAnalysis
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
-        private Func<object, int> failingObligations;
+        public Func<object, int> FailingObligations { get; set; }
 
         private DateTime startTime;
 
-        public State CurrentState;
+        public State CurrentState = State.Running;
 
         public enum State
         {
-            Paused,
-            Running
+            Running = 0,
+            Paused = 1
         };
 
-        public AnalysisController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou)
+        public DFAController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
@@ -1700,7 +1699,7 @@ namespace Microsoft.Research.CodeAnalysis
             wideningDepth = wd;
             wideningDepthCounter = 0;
 
-            failingObligations = fo;
+            FailingObligations = fo;
 
             CurrentState = State.Paused;
 
@@ -1720,6 +1719,7 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = null;
             imprecisionCounter = 0;
             startTime = DateTime.UtcNow;
+            CurrentState = State.Running;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
@@ -1766,13 +1766,13 @@ namespace Microsoft.Research.CodeAnalysis
           if (output != null)
           {
             int errors = -1;
-            if (failingObligations != null)
+            if (FailingObligations != null)
             {
               try
               {
                 Pause();
                 // TODO(wuestholz): Make sure that this always works and does not interfere with the analysis.
-                errors = failingObligations(result);
+                errors = FailingObligations(result);
               }
               finally
               {

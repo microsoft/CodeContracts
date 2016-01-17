@@ -45,12 +45,12 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var analysis =
-         new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.BufferAnalysis(methodName, driver, options, cachePCs);
-        return factory.Create(analysis);
+         new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.BufferAnalysis(methodName, driver, options, cachePCs, controller);
+        return factory.Create(analysis, controller);
       }
 
       public override IProofObligations<Variable, BoxedExpression> GetProofObligations<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>
@@ -68,13 +68,13 @@ namespace Microsoft.Research.CodeAnalysis
       (
         string fullMethodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
         //where Type : IEquatable<Type>
         //where Expression : IEquatable<Expression>
         //where Variable : IEquatable<Variable>
       {
-        var result = AnalysisWrapper.RunBufferAnalysis(fullMethodName, mdriver, this.options, cachePCs);
+        var result = AnalysisWrapper.RunBufferAnalysis(fullMethodName, mdriver, this.options, cachePCs, controller);
         return result;
       }
 

@@ -27,14 +27,14 @@ namespace Microsoft.Research.CodeAnalysis
     (
       string methodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver, IValueAnalysisOptions options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
       where Type : IEquatable<Type>
     {
       // We call the helper as a syntactic convenience, as there are too many type parameters!
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.HelperForStringAnalysis(methodName, driver, options, cachePCs);
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.HelperForStringAnalysis(methodName, driver, options, cachePCs, controller);
     }
 
     public static partial class TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>
@@ -51,12 +51,12 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver, 
         IValueAnalysisOptions options,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
       {
         var analysis = new StringValueAnalysis(methodName, driver, options, cachePCs);
 
-        var closure = driver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = false });
+        var closure = driver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = false }, controller);
 
         closure(analysis.GetTopValue());   // Do the analysis 
 

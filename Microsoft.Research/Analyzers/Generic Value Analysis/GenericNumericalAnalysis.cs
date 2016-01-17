@@ -59,6 +59,8 @@ namespace Microsoft.Research.CodeAnalysis
             return this.abstractDomain;
           }
         }
+
+        protected readonly DFAController Controller;
         
         #endregion
 
@@ -67,13 +69,14 @@ namespace Microsoft.Research.CodeAnalysis
           string methodName,
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
           Options options,
-          Predicate<APC> cachePCs
+          Predicate<APC> cachePCs, DFAController controller
         )
           : base(methodName, mdriver, options, cachePCs)
         {
           this.HasSwitchedToAdaptativeMode = false;
           this.abstractDomain = options.Type;
           this.BoxedVariables = new Dictionary<Variable, Variable>();
+          this.Controller = controller;
 
 #if DEBUG
           // This is only for regression, to test that the analyzer continues with other analyses even when a timeout exception is thrown

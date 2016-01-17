@@ -45,13 +45,13 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Main Entry point
         public void Run(
-          ICodeLayer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ContextData, EdgeData> codeLayer
+          ICodeLayer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ContextData, EdgeData> codeLayer, DFAController controller
           )
         {
             Contract.Requires(codeLayer != null);
 
             this.codeLayer = codeLayer;
-            var closure = codeLayer.CreateForward<bool>(this, this.Options);
+            var closure = codeLayer.CreateForward<bool>(this, this.Options, controller);
             closure(true);   // Do the analysis 
         }
         #endregion

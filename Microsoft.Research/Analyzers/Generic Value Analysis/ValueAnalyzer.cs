@@ -44,8 +44,6 @@ namespace Microsoft.Research.CodeAnalysis
 
       abstract public string Name { get; }
 
-      public Func<object, int> FailingObligations { get; set; }
-
       public bool ObligationsEnabled
       {
         get
@@ -66,7 +64,7 @@ namespace Microsoft.Research.CodeAnalysis
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
         where Variable : IEquatable<Variable>
         where Expression : IEquatable<Expression>
@@ -84,7 +82,7 @@ namespace Microsoft.Research.CodeAnalysis
       abstract public IMethodResult<Variable> Analyze<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>(
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
         where Type : IEquatable<Type>
         where Expression : IEquatable<Expression>
@@ -94,13 +92,13 @@ namespace Microsoft.Research.CodeAnalysis
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IFactQuery<BoxedExpression, Variable> factQuery
+        IFactQuery<BoxedExpression, Variable> factQuery, DFAController controller
       )
         where Type : IEquatable<Type>
         where Expression : IEquatable<Expression>
         where Variable : IEquatable<Variable>
       {
-        return Analyze(fullMethodName, driver, cachePCs);
+        return Analyze(fullMethodName, driver, cachePCs, controller);
       }
 
       protected ValueAnalyzer()

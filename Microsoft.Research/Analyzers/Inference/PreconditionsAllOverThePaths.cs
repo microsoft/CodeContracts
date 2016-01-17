@@ -203,7 +203,7 @@ namespace Microsoft.Research.CodeAnalysis
       {
         Contract.Requires(candidate != null);
 
-        var closure = this.MethodDriver.HybridLayer.CreateForward(this, new DFAOptions() { Trace = MethodDriver.Options.TraceDFA });
+        var closure = this.MethodDriver.HybridLayer.CreateForward(this, new DFAOptions() { Trace = MethodDriver.Options.TraceDFA }, null);
         closure(new AbstractValue(candidate));
 
         AbstractValue exitValue;

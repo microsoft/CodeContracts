@@ -106,12 +106,12 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var numericalAnalysis =
           new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.
-            NumericalAnalysis<Bounds.BoundsOptions>(methodName, mdriver, this.boundsOptions, cachePCs);
+            NumericalAnalysis<Bounds.BoundsOptions>(methodName, mdriver, this.boundsOptions, cachePCs, controller);
 
         var nonnullAnalysis =
           this.nonnullAnalysis != null ?
@@ -127,20 +127,20 @@ namespace Microsoft.Research.CodeAnalysis
          new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.
            ArrayAnalysis<Analyzers.Arrays.ArrayOptions, Bounds.BoundsOptions>(methodName, arrayAnalysis, numericalAnalysis, nonnullAnalysis, this.IsEnumAnalysisSelected, mdriver, this.options[0], cachePCs);
 
-        return factory.Create(analysis);
+        return factory.Create(analysis, controller);
       }
 
       public override IMethodResult<Variable> Analyze<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>
       (
         string fullMethodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
       //where Type : IEquatable<Type>
       //where Expression : IEquatable<Expression>
       //where Variable : IEquatable<Variable>
       {
-        return AnalysisWrapper.RunArraysAnalysis(fullMethodName, mdriver, this.options[0], this.boundsOptions, this.nonnullAnalysis, this.IsEnumAnalysisSelected, cachePCs);
+        return AnalysisWrapper.RunArraysAnalysis(fullMethodName, mdriver, this.options[0], this.boundsOptions, this.nonnullAnalysis, this.IsEnumAnalysisSelected, cachePCs, controller);
       }
 
       override public bool ExecuteAbstractDomainFunctor<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, Options, Result, Data>(

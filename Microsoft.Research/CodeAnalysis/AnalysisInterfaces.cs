@@ -442,7 +442,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <returns>A delegate that starts the fixpoint computation if provided an initial abstract value</returns>
         Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(
           IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis,
-          DFAOptions options
+          DFAOptions options, DFAController controller
         );
     }
 
@@ -492,7 +492,7 @@ namespace Microsoft.Research.CodeAnalysis
             get { throw new NotImplementedException(); }
         }
 
-        public Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis, DFAOptions options)
+        public Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis, DFAOptions options, DFAController controller)
         {
             Contract.Ensures(Contract.Result<Func<AnalysisState, IFixpointInfo<APC, AnalysisState>>>() != null);
 
@@ -910,7 +910,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         void EndAnalysis();
 
-        void RunHeapAndExpressionAnalyses();
+        void RunHeapAndExpressionAnalyses(DFAController controller);
 
         /// <summary>
         /// Returns a query interface for truths about variables and reachable pc's independent of higher-level analysis,
@@ -1034,7 +1034,7 @@ namespace Microsoft.Research.CodeAnalysis
             throw new NotImplementedException();
         }
 
-        public void RunHeapAndExpressionAnalyses()
+        public void RunHeapAndExpressionAnalyses(DFAController controller)
         {
             throw new NotImplementedException();
         }

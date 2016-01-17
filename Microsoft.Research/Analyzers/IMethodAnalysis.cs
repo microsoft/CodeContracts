@@ -107,15 +107,13 @@ namespace Microsoft.Research.CodeAnalysis
   public interface IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T>
     where Type : IEquatable<Type>
   {
-    T Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis);
+    T Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis, DFAController controller);
   }
 
   public interface IMethodAnalysis
   {
     string Name { get; }
     bool ObligationsEnabled { get; }
-
-    Func<object, int> FailingObligations { get; set; }
 
     /// <summary>
     /// Return false if options or args were wrong and initialization failed
@@ -136,7 +134,7 @@ namespace Microsoft.Research.CodeAnalysis
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IFactQuery<BoxedExpression, Variable> factQuery
+        IFactQuery<BoxedExpression, Variable> factQuery, DFAController controller
       )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -146,7 +144,7 @@ namespace Microsoft.Research.CodeAnalysis
       string fullMethodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       Predicate<APC> cachePCs,
-      IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+      IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>

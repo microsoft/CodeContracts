@@ -3174,7 +3174,7 @@ using System.IO;
           {
             this.mdriver = mdriver;
             if (noImplicitProofObligations) return;
-            this.Run(mdriver.ValueLayer);
+            this.Run(mdriver.ValueLayer, null);
             this.GroupSimilarProofObligations();
           }
 
@@ -3352,8 +3352,6 @@ using System.IO;
 
       public string Name { get { return "Non-null"; } }
 
-      public Func<object, int> FailingObligations { get; set; }
-
       public bool ObligationsEnabled { get { return !options.noObl; } }
 
       public IProofObligations<Variable, BoxedExpression> GetProofObligations<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>
@@ -3391,7 +3389,7 @@ using System.IO;
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IFactQuery<BoxedExpression, Variable> factQuery
+        IFactQuery<BoxedExpression, Variable> factQuery, DFAController controller
       )
         where Variable : IEquatable<Variable>
         where Expression : IEquatable<Expression>
@@ -3400,7 +3398,7 @@ using System.IO;
         TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.Analysis analysis =
           new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.Analysis(driver, this, cachePCs);
 
-        driver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = driver.Options.TraceDFA })(analysis.GetTopValue());
+        driver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = driver.Options.TraceDFA }, controller)(analysis.GetTopValue());
         return analysis;
       }
 
@@ -3408,7 +3406,7 @@ using System.IO;
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
         where Variable : IEquatable<Variable>
         where Expression : IEquatable<Expression>
@@ -3417,7 +3415,7 @@ using System.IO;
         var analysis =
           new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.Analysis(driver, this, cachePCs);
 
-        return factory.Create(analysis);
+        return factory.Create(analysis, controller);
       }
 
       public void PrintAnalysisSpecificStatistics(IOutput output)

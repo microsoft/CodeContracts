@@ -57,13 +57,13 @@ namespace Microsoft.Research.CodeAnalysis
       (
         string methodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
-        GenericValueAnalysis<AbstractDomain, Options> analysis
+        GenericValueAnalysis<AbstractDomain, Options> analysis, DFAController controller
       )
         where AbstractDomain : IAbstractDomainForEnvironments<BoxedVariable<Variable>, BoxedExpression>
         where Options : IValueAnalysisOptions
       {
         var closure = driver.HybridLayer.CreateForward<AbstractDomain>(
-          analysis, new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, SymbolicTimeout = driver.Options.SymbolicTimeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }
+          analysis, new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, SymbolicTimeout = driver.Options.SymbolicTimeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }, controller
           );
 
         closure(analysis.GetTopValue());   // Do the analysis 

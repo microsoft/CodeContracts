@@ -53,26 +53,26 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var analysis = new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.EnumAnalysis
                        (methodName, driver, options[0], cachePCs);
 
-        return factory.Create(analysis);
+        return factory.Create(analysis, controller);
       }
 
       public override IMethodResult<Variable> 
         Analyze<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>(
         string fullMethodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
           //where Type : IEquatable<Type>
           //where Expression : IEquatable<Expression>
           //where Variable : IEquatable<Variable>
       {
-        var result = AnalysisWrapper.RunEnumAnalysis(fullMethodName, mdriver, this.options, cachePCs);
+        var result = AnalysisWrapper.RunEnumAnalysis(fullMethodName, mdriver, this.options, cachePCs, controller);
         return result;
       }
 

@@ -2018,21 +2018,12 @@ namespace Microsoft.Research.CodeAnalysis
         var results = new List<IMethodResult<SymbolicValue>>(options.Analyses.Count);
         var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
 
-        // Initialize analysis controller
-        bool fileExists;
-        var tw = CreateCSVOutputWriter(out fileExists);
-        var analysisController = new AnalysisController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, (result) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var r = result as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(r); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, tw);
-        DFARoot.AnalysisControls = analysisController;
-        if (options.PrintControllerStats && !fileExists)
-        {
-          analysisController.PrintStatisticsCSVHeader();
-        }
-
         // keep density stats
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
 
         WriteLinePhase(output, "{0}: Running the heap analysis", (phasecount++).ToString());
-        mdriver.RunHeapAndExpressionAnalyses();
+        // TODO(wuestholz): Maybe we should create a controller here.
+        mdriver.RunHeapAndExpressionAnalyses(null);
 
         var inferenceManager = (ContractInferenceManager)null;
 
@@ -2531,7 +2522,7 @@ namespace Microsoft.Research.CodeAnalysis
         int errors = 0;
         
         AssertionStatistics dummy;
-        var explicitAssertions = ExplicitAssertions(mdriver, out dummy);
+        var explicitAssertions = ExplicitAssertions(mdriver, out dummy, null);
 
         var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
 
@@ -2579,7 +2570,7 @@ namespace Microsoft.Research.CodeAnalysis
         falseObligations = null;
 
         // Collect explicit obligations - we need them for precondition inference
-        var explicitAssertions = ExplicitAssertions(mdriver, out localAssertStats);
+        var explicitAssertions = ExplicitAssertions(mdriver, out localAssertStats, null);
 
         var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
 
@@ -2620,7 +2611,7 @@ namespace Microsoft.Research.CodeAnalysis
       AssertionFinder.AssertionObligations<SymbolicValue> cachedExplicitAssertions;
       AssertionStatistics cachedLocalAssertStats;
 
-      private AssertionFinder.AssertionObligations<SymbolicValue> ExplicitAssertions(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, out AssertionStatistics localAssertStats)
+      private AssertionFinder.AssertionObligations<SymbolicValue> ExplicitAssertions(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, out AssertionStatistics localAssertStats, DFAController controller)
       {
         if (cachedExplicitAssertions != null)
         {
@@ -2633,10 +2624,6 @@ namespace Microsoft.Research.CodeAnalysis
           {
             DFARoot.TimeOut.Pause();
           }
-          if (DFARoot.AnalysisControls.CurrentState == AnalysisController.State.Running)
-          {
-            DFARoot.AnalysisControls.Pause();
-          }
           cachedExplicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
         }
         finally
@@ -2644,10 +2631,6 @@ namespace Microsoft.Research.CodeAnalysis
           if (DFARoot.TimeOut.CurrentState == TimeOutChecker.State.Paused)
           {
             DFARoot.TimeOut.Resume();
-          }
-          if (DFARoot.AnalysisControls.CurrentState == AnalysisController.State.Paused)
-          {
-            DFARoot.AnalysisControls.Resume();
           }
         }
         cachedLocalAssertStats = localAssertStats;
@@ -2718,39 +2701,45 @@ namespace Microsoft.Research.CodeAnalysis
               if (obl != null) obligations.Add(obl);
 
               IMethodResult<SymbolicValue> result;
-              bool resumed = false;
+              DFAController controller = null;
               try
               {
+                // TODO(wuestholz): Should we enable this for more analyses?
                 if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
                 {
-                  // TODO(wuestholz): Should we enable this for more analyses?
-                  resumed = true;
+                  bool fileExists;
+                  var tw = CreateCSVOutputWriter(out fileExists);
+                  controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw);
+                  controller.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
+                  if (options.PrintControllerStats && !fileExists)
+                  {
+                    controller.PrintStatisticsCSVHeader();
+                  }
+                  controller.ReachedStart(analysis.Name, methodFullName);
+
                   DFARoot.TimeOut.Resume();
-                  DFARoot.AnalysisControls.ReachedStart(analysis.Name, methodFullName);
-                  DFARoot.AnalysisControls.Resume();
                 }
                 if (factory != null)
                 {
-                  var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
+                  var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory, controller);
                   result = iteratorAnalysis.Analyze();
                 }
                 else
                 {
-                  analysis.FailingObligations = failingObligations;
-                  result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery);
+                  result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery, controller);
                 }
               }
               finally
               {
-                if (resumed)
+                if (controller != null)
                 {
                   DFARoot.TimeOut.Pause();
-                  DFARoot.AnalysisControls.Pause();
+
                   if (options.TraceSuspended)
                   {
-                    if (DFARoot.AnalysisControls.SuspendedAPCs != null && 0 < DFARoot.AnalysisControls.SuspendedAPCs.Count)
+                    if (controller.SuspendedAPCs != null && 0 < controller.SuspendedAPCs.Count)
                     {
-                      Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", DFARoot.AnalysisControls.SuspendedAPCs));
+                      Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
                     }
                   }
                 }

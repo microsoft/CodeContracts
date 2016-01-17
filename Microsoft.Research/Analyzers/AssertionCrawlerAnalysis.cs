@@ -793,7 +793,7 @@ namespace Microsoft.Research.CodeAnalysis
           this.checkConditions = mdriver.Options.CheckConditions;
 
           var codeLayer = mdriver.ValueLayer;
-          var closure = codeLayer.CreateForward<Data>(this, new DFAOptions() { Trace = mdriver.Options.TraceDFA });
+          var closure = codeLayer.CreateForward<Data>(this, new DFAOptions() { Trace = mdriver.Options.TraceDFA }, null);
           closure(Data.Top);   // Do the analysis 
 
           this.mdriver = null;

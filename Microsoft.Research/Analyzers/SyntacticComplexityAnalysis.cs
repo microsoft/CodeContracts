@@ -75,7 +75,7 @@ namespace Microsoft.Research.CodeAnalysis
         public SyntacticComplexity DoIt(
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver)
         {
-          base.Run(driver.RawLayer);
+          base.Run(driver.RawLayer, null);
 
           return new SyntacticComplexity(this.joinpoints, this.instructions, this.loops);
         }

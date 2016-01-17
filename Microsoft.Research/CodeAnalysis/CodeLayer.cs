@@ -129,10 +129,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(
           IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeData> analysis,
-          DFAOptions options)
+          DFAOptions options, DFAController controller)
         {
             var solver = ForwardAnalysisSolver<AnalysisState, Type, EdgeData>.Make(ildecoder, analysis, this.Printer);
             solver.Options = options;
+            solver.Controller = controller;
             return (initialState) => { solver.Run(initialState, analysis); return solver; };
         }
 

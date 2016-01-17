@@ -69,7 +69,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           this.MethodDriver = mdriver;
           this.myOptions = myOptions;
-          this.Run(this.MethodDriver.ValueLayer);
+          this.Run(this.MethodDriver.ValueLayer, null);
         }
 
         public override string Name

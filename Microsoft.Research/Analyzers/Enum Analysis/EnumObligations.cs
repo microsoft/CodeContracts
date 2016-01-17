@@ -46,7 +46,7 @@ namespace Microsoft.Research.CodeAnalysis
             return;
           }
 
-          this.Run(mdriver.ValueLayer);
+          this.Run(mdriver.ValueLayer, null);
         }
 
         public override string Name

@@ -62,13 +62,13 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver, 
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var analysis =
           new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.
-            NumericalAnalysis<BoundsOptions>(methodName, driver, options, cachePCs);
-        return factory.Create(analysis);
+            NumericalAnalysis<BoundsOptions>(methodName, driver, options, cachePCs, controller);
+        return factory.Create(analysis, controller);
       }
 
       /// <summary>
@@ -78,13 +78,13 @@ namespace Microsoft.Research.CodeAnalysis
       (
         string methodFullName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> methodDriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
           //where Variable : IEquatable<Variable>
           //where Expression : IEquatable<Expression>
           //where Type : IEquatable<Type>
       {
-        var result = AnalysisWrapper.RunTheAnalysis(methodFullName, methodDriver, options, cachePCs);
+        var result = AnalysisWrapper.RunTheAnalysis(methodFullName, methodDriver, options, cachePCs, controller);
         return result;
       }
 
