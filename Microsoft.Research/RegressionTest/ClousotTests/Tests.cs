@@ -1682,7 +1682,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth5.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joindepth 1 -wideningdepth 1",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 0 -wideningdepth 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",

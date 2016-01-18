@@ -41,7 +41,7 @@ namespace WideningDepth
 
     // Gulwani, S., Jojic, N.: Program verification as probabilistic inference. In: POPL. (2007) 277–289
     [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message="assert unreachable",PrimaryILOffset=32,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.False,Message="assert is false",PrimaryILOffset=32,MethodILOffset=0)]
     [RegressionOutcome(Outcome=ProofOutcome.Bottom,Message="assert unreachable",PrimaryILOffset=47,MethodILOffset=0)]
     public void Test2()
     {
@@ -53,7 +53,6 @@ namespace WideningDepth
           y = y + 1;
         }
         if (NondetBool()) {
-          // TODO(wuestholz): Why isn't this reported?
           Contract.Assert(50 < y);  // genuine error
         }
       }
