@@ -23,16 +23,23 @@ namespace CallDepth
     public class CallDepth
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 13, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 21, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 34, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 38, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 46, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 59, MethodILOffset = 0)]
         private void Test0(int x)
         {
             string s = "non-null";
+            Nop();
+            Nop();
+            Nop();
+            Nop();
+            Nop();
             Contract.Assert(s != null);
             s = Test0Helper(x, s);
             Contract.Assert(s != null);
         }
+
+        private static void Nop() {}
 
         private string Test0Helper(int x, string s)
         {

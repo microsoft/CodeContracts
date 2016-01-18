@@ -2709,7 +2709,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                   bool fileExists;
                   var tw = CreateCSVOutputWriter(out fileExists);
-                  controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw);
+                  controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
                   controller.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
                   if (options.PrintControllerStats && !fileExists)
                   {

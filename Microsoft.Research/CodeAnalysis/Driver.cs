@@ -35,6 +35,8 @@ namespace Microsoft.Research.CodeAnalysis
           , IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, LogOptions>
           , IFactBase<SymbolicValue>
         {
+            public IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
+
             private OptimisticHeapAnalyzer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> optimisticHeapAnalysis;
             private Converter<ExternalExpression<APC, SymbolicValue>, string> expr2String;
             private IFullExpressionDecoder<Type, SymbolicValue, ExternalExpression<APC, SymbolicValue>> expressionDecoder;
@@ -192,6 +194,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                     #endregion
                 }
+                ModifiedAtCall = optimisticHeapAnalysis.ModifiedAtCall;
             }
 
             public Converter<ExternalExpression<APC, SymbolicValue>, string> ExpressionToString { get { return expr2String; } }

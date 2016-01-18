@@ -912,6 +912,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         void RunHeapAndExpressionAnalyses(DFAController controller);
 
+        IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
+
         /// <summary>
         /// Returns a query interface for truths about variables and reachable pc's independent of higher-level analysis,
         /// just based on the value/expression analysis.
@@ -937,6 +939,8 @@ namespace Microsoft.Research.CodeAnalysis
       where LogOptions : IFrameworkLogOptions
       where Type : IEquatable<Type>
     {
+        public IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
+
         public ICodeLayer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Variable, Variable, IValueContext<Local, Parameter, Method, Field, Type, Variable>, IFunctionalMap<Variable, FList<Variable>>>
           ValueLayer
         {

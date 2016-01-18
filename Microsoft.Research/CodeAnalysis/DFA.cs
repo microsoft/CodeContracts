@@ -472,7 +472,10 @@ namespace Microsoft.Research.CodeAnalysis
                
                         Method calledMethod;
                         bool isNewObj, isVirtual;
-                        if (Controller != null && current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual))
+                        if (Controller != null
+                            && current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual)
+                            && Controller.ModifiedAtCall.ContainsKey(current.Block)
+                            && 0 < Controller.ModifiedAtCall[current.Block].Count)
                         {
                             // TODO(wuestholz): Make sure that the call actually led to imprecision by comparing with the pre-state.
                             Controller.ReachedCall(result, current, suspended);
@@ -1679,13 +1682,15 @@ namespace Microsoft.Research.CodeAnalysis
 
         public State CurrentState = State.Running;
 
+        public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
+
         public enum State
         {
             Running = 0,
             Paused = 1
         };
 
-        public DFAController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou)
+        public DFAController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
@@ -1706,6 +1711,8 @@ namespace Microsoft.Research.CodeAnalysis
             output = ou;
 
             startTime = DateTime.UtcNow;
+
+            ModifiedAtCall = modifiedAtCall;
         }
 
         public void ReachedStart(string analysisName, string methodName)
