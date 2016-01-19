@@ -85,5 +85,33 @@ namespace WideningDepth
       Contract.Assert(m <= s);  // spurious error (not reported without widening)
       Contract.Assert(0 < s);  // genuine error
     }
+
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome=ProofOutcome.True,Message="assert is valid",PrimaryILOffset=27,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="assert unproven. Is it an off-by-one? The static checker can prove (0 - 1) < c instead",PrimaryILOffset=36,MethodILOffset=0)]
+    public void Test4()
+    {
+      int c = 0;
+      while (NondetBool()) {
+        if (c < 7) { c++; }
+      }
+
+      Contract.Assert(c < 585);  // spurious error
+      Contract.Assert(0 < c);  // genuine error
+    }
+
+    [ClousotRegressionTest]
+    [RegressionOutcome(Outcome=ProofOutcome.True,Message="assert is valid",PrimaryILOffset=27,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.False,Message="assert is false",PrimaryILOffset=36,MethodILOffset=0)]
+    public void Test5()
+    {
+      int c = 0;
+      while (NondetBool()) {
+        if (c < 7) { c++; }
+      }
+
+      Contract.Assert(c < 585);  // spurious error
+      Contract.Assert(7 < c);  // genuine error
+    }
   }
 }
