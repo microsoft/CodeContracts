@@ -2737,21 +2737,21 @@ namespace Microsoft.Research.CodeAnalysis
           }
           catch (TimeoutExceptionFixpointComputation e)
           {
-              IMethodResult<SymbolicValue> result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
-              
-              output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
-                this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                this.driver.MetaDataDecoder.FullName(method),
-                analysis.Name);
+            IMethodResult<SymbolicValue> result = e.Result as IMethodResult<SymbolicValue>;
+            
+            output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
+              this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+              this.driver.MetaDataDecoder.FullName(method),
+              analysis.Name);
 
-              if (result != null)
-              {
-                  results.Add(result);
-                  factQuery.Add(result.FactQuery);
-                  RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
-              }
+            if (result != null)
+            {
+                results.Add(result);
+                factQuery.Add(result.FactQuery);
+                RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
+            }
 
-              break; // we are done
+            break; // we are done
           }
 
           #endregion

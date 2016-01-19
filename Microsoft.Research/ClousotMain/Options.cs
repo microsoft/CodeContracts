@@ -709,7 +709,7 @@ namespace Microsoft.Research.CodeAnalysis
     public bool TraceArrayAnalysis { get { return this.trace.Contains(TraceOptions.arrays); } }
     public bool TraceCache { get { return this.trace.Contains(TraceOptions.cache); } }
     public bool TraceCacheHashing { get { return this.trace.Contains(TraceOptions.cachehashing); } }
-  
+   
     public bool TraceSuspended { get { return this.trace.Contains(TraceOptions.suspended); } }
 
     //public bool TraceCacheHashing(int methodNumber) { return this.trace.Contains(TraceOptions.cachehashing) || methodNumber == this.focusHash; }
