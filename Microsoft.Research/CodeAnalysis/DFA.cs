@@ -1242,13 +1242,10 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void PushExceptionState(APC atThrow, AState state)
         {
-            throw new NotImplementedException();
-            /*
             foreach (APC target in this.cfg.ExceptionHandlers<Type, object>(atThrow, null, null))
             {
-                PushState(atThrow, target, state);
+                PushState(atThrow, target, state, null, null);
             }
-            */
         }
 
         public bool TryAStateForPostCondition(AState initialState, out AState exitState)
@@ -1538,7 +1535,10 @@ namespace Microsoft.Research.CodeAnalysis
                 }
                 else
                 {
-                    exception = new TimeoutExceptionFixpointComputation(result);
+                    if (exception == null)
+                    {
+                        exception = new TimeoutExceptionFixpointComputation(result);
+                    }
                     throw exception;
                 }
             }
@@ -1864,16 +1864,4 @@ namespace Microsoft.Research.CodeAnalysis
         ReachedJoinDepth,
         ReachedWideningDepth
     };
-
-    public class TerminationException : SystemException
-    {
-        public object Result;
-        public SuspensionReason Reason;
-
-        public TerminationException(object result, SuspensionReason reason)
-        {
-            this.Result = result;
-            this.Reason = reason;
-        }
-    }
 }

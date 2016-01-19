@@ -1934,10 +1934,6 @@ namespace Microsoft.Research.CodeAnalysis
             {
               throw;
             }
-            catch (TerminationException)
-            {
-              throw;
-            }
             catch (Exception e)
             {
               if (options.InferObjectInvariantsOnlyForReadonlyFields)
@@ -2270,7 +2266,7 @@ namespace Microsoft.Research.CodeAnalysis
           if (shouldSearchForAWitness)
           {
             // todo(mchri): Decide which value makes sense for the symbolic timeout
-              var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, Int64.MaxValue, this.cancellationToken));
+            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, Int64.MaxValue, this.cancellationToken));
 #if DEBUG
             if (mayReturnNull)
             {
@@ -2739,30 +2735,23 @@ namespace Microsoft.Research.CodeAnalysis
               RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
             }
           }
-          catch (Exception e)
+          catch (TimeoutExceptionFixpointComputation e)
           {
-              if (e is TimeoutExceptionFixpointComputation)
-              {
-                  IMethodResult<SymbolicValue> result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
-                  
-                  output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
-                    this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
-                    this.driver.MetaDataDecoder.FullName(method),
-                    analysis.Name);
+              IMethodResult<SymbolicValue> result = ((TimeoutExceptionFixpointComputation)e).Result as IMethodResult<SymbolicValue>;
+              
+              output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
+                this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
+                this.driver.MetaDataDecoder.FullName(method),
+                analysis.Name);
 
-                  if (result != null)
-                  {
-                      results.Add(result);
-                      factQuery.Add(result.FactQuery);
-                      RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
-                  }
-
-                  break; // we are done
-              }
-              else
+              if (result != null)
               {
-                  throw e;
+                  results.Add(result);
+                  factQuery.Add(result.FactQuery);
+                  RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
               }
+
+              break; // we are done
           }
 
           #endregion
