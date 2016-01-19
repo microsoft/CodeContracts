@@ -477,7 +477,8 @@ namespace Microsoft.Research.CodeAnalysis
                             && Controller.ModifiedAtCall.ContainsKey(current.Block)
                             && 0 < Controller.ModifiedAtCall[current.Block].Count)
                         {
-                            // TODO(wuestholz): Make sure that the call actually led to imprecision by comparing with the pre-state.
+                            // TODO(wuestholz): Maybe only do this if the call actually led to imprecision by comparing with the pre-state.
+                            // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations.
                             Controller.ReachedCall(result, current, suspended);
                         }
 
@@ -1532,7 +1533,7 @@ namespace Microsoft.Research.CodeAnalysis
 #endif
                 if (totalElapsedSymbolic >= symbolicTimeout)
                 {
-                    // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites.
+                    // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites (e.g., when putting matrix into row echelon form).
                     if (controller != null) { controller.ReachedTimeout(this, result, pc, suspended); }
                 }
                 else
@@ -1778,7 +1779,6 @@ namespace Microsoft.Research.CodeAnalysis
               try
               {
                 Pause();
-                // TODO(wuestholz): Make sure that this always works and does not interfere with the analysis.
                 errors = FailingObligations(result);
               }
               finally

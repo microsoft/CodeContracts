@@ -2022,7 +2022,7 @@ namespace Microsoft.Research.CodeAnalysis
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
 
         WriteLinePhase(output, "{0}: Running the heap analysis", (phasecount++).ToString());
-        // TODO(wuestholz): Maybe we should create a controller here.
+        // TODO(wuestholz): Maybe we should pass a fresh controller for the next call.
         mdriver.RunHeapAndExpressionAnalyses(null);
 
         var inferenceManager = (ContractInferenceManager)null;
@@ -2704,17 +2704,10 @@ namespace Microsoft.Research.CodeAnalysis
               DFAController controller = null;
               try
               {
-                // TODO(wuestholz): Should we enable this for more analyses?
+                // TODO(wuestholz): Maybe enable this for more analyses.
                 if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
                 {
-                  bool fileExists;
-                  var tw = CreateCSVOutputWriter(out fileExists);
-                  controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
-                  controller.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
-                  if (options.PrintControllerStats && !fileExists)
-                  {
-                    controller.PrintStatisticsCSVHeader();
-                  }
+                  controller = CreateFreshDFAController(mdriver, results, obligations);
                   controller.ReachedStart(analysis.Name, methodFullName);
 
                   DFARoot.TimeOut.Resume();
@@ -2735,13 +2728,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                   DFARoot.TimeOut.Pause();
 
-                  if (options.TraceSuspended)
-                  {
-                    if (controller.SuspendedAPCs != null && 0 < controller.SuspendedAPCs.Count)
-                    {
-                      Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
-                    }
-                  }
+                  TraceSuspendedAPCs(methodFullName, analysis, controller);
                 }
               }
 
@@ -2781,6 +2768,31 @@ namespace Microsoft.Research.CodeAnalysis
           #endregion
         }
         return phasecount;
+      }
+
+      private void TraceSuspendedAPCs(string methodFullName, IMethodAnalysis analysis, DFAController controller)
+      {
+        if (options.TraceSuspended)
+        {
+          if (controller.SuspendedAPCs != null && 0 < controller.SuspendedAPCs.Count)
+          {
+            Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
+          }
+        }
+      }
+
+      private DFAController CreateFreshDFAController(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
+      {
+        DFAController controller;
+        bool exists;
+        var tw = CreateCSVOutputWriter(out exists);
+        controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
+        controller.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
+        if (options.PrintControllerStats && !exists)
+        {
+          controller.PrintStatisticsCSVHeader();
+        }
+        return controller;
       }
 
       private int RunSyntacticAnalysis(int phasecount, string methodFullName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver)
