@@ -484,7 +484,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                         state = Transfer(current, state);
 
-                        if (Controller != null && Controller.CurrentState == DFAController.State.Running)
+                        if (Controller != null)
                         {
                             // TODO(wuestholz): Maybe we should make the symbolic timer part of the DFA controller.
                             timeout.SpendSymbolicTime(1);
@@ -1669,15 +1669,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private DateTime startTime;
 
-        public State CurrentState = State.Running;
-
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
-
-        public enum State
-        {
-            Running = 0,
-            Paused = 1
-        };
 
         public DFAController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
         {
@@ -1694,8 +1686,6 @@ namespace Microsoft.Research.CodeAnalysis
             wideningDepthCounter = 0;
 
             FailingObligations = fo;
-
-            CurrentState = State.Paused;
 
             output = ou;
 
@@ -1715,7 +1705,6 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = null;
             imprecisionCounter = 0;
             startTime = DateTime.UtcNow;
-            CurrentState = State.Running;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
@@ -1723,8 +1712,6 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another slot of calls.
         public void ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
-            if (CurrentState == State.Paused) { return; }
-
             callDepthCounter++;
 
             ReachedPossibleImprecision(result, "call");
@@ -1738,8 +1725,6 @@ namespace Microsoft.Research.CodeAnalysis
         public void ReachedPossibleImprecision(object result, string source)
         {
           Contract.Requires(source != null);
-
-          if (CurrentState == State.Paused) { return; }
 
           imprecisionCounter++;
 
@@ -1757,7 +1742,6 @@ namespace Microsoft.Research.CodeAnalysis
         public void PrintStatisticsCSVData(object result, string source)
         {
           Contract.Requires(source != null);
-          Contract.Requires(CurrentState == State.Running);
 
           if (output != null)
           {
@@ -1766,13 +1750,10 @@ namespace Microsoft.Research.CodeAnalysis
             {
               try
               {
-                // TODO(wuestholz): Maybe get rid of the pausing and resuming.
-                Pause();
                 errors = FailingObligations(result);
               }
-              finally
+              catch (Exception)
               {
-                Resume();
               }
             }
             output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, imprecisionCounter, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
@@ -1781,8 +1762,6 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedJoin(object result, APC apc, ISet<APC> suspended)
         {
-            if (CurrentState == State.Paused) { return; }
-
             joinDepthCounter++;
 
             ReachedPossibleImprecision(result, "join");
@@ -1798,8 +1777,6 @@ namespace Microsoft.Research.CodeAnalysis
         // The user should be given the option to stop or continue for another time slot.
         public void ReachedTimeout(TimeOutChecker checker, object result, APC apc, ISet<APC> suspended)
         {
-            if (CurrentState == State.Paused) { return; }
-
             symbolicTimeSlotsCounter++;
             if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
             {
@@ -1813,8 +1790,6 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedWidening(object result, APC apc, ISet<APC> suspended)
         {
-            if (CurrentState == State.Paused) { return; }
-
             wideningDepthCounter++;
 
             ReachedPossibleImprecision(result, "widening");
@@ -1833,16 +1808,6 @@ namespace Microsoft.Research.CodeAnalysis
         protected void SuspendAPC(APC apc, ISet<APC> suspended, SuspensionReason reason)
         {
             if (suspended != null) { suspended.Add(apc); }
-        }
-
-        public void Pause()
-        {
-            CurrentState = State.Paused;
-        }
-
-        public void Resume()
-        {
-            CurrentState = State.Running;
         }
     }
 
