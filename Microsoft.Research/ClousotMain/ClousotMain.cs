@@ -1581,7 +1581,6 @@ namespace Microsoft.Research.CodeAnalysis
         WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut,
           this.options.SymbolicTimeout > 0 ? this.options.SymbolicTimeout : DFARoot.DefaultSymbolicTimeOut,
           this.cancellationToken);
-        WeakestPreconditionProver.Timeout.Pause();
 
         if (!driver.MetaDataDecoder.HasBody(method))
         {
@@ -2614,21 +2613,7 @@ namespace Microsoft.Research.CodeAnalysis
           localAssertStats = cachedLocalAssertStats;
           return cachedExplicitAssertions;
         }
-        try
-        {
-          if (DFARoot.TimeOut.CurrentState == TimeOutChecker.State.Running)
-          {
-            DFARoot.TimeOut.Pause();
-          }
-          cachedExplicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
-        }
-        finally
-        {
-          if (DFARoot.TimeOut.CurrentState == TimeOutChecker.State.Paused)
-          {
-            DFARoot.TimeOut.Resume();
-          }
-        }
+        cachedExplicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
         cachedLocalAssertStats = localAssertStats;
         return cachedExplicitAssertions;
       }
@@ -2705,8 +2690,6 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                   controller = CreateFreshDFAController(mdriver, results, obligations);
                   controller.ReachedStart(analysis.Name, methodFullName);
-
-                  DFARoot.TimeOut.Resume();
                 }
                 if (factory != null)
                 {
@@ -2722,8 +2705,6 @@ namespace Microsoft.Research.CodeAnalysis
               {
                 if (controller != null)
                 {
-                  DFARoot.TimeOut.Pause();
-
                   TraceSuspendedAPCs(methodFullName, analysis, controller);
                 }
               }

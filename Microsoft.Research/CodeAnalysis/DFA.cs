@@ -484,7 +484,11 @@ namespace Microsoft.Research.CodeAnalysis
 
                         state = Transfer(current, state);
 
-                        timeout.SpendSymbolicTime(1);
+                        if (Controller != null && Controller.CurrentState == DFAController.State.Running)
+                        {
+                            // TODO(wuestholz): Maybe we should make the symbolic timer part of the DFA controller.
+                            timeout.SpendSymbolicTime(1);
+                        }
 
                         if (Options.Trace)
                         {
@@ -1363,7 +1367,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Private state
 
-        public enum State { Stopped, Running, Paused }
+        public enum State { Stopped, Running }
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
@@ -1468,22 +1472,6 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void Pause()
-        {
-          Contract.Assume(CurrentState == State.Running);
-
-          stopWatch.Stop();
-          CurrentState = State.Paused;
-        }
-
-        public void Resume()
-        {
-          Contract.Assume(CurrentState == State.Paused);
-
-          stopWatch.Start();
-          CurrentState = State.Running;
-        }
-
         public void ResetSymbolic()
         {
             totalElapsedSymbolic = 0;
@@ -1503,7 +1491,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         public void CheckTimeOut(string reason = "", object result = null, APC pc = default(APC), ISet<APC> suspended = null, DFAController controller = null)
         {
-            if (CurrentState == State.Stopped || CurrentState == State.Paused) { return; }
+            if (CurrentState != State.Running) { return; }
 
             this.Start();
 
@@ -1778,6 +1766,7 @@ namespace Microsoft.Research.CodeAnalysis
             {
               try
               {
+                // TODO(wuestholz): Maybe get rid of the pausing and resuming.
                 Pause();
                 errors = FailingObligations(result);
               }
