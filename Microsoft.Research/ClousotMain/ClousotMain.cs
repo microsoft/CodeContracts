@@ -2505,13 +2505,13 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
-      private int FailingObligations(
+      private uint FailingObligations(
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
           List<IMethodResult<SymbolicValue>> results,
           List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
           IOutputFullResults<Method, Assembly> output)
       {
-        int errors = 0;
+        uint errors = 0;
         
         AssertionStatistics dummy;
         var explicitAssertions = ExplicitAssertions(mdriver, out dummy, null);
@@ -2527,21 +2527,13 @@ namespace Microsoft.Research.CodeAnalysis
         foreach (var obl in obligations)
         {
           obl.Validate(output, inferenceManager, facts);
-
-          if (0 < obl.Statistics.False || 0 < obl.Statistics.Top)
-          {
-            errors++;
-          }
+          errors += (obl.Statistics.False + obl.Statistics.Top);
         }
 
         if (options.CheckAssertions)
         {
           var stats = AssertionFinder.ValidateAssertions(explicitAssertions, facts, inferenceManager, mdriver, output);
-
-          if (0 < stats.False || 0 < stats.Top)
-          {
-            errors++;
-          }
+          errors += (stats.False + stats.Top);
         }
 
         return errors;

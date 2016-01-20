@@ -1628,7 +1628,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
-        public Func<object, int> FailingObligations { get; set; }
+        public Func<object, uint> FailingObligations { get; set; }
 
         private DateTime startTime;
 
@@ -1636,7 +1636,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private Func<SuspensionReason, object, bool> ReallySuspend;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, uint> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
         {
             analysisName = an;
             methodName = mn;
@@ -1715,12 +1715,12 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (output != null)
           {
-            int errors = -1;
+            string errors = "<unknown>";
             if (FailingObligations != null)
             {
               try
               {
-                errors = FailingObligations(result);
+                errors = FailingObligations(result).ToString();
               }
               catch (Exception)
               {
