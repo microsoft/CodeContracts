@@ -3351,7 +3351,6 @@ using System.IO;
       #region IMethodAnalysis Members
 
       public string Name { get { return "Non-null"; } }
-
       public bool ObligationsEnabled { get { return !options.noObl; } }
 
       public IProofObligations<Variable, BoxedExpression> GetProofObligations<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>

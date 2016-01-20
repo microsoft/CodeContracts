@@ -2715,13 +2715,12 @@ namespace Microsoft.Research.CodeAnalysis
           }
           catch (TimeoutExceptionFixpointComputation e)
           {
-            IMethodResult<SymbolicValue> result = e.Result as IMethodResult<SymbolicValue>;
-            
             output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
               this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
               this.driver.MetaDataDecoder.FullName(method),
               analysis.Name);
 
+            var result = e.Result as IMethodResult<SymbolicValue>;
             if (result != null)
             {
                 results.Add(result);
@@ -2750,16 +2749,15 @@ namespace Microsoft.Research.CodeAnalysis
 
       private DFAController CreateFreshDFAController(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
       {
-        DFAController controller;
         bool exists;
         var tw = CreateCSVOutputWriter(out exists);
-        controller = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
-        controller.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
+        var result = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
+        result.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
         if (options.PrintControllerStats && !exists)
         {
-          controller.PrintStatisticsCSVHeader();
+          result.PrintStatisticsCSVHeader();
         }
-        return controller;
+        return result;
       }
 
       private int RunSyntacticAnalysis(int phasecount, string methodFullName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver)

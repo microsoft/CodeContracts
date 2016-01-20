@@ -531,7 +531,7 @@ namespace Microsoft.Research.CodeAnalysis
             finally
             {
                 FixpointComputed = true;
-                if (Controller != null) { Controller.ReachedEnd(result, suspended); }
+                if (Controller != null) { Controller.ReachedEnd(suspended); }
             }
         }
 
@@ -1367,7 +1367,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Private state
 
-        public enum State { Stopped, Running }
+        private enum State { Stopped, Running }
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
@@ -1376,7 +1376,7 @@ namespace Microsoft.Research.CodeAnalysis
         readonly private int timeout;                                    // The seconds for the timeout
         readonly private long symbolicTimeout;                           // The ticks for the symbolic timeout
         private TimeoutExceptionFixpointComputation exception;  // We want to throw one exception per TimeOutChecker instance
-        public State CurrentState;
+        private State state;
 
         #endregion
 
@@ -1399,11 +1399,11 @@ namespace Microsoft.Research.CodeAnalysis
             if (start)
             {
                 stopWatch.Start();
-                CurrentState = State.Running;
+                state = State.Running;
             }
             else
             {
-                CurrentState = State.Stopped;
+                state = State.Stopped;
             }
             timeout = seconds;
             symbolicTimeout = symbolicTicks;
@@ -1413,7 +1413,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void SpendSymbolicTime(long amount)
         {
-            if (CurrentState == State.Running)
+            if (state == State.Running)
             {
                 Contract.Assert(stopWatch.IsRunning);
                 stopWatch.SpendSymbolicTime(amount);
@@ -1422,11 +1422,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Start()
         {
-            switch (CurrentState)
+            switch (state)
             {
                 case State.Stopped:
                     {
-                        CurrentState = State.Running;
+                        state = State.Running;
                         stopWatch.Start();
                     }
                     break;
@@ -1446,11 +1446,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Stop()
         {
-            switch (CurrentState)
+            switch (state)
             {
                 case State.Running:
                     {
-                        CurrentState = State.Stopped;
+                        state = State.Stopped;
 
                         stopWatch.Stop();
                         totalElapsed += stopWatch.Elapsed;
@@ -1491,7 +1491,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         public void CheckTimeOut(string reason = "", object result = null, APC pc = default(APC), ISet<APC> suspended = null, DFAController controller = null)
         {
-            if (CurrentState != State.Running) { return; }
+            if (state != State.Running) { return; }
 
             this.Start();
 
@@ -1543,7 +1543,7 @@ namespace Microsoft.Research.CodeAnalysis
         [ThreadStatic]
         private static uint count;
 
-        public object Result;
+        public readonly object Result;
 
         static public uint ThrownExceptions
         {
@@ -1643,16 +1643,16 @@ namespace Microsoft.Research.CodeAnalysis
 
     public class DFAController
     {
-        private int symbolicTimeSlots;
+        private readonly int symbolicTimeSlots;
         private int symbolicTimeSlotsCounter;
 
-        private int callDepth;
+        private readonly int callDepth;
         private int callDepthCounter;
 
-        private int joinDepth;
+        private readonly int joinDepth;
         private int joinDepthCounter;
 
-        private int wideningDepth;
+        private readonly int wideningDepth;
         private int wideningDepthCounter;
 
         private long imprecisionCounter;
@@ -1661,7 +1661,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private string methodName;
 
-        private TextWriter output;
+        private readonly TextWriter output;
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
@@ -1800,7 +1800,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void ReachedEnd(object result, ISet<APC> suspended)
+        public void ReachedEnd(ISet<APC> suspended)
         {
             SuspendedAPCs = suspended;
         }
