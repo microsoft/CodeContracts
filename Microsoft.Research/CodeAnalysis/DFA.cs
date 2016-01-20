@@ -1705,7 +1705,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", "method", "analysis", "step", "errors", "obligations", "source", "ms"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms"));
           }
         }
 
