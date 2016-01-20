@@ -366,18 +366,17 @@ namespace Microsoft.Research.CodeAnalysis
 
                 bool changed = Join(edge, state, existing, out joined, widen);
 
+                bool suspend = false;
                 if (widen)
                 {
-                    if (changed && Controller != null) { Controller.ReachedWidening(result, edge.Two, suspended); }
+                    if (changed && Controller != null) { suspend = Controller.ReachedWidening(result, edge.Two, suspended); }
                 }
                 else
                 {
-                    if (changed && Controller != null) { Controller.ReachedJoin(result, edge.Two, suspended); }
+                    if (changed && Controller != null) { suspend = Controller.ReachedJoin(result, edge.Two, suspended); }
                 }
-
                 
-                // TODO(wuestholz): Maybe use the return value of ReachedWidening/ReachedJoin below.
-                if (changed && !suspended.Contains(edge.Two))
+                if (changed && !suspend)
                 {
                     joinState[edge.Two] = this.ImmutableVersion(joined, edge.Two);
                 }
@@ -1726,7 +1725,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxCalls <= calls;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedCallDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxCalls);
                 ReachedPossibleImprecision(result, "call");
             }
 
@@ -1777,7 +1776,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxJoins <= joins;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedJoinDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxJoins);
                 ReachedPossibleImprecision(result, "join");
             }
 
@@ -1806,7 +1805,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxWidenings <= widenings;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedWideningDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxWidenings);
                 ReachedPossibleImprecision(result, "widening");
             }
 
@@ -1827,12 +1826,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (suspend)
             {
                 SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxSteps);
-                ReachedPossibleImprecision(result, "step");
             }
-            else
-            {
-                PrintStatisticsCSVData(result, "step");
-            }            
+
+            PrintStatisticsCSVData(result, "step");
 
             steps++;
             return suspend;
@@ -1847,9 +1843,9 @@ namespace Microsoft.Research.CodeAnalysis
     public enum SuspensionReason
     {
         ReachedSymbolicTimeSlots,
-        ReachedCallDepth,
-        ReachedJoinDepth,
-        ReachedWideningDepth,
+        ReachedMaxCalls,
+        ReachedMaxJoins,
+        ReachedMaxWidenings,
         ReachedMaxSteps
     };
 }
