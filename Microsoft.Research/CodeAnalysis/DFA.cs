@@ -375,6 +375,8 @@ namespace Microsoft.Research.CodeAnalysis
                     if (changed && Controller != null) { Controller.ReachedJoin(result, edge.Two, suspended); }
                 }
 
+                
+                // TODO(wuestholz): Maybe use the return value of ReachedWidening/ReachedJoin below.
                 if (changed && !suspended.Contains(edge.Two))
                 {
                     joinState[edge.Two] = this.ImmutableVersion(joined, edge.Two);
@@ -1648,19 +1650,19 @@ namespace Microsoft.Research.CodeAnalysis
         private readonly int symbolicTimeSlots;
         private int symbolicTimeSlotsCounter;
 
-        private readonly int callDepth;
-        private int callDepthCounter;
+        private readonly int maxCalls;
+        private int calls;
 
-        private readonly int joinDepth;
-        private int joinDepthCounter;
+        private readonly int maxJoins;
+        private int joins;
 
-        private readonly int wideningDepth;
-        private int wideningDepthCounter;
+        private readonly int maxWidenings;
+        private int widenings;
 
         private readonly int maxSteps;
-        private int stepCount;
+        private int steps;
 
-        private long imprecisionCounter;
+        private long imprecisions;
 
         private string analysisName;
 
@@ -1676,22 +1678,22 @@ namespace Microsoft.Research.CodeAnalysis
 
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
-        public DFAController(int sts, int cd, int jd, int wd, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
+        public DFAController(int sts, int mc, int mj, int mw, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
 
-            callDepth = cd;
-            callDepthCounter = 0;
+            maxCalls = mc;
+            calls = 0;
 
-            joinDepth = jd;
-            joinDepthCounter = 0;
+            maxJoins = mj;
+            joins = 0;
 
-            wideningDepth = wd;
-            wideningDepthCounter = 0;
+            maxWidenings = mw;
+            widenings = 0;
 
             maxSteps = ms;
-            stepCount = 0;
+            steps = 0;
 
             FailingObligations = fo;
 
@@ -1706,36 +1708,37 @@ namespace Microsoft.Research.CodeAnalysis
         {
             this.analysisName = analysisName;
             this.methodName = methodName;
-            callDepthCounter = 0;
-            joinDepthCounter = 0;
-            wideningDepthCounter = 0;
-            stepCount = 0;
+            calls = 0;
+            joins = 0;
+            widenings = 0;
+            steps = 0;
             symbolicTimeSlotsCounter = 0;
             SuspendedAPCs = null;
-            imprecisionCounter = 0;
+            imprecisions = 0;
             startTime = DateTime.UtcNow;
         }
 
         // ReachedCall should pause the analysis when the maximum number of calls is hit.
         // All errors detected until that point should be emitted.
         // The user should be given the option to stop or continue for another slot of calls.
-        public void ReachedCall(object result, APC apc, ISet<APC> suspended)
+        public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
-            callDepthCounter++;
-
-            ReachedPossibleImprecision(result, "call");
-
-            if (callDepth <= callDepthCounter)
+            bool suspend = maxCalls <= calls;
+            if (suspend)
             {
                 SuspendAPC(apc, suspended, SuspensionReason.ReachedCallDepth);
+                ReachedPossibleImprecision(result, "call");
             }
+
+            calls++;
+            return suspend;
         }
 
         public void ReachedPossibleImprecision(object result, string source)
         {
           Contract.Requires(source != null);
 
-          imprecisionCounter++;
+          imprecisions++;
 
           PrintStatisticsCSVData(result, source);
         }
@@ -1765,20 +1768,21 @@ namespace Microsoft.Research.CodeAnalysis
               {
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, imprecisionCounter, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, imprecisions, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
           }
         }
 
-        public void ReachedJoin(object result, APC apc, ISet<APC> suspended)
+        public bool ReachedJoin(object result, APC apc, ISet<APC> suspended)
         {
-            joinDepthCounter++;
-
-            ReachedPossibleImprecision(result, "join");
-
-            if (joinDepth <= joinDepthCounter)
+            bool suspend = maxJoins <= joins;
+            if (suspend)
             {
                 SuspendAPC(apc, suspended, SuspensionReason.ReachedJoinDepth);
+                ReachedPossibleImprecision(result, "join");
             }
+
+            joins++;
+            return suspend;
         }
 
         // ReachedTimeout should pause the analysis when any timeout is hit.
@@ -1797,16 +1801,17 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void ReachedWidening(object result, APC apc, ISet<APC> suspended)
+        public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
         {
-            wideningDepthCounter++;
-
-            ReachedPossibleImprecision(result, "widening");
-
-            if (wideningDepth <= wideningDepthCounter)
+            bool suspend = maxWidenings <= widenings;
+            if (suspend)
             {
                 SuspendAPC(apc, suspended, SuspensionReason.ReachedWideningDepth);
+                ReachedPossibleImprecision(result, "widening");
             }
+
+            widenings++;
+            return suspend;
         }
 
         public void ReachedEnd(object result, ISet<APC> suspended)
@@ -1818,10 +1823,10 @@ namespace Microsoft.Research.CodeAnalysis
 
         public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
         {
-            bool suspend = maxSteps <= stepCount;
+            bool suspend = maxSteps <= steps;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedWideningDepth);
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxSteps);
                 ReachedPossibleImprecision(result, "step");
             }
             else
@@ -1829,8 +1834,7 @@ namespace Microsoft.Research.CodeAnalysis
                 PrintStatisticsCSVData(result, "step");
             }            
 
-            stepCount++;
-            // TODO(wuestholz): Should we adapt the other methods like this.
+            steps++;
             return suspend;
         }
 
@@ -1845,6 +1849,7 @@ namespace Microsoft.Research.CodeAnalysis
         ReachedSymbolicTimeSlots,
         ReachedCallDepth,
         ReachedJoinDepth,
-        ReachedWideningDepth
+        ReachedWideningDepth,
+        ReachedMaxSteps
     };
 }

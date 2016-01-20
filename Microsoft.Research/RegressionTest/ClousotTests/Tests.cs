@@ -1594,7 +1594,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth0.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 1",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 0",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/unsafe",
@@ -1605,7 +1605,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth1.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 2",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 1",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/unsafe",
@@ -1616,7 +1616,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth2.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -joindepth 3",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 2",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/unsafe",
@@ -1627,7 +1627,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth0.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -wideningdepth 3",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -maxWidenings 2",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1638,7 +1638,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth1.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -wideningdepth 4",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -maxWidenings 3",
                     useContractReferenceAssemblies: false,
                     useExe: false,
                     compilerOptions: @"/optimize /define:SIMPLEXCONVEX",
@@ -1649,7 +1649,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth2.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -wideningdepth 1",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1660,7 +1660,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth3.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -wideningdepth 5",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 4",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1671,7 +1671,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth4.cs",
-                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -wideningdepth 10",
+                    clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 10",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1682,7 +1682,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth5.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 0 -wideningdepth 1",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 0 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1693,7 +1693,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth6.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -wideningdepth 1",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1704,7 +1704,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth7.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex,diseq=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -wideningdepth 1",
+                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex,diseq=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1715,7 +1715,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth8.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:mpw=false -bounds:type=subpolyhedra,reduction=simplex,diseq=false,mpw=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow,mpw=false -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -wideningdepth 2",
+                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:mpw=false -bounds:type=subpolyhedra,reduction=simplex,diseq=false,mpw=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow,mpw=false -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1759,7 +1759,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -calldepth 10",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 10",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1770,7 +1770,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth0.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -calldepth 1",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",
@@ -1781,7 +1781,7 @@ namespace Tests
                     skipSlicing: false);
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth1.cs",
-                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -calldepth 2",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,
                     compilerOptions: @"/optimize /unsafe",

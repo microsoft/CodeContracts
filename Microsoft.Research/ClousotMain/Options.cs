@@ -507,16 +507,16 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Allowed symbolic time slots per method")]
     public int symbolicTimeSlots = 1;
 
-    [OptionDescription("Allowed call depth per method")]
-    public int callDepth = Int32.MaxValue;
+    [OptionDescription("Maximum number of calls per method and analysis")]
+    public int maxCalls = Int32.MaxValue;
 
-    [OptionDescription("Allowed join depth per method")]
-    public int joinDepth = Int32.MaxValue;
+    [OptionDescription("Maximum number of joins per method and analysis")]
+    public int maxJoins = Int32.MaxValue;
 
-    [OptionDescription("Allowed widening depth per method")]
-    public int wideningDepth = Int32.MaxValue;
+    [OptionDescription("Maximum number of widenings per method and analysis")]
+    public int maxWidenings = Int32.MaxValue;
 
-    [OptionDescription("Maximum number steps per method and analysis")]
+    [OptionDescription("Maximum number of steps per method and analysis")]
     public int maxSteps = Int32.MaxValue;
 
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
@@ -727,9 +727,9 @@ namespace Microsoft.Research.CodeAnalysis
     public int Timeout { get { return this.timeout; } }
     public long SymbolicTimeout { get { return this.symbolicTimeout; } }
     public int SymbolicTimeSlots { get { return this.symbolicTimeSlots; } }
-    public int CallDepth { get { return this.callDepth; } }
-    public int JoinDepth { get { return this.joinDepth; } }
-    public int WideningDepth { get { return this.wideningDepth; } }
+    public int MaxCalls { get { return this.maxCalls; } }
+    public int MaxJoins { get { return this.maxJoins; } }
+    public int MaxWidenings { get { return this.maxWidenings; } }
     public int MaxSteps { get { return this.maxSteps; } }
     public int AnalyzeTo { get { return this.analyzeTo; } }
     public int AnalyzeFrom { get { return this.analyzeFrom; } }
