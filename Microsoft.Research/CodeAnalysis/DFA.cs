@@ -531,7 +531,7 @@ namespace Microsoft.Research.CodeAnalysis
             finally
             {
                 FixpointComputed = true;
-                if (Controller != null) { Controller.ReachedEnd(suspended); }
+                if (Controller != null) { Controller.ReachedEnd(result, suspended); }
             }
         }
 
@@ -1800,9 +1800,11 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public void ReachedEnd(ISet<APC> suspended)
+        public void ReachedEnd(object result, ISet<APC> suspended)
         {
             SuspendedAPCs = suspended;
+
+            PrintStatisticsCSVData(result, "end");
         }
 
         protected void SuspendAPC(APC apc, ISet<APC> suspended, SuspensionReason reason)
