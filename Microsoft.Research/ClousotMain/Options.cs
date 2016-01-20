@@ -501,12 +501,6 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Analysis timeout per method (in seconds)")]
     public int timeout = 180;
 
-    [OptionDescription("Analysis timeout per method (in symbolic ticks)")]
-    public long symbolicTimeout = Int64.MaxValue; // todo(mchri): Decide which value makes sense
-
-    [OptionDescription("Allowed symbolic time slots per method")]
-    public int symbolicTimeSlots = 1;
-
     [OptionDescription("Maximum number of calls per method and analysis")]
     public int maxCalls = Int32.MaxValue;
 
@@ -725,8 +719,6 @@ namespace Microsoft.Research.CodeAnalysis
     public bool EmitErrorOnCacheLookup { get { return this.emitErrorOnCacheLookup; } }
     public bool PrintIL { get { return this.show.Contains(ShowOptions.il); } }
     public int Timeout { get { return this.timeout; } }
-    public long SymbolicTimeout { get { return this.symbolicTimeout; } }
-    public int SymbolicTimeSlots { get { return this.symbolicTimeSlots; } }
     public int MaxCalls { get { return this.maxCalls; } }
     public int MaxJoins { get { return this.maxJoins; } }
     public int MaxWidenings { get { return this.maxWidenings; } }

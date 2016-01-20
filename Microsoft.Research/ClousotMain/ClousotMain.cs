@@ -1578,9 +1578,7 @@ namespace Microsoft.Research.CodeAnalysis
       internal void AnalyzeMethod(Method method)
       {
         // Very first thing: Let's put the timeout to zero at each new method analysis, and let's share it with the WPs
-        WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut,
-          this.options.SymbolicTimeout > 0 ? this.options.SymbolicTimeout : DFARoot.DefaultSymbolicTimeOut,
-          this.cancellationToken);
+        WeakestPreconditionProver.Timeout = DFARoot.StartTimeOut(this.options.Timeout > 0 ? this.options.Timeout : DFARoot.DefaultTimeOut, this.cancellationToken);
 
         if (!driver.MetaDataDecoder.HasBody(method))
         {
@@ -2264,8 +2262,7 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (shouldSearchForAWitness)
           {
-            // todo(mchri): Decide which value makes sense for the symbolic timeout
-            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, Int64.MaxValue, this.cancellationToken));
+            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, this.cancellationToken));
 #if DEBUG
             if (mayReturnNull)
             {
@@ -2685,7 +2682,7 @@ namespace Microsoft.Research.CodeAnalysis
               DFAController controller = null;
               try
               {
-                controller = CreateFreshDFAController(mdriver, results, obligations);
+                controller = CreateFreshDFAController(analysis.Name, methodFullName, mdriver, results, obligations);
 
                 if (factory != null)
                 {
@@ -2746,11 +2743,11 @@ namespace Microsoft.Research.CodeAnalysis
         }
       }
 
-      private DFAController CreateFreshDFAController(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
+      private DFAController CreateFreshDFAController(string analysisName, string methodName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
       {
         bool exists;
         var tw = CreateCSVOutputWriter(out exists);
-        var result = new DFAController(options.SymbolicTimeSlots, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, null, tw, mdriver.ModifiedAtCall);
+        var result = new DFAController(analysisName, methodName, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, null, tw, mdriver.ModifiedAtCall);
         result.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
         if (options.PrintControllerStats && !exists)
         {

@@ -34,22 +34,15 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         public int Timeout { get; set; }
 
-        /// <summary>
-        /// Symbolic timeout expressed in symbolic ticks for the fixpoint computation
-        /// </summary>
-        public long SymbolicTimeout { get; set; }
-
         public DFAOptions()
         {
             Timeout = Int32.MaxValue;
-            SymbolicTimeout = long.MaxValue;
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(Timeout >= 0);
-            Contract.Invariant(SymbolicTimeout >= 0);
         }
     }
 
@@ -59,19 +52,17 @@ namespace Microsoft.Research.CodeAnalysis
         #region Constants
 
         public const int DefaultTimeOut = 180;
-        public const long DefaultSymbolicTimeOut = Int64.MaxValue; // todo(mchri): Decide which value makes sense
 
         #endregion
 
         #region TimeOut
-        static public TimeOutChecker StartTimeOut(int time, long symbolicTime, CancellationToken cancellationToken)
+        static public TimeOutChecker StartTimeOut(int time, CancellationToken cancellationToken)
         {
             Contract.Requires(time > 0);
-            Contract.Requires(symbolicTime > 0);
 
             Contract.Ensures(Contract.Result<TimeOutChecker>() != null);
 
-            timeout = new TimeOutChecker(time, symbolicTime, cancellationToken);
+            timeout = new TimeOutChecker(time, cancellationToken);
 
             return timeout;
         }
@@ -88,7 +79,7 @@ namespace Microsoft.Research.CodeAnalysis
                 // just to make the code more robust
                 if (timeout == null)
                 {
-                    timeout = new TimeOutChecker(DefaultTimeOut, DefaultSymbolicTimeOut, new CancellationToken());
+                    timeout = new TimeOutChecker(DefaultTimeOut, new CancellationToken());
                 }
 
                 return timeout;
@@ -488,12 +479,6 @@ namespace Microsoft.Research.CodeAnalysis
 
                         state = Transfer(current, state);
 
-                        if (Controller != null)
-                        {
-                            // TODO(wuestholz): Maybe we should get rid of the symbolic timer.
-                            timeout.SpendSymbolicTime(1);
-                        }
-
                         if (Options.Trace)
                         {
                             Console.WriteLine("State after {0}", current);
@@ -531,6 +516,11 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                     Console.WriteLine("DFA done");
                 }
+            }
+            catch (TimeoutExceptionFixpointComputation e)
+            {
+                if (Controller != null) { Controller.ReachedTimeout(result); }
+                throw e;
             }
             finally
             {
@@ -1375,31 +1365,26 @@ namespace Microsoft.Research.CodeAnalysis
 
         private readonly CustomStopwatch stopWatch;
         private TimeSpan totalElapsed;
-        private long totalElapsedSymbolic;
         private readonly CancellationToken cancellationToken;
         readonly private int timeout;                                    // The seconds for the timeout
-        readonly private long symbolicTimeout;                           // The ticks for the symbolic timeout
         private TimeoutExceptionFixpointComputation exception;  // We want to throw one exception per TimeOutChecker instance
         private State state;
 
         #endregion
 
-        public TimeOutChecker(int seconds, long symbolicTicks, bool start = true)
-          : this(seconds, symbolicTicks, new CancellationToken(), start)
+        public TimeOutChecker(int seconds, bool start = true)
+          : this(seconds, new CancellationToken(), start)
         {
             Contract.Requires(seconds >= 0);
-            Contract.Requires(symbolicTicks >= 0);
         }
 
         /// <param name="seconds"> The timeout in seconds and symbolic ticks</param>    
-        public TimeOutChecker(int seconds, long symbolicTicks, CancellationToken cancellationToken, bool start = true)
+        public TimeOutChecker(int seconds, CancellationToken cancellationToken, bool start = true)
         {
             Contract.Requires(seconds >= 0);
-            Contract.Requires(symbolicTicks >= 0);
 
             stopWatch = new CustomStopwatch();
             totalElapsed = new TimeSpan();
-            totalElapsedSymbolic = 0;
             if (start)
             {
                 stopWatch.Start();
@@ -1410,18 +1395,8 @@ namespace Microsoft.Research.CodeAnalysis
                 state = State.Stopped;
             }
             timeout = seconds;
-            symbolicTimeout = symbolicTicks;
             this.cancellationToken = cancellationToken;
             exception = null;
-        }
-
-        public void SpendSymbolicTime(long amount)
-        {
-            if (state == State.Running)
-            {
-                Contract.Assert(stopWatch.IsRunning);
-                stopWatch.SpendSymbolicTime(amount);
-            }
         }
 
         public void Start()
@@ -1458,7 +1433,6 @@ namespace Microsoft.Research.CodeAnalysis
 
                         stopWatch.Stop();
                         totalElapsed += stopWatch.Elapsed;
-                        totalElapsedSymbolic += stopWatch.ElapsedSymbolic;
                         stopWatch.Reset();
                     }
                     break;
@@ -1474,11 +1448,6 @@ namespace Microsoft.Research.CodeAnalysis
                         break;
                     }
             }
-        }
-
-        public void ResetSymbolic()
-        {
-            totalElapsedSymbolic = 0;
         }
 
         public bool HasAlreadyTimeOut
@@ -1502,13 +1471,12 @@ namespace Microsoft.Research.CodeAnalysis
             stopWatch.Stop();
 
             totalElapsed += stopWatch.Elapsed;
-            totalElapsedSymbolic += stopWatch.ElapsedSymbolic;
 
             stopWatch.Reset();
             stopWatch.Start();
 
             // If we've reached a timeout, we throw an exception, and we abort the fixpoint computation
-            if (totalElapsed.TotalSeconds >= timeout || totalElapsedSymbolic >= symbolicTimeout
+            if (totalElapsed.TotalSeconds >= timeout
 #if DEBUG
  && !System.Diagnostics.Debugger.IsAttached
 #endif
@@ -1520,19 +1488,12 @@ namespace Microsoft.Research.CodeAnalysis
                     Console.WriteLine("Timeout hit: Reason {0}", reason);
                 }
 #endif
-                if (totalElapsedSymbolic >= symbolicTimeout)
+
+                if (exception == null)
                 {
-                    // TODO(wuestholz): Maybe pass a non-null 'result' at more call-sites (e.g., when putting matrix into row echelon form).
-                    if (controller != null) { controller.ReachedTimeout(this, result, pc, suspended); }
+                    exception = new TimeoutExceptionFixpointComputation(result);
                 }
-                else
-                {
-                    if (exception == null)
-                    {
-                        exception = new TimeoutExceptionFixpointComputation(result);
-                    }
-                    throw exception;
-                }
+                throw exception;
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -1647,9 +1608,6 @@ namespace Microsoft.Research.CodeAnalysis
 
     public class DFAController
     {
-        private readonly int symbolicTimeSlots;
-        private int symbolicTimeSlotsCounter;
-
         private readonly int maxCalls;
         private int calls;
 
@@ -1678,10 +1636,12 @@ namespace Microsoft.Research.CodeAnalysis
 
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
-        public DFAController(int sts, int mc, int mj, int mw, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
+        private Func<SuspensionReason, object, bool> ReallySuspend;
+
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
         {
-            symbolicTimeSlots = sts;
-            symbolicTimeSlotsCounter = 0;
+            analysisName = an;
+            methodName = mn;
 
             maxCalls = mc;
             calls = 0;
@@ -1702,6 +1662,8 @@ namespace Microsoft.Research.CodeAnalysis
             startTime = DateTime.UtcNow;
 
             ModifiedAtCall = modifiedAtCall;
+
+            ReallySuspend = reallySuspend;
         }
 
         public void ReachedStart()
@@ -1711,7 +1673,6 @@ namespace Microsoft.Research.CodeAnalysis
             joins = 0;
             widenings = 0;
             steps = 0;
-            symbolicTimeSlotsCounter = 0;
             SuspendedAPCs = null;
             imprecisions = 0;
             startTime = DateTime.UtcNow;
@@ -1725,7 +1686,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxCalls <= calls;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxCalls);
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxCalls);
                 ReachedPossibleImprecision(result, "call");
             }
 
@@ -1776,7 +1737,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxJoins <= joins;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxJoins);
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxJoins);
                 ReachedPossibleImprecision(result, "join");
             }
 
@@ -1784,20 +1745,9 @@ namespace Microsoft.Research.CodeAnalysis
             return suspend;
         }
 
-        // ReachedTimeout should pause the analysis when any timeout is hit.
-        // All errors detected until that point should be emitted.
-        // The user should be given the option to stop or continue for another time slot.
-        public void ReachedTimeout(TimeOutChecker checker, object result, APC apc, ISet<APC> suspended)
+        public void ReachedTimeout(object result)
         {
-            symbolicTimeSlotsCounter++;
-            if (symbolicTimeSlots <= symbolicTimeSlotsCounter)
-            {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedSymbolicTimeSlots);
-            }
-            else
-            {
-                checker.ResetSymbolic();
-            }
+            PrintStatisticsCSVData(result, "timeout");
         }
 
         public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
@@ -1805,7 +1755,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxWidenings <= widenings;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxWidenings);
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxWidenings);
                 ReachedPossibleImprecision(result, "widening");
             }
 
@@ -1825,7 +1775,7 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxSteps <= steps;
             if (suspend)
             {
-                SuspendAPC(apc, suspended, SuspensionReason.ReachedMaxSteps);
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxSteps);
             }
 
             PrintStatisticsCSVData(result, "step");
@@ -1834,15 +1784,20 @@ namespace Microsoft.Research.CodeAnalysis
             return suspend;
         }
 
-        protected void SuspendAPC(APC apc, ISet<APC> suspended, SuspensionReason reason)
+        protected void SuspendAPC(object result, APC apc, ISet<APC> suspended, SuspensionReason reason)
         {
-            if (suspended != null) { suspended.Add(apc); }
+            if (suspended != null)
+            {
+                if (ReallySuspend == null || ReallySuspend(reason, result))
+                {
+                    suspended.Add(apc);
+                }
+            }
         }
     }
 
     public enum SuspensionReason
     {
-        ReachedSymbolicTimeSlots,
         ReachedMaxCalls,
         ReachedMaxJoins,
         ReachedMaxWidenings,

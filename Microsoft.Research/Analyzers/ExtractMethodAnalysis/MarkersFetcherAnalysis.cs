@@ -122,7 +122,7 @@ namespace Microsoft.Research.CodeAnalysis
       public static Data<Variable> RunTheAnalysis(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver)
       {
         var analysis = new MarkersFetcherAnalysis(mdriver);
-        var closure = mdriver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = mdriver.Options.TraceDFA, Timeout = mdriver.Options.Timeout, SymbolicTimeout = mdriver.Options.SymbolicTimeout, EnforceFairJoin = mdriver.Options.EnforceFairJoin, IterationsBeforeWidening = mdriver.Options.IterationsBeforeWidening, TraceTimePerInstruction = mdriver.Options.TraceTimings, TraceMemoryPerInstruction = mdriver.Options.TraceMemoryConsumption }, null);
+        var closure = mdriver.HybridLayer.CreateForward(analysis, new DFAOptions { Trace = mdriver.Options.TraceDFA, Timeout = mdriver.Options.Timeout, EnforceFairJoin = mdriver.Options.EnforceFairJoin, IterationsBeforeWidening = mdriver.Options.IterationsBeforeWidening, TraceTimePerInstruction = mdriver.Options.TraceTimings, TraceMemoryPerInstruction = mdriver.Options.TraceMemoryConsumption }, null);
 
         closure(analysis.GetTopValue());
 

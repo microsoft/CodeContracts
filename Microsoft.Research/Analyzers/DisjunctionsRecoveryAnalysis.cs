@@ -45,7 +45,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       var closure = driver.HybridLayer.CreateForward<TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.DisjunctiveRefinement>(
           analysis, 
-          new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, SymbolicTimeout = driver.Options.SymbolicTimeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }, null);
+          new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }, null);
 
       closure(analysis.GetTopValue());   // Do the analysis 
 

@@ -83,7 +83,7 @@ namespace Microsoft.Research.CodeAnalysis
                 // We want the timeout to be always set before, but if it is not the case, we do not want to crash, and just get a dummy Timeout
                 if (timeout == null)
                 {
-                    timeout = new TimeOutChecker(180, Int64.MaxValue, new CancellationToken()); // todo(mchri): Decide which value makes sense for the symbolic timeout
+                    timeout = new TimeOutChecker(180, new CancellationToken());
                 }
 
                 return timeout;

@@ -63,7 +63,7 @@ namespace Microsoft.Research.CodeAnalysis
         where Options : IValueAnalysisOptions
       {
         var closure = driver.HybridLayer.CreateForward<AbstractDomain>(
-          analysis, new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, SymbolicTimeout = driver.Options.SymbolicTimeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }, controller
+          analysis, new DFAOptions { Trace = driver.Options.TraceDFA, Timeout = driver.Options.Timeout, EnforceFairJoin = driver.Options.EnforceFairJoin, IterationsBeforeWidening = driver.Options.IterationsBeforeWidening, TraceTimePerInstruction = driver.Options.TraceTimings, TraceMemoryPerInstruction = driver.Options.TraceMemoryConsumption }, controller
           );
 
         closure(analysis.GetTopValue());   // Do the analysis 
