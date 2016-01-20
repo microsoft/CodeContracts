@@ -425,6 +425,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         protected virtual void ComputeFixpoint(object result)
         {
+            if (Controller != null) { Controller.ReachedStart(); }
             var suspended = new HashSet<APC>();
             try
             {
@@ -1704,10 +1705,9 @@ namespace Microsoft.Research.CodeAnalysis
             ModifiedAtCall = modifiedAtCall;
         }
 
-        public void ReachedStart(string analysisName, string methodName)
+        public void ReachedStart()
         {
-            this.analysisName = analysisName;
-            this.methodName = methodName;
+            // TODO(wuestholz): Maybe we should check here that this is only called once.
             calls = 0;
             joins = 0;
             widenings = 0;

@@ -2686,8 +2686,6 @@ namespace Microsoft.Research.CodeAnalysis
               try
               {
                 controller = CreateFreshDFAController(mdriver, results, obligations);
-                // TODO(wuestholz): Maybe drop the next call.
-                controller.ReachedStart(analysis.Name, methodFullName);
 
                 if (factory != null)
                 {
