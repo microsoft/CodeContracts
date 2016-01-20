@@ -1628,7 +1628,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
-        public Func<object, uint> FailingObligations { get; set; }
+        public Func<object, AnalysisStatistics> FailingObligations { get; set; }
 
         private DateTime startTime;
 
@@ -1636,7 +1636,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private Func<SuspensionReason, object, bool> ReallySuspend;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, uint> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
         {
             analysisName = an;
             methodName = mn;
@@ -1705,7 +1705,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", "method", "analysis", "step", "errors", "source", "ms"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", "method", "analysis", "step", "errors", "obligations", "source", "ms"));
           }
         }
 
@@ -1716,17 +1716,20 @@ namespace Microsoft.Research.CodeAnalysis
           if (output != null)
           {
             string errors = "<unknown>";
+            string obls = "<unknown>";
             if (FailingObligations != null)
             {
               try
               {
-                errors = FailingObligations(result).ToString();
+                var stats = FailingObligations(result);
+                errors = (stats.Top + stats.False).ToString();
+                obls = (stats.Bottom + stats.True).ToString();
               }
               catch (Exception)
               {
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5:F0}", methodName, analysisName, imprecisions, errors, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}", methodName, analysisName, imprecisions, errors, obls, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
           }
         }
 

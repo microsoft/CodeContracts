@@ -2111,7 +2111,7 @@ namespace Microsoft.Research.CodeAnalysis
       private StreamWriter CreateCSVOutputWriter(out bool fileExists)
       {
         StreamWriter result = null;
-        var fn = string.Format("imprecisions.{0}.csv", Thread.CurrentThread.ManagedThreadId);
+        var fn = string.Format("dfa_statistics.{0}.csv", Thread.CurrentThread.ManagedThreadId);
         fileExists = false;
         if (options.PrintControllerStats)
         {
@@ -2505,14 +2505,14 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
-      private uint FailingObligations(
+      private AnalysisStatistics FailingObligations(
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
           List<IMethodResult<SymbolicValue>> results,
           List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
           IOutputFullResults<Method, Assembly> output)
       {
-        uint errors = 0;
-        
+        var result = new AnalysisStatistics();
+
         AssertionStatistics dummy;
         var explicitAssertions = ExplicitAssertions(mdriver, out dummy, null);
 
@@ -2527,16 +2527,22 @@ namespace Microsoft.Research.CodeAnalysis
         foreach (var obl in obligations)
         {
           obl.Validate(output, inferenceManager, facts);
-          errors += (obl.Statistics.False + obl.Statistics.Top);
+          result.Bottom += obl.Statistics.Bottom;
+          result.True += obl.Statistics.True;
+          result.False += obl.Statistics.False;
+          result.Top += obl.Statistics.Top;
         }
 
         if (options.CheckAssertions)
         {
           var stats = AssertionFinder.ValidateAssertions(explicitAssertions, facts, inferenceManager, mdriver, output);
-          errors += (stats.False + stats.Top);
+          result.Bottom += stats.Bottom;
+          result.True += stats.True;
+          result.False += stats.False;
+          result.Top += stats.Top;
         }
 
-        return errors;
+        return result;
       }
 
       // Check the proof obligations
