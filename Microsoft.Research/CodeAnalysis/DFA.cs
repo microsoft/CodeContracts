@@ -494,7 +494,7 @@ namespace Microsoft.Research.CodeAnalysis
                         this.TraceMemoryUsageIfEnabled("after instruction", current);
 
                         // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
-                        timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
+                        timeout.CheckTimeOut("fixpoint computation", result);
 
                         alreadyCached = false;
                     } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
@@ -506,7 +506,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                         PushState(current, succ, state, result, suspended);
                     }
-                    timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
+                    timeout.CheckTimeOut("fixpoint computation", result);
 
                 nextPending:
                     ;
@@ -1378,7 +1378,7 @@ namespace Microsoft.Research.CodeAnalysis
             Contract.Requires(seconds >= 0);
         }
 
-        /// <param name="seconds"> The timeout in seconds and symbolic ticks</param>    
+        /// <param name="seconds"> The timeout in seconds</param>    
         public TimeOutChecker(int seconds, CancellationToken cancellationToken, bool start = true)
         {
             Contract.Requires(seconds >= 0);
@@ -1462,10 +1462,8 @@ namespace Microsoft.Research.CodeAnalysis
         /// Check that we did not timed out.
         /// If the timeout was not started, starts it
         /// </summary>
-        public void CheckTimeOut(string reason = "", object result = null, APC pc = default(APC), ISet<APC> suspended = null, DFAController controller = null)
+        public void CheckTimeOut(string reason = "", object result = null)
         {
-            if (state != State.Running) { return; }
-
             this.Start();
 
             stopWatch.Stop();
