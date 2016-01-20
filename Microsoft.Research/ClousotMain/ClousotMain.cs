@@ -2685,12 +2685,9 @@ namespace Microsoft.Research.CodeAnalysis
               DFAController controller = null;
               try
               {
-                // TODO(wuestholz): Maybe enable this for more analyses.
-                if (analysis.Name == "Arithmetic" || analysis.Name == "Bounds" || analysis.Name == "Non-null")
-                {
-                  controller = CreateFreshDFAController(mdriver, results, obligations);
-                  controller.ReachedStart(analysis.Name, methodFullName);
-                }
+                controller = CreateFreshDFAController(mdriver, results, obligations);
+                controller.ReachedStart(analysis.Name, methodFullName);
+
                 if (factory != null)
                 {
                   var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory, controller);
