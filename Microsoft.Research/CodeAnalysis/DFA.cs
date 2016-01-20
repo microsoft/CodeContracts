@@ -1470,7 +1470,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Pause()
         {
-          //Contract.Requires(state == State.Running);
+          Contract.Assume(CurrentState == State.Running);
 
           stopWatch.Stop();
           CurrentState = State.Paused;
@@ -1478,7 +1478,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void Resume()
         {
-          //Contract.Requires(state == State.Paused);
+          Contract.Assume(CurrentState == State.Paused);
 
           stopWatch.Start();
           CurrentState = State.Running;
