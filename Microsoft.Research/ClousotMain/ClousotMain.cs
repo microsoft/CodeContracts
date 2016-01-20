@@ -2686,6 +2686,7 @@ namespace Microsoft.Research.CodeAnalysis
               try
               {
                 controller = CreateFreshDFAController(mdriver, results, obligations);
+                // TODO(wuestholz): Maybe drop the next call.
                 controller.ReachedStart(analysis.Name, methodFullName);
 
                 if (factory != null)
@@ -2751,7 +2752,7 @@ namespace Microsoft.Research.CodeAnalysis
       {
         bool exists;
         var tw = CreateCSVOutputWriter(out exists);
-        var result = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, null, tw, mdriver.ModifiedAtCall);
+        var result = new DFAController(options.SymbolicTimeSlots, options.CallDepth, options.JoinDepth, options.WideningDepth, options.MaxSteps, null, tw, mdriver.ModifiedAtCall);
         result.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
         if (options.PrintControllerStats && !exists)
         {

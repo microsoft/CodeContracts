@@ -516,6 +516,9 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Allowed widening depth per method")]
     public int wideningDepth = Int32.MaxValue;
 
+    [OptionDescription("Maximum number steps per method and analysis")]
+    public int maxSteps = Int32.MaxValue;
+
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
     public bool adaptive = false;
 
@@ -727,6 +730,7 @@ namespace Microsoft.Research.CodeAnalysis
     public int CallDepth { get { return this.callDepth; } }
     public int JoinDepth { get { return this.joinDepth; } }
     public int WideningDepth { get { return this.wideningDepth; } }
+    public int MaxSteps { get { return this.maxSteps; } }
     public int AnalyzeTo { get { return this.analyzeTo; } }
     public int AnalyzeFrom { get { return this.analyzeFrom; } }
     public int IterationsBeforeWidening { get { return this.joinsBeforeWiden; } }

@@ -1725,6 +1725,39 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxSteps\MaxSteps0.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace suspended -maxSteps 0",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxSteps\MaxSteps1.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace suspended -maxSteps 50",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxSteps\MaxSteps2.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace suspended -maxSteps 200",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -calldepth 10",
                     useContractReferenceAssemblies: true,

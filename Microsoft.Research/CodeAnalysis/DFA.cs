@@ -482,6 +482,8 @@ namespace Microsoft.Research.CodeAnalysis
                             Controller.ReachedCall(result, current, suspended);
                         }
 
+                        if (Controller != null && Controller.ReachedStep(result, current, suspended)) { goto nextPending; }
+
                         state = Transfer(current, state);
 
                         if (Controller != null)
@@ -1655,6 +1657,9 @@ namespace Microsoft.Research.CodeAnalysis
         private readonly int wideningDepth;
         private int wideningDepthCounter;
 
+        private readonly int maxSteps;
+        private int stepCount;
+
         private long imprecisionCounter;
 
         private string analysisName;
@@ -1671,7 +1676,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
-        public DFAController(int sts, int cd, int jd, int wd, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
+        public DFAController(int sts, int cd, int jd, int wd, int ms, Func<object, int> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall)
         {
             symbolicTimeSlots = sts;
             symbolicTimeSlotsCounter = 0;
@@ -1684,6 +1689,9 @@ namespace Microsoft.Research.CodeAnalysis
 
             wideningDepth = wd;
             wideningDepthCounter = 0;
+
+            maxSteps = ms;
+            stepCount = 0;
 
             FailingObligations = fo;
 
@@ -1701,6 +1709,7 @@ namespace Microsoft.Research.CodeAnalysis
             callDepthCounter = 0;
             joinDepthCounter = 0;
             wideningDepthCounter = 0;
+            stepCount = 0;
             symbolicTimeSlotsCounter = 0;
             SuspendedAPCs = null;
             imprecisionCounter = 0;
@@ -1805,6 +1814,24 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = suspended;
 
             PrintStatisticsCSVData(result, "end");
+        }
+
+        public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
+        {
+            bool suspend = maxSteps <= stepCount;
+            if (suspend)
+            {
+                SuspendAPC(apc, suspended, SuspensionReason.ReachedWideningDepth);
+                ReachedPossibleImprecision(result, "step");
+            }
+            else
+            {
+                PrintStatisticsCSVData(result, "step");
+            }            
+
+            stepCount++;
+            // TODO(wuestholz): Should we adapt the other methods like this.
+            return suspend;
         }
 
         protected void SuspendAPC(APC apc, ISet<APC> suspended, SuspensionReason reason)
