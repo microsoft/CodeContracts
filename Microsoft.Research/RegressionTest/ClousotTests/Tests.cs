@@ -1703,6 +1703,28 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth7.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex,diseq=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -wideningdepth 1",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth8.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:mpw=false -bounds:type=subpolyhedra,reduction=simplex,diseq=false,mpw=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow,mpw=false -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -wideningdepth 2",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -calldepth 10",
                     useContractReferenceAssemblies: true,

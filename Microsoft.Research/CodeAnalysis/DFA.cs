@@ -526,7 +526,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
             finally
             {
-                FixpointComputed = (suspended.Count == 0);
+                FixpointComputed = true;
                 if (Controller != null) { Controller.ReachedEnd(result, suspended); }
             }
         }
