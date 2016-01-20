@@ -427,7 +427,7 @@ namespace Microsoft.Research.CodeAnalysis
             try
             {
                 var timeout = TimeOut;
-               
+
                 if (this.Options.EnforceFairJoin)
                 {
                     widenStrategy = new EdgeBasedWidening(this.Options.IterationsBeforeWidening);
@@ -436,7 +436,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
                     widenStrategy = new BlockBasedWidening(this.Options.IterationsBeforeWidening);
                 }
-               
+
                 while (pending.Count > 0)
                 {
                     var next = pending.Pull();
@@ -444,32 +444,32 @@ namespace Microsoft.Research.CodeAnalysis
                     var state = MutableVersion(joinState[next], next);
                     var alreadyCached = true;
                     APC current;
-               
+
                     if (Options.Trace)
                     {
                         Console.WriteLine("State before {0}", next);
                         Dump(state);
                     }
-               
+
                     if (this.Options.TraceTimePerInstruction)
                     {
                         this.timeCounter.Start();
                     }
-               
+
                     do
                     {
                         current = next;
-               
+
                         if (IsBottom(current, state) || suspended.Contains(current))
                         {
                             goto nextPending;
                         }
-               
+
                         if (!alreadyCached && this.CacheThisPC(current))
                         {
                             state = this.Cache(current, state);
                         }
-               
+
                         Method calledMethod;
                         bool isNewObj, isVirtual;
                         if (Controller != null
@@ -483,42 +483,42 @@ namespace Microsoft.Research.CodeAnalysis
                         }
 
                         state = Transfer(current, state);
-               
+
                         timeout.SpendSymbolicTime(1);
-               
+
                         if (Options.Trace)
                         {
                             Console.WriteLine("State after {0}", current);
                             Dump(state);
                         }
-               
+
                         if (this.Options.TraceTimePerInstruction)
                         {
                             this.timeCounter.Stop();
                             Console.WriteLine("Elapsed time for {0} : {1}", current, timeCounter);
                         }
-               
+
                         this.TraceMemoryUsageIfEnabled("after instruction", current);
-               
+
                         // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
                         timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
-               
+
                         alreadyCached = false;
                     } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
-               
-               
+
+
                     foreach (APC succ in this.Successors(current).AssumeNotNull())
                     {
                         if (IsBottom(succ, state) || suspended.Contains(current) || suspended.Contains(succ)) continue;
-               
+
                         PushState(current, succ, state, result, suspended);
                     }
                     timeout.CheckTimeOut("fixpoint computation", result, current, suspended, Controller);
-               
+
                 nextPending:
                     ;
                 }
-               
+
                 if (Options.Trace)
                 {
                     Console.WriteLine("DFA done");
