@@ -1582,7 +1582,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxJoins\MaxJoins.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1593,7 +1593,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth0.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxJoins\MaxJoins0.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 0",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1604,7 +1604,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth1.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxJoins\MaxJoins1.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 1",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1615,7 +1615,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Join\JoinDepth2.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxJoins\MaxJoins2.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -nonnull -define:regular -show:validations;unreached -missingPublicRequiresAreErrors=true -maxJoins 2",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1626,7 +1626,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth0.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings0.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -maxWidenings 2",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1637,7 +1637,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth1.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings1.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show validations -bounds:type:SubPolyhedra,diseq:false,ch,infOct,reduction=simplex -define simplex-convexhull -wp=false -enforcefairJoin=true -joinsbeforewiden 1 -show progress -maxWidenings 3",
                     useContractReferenceAssemblies: false,
                     useExe: false,
@@ -1648,7 +1648,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth2.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings2.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1659,7 +1659,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth3.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings3.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 4",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1670,7 +1670,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth4.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings4.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires  -show validations -bounds:type:Intervals -arithmetic:type:Pentagons,obl=intOverflow -maxWidenings 10",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1681,7 +1681,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth5.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings5.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 0 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1692,7 +1692,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth6.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings6.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1703,7 +1703,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth7.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings7.cs",
                     clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds -bounds:type=subpolyhedra,reduction=simplex,diseq=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1714,7 +1714,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Widening\WideningDepth8.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxWidenings\MaxWidenings8.cs",
                     clousotOptions: @"-nobox -nologo -nopex -infer autopropertiesensures -infer methodensures -infer nonnullreturn -infer propertyensures -suggest=!! -stats=!! -stats controller -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:mpw=false -bounds:type=subpolyhedra,reduction=simplex,diseq=false,mpw=false -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow,mpw=false -trace dfa -trace numerical -trace suspended -joinsbeforewiden 1 -maxWidenings 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1758,7 +1758,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxCalls\MaxCalls.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 10",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1769,7 +1769,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth0.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxCalls\MaxCalls0.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 0",
                     useContractReferenceAssemblies: true,
                     useExe: false,
@@ -1780,7 +1780,7 @@ namespace Tests
                     skipForCCI2: false,
                     skipSlicing: false);
                 yield return new Options(
-                    sourceFile: @"Microsoft.Research\RegressionTest\Call\CallDepth1.cs",
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxCalls\MaxCalls1.cs",
                     clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxCalls 1",
                     useContractReferenceAssemblies: true,
                     useExe: false,

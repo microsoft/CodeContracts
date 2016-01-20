@@ -490,7 +490,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                         if (Controller != null)
                         {
-                            // TODO(wuestholz): Maybe we should make the symbolic timer part of the DFA controller.
+                            // TODO(wuestholz): Maybe we should get rid of the symbolic timer.
                             timeout.SpendSymbolicTime(1);
                         }
 
