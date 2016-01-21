@@ -2527,19 +2527,13 @@ namespace Microsoft.Research.CodeAnalysis
         foreach (var obl in obligations)
         {
           obl.Validate(output, inferenceManager, facts);
-          result.Bottom += obl.Statistics.Bottom;
-          result.True += obl.Statistics.True;
-          result.False += obl.Statistics.False;
-          result.Top += obl.Statistics.Top;
+          result.Add(obl.Statistics);
         }
 
         if (options.CheckAssertions)
         {
           var stats = AssertionFinder.ValidateAssertions(explicitAssertions, facts, inferenceManager, mdriver, output);
-          result.Bottom += stats.Bottom;
-          result.True += stats.True;
-          result.False += stats.False;
-          result.Top += stats.Top;
+          result.Add(stats);
         }
 
         return result;

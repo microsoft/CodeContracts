@@ -920,6 +920,7 @@ namespace Microsoft.Research.CodeAnalysis
       {
         obl.ResetCachedOutcome();
       }
+      stats = new AnalysisStatistics();
     }
 
     public void Print()
