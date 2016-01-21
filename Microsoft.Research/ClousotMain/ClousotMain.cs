@@ -2736,7 +2736,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (controller.SuspendedAPCs != null && 0 < controller.SuspendedAPCs.Count)
           {
-            Console.WriteLine("Finished analysis ({0}) of method {1} with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
+            Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
           }
         }
       }

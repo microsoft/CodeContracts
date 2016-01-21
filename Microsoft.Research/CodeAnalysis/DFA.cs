@@ -1634,9 +1634,9 @@ namespace Microsoft.Research.CodeAnalysis
 
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
-        private Func<SuspensionReason, object, bool> ReallySuspend;
+        private Func<SuspensionReason, object, bool> shouldBeSuspended;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> reallySuspend = null)
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null)
         {
             analysisName = an;
             methodName = mn;
@@ -1661,7 +1661,7 @@ namespace Microsoft.Research.CodeAnalysis
 
             ModifiedAtCall = modifiedAtCall;
 
-            ReallySuspend = reallySuspend;
+            this.shouldBeSuspended = shouldBeSuspended;
         }
 
         public void ReachedStart()
@@ -1685,8 +1685,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (suspend)
             {
                 SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxCalls);
-                ReachedPossibleImprecision(result, "call");
             }
+
+            ReachedPossibleImprecision(result, "call");
 
             calls++;
             return suspend;
@@ -1739,8 +1740,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (suspend)
             {
                 SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxJoins);
-                ReachedPossibleImprecision(result, "join");
             }
+
+            ReachedPossibleImprecision(result, "join");
 
             joins++;
             return suspend;
@@ -1757,8 +1759,9 @@ namespace Microsoft.Research.CodeAnalysis
             if (suspend)
             {
                 SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxWidenings);
-                ReachedPossibleImprecision(result, "widening");
             }
+
+            ReachedPossibleImprecision(result, "widening");
 
             widenings++;
             return suspend;
@@ -1789,7 +1792,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
             if (suspended != null)
             {
-                if (ReallySuspend == null || ReallySuspend(reason, result))
+                if (shouldBeSuspended == null || shouldBeSuspended(reason, result))
                 {
                     suspended.Add(apc);
                 }
