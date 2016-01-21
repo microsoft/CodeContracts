@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="TestIterativeDomainApplication" storage="e:\cci\microsoft.research\regressiontest\basic\testiterativedomainapplication\testiterativedomainapplication.generictest" id="9b80c5b1-3e78-4f3e-a694-8fb07119a4cf" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -bounds:type:intervals -bounds:type:pentagons -bounds TestIterativeDomainApplication.dll" workingDirectory="%testlocation%/bin/debug/" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

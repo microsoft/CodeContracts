@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="BrianScenarioTest" storage="c:\users\maf\cci1\microsoft.research\regressiontest\basic\brianscenario\brianscenariotest.generictest" id="ea9b8fdf-7af7-4924-8c24-b44d1bf14995" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -bounds  -nonnull -show progress BrianScenario.dll" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

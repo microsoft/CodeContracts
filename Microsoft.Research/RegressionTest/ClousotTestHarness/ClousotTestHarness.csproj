@@ -92,7 +92,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\..\Contracts\bin\debug\" />
   </ItemGroup>
   <Import Project="..\..\..\Microsoft.Research\Contracts\Multitarget.targets" />

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="TestKarrOnly2" storage="c:\maf\singsharp2\microsoft.research\regressiontest\basic\testkarr\testkarronly2.generictest" id="8dc65917-970c-4dbc-8490-6fddcc0db343" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -define karronly -bounds:type:Karr TestKarr.dll" workingDirectory="%testlocation%/bin/debug/" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>
