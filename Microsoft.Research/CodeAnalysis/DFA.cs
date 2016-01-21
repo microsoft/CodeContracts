@@ -520,7 +520,7 @@ namespace Microsoft.Research.CodeAnalysis
             catch (TimeoutExceptionFixpointComputation e)
             {
                 if (e.Result == null) { e.Result = result; }
-                if (Controller != null) { Controller.ReachedTimeout(result); }
+                if (Controller != null) { Controller.ReachedTimeout(result, e.Reason); }
                 throw e;
             }
             finally
@@ -1490,7 +1490,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                 if (exception == null)
                 {
-                    exception = new TimeoutExceptionFixpointComputation(result);
+                    exception = new TimeoutExceptionFixpointComputation(reason, result);
                 }
                 throw exception;
             }
@@ -1509,6 +1509,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public object Result;
 
+        public readonly string Reason;
+
         static public uint ThrownExceptions
         {
             get
@@ -1517,10 +1519,11 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public TimeoutExceptionFixpointComputation(object result = null)
+        public TimeoutExceptionFixpointComputation(string reason = null, object result = null)
         {
             count++;
             this.Result = result;
+            this.Reason = reason;
         }
     }
 
@@ -1696,11 +1699,11 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms", "info"));
           }
         }
 
-        public void PrintStatisticsCSVData(object result, string source)
+        public void PrintStatisticsCSVData(object result, string source, string info = "")
         {
           Contract.Requires(source != null);
 
@@ -1716,11 +1719,12 @@ namespace Microsoft.Research.CodeAnalysis
                 errors = (stats.Top + stats.False).ToString();
                 obls = (stats.Bottom + stats.True).ToString();
               }
-              catch (Exception)
+              catch (Exception e)
               {
+                info += string.Format(", threw {0}", e.GetType());
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}", methodName, analysisName, imprecisions, errors, obls, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7}", methodName, analysisName, imprecisions, errors, obls, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds, info));
           }
         }
 
@@ -1738,9 +1742,9 @@ namespace Microsoft.Research.CodeAnalysis
             return suspend;
         }
 
-        public void ReachedTimeout(object result)
+        public void ReachedTimeout(object result, string reason)
         {
-            PrintStatisticsCSVData(result, "timeout");
+            PrintStatisticsCSVData(result, "timeout", reason == null ? "" : reason);
         }
 
         public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
