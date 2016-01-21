@@ -519,6 +519,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
             catch (TimeoutExceptionFixpointComputation e)
             {
+                if (e.Result == null) { e.Result = result; }
                 if (Controller != null) { Controller.ReachedTimeout(result); }
                 throw e;
             }
@@ -1506,7 +1507,7 @@ namespace Microsoft.Research.CodeAnalysis
         [ThreadStatic]
         private static uint count;
 
-        public readonly object Result;
+        public object Result;
 
         static public uint ThrownExceptions
         {

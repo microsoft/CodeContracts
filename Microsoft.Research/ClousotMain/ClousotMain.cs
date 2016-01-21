@@ -2734,9 +2734,16 @@ namespace Microsoft.Research.CodeAnalysis
       {
         if (options.TraceSuspended)
         {
-          if (controller.SuspendedAPCs != null && 0 < controller.SuspendedAPCs.Count)
+          if (controller.SuspendedAPCs != null)
           {
-            Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
+            if (0 < controller.SuspendedAPCs.Count)
+            {
+              Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
+            }
+            else
+            {
+              Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with no suspended program points", analysis.Name, methodFullName);
+            }
           }
         }
       }
