@@ -2752,8 +2752,7 @@ namespace Microsoft.Research.CodeAnalysis
       {
         bool exists;
         var tw = CreateCSVOutputWriter(out exists);
-        var result = new DFAController(analysisName, methodName, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, null, tw, mdriver.ModifiedAtCall);
-        result.FailingObligations = (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); };
+        var result = new DFAController(analysisName, methodName, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, tw, mdriver.ModifiedAtCall);
         if (options.PrintControllerStats && !exists)
         {
           result.PrintStatisticsCSVHeader();

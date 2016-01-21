@@ -472,7 +472,7 @@ namespace Microsoft.Research.CodeAnalysis
                         {
                             // TODO(wuestholz): Maybe only do this if the call actually led to imprecision by comparing with the pre-state.
                             // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations.
-                            Controller.ReachedCall(result, current, suspended);
+                            if (Controller.ReachedCall(result, current, suspended)) { goto nextPending; }
                         }
 
                         if (Controller != null && Controller.ReachedStep(result, current, suspended)) { goto nextPending; }
@@ -1621,15 +1621,15 @@ namespace Microsoft.Research.CodeAnalysis
 
         private long imprecisions;
 
-        private string analysisName;
+        private readonly string analysisName;
 
-        private string methodName;
+        private readonly string methodName;
 
         private readonly TextWriter output;
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
-        public Func<object, AnalysisStatistics> FailingObligations { get; set; }
+        public readonly Func<object, AnalysisStatistics> FailingObligations;
 
         private DateTime startTime;
 
@@ -1641,27 +1641,18 @@ namespace Microsoft.Research.CodeAnalysis
         {
             analysisName = an;
             methodName = mn;
-
             maxCalls = mc;
             calls = 0;
-
             maxJoins = mj;
             joins = 0;
-
             maxWidenings = mw;
             widenings = 0;
-
             maxSteps = ms;
             steps = 0;
-
             FailingObligations = fo;
-
             output = ou;
-
             startTime = DateTime.UtcNow;
-
             ModifiedAtCall = modifiedAtCall;
-
             this.shouldBeSuspended = shouldBeSuspended;
         }
 
@@ -1672,14 +1663,12 @@ namespace Microsoft.Research.CodeAnalysis
             joins = 0;
             widenings = 0;
             steps = 0;
-            SuspendedAPCs = null;
             imprecisions = 0;
+            // TODO(wuestholz): Maybe we shouldn't reset the suspended APCs.
+            SuspendedAPCs = null;
             startTime = DateTime.UtcNow;
         }
 
-        // ReachedCall should pause the analysis when the maximum number of calls is hit.
-        // All errors detected until that point should be emitted.
-        // The user should be given the option to stop or continue for another slot of calls.
         public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
             bool suspend = maxCalls <= calls;
@@ -1694,7 +1683,7 @@ namespace Microsoft.Research.CodeAnalysis
             return suspend;
         }
 
-        public void ReachedPossibleImprecision(object result, string source)
+        protected void ReachedPossibleImprecision(object result, string source)
         {
           Contract.Requires(source != null);
 
