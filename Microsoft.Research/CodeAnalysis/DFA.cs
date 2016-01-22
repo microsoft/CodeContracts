@@ -1636,7 +1636,9 @@ namespace Microsoft.Research.CodeAnalysis
 
         private DateTime startTime;
 
-        private TimeSpan checkingTime;
+        private TimeSpan totalChecking;
+
+        public bool IsChecking { get; private set; }
 
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
@@ -1657,13 +1659,15 @@ namespace Microsoft.Research.CodeAnalysis
             FailingObligations = fo;
             output = ou;
             startTime = DateTime.UtcNow;
-            checkingTime = TimeSpan.Zero;
+            totalChecking = TimeSpan.Zero;
             ModifiedAtCall = modifiedAtCall;
             this.shouldBeSuspended = shouldBeSuspended;
         }
 
         public void ReachedStart(object result)
         {
+            if (IsChecking) { return; }
+
             // TODO(wuestholz): Maybe we should check here that this is only called once.
             calls = 0;
             joins = 0;
@@ -1673,13 +1677,15 @@ namespace Microsoft.Research.CodeAnalysis
             // TODO(wuestholz): Maybe we shouldn't reset the suspended APCs.
             SuspendedAPCs = null;
             startTime = DateTime.UtcNow;
-            checkingTime = TimeSpan.Zero;
+            totalChecking = TimeSpan.Zero;
 
             PrintStatisticsCSVData(result, "start");
         }
 
         public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
+            if (IsChecking) { return false; }
+
             bool suspend = maxCalls <= calls;
             if (suspend)
             {
@@ -1709,7 +1715,7 @@ namespace Microsoft.Research.CodeAnalysis
           }
         }
 
-        public void PrintStatisticsCSVData(object result, string source, string info = null)
+        protected void PrintStatisticsCSVData(object result, string source, string info = null)
         {
           Contract.Requires(source != null);
 
@@ -1721,10 +1727,11 @@ namespace Microsoft.Research.CodeAnalysis
             string obls = "<unknown>";            
             var start = DateTime.UtcNow;
             var end = start;
-            if (FailingObligations != null)
+            if (FailingObligations != null && !IsChecking)
             {
               try
               {
+                IsChecking = true;
                 var stats = FailingObligations(result);
                 errors = (stats.Top + stats.False).ToString();
                 obls = (stats.Bottom + stats.True).ToString();
@@ -1737,15 +1744,18 @@ namespace Microsoft.Research.CodeAnalysis
               finally
               {
                 end = DateTime.UtcNow;
-                checkingTime = checkingTime.Add(end.Subtract(start));
+                totalChecking = totalChecking.Add(end.Subtract(start));
+                IsChecking = false;
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7:F0}\t{8}", methodName, analysisName, imprecisions, errors, obls, source, end.Subtract(startTime).TotalMilliseconds, checkingTime.TotalMilliseconds, info));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7:F0}\t{8}", methodName, analysisName, imprecisions, errors, obls, source, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
           }
         }
 
         public bool ReachedJoin(object result, APC apc, ISet<APC> suspended)
         {
+            if (IsChecking) { return false; }
+
             bool suspend = maxJoins <= joins;
             if (suspend)
             {
@@ -1760,11 +1770,15 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedTimeout(object result, string reason)
         {
+            if (IsChecking) { return; }
+
             PrintStatisticsCSVData(result, "timeout", reason == null ? "" : reason);
         }
 
         public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
         {
+            if (IsChecking) { return false; }
+
             bool suspend = maxWidenings <= widenings;
             if (suspend)
             {
@@ -1779,6 +1793,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void ReachedEnd(object result, ISet<APC> suspended)
         {
+            if (IsChecking) { return; }
+
             SuspendedAPCs = suspended;
 
             PrintStatisticsCSVData(result, "end");
@@ -1786,6 +1802,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
         {
+            if (IsChecking) { return false; }
+
             bool suspend = maxSteps <= steps;
             if (suspend)
             {

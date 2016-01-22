@@ -338,8 +338,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
 
                   var run = AnalysisWrapper.RunTheAnalysis(this.MethodName, opt.Type, this.MethodDriver, opt,
-                    (APC pc) => false, null) as NumericalAnalysis<Options>;
-                  // TODO(wuestholz): Maybe we should pass a non-null controller in the line above.
+                    (APC pc) => false, Controller) as NumericalAnalysis<Options>;
                   result = run.fixpointInfo;
                 }
                 else
