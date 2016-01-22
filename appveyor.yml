@@ -12,9 +12,12 @@ test:
   assemblies:
   - '**\FoxtrotTests.dll'
   - '**\UnitTests.dll'
-#  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
-#  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
+  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
+  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
 artifacts:
 - path: '**\ManagedContract.Setup\devlab9ts\Microsoft.Contracts.*.nupkg'
 - path: '**\ManagedContract.Setup\devlab9ts\msi\Contracts.devlab9ts.msi'
 - path: '**\ContractAdornments\Extension\bin\Devlab9\CodeContractsHelper.vsix'
+# preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
+cache:
+  - packages -> **\packages.config
