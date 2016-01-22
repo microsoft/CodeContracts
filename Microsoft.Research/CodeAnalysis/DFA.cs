@@ -1463,7 +1463,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// Check that we did not timed out.
         /// If the timeout was not started, starts it
         /// </summary>
-        public void CheckTimeOut(string reason = "", object result = null)
+        public void CheckTimeOut(string reason, object result = null)
         {
             this.Start();
 
