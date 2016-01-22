@@ -415,7 +415,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         protected virtual void ComputeFixpoint(object result)
         {
-            if (Controller != null) { Controller.ReachedStart(); }
+            if (Controller != null) { Controller.ReachedStart(result); }
             var suspended = new HashSet<APC>();
             try
             {
@@ -1662,7 +1662,7 @@ namespace Microsoft.Research.CodeAnalysis
             this.shouldBeSuspended = shouldBeSuspended;
         }
 
-        public void ReachedStart()
+        public void ReachedStart(object result)
         {
             // TODO(wuestholz): Maybe we should check here that this is only called once.
             calls = 0;
@@ -1674,6 +1674,8 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = null;
             startTime = DateTime.UtcNow;
             checkingTime = TimeSpan.Zero;
+
+            PrintStatisticsCSVData(result, "start");
         }
 
         public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
@@ -1707,9 +1709,11 @@ namespace Microsoft.Research.CodeAnalysis
           }
         }
 
-        public void PrintStatisticsCSVData(object result, string source, string info = "")
+        public void PrintStatisticsCSVData(object result, string source, string info = null)
         {
           Contract.Requires(source != null);
+
+          info = (info == null ? "" : info);
 
           if (output != null)
           {
