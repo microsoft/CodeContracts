@@ -2031,7 +2031,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // Previous version of the code worked incorrectly with VS2015 compiler.
                 // Because field-like initializer satisfy original criteria the function
                 // was unable to find closure initializer properly.
-                if (IsBaseContructorCall(closureCreationCandidate))
+                if (IsChainConstructorCall(closureCreationCandidate))
                 {
                     return currentIndex;
                 }
@@ -2176,7 +2176,7 @@ namespace Microsoft.Contracts.Foxtrot
             return currentIndex;
         }
 
-        private static bool IsBaseContructorCall(Statement statement)
+        private static bool IsChainConstructorCall(Statement statement)
         {
             var expression = statement as ExpressionStatement;
             if (expression == null) return false;
