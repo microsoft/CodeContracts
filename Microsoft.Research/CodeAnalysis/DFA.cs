@@ -1711,7 +1711,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms", "checking in ms", "info"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "ms (total)", "ms (checking)", "info"));
           }
         }
 
@@ -1723,8 +1723,9 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (output != null)
           {
-            string errors = "<unknown>";
-            string obls = "<unknown>";            
+            string errors = "?";
+            string unreached = "?";
+            string obls = "?";
             var start = DateTime.UtcNow;
             var end = start;
             if (FailingObligations != null && !IsChecking)
@@ -1734,12 +1735,20 @@ namespace Microsoft.Research.CodeAnalysis
                 IsChecking = true;
                 var stats = FailingObligations(result);
                 errors = (stats.Top + stats.False).ToString();
+                unreached = stats.Bottom.ToString();
                 obls = (stats.Bottom + stats.True).ToString();
               }
               catch (Exception e)
               {
-                var fe = e as TimeoutExceptionFixpointComputation;
-                info += string.Format("{0}threw {1}({2})", string.IsNullOrEmpty(info) ? "" : ", ", e.GetType(), fe == null && string.IsNullOrEmpty(fe.Reason) ? e.Message : fe.Reason);
+                string exInfo = "exception: " + e.GetType();
+                if (string.IsNullOrEmpty(info))
+                {
+                  info = exInfo;
+                }
+                else
+                {
+                  info = string.Format("{0}, {1}", info, exInfo);
+                }
               }
               finally
               {
@@ -1748,7 +1757,7 @@ namespace Microsoft.Research.CodeAnalysis
                 IsChecking = false;
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7:F0}\t{8}", methodName, analysisName, imprecisions, errors, obls, source, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7:F0}\t{8:F0}\t{9}", methodName, analysisName, imprecisions, errors, unreached, obls, source, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
           }
         }
 
@@ -1772,7 +1781,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
             if (IsChecking) { return; }
 
-            PrintStatisticsCSVData(result, "timeout", reason == null ? "" : reason);
+            PrintStatisticsCSVData(result, "timeout", reason != null ? "reason: " + reason : null);
         }
 
         public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
