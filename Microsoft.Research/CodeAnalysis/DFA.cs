@@ -1632,6 +1632,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
+        public readonly ISet<APC> ReachedAPCs = new HashSet<APC>();
+
         public readonly Func<object, AnalysisStatistics> FailingObligations;
 
         private DateTime startTime;
@@ -1676,6 +1678,7 @@ namespace Microsoft.Research.CodeAnalysis
             imprecisions = 0;
             // TODO(wuestholz): Maybe we shouldn't reset the suspended APCs.
             SuspendedAPCs = null;
+            ReachedAPCs.Clear();
             startTime = DateTime.UtcNow;
             totalChecking = TimeSpan.Zero;
 
@@ -1685,6 +1688,8 @@ namespace Microsoft.Research.CodeAnalysis
         public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
         {
             if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
 
             bool suspend = maxCalls <= calls;
             if (suspend)
@@ -1711,7 +1716,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "ms (total)", "ms (checking)", "info"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
           }
         }
 
@@ -1757,13 +1762,15 @@ namespace Microsoft.Research.CodeAnalysis
                 IsChecking = false;
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7:F0}\t{8:F0}\t{9}", methodName, analysisName, imprecisions, errors, unreached, obls, source, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8:F0}\t{9:F0}\t{10}", methodName, analysisName, imprecisions, errors, unreached, obls, source, ReachedAPCs.Count, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
           }
         }
 
         public bool ReachedJoin(object result, APC apc, ISet<APC> suspended)
         {
             if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
 
             bool suspend = maxJoins <= joins;
             if (suspend)
@@ -1787,6 +1794,8 @@ namespace Microsoft.Research.CodeAnalysis
         public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
         {
             if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
 
             bool suspend = maxWidenings <= widenings;
             if (suspend)
@@ -1812,6 +1821,8 @@ namespace Microsoft.Research.CodeAnalysis
         public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
         {
             if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
 
             bool suspend = maxSteps <= steps;
             if (suspend)
