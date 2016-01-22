@@ -1636,6 +1636,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         private DateTime startTime;
 
+        private TimeSpan checkingTime;
+
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
         private Func<SuspensionReason, object, bool> shouldBeSuspended;
@@ -1655,6 +1657,7 @@ namespace Microsoft.Research.CodeAnalysis
             FailingObligations = fo;
             output = ou;
             startTime = DateTime.UtcNow;
+            checkingTime = TimeSpan.Zero;
             ModifiedAtCall = modifiedAtCall;
             this.shouldBeSuspended = shouldBeSuspended;
         }
@@ -1670,6 +1673,7 @@ namespace Microsoft.Research.CodeAnalysis
             // TODO(wuestholz): Maybe we shouldn't reset the suspended APCs.
             SuspendedAPCs = null;
             startTime = DateTime.UtcNow;
+            checkingTime = TimeSpan.Zero;
         }
 
         public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
@@ -1699,7 +1703,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
           if (output != null)
           {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms", "info"));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}", "method", "analysis", "imprecisions", "errors", "obligations", "source", "ms", "checking in ms", "info"));
           }
         }
 
@@ -1710,7 +1714,9 @@ namespace Microsoft.Research.CodeAnalysis
           if (output != null)
           {
             string errors = "<unknown>";
-            string obls = "<unknown>";
+            string obls = "<unknown>";            
+            var start = DateTime.UtcNow;
+            var end = start;
             if (FailingObligations != null)
             {
               try
@@ -1721,10 +1727,16 @@ namespace Microsoft.Research.CodeAnalysis
               }
               catch (Exception e)
               {
-                info += string.Format(", threw {0}", e.GetType());
+                var fe = e as TimeoutExceptionFixpointComputation;
+                info += string.Format("{0}threw {1}({2})", string.IsNullOrEmpty(info) ? "" : ", ", e.GetType(), fe == null && string.IsNullOrEmpty(fe.Reason) ? e.Message : fe.Reason);
+              }
+              finally
+              {
+                end = DateTime.UtcNow;
+                checkingTime = checkingTime.Add(end.Subtract(start));
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7}", methodName, analysisName, imprecisions, errors, obls, source, DateTime.UtcNow.Subtract(startTime).TotalMilliseconds, info));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6:F0}\t{7:F0}\t{8}", methodName, analysisName, imprecisions, errors, obls, source, end.Subtract(startTime).TotalMilliseconds, checkingTime.TotalMilliseconds, info));
           }
         }
 
