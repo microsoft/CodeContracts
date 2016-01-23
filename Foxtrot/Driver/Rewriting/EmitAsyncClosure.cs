@@ -59,20 +59,20 @@ namespace Microsoft.Contracts.Foxtrot
     internal class EmitAsyncClosure : StandardVisitor
     {
         /// <summary>
-        /// Class that maps generic arguments of the enclosed class/method the generic arguments of the closure.
+        /// Class that maps generic arguments of the enclosed class/method to the generic arguments of the closure.
         /// </summary>
         /// <remarks>
         /// The problem.
         /// Original implementation of the Code Contract didn't support async postconditions in generics.
         /// Here is why:
-        /// Suppose we have following function (in class <code>Foo</code>:
+        /// Suppose we have following function (in class <c>Foo</c>:
         /// <code><![CDATA[
         /// public static Task<T> FooAsync() where T: class
         /// {
         ///     Contract.Ensures(Contract.Result<T>() != null);
         /// }
         /// ]]></code>
-        /// In this case, ccrewrite will generate async closure class called <code>Foo.AsyncContractClosure_0&lt;T%gt;</T></code> 
+        /// In this case, ccrewrite will generate async closure class called <c>Foo.AsyncContractClosure_0&lt;T&gt;</c>
         /// with following structure:
         /// <code><![CDATA[
         /// [CompilerGenerated]
@@ -150,6 +150,12 @@ namespace Microsoft.Contracts.Foxtrot
                     return null;
                 }
 
+                var gen = enclosingType;
+                if (gen.ConsolidatedTemplateParameters != null && gen.ConsolidatedTemplateParameters.Count != 0)
+                {
+                    gen = gen.ConsolidatedTemplateParameters[0];
+                }
+
                 var candidate = typeParametersMapping.FirstOrDefault(t => t.EnclosingGenericType == enclosingType);
                 return candidate != null ? candidate.ClosureGenericType : enclosingType;
             }
@@ -161,7 +167,7 @@ namespace Microsoft.Contracts.Foxtrot
             /// <remarks>
             /// Function returns the same argument if the matching argument does not exists.
             /// </remarks>
-            public TypeNode GetEnclosingTypeParamterByGenericTypeParameter(TypeNode closureType)
+            public TypeNode GetEnclosingTypeParameterByClosureTypeParameter(TypeNode closureType)
             {
                 if (closureType == null)
                 {
@@ -250,22 +256,7 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Should distinguish between generic enclosing method and non-generic method in enclosing type.
             // In both cases generated closure should be generic.
-            Func<Method, TypeNodeList> getGenericTypesFrom = method =>
-            {
-                if (method.IsGeneric)
-                {
-                    return from.TemplateParameters;
-                }
-                
-                if (method.DeclaringType.IsGeneric)
-                {
-                    return method.DeclaringType.TemplateParameters;
-                }
-
-                return null;
-            };
-
-            var enclosingTemplateParameters = getGenericTypesFrom(from);
+            var enclosingTemplateParameters = GetGenericTypesFrom(from);
 
             if (!enclosingTemplateParameters.IsNullOrEmpty())
             {
@@ -400,6 +391,36 @@ namespace Microsoft.Contracts.Foxtrot
         private InstanceInitializer Ctor
         {
             get { return (InstanceInitializer)this.closureClassInstance.GetMembersNamed(StandardIds.Ctor)[0]; }
+        }
+
+        private static TypeNodeList GetGenericTypesFrom(Method method)
+        {
+            if (method.IsGeneric)
+            {
+                return method.TemplateParameters;
+            }
+
+            if (method.DeclaringType.IsGeneric)
+            {
+                return GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(method.DeclaringType);
+            }
+
+            return null;
+        }
+
+        private static TypeNodeList GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(TypeNode node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            if (node.TemplateParameters != null && node.TemplateParameters.Count != 0)
+            {
+                return node.TemplateParameters;
+            }
+
+            return GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(node.DeclaringType);
         }
 
         [Pure]
@@ -745,6 +766,18 @@ namespace Microsoft.Contracts.Foxtrot
                 this.genericParametersMapping = genericParametersMapping;
             }
 
+            public override Expression VisitAddressDereference(AddressDereference addr)
+            {
+                // Replacing initobj !!0 to initobj !0
+                var newType = genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(addr.Type);
+                if (newType != addr.Type)
+                {
+                    return new AddressDereference(addr.Address, newType, addr.Volatile, addr.Alignment, addr.SourceContext);
+                }
+                
+                return base.VisitAddressDereference(addr);
+            }
+
             // Literal is used when contract result compares to null: Contract.Result<T>() != null
             public override Expression VisitLiteral(Literal literal)
             {
@@ -846,7 +879,7 @@ namespace Microsoft.Contracts.Foxtrot
                 // and use !!0 (reference to method template arg) instead of using !0 (which is reference
                 // to closure class template arg).
                 var enclosingGeneritType = 
-                    this.genericTypeMapper.GetEnclosingTypeParamterByGenericTypeParameter(
+                    this.genericTypeMapper.GetEnclosingTypeParameterByClosureTypeParameter(
                         checkMethodTaskType.TemplateArguments[0]);
 
                 return genericUnwrapCandidate.GetTemplateInstance(null, enclosingGeneritType);

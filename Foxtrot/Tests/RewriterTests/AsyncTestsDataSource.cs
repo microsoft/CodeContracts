@@ -49,10 +49,12 @@ namespace Tests
                 {
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericClass.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericClass2.cs",
+                    @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericClass3.cs",
 
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericMethod.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericMethod2.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericMethod3.cs",
+                    @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericMethod4.cs",
 
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionInGenericMethodInStruct.cs",
 
