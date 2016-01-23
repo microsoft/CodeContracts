@@ -2108,16 +2108,17 @@ namespace Microsoft.Research.CodeAnalysis
         mdriver.EndAnalysis();
       }
 
-      private StreamWriter CreateCSVOutputWriter(out bool fileExists)
+      private TextWriter CreateCSVOutputWriter(out bool fileExists)
       {
-        StreamWriter result = null;
+        TextWriter result = null;
         var fn = string.Format("dfa_statistics.{0}.csv", Thread.CurrentThread.ManagedThreadId);
         fileExists = false;
         if (options.PrintControllerStats)
         {
           fileExists = File.Exists(fn);
-          result = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
-          result.AutoFlush = true;
+          var sw = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.Write));
+          sw.AutoFlush = true;
+          result = TextWriter.Synchronized(sw);
         }
         return result;
       }
