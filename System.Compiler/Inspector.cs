@@ -1482,10 +1482,14 @@ namespace System.Compiler
         this.Visit(Requires[i]);
     }
 #endif
-    public virtual void VisitReturn(Return Return)
+    public virtual void VisitReturn(Return returnStatement)
     {
-      if (Return == null) return;
-      this.VisitExpression(Return.Expression);
+      if (returnStatement == null)
+      {
+        return;
+      }
+
+      this.VisitExpression(returnStatement.Expression);
     }
 #if !MinimalReader && !CodeContracts
     public virtual void VisitAcquire(Acquire @acquire)

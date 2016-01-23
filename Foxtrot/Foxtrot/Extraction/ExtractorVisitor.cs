@@ -1453,6 +1453,33 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
+            public override void VisitReturn(Return returnStatement)
+            {
+                Expression source = returnStatement.Expression;
+                Construct sourceConstruct = source as Construct;
+
+                if (sourceConstruct != null)
+                {
+                    if (sourceConstruct.Type != null && sourceConstruct.Type.Name.Name.StartsWith(this.closureTag))
+                    {
+                        if (sourceConstruct.Type.Template != null)
+                        {
+                            TypeNode template = sourceConstruct.Type.Template;
+                            while (template.Template != null)
+                            {
+                                template = template.Template;
+                            }
+
+                            this.closureClass = (Class)template;
+                        }
+                        else
+                        {
+                            this.closureClass = (Class)sourceConstruct.Type;
+                        }
+                    }
+                }
+            }
+
             public override void VisitExpressionStatement(ExpressionStatement estmt)
             {
                 Expression source = estmt.Expression;
