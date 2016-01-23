@@ -2116,7 +2116,7 @@ namespace Microsoft.Research.CodeAnalysis
         if (options.PrintControllerStats)
         {
           fileExists = File.Exists(fn);
-          var sw = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.Write));
+          var sw = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
           sw.AutoFlush = true;
           result = TextWriter.Synchronized(sw);
         }
