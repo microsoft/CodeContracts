@@ -62,7 +62,7 @@ namespace Microsoft.Cci.Analysis {
     public bool WriteSliceToFile(ISlice<MethodReferenceAdaptor, FieldReferenceAdaptor, TypeReferenceAdaptor, IAssemblyReference> slice, string directory, out string dll)
     {
 #if TRACE_PERFORMANCE
-      var stopWatch = new Stopwatch();
+      var stopWatch = new Research.DataStructures.CustomStopwatch();
       stopWatch.Start();
 #endif
       

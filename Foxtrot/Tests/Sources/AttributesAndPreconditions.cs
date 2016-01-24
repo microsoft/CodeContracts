@@ -16,48 +16,36 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
-
-#if !NETFRAMEWORK_4_5 
-  public class ContractAbbreviatorAttribute : Attribute
-  {
-  }
-#endif
+using System.Threading;
 
 namespace Tests.Sources
 {
+    internal class MyAttr : Attribute { }
 
-    internal enum Enumeration
+    public class Foo
     {
-        Default = 0,
-        NotDefault = 1
+        public static void Method1([MyAttr] string s)
+        {
+            // If ccrewrite behaves properly, this method should not fail
+            Contract.Requires(s.StartsWith("foo"));
+        }
     }
 
     partial class TestMain
     {
-        [ContractAbbreviator]
-        public static void NotDefault<T>(T value)
-        {
-            Contract.Requires(!EqualityComparer<T>.Default.Equals(value, default(T)));
-        }
-        
-        void Test(Enumeration value)
-        {
-            NotDefault(value);
-        }
-
         partial void Run()
         {
             if (behave)
             {
-                this.Test(Enumeration.NotDefault);
+                Foo.Method1("foo");
             }
             else
             {
-                this.Test(Enumeration.Default);
+                throw new ArgumentNullException();
             }
         }
 
         public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
-        public string NegativeExpectedCondition = "!EqualityComparer<T>.Default.Equals(value, default(T))";
+        public string NegativeExpectedCondition = "Value cannot be null.";
     }
 }

@@ -3288,14 +3288,13 @@ namespace Microsoft.Contracts.Foxtrot
     /// </summary>
     internal sealed class RewriteAssertAssumeAndCallSiteRequires : StandardVisitor
     {
-        private Dictionary<Method, bool> methodTable;
-        private RuntimeContractMethods runtimeContracts;
-        private RuntimeContractEmitFlags emitFlags;
+        private readonly Dictionary<Method, bool> methodTable;
+        private readonly RuntimeContractMethods runtimeContracts;
+        private readonly RuntimeContractEmitFlags emitFlags;
 
-        private Rewriter parent;
-        private Method containingMethod;
+        private readonly Rewriter parent;
+        private readonly Method containingMethod;
         private SourceContext lastStmtContext;
-
         public RewriteAssertAssumeAndCallSiteRequires(Dictionary<Method, bool> replacementMethods,
             RuntimeContractMethods runtimeContracts, RuntimeContractEmitFlags emitFlags, Rewriter parent,
             Method containingMethod)
@@ -3318,6 +3317,7 @@ namespace Microsoft.Contracts.Foxtrot
         //  && methodToReplace.Parameters.Count == 1
         //  && replacementMethod.Parameters[0].Type == methodToReplace.Parameters[0].Type
         //
+        [ContractVerification(false)]
         private static Statement RewriteContractCall(
             MethodCall call,
             ExpressionStatement statement,
@@ -3380,6 +3380,7 @@ namespace Microsoft.Contracts.Foxtrot
             return statements;
         }
 
+        [ContractVerification(false)]
         public override Statement VisitExpressionStatement(ExpressionStatement statement)
         {
             MethodCall call;

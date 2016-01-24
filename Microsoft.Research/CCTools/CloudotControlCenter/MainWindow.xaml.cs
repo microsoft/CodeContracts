@@ -108,6 +108,7 @@ namespace CloudotControlCenter
     }
 
     #region Write to the Log space
+    [ContractVerification(false)]
     public void AddLineToLog(string str)
     {
       this.Dispatcher.BeginInvoke((Action)
@@ -128,6 +129,7 @@ namespace CloudotControlCenter
         ));
     }
     */
+    [ContractVerification(false)]
     public object RunInUIThread(Func<object> action)
     {
       object result = default(object);

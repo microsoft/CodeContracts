@@ -51,7 +51,7 @@
    ===========================================================-->
   <PropertyGroup>
     <SolutionDir>..\</SolutionDir>
-    <SolutionName>CodeTools10.sln</SolutionName>
+    <SolutionName>CodeTools.sln</SolutionName>
     <Platform>Mixed Platforms</Platform>
   </PropertyGroup>
 

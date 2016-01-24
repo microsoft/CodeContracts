@@ -163,6 +163,7 @@ namespace Microsoft.Cci.Analysis
     }
 
     [Pure]
+    [ContractVerification(false)]
     private ThreeValued CheckIfClousotOption(IEnumerable<ICustomAttribute> attributes)
     {
       Contract.Requires(attributes != null);
@@ -9903,6 +9904,7 @@ namespace Microsoft.Cci.Analysis
       return sourceLocationProvider;
     }
 
+    [ContractVerification(false)]
     public void RegisterSourceLocationProvider(IUnitReference unit, ISourceLocationProvider sourceLocationProvider)
     {
       this.unit2SourceLocationProvider.Add(unit, sourceLocationProvider);

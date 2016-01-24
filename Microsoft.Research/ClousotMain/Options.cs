@@ -501,6 +501,9 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Analysis timeout per method (in seconds)")]
     public int timeout = 180;
 
+    [OptionDescription("Analysis timeout per method (in symbolic ticks)")]
+    public int symbolicTimeout = -1;
+
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
     public bool adaptive = false;
 
@@ -705,6 +708,8 @@ namespace Microsoft.Research.CodeAnalysis
     public bool EmitErrorOnCacheLookup { get { return this.emitErrorOnCacheLookup; } }
     public bool PrintIL { get { return this.show.Contains(ShowOptions.il); } }
     public int Timeout { get { return this.timeout; } }
+    // TODO(wuestholz): Propagate this value just like 'Timeout'.
+    public int SymbolicTimeout { get { return this.symbolicTimeout; } }
     public int AnalyzeTo { get { return this.analyzeTo; } }
     public int AnalyzeFrom { get { return this.analyzeFrom; } }
     public int IterationsBeforeWidening { get { return this.joinsBeforeWiden; } }

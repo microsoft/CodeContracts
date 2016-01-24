@@ -515,6 +515,7 @@ namespace Microsoft.Research.AbstractDomains
             return true;
         }
 
+        [ContractVerification(false)]
         public static void Add<T, V>(this Dictionary<T, List<V>> dictionary, T key, V value)
         {
             Contract.Requires(dictionary != null);

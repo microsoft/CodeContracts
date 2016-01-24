@@ -412,7 +412,7 @@ namespace Microsoft.Cci.Pdb
       int nameStream;
       if (!nameIndex.TryGetValue("/NAMES", out nameStream))
       {
-        throw new PdbDebugException("No `name' stream");
+        throw new NoNameStreamPdbException();
       }
       dir.streams[nameStream].Read(reader, bits);
       IntHashTable names = LoadNameStream(bits);
@@ -493,7 +493,7 @@ namespace Microsoft.Cci.Pdb
       int nameStream;
       if (!nameIndex.TryGetValue("/NAMES", out nameStream))
       {
-        throw new PdbDebugException("No `name' stream");
+        throw new NoNameStreamPdbException();
       }
       dir.streams[nameStream].Read(reader, bits);
       IntHashTable names = LoadNameStream(bits);

@@ -445,7 +445,15 @@ namespace System.Compiler.Metadata{
 #endif
         return assembly;
 #if !FxCop
-      }catch(Exception e){
+      }
+      catch(Microsoft.Cci.Pdb.NoNameStreamPdbException e)
+      {
+        if (this.module == null) return null;
+        if (this.module.MetadataImportWarnings == null) this.module.MetadataImportWarnings = new ArrayList();
+        this.module.MetadataImportWarnings.Add(e);
+        return this.module as AssemblyNode;
+      }
+      catch(Exception e){
         if (this.module == null) return null;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
