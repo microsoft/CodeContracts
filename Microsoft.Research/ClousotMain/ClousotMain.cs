@@ -2113,21 +2113,6 @@ namespace Microsoft.Research.CodeAnalysis
         mdriver.EndAnalysis();
       }
 
-      private TextWriter CreateCSVOutputWriter(out bool fileExists)
-      {
-        TextWriter result = null;
-        var fn = string.Format("dfa_statistics.{0}.csv", Thread.CurrentThread.ManagedThreadId);
-        fileExists = false;
-        if (options.PrintControllerStats)
-        {
-          fileExists = File.Exists(fn);
-          var sw = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
-          sw.AutoFlush = true;
-          result = TextWriter.Synchronized(sw);
-        }
-        return result;
-      }
-
       private int RunCodeFixesSuggestion(int phasecount, Method method, IEnumerable<MinimalProofObligation> falseObligations,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
         IFactQuery<BoxedExpression, SymbolicValue> factQuery,
@@ -2750,14 +2735,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       private DFAController CreateFreshDFAController(string analysisName, string methodName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
       {
-        bool exists;
-        var tw = CreateCSVOutputWriter(out exists);
-        var result = new DFAController(analysisName, methodName, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, tw, mdriver.ModifiedAtCall);
-        if (options.PrintControllerStats && !exists)
-        {
-          result.PrintStatisticsCSVHeader();
-        }
-        return result;
+        return new DFAController(analysisName, methodName, options.MaxCalls, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, options.PrintControllerStats, mdriver.ModifiedAtCall);
       }
 
       private int RunSyntacticAnalysis(int phasecount, string methodFullName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver)

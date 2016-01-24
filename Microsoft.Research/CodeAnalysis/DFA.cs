@@ -1628,7 +1628,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private readonly string methodName;
 
-        private readonly TextWriter output;
+        private TextWriter output;
 
         public ISet<APC> SuspendedAPCs { get; private set; }
 
@@ -1642,11 +1642,19 @@ namespace Microsoft.Research.CodeAnalysis
 
         public bool IsChecking { get; private set; }
 
+        public bool HasReachedEnd { get; private set; }
+
+        public bool HasReachedStart { get; private set; }
+
         public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
 
         private Func<SuspensionReason, object, bool> shouldBeSuspended;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, TextWriter ou, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null)
+        private static string dummy = "dummy";
+
+        private static bool headerWasWritten;
+
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null)
         {
             analysisName = an;
             methodName = mn;
@@ -1659,16 +1667,22 @@ namespace Microsoft.Research.CodeAnalysis
             maxSteps = ms;
             steps = 0;
             FailingObligations = fo;
-            output = ou;
             startTime = DateTime.UtcNow;
             totalChecking = TimeSpan.Zero;
             ModifiedAtCall = modifiedAtCall;
             this.shouldBeSuspended = shouldBeSuspended;
+
+            if (printControllerStats)
+            {
+                output = new StringWriter();
+            }
         }
 
         public void ReachedStart(object result)
         {
             if (IsChecking) { return; }
+
+            Debug.Assert(!HasReachedStart || HasReachedEnd);
 
             // TODO(wuestholz): Maybe we should check here that this is only called once.
             calls = 0;
@@ -1681,6 +1695,8 @@ namespace Microsoft.Research.CodeAnalysis
             ReachedAPCs.Clear();
             startTime = DateTime.UtcNow;
             totalChecking = TimeSpan.Zero;
+            HasReachedStart = true;
+            HasReachedEnd = false;
 
             PrintStatisticsCSVData(result, "start");
         }
@@ -1712,12 +1728,10 @@ namespace Microsoft.Research.CodeAnalysis
           PrintStatisticsCSVData(result, source);
         }
 
-        public void PrintStatisticsCSVHeader()
+        public void PrintStatisticsCSVHeader(TextWriter wr)
         {
-          if (output != null)
-          {
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
-          }
+          wr.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
+          headerWasWritten = true;
         }
 
         protected void PrintStatisticsCSVData(object result, string source, string info = null, AnalysisStatistics? stats = null)
@@ -1742,7 +1756,7 @@ namespace Microsoft.Research.CodeAnalysis
               obls = (s.Bottom + s.True).ToString();
             }
 
-            if (FailingObligations != null && !IsChecking)
+            if (FailingObligations != null && !IsChecking && false)
             {
               try
               {
@@ -1825,6 +1839,25 @@ namespace Microsoft.Research.CodeAnalysis
             SuspendedAPCs = suspended;
 
             PrintStatisticsCSVData(result, "end", stats: stats);
+
+            if (output != null)
+            {
+                lock(dummy)
+                {
+                    using (var fs = File.Open("dfa_statistics.csv", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                    using (var wr = new StreamWriter(fs))
+                    {
+                        if (!headerWasWritten)
+                        {
+                            PrintStatisticsCSVHeader(wr);
+                        }
+                        wr.Write(output.ToString());
+                        output = new StringWriter();
+                    }
+                }
+            }
+
+            HasReachedEnd = true;
         }
 
         public bool ReachedStep(object result, APC apc, ISet<APC> suspended)

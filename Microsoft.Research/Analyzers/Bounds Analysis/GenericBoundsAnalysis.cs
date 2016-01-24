@@ -338,7 +338,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
 
                   var run = AnalysisWrapper.RunTheAnalysis(this.MethodName, opt.Type, this.MethodDriver, opt,
-                    (APC pc) => false, Controller) as NumericalAnalysis<Options>;
+                    (APC pc) => false, Controller == null || !Controller.HasReachedEnd ? null : Controller) as NumericalAnalysis<Options>;
                   result = run.fixpointInfo;
                 }
                 else
