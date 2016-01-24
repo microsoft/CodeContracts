@@ -154,10 +154,16 @@
   <ItemGroup>
     <Compile Include="ExitTraceListener.cs" />
     <Compile Include="FoxtrotOptions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Rewriting\CleanUpOldAndResult.cs" />
     <Compile Include="Rewriting\CollectBoundVariables.cs" />
     <Compile Include="Rewriting\CollectOldExpressions.cs" />
     <Compile Include="Rewriting\EmitAsyncClosure.cs" />
+    <Compile Include="Rewriting\PostRewriteChecker.cs" />
     <Compile Include="Rewriting\RemoveContractClasses.cs" />
     <Compile Include="Rewriting\RemoveShortBranches.cs" />
     <Compile Include="Rewriting\ReplaceResult.cs" />
@@ -186,6 +192,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\Foxtrot\InternalExceptionType\InternalException.dll" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Foxtrot\InternalExceptionType\README.txt" />

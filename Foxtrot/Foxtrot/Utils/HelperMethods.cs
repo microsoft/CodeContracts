@@ -2010,8 +2010,31 @@ namespace Microsoft.Contracts.Foxtrot
                     return currentIndex;
                 }
 
-                if (closureCreationCandidate != null && closureCreationCandidate.SourceContext.IsValid)
+                // Following code was changed from simple check that closureCreationCandidate is not null and sourceContext is valid
+                // to method call IsBaseConstructorCall.
+                // Here is a history of this fix.
+                // Original code led to NullReferenceException for constructor with capturing lambda 
+                // and field-like initializer compiled with VS2015.
+                //
+                // With VS2015 order of initialization was changed. Consider constructor initialization:
+                // VS2013:
+                // 1. Field-like initialization
+                // 2. Closure creation
+                // 3. Base class constructor call
+                // 4. Constructor body
+                // VS2015
+                // 1. Closure creation
+                // 2. Field-like initialization
+                // 3. Base class constructor call
+                // 4. Constructor body 
+                // 
+                // Previous version of the code worked incorrectly with VS2015 compiler.
+                // Because field-like initializer satisfy original criteria the function
+                // was unable to find closure initializer properly.
+                if (IsChainConstructorCall(closureCreationCandidate))
+                {
                     return currentIndex;
+                }
                 
                 indexForClosureCreationStatement++;
             }
@@ -2151,6 +2174,20 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             return currentIndex;
+        }
+
+        private static bool IsChainConstructorCall(Statement statement)
+        {
+            var expression = statement as ExpressionStatement;
+            if (expression == null) return false;
+
+            var method = expression.Expression as MethodCall;
+            if (method == null) return false;
+
+            var callee = method.Callee as MemberBinding;
+            if (callee == null) return false;
+
+            return callee.BoundMember is InstanceInitializer;
         }
 
         private static bool IsDup(Statement statement)

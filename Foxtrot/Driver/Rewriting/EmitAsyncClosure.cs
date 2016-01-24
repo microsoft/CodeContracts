@@ -496,10 +496,11 @@ namespace Microsoft.Contracts.Foxtrot
                 // but allows to throw postconditions violations).
 
                 // Generating: result.ContinueWith(closure.CheckPost);
+                var taskContinuationOption = new Literal(TaskContinuationOptions.ExecuteSynchronously);
                 var continueWithCall =
                     new MethodCall(
                         new MemberBinding(taskBasedResult, continueWithMethodLocal),
-                        new ExpressionList(funcLocal));
+                        new ExpressionList(funcLocal, taskContinuationOption));
 
                 // Generating: TaskExtensions.Unwrap(result.ContinueWith(...))
                 var unwrapMethod = GetUnwrapMethod(checkMethodTaskType);
@@ -1125,37 +1126,45 @@ namespace Microsoft.Contracts.Foxtrot
         /// <summary>
         /// Returns correct version of the ContinueWith method.
         /// </summary>
+        /// <remarks>
+        /// This function returns ContinueWith overload that takes TaskContinuationOptions.
+        /// </remarks>
         private static Method GetContinueWithMethod(Class closureClass, TypeNode taskTemplate, TypeNode taskType)
         {
             var continueWithCandidates = taskTemplate.GetMembersNamed(Identifier.For("ContinueWith"));
+            
+            // Looking for an overload with TaskContinuationOptions
+            const int expectedNumberOfArguments = 2;
 
             for (int i = 0; i < continueWithCandidates.Count; i++)
             {
                 var cand = continueWithCandidates[i] as Method;
                 if (cand == null) continue;
 
-                // For non-generic version we're looking for ContinueWith(Action<Task>)
+                // For non-generic version we're looking for ContinueWith(Action<Task>, TaskContinuationOptions)
 
-                //if (taskType.TemplateArgumentsCount() == 0)
                 if (!taskType.IsGeneric)
                 {
                     if (cand.IsGeneric) continue;
 
-                    if (cand.ParameterCount != 1) continue;
+                    if (cand.ParameterCount != expectedNumberOfArguments) continue;
 
                     if (cand.Parameters[0].Type.GetMetadataName() != "Action`1") continue;
+                    
+                    if (cand.Parameters[1].Type.GetMetadataName() != "TaskContinuationOptions") continue;
 
                     return cand;
                 }
 
-                // For generic version we're looking for ContinueWith(Func<Task, T>)
+                // For generic version we're looking for ContinueWith(Func<Task, T>, TaskContinuationOptions)
                 if (!cand.IsGeneric) continue;
 
                 if (cand.TemplateParameters.Count != 1) continue;
 
-                if (cand.ParameterCount != 1) continue;
+                if (cand.ParameterCount != expectedNumberOfArguments) continue;
 
                 if (cand.Parameters[0].Type.GetMetadataName() != "Func`2") continue;
+                if (cand.Parameters[1].Type.GetMetadataName() != "TaskContinuationOptions") continue;
 
                 // now create instance, first of task
                 var taskInstance = taskTemplate.GetTemplateInstance(

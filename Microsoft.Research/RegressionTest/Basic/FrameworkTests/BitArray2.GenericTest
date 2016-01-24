@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="BitArray2" storage="c:\cci\microsoft.research\regressiontest\basic\frameworktests\bitarray2.generictest" id="29a8b884-dfe9-4119-a0a5-60d455a164b1" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -define bitarray -nonnull -bounds -bounds:type=subpolyhedra,diseq=false,reduction=fast  FrameworkTests.dll" maxDuration="0" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

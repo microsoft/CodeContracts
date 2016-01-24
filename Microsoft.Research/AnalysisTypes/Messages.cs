@@ -18,7 +18,6 @@ namespace Microsoft.Research.ClousotPulse.Messages
     {
         private const string PIPENAME = "CCCHECKPulsePipe";
         private const string PIPENAME_CALLBACK = "CCCHECKPulsePipeForCallback";
-        private const string PIPENAME_CLOUDOT = "CLOUDOT_WorkerPipe";
 
         [Pure]
         public static string GetPipeNameForCCCheckPulse()
@@ -42,22 +41,6 @@ namespace Microsoft.Research.ClousotPulse.Messages
             Contract.Ensures(Contract.Result<string>() != null);
 
             return PIPENAME_CALLBACK + procID;
-        }
-
-        [Pure]
-        public static string GetPipeNameForCloudotWorker()
-        {
-            Contract.Ensures(Contract.Result<string>() != null);
-
-            return GetPipeNameForCloudotWorker(Process.GetCurrentProcess().Id);
-        }
-
-        [Pure]
-        public static string GetPipeNameForCloudotWorker(int procID)
-        {
-            Contract.Ensures(Contract.Result<string>() != null);
-
-            return PIPENAME_CLOUDOT + procID;
         }
     }
 
@@ -138,45 +121,6 @@ namespace Microsoft.Research.ClousotPulse.Messages
             }
 
             return false; // we failed
-        }
-    }
-    public static class PipesUtils
-    {
-        [ContractVerification(true)]
-        public static string[] WaitForArgsIfNeeded(string[] args)
-        {
-            Contract.Requires(args != null);
-            Contract.Requires(Contract.ForAll(args, arg => arg != null));
-
-            if (args.Length == 1 && args[0].ToLower() == StringConstants.ClousotWait)
-            {
-                var namedPipeServer = new NamedPipeServerStream(CommonNames.GetPipeNameForCloudotWorker(), PipeDirection.InOut, 254);
-                while (true)
-                {
-                    try
-                    {
-                        namedPipeServer.WaitForConnection(); // wait for connection
-
-                        var stream = new PipeStreamSimple(namedPipeServer);
-
-                        string[] obj;
-                        if (stream.TryRead(out obj))
-                        {
-                            args = obj;
-                        }
-
-                        namedPipeServer.Disconnect();
-                        goto done;
-                    }
-                    catch
-                    {
-                        // just swallow the error
-                        Console.Error.WriteLine("Some error in reading the Clousot arguments from the pipe");
-                    }
-                }
-            }
-        done:
-            return args;
         }
     }
 

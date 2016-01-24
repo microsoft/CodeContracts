@@ -41,7 +41,6 @@
       $(BuildConfig)
       $(Feature_Unsafe)
       $(Feature_Pex)
-      $(ClousotVersion)
       $(CheckCpx)
       $(Flavor)            : displayed in installer
       $(IncludePDBs)
@@ -54,7 +53,6 @@
         <Feature_Unsafe>false</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(devlabs_TS)</Flavor>
         <IncludePDBs>false</IncludePDBs>
@@ -69,7 +67,6 @@
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>true</Feature_Leaderboard>
         <Feature_LeaderboardXML>true</Feature_LeaderboardXML>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(internal)</Flavor>
         <IncludePDBs>true</IncludePDBs>
@@ -82,7 +79,6 @@
         <Feature_Unsafe>true</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
-        <ClousotVersion>1</ClousotVersion>
         <CheckCpx>false</CheckCpx>
         <Flavor>(debug)</Flavor>
         <IncludePDBs>true</IncludePDBs>
@@ -104,12 +100,12 @@
   <Choose>
     <When Condition="'$(ProgramFiles(x86))' == ''">
       <PropertyGroup>
-          <ProgramFilesX86>$(ProgramFiles)</ProgramFilesX86>
+        <ProgramFilesX86>$(ProgramFiles)</ProgramFilesX86>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-          <ProgramFilesX86>$(ProgramFiles) (x86)</ProgramFilesX86>
+        <ProgramFilesX86>$(ProgramFiles) (x86)</ProgramFilesX86>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -136,10 +132,10 @@
     <CodeSignOutputPath>$(MsiSignedDir)</CodeSignOutputPath>
     <CodeSignCodeContractsUrl>http://research.microsoft.com/contracts</CodeSignCodeContractsUrl>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <Samples 
-      Include="$(SamplesDir)\**" 
+    <Samples
+      Include="$(SamplesDir)\**"
       Exclude="
         $(SamplesDir)\ArrayList\**;
         $(SamplesDir)\**\bin\**;
@@ -199,7 +195,7 @@
   <Target Name="UpdateVSIXVersions"
           DependsOnTargets="Validate">
     <Message Text="Updating Version Number in VSIX manifest"/>
-<PropertyGroup>
+    <PropertyGroup>
       <Vsix10Namespace>
         &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2010' /&gt;
       </Vsix10Namespace>
@@ -207,6 +203,17 @@
         &lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' /&gt;
       </Vsix20Namespace>
     </PropertyGroup>
+
+    <Copy SourceFiles="..\ContractAdornments\Extension\Templates\source.extension.vsixmanifest"
+      DestinationFiles="..\ContractAdornments\Extension\source.extension.vsixmanifest" />
+    <Copy SourceFiles="VSIX\Templates\VS10.extension.vsixmanifest"
+      DestinationFiles="VSIX\VS10.extension.vsixmanifest" />
+    <Copy SourceFiles="VSIX\Templates\VS11.extension.vsixmanifest"
+      DestinationFiles="VSIX\VS11.extension.vsixmanifest" />
+    <Copy SourceFiles="VSIX\Templates\VS12.extension.vsixmanifest"
+      DestinationFiles="VSIX\VS12.extension.vsixmanifest" />
+    <Copy SourceFiles="VSIX\Templates\VS14.extension.vsixmanifest"
+      DestinationFiles="VSIX\VS14.extension.vsixmanifest" />
 
     <XmlPoke
        Namespaces="$(Vsix10Namespace)"
@@ -238,6 +245,12 @@
        Value="$(CCNetLabel)"
        XmlInputPath="VSIX\VS14.extension.vsixmanifest" />
 
+    <Exec Command="git update-index -–assume-unchanged ..\ContractAdornments\Extension\source.extension.vsixmanifest"/>
+    <Exec Command="git update-index -–assume-unchanged VSIX\VS10.extension.vsixmanifest"/>
+    <Exec Command="git update-index -–assume-unchanged VSIX\VS11.extension.vsixmanifest"/>
+    <Exec Command="git update-index -–assume-unchanged VSIX\VS12.extension.vsixmanifest"/>
+    <Exec Command="git update-index -–assume-unchanged VSIX\VS14.extension.vsixmanifest"/>
+
   </Target>
 
   <!--==========================================================
@@ -267,17 +280,11 @@
    ===========================================================-->
 
   <ItemGroup>
-    <VersionFile Include="..\common\include\Version.cs"/>
+    <VersionFile Include="..\common\include\version.cs"/>
   </ItemGroup>
 
   <Target Name="CreateVersionFile">
-    <!-- create version number (checkout version file first) 
-    <SourceDepotEdit
-      Condition = "$(CCNetLabel) != ''"
-      ContinueOnError="true"
-      WorkingDirectory="..\Common\Include\"
-      Files="@(VersionFile)"
-     /> -->
+    <!-- create version number -->
     <CreateAssemblyInfo
        Condition = "$(CCNetLabel) != ''"
        CreateVersionFile="true"
@@ -287,8 +294,9 @@
        Copyright="(c) Microsoft Corporation.  All rights reserved."
        ForceReadOnly="true"
        >
-       <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
+      <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
     </CreateAssemblyInfo>
+    <Exec Command="git update-index -–assume-unchanged @(VersionFile)"/>
   </Target>
 
   <!--==========================================================
@@ -331,14 +339,14 @@
     </Copy>
     <!--
     <CreateItem
-    	Include="..\..\Foxtrot\Contracts\$(BinDir)\Microsoft.Contracts.dll"
+      Include="..\..\Foxtrot\Contracts\$(BinDir)\Microsoft.Contracts.dll"
       Exclude=""
     >
       <Output TaskParameter="Include" ItemName="AssemblyFiles" />
     </CreateItem>
      -->
     <CreateItem
-    	Include="$(TmpDir)\Samples\**\*.sln"
+      Include="$(TmpDir)\Samples\**\*.sln"
       Exclude=""
     >
       <Output TaskParameter="Include" ItemName="SampleSolutions" />
@@ -353,7 +361,7 @@
     <ItemGroup>
       <SampleDirectories Include="@(SampleSolutions->'%(RecursiveDir)')"/>
     </ItemGroup>
-<!--    <PatchProjectReferences
+    <!--    <PatchProjectReferences
       Projects="@(SampleProjects)"
       HintPath="c:\Program Files\Microsoft\Contracts\Public"
       ReferencePath="..\..\Contracts\$(BinDir)"
@@ -384,7 +392,7 @@
     </Copy>
 
   </Target>
-  
+
   <!--==========================================================
 
     Merge final executables to reduce surface
@@ -405,15 +413,15 @@
     </XmlPeek>
     <PropertyGroup>
       <ILMergeExePath>$(SolutionDir)packages\ILMerge.@(ILMergeVersion)\tools\ilmerge.exe</ILMergeExePath>
-        <ILMergeExeV40>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
-        <ILMergeExeV45>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
+      <ILMergeExeV40>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"</ILMergeExeV40>
+      <ILMergeExeV45>$(ILMergeExePath) "/targetplatform:v4,$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5"</ILMergeExeV45>
     </PropertyGroup>
     <Message Text="Using ILMerge in version: @(ILMergeVersion)"/>
-  </Target>	
-	
+  </Target>
+
   <Target Name="ExecuteMerges"
     DependsOnTargets="ILMergeFoxtrot;ILMergeAsmMeta;ILMergeClousot;ILMergeCCDoc"/>
-    
+
   <PropertyGroup>
     <FoxtrotDir>..\..\Foxtrot\Driver\$(BinDir)</FoxtrotDir>
     <CCRefGenAttributesDir>CCRefGenAttributes\$(BinDir)</CCRefGenAttributesDir>
@@ -447,11 +455,11 @@
        Include="
       $(FoxtrotDir)\Microsoft.Contracts.dll
     "/>
-    <FoxtrotMergeBinaries 
+    <FoxtrotMergeBinaries
        Condition="'$(Feature_Leaderboard)'=='true'"
        Include="
     "/>
-    <FoxtrotMergeBinaries 
+    <FoxtrotMergeBinaries
        Condition="'$(Feature_LeaderboardXML)'=='true'"
        Include="
     "/>
@@ -470,7 +478,7 @@
       $(CCI2Dir)\Microsoft.Cci.PeWriter.dll;
       $(CCI2Dir)\Microsoft.Cci.SourceModel.dll;
     "/>
-    <AsmmetaMergeBinaries 
+    <AsmmetaMergeBinaries
        Condition="Exists('$(CCI2Dir)\Microsoft.Contracts.dll')"
        Include="
       $(CCI2Dir)\Microsoft.Contracts.dll
@@ -516,11 +524,11 @@
        Include="
       $(Clousot1Dir)\Microsoft.Contracts.dll
     "/>
-    <Clousot1MergeBinaries 
+    <Clousot1MergeBinaries
        Condition="'$(Feature_Leaderboard)'=='true'"
        Include="
     "/>
-    <Clousot1MergeBinaries 
+    <Clousot1MergeBinaries
        Condition="'$(Feature_LeaderboardXML)'=='true'"
        Include="
     "/>
@@ -673,10 +681,10 @@
         DestinationFiles="$(Adornment2010UnpackDir)\AdornmentManager.pkgdef"
         />
     <Delete Files="$(Adornment2010UnpackDir)\CodeContractsHelper.pkgdef"/>
-    <Exec 
+    <Exec
         Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper AdornmentManager AdornmentManager.pkgdef"
         WorkingDirectory="$(Adornment2010UnpackDir)"/>
-    <Exec 
+    <Exec
         Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper AdornmentManager extension.vsixmanifest"
         WorkingDirectory="$(Adornment2010UnpackDir)"/>
 
@@ -745,10 +753,10 @@
         DestinationFiles="$(Adornment2012UnpackDir)\AdornmentManager.pkgdef"
         />
     <Delete Files="$(Adornment2012UnpackDir)\CodeContractsHelper11.pkgdef"/>
-    <Exec 
+    <Exec
         Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper11 AdornmentManager AdornmentManager.pkgdef"
         WorkingDirectory="$(Adornment2012UnpackDir)"/>
-    <Exec 
+    <Exec
         Command="..\..\..\..\Common\bin\SubstituteText.exe CodeContractsHelper11 AdornmentManager extension.vsixmanifest"
         WorkingDirectory="$(Adornment2012UnpackDir)"/>
 
@@ -787,12 +795,7 @@
   </Target>
 
   <Target Name="ILMergeClousot"
-    DependsOnTargets="ILMergeClousot1;ILMergeClousot2"
-  />
-
-  <Target Name="ILMergeClousot1"
     DependsOnTargets="MakeDirs"
-    Condition="'$(ClousotVersion)'=='1'"
     Inputs="@(Clousot1MergeBinaries);$(CCCheckConfig)"
     Outputs="$(CCCheckBinary);$(CCCheckBinary).config">
     <Message Text="ILmerge cccheck Clousot1"/>
@@ -806,19 +809,6 @@
        DestinationFiles="$(CCCheckBinary).config"
        />
     <Touch Files="$(CCCheckBinary).config"/>
-  </Target>
-
-  <Target Name="ILMergeClousot2"
-    DependsOnTargets="MakeDirs"
-    Condition="'$(ClousotVersion)'=='2'"
-    Inputs="@(Clousot2MergeBinaries)"
-    Outputs="$(CCCheckBinary)">
-    <Message Text="ILmerge cccheck Clousot2"/>
-
-    <Exec
-       Command="$(ILMergeExeV40) -allowDup /copyattrs /allowMultiple /keepFirst /keyfile:%(ContractsKeyRel.FullPath) /internalize:ClousotILMerge.internexceptions /closed /out:$(CCCheckBinary) @(Clousot2MergeBinaries, ' ')"
-       WorkingDirectory="."
-    />
   </Target>
 
   <!--==========================================================
@@ -847,9 +837,7 @@
     ==========================================================-->
 
   <PropertyGroup>
-    <CLOUSOT Condition="'$(ClousotVersion)'=='1'">..\Clousot\$(BinDir)</CLOUSOT>
-    <CLOUSOT
-    Condition="'$(ClousotVersion)'=='2'">..\Clousot2\$(BinDir)</CLOUSOT>
+    <CLOUSOT>..\Clousot\$(BinDir)</CLOUSOT>
     <FOXTROTBASE>..\..\Foxtrot</FOXTROTBASE>
     <FOXTROT>$(FOXTROTBASE)\Driver\$(BinDir)</FOXTROT>
     <SAMPLES>..\..\Foxtrot\Samples</SAMPLES>
@@ -879,8 +867,8 @@
     <MsiOutputFile>$(MsiDir)\Contracts.$(ReleaseConfig).msi</MsiOutputFile>
     <ContractReferenceAssemblyRoot>..\Contracts\$(BinDir)</ContractReferenceAssemblyRoot>
   </PropertyGroup>
-  
-  <Target Name="MakeMSI" 
+
+  <Target Name="MakeMSI"
     DependsOnTargets="BuildExtras;MergeExes">
     <CreateGuid>
       <Output TaskParameter="Guid" PropertyName="ProductGuid" />
@@ -911,7 +899,7 @@
                   "
        />
     <Message Text="Finished with Wix. ContinuousBuild: $(ContinuousBuild)$"/>
-    <MakeDir 
+    <MakeDir
       Condition="'$(ContinuousBuild)' == 'true'"
       Directories="$(CodeSignOutputPath)"/>
     <CodeSign
@@ -956,7 +944,7 @@
     <Copy SourceFiles="@(ApiScanAssemblies)" DestinationFolder="$(ApiScanDirectory)" />
 
     <!-- call apiscan -->
-    <Exec Command="&quot;$(ApiScanExe)&quot; $(ApiScanParameters)"/> 
+    <Exec Command="&quot;$(ApiScanExe)&quot; $(ApiScanParameters)"/>
   </Target>
 
   <PropertyGroup>

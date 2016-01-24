@@ -233,7 +233,10 @@ namespace Tests
             string compilerCode,
             bool useBinDir,
             bool useExe,
-            bool mustSucceed)
+            bool mustSucceed,
+            bool optimize,
+            bool releaseMode,
+            bool pdbOnly)
         {
             this.SourceFile = sourceFile;
             this.FoxtrotOptions = foxtrotOptions;
@@ -246,8 +249,38 @@ namespace Tests
             this.UseBinDir = useBinDir;
             this.UseExe = useExe;
             this.MustSucceed = mustSucceed;
+            this.Optimize = optimize;
+            this.ReleaseMode = releaseMode;
+            this.PdbOnly = pdbOnly;
 
             this.RootDirectory = Path.GetFullPath(RelativeRoot);
+        }
+        public Options(
+            string sourceFile,
+            string foxtrotOptions,
+            bool useContractReferenceAssemblies,
+            string compilerOptions,
+            string[] references,
+            string[] libPaths,
+            string compilerCode,
+            bool useBinDir,
+            bool useExe,
+            bool mustSucceed)
+            : this(
+            sourceFile,
+            foxtrotOptions,
+            useContractReferenceAssemblies,
+            compilerOptions,
+            references,
+            libPaths,
+            compilerCode,
+            useBinDir,
+            useExe,
+            mustSucceed,
+            false,
+            false,
+            false)
+        {
         }
 
         public Options WithSourceFile(string sourceFile)
@@ -268,6 +301,10 @@ namespace Tests
         }
 
         public bool ReleaseMode { get; set; }
+
+        public bool Optimize { get; set; }
+
+        public bool PdbOnly { get; set; }
 
         private static string LoadString(System.Data.DataRow dataRow, string name)
         {
