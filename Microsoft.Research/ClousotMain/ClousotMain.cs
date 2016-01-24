@@ -2035,7 +2035,12 @@ namespace Microsoft.Research.CodeAnalysis
 
           phasecount = RunFactsDiscoveryAnalyses(method, phasecount, methodFullName, cdriver, mdriver, results, obligations, factQuery);
 
+          var controller = CreateFreshDFAController("checking", methodFullName, mdriver, results, obligations);
+          controller.ReachedStart(null);
+
           phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
+
+          controller.ReachedEnd(null, null, methodStats);
 
           phasecount = RunExtractMethodLogic(phasecount, mdriver, factQuery);
 

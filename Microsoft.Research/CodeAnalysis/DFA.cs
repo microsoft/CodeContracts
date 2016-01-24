@@ -1720,7 +1720,7 @@ namespace Microsoft.Research.CodeAnalysis
           }
         }
 
-        protected void PrintStatisticsCSVData(object result, string source, string info = null)
+        protected void PrintStatisticsCSVData(object result, string source, string info = null, AnalysisStatistics? stats = null)
         {
           Contract.Requires(source != null);
 
@@ -1733,15 +1733,24 @@ namespace Microsoft.Research.CodeAnalysis
             string obls = "?";
             var start = DateTime.UtcNow;
             var end = start;
+
+            if (stats != null && stats.HasValue)
+            {
+              var s = stats.Value;
+              errors = (s.Top + s.False).ToString();
+              unreached = s.Bottom.ToString();
+              obls = (s.Bottom + s.True).ToString();
+            }
+
             if (FailingObligations != null && !IsChecking)
             {
               try
               {
                 IsChecking = true;
-                var stats = FailingObligations(result);
-                errors = (stats.Top + stats.False).ToString();
-                unreached = stats.Bottom.ToString();
-                obls = (stats.Bottom + stats.True).ToString();
+                var s = FailingObligations(result);
+                errors = (s.Top + s.False).ToString();
+                unreached = s.Bottom.ToString();
+                obls = (s.Bottom + s.True).ToString();
               }
               catch (Exception e)
               {
@@ -1809,13 +1818,13 @@ namespace Microsoft.Research.CodeAnalysis
             return suspend;
         }
 
-        public void ReachedEnd(object result, ISet<APC> suspended)
+        public void ReachedEnd(object result, ISet<APC> suspended, AnalysisStatistics? stats = null)
         {
             if (IsChecking) { return; }
 
             SuspendedAPCs = suspended;
 
-            PrintStatisticsCSVData(result, "end");
+            PrintStatisticsCSVData(result, "end", stats: stats);
         }
 
         public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
