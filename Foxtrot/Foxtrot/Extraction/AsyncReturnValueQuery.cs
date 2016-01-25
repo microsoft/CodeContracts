@@ -76,8 +76,13 @@ namespace Microsoft.Contracts.Foxtrot
                 }
             }
 
+            // For async methods calledMethod (Contract.Result) would be called in the generated generic state machine,
+            // and calledMethod.ReturnType would be generic type argument and actualResultType can be generic method argument
+            // (if async postcondition declared in the generic method from non-generic class).
+            // In this case calledMethod.ReturnType would be != this.actualResultType
+            // and different comparison logic should be used (reflected in EquivalentGenercTypes method).
             if (this.actualResultType != null && contractNodes.IsResultMethod(template) &&
-                calledMethod.ReturnType == this.actualResultType)
+                (calledMethod.ReturnType == this.actualResultType || EquivalentGenericTypes(calledMethod, actualResultType)))
             {
                 // using Contract.Result<T>() in a Task<T> returning method, this is a shorthand for
                 // Contract.Result<Task<T>>().Result
@@ -86,6 +91,18 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             base.VisitMethodCall(call);
+        }
+
+        private static bool EquivalentGenericTypes(Method calledMethod, TypeNode actualResultType)
+        {
+            if (calledMethod.IsGeneric && actualResultType.IsTemplateParameter)
+            {
+                // Relatively naive implementation for equality, but still correct
+                // and should not lead to false positives.
+                return calledMethod.ReturnType.FullName == actualResultType.FullName;
+            }
+
+            return false;
         }
     }
 }

@@ -24,25 +24,24 @@ namespace Tests.Sources
 
     class Foo
     {
-        private static int _expectedResult = 42;
-        private async Task<int> FooAsync()
+        private async Task<T> FooAsync<T>(T t) where T: class
         {
-            Contract.Ensures(Contract.Result<int>() == _expectedResult);
+            Contract.Ensures(Contract.Result<T>() != null);
 
             await Task.Delay(42);
 
             throw new InvalidOperationException();
 
-            return 42;
+            //return t;
         }
 
-        public static async Task HandleFooAsync()
+        public static async Task HandleFooAsync(string arg)
         {
             try
             {
                 // When async postcondition are implemented properly
                 // they should not affect exception handling when the method throws.
-                await new Foo().FooAsync();
+                await new Foo().FooAsync(arg);
             }
             catch (InvalidOperationException)
             {
@@ -57,7 +56,7 @@ namespace Tests.Sources
         {
             if (behave)
             {
-                Foo.HandleFooAsync().Wait();
+                Foo.HandleFooAsync("foo").Wait();
             }
             else
             {

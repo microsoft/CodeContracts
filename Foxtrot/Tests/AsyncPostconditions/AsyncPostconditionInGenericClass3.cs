@@ -22,34 +22,14 @@ namespace Tests.Sources
 {
     using System.Threading.Tasks;
 
-    class Foo
-    {
-        private static int _expectedResult = 42;
-        private async Task<int> FooAsync()
-        {
-            Contract.Ensures(Contract.Result<int>() == _expectedResult);
-
-            await Task.Delay(42);
-
-            throw new InvalidOperationException();
-
-            return 42;
-        }
-
-        public static async Task HandleFooAsync()
-        {
-            try
-            {
-                // When async postcondition are implemented properly
-                // they should not affect exception handling when the method throws.
-                await new Foo().FooAsync();
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("Exception should be handled!");
-            }
-        }
+public class Outer<T> {
+  public class Inner {
+    public static Task<T> OuterClassTypeArgument(T obj) {
+      Contract.Ensures(Contract.Result<T>() != null);
+      return Task.FromResult(obj);
     }
+  }
+}
 
     partial class TestMain
     {
@@ -57,15 +37,15 @@ namespace Tests.Sources
         {
             if (behave)
             {
-                Foo.HandleFooAsync().Wait();
+                Outer<string>.Inner.OuterClassTypeArgument("foo").Wait();
             }
             else
             {
-                throw new ArgumentNullException();
+                Outer<string>.Inner.OuterClassTypeArgument(null).Wait();
             }
         }
 
-        public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Precondition;
-        public string NegativeExpectedCondition = "Value cannot be null.";
+        public ContractFailureKind NegativeExpectedKind = ContractFailureKind.Postcondition;
+        public string NegativeExpectedCondition = "Contract.Result<T>() != null";
     }
 }

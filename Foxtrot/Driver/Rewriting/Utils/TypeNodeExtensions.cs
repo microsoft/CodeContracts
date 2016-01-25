@@ -26,5 +26,10 @@ namespace Microsoft.Contracts.Foxtrot.Utils
         {
             return list == null ? 0 : list.Count;
         }
+
+        public static bool IsNullOrEmpty(this TypeNodeList list)
+        {
+            return list == null || list.Count == 0;
+        }
     }
 }
