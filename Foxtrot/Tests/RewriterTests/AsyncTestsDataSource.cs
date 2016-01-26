@@ -71,5 +71,18 @@ namespace Tests
                 return sourceFiles.Select(f => OptionsTemplate.WithSourceFile(f));
             }
         }
+		
+        public static IEnumerable<Options> AsyncPreconditionsTestCases
+        {
+            get
+            {
+                var sourceFiles = new[]
+                {
+                    @"Foxtrot\Tests\AsyncPreconditions\PropertyPreconditionAsync.cs"
+                };
+
+                return sourceFiles.Select(f => OptionsTemplate.WithSourceFile(f));
+            }
+        }
     }
 }

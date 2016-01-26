@@ -53,6 +53,14 @@ namespace Tests
             }
         }
 
+        public static IEnumerable<object> AsyncPreconditions
+        {
+            get
+            {
+                return Enumerable.Range(0, AsyncTestsDataSource.AsyncPreconditionsTestCases.Count()).Select(i => new object[] { i });
+            }
+        }
+
 
         private static IEnumerable<Options> TestFileData
         {
@@ -1688,6 +1696,30 @@ namespace Tests
         public void TestAsyncPostconditionsV45(int testIndex)
         {
             Options options = AsyncTestsDataSource.AsyncPostconditionsTestCases.ElementAt(testIndex);
+            options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
+            options.BuildFramework = @".NETFramework\v4.5";
+            options.ContractFramework = @".NETFramework\v4.0";
+            options.UseTestHarness = true;
+            TestDriver.BuildRewriteRun(_testOutputHelper, options);
+        }
+
+        [Theory]
+        [MemberData("AsyncPreconditions")]
+        [Trait("Category", "Runtime"), Trait("Category", "CoreTest"), Trait("Category", "Roslyn"), Trait("Category", "VS14")]
+        public void TestAsyncPreconditionsWithRoslyn(int testIndex)
+        {
+            Options options = AsyncTestsDataSource.AsyncPreconditionsTestCases.ElementAt(testIndex);
+            CreateRoslynOptions(options, "VS14RC3");
+            TestDriver.BuildRewriteRun(_testOutputHelper, options);
+        }
+
+        // TODO ST: it seems that the Trait("Category", "Roslyn" is invalid for this test! And VS14 as well!
+        [Theory]
+        [MemberData("AsyncPreconditions")]
+        [Trait("Category", "Runtime"), Trait("Category", "CoreTest"), Trait("Category", "Roslyn"), Trait("Category", "VS14")]
+        public void TestAsyncPreconditionsV45(int testIndex)
+        {
+            Options options = AsyncTestsDataSource.AsyncPreconditionsTestCases.ElementAt(testIndex);
             options.FoxtrotOptions = options.FoxtrotOptions + String.Format(" /throwonfailure /rw:{0}.exe,TestInfrastructure.RewriterMethods", Path.GetFileNameWithoutExtension(options.TestName));
             options.BuildFramework = @".NETFramework\v4.5";
             options.ContractFramework = @".NETFramework\v4.0";
