@@ -1634,6 +1634,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         public bool IsChecking { get; private set; }
 
+        public readonly bool checkObligations;
+
         public bool HasReachedEnd { get; private set; }
 
         public bool HasReachedStart { get; private set; }
@@ -1646,7 +1648,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         private static bool headerWasWritten;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null)
+        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null, bool checkObligations = false)
         {
             analysisName = an;
             methodName = mn;
@@ -1663,6 +1665,7 @@ namespace Microsoft.Research.CodeAnalysis
             totalChecking = TimeSpan.Zero;
             ModifiedAtCall = modifiedAtCall;
             this.shouldBeSuspended = shouldBeSuspended;
+            this.checkObligations = checkObligations;
 
             if (printControllerStats)
             {
@@ -1748,7 +1751,7 @@ namespace Microsoft.Research.CodeAnalysis
               obls = (s.Bottom + s.True).ToString();
             }
 
-            if (FailingObligations != null && !IsChecking && false)
+            if (checkObligations && !IsChecking && FailingObligations != null)
             {
               try
               {
