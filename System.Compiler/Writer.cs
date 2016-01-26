@@ -2780,6 +2780,9 @@ namespace System.Compiler{
           }
           this.IncrementStackHeight();
           return;
+        case NodeType.This:
+          this.methodBodyHeap.Write((byte)0x02);
+          return;
       }
     }
     void VisitAssignmentStatement(AssignmentStatement/*!*/ assignment) {
