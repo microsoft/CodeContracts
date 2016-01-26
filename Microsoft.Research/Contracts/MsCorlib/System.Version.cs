@@ -22,24 +22,58 @@ namespace System
     public class Version: ICloneable, IComparable
     {
 
+        [Pure]
         public int Minor
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= 0);
+              return default(int);
+            }
         }
 
+        [Pure]
         public int Major
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= 0);
+              return default(int);
+            }
         }
 
+        [Pure]
         public int Revision
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
         }
 
+        [Pure]
         public int Build
         {
-            get { return default(int); }
+            get {
+              Contract.Ensures(Contract.Result<int>() >= -1);
+              return default(int);
+            }
+        }
+
+        [Pure]
+        public short MajorRevision
+        {
+            get {
+              Contract.Ensures(Contract.Result<short>() >= -1);
+              return default(short);
+            }
+        }
+
+        [Pure]
+        public short MinorRevision
+        {
+            get {
+              Contract.Ensures(Contract.Result<short>() >= -1);
+              return default(short);
+            }
         }
 
         [Pure][Reads(ReadsAttribute.Reads.Nothing)]
@@ -85,9 +119,27 @@ namespace System
 
           return default(object);
         }
+#if SILVERLIGHT || NETFRAMEWORK_4_0
+        [Pure]
+        public static Version Parse(string input) {
+            Contract.Requires(input != null);
+            Contract.Ensures(Contract.Result<Version>() != null);
+            return default(Version);
+        }
+        [Pure]
+        public static bool TryParse(string input, out Version result) {
+            Contract.Requires(input != null);
+            Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out result) != null);
+            result = default(Version);
+            return default(bool);
+        }
+#endif
 #if !SILVERLIGHT
         public Version () {
-
+            Contract.Ensures(Major == 0);
+            Contract.Ensures(Minor == 0);
+            Contract.Ensures(Build == -1);
+            Contract.Ensures(Revision == -1);
         }
 #endif
         public Version (string version) {
@@ -97,12 +149,20 @@ namespace System
         public Version (int major, int minor) {
             Contract.Requires(major >= 0);
             Contract.Requires(minor >= 0);
+            Contract.Ensures(Major == major);
+            Contract.Ensures(Minor == minor);
+            Contract.Ensures(Build == -1);
+            Contract.Ensures(Revision == -1);
 
         }
         public Version (int major, int minor, int build) {
             Contract.Requires(major >= 0);
             Contract.Requires(minor >= 0);
             Contract.Requires(build >= 0);
+            Contract.Ensures(Major == major);
+            Contract.Ensures(Minor == minor);
+            Contract.Ensures(Build == build);
+            Contract.Ensures(Revision == -1);
 
         }
         public Version (int major, int minor, int build, int revision) {
@@ -110,6 +170,11 @@ namespace System
             Contract.Requires(minor >= 0);
             Contract.Requires(build >= 0);
             Contract.Requires(revision >= 0);
+            Contract.Ensures(Major == major);
+            Contract.Ensures(Minor == minor);
+            Contract.Ensures(Build == build);
+            Contract.Ensures(Revision == revision);
+
         }
     }
 }

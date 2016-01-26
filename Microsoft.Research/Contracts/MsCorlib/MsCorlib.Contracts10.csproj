@@ -351,7 +351,6 @@
     <!--    <Compile Include="System.ArgumentException.cs" /> -->
     <!--    <Compile Include="System.ArgumentOutOfRangeException.cs" /> -->
     <Compile Include="Sources\System.OperatingSystem.cs" />
-    <Compile Include="Sources\System.Version.cs" />
     <Compile Include="System.Action.cs" />
     <Compile Include="System.ArgumentException.cs" />
     <Compile Include="System.ArgumentNullException.cs" />
@@ -905,7 +904,7 @@ Include="System.Security.Principal.WindowsPrincipal.cs" /> -->
     <Compile Include="System.UIntPtr.cs" />
     <!--    <Compile Include="System.UnhandledExceptionEventHandler.cs" /> -->
     <Compile Include="System.ValueType.cs" />
-    <!--    <Compile Include="System.Version.cs" /> -->
+    <Compile Include="System.Version.cs" />
     <Compile Include="System.Void.cs" />
     <!--    <Compile Include="System.WeakReference.cs" /> -->
   </ItemGroup>
