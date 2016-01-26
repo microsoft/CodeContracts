@@ -266,6 +266,9 @@
     <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
+  <PropertyGroup>
+    <MultiTargetFrameworkAssembliesRoot>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework</MultiTargetFrameworkAssembliesRoot>
+  </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>

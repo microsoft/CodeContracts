@@ -46,9 +46,9 @@ namespace System.ServiceModel
     {
     }
 
-    internal HttpBindingBase(BasicHttpSecurityMode securityMode)
-    {
-    }
+    //internal HttpBindingBase(BasicHttpSecurityMode securityMode)
+    //{
+    //}
 
     public bool ShouldSerializeReaderQuotas()
     {
