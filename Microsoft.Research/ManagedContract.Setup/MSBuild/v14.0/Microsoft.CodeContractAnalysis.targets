@@ -220,7 +220,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <_CodeContractsCCCheckArguments>-nobox -nologo -nopex -remote  -suggest=!! -premode combined -suggest codefixes -framework:$(TargetFrameworkVersion) -warninglevel $(CodeContractsAnalysisWarning) $(CodeContractCodeAnalysisOptions) "-resolvedPaths:@(ReferencePath)" "-libPaths:@(CodeContractsAllLibPaths) " "$(DeclarativeAssemblyPath)"</_CodeContractsCCCheckArguments>
+      <_CodeContractsCCCheckArguments>-nobox -nologo -nopex -remote  -suggest=!! -premode combined -suggest codefixes -framework:$(TargetFrameworkVersion) -warninglevel $(CodeContractsAnalysisWarning) $(CodeContractCodeAnalysisOptions) "-resolvedPaths:@(ReferencePath)" "-libPaths:@(CodeContractsAllLibPaths)" "$(DeclarativeAssemblyPath)"</_CodeContractsCCCheckArguments>
     </PropertyGroup>
 
     <ItemGroup>

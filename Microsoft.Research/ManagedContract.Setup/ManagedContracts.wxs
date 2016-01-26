@@ -71,6 +71,7 @@
 <?define var.EnvironmentVariablesCompGuid     = "{990ACAFB-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.OutOfBandCompGuid40              = "{990ACAFC-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.OutOfBandCompGuid45              = "{990ACAFD-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.OutOfBandCompGuid46              = "{990ACB0D-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.OutOfBandCompGuidSL30            = "{990ACAFE-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.OutOfBandCompGuidSL40            = "{990ACAFF-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.OutOfBandCompGuidSL50            = "{990ACB03-1AAE-4fa6-A178-9BF28206012F}" ?>
@@ -670,6 +671,112 @@
                        Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.5\$(var.WindowsBaseContracts)' Vital='yes'/>
                   </Component>
                 </Directory>
+                <Directory Id='OUTOFBANDDIR46' Name='v4.6'>
+                  <Component Id='OutOfBandContracts46' Guid='$(var.OutOfBandCompGuid46)'>
+                    <File
+                       Id='$(var.MicrosoftVBCompatContracts)46'
+                       Name='$(var.MicrosoftVBCompatContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.MicrosoftVBCompatContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.MSFTVBContracts)46'
+                       Name='$(var.MSFTVBContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.MSFTVBContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.mscorlibContracts)46'
+                       Name='$(var.mscorlibContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.mscorlibContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationCoreContracts)46'
+                       Name='$(var.PresentationCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.PresentationCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.PresentationFrameworkContracts)46'
+                       Name='$(var.PresentationFrameworkContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.PresentationFrameworkContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemComponentModelCompositionContracts)46'
+                       Name='$(var.SystemComponentModelCompositionContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemComponentModelCompositionContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationContracts)46'
+                       Name='$(var.SystemConfigurationContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemConfigurationContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemConfigurationInstallContracts)46'
+                       Name='$(var.SystemConfigurationInstallContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemConfigurationInstallContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemContracts)46'
+                       Name='$(var.SystemContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemCoreContracts)46'
+                       Name='$(var.SystemCoreContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemCoreContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataContracts)46'
+                       Name='$(var.SystemDataContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemDataContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDataServicesContracts)46'
+                       Name='$(var.SystemDataServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemDataServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDirectoryServicesContracts)46'
+                       Name='$(var.SystemDirectoryServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemDirectoryServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemDrawingContracts)46'
+                       Name='$(var.SystemDrawingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemDrawingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemNumericsContracts)46'
+                       Name='$(var.SystemNumericsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemNumericsContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemRuntimeCachingContracts)46'
+                       Name='$(var.SystemRuntimeCachingContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemRuntimeCachingContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemSecurityContracts)46'
+                       Name='$(var.SystemSecurityContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemSecurityContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceModelContracts)46'
+                       Name='$(var.SystemServiceModelContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemServiceModelContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemServiceProcessContracts)46'
+                       Name='$(var.SystemServiceProcessContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemServiceProcessContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebApplicationServicesContracts)46'
+                       Name='$(var.SystemWebApplicationServicesContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemWebApplicationServicesContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWebContracts)46'
+                       Name='$(var.SystemWebContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemWebContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemWindowsFormsContracts)46'
+                       Name='$(var.SystemWindowsFormsContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemWindowsFormsContracts)'
+                       Vital='yes'/>
+                    <File
+                       Id='$(var.SystemXmlContracts)46'
+                       Name='$(var.SystemXmlContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemXmlContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.SystemXmlLinqContracts)46'
+                       Name='$(var.SystemXmlLinqContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.SystemXmlLinqContracts)' Vital='yes'/>
+                    <File
+                       Id='$(var.WindowsBaseContracts)46'
+                       Name='$(var.WindowsBaseContracts)'
+                       Source='$(var.ContractReferenceAssemblyRoot)\.NETFramework\v4.6\$(var.WindowsBaseContracts)' Vital='yes'/>
+                  </Component>
+                </Directory>
               </Directory>
               <Directory Id='SilverlightContracts' Name='Silverlight'>
                 <Directory Id='OUTOFBANDDIRSL30' Name='v3.0'>
@@ -1187,6 +1294,7 @@
         <ComponentRef Id='OutOfBandContracts35' />
         <ComponentRef Id='OutOfBandContracts40' />
         <ComponentRef Id='OutOfBandContracts45' />
+        <ComponentRef Id='OutOfBandContracts46' />
         <ComponentRef Id='OutOfBandContractsSL30' />
         <ComponentRef Id='OutOfBandContractsSL40' />
         <ComponentRef Id='OutOfBandContractsSL50' />
