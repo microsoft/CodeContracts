@@ -331,8 +331,10 @@
     <Compile Include="System.Collections.ObjectModel.Collection.cs" />
     <Compile Include="System.Diagnostic.Tracing.EventSource.cs" />
     <Compile Include="System.Diagnostic.Tracing.EventWrittenEventArgs.cs" />
+    <Compile Include="System.Runtime.CompilerServices.FormattableStringFactory.cs" />
     <Compile Include="System.Globalization.CalendarWeekRule.cs" />
     <Compile Include="System.Globalization.DateTimeFormatInfo.cs" />
+    <Compile Include="System.FormattableString.cs" />
     <Compile Include="System.IO.DirectoryNotFoundException.cs" />
     <Compile Include="System.IO.FileNotFoundException.cs" />
     <Compile Include="System.IO.PathTooLongException.cs" />
