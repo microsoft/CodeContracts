@@ -2,13 +2,13 @@
 <package>
   <metadata>
     <id>DotNet.Contracts</id>
-    <version>1.10.10125.1</version>
+    <version>0.0.0.0</version>
     <authors>logozzo,mbarnett,maf,dannyvv,seteplia,sharwell</authors>
     <owners>logozzo,mbarnett,maf,dannyvv,seteplia</owners>
     <projectUrl>https://github.com/Microsoft/CodeContracts</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This project brings the advantages of design-by-contract programming to all .NET programming languages. Programming with contracts means writing extra pre-conditions, post-conditions, and object invariants in your code.</description>
-    <releaseNotes>https://github.com/Microsoft/CodeContracts/releases/v1.10.10125.1</releaseNotes>
+    <releaseNotes>https://github.com/Microsoft/CodeContracts/releases/v$version$</releaseNotes>
   </metadata>
   <files>
      <file src="**\*" />
