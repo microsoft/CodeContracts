@@ -433,7 +433,6 @@ namespace Microsoft.Research.CodeAnalysis
                 while (pending.Count > 0)
                 {
                     var next = pending.Pull();
-                    if (suspended.Contains(next)) { continue; }
                     var state = MutableVersion(joinState[next], next);
                     var alreadyCached = true;
                     APC current;
@@ -453,7 +452,7 @@ namespace Microsoft.Research.CodeAnalysis
                     {
                         current = next;
 
-                        if (IsBottom(current, state) || suspended.Contains(current))
+                        if (IsBottom(current, state))
                         {
                             goto nextPending;
                         }

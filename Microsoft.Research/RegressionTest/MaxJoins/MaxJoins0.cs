@@ -50,5 +50,28 @@ namespace JoinDepth
             }
             Contract.Assert(s1 != null);
         }
+
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 46, MethodILOffset = 0)]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 60, MethodILOffset = 0)]
+        private void Test2(int x, bool b)
+        {
+            string s = null;
+            string c = null;
+            if (x < 0)
+            {
+                s = "non-null";
+            }
+            else
+            {
+                s = null;
+                c = "non-null";
+            }
+            if (c != null)
+            {
+                Contract.Assert(b);
+            }
+            Contract.Assert(s != null);
+        }
     }
 }

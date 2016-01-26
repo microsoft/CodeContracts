@@ -83,7 +83,7 @@ namespace WideningDepth
         }
       }
       Contract.Assert(m <= s);  // spurious error (not reported without widening)
-      Contract.Assert(0 < s);  // genuine error
+      Contract.Assert(1 < s);  // genuine error
     }
 
     [ClousotRegressionTest]
