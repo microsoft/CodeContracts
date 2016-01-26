@@ -295,7 +295,7 @@ namespace Microsoft.Research.CodeAnalysis
             if (RequiresJoining(next))
             {
                 Pair<APC, APC> edge = new Pair<APC, APC>(current, next);
-                if (JoinStateAtBlock(edge, state, result, suspended) && !suspended.Contains(next))
+                if (JoinStateAtBlock(edge, state, result, suspended))
                 {
                     this.pending.Add(next);
                 }
@@ -357,21 +357,14 @@ namespace Microsoft.Research.CodeAnalysis
 
                 bool changed = Join(edge, state, existing, out joined, widen);
 
-                bool suspend = false;
-                if (widen)
-                {
-                    if (changed && Controller != null) { suspend = Controller.ReachedWidening(result, edge.Two, suspended); }
-                }
-                else
-                {
-                    if (changed && Controller != null) { suspend = Controller.ReachedJoin(result, edge.Two, suspended); }
-                }
+                bool suspend = (changed && Controller != null && (widen ? Controller.ReachedWidening(result, edge.Two, suspended) : Controller.ReachedJoin(result, edge.Two, suspended)));
                 
                 if (changed && !suspend)
                 {
                     joinState[edge.Two] = this.ImmutableVersion(joined, edge.Two);
+                    return true;
                 }
-                return changed;
+                return false;
             }
             else
             {
@@ -501,7 +494,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                     foreach (APC succ in this.Successors(current).AssumeNotNull())
                     {
-                        if (IsBottom(succ, state) || suspended.Contains(current) || suspended.Contains(succ)) continue;
+                        if (IsBottom(succ, state)) continue;
 
                         PushState(current, succ, state, result, suspended);
                     }
