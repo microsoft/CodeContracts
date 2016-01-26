@@ -1764,7 +1764,7 @@ namespace Microsoft.Research.CodeAnalysis
                 var s = FailingObligations(result);
                 errors = (s.Top + s.False).ToString();
                 unreached = s.Bottom.ToString();
-                obls = (s.Bottom + s.True).ToString();
+                obls = s.Total.ToString();
               }
               catch (Exception e)
               {
