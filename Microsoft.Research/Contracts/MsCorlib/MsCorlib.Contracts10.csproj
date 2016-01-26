@@ -324,6 +324,7 @@
     <Compile Include="..\AssemblyInfo.cs">
       <Link>Sources\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="System.ArgumentOutOfRangeException.cs" />
     <Compile Include="System.ArraySegment.cs" />
     <Compile Include="System.Collections.Concurrent.ConcurrentDictionary.cs" />
     <Compile Include="System.Collections.Generic.IReadOnlyCollection.cs" />
@@ -1244,6 +1245,9 @@ Include="System.Security.Principal.WindowsIdentity.cs" /> -->
     <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
+  <PropertyGroup>
+    <MultiTargetFrameworkAssembliesRoot>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework</MultiTargetFrameworkAssembliesRoot>
+  </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>

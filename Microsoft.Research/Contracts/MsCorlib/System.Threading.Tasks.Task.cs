@@ -307,7 +307,7 @@ namespace System.Threading.Tasks
     //
     // Returns:
     //     true if the task has completed; otherwise false.
-    public bool IsCompleted
+    public virtual bool IsCompleted
     {
       get
       {

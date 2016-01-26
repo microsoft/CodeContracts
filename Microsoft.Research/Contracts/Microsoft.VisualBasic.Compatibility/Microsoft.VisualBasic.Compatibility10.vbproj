@@ -168,6 +168,9 @@
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <PropertyGroup>
+    <MultiTargetFrameworkAssembliesRoot>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework</MultiTargetFrameworkAssembliesRoot>
+  </PropertyGroup>
+  <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
   </PropertyGroup>
   <Import Project="..\Multitarget.targets" />

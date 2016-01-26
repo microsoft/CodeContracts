@@ -135,8 +135,12 @@ namespace System.Net {
       }
     }
 
-    extern public bool HaveResponse {
-      get;
+#if NETFRAMEWORK_4_6
+    public virtual bool HaveResponse {
+#else
+    public bool HaveResponse {
+#endif
+      get { return default(bool); }
     }
 
     public bool UnsafeAuthenticatedConnectionSharing {

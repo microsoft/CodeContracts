@@ -78,7 +78,11 @@ namespace System.Linq.Expressions
       }
     }
 
+#if NETFRAMEWORK_4_6
+    public virtual Type DelegateType
+#else
     public Type DelegateType
+#endif
     {
       get
       {

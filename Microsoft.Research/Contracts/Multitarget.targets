@@ -500,10 +500,18 @@
        LibPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
        WritePDB="true"
        />
-
+	
+	<PropertyGroup>
+      <OriginalAssembly>$(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    </PropertyGroup>
+		 
+	<PropertyGroup Condition="!Exists($(OriginalAssembly)) AND '$(MultiTargetFrameworkAssembliesRoot)' != ''">
+      <OriginalAssembly>$(MultiTargetFrameworkAssembliesRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    </PropertyGroup>
+		
     <Exec
        Condition="'$(CodeContractsCheckReferenceAssembly)'=='true'"
-       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(AbsoluteContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+       Command='$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(AbsoluteContractReferenceAssemblyOutput) "$(OriginalAssembly)"' />
 
     <ItemGroup>
       <FileWrites
@@ -569,8 +577,16 @@
     <Message Text="crasantitizer on $(_ContractReferenceAssemblyOutput)"
              Importance="high"/>
 
+	<PropertyGroup>
+      <OriginalAssembly>$(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    </PropertyGroup>
+			 
+	<PropertyGroup Condition="!Exists($(OriginalAssembly)) AND '$(MultiTargetFrameworkAssembliesRoot)' != ''">
+      <OriginalAssembly>$(MultiTargetFrameworkAssembliesRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    </PropertyGroup>
+		
     <Exec
-       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(_ContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+       Command='$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(_ContractReferenceAssemblyOutput) "$(OriginalAssembly)"' />
   </Target>
 
   <Target

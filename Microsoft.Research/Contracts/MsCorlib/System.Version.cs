@@ -57,7 +57,7 @@ namespace System
               return default(int);
             }
         }
-
+#if !SILVERLIGHT
         [Pure]
         public short MajorRevision
         {
@@ -75,7 +75,7 @@ namespace System
               return default(short);
             }
         }
-
+#endif
         [Pure][Reads(ReadsAttribute.Reads.Nothing)]
         public static bool operator >= (Version v1, Version v2) {
 
@@ -119,7 +119,7 @@ namespace System
 
           return default(object);
         }
-#if SILVERLIGHT || NETFRAMEWORK_4_0
+#if SILVERLIGHT_4_0 || NETFRAMEWORK_4_0
         [Pure]
         public static Version Parse(string input) {
             Contract.Requires(input != null);
