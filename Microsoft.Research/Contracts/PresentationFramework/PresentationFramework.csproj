@@ -107,9 +107,6 @@
     <BuildTargetList Include="Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
-  <PropertyGroup>
-    <MultiTargetFrameworkAssembliesRoot>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework</MultiTargetFrameworkAssembliesRoot>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Sources\System.Windows.Application.cs" />
     <Compile Include="Sources\System.Windows.AttachedPropertyBrowsableForChildrenAttribute.cs" />
