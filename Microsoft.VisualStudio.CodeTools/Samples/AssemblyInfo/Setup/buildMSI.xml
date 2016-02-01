@@ -77,7 +77,7 @@
     <MsiDir>$(ReleaseConfig)\msi</MsiDir>       <!-- Used for final product -->
     <TmpDir>$(ReleaseConfig)\tmp</TmpDir>       <!-- Used for intermediate product -->
     <BinDir>bin\$(BuildConfig)</BinDir>         <!-- Relative. used in source dirs -->
-    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <License>Licenses\License.rtf</License>
     <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
   </PropertyGroup>
 

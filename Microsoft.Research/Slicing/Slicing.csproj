@@ -35,7 +35,7 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\common\Contracts.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Devlab9\</OutputPath>
     <Optimize>true</Optimize>
   </PropertyGroup>

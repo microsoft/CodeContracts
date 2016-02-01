@@ -50,7 +50,7 @@
   <PropertyGroup>
     <CodeToolsDir>..</CodeToolsDir>
     <SamplesDir>$(CodeToolsDir)\Samples</SamplesDir>
-    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <License>Licenses\License.rtf</License>
     <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
     <MsiDir>$(ReleaseConfig)</MsiDir>         <!-- Used for final product -->
     <TmpDir>$(ReleaseConfig)\Tmp</TmpDir>  

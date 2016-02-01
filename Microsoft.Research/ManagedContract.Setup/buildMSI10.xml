@@ -1,4 +1,4 @@
-<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!--==================================================================================
    Re-usable file to build a particular release config msi.
@@ -47,14 +47,14 @@
       $(Feature_CCCheck)
     ================================================-->
   <Choose>
-    <When Condition="'$(ReleaseConfig)'=='devlab9ts'">
+    <When Condition="'$(ReleaseConfig)'=='Release'">
       <PropertyGroup>
-        <BuildConfig>Devlab9</BuildConfig>
+        <BuildConfig>Release</BuildConfig>
         <Feature_Unsafe>false</Feature_Unsafe>
         <Feature_Pex>false</Feature_Pex>
         <Feature_Leaderboard>false</Feature_Leaderboard>
         <CheckCpx>false</CheckCpx>
-        <Flavor>(devlabs_TS)</Flavor>
+        <Flavor>(Release)</Flavor>
         <IncludePDBs>false</IncludePDBs>
         <Feature_CCCheck>true</Feature_CCCheck>
         <SignVSIX>true</SignVSIX>
@@ -123,7 +123,7 @@
 
     <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
 
-    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <License>Licenses\License.rtf</License>
   </PropertyGroup>
   <PropertyGroup>
     <CodeSignApprovers>logozzo;mbarnett</CodeSignApprovers>

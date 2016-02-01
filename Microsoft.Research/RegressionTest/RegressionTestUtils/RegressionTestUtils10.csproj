@@ -90,7 +90,7 @@
     <CodeContractsSQLServerOption>cloudotserver</CodeContractsSQLServerOption>
     <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Devlab9\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>

@@ -11,10 +11,10 @@ if errorlevel 1 goto Failed
 popd
 pushd Microsoft.Research\ManagedContract.Setup
 
-call buildmsi %1 devlab9ts
+call buildmsi %1 Release
 if errorlevel 1 goto Failed
 
-call buildnuget %1 devlab9ts 
+call buildnuget %1 Release
 if errorlevel 1 goto Failed
 
 popd

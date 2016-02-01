@@ -56,9 +56,9 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Devlab9'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Devlab9\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>CONTRACTS_FULL</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>AnyCPU</PlatformTarget>

@@ -79,7 +79,7 @@
   <PropertyGroup>
     <MsiDir>$(ReleaseConfig)</MsiDir>       <!-- Used for final product -->
     <BinDir>bin\$(BuildConfig)</BinDir>         <!-- Relative. used in source dirs -->
-    <License>Licenses\$(ReleaseConfig).rtf</License>
+    <License>Licenses\License.rtf</License>
     <AssemblyFileVersion>$(CCNetLabel)</AssemblyFileVersion>
     <CODETOOLS>..</CODETOOLS>
     <ExportDir>$(CODETOOLS)\..\Microsoft.Research\ImportedCodeTools</ExportDir>

@@ -74,8 +74,8 @@
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Devlab9|AnyCPU' ">
-    <OutputPath>..\..\Microsoft.Research\Contracts\bin\Devlab9\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Microsoft.Research\Contracts\bin\Release\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <Optimize>false</Optimize>
     <DebugType>pdbonly</DebugType>
