@@ -218,15 +218,15 @@
   <ItemGroup>
     <ProjectReference Include="..\CodeAnalysis\CodeAnalysis10.csproj">
       <Project>{91B4C2F9-5CD7-47CE-BDCA-1C1CF02D6605}</Project>
-      <Name>CodeAnalysis10</Name>
+      <Name>CodeAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\ControlFlow\ControlFlow10.csproj">
       <Project>{C8AF1B1D-3A71-40B7-9B40-5391B783D9D6}</Project>
-      <Name>ControlFlow10</Name>
+      <Name>ControlFlow</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataStructures\DataStructures10.csproj">
       <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
-      <Name>DataStructures10</Name>
+      <Name>DataStructures</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

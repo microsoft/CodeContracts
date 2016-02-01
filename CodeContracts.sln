@@ -25,8 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clousot", "Clousot", "{BFC5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D84ADA81-0B8B-412E-BFB0-F160A2252DC6}"
 	ProjectSection(SolutionItems) = preProject
-		Microsoft.Research\RegressionTest\CodeContracts10.testsettings = Microsoft.Research\RegressionTest\CodeContracts10.testsettings
-		CodeContracts10.vsmdi = CodeContracts10.vsmdi
+		Microsoft.Research\RegressionTest\CodeContracts.testsettings = Microsoft.Research\RegressionTest\CodeContracts.testsettings
+		CodeContracts.vsmdi = CodeContracts.vsmdi
 		FoxtrotTestRun.testrunconfig = FoxtrotTestRun.testrunconfig
 		Local.testsettings = Local.testsettings
 		Performance1.psess = Performance1.psess
@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caching", "Caching", "{BC2D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{8C9BFE1D-90BD-4F88-B58E-89FF1DA325B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Contracts10", "Foxtrot\Contracts\Microsoft.Contracts10.csproj", "{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Contracts", "Foxtrot\Contracts\Microsoft.Contracts.csproj", "{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2} = {9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2}
 	EndProjectSection
@@ -64,7 +64,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foxtrot.Extractor", "Foxtro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAnalysis", "Microsoft.Research\CodeAnalysis\CodeAnalysis.csproj", "{91B4C2F9-5CD7-47CE-BDCA-1C1CF02D6605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsCorlib.Contracts10", "Microsoft.Research\Contracts\MsCorlib\MsCorlib.Contracts10.csproj", "{D45E4F81-3252-4000-9818-F8D018895B5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsCorlib.Contracts", "Microsoft.Research\Contracts\MsCorlib\MsCorlib.Contracts.csproj", "{D45E4F81-3252-4000-9818-F8D018895B5B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2} = {9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2}
 	EndProjectSection
@@ -77,37 +77,37 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClousotMain", "Microsoft.Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analyzers", "Microsoft.Research\Analyzers\Analyzers.csproj", "{93B9248C-D3B5-4B05-9172-B9436E3C2A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTestUtils10", "Microsoft.Research\RegressionTest\RegressionTestUtils\RegressionTestUtils10.csproj", "{212F463D-72DC-4B11-91B5-5578AF35C880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTestUtils", "Microsoft.Research\RegressionTest\RegressionTestUtils\RegressionTestUtils.csproj", "{212F463D-72DC-4B11-91B5-5578AF35C880}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foxtrot", "Foxtrot\Driver\Foxtrot.csproj", "{24B45DC0-77D2-4CFC-AB64-8FB9FB93EEE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Contracts10", "Microsoft.Research\Contracts\System\System.Contracts10.csproj", "{2C10FDB2-966D-4A14-B18D-385FDFA1746A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Contracts", "Microsoft.Research\Contracts\System\System.Contracts.csproj", "{2C10FDB2-966D-4A14-B18D-385FDFA1746A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRASanitizer", "Microsoft.Research\Contracts\CRASanitizer\CRASanitizer.csproj", "{9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Configuration10", "Microsoft.Research\Contracts\System.Configuration\System.Configuration10.csproj", "{4695B865-1F0F-45DD-96CF-FDF999A813BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Configuration", "Microsoft.Research\Contracts\System.Configuration\System.Configuration.csproj", "{4695B865-1F0F-45DD-96CF-FDF999A813BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Core.Contracts10", "Microsoft.Research\Contracts\System.Core.Contracts\System.Core.Contracts10.csproj", "{04811420-E4EC-4E3D-A974-8A43FAF724C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Core.Contracts", "Microsoft.Research\Contracts\System.Core.Contracts\System.Core.Contracts.csproj", "{04811420-E4EC-4E3D-A974-8A43FAF724C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Data10", "Microsoft.Research\Contracts\System.Data\System.Data10.csproj", "{8A669480-0FD3-453A-823A-E82CFAE7558C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Data", "Microsoft.Research\Contracts\System.Data\System.Data.csproj", "{8A669480-0FD3-453A-823A-E82CFAE7558C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Drawing10", "Microsoft.Research\Contracts\System.Drawing\System.Drawing10.csproj", "{0E7A10F3-10E2-40CB-A47B-234615C4719B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Drawing", "Microsoft.Research\Contracts\System.Drawing\System.Drawing.csproj", "{0E7A10F3-10E2-40CB-A47B-234615C4719B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Security10", "Microsoft.Research\Contracts\System.Security\System.Security10.csproj", "{202E0819-A63F-4BE1-9314-13306C4C9C96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Security", "Microsoft.Research\Contracts\System.Security\System.Security.csproj", "{202E0819-A63F-4BE1-9314-13306C4C9C96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Web10", "Microsoft.Research\Contracts\System.Web\System.Web10.csproj", "{9FA6D0C7-6B7B-4090-818E-29DEA3C295AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Web", "Microsoft.Research\Contracts\System.Web\System.Web.csproj", "{9FA6D0C7-6B7B-4090-818E-29DEA3C295AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows10", "Microsoft.Research\Contracts\System.Windows\System.Windows10.csproj", "{560BAEE6-D01B-4714-92EF-798EEBCCF2DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows", "Microsoft.Research\Contracts\System.Windows\System.Windows.csproj", "{560BAEE6-D01B-4714-92EF-798EEBCCF2DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Browser10", "Microsoft.Research\Contracts\System.Windows.Browser\System.Windows.Browser10.csproj", "{A09A280B-E5CE-4F5B-8081-163944392804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Browser", "Microsoft.Research\Contracts\System.Windows.Browser\System.Windows.Browser.csproj", "{A09A280B-E5CE-4F5B-8081-163944392804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms10", "Microsoft.Research\Contracts\System.Windows.Forms\System.Windows.Forms10.csproj", "{C719D602-0573-4E5A-AAFB-6DFF2106EEE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms", "Microsoft.Research\Contracts\System.Windows.Forms\System.Windows.Forms.csproj", "{C719D602-0573-4E5A-AAFB-6DFF2106EEE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xml10", "Microsoft.Research\Contracts\System.Xml\System.Xml10.csproj", "{87CFEEDB-BF05-455C-A14D-51DCB3FE9C65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xml", "Microsoft.Research\Contracts\System.Xml\System.Xml.csproj", "{87CFEEDB-BF05-455C-A14D-51DCB3FE9C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xml.Linq10", "Microsoft.Research\Contracts\System.Xml.Linq\System.Xml.Linq10.csproj", "{EF8C241A-7A60-4AA4-9E4B-2752472A96EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xml.Linq", "Microsoft.Research\Contracts\System.Xml.Linq\System.Xml.Linq.csproj", "{EF8C241A-7A60-4AA4-9E4B-2752472A96EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsBase10", "Microsoft.Research\Contracts\WindowsBase\WindowsBase10.csproj", "{650CD908-450D-4B70-9A68-590C7A2AC32B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsBase", "Microsoft.Research\Contracts\WindowsBase\WindowsBase.csproj", "{650CD908-450D-4B70-9A68-590C7A2AC32B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCI2.CodeProvider", "Microsoft.Research\CodeProviders\CCI2\CCI2.CodeProvider.csproj", "{A95E0F22-0B11-4A4B-A938-D060CB91DAC8}"
 EndProject
@@ -115,7 +115,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCRefGenAttributes", "Micro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedContractsVSPropertyPane", "Microsoft.Research\ManagedContractsVSPropertyPane\ManagedContractsVSPropertyPane.csproj", "{2944AB9F-A2A6-4F31-8476-88C4EB5229A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsBuildCodeContracts10", "Microsoft.Research\MsBuildCodeContracts\MsBuildCodeContracts10.csproj", "{160F3F9C-1A20-44F2-832C-DBAA269BD0C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsBuildCodeContracts", "Microsoft.Research\MsBuildCodeContracts\MsBuildCodeContracts.csproj", "{160F3F9C-1A20-44F2-832C-DBAA269BD0C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyWithContracts", "Foxtrot\Tests\AssemblyWithContracts\AssemblyWithContracts.csproj", "{8602713E-68E4-4A8F-BB6C-9AEA279E494F}"
 EndProject
@@ -143,7 +143,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClousotTests", "Microsoft.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClousotTestHarness", "Microsoft.Research\RegressionTest\ClousotTestHarness\ClousotTestHarness.csproj", "{EB03C49B-60FF-4BBF-9FCB-25679A2B2673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriterMethods10", "Foxtrot\Tests\RewriterMethods\RewriterMethods10.csproj", "{0332D4D9-7C63-4241-BAF1-3965BD009F38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriterMethods", "Foxtrot\Tests\RewriterMethods\RewriterMethods.csproj", "{0332D4D9-7C63-4241-BAF1-3965BD009F38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Foxtrot\Tests\UnitTests\UnitTests.csproj", "{29FD2FE2-CC61-4399-812D-B40A5D5795DF}"
 EndProject
@@ -151,7 +151,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubtypeWithoutContracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeUnderTest", "Foxtrot\Tests\CodeUnderTest\CodeUnderTest\CodeUnderTest.csproj", "{FFECE98B-42B2-47D8-9349-BEB4647FC0FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoxtrotTests10", "Foxtrot\Tests\FoxtrotTests10.csproj", "{F16856FE-6E04-4C9D-8604-190BFE5EEC76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoxtrotTests", "Foxtrot\Tests\FoxtrotTests.csproj", "{F16856FE-6E04-4C9D-8604-190BFE5EEC76}"
 	ProjectSection(ProjectDependencies) = postProject
 		{24B45DC0-77D2-4CFC-AB64-8FB9FB93EEE1} = {24B45DC0-77D2-4CFC-AB64-8FB9FB93EEE1}
 	EndProjectSection
@@ -160,13 +160,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseClassWithContracts", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutOfBand", "Foxtrot\Tests\CodeUnderTest\OutOfBand\OutOfBand.csproj", "{A9346FC0-4978-47A4-9D4E-35ADB9C48139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Configuration.Install10", "Microsoft.Research\Contracts\System.Configuration.Install\System.Configuration.Install10.csproj", "{EB432A52-712F-478D-9A5B-81FF99DE6CBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Configuration.Install", "Microsoft.Research\Contracts\System.Configuration.Install\System.Configuration.Install.csproj", "{EB432A52-712F-478D-9A5B-81FF99DE6CBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacyCodeUnderTest", "Foxtrot\Tests\CodeUnderTest\LegacyCodeUnderTest\LegacyCodeUnderTest.csproj", "{94C33E74-5F2B-48F1-A308-1AE805D58FAF}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Compatibility10", "Microsoft.Research\Contracts\Microsoft.VisualBasic.Compatibility\Microsoft.VisualBasic.Compatibility10.vbproj", "{1A4FF4FF-5CF0-4DF0-8581-80A4DDBBCB5A}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Compatibility", "Microsoft.Research\Contracts\Microsoft.VisualBasic.Compatibility\Microsoft.VisualBasic.Compatibility.vbproj", "{1A4FF4FF-5CF0-4DF0-8581-80A4DDBBCB5A}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic10", "Microsoft.Research\Contracts\Microsoft.VisualBasic.Contracts\Microsoft.VisualBasic10.vbproj", "{83E81339-DFB4-46A7-B0BF-21098B862AEF}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic", "Microsoft.Research\Contracts\Microsoft.VisualBasic.Contracts\Microsoft.VisualBasic.vbproj", "{83E81339-DFB4-46A7-B0BF-21098B862AEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClousotCacheTests", "Microsoft.Research\RegressionTest\ClousotCacheTests\ClousotCacheTests.csproj", "{5FB08425-08B0-4E08-A807-4795A613951B}"
 EndProject
@@ -259,7 +259,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slicing", "Microsoft.Resear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clousot.Cache", "Microsoft.Research\Clousot.Cache\Clousot.Cache.csproj", "{B3C2E776-3A69-4F9A-9434-C8BEE3CD6A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualBasicTestDriver10", "Microsoft.Research\RegressionTest\VisualBasicTestDriver\VisualBasicTestDriver10.csproj", "{298B21EA-3A82-42D0-976E-8FCF6F9E65F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualBasicTestDriver", "Microsoft.Research\RegressionTest\VisualBasicTestDriver\VisualBasicTestDriver.csproj", "{298B21EA-3A82-42D0-976E-8FCF6F9E65F6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DDCFABF7-69E9-4B33-9F0E-A5661F960111} = {DDCFABF7-69E9-4B33-9F0E-A5661F960111}
 	EndProjectSection
@@ -294,7 +294,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractAdornments.Interfac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.CodeTools.IPropertyPane", "Microsoft.VisualStudio.CodeTools\IPropertyPane\Microsoft.VisualStudio.CodeTools.IPropertyPane.csproj", "{85F039C4-3CCA-487D-8538-748DC38F03C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCDoc10", "Microsoft.Research\CCDoc\CCDoc10.csproj", "{DCDA8451-4A1F-4122-A3A5-25B46BF92034}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCDoc", "Microsoft.Research\CCDoc\CCDoc.csproj", "{DCDA8451-4A1F-4122-A3A5-25B46BF92034}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -692,6 +692,6 @@ Global
 		{DCDA8451-4A1F-4122-A3A5-25B46BF92034} = {7CD8B829-346E-4FA0-ADDD-87152DDC5DDE}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = CodeContracts10.vsmdi
+		CategoryFile = CodeContracts.vsmdi
 	EndGlobalSection
 EndGlobal

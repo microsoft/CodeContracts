@@ -81,9 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Microsoft.Contracts10.csproj">
+    <ProjectReference Include="..\..\Contracts\Microsoft.Contracts.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

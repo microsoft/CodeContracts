@@ -110,9 +110,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts10.csproj">
+    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
       <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>

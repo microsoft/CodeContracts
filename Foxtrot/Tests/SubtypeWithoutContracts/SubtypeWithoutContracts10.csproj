@@ -64,11 +64,11 @@
   <ItemGroup>
     <ProjectReference Include="..\BaseClassWithContracts\BaseClassWithContracts10.csproj">
       <Project>{1571BBAE-7BC2-4C6D-A9E8-C67521AD4A9C}</Project>
-      <Name>BaseClassWithContracts10</Name>
+      <Name>BaseClassWithContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\RewriterMethods\RewriterMethods10.csproj">
       <Project>{0332D4D9-7C63-4241-BAF1-3965BD009F38}</Project>
-      <Name>RewriterMethods10</Name>
+      <Name>RewriterMethods</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

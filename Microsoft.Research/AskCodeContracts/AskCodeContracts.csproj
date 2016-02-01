@@ -207,7 +207,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AbstractInterpretation\Abstract Domains\Abstract Domains10.csproj">
       <Project>{510f44fc-18d0-484f-b2f7-f6a565354a8c}</Project>
-      <Name>Abstract Domains10</Name>
+      <Name>Abstract Domains</Name>
     </ProjectReference>
     <ProjectReference Include="..\AnalysisTypes\AnalysisTypes.csproj">
       <Project>{ea595150-c741-411a-940e-4a9d5fdae4fa}</Project>
@@ -215,7 +215,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Analyzers\Analyzers10.csproj">
       <Project>{93b9248c-d3b5-4b05-9172-b9436e3c2a54}</Project>
-      <Name>Analyzers10</Name>
+      <Name>Analyzers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Clousot.Cache\Clousot.Cache.csproj">
       <Project>{b3c2e776-3a69-4f9a-9434-c8bee3cd6a40}</Project>
@@ -223,27 +223,27 @@
     </ProjectReference>
     <ProjectReference Include="..\ClousotMain\ClousotMain10.csproj">
       <Project>{15d63d49-0aad-4eff-b6ff-8e9b9d3a7b0d}</Project>
-      <Name>ClousotMain10</Name>
+      <Name>ClousotMain</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeAnalysis\CodeAnalysis10.csproj">
       <Project>{91b4c2f9-5cd7-47ce-bdca-1c1cf02d6605}</Project>
-      <Name>CodeAnalysis10</Name>
+      <Name>CodeAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeProviders\CCI2\CCI2.CodeProvider10.csproj">
       <Project>{a95e0f22-0b11-4a4b-a938-d060cb91dac8}</Project>
-      <Name>CCI2.CodeProvider10</Name>
+      <Name>CCI2.CodeProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\ControlFlow\ControlFlow10.csproj">
       <Project>{c8af1b1d-3a71-40b7-9b40-5391b783d9d6}</Project>
-      <Name>ControlFlow10</Name>
+      <Name>ControlFlow</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataStructures\DataStructures10.csproj">
       <Project>{35d2ef6d-ddb0-481b-a21d-9bd2634f503a}</Project>
-      <Name>DataStructures10</Name>
+      <Name>DataStructures</Name>
     </ProjectReference>
     <ProjectReference Include="..\Graphs\Graphs10.csproj">
       <Project>{ac80fd0f-6033-4000-b589-0c36c4e36db6}</Project>
-      <Name>Graphs10</Name>
+      <Name>Graphs</Name>
     </ProjectReference>
     <ProjectReference Include="..\Roslyn\RoslynToCCICodeModel\RoslynToCCICodeModel.csproj">
       <Project>{43ce13db-3ff7-436e-95fa-3f5bd84045ee}</Project>

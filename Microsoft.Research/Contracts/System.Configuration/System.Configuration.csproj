@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{87CFEEDB-BF05-455C-A14D-51DCB3FE9C65}</ProjectGuid>
+    <ProjectGuid>{4695B865-1F0F-45DD-96CF-FDF999A813BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Xml</RootNamespace>
-    <AssemblyName>System.Xml</AssemblyName>
+    <RootNamespace>System.Configuration</RootNamespace>
+    <AssemblyName>System.Configuration</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -40,8 +41,8 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
-    <NoWarn>1591</NoWarn>
-    <DocumentationFile>bin\Debug\System.Xml.XML</DocumentationFile>
+    <NoWarn>0824 0626 1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.Configuration.XML</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -78,85 +79,58 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
+    <DebugSymbols>true</DebugSymbols>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>1591</NoWarn>
-    <DocumentationFile>
-    </DocumentationFile>
+    <NoWarn>0824 0626 1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="System.Xml.IXmlNamespaceResolver.cs" />
-    <Compile Include="System.Xml.Schema.XmlSchema.cs" />
-    <Compile Include="System.Xml.Schema.IXmlSchemaInfo.cs" />
-    <Compile Include="System.Xml.Schema.XmlSchemaComplexType.cs" />
-    <Compile Include="System.Xml.Schema.XmlSchemaGroupBase.cs" />
-    <Compile Include="System.Xml.Schema.XmlSchemaObjectCollection.cs" />
-    <Compile Include="System.Xml.Serialization.IXmlSerializable.cs" />
-    <Compile Include="System.Xml.XmlAttribute.cs" />
-    <Compile Include="System.Xml.XmlCDataSection.cs" />
-    <Compile Include="System.Xml.XmlCharacterData.cs" />
-    <Compile Include="System.Xml.XmlComment.cs" />
-    <Compile Include="System.Xml.XmlConvert.cs" />
-    <Compile Include="System.Xml.XmlDeclaration.cs" />
-    <Compile Include="System.Xml.XmlDocument.cs" />
+    <Compile Include="ConfigurationElementProperty.cs" />
+    <Compile Include="ConfigurationLockCollection.cs" />
+    <Compile Include="ConfigurationProperty.cs" />
+    <Compile Include="ConfigurationValidatorBase.cs" />
+    <Compile Include="ContextInformation.cs" />
+    <Compile Include="PropertyInformation.cs" />
+    <Compile Include="PropertyInformationCollection.cs" />
+    <Compile Include="ElementInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System.Xml.XmlDocumentFragment.cs" />
-    <Compile Include="System.Xml.XmlDocumentType.cs" />
-    <Compile Include="System.Xml.XmlElement.cs" />
-    <Compile Include="System.Xml.XmlEntityReference.cs" />
-    <Compile Include="System.Xml.XmlNamedNodeMap.cs" />
-    <Compile Include="System.Xml.XmlNamespaceManager.cs" />
-    <Compile Include="System.Xml.XmlNamespacescope.cs" />
-    <Compile Include="System.Xml.XmlNameTable.cs" />
-    <Compile Include="System.Xml.XmlNode.cs" />
-    <Compile Include="System.Xml.XmlNodeList.cs" />
-    <Compile Include="System.Xml.XmlNodeType.cs" />
-    <Compile Include="System.Xml.XmlParserContext.cs" />
-    <Compile Include="System.Xml.XmlProcessingInstruction.cs" />
-    <Compile Include="System.Xml.XmlReader.cs" />
-    <Compile Include="System.Xml.XmlReaderSettings.cs" />
-    <Compile Include="System.Xml.XmlResolver.cs" />
-    <Compile Include="System.Xml.XmlSchemaObjectTable.cs" />
-    <Compile Include="System.Xml.XmlSchemaSet.cs" />
-    <Compile Include="System.Xml.XmlSignificantWhiteSpace.cs" />
-    <Compile Include="System.Xml.XmlText.cs" />
-    <Compile Include="System.Xml.XmlWhiteSpace.cs" />
-    <Compile Include="System.Xml.XmlWriter.cs" />
-    <Compile Include="System.Xml.XmlWriterSettings.cs" />
-    <Compile Include="System.Xml.XPath.XmlCaseOrder.cs" />
-    <Compile Include="System.Xml.XPath.XmlDataType.cs" />
-    <Compile Include="System.Xml.XPath.XmlSortOrder.cs" />
-    <Compile Include="System.Xml.XPath.XPathExpression.cs" />
-    <Compile Include="System.Xml.XPath.XPathNavigator.cs" />
-    <Compile Include="System.Xml.XPath.XPathNodeIterator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts10.csproj">
-      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
-      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
-      <Name>PreContractsBuildDummy</Name>
-    </ProjectReference>
+    <Compile Include="ProtectedConfigurationProvider.cs" />
+    <Compile Include="SectionInformation.cs" />
+    <Compile Include="System.Configuration.AppSettingsSection.cs" />
+    <Compile Include="System.Configuration.Configuration.cs" />
+    <Compile Include="System.Configuration.ConfigurationElement.cs" />
+    <Compile Include="System.Configuration.ConfigurationElementCollection.cs" />
+    <Compile Include="System.Configuration.ConfigurationFileMap.cs" />
+    <Compile Include="System.Configuration.ConfigurationLocation.cs" />
+    <Compile Include="System.Configuration.ConfigurationLocationCollection.cs" />
+    <Compile Include="System.Configuration.ConfigurationManager.cs" />
+    <Compile Include="System.Configuration.ConfigurationPropertyCollection.cs" />
+    <Compile Include="System.Configuration.ConfigurationSection.cs" />
+    <Compile Include="System.Configuration.ConfigurationSectionCollection.cs" />
+    <Compile Include="System.Configuration.ConfigurationSectionGroup.cs" />
+    <Compile Include="System.Configuration.ConfigurationSectionGroupCollection.cs" />
+    <Compile Include="System.Configuration.ConnectionStringSettings.cs" />
+    <Compile Include="System.Configuration.ConnectionStringSettingsCollection.cs" />
+    <Compile Include="System.Configuration.ConnectionStringsSection.cs" />
+    <Compile Include="System.Configuration.cs" />
+    <Compile Include="System.Configuration.ExeConfigurationFileMap.cs" />
+    <Compile Include="System.Configuration.KeyValueConfigurationCollection.cs" />
+    <Compile Include="System.Configuration.KeyValueConfigurationElement.cs" />
+    <Compile Include="System.Configuration.Provider.ProviderBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
     <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +155,16 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts.csproj">
+      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
+      <Name>Microsoft.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>
   </PropertyGroup>
@@ -192,4 +176,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+  </PropertyGroup>
 </Project>

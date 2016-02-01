@@ -79,7 +79,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\System.Compiler\System.Compiler9.csproj">
       <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
-      <Name>System.Compiler9</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\Contracts\Microsoft.Contracts.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>

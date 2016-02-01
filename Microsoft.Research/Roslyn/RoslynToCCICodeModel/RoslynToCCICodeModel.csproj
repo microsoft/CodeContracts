@@ -191,31 +191,31 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AbstractInterpretation\Abstract Domains\Abstract Domains10.csproj">
       <Project>{510F44FC-18D0-484F-B2F7-F6A565354A8C}</Project>
-      <Name>Abstract Domains10</Name>
+      <Name>Abstract Domains</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Analyzers\Analyzers10.csproj">
       <Project>{93B9248C-D3B5-4B05-9172-B9436E3C2A54}</Project>
-      <Name>Analyzers10</Name>
+      <Name>Analyzers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ClousotMain\ClousotMain10.csproj">
       <Project>{15D63D49-0AAD-4EFF-B6FF-8E9B9D3A7B0D}</Project>
-      <Name>ClousotMain10</Name>
+      <Name>ClousotMain</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CodeAnalysis\CodeAnalysis10.csproj">
       <Project>{91B4C2F9-5CD7-47CE-BDCA-1C1CF02D6605}</Project>
-      <Name>CodeAnalysis10</Name>
+      <Name>CodeAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ControlFlow\ControlFlow10.csproj">
       <Project>{C8AF1B1D-3A71-40B7-9B40-5391B783D9D6}</Project>
-      <Name>ControlFlow10</Name>
+      <Name>ControlFlow</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DataStructures\DataStructures10.csproj">
       <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
-      <Name>DataStructures10</Name>
+      <Name>DataStructures</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Graphs\Graphs10.csproj">
       <Project>{AC80FD0F-6033-4000-B589-0C36C4E36DB6}</Project>
-      <Name>Graphs10</Name>
+      <Name>Graphs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

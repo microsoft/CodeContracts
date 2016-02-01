@@ -236,7 +236,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\DataStructures\DataStructures10.csproj">
       <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
-      <Name>DataStructures10</Name>
+      <Name>DataStructures</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

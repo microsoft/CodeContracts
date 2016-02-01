@@ -67,9 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Microsoft.VisualBasic.Contracts\Microsoft.VisualBasic10.vbproj">
+    <ProjectReference Include="..\..\Contracts\Microsoft.VisualBasic.Contracts\Microsoft.VisualBasic.vbproj">
       <Project>{83e81339-dfb4-46a7-b0bf-21098b862aef}</Project>
-      <Name>Microsoft.VisualBasic10</Name>
+      <Name>Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

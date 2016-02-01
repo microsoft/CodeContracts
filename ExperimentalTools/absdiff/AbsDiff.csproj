@@ -94,7 +94,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Clousot\Clousot10.csproj">
       <Project>{EF464FE4-C110-41A8-8FE3-CF7C5355D854}</Project>
-      <Name>Clousot10</Name>
+      <Name>Clousot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{202E0819-A63F-4BE1-9314-13306C4C9C96}</ProjectGuid>
+    <ProjectGuid>{A09A280B-E5CE-4F5B-8081-163944392804}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Security</RootNamespace>
-    <AssemblyName>System.Security</AssemblyName>
+    <RootNamespace>System.Windows.Browser</RootNamespace>
+    <AssemblyName>System.Windows.Browser</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
@@ -35,13 +35,13 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
-    <NoWarn>1591</NoWarn>
-    <DocumentationFile>bin\Debug\System.Security.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\System.Windows.Browser.XML</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -80,30 +80,51 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;CONTRACTS_FULL</DefineConstants>
-    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
+    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
+    <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows">
+      <HintPath>..\..\Imported\ReferenceAssemblies\Silverlight\v3.0\System.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="System.Security.Cryptography.DataProtectionScope.cs" />
-    <Compile Include="System.Security.Cryptography.ProtectedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.Windows.Browser.BrowserInformation.cs" />
+    <Compile Include="System.Windows.Browser.HtmlDocument.cs" />
+    <Compile Include="System.Windows.Browser.HtmlElement.cs" />
+    <Compile Include="System.Windows.Browser.HtmlPage.cs" />
+    <Compile Include="System.Windows.Browser.HtmlPopupWindowOptions.cs" />
+    <Compile Include="System.Windows.Browser.HtmlWindow.cs" />
+    <Compile Include="System.Windows.Browser.ScriptObject.cs" />
+    <Compile Include="System.Windows.Browser.ScriptObjectCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts.csproj">
+      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
+      <Name>Microsoft.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -126,16 +147,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts10.csproj">
-      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
-      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
-      <Name>PreContractsBuildDummy</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>

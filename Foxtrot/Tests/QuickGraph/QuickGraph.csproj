@@ -72,7 +72,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\Microsoft.Contracts9.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts9</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

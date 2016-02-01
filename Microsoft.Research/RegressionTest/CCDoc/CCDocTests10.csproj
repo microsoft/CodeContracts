@@ -180,7 +180,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CCDoc\CCDoc10.csproj">
       <Project>{DCDA8451-4A1F-4122-A3A5-25B46BF92034}</Project>
-      <Name>CCDoc10</Name>
+      <Name>CCDoc</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

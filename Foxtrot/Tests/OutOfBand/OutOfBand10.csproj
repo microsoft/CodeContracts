@@ -95,15 +95,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\Microsoft.Contracts10.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\OutOfBand.Contracts\OutOfBand.Contracts10.csproj">
       <Project>{7B3C8F83-4FEC-4299-AF67-BF0B3DBDF179}</Project>
-      <Name>OutOfBand.Contracts10</Name>
+      <Name>OutOfBand.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\RewriterMethods\RewriterMethods10.csproj">
       <Project>{0332D4D9-7C63-4241-BAF1-3965BD009F38}</Project>
-      <Name>RewriterMethods10</Name>
+      <Name>RewriterMethods</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

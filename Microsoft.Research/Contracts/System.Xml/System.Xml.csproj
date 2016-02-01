@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{04811420-E4EC-4E3D-A974-8A43FAF724C8}</ProjectGuid>
+    <ProjectGuid>{87CFEEDB-BF05-455C-A14D-51DCB3FE9C65}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Linq</RootNamespace>
-    <AssemblyName>System.Core</AssemblyName>
+    <RootNamespace>System.Xml</RootNamespace>
+    <AssemblyName>System.Xml</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
@@ -28,7 +28,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NoStdLib>true</NoStdLib>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,10 +38,10 @@
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
-    <DocumentationFile>bin\Debug\System.Core.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\System.Xml.XML</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -88,82 +87,72 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System.Dynamic.BinaryOperationBinder.cs" />
-    <Compile Include="System.Dynamic.BindingRestrictions.cs" />
-    <Compile Include="System.Dynamic.DynamicMetaObject.cs" />
-    <Compile Include="System.Dynamic.DynamicMetaObjectBinder.cs" />
-    <Compile Include="System.Dynamic.DynamicObject.cs" />
-    <Compile Include="System.Dynamic.IDynamicMetaObjectProvider.cs" />
-    <Compile Include="System.Func.cs" />
-    <Compile Include="System.Linq.cs" />
-    <Compile Include="System.Linq.Enumerable.cs" />
-    <Compile Include="System.Linq.Expressions.BinaryExpression.cs" />
-    <Compile Include="System.Linq.Expressions.BlockExpression.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="System.Linq.Expressions.CatchBlock.cs" />
-    <Compile Include="System.Linq.Expressions.ConditionalExpression.cs" />
-    <Compile Include="System.Linq.Expressions.ConstantExpression.cs" />
-    <Compile Include="System.Linq.Expressions.DebugInfoExpression.cs" />
-    <Compile Include="System.Linq.Expressions.DefaultExpression.cs" />
-    <Compile Include="System.Linq.Expressions.DynamicExpression.cs" />
-    <Compile Include="System.Linq.Expressions.ElementInit.cs" />
-    <Compile Include="System.Linq.Expressions.Expression.cs" />
-    <Compile Include="System.Linq.Expressions.ExpressionVisitor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="System.Linq.Expressions.GotoExpression.cs" />
-    <Compile Include="System.Linq.Expressions.IndexExpression.cs" />
-    <Compile Include="System.Linq.Expressions.InvocationExpression.cs" />
-    <Compile Include="System.Linq.Expressions.LabelExpression.cs" />
-    <Compile Include="System.Linq.Expressions.LabelTarget.cs" />
-    <Compile Include="System.Linq.Expressions.LambdaExpression.cs" />
-    <Compile Include="System.Linq.Expressions.ListInitExpression.cs" />
-    <Compile Include="System.Linq.Expressions.LoopExpression.cs" />
-    <Compile Include="System.Linq.Expressions.MemberAssignment.cs" />
-    <Compile Include="System.Linq.Expressions.MemberBinding.cs" />
-    <Compile Include="System.Linq.Expressions.MemberExpression.cs" />
-    <Compile Include="System.Linq.Expressions.MemberInitExpression.cs" />
-    <Compile Include="System.Linq.Expressions.MemberListBinding.cs" />
-    <Compile Include="System.Linq.Expressions.MemberMemberBinding.cs" />
-    <Compile Include="System.Linq.Expressions.MethodCallExpression.cs" />
-    <Compile Include="System.Linq.Expressions.NewArrayExpression.cs" />
-    <Compile Include="System.Linq.Expressions.NewExpression.cs" />
-    <Compile Include="System.Linq.Expressions.ParameterExpression.cs" />
-    <Compile Include="System.Linq.Expressions.RuntimeVariablesExpression.cs" />
-    <Compile Include="System.Linq.Expressions.SwitchCase.cs" />
-    <Compile Include="System.Linq.Expressions.SwitchExpression.cs" />
-    <Compile Include="System.Linq.Expressions.SymbolDocumentInfo.cs" />
-    <Compile Include="System.Linq.Expressions.TryExpression.cs" />
-    <Compile Include="System.Linq.Expressions.TypeBinaryExpression.cs" />
-    <Compile Include="System.Linq.Expressions.UnaryExpression.cs" />
-    <Compile Include="System.Linq.IGrouping.cs" />
-    <Compile Include="System.Linq.ILookup.cs" />
-    <Compile Include="System.Linq.IOrderedEnumerable.cs" />
-    <Compile Include="System.Linq.IOrderedQueryable.cs" />
-    <Compile Include="System.Linq.IQueryable.cs" />
-    <Compile Include="System.Linq.IQueryProvider.cs" />
-    <Compile Include="System.Linq.OrderedParallelQuery_1.cs" />
-    <Compile Include="System.Linq.ParallelEnumerable.cs" />
-    <Compile Include="System.Linq.ParallelQuery.cs" />
-    <Compile Include="System.Linq.ParallelQuery_1.cs" />
-    <Compile Include="System.Linq.Queryable.cs" />
-    <Compile Include="System.Runtime.CompilerServices.DebugInfoGenerator.cs" />
-    <Compile Include="System.Runtime.CompilerServices.CallSite.cs" />
-    <Compile Include="System.Runtime.CompilerServices.CallSiteBinder.cs" />
-    <Compile Include="System.Runtime.CompilerServices.CallSite_1.cs" />
-    <Compile Include="System.Runtime.CompilerServices.ExtensionAttribute.cs" />
-    <Compile Include="System.Threading.cs" />
-    <Compile Include="System.Threading.Tasks.TaskExtensions.cs" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
+    <Compile Include="System.Xml.IXmlNamespaceResolver.cs" />
+    <Compile Include="System.Xml.Schema.XmlSchema.cs" />
+    <Compile Include="System.Xml.Schema.IXmlSchemaInfo.cs" />
+    <Compile Include="System.Xml.Schema.XmlSchemaComplexType.cs" />
+    <Compile Include="System.Xml.Schema.XmlSchemaGroupBase.cs" />
+    <Compile Include="System.Xml.Schema.XmlSchemaObjectCollection.cs" />
+    <Compile Include="System.Xml.Serialization.IXmlSerializable.cs" />
+    <Compile Include="System.Xml.XmlAttribute.cs" />
+    <Compile Include="System.Xml.XmlCDataSection.cs" />
+    <Compile Include="System.Xml.XmlCharacterData.cs" />
+    <Compile Include="System.Xml.XmlComment.cs" />
+    <Compile Include="System.Xml.XmlConvert.cs" />
+    <Compile Include="System.Xml.XmlDeclaration.cs" />
+    <Compile Include="System.Xml.XmlDocument.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.Xml.XmlDocumentFragment.cs" />
+    <Compile Include="System.Xml.XmlDocumentType.cs" />
+    <Compile Include="System.Xml.XmlElement.cs" />
+    <Compile Include="System.Xml.XmlEntityReference.cs" />
+    <Compile Include="System.Xml.XmlNamedNodeMap.cs" />
+    <Compile Include="System.Xml.XmlNamespaceManager.cs" />
+    <Compile Include="System.Xml.XmlNamespacescope.cs" />
+    <Compile Include="System.Xml.XmlNameTable.cs" />
+    <Compile Include="System.Xml.XmlNode.cs" />
+    <Compile Include="System.Xml.XmlNodeList.cs" />
+    <Compile Include="System.Xml.XmlNodeType.cs" />
+    <Compile Include="System.Xml.XmlParserContext.cs" />
+    <Compile Include="System.Xml.XmlProcessingInstruction.cs" />
+    <Compile Include="System.Xml.XmlReader.cs" />
+    <Compile Include="System.Xml.XmlReaderSettings.cs" />
+    <Compile Include="System.Xml.XmlResolver.cs" />
+    <Compile Include="System.Xml.XmlSchemaObjectTable.cs" />
+    <Compile Include="System.Xml.XmlSchemaSet.cs" />
+    <Compile Include="System.Xml.XmlSignificantWhiteSpace.cs" />
+    <Compile Include="System.Xml.XmlText.cs" />
+    <Compile Include="System.Xml.XmlWhiteSpace.cs" />
+    <Compile Include="System.Xml.XmlWriter.cs" />
+    <Compile Include="System.Xml.XmlWriterSettings.cs" />
+    <Compile Include="System.Xml.XPath.XmlCaseOrder.cs" />
+    <Compile Include="System.Xml.XPath.XmlDataType.cs" />
+    <Compile Include="System.Xml.XPath.XmlSortOrder.cs" />
+    <Compile Include="System.Xml.XPath.XPathExpression.cs" />
+    <Compile Include="System.Xml.XPath.XPathNavigator.cs" />
+    <Compile Include="System.Xml.XPath.XPathNodeIterator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts.csproj">
+      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
+      <Name>Microsoft.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
+      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
+      <Name>PreContractsBuildDummy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -191,16 +180,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts10.csproj">
-      <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
-      <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
-      <Name>PreContractsBuildDummy</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>

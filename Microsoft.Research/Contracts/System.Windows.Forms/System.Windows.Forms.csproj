@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A09A280B-E5CE-4F5B-8081-163944392804}</ProjectGuid>
+    <ProjectGuid>{C719D602-0573-4E5A-AAFB-6DFF2106EEE6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Windows.Browser</RootNamespace>
-    <AssemblyName>System.Windows.Browser</AssemblyName>
+    <RootNamespace>System.Windows.Forms</RootNamespace>
+    <AssemblyName>System.Windows.Forms</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
@@ -35,13 +35,13 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;CONTRACTS_FULL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsCheckReferenceAssembly>true</CodeContractsCheckReferenceAssembly>
-    <DocumentationFile>bin\Debug\System.Windows.Browser.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\System.Windows.Forms.XML</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -80,14 +80,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <NoWarn>0660 0661 0626 824 649 1591</NoWarn>
-    <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
@@ -95,26 +95,78 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Windows">
-      <HintPath>..\..\Imported\ReferenceAssemblies\Silverlight\v3.0\System.Windows.dll</HintPath>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="System.Windows.Forms.Application.cs" />
+    <Compile Include="System.Windows.Forms.ContainterControl.cs" />
+    <Compile Include="System.Windows.Forms.ComboBox.cs" />
+    <Compile Include="System.Windows.Forms.Control.cs">
+    </Compile>
+    <Compile Include="System.Windows.Forms.ControlEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.DomainUpDown.cs" />
+    <Compile Include="System.Windows.Forms.DragEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.DrawTreeNodeEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.Form.cs" />
+    <Compile Include="System.Windows.Forms.FormCollection.cs" />
+    <Compile Include="System.Windows.Forms.GiveFeedbackEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.HelpEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.ImageList.cs" />
+    <Compile Include="System.Windows.Forms.InvalidateEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.ItemDragEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.IWin32Window.cs" />
+    <Compile Include="System.Windows.Forms.KeyEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.KeyPressEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.Keys.cs" />
+    <Compile Include="System.Windows.Forms.Layout.ArrangedElementCollection.cs" />
+    <Compile Include="System.Windows.Forms.Layout.LayoutEngine.cs" />
+    <Compile Include="System.Windows.Forms.LayoutEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.ListBox.cs" />
+    <Compile Include="System.Windows.Forms.ListView.cs" />
+    <Compile Include="System.Windows.Forms.ListViewItem.cs" />
+    <Compile Include="System.Windows.Forms.Menu.cs">
+    </Compile>
+    <Compile Include="System.Windows.Forms.Menu.MenuItemCollection.cs" />
+    <Compile Include="System.Windows.Forms.MenuItem.cs" />
+    <Compile Include="System.Windows.Forms.MouseEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.NodeLabelEditEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.PaintEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.PreviewKeyDownEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.QueryContinueDragEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.Screen.cs" />
+    <Compile Include="System.Windows.Forms.Shortcut.cs" />
+    <Compile Include="System.Windows.Forms.SplitContainer.cs" />
+    <Compile Include="System.Windows.Forms.SplitterPanel.cs" />
+    <Compile Include="System.Windows.Forms.TabPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System.Windows.Browser.BrowserInformation.cs" />
-    <Compile Include="System.Windows.Browser.HtmlDocument.cs" />
-    <Compile Include="System.Windows.Browser.HtmlElement.cs" />
-    <Compile Include="System.Windows.Browser.HtmlPage.cs" />
-    <Compile Include="System.Windows.Browser.HtmlPopupWindowOptions.cs" />
-    <Compile Include="System.Windows.Browser.HtmlWindow.cs" />
-    <Compile Include="System.Windows.Browser.ScriptObject.cs" />
-    <Compile Include="System.Windows.Browser.ScriptObjectCollection.cs" />
+    <Compile Include="System.Windows.Forms.TabControl.cs" />
+    <Compile Include="System.Windows.Forms.ToolBar.cs" />
+    <Compile Include="System.Windows.Forms.ToolStrip.cs" />
+    <Compile Include="System.Windows.Forms.ToolStripDropDownItem.cs" />
+    <Compile Include="System.Windows.Forms.ToolStripItem.cs">
+    </Compile>
+    <Compile Include="System.Windows.Forms.ToolStripItemCollection.cs" />
+    <Compile Include="System.Windows.Forms.ListViewHitTestInfo.cs" />
+    <Compile Include="System.Windows.Forms.ToolTip.cs">
+    </Compile>
+    <Compile Include="System.Windows.Forms.TreeNode.cs" />
+    <Compile Include="System.Windows.Forms.TreeNodeCollection.cs" />
+    <Compile Include="System.Windows.Forms.TreeNodeMouseClickEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.TreeViewCancelEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.TreeViewEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.UICues.cs" />
+    <Compile Include="System.Windows.Forms.UpDownBase.cs" />
+    <Compile Include="System.Windows.Forms.TreeView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts10.csproj">
+    <ProjectReference Include="..\..\..\Foxtrot\Contracts\Microsoft.Contracts.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts10</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\PreContractsBuildDummy\PreContractsBuildDummy.csproj">
       <Project>{4C272996-FE22-4700-BA18-0A2F482FB857}</Project>
@@ -123,8 +175,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -147,6 +199,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="System.Windows.Forms.UICuesEventArgs.cs" />
   </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>..\$(OutputPath)</ContractReferenceOutputPathRoot>

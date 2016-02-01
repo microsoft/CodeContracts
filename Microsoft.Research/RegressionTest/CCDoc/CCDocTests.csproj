@@ -90,7 +90,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CCDoc\CCDoc.csproj">
       <Project>{DCDA8451-4A1F-4122-A3A5-25B46BF92034}</Project>
-      <Name>CCDoc %28Executables\CCDoc%29</Name>
+      <Name>CCDoc %28Executables\CCDoc%</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

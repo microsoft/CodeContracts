@@ -88,7 +88,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\System.Compiler\System.Compiler10.csproj">
       <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
-      <Name>System.Compiler10</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeProviders\CCI1\CCI1.CodeProvider.csproj">
       <Project>{297C2BD0-BEB9-4F4C-9C0B-59021ACD6B45}</Project>
@@ -100,11 +100,11 @@
     </ProjectReference>
     <ProjectReference Include="..\DataStructures\DataStructures10.csproj">
       <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
-      <Name>DataStructures10</Name>
+      <Name>DataStructures</Name>
     </ProjectReference>
     <ProjectReference Include="..\Graphs\Graphs10.csproj">
       <Project>{AC80FD0F-6033-4000-B589-0C36C4E36DB6}</Project>
-      <Name>Graphs10</Name>
+      <Name>Graphs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

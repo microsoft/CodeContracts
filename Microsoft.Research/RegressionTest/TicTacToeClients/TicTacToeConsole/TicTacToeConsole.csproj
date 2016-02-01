@@ -87,7 +87,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Foxtrot\Contracts\Microsoft.Contracts9.csproj">
       <Project>{29E1DFE9-D0A9-4AAB-B876-10BBF747C293}</Project>
-      <Name>Microsoft.Contracts9</Name>
+      <Name>Microsoft.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TicTacToe\TicTacToeEngine.csproj">
       <Project>{F8947296-091D-4CC4-8BAC-046834BC731D}</Project>

@@ -87,7 +87,7 @@
     </ProjectReference>
     <ProjectReference Include="..\PostMSIApp1\PostMSIApp1.csproj">
       <Project>{2D9B9A82-B387-4858-8135-A05128337C64}</Project>
-      <Name>PostMSIApp1</Name>
+      <Name>PostMSIApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\RegressionAttributes\RegressionAttributes.csproj">
       <Project>{837AB638-F42E-41BA-AC3F-0B44F06C5143}</Project>

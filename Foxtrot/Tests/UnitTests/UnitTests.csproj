@@ -97,9 +97,9 @@
       <Project>{5393823C-43F8-4E55-B7B3-952182FBD074}</Project>
       <Name>SubtypeWithoutContracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RewriterMethods\RewriterMethods10.csproj">
+    <ProjectReference Include="..\RewriterMethods\RewriterMethods.csproj">
       <Project>{0332D4D9-7C63-4241-BAF1-3965BD009F38}</Project>
-      <Name>RewriterMethods10</Name>
+      <Name>RewriterMethods</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

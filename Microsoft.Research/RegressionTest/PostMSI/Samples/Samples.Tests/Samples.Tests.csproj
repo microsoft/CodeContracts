@@ -45,7 +45,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Samples\Samples.csproj">
       <Project>{2B4BCDFB-4F68-49B9-98AE-FDC0BFBD28DC}</Project>
-      <Name>Samples %28Samples\Samples%29</Name>
+      <Name>Samples %28Samples\Samples%</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
