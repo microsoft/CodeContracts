@@ -5,7 +5,7 @@
 
    Inputs:
      $(CCNetLabel)     : the version e.g. 1.1.20210.5
-     $(ReleaseConfig)  : one of devlab9, msr9, msft9
+     $(ReleaseConfig)  : one of Release or Debug
 
    Outputs:
      $(ReleaseConfig)\msi\Contracts.$(ReleaseConfig).msi
@@ -165,11 +165,11 @@
     />
     <Error
       Condition="'$(ReleaseConfig)'==''"
-      Text="Please set ReleaseConfig to one of devlab9ts, msft9 using /p:ReleaseConfig=xxx"
+      Text="Please set ReleaseConfig to one of Release or Debug using /p:ReleaseConfig=xxx"
     />
     <Error
       Condition="'$(InvalidRelease)'=='true'"
-      Text="$(ReleaseConfig) is an invalid config: Please set to one of devlab9ts, msft9 using /p:ReleaseConfig=xxx"
+      Text="$(ReleaseConfig) is an invalid config: Please set to one of Release or Debug using /p:ReleaseConfig=xxx"
     />
     <Message
         Importance="high"

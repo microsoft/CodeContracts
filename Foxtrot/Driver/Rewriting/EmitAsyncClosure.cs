@@ -179,7 +179,7 @@ namespace Microsoft.Contracts.Foxtrot
             }
         }
 
-        // This assembly should be in this class but not in the SystemTypes from System.CompilerCC.
+        // This assembly should be in this class but not in the SystemTypes from System.Compiler.
         // Moving this type there will lead to test failures and assembly resolution errors.
         private static readonly AssemblyNode/*!*/ SystemCoreAssembly = SystemTypes.GetSystemCoreAssembly(false, true);
         

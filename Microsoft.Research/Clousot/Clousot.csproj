@@ -140,9 +140,9 @@
       <Project>{F7364559-90F5-480B-B975-C95A04E0DAF6}</Project>
       <Name>Foxtrot.Extractor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+    <ProjectReference Include="..\..\System.Compiler\System.Compiler.csproj">
       <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
-      <Name>System.CompilerCC</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\AnalysisTypes\AnalysisTypes.csproj">
       <Project>{ea595150-c741-411a-940e-4a9d5fdae4fa}</Project>

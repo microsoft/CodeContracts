@@ -90,9 +90,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>..\..\..\..\Driver\bin\debug\foxtrot /rewrite /csr /out:QGRW.dll QuickGraph.dll -libpaths .
-..\..\..\..\Driver\bin\debug\foxtrot /rewrite /csr /throwonfailure /out:QGDRW.dll QuickGraph.Data.dll -libpaths .
+    <PostBuildEvent>..\..\..\..\Driver\bin\$(Configuration)\foxtrot /rewrite /csr /out:QGRW.dll QuickGraph.dll -libpaths .
+..\..\..\..\Driver\bin\$(Configuration)\foxtrot /rewrite /csr /throwonfailure /out:QGDRW.dll QuickGraph.Data.dll -libpaths .
 </PostBuildEvent>
-    <PreBuildEvent>copy ..\..\..\..\..\Microsoft.Research\Contracts\bin\debug\v3.5\mscorlib.contracts.dll .</PreBuildEvent>
+    <PreBuildEvent>copy ..\..\..\..\..\Microsoft.Research\Contracts\bin\$(Configuration)\v3.5\mscorlib.contracts.dll .</PreBuildEvent>
   </PropertyGroup>
 </Project>

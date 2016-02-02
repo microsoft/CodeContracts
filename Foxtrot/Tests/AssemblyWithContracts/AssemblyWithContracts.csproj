@@ -63,7 +63,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
-    <MultiTargetReferencePaths Include="..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\;..\..\..\Microsoft.Research\Contracts\bin\debug\" />
+    <MultiTargetReferencePaths Include="..\..\..\Microsoft.Research\Imported\ReferenceAssemblies\;..\..\..\Microsoft.Research\Contracts\bin\$(Configuration)\" />
   </ItemGroup>
   <PropertyGroup>
     <ContractReferenceOutputPathRoot>$(OutputPath)</ContractReferenceOutputPathRoot>

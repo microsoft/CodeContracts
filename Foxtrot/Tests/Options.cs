@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Tests
 {
@@ -244,7 +245,7 @@ namespace Tests
             this.CompilerOptions = compilerOptions;
             this.References = new List<string>(new[] { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" });
             this.References.AddRange(references);
-            this.libPaths = new List<string>(libPaths ?? Enumerable.Empty<string>());
+            this.libPaths = new List<string>((libPaths ?? Enumerable.Empty<string>()).Select(path => ReplaceConfiguration(path)));
             this.compilerCode = compilerCode;
             this.UseBinDir = useBinDir;
             this.UseExe = useExe;
@@ -281,6 +282,19 @@ namespace Tests
             false,
             false)
         {
+        }
+        public static string ReplaceConfiguration(string path)
+        {
+            return path.Replace("{Configuration}", GetConfigurationName());
+        }
+
+        public static string GetConfigurationName()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            string directoryName = Path.GetDirectoryName(path);
+            return Path.GetFileName(directoryName);
         }
 
         public Options WithSourceFile(string sourceFile)
@@ -375,7 +389,7 @@ namespace Tests
 
         public string MakeAbsolute(string relativeToRoot)
         {
-            return Path.GetFullPath(Path.Combine(this.RootDirectory, relativeToRoot));
+            return Path.GetFullPath(Path.Combine(this.RootDirectory, ReplaceConfiguration(relativeToRoot)));
         }
 
         internal void Delete(string fileName)

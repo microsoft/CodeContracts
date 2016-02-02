@@ -17,6 +17,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Contracts.Foxtrot;
 using Xunit;
 using Xunit.Abstractions;
@@ -26,11 +27,10 @@ namespace Tests
     public class TestDriver
     {
         public const string ReferenceDirRoot = @"Microsoft.Research\Imported\ReferenceAssemblies\";
-        public const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\Debug\";
-        public const string FoxtrotExe = @"Foxtrot\Driver\bin\debug\foxtrot.exe";
+        public const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\{Configuration}";
+        public const string FoxtrotExe = @"Foxtrot\Driver\bin\{Configuration}\foxtrot.exe";
         public const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
-
-
+        
         internal static object Rewrite(ITestOutputHelper testOutputHelper, string absoluteSourceDir, string absoluteBinary, Options options, bool alwaysCapture = false)
         {
             string referencedir;
@@ -44,7 +44,7 @@ namespace Tests
                 referencedir = options.MakeAbsolute(Path.Combine(ReferenceDirRoot, options.ReferencesFramework));
             }
 
-            var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ContractFramework));
+            var contractreferencedir = options.MakeAbsolute(Path.Combine(Options.ReplaceConfiguration(ContractReferenceDirRoot), options.ContractFramework));
             var absoluteSourcedir = Path.GetDirectoryName(absoluteBinary);
             var absoluteSource = absoluteBinary;
             var libPathsString = FormLibPaths(absoluteSourceDir, contractreferencedir, options);
@@ -252,7 +252,7 @@ namespace Tests
             var compilerPath = options.GetCompilerAbsolutePath(ToolsRoot);
             Assert.True(File.Exists(compilerPath), string.Format("Can't find compiler at '{0}'", compilerPath));
 
-            var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ReferencesFramework));
+            var contractreferencedir = options.MakeAbsolute(Path.Combine(Options.ReplaceConfiguration(ContractReferenceDirRoot), options.ReferencesFramework));
             var sourcedir = absoluteSourceDir = Path.GetDirectoryName(sourceFile);
 
             var outputdir = Path.Combine(Path.Combine(sourcedir, "bin"), options.CompilerPath);
@@ -392,7 +392,7 @@ namespace Tests
 
         private static bool FindReference(Options options, List<string> result, string filename, string framework)
         {
-            foreach (var root in System.Linq.Enumerable.Concat(options.LibPaths, new[] { ReferenceDirRoot, ContractReferenceDirRoot }))
+            foreach (var root in System.Linq.Enumerable.Concat(options.LibPaths, new[] { ReferenceDirRoot, Options.ReplaceConfiguration(ContractReferenceDirRoot) }))
             {
                 var dir = options.MakeAbsolute(Path.Combine(root, framework));
 

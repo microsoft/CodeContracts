@@ -34,7 +34,7 @@ namespace Tests
 
     private static void Verify(ITestOutputHelper testOutputHelper, string assemblyName, string frameworkPath)
     {
-      var path = Path.Combine(@"..\..\..\..\Microsoft.Research\Contracts\bin\Debug", frameworkPath);
+      var path = Path.Combine(Options.ReplaceConfiguration(@"..\..\..\..\Microsoft.Research\Contracts\bin\{Configuration}"), frameworkPath);
       string originalPath = Path.Combine(@"..\..\..\..\Microsoft.Research\Imported\ReferenceAssemblies", frameworkPath, assemblyName + ".dll");
 
       StringWriter stringWriter = new StringWriter();

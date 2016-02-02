@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace Tests
 {
@@ -18,7 +19,7 @@ namespace Tests
     public class Options
     {
         private const string RelativeRoot = @"..\..\..\..\..\";
-        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug";
+        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\{Configuration}";
         protected static readonly string RootDirectory = Path.GetFullPath(RelativeRoot);
 
         private readonly string _outDirectory;
@@ -180,10 +181,23 @@ namespace Tests
             this._compilerOptions = compilerOptions;
             this.References = new List<string> { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" };
             this.References.AddRange(references);
-            this.LibPaths = new List<string> { MakeAbsolute(TestHarnessDirectory) };
+            this.LibPaths = new List<string> { MakeAbsolute(ReplaceConfiguration(TestHarnessDirectory)) };
             this.LibPaths.AddRange(libPaths);
             this._compilerCode = compilerCode;
             this.SkipFor = skipFor;
+        }
+        public static string ReplaceConfiguration(string path)
+        {
+            return path.Replace("{Configuration}", GetConfigurationName());
+        }
+
+        public static string GetConfigurationName()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            string directoryName = Path.GetDirectoryName(path);
+            return Path.GetFileName(directoryName);
         }
 
         /// <summary>

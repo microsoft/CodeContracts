@@ -59,9 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+    <ProjectReference Include="..\..\System.Compiler\System.Compiler.csproj">
       <Project>{d7e16b38-3893-4eef-847f-a3be807e9546}</Project>
-      <Name>System.CompilerCC</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\AbstractInterpretation\Abstract Domains\Abstract Domains.csproj">
       <Project>{510f44fc-18d0-484f-b2f7-f6a565354a8c}</Project>

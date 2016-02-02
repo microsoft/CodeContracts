@@ -102,9 +102,9 @@
       <Project>{9D404D0C-0921-4ADD-BC22-A14AAE2CA7E2}</Project>
       <Name>CRASanitizer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+    <ProjectReference Include="..\..\System.Compiler\System.Compiler.csproj">
       <Project>{d7e16b38-3893-4eef-847f-a3be807e9546}</Project>
-      <Name>System.CompilerCC</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\Foxtrot\Foxtrot.Extractor.csproj">
       <Project>{f7364559-90f5-480b-b975-c95a04e0daf6}</Project>

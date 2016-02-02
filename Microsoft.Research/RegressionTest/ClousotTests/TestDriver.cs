@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -14,16 +15,16 @@ namespace Tests
     public static class TestDriver
     {
         private const string ReferenceDirRoot = @"Microsoft.Research\Imported\ReferenceAssemblies\";
-        private const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\Debug\";
+        private const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\{Configuration}";
         private const string ClousotExe = @"Microsoft.Research\Clousot\bin\debug\clousot.exe";
         private const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
 
         private static readonly Random randGenerator = new Random();
-
+        
         internal static void Clousot(string absoluteSourceDir, string absoluteBinary, Options options, string testName, int testindex, Output output)
         {
             var referencedir = options.MakeAbsolute(Path.Combine(ReferenceDirRoot, options.BuildFramework));
-            var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.ContractFramework));
+            var contractreferencedir = options.MakeAbsolute(Path.Combine(Options.ReplaceConfiguration(ContractReferenceDirRoot), options.ContractFramework));
             var absoluteBinaryDir = Path.GetDirectoryName(absoluteBinary);
             var absoluteSource = absoluteBinary;
             var libPathsString = FormLibPaths(contractreferencedir, options);
@@ -116,7 +117,7 @@ namespace Tests
         {
             var sourceFile = options.MakeAbsolute(options.SourceFile);
             var compilerpath = options.MakeAbsolute(Path.Combine(ToolsRoot, options.BuildFramework, options.Compiler));
-            var contractreferencedir = options.MakeAbsolute(Path.Combine(ContractReferenceDirRoot, options.BuildFramework));
+            var contractreferencedir = options.MakeAbsolute(Path.Combine(Options.ReplaceConfiguration(ContractReferenceDirRoot), options.BuildFramework));
             var sourcedir = absoluteSourceDir = Path.GetDirectoryName(sourceFile);
             var outputdir = Path.Combine(sourcedir, "bin", options.BuildFramework);
             var extension = options.UseExe ? ".exe" : ".dll";
@@ -186,7 +187,7 @@ namespace Tests
                         break;
                     }
                 }
-                foreach (var root in new[] { ReferenceDirRoot, ContractReferenceDirRoot })
+                foreach (var root in new[] { ReferenceDirRoot, Options.ReplaceConfiguration(ContractReferenceDirRoot) })
                 {
                     var dir = options.MakeAbsolute(Path.Combine(root, options.BuildFramework));
 

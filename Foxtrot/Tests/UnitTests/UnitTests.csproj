@@ -69,9 +69,9 @@
       <Project>{35D2EF6D-DDB0-481B-A21D-9BD2634F503A}</Project>
       <Name>DataStructures</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\System.Compiler\System.CompilerCC.csproj">
+    <ProjectReference Include="..\..\..\System.Compiler\System.Compiler.csproj">
       <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
-      <Name>System.CompilerCC</Name>
+      <Name>System.Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Driver\Foxtrot.csproj">
       <Project>{24B45DC0-77D2-4CFC-AB64-8FB9FB93EEE1}</Project>

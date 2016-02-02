@@ -83,9 +83,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)\..\BaseClassWithContracts\bin\Debug\BaseClassWithContracts.Contracts.dll
-copy $(ProjectDir)\..\BaseClassWithContracts\bin\Debug\BaseClassWithContracts.Contracts.pdb
-copy $(ProjectDir)\..\BaseClassWithContracts\bin\Debug\Microsoft.Contracts.dll
+    <PostBuildEvent>copy $(ProjectDir)\..\BaseClassWithContracts\bin\$(Configuration)\BaseClassWithContracts.Contracts.dll
+copy $(ProjectDir)\..\BaseClassWithContracts\bin\$(Configuration)\BaseClassWithContracts.Contracts.pdb
+copy $(ProjectDir)\..\BaseClassWithContracts\bin\$(Configuration)\Microsoft.Contracts.dll
 $(ProjectDir)\..\..\Driver\$(OutDir)\Foxtrot.exe /rewrite /throwonfailure /rw:RewriterMethods.dll,TestRewriterMethods SubtypeWithoutContracts.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -208,7 +208,8 @@ namespace Tests {
 
         return Path.GetFullPath(Path.Combine(deploymentdir, "Foxtrot.exe"));
       } else {
-        return Path.GetFullPath(Path.Combine(RootDirectory, @"Foxtrot\Driver\bin\Debug\Foxtrot.exe"));
+        return Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "Foxtrot.exe"));
+        //return Path.GetFullPath(Path.Combine(RootDirectory, @"Foxtrot\Driver\bin\Debug\Foxtrot.exe"));
       }
     }
 

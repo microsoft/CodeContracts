@@ -116,6 +116,6 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>echo Rewriting OutOfBand.dll
-$(SolutionDir)Foxtrot\Driver\bin\Debug\foxtrot.exe /throwonfailure /rewrite /rw:RewriterMethods,TestRewriterMethods /contracts:OutOfBand.Contracts.dll /autoRef:- OutOfBand.dll /assemblyMode=standard</PostBuildEvent>
+$(SolutionDir)Foxtrot\Driver\bin\$(Configuration)\foxtrot.exe /throwonfailure /rewrite /rw:RewriterMethods,TestRewriterMethods /contracts:OutOfBand.Contracts.dll /autoRef:- OutOfBand.dll /assemblyMode=standard</PostBuildEvent>
   </PropertyGroup>
 </Project>
