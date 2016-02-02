@@ -383,7 +383,7 @@ namespace Tests
                     useExe: false,
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
-                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
+                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\<Configuration>" },
                     compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\DoubleZero.cs",
@@ -392,7 +392,7 @@ namespace Tests
                     useExe: false,
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
-                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
+                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\<Configuration>" },
                     compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\OperatorOverloading.cs",
@@ -401,7 +401,7 @@ namespace Tests
                     useExe: false,
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
-                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
+                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\<Configuration>" },
                     compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\EnumerableAll.cs",
@@ -1230,7 +1230,7 @@ namespace Tests
                     useExe: false,
                     compilerOptions: @"",
                     references: new[] { @"AssemblyWithContracts.dll", @"System.Core.dll" },
-                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\debug" },
+                    libPaths: new[] { @"Foxtrot\Tests\AssemblyWithContracts\bin\<Configuration>" },
                     compilerCode: "CS");
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\VisualBasicTests\Allen.vb",

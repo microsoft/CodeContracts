@@ -285,7 +285,7 @@ namespace Tests
         }
         public static string ReplaceConfiguration(string path)
         {
-            return path.Replace("{Configuration}", GetConfigurationName());
+            return path.Replace("<Configuration>", GetConfigurationName());
         }
 
         public static string GetConfigurationName()

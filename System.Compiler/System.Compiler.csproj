@@ -105,7 +105,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
     <UseCodeContracts>true</UseCodeContracts>
-    <DefineConstants>WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts;CLOUSOT</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>

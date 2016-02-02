@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Tests
@@ -19,7 +20,7 @@ namespace Tests
     public class Options
     {
         private const string RelativeRoot = @"..\..\..\..\..\";
-        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\{Configuration}";
+        internal const string TestHarnessDirectory = @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\<Configuration>";
         protected static readonly string RootDirectory = Path.GetFullPath(RelativeRoot);
 
         private readonly string _outDirectory;
@@ -182,13 +183,13 @@ namespace Tests
             this.References = new List<string> { "mscorlib.dll", "System.dll", "ClousotTestHarness.dll" };
             this.References.AddRange(references);
             this.LibPaths = new List<string> { MakeAbsolute(ReplaceConfiguration(TestHarnessDirectory)) };
-            this.LibPaths.AddRange(libPaths);
+            this.LibPaths.AddRange(libPaths.Select(path => ReplaceConfiguration(path)));
             this._compilerCode = compilerCode;
             this.SkipFor = skipFor;
         }
         public static string ReplaceConfiguration(string path)
         {
-            return path.Replace("{Configuration}", GetConfigurationName());
+            return path.Replace("<Configuration>", GetConfigurationName());
         }
 
         public static string GetConfigurationName()
@@ -215,7 +216,7 @@ namespace Tests
 
         public string MakeAbsolute(string relativeToRoot)
         {
-            return Path.Combine(RootDirectory, relativeToRoot); // MB: do not need Path.GetFullPath because RootDirectory is already an absolute path
+            return Path.Combine(RootDirectory, ReplaceConfiguration(relativeToRoot)); // MB: do not need Path.GetFullPath because RootDirectory is already an absolute path
         }
 
         public object Framework

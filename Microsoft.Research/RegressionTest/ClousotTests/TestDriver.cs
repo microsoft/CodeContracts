@@ -15,7 +15,7 @@ namespace Tests
     public static class TestDriver
     {
         private const string ReferenceDirRoot = @"Microsoft.Research\Imported\ReferenceAssemblies\";
-        private const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\{Configuration}";
+        private const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\<Configuration>";
         private const string ClousotExe = @"Microsoft.Research\Clousot\bin\debug\clousot.exe";
         private const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
 

@@ -27,8 +27,8 @@ namespace Tests
     public class TestDriver
     {
         public const string ReferenceDirRoot = @"Microsoft.Research\Imported\ReferenceAssemblies\";
-        public const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\{Configuration}";
-        public const string FoxtrotExe = @"Foxtrot\Driver\bin\{Configuration}\foxtrot.exe";
+        public const string ContractReferenceDirRoot = @"Microsoft.Research\Contracts\bin\<Configuration>";
+        public const string FoxtrotExe = @"Foxtrot\Driver\bin\<Configuration>\foxtrot.exe";
         public const string ToolsRoot = @"Microsoft.Research\Imported\Tools\";
         
         internal static object Rewrite(ITestOutputHelper testOutputHelper, string absoluteSourceDir, string absoluteBinary, Options options, bool alwaysCapture = false)
