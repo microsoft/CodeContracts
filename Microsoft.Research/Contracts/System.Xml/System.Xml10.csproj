@@ -205,7 +205,6 @@
     <Compile Include="System.Xml.Schema.XmlSchemaComplexType.cs" />
     <Compile Include="System.Xml.Schema.XmlSchemaGroupBase.cs" />
     <Compile Include="System.Xml.Schema.XmlSchemaObjectCollection.cs" />
-    <Compile Include="System.Xml.SchemaSet.cs" />
     <Compile Include="System.Xml.Serialization.IXmlSerializable.cs" />
     <Compile Include="System.Xml.XmlAttribute.cs" />
     <Compile Include="System.Xml.XmlCDataSection.cs" />
@@ -232,6 +231,7 @@
     <Compile Include="System.Xml.XmlReaderSettings.cs" />
     <Compile Include="System.Xml.XmlResolver.cs" />
     <Compile Include="System.Xml.XmlSchemaObjectTable.cs" />
+    <Compile Include="System.Xml.XmlSchemaSet.cs" />
     <Compile Include="System.Xml.XmlSignificantWhiteSpace.cs" />
     <Compile Include="System.Xml.XmlText.cs" />
     <Compile Include="System.Xml.XmlWhiteSpace.cs" />
