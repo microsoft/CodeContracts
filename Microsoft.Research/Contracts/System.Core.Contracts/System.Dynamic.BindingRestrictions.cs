@@ -83,7 +83,6 @@ namespace System.Dynamic
     public static BindingRestrictions GetInstanceRestriction(Expression expression, object instance)
     {
       Contract.Requires(expression != null);
-      Contract.Requires(instance != null);
 
       Contract.Ensures(Contract.Result<BindingRestrictions>() != null);
 
