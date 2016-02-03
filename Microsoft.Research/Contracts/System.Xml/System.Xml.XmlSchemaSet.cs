@@ -236,8 +236,6 @@ namespace System.Xml.Schema
     //     The URL passed as a parameter is null or System.String.Empty.
     public XmlSchema Add(string targetNamespace, string schemaUri)
     {
-      Contract.Requires(!String.IsNullOrEmpty(targetNamespace));
-
       return default(XmlSchema);
     }
     //
