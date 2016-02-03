@@ -9,7 +9,7 @@
   ======================================================================-->
 
   <PropertyGroup>
-    <CodeContractsDeclDir>$(IntermediateOutputPath)Decl\</CodeContractsDeclDir>
+    <CodeContractsDeclDir>$(OutDir)Decl\</CodeContractsDeclDir>
     <CodeContractsContractSubDir>CodeContracts\</CodeContractsContractSubDir>
     <CodeContractsCCRefgenCommand>$(CodeContractsInstallDir)Bin\ccrefgen.exe</CodeContractsCCRefgenCommand>
   </PropertyGroup>
