@@ -3567,8 +3567,10 @@ namespace System.Linq.Expressions
     public static MemberExpression Field(Expression expression, FieldInfo field)
     {
       Contract.Requires(field != null);
-      Contract.Requires(field.IsStatic || expression != null);
-      Contract.Requires(!field.IsStatic || expression == null);
+      // Commented out as this breaks static checking for Linq expressions
+      // When the compiler sets up the constructions of Expressions.
+      //// Contract.Requires(field.IsStatic || expression != null);
+      //// Contract.Requires(!field.IsStatic || expression == null);
       Contract.Ensures(Contract.Result<MemberExpression>() != null);
       return default(MemberExpression);
     }
