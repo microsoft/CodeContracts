@@ -500,18 +500,22 @@
        LibPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
        WritePDB="true"
        />
-	
-	<PropertyGroup>
-      <OriginalAssembly>$(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+     
+    <ItemGroup>
+      <OriginalAssemblies
+        Include="@(MultiTargetReferencePaths)"
+        Condition="Exists('%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <OriginalAssembly>@(OriginalAssemblies->'%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')</OriginalAssembly>
     </PropertyGroup>
-		 
-	<PropertyGroup Condition="!Exists($(OriginalAssembly)) AND '$(MultiTargetFrameworkAssembliesRoot)' != ''">
-      <OriginalAssembly>$(MultiTargetFrameworkAssembliesRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    <PropertyGroup Condition="'$(OriginalAssembly)' != '' AND $(OriginalAssembly.IndexOf(';')) > -1">
+      <OriginalAssembly>$(OriginalAssembly.Substring(0, $(OriginalAssembly.IndexOf(';'))))</OriginalAssembly>
     </PropertyGroup>
-		
+  
     <Exec
        Condition="'$(CodeContractsCheckReferenceAssembly)'=='true'"
-       Command='$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(AbsoluteContractReferenceAssemblyOutput) "$(OriginalAssembly)"' />
+       Command='"$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe" "$(AbsoluteContractReferenceAssemblyOutput)" "$(OriginalAssembly)"' />
 
     <ItemGroup>
       <FileWrites
@@ -577,16 +581,20 @@
     <Message Text="crasantitizer on $(_ContractReferenceAssemblyOutput)"
              Importance="high"/>
 
-	<PropertyGroup>
-      <OriginalAssembly>$(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    <ItemGroup>
+      <OriginalAssemblies
+        Include="@(MultiTargetReferencePaths)"
+        Condition="Exists('%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <OriginalAssembly>@(OriginalAssemblies->'%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')</OriginalAssembly>
     </PropertyGroup>
-			 
-	<PropertyGroup Condition="!Exists($(OriginalAssembly)) AND '$(MultiTargetFrameworkAssembliesRoot)' != ''">
-      <OriginalAssembly>$(MultiTargetFrameworkAssembliesRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)</OriginalAssembly>
+    <PropertyGroup Condition="'$(OriginalAssembly)' != '' AND $(OriginalAssembly.IndexOf(';')) > -1">
+      <OriginalAssembly>$(OriginalAssembly.Substring(0, $(OriginalAssembly.IndexOf(';'))))</OriginalAssembly>
     </PropertyGroup>
-		
+
     <Exec
-       Command='$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(_ContractReferenceAssemblyOutput) "$(OriginalAssembly)"' />
+     Command='"$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe" "$(_ContractReferenceAssemblyOutput)" "$(OriginalAssembly)"' />
   </Target>
 
   <Target
