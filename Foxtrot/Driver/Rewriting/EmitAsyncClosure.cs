@@ -195,7 +195,6 @@ namespace Microsoft.Contracts.Foxtrot
         private readonly Cache<TypeNode> func2Type;
 
         private readonly Dictionary<Local, MemberBinding> closureLocals = new Dictionary<Local, MemberBinding>();
-        private readonly Dictionary<MemberBinding, MemberBinding> closureMembers = new Dictionary<MemberBinding, MemberBinding>();
         private readonly List<SourceContext> contractResultCapturedInStaticContext = new List<SourceContext>();
 
         private readonly Rewriter rewriter;
