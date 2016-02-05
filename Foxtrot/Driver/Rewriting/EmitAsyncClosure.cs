@@ -195,6 +195,7 @@ namespace Microsoft.Contracts.Foxtrot
         private readonly Cache<TypeNode> func2Type;
 
         private readonly Dictionary<Local, MemberBinding> closureLocals = new Dictionary<Local, MemberBinding>();
+        private readonly Dictionary<MemberBinding, MemberBinding> closureMembers = new Dictionary<MemberBinding, MemberBinding>();
         private readonly List<SourceContext> contractResultCapturedInStaticContext = new List<SourceContext>();
 
         private readonly Rewriter rewriter;
@@ -360,6 +361,14 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Add task.ContinueWith().Unwrap(); method call to returnBlock
             AddContinueWithMethodToReturnBlock(returnBlock, taskBasedResult);
+
+            ChangeThisReferencesToClosureLocals();
+        }
+
+        private void ChangeThisReferencesToClosureLocals()
+        {
+            var fieldRewriter = new FieldRewriter(this);
+            fieldRewriter.Visit(this.checkPostMethod);
         }
 
         /// <summary>
@@ -1204,8 +1213,64 @@ namespace Microsoft.Contracts.Foxtrot
             return this.checkPostMethod.ReturnType == SystemTypes.Void;
         }
 
-        // Visitor for changing closure locals to fields
+        class FieldRewriter : StandardVisitor
+        {
+            private readonly EmitAsyncClosure closure;
+            private Field enclosingInstance;
 
+            public FieldRewriter(EmitAsyncClosure closure)
+            {
+                this.closure = closure;
+            }
+
+            public override Expression VisitMemberBinding(MemberBinding memberBinding)
+            {
+                // Original postcondition could have an access to the instance state via Contract.Ensures(_state == "foo");
+                // Now postcondition body resides in the different class and all references to 'this' pointer should be changed.
+                // If member binding references 'this', then we need to initialize '_this' field that points to the enclosing class
+                // and redirect the binding to this field.
+                var thisNode = memberBinding != null ? memberBinding.TargetObject as This : null;
+                if (thisNode != null && thisNode.DeclaringMethod != null && thisNode.DeclaringMethod.DeclaringType != null &&
+                    // Need to change only when 'this' belongs to enclosing class instance
+                    thisNode.DeclaringMethod.DeclaringType.Equals(this.closure.declaringType))
+                {
+                    var thisField = EnsureClosureInitialization(memberBinding.TargetObject);
+
+                    return new MemberBinding(
+                            new MemberBinding(this.closure.checkPostMethod.ThisParameter, thisField),
+                            memberBinding.BoundMember);
+                }
+
+                return base.VisitMemberBinding(memberBinding);
+            }
+
+            /// <summary>
+            /// Ensures that async closure has a field with enclosing class field, like public EnclosingType _this.
+            /// </summary>
+            private Field EnsureClosureInitialization(Expression targetObject)
+            {
+                if (this.enclosingInstance == null)
+                {
+                    var localType = this.closure.forwarder != null ? this.closure.forwarder.VisitTypeReference(targetObject.Type) : targetObject.Type;
+
+                    var enclosedTypeField = new Field(
+                        this.closure.closureClass, null, FieldFlags.Public, new Identifier("_this"), localType, null);
+                    this.closure.closureClass.Members.Add(enclosedTypeField);
+
+                    // initialize the closure field
+                    var instantiatedField = Rewriter.GetMemberInstanceReference(enclosedTypeField, this.closure.closureClassInstance);
+                    this.closure.ClosureInitializer.Statements.Add(
+                        new AssignmentStatement(
+                            new MemberBinding(this.closure.closureLocal, instantiatedField), targetObject));
+
+                    this.enclosingInstance = enclosedTypeField;
+                }
+
+                return this.enclosingInstance;
+            }
+        }
+
+        // Visitor for changing closure locals to fields
         public override Expression VisitLocal(Local local)
         {
             if (HelperMethods.IsClosureType(this.declaringType, local.Type))
@@ -1214,6 +1279,16 @@ namespace Microsoft.Contracts.Foxtrot
                 if (!closureLocals.TryGetValue(local, out mb))
                 {
                     // TODO ST: not clear what's going on here!
+                    // Clarification: this method changes access to local variables to apropriate fields.
+                    // Consider following example:
+                    // public async Task<int> FooAsync(int[] arguments, int length)
+                    // {
+                    //    Contract.Ensures(Contract.ForAll(arguments, i => i == Contract.Result<int>() && i == length)); 
+                    // }
+                    // In this case, CheckPost method should reference length that will become a field of the generated
+                    // closure class.
+                    // So this code will change all locals (like length) to appropriate fields of the async closure instance.
+
                     // Forwarder would be null, if enclosing method with async closure is not generic
                     var localType = forwarder != null ? forwarder.VisitTypeReference(local.Type) : local.Type;
 
