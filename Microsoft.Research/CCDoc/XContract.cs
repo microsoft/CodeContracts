@@ -606,6 +606,8 @@ namespace CCDoc {
         var n = methodCall.Arguments.Count();
         if (n == 2) {
           var lambda = methodCall.Arguments.ElementAt(1) as IAnonymousDelegate;
+          if (lambda == null)
+            return;
           sourceEmitterOutput.Write(lambda.Parameters.ElementAt(0).Name.Value);
           sourceEmitterOutput.Write(" in ");
           Traverse(methodCall.Arguments.ElementAt(0));
@@ -615,6 +617,8 @@ namespace CCDoc {
         } else {
           // n == 3
           var lambda = methodCall.Arguments.ElementAt(2) as IAnonymousDelegate;
+          if (lambda == null)
+              return;
           var paramName = lambda.Parameters.ElementAt(0).Name.Value;
           sourceEmitterOutput.Write(paramName);
           sourceEmitterOutput.Write(" where ");
