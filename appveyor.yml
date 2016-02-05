@@ -10,10 +10,10 @@ build_script:
 - ps: msbuild "/nologo" "/logger:${env:ProgramFiles}\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "/t:build" "/p:Configuration=Debug" "/p:Platform=Any CPU" "/p:CodeContractsRunCodeAnalysis=false" CodeContracts.sln
 test:
   assemblies:
-#  - '**\FoxtrotTests.dll'
+  - '**\FoxtrotTests.dll'
   - '**\UnitTests.dll'
-#  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
-#  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
+  - '**\ClousotCacheTests\bin\Debug\ClousotCacheTests.dll'
+  - '**\ClousotTests\bin\Debug\ClousotTests.dll'
 artifacts:
 - path: '**\ManagedContract.Setup\devlab9ts\Microsoft.Contracts.*.nupkg'
 - path: '**\ManagedContract.Setup\devlab9ts\msi\Contracts.devlab9ts.msi'
