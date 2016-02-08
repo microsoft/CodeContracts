@@ -261,6 +261,32 @@ namespace Tests
                     skipSlicing: false);
                 #endregion
 
+                #region MaxFieldReads
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxFieldReads\MaxFieldReads0.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxFieldReads 10",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxFieldReads\MaxFieldReads1.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer=!! -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace dfa -trace numerical -trace suspended -maxFieldReads 0",
+                    useContractReferenceAssemblies: true,
+                    useExe: false,
+                    compilerOptions: @"/optimize /unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS",
+                    skipForCCI2: false,
+                    skipSlicing: false);
+                    yield break;
+                #endregion
+
                 yield return new Options(
                     sourceFile: @"Microsoft.Research\RegressionTest\ClousotTests\Sources\Decimal.cs",
                     clousotOptions: @"-infer autopropertiesensures -suggest requires -show unreached -Bounds -bounds:type=subpolyhedra,reduction=fast,noObl -show progress -arithmetic:obl=intOverflow",

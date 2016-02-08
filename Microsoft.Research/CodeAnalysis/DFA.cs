@@ -406,6 +406,8 @@ namespace Microsoft.Research.CodeAnalysis
 
         protected bool FixpointComputed;
 
+        public abstract bool IsFieldRead(APC pc);
+
         protected virtual void ComputeFixpoint(object result)
         {
             if (Controller != null) { Controller.ReachedStart(result); }
@@ -455,17 +457,19 @@ namespace Microsoft.Research.CodeAnalysis
                             state = this.Cache(current, state);
                         }
 
-                        Method calledMethod;
+                        Method calledMethod = null;
                         bool isNewObj, isVirtual;
                         if (Controller != null
                             && current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual)
                             && Controller.ModifiedAtCall.ContainsKey(current.Block)
-                            && 0 < Controller.ModifiedAtCall[current.Block].Count)
+                            && (0 < Controller.ModifiedAtCall[current.Block].Count || TypeNode.StripModifiers(calledMethod.ReturnType) != SystemTypes.Void))
                         {
                             // TODO(wuestholz): Maybe only do this if the call actually led to imprecision by comparing with the pre-state.
                             // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations.
                             if (Controller.ReachedCall(result, current, suspended)) { goto nextPending; }
                         }
+
+                        if (Controller != null && (IsFieldRead(current) || (calledMethod != null && calledMethod.IsPropertyGetter)) && Controller.ReachedFieldRead(result, current, suspended)) { goto nextPending; }
 
                         if (Controller != null && Controller.ReachedStep(result, current, suspended)) { goto nextPending; }
 
@@ -1059,6 +1063,15 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Overrides
 
+        public override bool IsFieldRead(APC pc)
+        {
+          var sw = new StringWriter();
+          printer(pc, "", sw);
+          var s = sw.ToString();
+          // TODO(wuestholz): Make this check more efficient.
+          return s.Contains(" = ldfld ") || s.Contains(" = ldsfld ");
+        }
+
         /// <summary>
         /// Gives us a chance to let client rename variables prior to storing away the state
         /// </summary>
@@ -1605,6 +1618,9 @@ namespace Microsoft.Research.CodeAnalysis
         private readonly int maxCalls;
         private int calls;
 
+        private readonly int maxFieldReads;
+        private int fieldReads;
+
         private readonly int maxJoins;
         private int joins;
 
@@ -1648,12 +1664,14 @@ namespace Microsoft.Research.CodeAnalysis
 
         private static bool headerWasWritten;
 
-        public DFAController(string an, string mn, int mc, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null, bool checkObligations = false)
+        public DFAController(string an, string mn, int mc, int mfr, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null, bool checkObligations = false)
         {
             analysisName = an;
             methodName = mn;
             maxCalls = mc;
             calls = 0;
+            maxFieldReads = mfr;
+            fieldReads = 0;
             maxJoins = mj;
             joins = 0;
             maxWidenings = mw;
@@ -1705,12 +1723,30 @@ namespace Microsoft.Research.CodeAnalysis
             bool suspend = maxCalls <= calls;
             if (suspend)
             {
-                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxCalls);
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxFieldReads);
             }
 
             ReachedPossibleImprecision(result, "call");
 
             calls++;
+            return suspend;
+        }
+
+        public bool ReachedFieldRead(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxFieldReads <= fieldReads;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxFieldReads);
+            }
+
+            ReachedPossibleImprecision(result, "reads");
+
+            fieldReads++;
             return suspend;
         }
 
@@ -1887,7 +1923,8 @@ namespace Microsoft.Research.CodeAnalysis
 
     public enum SuspensionReason
     {
-        ReachedMaxCalls,
+        ReachedMaxFieldReads,
+        ReachedFieldReads,
         ReachedMaxJoins,
         ReachedMaxWidenings,
         ReachedMaxSteps
