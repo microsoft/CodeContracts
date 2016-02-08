@@ -2735,7 +2735,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       private DFAController CreateFreshDFAController(string analysisName, string methodName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
       {
-        return new DFAController(analysisName, methodName, options.MaxCalls, options.maxFieldReads, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, options.PrintControllerStats, mdriver.ModifiedAtCall);
+        return new DFAController(analysisName, methodName, options.MaxCalls, options.MaxFieldReads, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, options.PrintControllerStats, mdriver.ModifiedAtCall);
       }
 
       private int RunSyntacticAnalysis(int phasecount, string methodFullName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver)

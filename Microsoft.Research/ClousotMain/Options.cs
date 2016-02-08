@@ -504,7 +504,7 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Maximum number of calls per method and analysis")]
     public int maxCalls = Int32.MaxValue;
 
-    [OptionDescription("Maximum number of calls per method and analysis")]
+    [OptionDescription("Maximum number of field reads per method and analysis")]
     public int maxFieldReads = Int32.MaxValue;
 
     [OptionDescription("Maximum number of joins per method and analysis")]
@@ -723,7 +723,7 @@ namespace Microsoft.Research.CodeAnalysis
     public bool PrintIL { get { return this.show.Contains(ShowOptions.il); } }
     public int Timeout { get { return this.timeout; } }
     public int MaxCalls { get { return this.maxCalls; } }
-    public int MaxFieldReads { get { return this.maxCalls; } }
+    public int MaxFieldReads { get { return this.maxFieldReads; } }
     public int MaxJoins { get { return this.maxJoins; } }
     public int MaxWidenings { get { return this.maxWidenings; } }
     public int MaxSteps { get { return this.maxSteps; } }
