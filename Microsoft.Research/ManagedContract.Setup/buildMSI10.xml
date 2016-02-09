@@ -245,11 +245,11 @@
        Value="$(CCNetLabel)"
        XmlInputPath="VSIX\VS14.extension.vsixmanifest" />
 
-    <Exec Command="git update-index -–assume-unchanged ..\ContractAdornments\Extension\source.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS10.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS11.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS12.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS14.extension.vsixmanifest"/>
+    <Exec Command="git update-index --assume-unchanged ..\ContractAdornments\Extension\source.extension.vsixmanifest"/>
+    <Exec Command="git update-index --assume-unchanged VSIX\VS10.extension.vsixmanifest"/>
+    <Exec Command="git update-index --assume-unchanged VSIX\VS11.extension.vsixmanifest"/>
+    <Exec Command="git update-index --assume-unchanged VSIX\VS12.extension.vsixmanifest"/>
+    <Exec Command="git update-index --assume-unchanged VSIX\VS14.extension.vsixmanifest"/>
 
   </Target>
 
@@ -296,7 +296,7 @@
        >
       <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
     </CreateAssemblyInfo>
-    <Exec Command="git update-index -–assume-unchanged @(VersionFile)"/>
+    <Exec Command="git update-index --assume-unchanged @(VersionFile)"/>
   </Target>
 
   <!--==========================================================
