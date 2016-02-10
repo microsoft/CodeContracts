@@ -193,7 +193,7 @@
   </Target>
 
   <Target Name="UpdateVSIXVersions"
-          DependsOnTargets="Validate">
+          DependsOnTargets="Validate;CheckGitRepository">
     <Message Text="Updating Version Number in VSIX manifest"/>
     <PropertyGroup>
       <Vsix10Namespace>
@@ -245,11 +245,11 @@
        Value="$(CCNetLabel)"
        XmlInputPath="VSIX\VS14.extension.vsixmanifest" />
 
-    <Exec Command="git update-index -–assume-unchanged ..\ContractAdornments\Extension\source.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS10.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS11.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS12.extension.vsixmanifest"/>
-    <Exec Command="git update-index -–assume-unchanged VSIX\VS14.extension.vsixmanifest"/>
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged ..\ContractAdornments\Extension\source.extension.vsixmanifest"/>
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged VSIX\VS10.extension.vsixmanifest"/>
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged VSIX\VS11.extension.vsixmanifest"/>
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged VSIX\VS12.extension.vsixmanifest"/>
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged VSIX\VS14.extension.vsixmanifest"/>
 
   </Target>
 
@@ -282,8 +282,19 @@
   <ItemGroup>
     <VersionFile Include="..\common\include\version.cs"/>
   </ItemGroup>
+  
+  <PropertyGroup>
+    <BuildOutsideGit></BuildOutsideGit>
+  </PropertyGroup>
 
-  <Target Name="CreateVersionFile">
+  <Target Name="CheckGitRepository">
+    <Exec Command="git rev-parse" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="BuildOutsideGit"/>
+    </Exec>
+  </Target>
+  
+  <Target Name="CreateVersionFile"
+    DependsOnTargets="CheckGitRepository">
     <!-- create version number -->
     <CreateAssemblyInfo
        Condition = "$(CCNetLabel) != ''"
@@ -296,7 +307,8 @@
        >
       <Output TaskParameter="AssemblyFileVersion" PropertyName="AssemblyFileVersion"/>
     </CreateAssemblyInfo>
-    <Exec Command="git update-index -–assume-unchanged @(VersionFile)"/>
+
+    <Exec Condition="'$(BuildOutsideGit)' == '0'" Command="git update-index --assume-unchanged @(VersionFile)"/>
   </Target>
 
   <!--==========================================================
