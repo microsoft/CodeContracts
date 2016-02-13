@@ -65,6 +65,7 @@ namespace Tests
 
                     @"Foxtrot\Tests\AsyncPostconditions\CancelledAsyncPostcondition.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionsInInterface.cs",
+                    @"Foxtrot\Tests\AsyncPostconditions\AsyncPostconditionsInGenericMethodInInterface.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\MixedAsyncPostcondition.cs",
                     @"Foxtrot\Tests\AsyncPostconditions\NormalAsyncPostcondition.cs",
                     
