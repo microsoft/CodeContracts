@@ -38,18 +38,6 @@ namespace System.Compiler
       //this.remapTable = PdbFile.LoadRemapTable(inputStream);
     }
 
-#if false
-    public Method GetMethodFromPdbToken(uint token)
-    {
-      // remap if necessary
-      if (this.remapTable != null)
-      {
-        token = 0x06000000 | this.remapTable[token & 0xffffff];
-      }
-      return reader.GetMemberFromToken((int)token) as Method;
-    }
-#endif
-
     public PdbFunction GetMethodInfo(uint token)
     {
       PdbFunction result;

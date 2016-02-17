@@ -12,30 +12,18 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if !NoWriter
 using System;
 using System.Collections;
-#if CCINamespace
-using Microsoft.Cci.Metadata;
-#else
 using System.Compiler.Metadata;
-#endif
 using System.Diagnostics;
 using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
-#if !ROTOR
 using System.Security.Cryptography;
-#endif
 using System.Text;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !ROTOR
   [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("B01FAFEB-C450-3A4D-BEEC-B4CEEC01E006"), SuppressUnmanagedCodeSecurity]
   interface ISymUnmanagedDocumentWriter{
     void SetSource(uint sourceSize, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] byte[] source);
@@ -232,9 +220,6 @@ namespace System.Compiler{
   }
   [SuppressUnmanagedCodeSecurity]
   internal sealed class Ir2md : IMetaDataEmit, IMetaDataImport{
-#else
-  internal sealed class Ir2md{
-#endif
     private AssemblyNode assembly;
     private Module/*!*/ module;
     private MetadataWriter/*!*/ writer;
@@ -243,11 +228,7 @@ namespace System.Compiler{
         get { return this.module.StripOptionalModifiersFromLocals; }
     }
     private BinaryWriter/*!*/ blobHeap = new BinaryWriter(new MemoryStream(), System.Text.Encoding.Unicode);
-#if WHIDBEYwithGenerics || WHIDBEYwithGenericsAndIEqualityComparer
     private Hashtable/*!*/ blobHeapIndex = new Hashtable(new ByteArrayKeyComparer());
-#else
-    private Hashtable/*!*/ blobHeapIndex = new Hashtable(new ByteArrayHasher(), new ByteArrayComparer());
-#endif
     private Hashtable/*!*/ blobHeapStringIndex = new Hashtable();
     private NodeList/*!*/ nodesWithCustomAttributes = new NodeList();
     private int customAttributeCount = 0;
@@ -287,9 +268,6 @@ namespace System.Compiler{
     private TrivialHashtable<int>/*!*/ methodIndex = new TrivialHashtable<int>();
     private MethodList/*!*/ methodImplEntries = new MethodList();
     private MethodInfo/*!*/ methodInfo;
-#if !MinimalReader && !CodeContracts
-    private Method currentMethod;
-#endif
     private MemberList/*!*/ methodSemanticsEntries = new MemberList();
     private MethodList/*!*/ methodSpecEntries = new MethodList();
     private Hashtable/*!*/ methodSpecIndex = new Hashtable();
@@ -304,9 +282,7 @@ namespace System.Compiler{
     private PropertyList/*!*/ propertyMapEntries = new PropertyList();
     private BinaryWriter/*!*/ resourceDataHeap = new BinaryWriter(new MemoryStream());
     private BinaryWriter/*!*/ sdataHeap = new BinaryWriter(new MemoryStream());
-#if !ROTOR
     private ISymUnmanagedWriter symWriter = null;
-#endif
     private int stackHeight;
     private int stackHeightMax;
     private int stackHeightExitTotal;
@@ -354,10 +330,8 @@ namespace System.Compiler{
         MetadataWriter mdWriter = ir2md.writer;
         mdWriter.WritePE(writer);
       }finally{
-#if !ROTOR
         if (ir2md.symWriter != null) 
           ir2md.symWriter.Close();
-#endif
         ir2md.assembly = null;
         ir2md.assemblyRefEntries = null;
         ir2md.assemblyRefIndex = null;
@@ -396,9 +370,6 @@ namespace System.Compiler{
         ir2md.methodImplEntries = null;
         ir2md.methodIndex = null;
         ir2md.methodInfo = null;
-#if !MinimalReader && !CodeContracts
-        ir2md.currentMethod = null;
-#endif
         ir2md.methodSemanticsEntries = null;
         ir2md.methodSpecEntries = null;
         ir2md.methodSpecIndex = null;
@@ -420,9 +391,7 @@ namespace System.Compiler{
         ir2md.standAloneSignatureEntries = null;
         ir2md.stringHeap = null;
         ir2md.stringHeapIndex = null;
-#if !ROTOR
         ir2md.symWriter = null;
-#endif
         ir2md.tlsHeap = null;
         ir2md.typeDefEntries = null;
         ir2md.typeDefIndex = null;
@@ -483,7 +452,6 @@ namespace System.Compiler{
     private void SetupMetadataWriter(string debugSymbolsLocation){
       Version v = TargetPlatform.TargetVersion;
       this.UseGenerics = TargetPlatform.UseGenerics;
-#if !ROTOR
       if (debugSymbolsLocation != null){
         // If targeting RTM (Version.Major = 1 and Version.Minor = 0)
         // then use Symwriter.pdb as ProgID else use CorSymWriter_SxS
@@ -535,21 +503,14 @@ namespace System.Compiler{
           }
         }
       }
-#endif
       //Visit the module, building lists etc.
       this.VisitModule(this.module);
       //Use the lists to populate the tables in the metadata writer
-#if !ROTOR
       MetadataWriter writer = this.writer = new MetadataWriter(this.symWriter);
-#else
-      MetadataWriter writer = this.writer = new MetadataWriter();
-#endif
       writer.UseGenerics = this.UseGenerics;
       if (module.EntryPoint != null){
         writer.entryPointToken = this.GetMethodToken(module.EntryPoint);
-#if !ROTOR
         if (this.symWriter != null) this.symWriter.SetUserEntryPoint((uint)writer.entryPointToken);
-#endif
       }
       writer.dllCharacteristics = module.DllCharacteristics;
       writer.moduleKind = module.Kind;
@@ -722,9 +683,6 @@ namespace System.Compiler{
       {
         fieldType = RequiredModifier.For(SystemTypes.IsVolatile, fieldType);
       }
-#if ExtendedRuntime
-      if (field.HasOutOfBandContract) fieldType = TypeNode.DeepStripModifiers(fieldType, null, SystemTypes.NonNullType);
-#endif
       if (fieldType == null) { Debug.Fail(""); fieldType = SystemTypes.Object; }
       this.WriteTypeSignature(signature, fieldType, true);
       return this.GetBlobIndex(sig.ToArray());
@@ -871,12 +829,10 @@ namespace System.Compiler{
         case NodeType.EnumNode:
         case NodeType.Interface:
         case NodeType.Struct:
-#if !MinimalReader
         case NodeType.TupleType:
         case NodeType.TypeAlias:
         case NodeType.TypeIntersection:
         case NodeType.TypeUnion:
-#endif
           TypeNode t = (TypeNode)node;
           if (this.IsStructural(t) && (!t.IsGeneric || (t.Template != null && t.ConsolidatedTemplateArguments != null && t.ConsolidatedTemplateArguments.Count > 0)))
             return (this.GetTypeSpecIndex(t) << 5) | 13;
@@ -893,7 +849,6 @@ namespace System.Compiler{
         default: Debug.Assert(false, "Unexpect custom attribute parent"); return 0;
       }
     }
-#if !ROTOR
     ISymUnmanagedDocumentWriter GetDocumentWriter(Document/*!*/ doc) 
       //^ requires this.symWriter != null;
     {
@@ -916,7 +871,6 @@ namespace System.Compiler{
       return null;
     }
 
-#endif
     int GetEventIndex(Event/*!*/ e) {
       return (int)this.eventIndex[e.UniqueKey];
     }
@@ -982,10 +936,8 @@ namespace System.Compiler{
       return (int)index;
     }
     internal int GetLocalVarIndex(Local/*!*/ loc) {
-#if !MinimalReader
       LocalBinding lb = loc as LocalBinding;
       if (lb != null) loc = lb.BoundLocal;
-#endif
       if (this.StripOptionalModifiersFromLocals)
         loc.Type = TypeNode.StripModifiers(loc.Type);
       MethodInfo methInfo = this.methodInfo;
@@ -996,15 +948,9 @@ namespace System.Compiler{
         methInfo.localVarIndex = new TrivialHashtable<int>();
         methInfo.localVarSigTok = 0x11000000 | this.GetStandAloneSignatureIndex(methInfo.localVarSignature);
       }
-#if true
       int index;
       if (!methInfo.localVarIndex.TryGetValue(loc.UniqueKey, out index)) {
-#else
-      object index = methInfo.localVarIndex[loc.UniqueKey];
-      if (index == null) {
-#endif
         methInfo.localVarIndex[loc.UniqueKey] = index = methInfo.localVarIndex.Count;
-#if !ROTOR
         int startPosition = 0;
         if (this.symWriter != null && loc.Name != null && loc.Name.UniqueIdKey != Identifier.Empty.UniqueIdKey){
           methInfo.debugLocals.Add(loc);
@@ -1013,12 +959,9 @@ namespace System.Compiler{
           this.WriteTypeSignature(methInfo.localVarSignature, loc.Type, true);
           methInfo.signatureLengths.Add(methInfo.localVarSignature.BaseStream.Position - startPosition);
         }else{
-#endif
           if (loc.Pinned) methInfo.localVarSignature.Write((byte)ElementType.Pinned);
           this.WriteTypeSignature(methInfo.localVarSignature, loc.Type, true);
-#if !ROTOR
         }
-#endif
       }
       return (int)index;
     }
@@ -1219,10 +1162,8 @@ namespace System.Compiler{
     }
     int GetParamIndex(Parameter p){
       if (p == null) return 0;
-#if !MinimalReader
       ParameterBinding pb = p as ParameterBinding;
       if (pb != null) p = pb.BoundParameter;
-#endif
       return this.paramIndex[p.UniqueKey];
     }
     int GetPropertyIndex(Property/*!*/ p) {
@@ -1641,12 +1582,10 @@ namespace System.Compiler{
           case NodeType.EnumNode:
           case NodeType.Interface:
           case NodeType.Struct:
-#if !MinimalReader
           case NodeType.TupleType:
           case NodeType.TypeAlias:
           case NodeType.TypeIntersection:
           case NodeType.TypeUnion:
-#endif
             TypeNode t = (TypeNode)node;
             if (this.IsStructural(t) && (!t.IsGeneric || (t.Template != null && t.ConsolidatedTemplateArguments != null && t.ConsolidatedTemplateArguments.Count > 0)))
               codedIndex = (this.GetTypeSpecIndex(t)<<5)|13;
@@ -1961,28 +1900,15 @@ namespace System.Compiler{
       TypeNode lastParameter = null;
       int paramIndex = 0;
       int constraintIndex = 0;
-#if !CodeContracts
-      int indexOffset = 0;
-#endif
       for (int i = 0; i < n; i++){
         TypeNode t = this.genericParamConstraintEntries[i];
         if (t != lastParameter){
           paramIndex = this.GetGenericParamIndex(t);
           constraintIndex = 0; 
-#if !CodeContracts
-          indexOffset = 0;
-#endif
         }
         gpcr[i].Param = paramIndex;
         TypeNode constraint;
-#if CodeContracts
         constraint = t.StructuralElementTypes[constraintIndex];
-#else
-        if (constraintIndex == 0 && t.BaseType != null && t.BaseType != CoreSystemTypes.Object){
-          constraint = t.BaseType; indexOffset = 1;
-        }else
-          constraint = t.Interfaces[constraintIndex-indexOffset];
-#endif
         gpcr[i].Constraint = this.GetTypeDefOrRefOrSpecEncoded(constraint);
         lastParameter = t;
         constraintIndex++;
@@ -2031,15 +1957,6 @@ namespace System.Compiler{
         }
         int ti = iir[i].Class = this.GetTypeDefIndex(t);
         Interface iface = null;
-#if ExtendedRuntime
-        if (t is ITypeParameter){
-          int numIfaces = t.Interfaces == null ? 0 : t.Interfaces.Count;
-          if (j == numIfaces)
-            iface = SystemTypes.ITemplateParameter;
-          else
-            iface = t.Interfaces[j];
-        }else
-#endif
           iface = t.Interfaces[j];
         if (iface == null){i--; continue;}
         int ii = iir[i].Interface = this.GetTypeDefOrRefOrSpecEncoded(iface);
@@ -2457,16 +2374,10 @@ namespace System.Compiler{
           this.VisitExpression((Expression)node); return;
         case NodeType.AssignmentStatement : 
           this.VisitAssignmentStatement((AssignmentStatement)node); return;
-#if !MinimalReader && !CodeContracts
-        case NodeType.Base :
-          this.VisitBase((Base)node); return;
-#endif
         case NodeType.Block : 
           this.VisitBlock((Block)node); return;
-#if !MinimalReader
         case NodeType.BlockExpression :
           this.VisitBlockExpression((BlockExpression)node); return;
-#endif
         case NodeType.Branch :
           this.VisitBranch((Branch)node); return;
         case NodeType.DebugBreak :
@@ -2475,9 +2386,7 @@ namespace System.Compiler{
         case NodeType.Calli :
         case NodeType.Callvirt :
         case NodeType.Jmp :
-#if !MinimalReader
         case NodeType.MethodCall :
-#endif
           this.VisitMethodCall((MethodCall)node); return;
         case NodeType.Class :
         case NodeType.ClassParameter:
@@ -2515,10 +2424,6 @@ namespace System.Compiler{
           this.VisitLiteral((Literal)node); return;
         case NodeType.Local :
           this.VisitLocal((Local)node); return;
-#if !MinimalReader && !CodeContracts
-        case NodeType.LocalDeclarationsStatement:
-          this.VisitLocalDeclarationsStatement((LocalDeclarationsStatement)node); return;
-#endif
         case NodeType.MemberBinding :
           this.VisitMemberBinding((MemberBinding)node); return;
         case NodeType.Nop :
@@ -2535,17 +2440,13 @@ namespace System.Compiler{
         case NodeType.Return:
           this.VisitReturn((Return)node); return;
         case NodeType.Struct :
-#if !MinimalReader
         case NodeType.TypeAlias :
         case NodeType.TypeIntersection :
         case NodeType.TypeUnion:
         case NodeType.TupleType:
-#endif
           this.VisitStruct((Struct)node); return;
-#if !MinimalReader
         case NodeType.SwitchCaseBottom:
           return;
-#endif
         case NodeType.SwitchInstruction :
           this.VisitSwitchInstruction((SwitchInstruction)node); return;
         case NodeType.This :
@@ -2571,9 +2472,7 @@ namespace System.Compiler{
         case NodeType.Eq : 
         case NodeType.Ge : 
         case NodeType.Gt : 
-#if !MinimalReader
         case NodeType.Is : 
-#endif
         case NodeType.Isinst : 
         case NodeType.Ldvirtftn :
         case NodeType.Le : 
@@ -2600,10 +2499,8 @@ namespace System.Compiler{
 
         
         case NodeType.AddressOf:
-#if !MinimalReader        
         case NodeType.OutAddress:
         case NodeType.RefAddress:
-#endif
         case NodeType.ReadOnlyAddressOf:
           this.VisitAddressOf((UnaryExpression)node); return;
         case NodeType.Ckfinite :
@@ -2771,10 +2668,8 @@ namespace System.Compiler{
           this.methodBodyHeap.Write((int)this.GetFieldToken((Field)mb.BoundMember));
           return;
         case NodeType.Parameter: 
-#if !MinimalReader
           ParameterBinding pb = operand as ParameterBinding;
           if (pb != null) operand = pb.BoundParameter;
-#endif
           int pi = ((Parameter)operand).ArgumentListIndex;
           if (pi < 256){
             this.methodBodyHeap.Write((byte)0x0f);
@@ -2851,10 +2746,8 @@ namespace System.Compiler{
           this.stackHeight--;
           return;
         case NodeType.Parameter:
-#if !MinimalReader
           ParameterBinding pb = target as ParameterBinding;
           if (pb != null) target = pb.BoundParameter;
-#endif
           Parameter par = (Parameter)target;
           this.Visit(assignment.Source);
           int pi = par.ArgumentListIndex;
@@ -2966,12 +2859,6 @@ namespace System.Compiler{
           return;
       }
     }
-#if !MinimalReader && !CodeContracts
-    void VisitBase(Base/*!*/ Base) {
-      this.IncrementStackHeight();
-      this.methodBodyHeap.Write((byte)0x02);
-    }
-#endif
     void VisitBinaryExpression(BinaryExpression/*!*/ binaryExpression) {
       byte opCode = 0;
       this.Visit(binaryExpression.Operand1);
@@ -3038,7 +2925,6 @@ namespace System.Compiler{
       if (this.exceptionBlock[block.UniqueKey] != null) this.stackHeight = 1;
       StatementList statements = block.Statements;
       if (statements == null) return;
-#if !ROTOR
       if (this.symWriter != null && block.HasLocals){
         LocalList savedDebugLocals = mInfo.debugLocals;
         Int32List savedSignatureLengths = mInfo.signatureLengths;
@@ -3055,21 +2941,16 @@ namespace System.Compiler{
         mInfo.signatureLengths = savedSignatureLengths;
         mInfo.signatureOffsets = savedSignatureOffsets;
       }else{
-#endif
         for (int i = 0, n = statements.Count; i < n; i++)
           this.Visit(statements[i]);
         if (this.stackHeight > savedStackHeight) this.stackHeightExitTotal += (this.stackHeight - savedStackHeight);
-#if !ROTOR
       }
-#endif
       this.stackHeight = savedStackHeight;
     }
-#if !MinimalReader
     void VisitBlockExpression(BlockExpression/*!*/ blockExpression) {
       if (blockExpression.Block == null) return;
       this.VisitBlock(blockExpression.Block);
     }
-#endif
     void VisitBranch(Branch/*!*/ branch) {
       this.DefineSequencePoint(branch);
       BinaryExpression bex = branch.Condition as BinaryExpression;
@@ -3380,9 +3261,7 @@ namespace System.Compiler{
         this.Visit(expressions[i]);
     }
     void VisitExpressionStatement(ExpressionStatement/*!*/ statement) {
-#if !MinimalReader
       if (!(statement.Expression is BlockExpression))
-#endif
         this.DefineSequencePoint(statement);
       this.Visit(statement.Expression);
     }
@@ -3416,15 +3295,8 @@ namespace System.Compiler{
         if (((ITypeParameter)parameter).DeclaringMember != member)
           parameter = (TypeNode)parameter.Clone();
         this.genericParameters.Add(parameter);
-#if CodeContracts
         for (int j = 0, m = parameter.StructuralElementTypes == null ? 0 : parameter.StructuralElementTypes.Count; j < m; j++)
           this.genericParamConstraintEntries.Add(parameter);
-#else
-        if (parameter.BaseType is Class && parameter.BaseType != CoreSystemTypes.Object)
-          this.genericParamConstraintEntries.Add(parameter);
-        for (int j = 0, m = parameter.Interfaces == null ? 0 : parameter.Interfaces.Count; j < m; j++)
-          this.genericParamConstraintEntries.Add(parameter);
-#endif
       }
     }
     void VisitIndexer(Indexer/*!*/ indexer) {
@@ -3497,31 +3369,6 @@ namespace System.Compiler{
           return;
       }
     }
-#if !MinimalReader && !CodeContracts
-    /// <summary>
-    /// This just gets the local variable index for each local declaration.
-    /// That associates the debug information with the right block because
-    /// it is the block the local is declared in rather than the subblock
-    /// it is first referenced in. (When different, the debugger only knows
-    /// about the local when control is in the subblock.)
-    /// </summary>
-    /// <param name="localDeclarations">The list of locals declared at this statement</param>
-    void VisitLocalDeclarationsStatement(LocalDeclarationsStatement/*!*/ localDeclarations) {
-      if (localDeclarations == null) return;
-      LocalDeclarationList decls = localDeclarations.Declarations;
-      for (int i = 0, n = decls == null ? 0 : decls.Count; i < n; i++) {
-        //^ assert decls != null;
-        LocalDeclaration decl = decls[i];
-        if (decl == null) continue;
-        Field f = decl.Field;
-        if (f == null) continue;
-        //^ assume this.currentMethod != null;
-        Local loc = this.currentMethod.GetLocalForField(f);
-        loc.Type = localDeclarations.Type;
-        this.GetLocalVarIndex(loc);
-      }
-    }
-#endif
     void VisitLiteral(Literal/*!*/ literal) {
       this.IncrementStackHeight();
       IConvertible ic = literal.Value as IConvertible;
@@ -3649,13 +3496,9 @@ namespace System.Compiler{
       //Visit body, emitting IL bytes and gathering information
       this.methodBodyHeap = new BinaryWriter(new MemoryStream());
       this.methodInfo = new MethodInfo();
-#if !MinimalReader && !CodeContracts
-      this.currentMethod = method;
-#endif
       this.stackHeightMax = 0;
       this.stackHeightExitTotal = 0;
       uint methodDefToken = 0;
-#if !ROTOR
       if (this.symWriter != null){
         methodDefToken = (uint)this.GetMethodDefToken(method);
         this.methodInfo.debugLocals = new LocalList();
@@ -3665,21 +3508,7 @@ namespace System.Compiler{
         this.methodInfo.statementOffsets = new Int32List();
         this.symWriter.OpenMethod(methodDefToken);
         this.symWriter.OpenScope(0u);
-#if !MinimalReader && !CodeContracts
-        MethodScope scope = method.Scope;
-        if (scope != null){
-          UsedNamespaceList usedNamespaces = scope.UsedNamespaces;
-          for (int i = 0, n = usedNamespaces == null ? 0 : usedNamespaces.Count; i < n; i++) {
-            //^ assert usedNamespaces != null;
-            UsedNamespace uns = usedNamespaces[i];
-            if (uns == null || uns.Namespace == null) continue;
-            this.symWriter.UsingNamespace(uns.Namespace.ToString());
-          }
-        }
-#endif
       }
-#endif
-#if !FxCop
       int originalAddress = 0;
       if (method.LocalList != null) {
         for (int i = 0, n = method.LocalList.Count; i < n; i++) {
@@ -3687,15 +3516,12 @@ namespace System.Compiler{
           if (loc == null) continue;
           this.GetLocalVarIndex(loc);
         }
-#if !ROTOR
         if (this.symWriter != null) {
           int currentAddress = (int)this.methodBodyHeap.BaseStream.Position;
           originalAddress = currentAddress;
           this.symWriter.OpenScope((uint)currentAddress);
         }
-#endif
       }
-#endif
       int exceptionHandlersCount = method.ExceptionHandlers == null ? 0 : method.ExceptionHandlers.Count;
       if (exceptionHandlersCount > 0){
         this.exceptionBlock = new TrivialHashtable();
@@ -3707,15 +3533,11 @@ namespace System.Compiler{
       }
       this.VisitBlock(method.Body);
 
-#if !FxCop
       if (method.LocalList != null) {
-#if !ROTOR
         if (this.symWriter != null) {
           DefineLocalVariables(originalAddress, method.LocalList);
         }
-#endif
       }
-#endif
       
       this.methodBodiesHeapIndex[method.UniqueKey] = (int)this.methodBodiesHeap.BaseStream.Position;
       int maxStack = this.stackHeightExitTotal + this.stackHeightMax; //Wildly pessimistic estimate. Works dandy if BBlocks never leave anything on the stack.
@@ -3810,7 +3632,6 @@ namespace System.Compiler{
             this.methodBodiesHeap.Write((int)0);
         }
       }
-#if !ROTOR
       if (this.symWriter != null){
         MethodInfo mInfo = this.methodInfo;
         NodeList statementNodes = mInfo.statementNodes;
@@ -3848,21 +3669,17 @@ namespace System.Compiler{
           this.DefineSequencePoints(statementNodes, statementOffsets, j, k, doc);
         }
         this.symWriter.CloseScope((uint)this.methodBodyHeap.BaseStream.Position);
-#if CodeContracts
         if (method.ExtraDebugInfo != null)
         {
           method.ExtraDebugInfo.Write(methodDefToken, this.symWriter, this);
         }
-#endif
         this.symWriter.CloseMethod();
       }
-#endif
       //this.methodBodyHeap = null;
       //this.methodInfo = null;
       //this.currentMethod = null;
     }
 
-#if !ROTOR
     private void DefineLocalVariables(int startAddress, LocalList locals) {
       MethodInfo mInfo = this.methodInfo;
       for(int i = 0, n = locals.Count; i < n; i++) {
@@ -3886,9 +3703,7 @@ namespace System.Compiler{
       else
         this.symWriter.CloseScope((uint)startAddress);
     }
-#endif
     void DefineSequencePoint(Node node){
-#if !ROTOR
       if (this.symWriter != null && node != null && node.SourceContext.Document != null && !node.SourceContext.Document.Hidden){
         if (this.methodInfo.statementNodes.Count > 0)
         {
@@ -3901,9 +3716,7 @@ namespace System.Compiler{
         this.methodInfo.statementNodes.Add(node);
         this.methodInfo.statementOffsets.Add(this.methodBodyHeap.BaseStream.Position);
       }
-#endif
     }
-#if !ROTOR
     void DefineSequencePoints(NodeList/*!*/ statementNodes, Int32List/*!*/ statementOffsets, int start, int count, ISymUnmanagedDocumentWriter doc) 
       //^ requires this.symWriter != null;
     {
@@ -3923,7 +3736,6 @@ namespace System.Compiler{
       }
       this.symWriter.DefineSequencePoints(doc, (uint)count, offsets, lines, columns, endLines, endColumns);
     }
-#endif
     void VisitModule(Module/*!*/ module) {
       //REVIEW: check that module has no explicit lists of assembly/module references?
       //this.ForceTemplateTypeMethodBodiesToGetSpecialized(module);
@@ -4003,140 +3815,11 @@ namespace System.Compiler{
         }
       }
     }
-#if !CodeContracts
-    sealed class MethodSpecializer : StandardVisitor{
-      private Module/*!*/ module;
-
-      internal MethodSpecializer(Module/*!*/ module) {
-        this.module = module;
-        //^ base();
-      }
-
-      public override Method VisitMethod(Method method) {
-        if (method == null) return null;
-        if (method.Template == null || method.Template.IsGeneric) return method;
-        TypeNodeList templateParameters = null;
-        TypeNodeList templateArguments = null;
-        if (method.TemplateArguments != null && method.TemplateArguments.Count > 0){
-          templateParameters = method.Template.TemplateParameters;
-          templateArguments = method.TemplateArguments;
-        }else{
-          TypeNode tdt = method.Template.DeclaringType;
-          TypeNode dt = method.DeclaringType;
-          templateParameters = tdt.ConsolidatedTemplateParameters;
-          templateArguments = dt.ConsolidatedTemplateArguments;
-          if (templateArguments == null) templateArguments = templateParameters;
-        }
-        if (templateParameters == null || templateParameters.Count == 0) return method;
-        TypeNode declaringTemplate = method.DeclaringType == null ? null : method.DeclaringType.Template;
-        bool savedNewTemplateInstanceIsRecursive = false;
-        if (declaringTemplate != null){
-          savedNewTemplateInstanceIsRecursive = declaringTemplate.NewTemplateInstanceIsRecursive;
-          declaringTemplate.NewTemplateInstanceIsRecursive = method.DeclaringType.IsNotFullySpecialized;
-        }
-        Duplicator duplicator = new Duplicator(this.module, method.DeclaringType);
-#if !MinimalReader && !CodeContracts
-        TypeNode closureClone = null;
-        if (method.Template.Scope != null && method.Template.Scope.CapturedForClosure){
-          duplicator.TypesToBeDuplicated[method.Template.Scope.ClosureClass.UniqueKey] = method.Template.Scope.ClosureClass;
-          duplicator.RecordOriginalAsTemplate = true;
-          closureClone = duplicator.VisitTypeNode(method.Template.Scope.ClosureClass);
-        }
-#endif
-        int n = method.Parameters == null ? 0 : method.Parameters.Count;
-        int m = method.Template.Parameters == null ? 0 : method.Template.Parameters.Count;
-        if (n != m){Debug.Assert(false); if (n > m) n = m;}
-        for (int i = 0; i < n; i++){
-          Parameter par = method.Parameters[i];
-          Parameter tpar = method.Template.Parameters[i];
-          if (par == null || tpar == null) continue;
-          duplicator.DuplicateFor[tpar.UniqueKey] = par;
-        }
-        n = method.TemplateParameters == null ? 0 : method.TemplateParameters.Count;
-        m = method.Template.TemplateParameters == null ? 0 : method.Template.TemplateParameters.Count;
-        if (n != m && n > 0){Debug.Assert(false); if (n > m) n = m;}
-        for (int i = 0; i < n; i++){
-          TypeNode tpar = method.TemplateParameters[i];
-          TypeNode ttpar = method.Template.TemplateParameters[i];
-          if (tpar == null || ttpar == null) continue;
-          duplicator.DuplicateFor[ttpar.UniqueKey] = tpar;
-        }
-        Method dup = duplicator.VisitMethod(method.Template);
-        //^ assume dup != null;
-        Specializer specializer = new Specializer(this.module, templateParameters, templateArguments);
-        specializer.VisitMethod(dup);
-#if !MinimalReader && !CodeContracts
-        if (closureClone != null){
-          specializer.VisitTypeNode(closureClone);
-          if (method.TemplateArguments != null && method.TemplateArguments.Count > 0)
-            closureClone.Name = Identifier.For(closureClone.Name.ToString()+closureClone.UniqueKey);
-          MemberList dtMembers = method.DeclaringType.Members;
-          for (int i = 0, nmems = dtMembers == null ? 0 : dtMembers.Count; i < nmems; i++){
-            ClosureClass closureRef = dtMembers[i] as ClosureClass;
-            if (closureRef != null && closureRef.Name.UniqueIdKey == closureClone.Name.UniqueIdKey){
-              //This happens when the declaring type was instantiated after Normalizer has already injected a closure into the template
-              dtMembers[i] = closureClone;
-              closureClone = null;
-              break;
-            }
-          }
-          if (closureClone != null)
-            method.DeclaringType.Members.Add(closureClone);
-        }
-#endif
-        if (method.Template.DeclaringType.DeclaringModule != this.module){
-          //Dealing with imported IR that misses important type information if it contains explicit stack operations (push, pop, dup) 
-          //Call a helper visitor to remove these stack operations and in the process supply the missing type information.
-          Unstacker unstacker = new Unstacker();
-          unstacker.Visit(dup);
-        }
-        MethodBodySpecializer mbSpecializer = this.module.GetMethodBodySpecializer(templateParameters, templateArguments);
-        mbSpecializer.methodBeingSpecialized = method;
-        mbSpecializer.dummyMethod = dup;
-        mbSpecializer.VisitMethod(dup);
-        method.Body = dup.Body;
-        // HACK to try to fix parameter declaring method back to the way it was before:
-        method.Parameters = method.Parameters;
-        method.ExceptionHandlers = dup.ExceptionHandlers;
-        if (declaringTemplate != null)
-          declaringTemplate.NewTemplateInstanceIsRecursive = savedNewTemplateInstanceIsRecursive;
-        return method;
-      }
-    }
-    void ForceTemplateTypeMethodBodiesToGetSpecialized(Module/*!*/ module) {
-      MethodSpecializer visitor = new MethodSpecializer(module);
-      if (module == null) return;
-      TypeNodeList types = module.Types;
-      if (types == null) return;
-      for (int i = 0; i < types.Count; i++)
-        this.ForceTemplateTypeMethodBodiesToGetSpecialized(types[i], visitor);
-    }
-    void ForceTemplateTypeMethodBodiesToGetSpecialized(TypeNode/*!*/ type, MethodSpecializer/*!*/ visitor) {
-      if (type == null) return;
-      if (type.IsNotFullySpecialized || type.IsGeneric) return;
-      bool savedNewTemplateInstanceIsRecursive = type.NewTemplateInstanceIsRecursive;
-      type.NewTemplateInstanceIsRecursive = type.IsNotFullySpecialized;
-      MemberList members = type.Members;
-      if (members == null) return;
-      for (int j = 0; j < members.Count; j++){
-        Member mem = members[j];
-        if (mem == null) continue;
-        TypeNode t = mem as TypeNode;
-        if (t != null)
-          this.ForceTemplateTypeMethodBodiesToGetSpecialized(t, visitor);
-        else
-          visitor.VisitMethod(mem as Method);
-      }
-      type.NewTemplateInstanceIsRecursive = savedNewTemplateInstanceIsRecursive;
-    }
-#endif
 
     void VisitParameter(Parameter/*!*/ parameter) {
       this.IncrementStackHeight();
-#if !MinimalReader
       ParameterBinding pb = parameter as ParameterBinding;
       if (pb != null) parameter = pb.BoundParameter;
-#endif
       int pi = parameter.ArgumentListIndex;
       switch(pi){
         case 0: this.methodBodyHeap.Write((byte)0x02); return;
@@ -4520,15 +4203,7 @@ namespace System.Compiler{
             case TypeCode.Object: 
               Array arr = lit.Value as Array;
               if (arr != null){
-#if !NoReflection
                 t = TypeNode.GetTypeNode(arr.GetType());
-#else
-                System.Type reflType = arr.GetType();
-                System.Type reflElemType = reflType.GetElementType();
-                AssemblyNode assem = AssemblyNode.GetAssembly(reflType.Assembly.Location);
-                TypeNode cciElemType = assem.GetType(Identifier.For(reflElemType.Namespace), Identifier.For(reflElemType.Name));
-                t = cciElemType.GetArrayType(reflType.GetArrayRank());
-#endif
               }else
                 t = CoreSystemTypes.Type; 
               break;
@@ -4574,24 +4249,12 @@ namespace System.Compiler{
       Ir2md.WriteCompressedInt(target, n);
 
       TypeNode returnType = method.ReturnType;
-#if ExtendedRuntime
-      if (method.HasOutOfBandContract || AttributesContains(method.ReturnAttributes, SystemTypes.NotNullAttribute)) {
-        returnType = TypeNode.DeepStripModifiers(returnType, (method.Template != null) ? method.Template.ReturnType : null, SystemTypes.NonNullType, SystemTypes.NullableType);
-    //    returnType = TypeNode.DeepStripModifier(returnType, SystemTypes.NullableType, (method.Template != null) ? returnType.GetTemplateInstance(returnType, returnType.TemplateArguments) : null);
-      }
-#endif      
       if (returnType == null) returnType = SystemTypes.Object;
       this.WriteTypeSignature(target, returnType, true);
       for (int i = 0; i < n; i++){
         Parameter p = pars[i];
         if (p == null) continue;
         TypeNode parameterType = p.Type;
-#if ExtendedRuntime
-        if (method.HasOutOfBandContract || AttributesContains(p.Attributes, SystemTypes.NotNullAttribute)) {
-          parameterType = TypeNode.DeepStripModifiers(parameterType, (method.Template != null) ? method.Template.Parameters[i].Type : null, SystemTypes.NonNullType, SystemTypes.NullableType);
-          //parameterType = TypeNode.DeepStripModifier(parameterType, SystemTypes.NullableType, (method.Template != null) ? parameterType.GetTemplateInstance(parameterType, parameterType.TemplateArguments) : null);
-        }
-#endif
         if (parameterType == null) parameterType = SystemTypes.Object;
         this.WriteTypeSignature(target, parameterType);
       }
@@ -4869,7 +4532,6 @@ namespace System.Compiler{
       }
     }
 
-#if !ROTOR  
     void IMetaDataEmit.SetModuleProps(string szName){
       throw new NotImplementedException();
     } 
@@ -5268,9 +4930,7 @@ namespace System.Compiler{
     int IMetaDataImport.IsGlobal(uint pd){
       throw new NotImplementedException();
     }
-#endif
   }  
-#if WHIDBEYwithGenericsAndIEqualityComparer
   public class ByteArrayKeyComparer : IEqualityComparer, IComparer{
     int IComparer.Compare(object x, object y) {
       if (x == null || y == null) throw new ArgumentNullException();
@@ -5298,60 +4958,6 @@ namespace System.Compiler{
       return hcode;
     }
   }
-#elif WHIDBEYwithGenerics
-  public class ByteArrayKeyComparer : IKeyComparer{
-    int IComparer.Compare(object x, object y) {
-      if (x == null || y == null) throw new ArgumentNullException();
-      byte[] xa = (byte[])x;
-      byte[] ya = (byte[])y;
-      int n = xa.Length;
-      int result = n - ya.Length;
-      if (result != 0) return result;
-      for (int i = 0; i < n; i++){
-        result = xa[i] - ya[i];
-        if (result != 0) return result;
-      }
-      return 0;
-    }
-    bool IKeyComparer.Equals(object x, object y){
-      return ((IKeyComparer)this).Compare(x, y) == 0;
-    }
-    int IHashCodeProvider.GetHashCode(object x) {
-      Debug.Assert(x != null);
-      byte[] xa = (byte[])x;
-      int hcode = 1;
-      for (int i = 0, n = xa.Length; i < n; i++)
-        hcode = hcode * 17 + xa[i];
-      return hcode;
-    }
-  }
-#else
-  public class ByteArrayComparer : IComparer{
-    int IComparer.Compare(object x, object y){
-      if (x == null || y == null) throw new ArgumentNullException();
-      byte[] xa = (byte[])x;
-      byte[] ya = (byte[])y;
-      int n = xa.Length;
-      int result = n - ya.Length;
-      if (result != 0) return result;
-      for (int i = 0; i < n; i++){
-        result = xa[i] - ya[i];
-        if (result != 0) return result;
-      }
-      return 0;
-    }
-  }
-  public class ByteArrayHasher : IHashCodeProvider{
-    int IHashCodeProvider.GetHashCode(object x){
-      Debug.Assert(x != null);
-      byte[] xa = (byte[])x;
-      int hcode = 1;
-      for (int i = 0, n = xa.Length; i < n; i++)
-        hcode = hcode*17 + xa[i];
-      return hcode;
-    }
-  }
-#endif
   internal class Fixup{
     internal int fixupLocation;
     internal int addressOfNextInstruction;
@@ -5363,13 +4969,11 @@ namespace System.Compiler{
     internal int localVarSigTok;
     internal BinaryWriter/*!*/ localVarSignature;
     internal TrivialHashtable<int>/*!*/ localVarIndex;
-#if !ROTOR
     internal NodeList/*!*/ statementNodes;
     internal LocalList/*!*/ debugLocals;
     internal Int32List/*!*/ signatureLengths;
     internal Int32List/*!*/ signatureOffsets;
     internal Int32List/*!*/ statementOffsets;
-#endif
 
     public MethodInfo() {
       //^ base();
@@ -5816,4 +5420,4 @@ namespace System.Compiler{
 
   }
 }
-#endif
+

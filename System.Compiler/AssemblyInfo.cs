@@ -12,7 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if !FxCop
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -24,14 +23,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Copyright (C) Microsoft Corp. 2002, 2003, 20004. All rights reserved")]
 [assembly: AssemblyTrademark("Microsoft and Windows are either registered trademarks or trademarks of Microsoft Corporation in the U.S. and/or other countries")]
 [assembly:System.Resources.NeutralResourcesLanguage("en-US")]
-#if DelaySign
-//[assembly: AssemblyDelaySign(true)]
-//[assembly: AssemblyKeyFile("..\\..\\..\\Common\\FinalPublicKey.snk")]
-#else
-//[assembly: AssemblyKeyFile("..\\..\\..\\Common\\InterimKey.snk")]
-#endif
-#if !ROTOR
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
-#endif
 [assembly: CLSCompliant(false)]
-#endif

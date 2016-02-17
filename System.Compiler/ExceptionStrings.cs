@@ -16,11 +16,7 @@ using System;
 using System.IO;
 using System.Resources;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
   sealed class ExceptionStrings{
     private readonly static WeakReference/*!*/ resMgr = new WeakReference(null);
 
@@ -31,11 +27,7 @@ namespace System.Compiler{
       get{
         System.Resources.ResourceManager rMgr = ExceptionStrings.resMgr.Target as System.Resources.ResourceManager;
         if (rMgr == null){
-#if CCINamespace
-          rMgr = new System.Resources.ResourceManager("Microsoft.Cci.ExceptionStrings", typeof(ExceptionStrings).Assembly);
-#else
           rMgr = new System.Resources.ResourceManager("System.Compiler.ExceptionStrings", typeof(ExceptionStrings).Assembly);
-#endif
           ExceptionStrings.resMgr.Target = rMgr;
         }
         return rMgr;

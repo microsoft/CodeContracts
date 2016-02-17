@@ -52,7 +52,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
     <UseCodeContracts>true</UseCodeContracts>
-    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts;CLOUSOT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -105,7 +105,8 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
     <UseCodeContracts>true</UseCodeContracts>
-    <DefineConstants>TRACE;DEBUG;WHIDBEY;WHIDBEYwithGenericsAndIEqualityComparer;AllowCsharpConstructorSyntax;ILOFFSETS;NoData;NoRuntimeXml;CodeContracts;CLOUSOT</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <BaseAddress>0</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -145,12 +146,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Comparer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DoubleVisitor.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Duplicator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -160,7 +155,6 @@
     <Compile Include="FastFileIO.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ILGenerator.cs" />
     <Compile Include="Inspector.cs" />
     <Compile Include="ListTemplate.cs">
       <SubType>Code</SubType>
@@ -177,30 +171,6 @@
     <Compile Include="OpCode.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PDBreaderWriter\BitAccess.cs" />
-    <Compile Include="PDBreaderWriter\BitSet.cs" />
-    <Compile Include="PDBreaderWriter\CvInfo.cs" />
-    <Compile Include="PDBreaderWriter\DataStream.cs" />
-    <Compile Include="PDBreaderWriter\DbiDbgHdr.cs" />
-    <Compile Include="PDBreaderWriter\DbiHeader.cs" />
-    <Compile Include="PDBreaderWriter\DbiModuleInfo.cs" />
-    <Compile Include="PDBreaderWriter\DbiSecCon.cs" />
-    <None Include="PDBreaderWriter\DumpMisc.cs" />
-    <Compile Include="PDBreaderWriter\IntHashTable.cs" />
-    <None Include="PDBreaderWriter\LineInfo.cs" />
-    <Compile Include="PDBreaderWriter\MsfDirectory.cs" />
-    <Compile Include="PDBreaderWriter\PdbDebugException.cs" />
-    <Compile Include="PDBreaderWriter\PdbException.cs" />
-    <Compile Include="PDBreaderWriter\PdbFile.cs" />
-    <Compile Include="PDBreaderWriter\PdbFileHeader.cs" />
-    <Compile Include="PDBreaderWriter\PdbFunction.cs" />
-    <Compile Include="PDBreaderWriter\PdbLine.cs" />
-    <Compile Include="PDBreaderWriter\PdbLines.cs" />
-    <Compile Include="PDBreaderWriter\PdbReader.cs" />
-    <Compile Include="PDBreaderWriter\PdbScope.cs" />
-    <Compile Include="PDBreaderWriter\PdbSlot.cs" />
-    <Compile Include="PDBreaderWriter\PdbSource.cs" />
-    <Compile Include="PDBreaderWriter\PdbWriter.cs" />
     <Compile Include="PDBreader\BitAccess.cs" />
     <Compile Include="PDBreader\BitSet.cs" />
     <Compile Include="PDBreader\CCIAdaptors.cs" />
@@ -237,12 +207,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SystemTypes.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Unstacker.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Updater.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Writer.cs">

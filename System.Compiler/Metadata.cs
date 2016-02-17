@@ -13,15 +13,7 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-#if FxCop
-using Win32ResourceList = Microsoft.Cci.Win32ResourceCollection;
-using TypeNodeList = Microsoft.Cci.TypeNodeCollection;
-#endif
-#if CCINamespace
-using Microsoft.Cci;
-#else
 using System.Compiler;
-#endif
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
@@ -32,11 +24,7 @@ using System.Runtime.Serialization;
 /* These classes help with parsing and producing PE files. They are best understood in conjunction with the ECMA 335 Specification
  * (Common Language Infrastructure), particularly Partition II. Also see "Inside Microsoft .NET IL Assembler" by Serge Lidin. */
 
-#if CCINamespace
-namespace Microsoft.Cci.Metadata{
-#else
 namespace System.Compiler.Metadata{
-#endif
   internal struct AssemblyRow{
     internal int HashAlgId;
     internal int MajorVersion;
@@ -196,11 +184,7 @@ namespace System.Compiler.Metadata{
   }
   internal struct ModuleRefRow{
     internal int Name;
-#if FxCop
-    internal ModuleNode Module;
-#else
     internal Module Module;
-#endif
   }
   internal struct NestedClassRow{
     internal int NestedClass;
@@ -517,9 +501,7 @@ namespace System.Compiler.Metadata{
   }
 
   unsafe internal class MetadataReader : IDisposable{
-#if !ROTOR
     private MemoryMappedFile memmap;
-#endif
     readonly private MemoryCursor/*!*/ cursor;
     internal int entryPointToken;
     internal int fileAlignment;
@@ -568,7 +550,6 @@ namespace System.Compiler.Metadata{
     private int[] tableOffset;
     internal byte[] HashValue;
 
-#if !ROTOR
     internal MetadataReader(string path){
       MemoryMappedFile memmap = this.memmap = new MemoryMappedFile(path);
       try {
@@ -580,7 +561,6 @@ namespace System.Compiler.Metadata{
         throw;
       }
     }
-#endif
     
     internal MetadataReader(byte* buffer, int length){
       this.cursor = new MemoryCursor(buffer, length);
@@ -589,10 +569,8 @@ namespace System.Compiler.Metadata{
     }
 
     public void Dispose(){
-#if !ROTOR
       if (this.memmap != null) this.memmap.Dispose();
       this.memmap = null;
-#endif
       //this.cursor = null;
       this.sectionHeaders = null;
       this.identifierStringHeap = null;
@@ -2165,7 +2143,6 @@ namespace System.Compiler.Metadata{
       return header;
     }
   }
-#if !NoWriter
   internal class MetadataWriter{
     internal MemoryStream StringHeap;
     internal MemoryStream BlobHeap;
@@ -2238,21 +2215,14 @@ namespace System.Compiler.Metadata{
     private int typeDefOrRefOrSpecSize;
     private int resolutionScopeRefSize;
     private int stringRefSize;
-#if !ROTOR
     private ISymUnmanagedWriter symWriter;
-#endif
     private int[] tableRefSize;
     private int[] tableSize;
     private long validMask;
 
-#if !ROTOR
     internal MetadataWriter(ISymUnmanagedWriter symWriter){
       this.symWriter = symWriter;
     }
-#else
-    internal MetadataWriter(){
-    }
-#endif
 
     private void SerializeMetadata(BinaryWriter/*!*/ writer, int virtualAddressBase, Fixup/*!*/ sdataFixup, Fixup/*!*/ tlsFixup)
       //^ requires this.MethodBodiesHeap != null;
@@ -2344,7 +2314,6 @@ namespace System.Compiler.Metadata{
       this.SerializeTables(writer, virtualAddressBase+72, sdataFixup, tlsFixup);
       this.cliHeader.metaData.size = ((int)writer.BaseStream.Position) - startPos; 
     }
-#if !ROTOR
     private unsafe void WriteReferenceToPDBFile(BinaryWriter/*!*/ writer, int virtualAddressBase, int fileBase)
       //^ requires this.symWriter != null;
     {
@@ -2368,7 +2337,6 @@ namespace System.Compiler.Metadata{
       writer.Write((int)startPos+28); //PointerToRawData
       writer.Write((byte[])data);
     }
-#endif
     private void SerializeTables(BinaryWriter/*!*/ writer, int mbRVAOffset, Fixup/*!*/ sdataFixup, Fixup/*!*/ tlsFixup)
       //^ requires this.StringHeap != null;
       //^ requires this.GuidHeap != null;
@@ -3128,9 +3096,7 @@ namespace System.Compiler.Metadata{
       writer.BaseStream.Position = textSection.pointerToRawData+72; //Leave 72 bytes for CLI header
       this.SerializeMetadata(writer, textSection.virtualAddress, sdataFixup, tlsFixup);
       int RVAofEntryPointJumpTarget = this.WriteImportTableAndEntryPointStub(writer, ref textSection);
-#if !ROTOR
       if (this.symWriter != null) this.WriteReferenceToPDBFile(writer, textSection.virtualAddress, textSection.pointerToRawData);
-#endif
       int len = textSection.virtualSize = ((int)writer.BaseStream.Position) - textSection.pointerToRawData;
       textSection.sizeOfRawData = ((int)Math.Ceiling(len / (double)this.fileAlignment))*this.fileAlignment;
       this.sectionHeaders[0] = textSection;
@@ -3602,5 +3568,4 @@ namespace System.Compiler.Metadata{
       return keySize < 128 + 32 ? 128 : keySize - 32;
     }
   }
-#endif
 }

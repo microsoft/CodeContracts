@@ -1833,19 +1833,6 @@ namespace Tests
         #endregion Test data
 
         #region Tests
-
-        [MemberData("TestRun")]
-        [Theory]
-        [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1"), Trait("Category", "Maintenance")]
-        public void SourceFileExists(string sortKey, int testIndex, string testName)
-        {
-            var options = TestRunData[testIndex];
-
-            var sourceFile = options.MakeAbsolute(options.SourceFile);
-
-            Assert.True(File.Exists(sourceFile));
-        }
-
         [MemberData("TestRun")]
         [Theory]
         [Trait("Category", "StaticChecker"), Trait("Category", "Clousot1")]

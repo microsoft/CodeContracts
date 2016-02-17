@@ -15,20 +15,8 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-#if FxCop
-using InterfaceList = Microsoft.Cci.InterfaceCollection;
-using MemberList = Microsoft.Cci.MemberCollection;
-using MethodList = Microsoft.Cci.MethodCollection;
-using TypeNodeList = Microsoft.Cci.TypeNodeCollection;
-using Module = Microsoft.Cci.ModuleNode;
-using Class = Microsoft.Cci.ClassNode;
-using Interface = Microsoft.Cci.InterfaceNode;
-#endif
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
+
 namespace System.Compiler{
-#endif
   /* Specializer walks an IR, replacing references to type parameters with references to actual types.
    * The main complication is that structural types involving type parameters need to be reconstructed.
    * Other complications arise from the fact that IL is not orthogonal and requires different instructions
@@ -50,10 +38,7 @@ namespace System.Compiler{
   /// <summary>
   /// This class specializes a normalized IR by replacing type parameters with type arguments.
   /// </summary>
-#if !FxCop
-  public 
-#endif
-  class Specializer : StandardVisitor{
+  public class Specializer : StandardVisitor{
     public TypeNodeList pars;
     public TypeNodeList args;
     public Method CurrentMethod;
@@ -68,7 +53,6 @@ namespace System.Compiler{
       this.args = args;
       this.TargetModule = targetModule;
     }
-#if !MinimalReader
     public Specializer(Visitor callingVisitor)
       : base(callingVisitor){
     }
@@ -81,7 +65,6 @@ namespace System.Compiler{
       target.CurrentMethod = this.CurrentMethod;
       target.CurrentType = this.CurrentType;
     }
-#endif
     public override DelegateNode VisitDelegateNode(DelegateNode delegateNode){
       return this.VisitTypeNode(delegateNode) as DelegateNode;
     }
@@ -100,13 +83,6 @@ namespace System.Compiler{
     }
     public virtual Member VisitMemberReference(Member member) {
       if (member == null) return null;
-#if false && !MinimalReader
-      ParameterField pField = member as ParameterField;
-      if (pField != null){
-        if (pField.Parameter != null) pField.Type = pField.Parameter.Type;
-        return pField;
-      }
-#endif
       var type = member as TypeNode;
       if (type != null) return this.VisitTypeReference(type);
 
@@ -151,16 +127,6 @@ namespace System.Compiler{
       for (int i = 0, n = specializedMembers == null ? 0 : specializedMembers.Count; i < n; i++) {
         Member unspecializedMember = unspecializedMembers[i-unspecializedOffset];
         Member specializedMember = specializedMembers[i-specializedOffset];
-#if false
-        if (unspecializedMember != null && specializedMember == null && unspecializedOffset == i &&
-          !(unspecializedMember is TypeParameter || unspecializedMember is ClassParameter)) {
-          unspecializedOffset++; continue; //Keep current unspecialized member, skip over null specialized member
-        }
-        if (unspecializedMember == null && specializedMember != null && specializedOffset == i &&
-          !(specializedMember is TypeParameter || specializedMember is ClassParameter)) {
-          specializedOffset++; continue; //Keep current specialized member, skip over null
-        }
-#endif
         if (unspecializedMember == member) {
           Debug.Assert(specializedMember != null);
           return specializedMember;
@@ -202,11 +168,7 @@ namespace System.Compiler{
       method.ReturnAttributes = this.VisitAttributeList(method.ReturnAttributes);
       method.SecurityAttributes = this.VisitSecurityAttributeList(method.SecurityAttributes);
       method.ReturnType = this.VisitTypeReference(method.ReturnType);
-#if !MinimalReader && !CodeContracts
-      method.ImplementedTypes = this.VisitTypeReferenceList(method.ImplementedTypes);
-#endif
       method.Parameters = this.VisitParameterList(method.Parameters);
-#if ExtendedRuntime || CodeContracts
       if (method.contract != null)
       {
         method.contract = this.VisitMethodContract(method.contract);
@@ -226,7 +188,6 @@ namespace System.Compiler{
           this.CurrentMethod = savedCurrentMethod2;
         }; 
       }
-#endif
       method.ImplementedInterfaceMethods = this.VisitMethodList(method.ImplementedInterfaceMethods);
       this.CurrentMethod = savedCurrentMethod;
       this.CurrentType = savedCurrentType;
@@ -303,10 +264,6 @@ namespace System.Compiler{
             return typeParameter; //give up
         result.SourceContext = typeParameter.SourceContext;
         result.TypeParameterFlags = ((ITypeParameter)typeParameter).TypeParameterFlags;
-#if ExtendedRuntime
-      if (typeParameter.IsUnmanaged) { result.SetIsUnmanaged(); }
-      if (typeParameter.IsPointerFree) { result.SetIsPointerFree(); }
-#endif
         result.ParameterListIndex = ((ITypeParameter)typeParameter).ParameterListIndex;
         result.Name = typeParameter.Name;
         result.Namespace = StandardIds.ClassParameter;
@@ -325,7 +282,6 @@ namespace System.Compiler{
         return result;
     }
 
-#if ExtendedRuntime || CodeContracts
     public override MethodContract VisitMethodContract(MethodContract contract){
       if (contract == null) return null;
       var specializer = this as MethodBodySpecializer;
@@ -356,7 +312,6 @@ namespace System.Compiler{
       if (initializer != null) return this.VisitBlock(initializer);
       return part;
     }
-#endif
     public virtual MethodList VisitMethodList(MethodList methods){
       if (methods == null) return null;
       int n = methods.Count;
@@ -379,7 +334,6 @@ namespace System.Compiler{
         typeNode.ProvideTypeMembers = new TypeNode.TypeMemberProvider(this.ProvideTypeMembers);
         typeNode.ProvideTypeAttributes = new TypeNode.TypeAttributeProvider(this.ProvideTypeAttributes);
         typeNode.ProvideTypeSignature = new TypeNode.TypeSignatureProvider(this.ProvideTypeSignature);
-#if !MinimalReader
         DelegateNode delegateNode = typeNode as DelegateNode;
         if (delegateNode != null){
           if (!delegateNode.IsNormalized){ //In the Normalized case Parameters are retrieved from the Invoke method, which means evaluating Members
@@ -387,7 +341,6 @@ namespace System.Compiler{
             delegateNode.ReturnType = this.VisitTypeReference(delegateNode.ReturnType);
           }
         }
-#endif
       }else{
         typeNode.Attributes = this.VisitAttributeList(typeNode.Attributes);
         typeNode.SecurityAttributes = this.VisitSecurityAttributeList(typeNode.SecurityAttributes);
@@ -490,9 +443,6 @@ namespace System.Compiler{
         }
         return id;
       }
-#if !MinimalReader && !CodeContracts
-      Debug.Assert(expr is QualifiedIdentifier || expr is Literal);
-#endif
       return expr;
     }
     public override TypeNode VisitTypeParameter(TypeNode typeParameter){
@@ -512,13 +462,11 @@ namespace System.Compiler{
           if (elemType == arrType.ElementType || elemType == null) return arrType;
           if (arrType.IsSzArray()) return elemType.GetArrayType(1);
           return elemType.GetArrayType(arrType.Rank, arrType.Sizes, arrType.LowerBounds);
-#if !MinimalReader
         case NodeType.DelegateNode:{
           FunctionType ftype = type as FunctionType;
           if (ftype == null) goto default;
           TypeNode referringType = ftype.DeclaringType == null ? this.CurrentType : this.VisitTypeReference(ftype.DeclaringType);
           return FunctionType.For(this.VisitTypeReference(ftype.ReturnType), this.VisitParameterList(ftype.Parameters), referringType);}
-#endif
         case NodeType.Pointer:
           Pointer pType = (Pointer)type;
           elemType = this.VisitTypeReference(pType.ElementType);
@@ -529,38 +477,6 @@ namespace System.Compiler{
           elemType = this.VisitTypeReference(rType.ElementType);
           if (elemType == rType.ElementType || elemType == null) return rType;
           return elemType.GetReferenceType();
-#if ExtendedRuntime
-        case NodeType.TupleType:{
-          TupleType tType = (TupleType)type;
-          bool reconstruct = false;
-          MemberList members = tType.Members;
-          int n = members == null ? 0 : members.Count;
-          FieldList fields = new FieldList(n);
-          for (int i = 0; i < n; i++){
-            //^ assert members != null;
-            Field f = members[i] as Field;
-            if (f == null) continue;
-            f = (Field)f.Clone();
-            fields.Add(f);
-            TypeNode oft = f.Type;
-            TypeNode ft = f.Type = this.VisitTypeReference(f.Type);
-            if (ft != oft) reconstruct = true;
-          }
-          if (!reconstruct) return tType;
-          TypeNode referringType = tType.DeclaringType == null ? this.CurrentType : this.VisitTypeReference(tType.DeclaringType);
-          return TupleType.For(fields, referringType);}
-        case NodeType.TypeIntersection:{
-          TypeIntersection tIntersect = (TypeIntersection)type;
-          TypeNode referringType = tIntersect.DeclaringType == null ? this.CurrentType : this.VisitTypeReference(tIntersect.DeclaringType);
-          return TypeIntersection.For(this.VisitTypeReferenceList(tIntersect.Types), referringType);}
-        case NodeType.TypeUnion:{
-          TypeUnion tUnion = (TypeUnion)type;
-          TypeNode referringType = tUnion.DeclaringType == null ? this.CurrentType : this.VisitTypeReference(tUnion.DeclaringType);
-          TypeNodeList types = this.VisitTypeReferenceList(tUnion.Types);
-          if (referringType == null || types == null) { Debug.Fail(""); return null; }
-          return TypeUnion.For(types, referringType);}
-#endif
-#if !MinimalReader        
         case NodeType.ArrayTypeExpression:
           ArrayTypeExpression aExpr = (ArrayTypeExpression)type;
           aExpr.ElementType = this.VisitTypeReference(aExpr.ElementType);
@@ -576,7 +492,6 @@ namespace System.Compiler{
           if (lit != null) return lit.Value as TypeNode;
           cExpr.TemplateArguments = this.VisitTypeReferenceList(cExpr.TemplateArguments);
           return cExpr;}
-#endif
         case NodeType.ClassParameter:
         case NodeType.TypeParameter:
           int key = type.UniqueKey;
@@ -587,25 +502,8 @@ namespace System.Compiler{
             TypeNode tp = pars[i];
             if (tp == null) continue;
             if (tp.UniqueKey == key) return args[i];
-#if false
-            if (tp.Name.UniqueIdKey == type.Name.UniqueIdKey && (tp is ClassParameter && type is TypeParameter)) {
-              //This shouldn't really happen, but in practice it does. Hack past it.
-              Debug.Assert(false);
-              return args[i];
-            }
-#endif
           }
           return type;
-#if ExtendedRuntime
-        case NodeType.ConstrainedType:{
-          ConstrainedType conType = (ConstrainedType)type;
-          TypeNode referringType = conType.DeclaringType == null ? this.CurrentType : this.VisitTypeReference(conType.DeclaringType);
-          TypeNode underlyingType = this.VisitTypeReference(conType.UnderlyingType);
-          Expression constraint = this.VisitExpression(conType.Constraint);
-          if (referringType == null || underlyingType == null || constraint == null) { Debug.Fail(""); return null; }
-          return new ConstrainedType(underlyingType, constraint, referringType);}
-#endif
-#if !MinimalReader
         case NodeType.FlexArrayTypeExpression:
           FlexArrayTypeExpression flExpr = (FlexArrayTypeExpression)type;
           flExpr.ElementType = this.VisitTypeReference(flExpr.ElementType);
@@ -619,14 +517,12 @@ namespace System.Compiler{
           InvariantTypeExpression invExpr = (InvariantTypeExpression)type;
           invExpr.ElementType = this.VisitTypeReference(invExpr.ElementType);
           return invExpr;
-#endif
         case NodeType.InterfaceExpression:
           InterfaceExpression iExpr = (InterfaceExpression)type;
           if (iExpr.Expression == null) goto default;
           iExpr.Expression = this.VisitTypeExpression(iExpr.Expression);
           iExpr.TemplateArguments = this.VisitTypeReferenceList(iExpr.TemplateArguments);
           return iExpr;
-#if !MinimalReader
         case NodeType.NonEmptyStreamTypeExpression:
           NonEmptyStreamTypeExpression neExpr = (NonEmptyStreamTypeExpression)type;
           neExpr.ElementType = this.VisitTypeReference(neExpr.ElementType);
@@ -643,28 +539,11 @@ namespace System.Compiler{
           NullableTypeExpression nuExpr = (NullableTypeExpression)type;
           nuExpr.ElementType = this.VisitTypeReference(nuExpr.ElementType);
           return nuExpr;
-#endif
         case NodeType.OptionalModifier:{
           TypeModifier modType = (TypeModifier)type;
           TypeNode modifiedType = this.VisitTypeReference(modType.ModifiedType);
           TypeNode modifierType = this.VisitTypeReference(modType.Modifier);
           if (modifiedType == null || modifierType == null) { return type; }
-#if ExtendedRuntime
-          if (modifierType != null && modifierType == SystemTypes.NullableType){
-            if (modifiedType.IsValueType) return modifiedType;
-            if (TypeNode.HasModifier(modifiedType, SystemTypes.NonNullType))
-              modifiedType = TypeNode.StripModifier(modifiedType, SystemTypes.NonNullType);
-            if (modifiedType.IsTemplateParameter) {
-              return OptionalModifier.For(modifierType, modifiedType);
-            }
-            return modifiedType;
-          }
-          if (modifierType == SystemTypes.NonNullType) {
-            if (modifiedType.IsValueType) return modifiedType;
-            modifiedType = TypeNode.StripModifier(modifiedType, SystemTypes.NonNullType);
-          }
-          //^ assert modifiedType != null;
-#endif
           return OptionalModifier.For(modifierType, modifiedType);
         }
         case NodeType.RequiredModifier:{
@@ -674,48 +553,6 @@ namespace System.Compiler{
           if (modifiedType == null || modifierType == null) { Debug.Fail(""); return type; }
           return RequiredModifier.For(modifierType, modifiedType);
         }
-#if !MinimalReader && !CodeContracts
-        case NodeType.OptionalModifierTypeExpression:
-          OptionalModifierTypeExpression optmodType = (OptionalModifierTypeExpression)type;
-          optmodType.ModifiedType = this.VisitTypeReference(optmodType.ModifiedType);
-          optmodType.Modifier = this.VisitTypeReference(optmodType.Modifier);
-          return optmodType;
-        case NodeType.RequiredModifierTypeExpression:
-          RequiredModifierTypeExpression reqmodType = (RequiredModifierTypeExpression)type;
-          reqmodType.ModifiedType = this.VisitTypeReference(reqmodType.ModifiedType);
-          reqmodType.Modifier = this.VisitTypeReference(reqmodType.Modifier);
-          return reqmodType;
-        case NodeType.PointerTypeExpression:
-          PointerTypeExpression pExpr = (PointerTypeExpression)type;
-          pExpr.ElementType = this.VisitTypeReference(pExpr.ElementType);
-          return pExpr;
-        case NodeType.ReferenceTypeExpression:
-          ReferenceTypeExpression rExpr = (ReferenceTypeExpression)type;
-          rExpr.ElementType = this.VisitTypeReference(rExpr.ElementType);
-          return rExpr;
-        case NodeType.StreamTypeExpression:
-          StreamTypeExpression sExpr = (StreamTypeExpression)type;
-          sExpr.ElementType = this.VisitTypeReference(sExpr.ElementType);
-          return sExpr;
-        case NodeType.TupleTypeExpression:
-          TupleTypeExpression tuExpr = (TupleTypeExpression)type;
-          tuExpr.Domains = this.VisitFieldList(tuExpr.Domains);
-          return tuExpr;
-        case NodeType.TypeExpression:{
-          TypeExpression tExpr = (TypeExpression)type;
-          tExpr.Expression = this.VisitTypeExpression(tExpr.Expression);
-          if (tExpr.Expression is Literal) return type;
-          tExpr.TemplateArguments = this.VisitTypeReferenceList(tExpr.TemplateArguments);
-          return tExpr;}
-        case NodeType.TypeIntersectionExpression:
-          TypeIntersectionExpression tiExpr = (TypeIntersectionExpression)type;
-          tiExpr.Types = this.VisitTypeReferenceList(tiExpr.Types);
-          return tiExpr;
-        case NodeType.TypeUnionExpression:
-          TypeUnionExpression tyuExpr = (TypeUnionExpression)type;
-          tyuExpr.Types = this.VisitTypeReferenceList(tyuExpr.Types);
-          return tyuExpr;
-#endif
         default:
           if (type.Template != null)
           {
@@ -739,97 +576,10 @@ namespace System.Compiler{
             return t;
           }
           return type;
-#if OLD
-          TypeNode declaringType = this.VisitTypeReference(type.DeclaringType);
-          if (declaringType != null){
-            Identifier tname = type.Name;
-            if (type.Template != null && type.IsGeneric) tname = type.Template.Name;
-            TypeNode nt = declaringType.GetNestedType(tname);
-            if (nt != null){
-              TypeNodeList arguments = type.TemplateArguments;
-              type = nt;
-              if (TargetPlatform.UseGenerics) {
-                if (arguments != null && arguments.Count > 0 && nt.ConsolidatedTemplateParameters != null && nt.ConsolidatedTemplateParameters.Count > 0)
-                  type = nt.GetTemplateInstance(this.TargetModule, this.CurrentType, declaringType, arguments);
-              }
-            }
-          }
-          if (type.Template != null && (type.ConsolidatedTemplateParameters == null || type.ConsolidatedTemplateParameters.Count == 0)){
-            if (!type.IsNotFullySpecialized && !type.IsNormalized) return type;
-            //Type is a template instance, but some of its arguments were themselves parameters.
-            //See if any of these parameters are to be specialized by this specializer.
-            bool mustSpecializeFurther = false;
-            TypeNodeList targs = type.TemplateArguments;
-            int numArgs = targs == null ? 0 : targs.Count;
-            if (targs != null) {
-              targs = targs.Clone();
-              for (int i = 0; i < numArgs; i++) {
-                TypeNode targ = targs[i];
-                ITypeParameter tparg = targ as ITypeParameter;
-                if (tparg != null) {
-                  for (int j = 0, np = pars == null ? 0 : pars.Count, m = args == null ? 0 : args.Count; j < np && j < m; j++) {
-                    //^ assert pars != null && args != null;
-                    if (TargetPlatform.UseGenerics) {
-                      ITypeParameter par = pars[j] as ITypeParameter;
-                      if (par == null) continue;
-                      if (tparg == par || (tparg.ParameterListIndex == par.ParameterListIndex && tparg.DeclaringMember == par.DeclaringMember)) {
-                        targ = this.args[j]; break;
-                      }
-                    }
-                    else {
-                      if (targ == pars[j]) { targ = this.args[j]; break; }
-                    }
-                  }
-                } else {
-                  if (targ != type)
-                    targ = this.VisitTypeReference(targ);
-                  if (targ == type) continue;
-                }
-                mustSpecializeFurther |= targs[i] != targ;
-                targs[i] = targ;
-              }
-            }
-            if (targs == null || !mustSpecializeFurther) return type;
-            TypeNode t = type.Template.GetTemplateInstance(this.TargetModule, this.CurrentType, declaringType, targs);
-#if ExtendedRuntime
-            if (this.CurrentType != null) {
-              if (this.CurrentType.ReferencedTemplateInstances == null) this.CurrentType.ReferencedTemplateInstances = new TypeNodeList();
-              this.CurrentType.ReferencedTemplateInstances.Add(t);
-            }
-#endif
-            return t;
-          }
-          TypeNodeList tPars = type.TemplateParameters;
-          if (tPars == null || tPars.Count == 0) return type; //Not a parameterized type. No need to get an instance.
-          TypeNodeList tArgs = new TypeNodeList();
-          for (int i = 0, n = tPars.Count; i < n; i++) {
-            TypeNode tPar = tPars[i];
-            tArgs.Add(tPar); //Leave parameter in place if there is no match
-            if (tPar == null || tPar.Name == null) continue;
-            int idKey = tPar.Name.UniqueIdKey;
-            for (int j = 0, m = pars == null ? 0 : pars.Count, k = args == null ? 0 : args.Count; j < m && j < k; j++) {
-              //^ assert pars != null && args != null;
-              TypeNode par = pars[j];
-              if (par == null || par.Name == null) continue;
-              if (par.Name.UniqueIdKey == idKey) {
-                tArgs[i] = args[j];
-                break;
-              }
-            }
-          }
-          TypeNode ti = type.GetTemplateInstance(this.TargetModule, this.CurrentType, this.VisitTypeReference(type.DeclaringType), tArgs);
-#if ExtendedRuntime
-          if (this.CurrentType != null) {
-            if (this.CurrentType.ReferencedTemplateInstances == null) this.CurrentType.ReferencedTemplateInstances = new TypeNodeList();
-            this.CurrentType.ReferencedTemplateInstances.Add(ti);
-          }
-#endif
-          return ti;
-#endif
       }
     }
   }
-#if !NoWriter
+
   public class MethodBodySpecializer : Specializer{
     public TrivialHashtable/*!*/ alreadyVisitedNodes = new TrivialHashtable();
     public Method methodBeingSpecialized;
@@ -839,12 +589,10 @@ namespace System.Compiler{
       : base(module, pars, args){
       //^ base;
     }
-#if !MinimalReader
     public MethodBodySpecializer(Visitor callingVisitor)
       : base(callingVisitor){
       //^ base;
     }
-#endif
     public override Node Visit(Node node){
       Literal lit = node as Literal;
       if (lit != null && lit.Value == null) return lit;
@@ -911,12 +659,7 @@ namespace System.Compiler{
       }else if (binaryExpression.NodeType == NodeType.Unbox){
         if (opnd1 != null && opnd1.Type != null && opnd1.Type.IsValueType)
           return opnd1;
-#if ExtendedRuntime
-      }else if (binaryExpression.NodeType == NodeType.Box){
-        if (t != null && !(t is ITypeParameter) && t.IsReferenceType && !t.IsPointerType) { // using pointer types is a Sing# extension
-          return opnd1;
-        }
-#endif
+
       }else if (binaryExpression.NodeType == NodeType.Eq) {
         //For value types, turn comparisons against null into false
         if (lit != null && lit.Value == null && opnd1 != null && opnd1.Type != null && opnd1.Type.IsValueType)
@@ -1002,33 +745,12 @@ namespace System.Compiler{
       this.alreadyVisitedNodes[local.UniqueKey] = local;
       return base.VisitLocal(local);
     }
-#if !MinimalReader && !CodeContracts
-    public override Statement VisitLocalDeclarationsStatement(LocalDeclarationsStatement localDeclarations) {
-      if (localDeclarations == null) return null;
-      localDeclarations.Type = this.VisitTypeReference(localDeclarations.Type);
-      return localDeclarations;
-    }
-#endif
     public override Expression VisitParameter(Parameter parameter){
-#if !MinimalReader
       ParameterBinding pb = parameter as ParameterBinding;
       if (pb != null && pb.BoundParameter != null)
         pb.Type = pb.BoundParameter.Type;
-#endif
       return parameter;
     }
-#if !MinimalReader && !CodeContracts
-    public override Expression VisitNameBinding(NameBinding nameBinding){
-      if (nameBinding == null) return null;
-      nameBinding.BoundMember = this.VisitExpression(nameBinding.BoundMember);
-      int n = nameBinding.BoundMembers == null ? 0 : nameBinding.BoundMembers.Count;
-      for (int i = 0; i < n; i++) {
-        //^ assert nameBinding.BoundMembers != null;
-        nameBinding.BoundMembers[i] = this.VisitMemberReference(nameBinding.BoundMembers[i]);
-      }
-      return nameBinding;
-    }
-#endif
     public override Expression VisitMemberBinding(MemberBinding memberBinding){
       if (memberBinding == null) return null;
       Expression tObj = memberBinding.TargetObject = this.VisitExpression(memberBinding.TargetObject);
@@ -1154,5 +876,4 @@ namespace System.Compiler{
       return base.VisitUnaryExpression((UnaryExpression)unaryExpression.Clone());
     }
   }
-#endif
 }

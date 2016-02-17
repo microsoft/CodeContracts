@@ -513,30 +513,6 @@ namespace Microsoft.Cci.Pdb
       dir.streams[3].Read(reader, bits);
       LoadDbiStream(bits, out modules, out header, true);
 
-#if SKIP_THIS
-      ArrayList funcList = new ArrayList();
-
-      if (modules != null)
-      {
-        for (int m = 0; m < modules.Length; m++)
-        {
-          var module = modules[m];
-          if (module.stream > 0)
-          {
-            dir.streams[module.stream].Read(reader, bits);
-            if (module.moduleName == "TokenSourceLineInfo")
-            {
-              LoadTokenToSourceInfo(bits, module, names, dir, nameIndex, reader, tokenToSourceMapping);
-              continue;
-            }
-            LoadFuncsFromDbiModule(bits, module, names, funcList, true, dir, nameIndex, reader, ilreader);
-          }
-        }
-      }
-
-      PdbFunction[] funcs = (PdbFunction[])funcList.ToArray(typeof(PdbFunction));
-#endif
-
       // After reading the functions, apply the token remapping table if it exists.
       if (header.snTokenRidMap != 0 && header.snTokenRidMap != 0xffff)
       {

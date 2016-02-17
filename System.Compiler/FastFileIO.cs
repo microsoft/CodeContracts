@@ -14,21 +14,12 @@
 
 using System;
 using System.Diagnostics;
-#if CCINamespace
-using Microsoft.Cci.Metadata;
-#else
 using System.Compiler.Metadata;
-#endif
 using System.Globalization;
 using System.Text;
 using System.Diagnostics.Contracts;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !(FxCop || NoWriter)
   /// <summary>
   /// High performance replacement for System.IO.BinaryWriter.
   /// </summary>
@@ -410,15 +401,10 @@ namespace System.Compiler{
     }
   }
   public enum SeekOrigin{Begin, Current, End}
-#endif
   /// <summary>
   /// A version of System.IO.Path that does not throw exceptions.
   /// </summary>
-#if FxCop || NoWriter
-  internal sealed class BetterPath {
-#else
   public sealed class BetterPath {
-#endif
     public static readonly char AltDirectorySeparatorChar = System.IO.Path.AltDirectorySeparatorChar;
     public static readonly char DirectorySeparatorChar = System.IO.Path.DirectorySeparatorChar;
     public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
@@ -496,18 +482,10 @@ namespace System.Compiler{
       return path;
     }
     public static char[] GetInvalidFileNameChars() {
-#if WHIDBEY
       return System.IO.Path.GetInvalidFileNameChars();
-#else
-      return System.IO.Path.InvalidPathChars;
-#endif
     }
     public static char[] GetInvalidPathChars() {
-#if WHIDBEY
       return System.IO.Path.GetInvalidPathChars();
-#else
-      return System.IO.Path.InvalidPathChars;
-#endif
     }
     public static string GetTempFileName() {
       return System.IO.Path.GetTempFileName();

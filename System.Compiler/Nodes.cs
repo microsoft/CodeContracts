@@ -17,64 +17,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Collections.Specialized;
-#if FxCop
-using AssemblyReferenceList = Microsoft.Cci.AssemblyReferenceCollection;
-using AttributeList = Microsoft.Cci.AttributeNodeCollection;
-using BlockList = Microsoft.Cci.BlockCollection;
-using ExpressionList = Microsoft.Cci.ExpressionCollection;
-using InstructionList = Microsoft.Cci.InstructionCollection;
-using Int32List = System.Collections.Generic.List<int>;
-using InterfaceList = Microsoft.Cci.InterfaceCollection;
-using MemberList = Microsoft.Cci.MemberCollection;
-using MethodList = Microsoft.Cci.MethodCollection;
-using ModuleReferenceList = Microsoft.Cci.ModuleReferenceCollection;
-using NamespaceList = Microsoft.Cci.NamespaceCollection;
-using ParameterList = Microsoft.Cci.ParameterCollection;
-using ResourceList = Microsoft.Cci.ResourceCollection;
-using SecurityAttributeList = Microsoft.Cci.SecurityAttributeCollection;
-using StatementList = Microsoft.Cci.StatementCollection;
-using TypeNodeList = Microsoft.Cci.TypeNodeCollection;
-using Win32ResourceList = Microsoft.Cci.Win32ResourceCollection;
-using Module = Microsoft.Cci.ModuleNode;
-using Class = Microsoft.Cci.ClassNode;
-using Interface = Microsoft.Cci.InterfaceNode;
-using Property = Microsoft.Cci.PropertyNode;
-using Event = Microsoft.Cci.EventNode;
-using Return = Microsoft.Cci.ReturnNode;
-using Throw = Microsoft.Cci.ThrowNode;
-#endif
-#if UseSingularityPDB
-using Microsoft.Singularity.PdbInfo;
-#endif
-#if CCINamespace
-using Cci = Microsoft.Cci;
-using Microsoft.Cci.Metadata;
-using Metadata = Microsoft.Cci.Metadata;
-#else
 using Cci = System.Compiler;
 using System.Compiler.Metadata;
 using Metadata = System.Compiler.Metadata;
-#endif
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-#if !NoXml
 using System.Xml;
-#endif
-#if CLOUSOT || CodeContracts
 using System.Diagnostics.Contracts;
 using CC = System.Diagnostics.Contracts;
 using Microsoft.Cci.Pdb;
-#endif
 
 using BindingFlags = System.Reflection.BindingFlags;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !FxCop
   /// <summary>
   /// This interface can be used to link an arbitrary source text provider into an IR tree via a DocumentText instance.
   /// </summary>
@@ -106,8 +62,6 @@ namespace System.Compiler{
     /// </summary>
     byte* Buffer{get;}
   }
-#endif
-#if !MinimalReader
   /// <summary>
   /// Use this after a source text has already been scanned and parsed. This allows the source text to get released
   /// if there is memory pressure, while still allowing portions of it to be retrieved on demand. This is useful when
@@ -195,9 +149,7 @@ namespace System.Compiler{
     void ISourceText.MakeCollectible(){
     }
   }
-#endif
 
-#if !FxCop
   /// <summary>
   /// This class provides a uniform interface to program sources provided in the form of Unicode strings,
   /// unsafe pointers to ascii buffers (as obtained from a memory mapped file, for instance) as well as
@@ -388,34 +340,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if FxCop
-    public class Document{
-    internal string Name;
-  }
-#endif
-#if false
-  public class Document {
-    /// <summary>
-    /// A Guid that identifies the kind of document to applications such as a debugger. Typically System.Diagnostics.SymbolStore.SymDocumentType.Text.
-    /// </summary>
-    public System.Guid DocumentType;
-    /// <summary>
-    /// A Guid that identifies the programming language used in the source document. Typically used by a debugger to locate language specific logic.
-    /// </summary>
-    public System.Guid Language;
-    /// <summary>
-    /// A Guid that identifies the compiler vendor programming language used in the source document. Typically used by a debugger to locate vendor specific logic.
-    /// </summary>
-    public System.Guid LanguageVendor;
-    /// <summary>
-    /// The name of the document. Typically a file name. Can be a full or relative file path, or a URI or some other kind of identifier.
-    /// </summary>
-    public string/*!*/ Name;
-
-  }  
-#endif
-#if !FxCop
   /// <summary>
   /// A source document from which an Abstract Syntax Tree has been derived.
   /// </summary>
@@ -717,47 +641,7 @@ namespace System.Compiler{
       return 0xFEEFEE;
     }
   }
-#endif
 
-#if !MinimalReader && !CodeContracts
-  /// <summary>
-  /// For creating source contexts that have just a filename, start line and column and end line and column.
-  /// If a SourceContext has a DocumentWithPrecomputedLineNumbers as its Document, then it should have 0 as its StartPos
-  /// and 1 as its EndPos because those are used here to decide what to return.
-  /// </summary>
-  public class DocumentWithPrecomputedLineNumbers : Document {
-    private int startLine, startCol, endLine, endCol;
-    public DocumentWithPrecomputedLineNumbers(string/*!*/ filename, int startLine, int startCol, int endLine, int endCol) {
-      this.Name = filename;
-      this.startLine = startLine;
-      this.startCol = startCol;
-      this.endLine = endLine;
-      this.endCol = endCol;
-    }
-    public override int GetColumn (int offset) { return offset == 0 ? this.startCol : this.endCol; }
-    public override int GetLine (int offset) { return offset == 0 ? this.startLine : this.endLine; }
-  }
-#endif
-#if UseSingularityPDB
-  internal class PdbDocument : Document {
-    internal PdbDocument(PdbLines lines) {
-      this.Name = lines.file.name;
-      this.lines = lines;
-    }
-    PdbLines lines;
-    public override int GetColumn(int position) {
-      PdbLine line = this.lines.lines[position/2];
-      if (position%2 == 0)
-        return line.colBegin;
-      else
-        return line.colEnd;
-    }
-    public override int GetLine(int position) {
-      PdbLine line = this.lines.lines[position/2];
-      return (int)line.line;
-    }
-  }
-#elif !ROTOR
   internal class UnmanagedDocument: Document{
     private UnmanagedDocument(IntPtr ptrToISymUnmanagedDocument){
       //^ base();
@@ -765,12 +649,10 @@ namespace System.Compiler{
         (ISymUnmanagedDocument)System.Runtime.InteropServices.Marshal.GetTypedObjectForIUnknown(ptrToISymUnmanagedDocument, typeof(ISymUnmanagedDocument));
       if (idoc != null){
         try{
-#if !FxCop
           idoc.GetDocumentType(out this.DocumentType);
           idoc.GetLanguage(out this.Language);
           idoc.GetLanguageVendor(out this.LanguageVendor);
-#endif
-#if true
+
           char[] buffer = null;
           uint len = 0;
           // get the size
@@ -782,32 +664,17 @@ namespace System.Compiler{
             idoc.GetURL(len, out finalLen, buffer);
             Debug.Assert(len == finalLen);
           }
-#else
-          uint capacity = 1024;
-          uint len = 0;
-          char[] buffer = new char[capacity];
-          while (capacity >= 1024){
-            idoc.GetURL(capacity, out len, buffer);
-            if (len < capacity) break;
-            capacity += 1024;
-            buffer = new char[capacity];
-          }
-#endif
+
           if (len > 0)
             this.Name = new String(buffer, 0, (int)len-1);
         }finally{
           System.Runtime.InteropServices.Marshal.ReleaseComObject(idoc);
         }
       }
-#if !FxCop && !CodeContracts
-      this.LineNumber = -1;
-      this.Text = null;
-#endif
     }
 
     readonly private Int32List/*!*/ lineList = new Int32List(8);
     readonly private Int32List/*!*/ columnList = new Int32List(8);
-#if !FxCop
     public override int GetLine(int offset){
       return this.lineList[offset];
     }
@@ -848,7 +715,6 @@ namespace System.Compiler{
     public override void InsertOrDeleteLines(int offset, int lineCount){
       Debug.Assert(false); //Caller should not be modifying an umanaged document
     }
-#endif
     internal int GetOffset(uint line, uint column){
       this.lineList.Add((int)line);
       this.columnList.Add((int)column);
@@ -874,45 +740,7 @@ namespace System.Compiler{
       return result;
     }
   }
-#endif // !ROTOR
 
-#if FxCop
-  public struct SourceContext{ 
-    private string name;
-    private int startLine;
-    private int endLine;
-    private int startColumn;
-    private int endColumn;
-    internal SourceContext(string name, uint startLine, uint endLine, uint startColumn, uint endColumn){  
-      this.name = name;
-      {
-        this.startLine = (int)startLine;
-        this.endLine = (int)endLine;
-        this.startColumn = (int)startColumn;
-        this.endColumn = (int)endColumn;
-      }    
-    }
-    public string FileName{
-      get{return this.name;}
-    }
-    public int StartLine{
-      get{return this.startLine;}
-    }
-    public int EndLine{
-      get{return this.endLine;}
-    }
-    public int StartColumn{
-      get{return this.startColumn;}
-    }
-    public int EndColumn{
-      get{return this.endColumn;}
-    }
-    public bool IsValid {
-      get { return name != null && this.startLine != 0xFEEFEE; }
-    }
-
-  }
-#else
   /// <summary>
   /// Records a location within a source document that corresponds to an Abstract Syntax Tree node.
   /// </summary>
@@ -967,16 +795,6 @@ namespace System.Compiler{
     /// </summary>
     public int EndLine{
       get{ 
-#if !CodeContracts
-#if UseSingularityPDB
-        if (this.Document == null || (this.Document.Text == null && !(this.Document is PdbDocument))) return 0;
-#elif !ROTOR
-        if (this.Document == null || (this.Document.Text == null && !(this.Document is UnmanagedDocument))) return 0;
-#else
-        if (this.Document == null || this.Document.Text == null) return 0;
-#endif
-        if (this.Document.Text != null && this.EndPos >= this.Document.Text.Length) this.EndPos = this.Document.Text.Length;
-#endif
         if (this.Hidden) return 0xFEEFEE;
         if (this.Document == null) return 0;
         return this.Document.GetLine(this.EndPos); 
@@ -987,16 +805,6 @@ namespace System.Compiler{
     /// </summary>
     public int EndColumn{
       get{ 
-#if !CodeContracts
-#if UseSingularityPDB
-        if (this.Document == null || (this.Document.Text == null && !(this.Document is PdbDocument))) return 0;
-#elif !ROTOR
-        if (this.Document == null || (this.Document.Text == null && !(this.Document is UnmanagedDocument))) return 0;
-#else
-        if (this.Document == null || this.Document.Text == null) return 0;
-#endif
-        if (this.Document.Text != null && this.EndPos >= this.Document.Text.Length) this.EndPos = this.Document.Text.Length;
-#endif
         if (!this.IsValid) return 0;
         return this.Document.GetColumn(this.EndPos); 
       }
@@ -1038,8 +846,6 @@ namespace System.Compiler{
       this.EndPos = -1;
     }
   }
-#endif
-#if !MinimalReader
   public struct SourceChange{
     public SourceContext SourceContext;
     public string ChangedText;
@@ -1056,8 +862,7 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if !NoWriter
+
   public enum PlatformType{notSpecified, v1, v11, v2, cli1}
   public class CompilerOptions: System.CodeDom.Compiler.CompilerParameters{
     public StringCollection AliasesForReferencedAssemblies;
@@ -1068,23 +873,6 @@ namespace System.Compiler{
     public string RecursiveWildcard;
     public StringList ReferencedModules;
     public string Win32Icon;
-#if !WHIDBEY
-    private StringCollection embeddedResources = new StringCollection();
-    public StringCollection EmbeddedResources{
-      get{return this.embeddedResources;}
-    }
-    private StringCollection linkedResources = new StringCollection();
-    public StringCollection LinkedResources{
-      get{return this.linkedResources;}
-    }
-#endif
-#if VS7
-    private System.Security.Policy.Evidence evidence;
-    public System.Security.Policy.Evidence Evidence{
-      get{return this.evidence;}
-      set{this.evidence = value;}
-    }
-#endif
     public bool PDBOnly;
     public bool Optimize;
     public bool IncrementalCompile;
@@ -1107,9 +895,7 @@ namespace System.Compiler{
     public object UserLocaleId; //must be an int if not null
     public string StandardLibraryLocation;
     public PlatformType TargetPlatform; //TODO: rename this to TargetRuntime
-#if !MinimalReader
     public ProcessorType TargetProcessor;
-#endif
     public string TargetPlatformLocation;
     public string AssemblyKeyFile;
     public string AssemblyKeyName;
@@ -1123,48 +909,7 @@ namespace System.Compiler{
     public bool MayLockFiles;
     public string ShadowedAssembly;
     public bool UseStandardConfigFile;
-#if !MinimalReader
     public CompilerSite Site;
-#endif
-#if ExtendedRuntime
-    /// <summary>
-    /// True if the source code for the assembly specify only contracts.
-    /// </summary>
-    public bool IsContractAssembly;
-    /// <summary>
-    /// Do not emit run-time checks for requires clauses of non-externally-accessible methods, assert statements, loop invariants, and ensures clauses.
-    /// </summary>
-    public bool DisableInternalChecks;
-    /// <summary>
-    /// Do not emit run-time checks for assume statements.
-    /// </summary>
-    public bool DisableAssumeChecks;
-    /// <summary>
-    /// Do not emit run-time checks for requires clauses of externally accessible methods.
-    /// Do not emit run-time checks that enforce checked exception policy.
-    /// </summary>
-    public bool DisableDefensiveChecks;
-    /// <summary>
-    /// Disable the guarded classes feature, which integrates run-time enforcement of object invariants, ownership, and safe concurrency.
-    /// </summary>
-    public bool DisableGuardedClassesChecks;
-    public bool DisableInternalContractsMetadata;
-    public bool DisablePublicContractsMetadata;
-    /// <summary>
-    /// Disable the runtime test against null on non-null typed parameters on public methods
-    /// </summary>
-    public bool DisableNullParameterValidation;
-    public virtual bool LoadDebugSymbolsForReferencedAssemblies {
-      get { return false; } 
-    }
-
-    /// <summary>
-    /// If set, the compiler will only parse and then emit an xml file with detailed source contexts 
-    /// about what is parsed.
-    /// </summary>
-    public bool EmitSourceContextsOnly = false;
-
-#endif
     public CompilerOptions(){
     }
     public CompilerOptions(CompilerOptions source){
@@ -1182,14 +927,7 @@ namespace System.Compiler{
       this.CompilerOptions = source.CompilerOptions;
       this.DefinedPreProcessorSymbols = source.DefinedPreProcessorSymbols;
       this.DelaySign = source.DelaySign;
-#if ExtendedRuntime
-      this.DisableAssumeChecks = source.DisableAssumeChecks;
-      this.DisableDefensiveChecks = source.DisableDefensiveChecks;
-      this.DisableGuardedClassesChecks = source.DisableGuardedClassesChecks;
-      this.DisableInternalChecks = source.DisableInternalChecks;
-      this.DisableInternalContractsMetadata = source.DisableInternalContractsMetadata;
-      this.DisablePublicContractsMetadata = source.DisablePublicContractsMetadata;
-#endif
+
       this.DisplayCommandLineHelp = source.DisplayCommandLineHelp;
       if (source.EmbeddedResources != null)
         foreach (string s in source.EmbeddedResources) this.EmbeddedResources.Add(s);
@@ -1203,9 +941,7 @@ namespace System.Compiler{
       this.HeuristicReferenceResolution = source.HeuristicReferenceResolution;
       this.IncludeDebugInformation = source.IncludeDebugInformation;
       this.IncrementalCompile = source.IncrementalCompile;
-#if ExtendedRuntime
-      this.IsContractAssembly = source.IsContractAssembly;
-#endif
+
       if (source.LinkedResources != null)
         foreach (string s in source.LinkedResources) this.LinkedResources.Add(s);
       this.MainClass = source.MainClass;
@@ -1245,7 +981,6 @@ namespace System.Compiler{
       return (CompilerOptions)this.MemberwiseClone();
     }
   }
-#endif
   public sealed class MarshallingInformation{
     private string @class;
     private string cookie;
@@ -1291,7 +1026,6 @@ namespace System.Compiler{
       set{this.size = value;}
     }
   }
-#if !NoWriter
   public struct TargetInformation{
     public string Company;
     public string Configuration;
@@ -1304,7 +1038,6 @@ namespace System.Compiler{
     public string Trademark;
     public string Version;
   }
-#endif
   public enum NativeType{
     Bool       = 0x2,      // 4 byte boolean value (true != 0, false == 0)
     I1         = 0x3,      // 1 byte signed value
@@ -1513,8 +1246,6 @@ namespace System.Compiler{
     StaticInitializer,
     Struct,
     TypeParameter,
-
-#if !MinimalReader
     // The following NodeType definitions are not required
     // for examining assembly metadata directly from binaries
 
@@ -1552,12 +1283,6 @@ namespace System.Compiler{
     AssignmentExpression,
     Assumption,
     Base,
-#endif
-#if FxCop
-    BlockExpression,
-    StackVariable,
-#endif
-#if !MinimalReader
     BlockExpression,
     BoxedTypeExpression,
     ClassExpression,
@@ -1728,7 +1453,6 @@ namespace System.Compiler{
     Product,
     Sum,
     Quantifier,    
-#endif  // MinimalReader
   }
   [Flags]
   public enum AssemblyFlags{
@@ -1771,9 +1495,7 @@ namespace System.Compiler{
     SpecialName   = 0x0200,
     ReservedMask  = 0x0400,
     RTSpecialName = 0x0400,
-#if !MinimalReader
     Extend   =   MethodFlags.Extend, // used for languages with type extensions, e.g. Sing#
-#endif
   }
   [Flags]
   public enum FieldFlags{
@@ -1830,9 +1552,7 @@ namespace System.Compiler{
     InternalCall = 0x1000,
     Synchronized = 0x0020,
     NoInlining = 0x0008,
-#if !MinimalReader
     MaxMethodImplVal = 0xffff
-#endif
   }
   [Flags]
   public enum MethodFlags{
@@ -1860,9 +1580,7 @@ namespace System.Compiler{
     RTSpecialName = 0x1000,
     HasSecurity = 0x4000,
     RequireSecObject = 0x8000,
-#if !MinimalReader
     Extend   =   0x01000000, // used for languages with type extensions, e.g. Sing#
-#endif
   }
   public enum ModuleKindFlags{ //TODO: rename this to just ModuleKind
     ConsoleApplication,
@@ -1921,23 +1639,19 @@ namespace System.Compiler{
     SpecialName   = 0x0200,
     ReservedMask  = 0xf400,
     RTSpecialName = 0x0400,
-#if !MinimalReader
     Extend   =   MethodFlags.Extend, // used for languages with type extensions, e.g. Sing#
-#endif
   }
   public enum PESection{
     Text, 
     SData, 
     TLS
   };
-#if !MinimalReader
   public enum ProcessorType{
     Any,
     x86,
     x64,
     Itanium,
   }
-#endif
   [Flags]
   public enum TypeFlags{
     None              =   0x00000000,
@@ -1973,9 +1687,7 @@ namespace System.Compiler{
     RTSpecialName     =   0x00000800, 
     HasSecurity       =   0x00040000,
     Forwarder         =   0x00200000, //The type is a stub left behind for backwards compatibility. References to this type are forwarded to another type by the CLR.
-#if !MinimalReader
     Extend            =   0x01000000,  // used for languages with type extensions, e.g. Sing#
-#endif
 }
   
   public sealed class TrivialHashtable{
@@ -2223,11 +1935,7 @@ namespace System.Compiler{
     }
   }
 
-
-#if !FxCop
-  public
-#endif  
-  sealed class TrivialHashtableUsingWeakReferences{
+  public sealed class TrivialHashtableUsingWeakReferences{
     struct HashEntry {
       public int Key;
       public WeakReference Value;
@@ -2410,31 +2118,12 @@ namespace System.Compiler{
   /// A node in an Abstract Syntax Tree.
   /// </summary>
   public abstract class Node : IUniqueKey{
-#if !MinimalReader
     public bool IsErroneous;
-#endif
+
     /// <summary>
     /// The region in the source code that contains the concrete syntax corresponding to this node in the Abstract Syntax Tree.
     /// </summary>
-#if !FxCop
-#if DEBUG
-    public virtual SourceContext SourceContext { 
-      get;
-      set;
-    }
-#else
     public SourceContext SourceContext;
-#endif
-#else
-    internal SourceContext sourceContext;
-    public SourceContext SourceContext {
-      get{return this.sourceContext;}
-      internal set{this.sourceContext = value;}
-    }
-#endif
-#if DEBUG && !MinimalReader
-    public string DebugLabel; // useful for debugging.
-#endif     
     protected Node(NodeType nodeType){
       this.NodeType = nodeType;
     }
@@ -2475,7 +2164,6 @@ namespace System.Compiler{
       result.uniqueKey = 0;
       return result;
     }
-#if !MinimalReader
     public virtual object GetVisitorFor(object/*!*/ callingVisitor, string/*!*/ visitorClassName) {
       if (callingVisitor == null || visitorClassName == null) { Debug.Fail(""); return null; }
       return Node.GetVisitorFor(this.GetType(), callingVisitor, visitorClassName);
@@ -2539,87 +2227,11 @@ namespace System.Compiler{
       }catch{}
       return null;
     }
-#endif
     int IUniqueKey.UniqueId { get { return this.UniqueKey; } }
-#if MinimalReader
-    // Return a constant value for IsNormalized in the binary-only
-    // reader. This results in less code churn elsewhere.
-    internal bool IsNormalized{get{return true;}}
-#endif
   }
-#if !MinimalReader && !CodeContracts
-  public abstract class ErrorNode : Node{
-    public int Code;
-#if ExtendedRuntime
-    public bool DoNotSuppress;
-#endif
-    public string[] MessageParameters;
-
-    protected ErrorNode(int code, params string[] messageParameters)
-      : base(NodeType.Undefined){
-      this.Code = code;
-      this.MessageParameters = messageParameters;
-    }
-    public virtual string GetErrorNumber(){
-      return this.Code.ToString("0000");
-    }
-    public string GetMessage(){
-      return this.GetMessage(null);
-    }
-
-    public abstract string GetMessage(System.Globalization.CultureInfo culture);
-    public virtual string GetMessage(string key, System.Resources.ResourceManager rm, System.Globalization.CultureInfo culture){
-      if (rm == null || key == null) return null;
-      string localizedString = rm.GetString(key, culture);
-      if (localizedString == null) localizedString = key;
-      string[] messageParameters = this.MessageParameters;
-      if (messageParameters == null || messageParameters.Length == 0) return localizedString;
-      return string.Format(localizedString, messageParameters);
-    }
-    public abstract int Severity{
-      get;
-    }
-    public static int GetCountAtSeverity(ErrorNodeList errors, int minSeverity, int maxSeverity){
-      if (errors == null) return 0;
-      int n = 0;
-      for (int i = 0; i < errors.Count; i++){
-        ErrorNode e = errors[i];
-        if (e == null)
-          continue;
-        int s = e.Severity;
-        if (minSeverity <= s && s <= maxSeverity)
-          n++;
-      }
-      return n;
-    }
-  }
-  public class Expose : Statement{
-    public Expression Instance;
-    public Block Body;
-    public bool IsLocal;
-    public Expose(NodeType nodeType)
-      : base(nodeType){
-    }
-  }
-  public class Acquire : Statement{
-    public bool ReadOnly;
-    public Statement Target;
-    public Expression Condition;
-    public Expression ConditionFunction;
-    public Block Body;
-    public BlockScope ScopeForTemporaryVariable;
-    public Acquire() : base(NodeType.Acquire) {
-    }
-  }
-#endif
   public class Expression : Node{
     private TypeNode type;
-#if FxCop
-    internal int ILOffset;
-#endif
-#if !FxCop && ILOFFSETS
     public int ILOffset;
-#endif
     public Expression(NodeType nodeType)
       : base(nodeType){
     }
@@ -2632,26 +2244,10 @@ namespace System.Compiler{
       set{this.type = value;}
     }
   }
-#if !MinimalReader && !CodeContracts
-  public class ExpressionSnippet : Expression{
-    public IParserFactory ParserFactory;
-
-    public ExpressionSnippet()
-      : base(NodeType.ExpressionSnippet){
-    }
-    public ExpressionSnippet(IParserFactory parserFactory, SourceContext sctx)
-      : base(NodeType.ExpressionSnippet){
-      this.ParserFactory = parserFactory;
-      this.SourceContext = sctx;
-    }
-  }
-#endif
   public class MemberBinding : Expression{
     private int alignment;
     private Member boundMember;
-#if !MinimalReader
     public Expression BoundMemberExpression;
-#endif
     private Expression targetObject;
     private bool @volatile;
     public MemberBinding()
@@ -2661,7 +2257,6 @@ namespace System.Compiler{
       : this(targetObject, boundMember, false, -1){
       if (boundMember is Field) this.Volatile = ((Field)boundMember).IsVolatile;
     }
-#if !MinimalReader
     public MemberBinding(Expression targetObject, Member/*!*/ boundMember, Expression boundMemberExpression)
       : this(targetObject, boundMember, false, -1){
       if (boundMember is Field) this.Volatile = ((Field)boundMember).IsVolatile;
@@ -2678,7 +2273,6 @@ namespace System.Compiler{
       this.SourceContext = sctx;
       this.BoundMemberExpression = boundMemberExpression;
     }
-#endif
     public MemberBinding(Expression targetObject, Member/*!*/ boundMember, bool @volatile, int alignment)
       : base(NodeType.MemberBinding){
       Contract.Requires(boundMember != null);
@@ -2701,9 +2295,7 @@ namespace System.Compiler{
     public Member BoundMember{
       get{return this.boundMember;}
       set{
-#if CLOUSOT || CodeContracts
         Contract.Requires(value != null);
-#endif
         this.boundMember = value;
       }
     }
@@ -2720,21 +2312,17 @@ namespace System.Compiler{
     private Expression address;
     private int alignment;
     private bool isVolatile; 
-#if !MinimalReader
     public enum ExplicitOp { None=0, Star, Arrow }
     private ExplicitOp explicitOperation; // was explicit in source (* or ->)
-#endif
     public AddressDereference()
       : base(NodeType.AddressDereference){
     }
     public AddressDereference(Expression address, TypeNode type)
       : this(address, type, false, -1){
     }
-#if !MinimalReader
     public AddressDereference(Expression address, TypeNode type, SourceContext sctx)
       : this(address, type, false, -1, sctx){
     }
-#endif
     public AddressDereference(Expression address, TypeNode type, bool isVolatile, int alignment)
       : base(NodeType.AddressDereference){
       this.address = address;
@@ -2742,7 +2330,6 @@ namespace System.Compiler{
       this.Type = type;
       this.isVolatile = isVolatile;
     }
-#if !MinimalReader
     public AddressDereference(Expression address, TypeNode type, bool Volatile, int alignment, SourceContext sctx)
       : base(NodeType.AddressDereference){
       this.address = address;
@@ -2751,7 +2338,6 @@ namespace System.Compiler{
       this.isVolatile = Volatile;
       this.SourceContext = sctx;
     }
-#endif
     public Expression Address{
       get{return this.address;}
       set{this.address = value;}
@@ -2764,7 +2350,6 @@ namespace System.Compiler{
       get{return this.isVolatile;}
       set{this.isVolatile = value;}
     }
-#if !MinimalReader
     public bool Explicit{
       get{return this.explicitOperation != ExplicitOp.None;}
     }
@@ -2772,7 +2357,6 @@ namespace System.Compiler{
       get { return this.explicitOperation; }
       set { this.explicitOperation = value; }
     }
-#endif
   }
   public class UnaryExpression : Expression{
     private Expression operand;
@@ -2783,32 +2367,27 @@ namespace System.Compiler{
       : base(nodeType){
       this.Operand = operand;
     }
-#if !MinimalReader
     public UnaryExpression(Expression operand, NodeType nodeType, SourceContext sctx)
       : base(nodeType){
       this.operand = operand;
       this.SourceContext = sctx;
     }
-#endif
     public UnaryExpression(Expression operand, NodeType nodeType, TypeNode type)
       : base(nodeType){
       this.operand = operand;
       this.Type = type;
     }
-#if !MinimalReader
     public UnaryExpression(Expression operand, NodeType nodeType, TypeNode type, SourceContext sctx)
       : base(nodeType){
       this.operand = operand;
       this.Type = type;
       this.SourceContext = sctx;
     }
-#endif
     public Expression Operand{
       get{return this.operand;}
       set{this.operand = value;}
     }
   }
-#if !MinimalReader
   public class PrefixExpression : Expression{
     public Expression Expression;
     public NodeType Operator;
@@ -2837,7 +2416,6 @@ namespace System.Compiler{
       this.SourceContext = sourceContext;
     }
   }
-#endif
   public class BinaryExpression : Expression{
     private Expression operand1;
     private Expression operand2;
@@ -2855,7 +2433,6 @@ namespace System.Compiler{
       this.operand2 = operand2;
       this.Type = resultType;
     }
-#if !MinimalReader
     public BinaryExpression(Expression operand1, Expression operand2, NodeType nodeType, SourceContext ctx)
       : base(nodeType){
       this.operand1 = operand1;
@@ -2869,7 +2446,6 @@ namespace System.Compiler{
       this.Type = resultType;
       this.SourceContext = ctx;
     }
-#endif
     public Expression Operand1{
       get{return this.operand1;}
       set{this.operand1 = value;}
@@ -2907,15 +2483,7 @@ namespace System.Compiler{
     }
   }
   public abstract class NaryExpression : Expression{
-#if !FxCop
     public ExpressionList Operands;
-#else
-    private ExpressionList operands;
-    public ExpressionList Operands {
-      get {return this.operands;}
-      internal set{this.operands = value;}
-    }
-#endif
     protected NaryExpression()
       : base(NodeType.Nop){
     }
@@ -2924,7 +2492,6 @@ namespace System.Compiler{
       this.Operands = operands;
     }
   }
-#if !MinimalReader
   public class ApplyToAll : BinaryExpression{
     public Local ElementLocal;
     public Method ResultIterator;
@@ -2939,7 +2506,6 @@ namespace System.Compiler{
       this.SourceContext = ctx;
     }
   }
-#endif
   public class NamedArgument : Expression{
     private bool isCustomAttributeProperty;
     private Identifier name;
@@ -2953,14 +2519,12 @@ namespace System.Compiler{
       this.Name = name;
       this.Value = value;
     }
-#if !MinimalReader
     public NamedArgument(Identifier name, Expression value, SourceContext ctx)
       : base(NodeType.NamedArgument){
       this.Name = name;
       this.Value = value;
       this.SourceContext = ctx;
     }
-#endif
     public bool IsCustomAttributeProperty{ //TODO: rename this to IsProperty
       get{return this.isCustomAttributeProperty;}
       set{this.isCustomAttributeProperty = value;}
@@ -2986,19 +2550,15 @@ namespace System.Compiler{
   /// </summary>
   public class Literal : Expression{
     private readonly object value;
-#if !MinimalReader
     public bool TypeWasExplicitlySpecifiedInSource;
     public Expression SourceExpression;
-#endif
     public Literal()
       : base(NodeType.Literal){
     }
-#if !NoReflection
     public Literal(object Value)
       : base(NodeType.Literal){
       this.value = Value;
     }
-#endif
     public Literal(object value, TypeNode type)
       : base(NodeType.Literal){
       this.value = value;
@@ -3020,7 +2580,6 @@ namespace System.Compiler{
       if (this.Value == null) return "Literal for null";
       return this.Value.ToString();
     }
-#if !NoWriter
     public static bool IsNullLiteral(Expression expr){
       Literal lit = expr as Literal;
       if (lit == null) return false;
@@ -3069,7 +2628,6 @@ namespace System.Compiler{
       Literal.SingleOne = null;
       Literal.True = null;
     }
-#endif
   }
   public class This : Parameter{
     public This(){
@@ -3081,178 +2639,15 @@ namespace System.Compiler{
       this.Name = StandardIds.This;
       this.Type = type;
     }
-#if !MinimalReader && !CodeContracts
-    public bool IsCtorCall = false;
-    public This(SourceContext sctx, bool isCtorCall){
-      this.NodeType = NodeType.This;
-      this.Name = StandardIds.This;
-      this.SourceContext = sctx;
-      this.IsCtorCall = isCtorCall;
-    }
-    public This(TypeNode type, SourceContext sctx){
-      this.NodeType = NodeType.This;
-      this.Name = StandardIds.This;
-      this.Type = type;
-      this.SourceContext = sctx;
-    }
-    public override bool Equals(object obj) {
-      ThisBinding binding = obj as ThisBinding;
-      return obj == this || binding != null && binding.BoundThis == this;
-    }
-    public override int GetHashCode(){
-      return base.GetHashCode();
-    }
-#endif
-#if ExtendedRuntime
-    public override bool IsUniversallyDelayed {
-      get {
-        if (this.DeclaringMethod is InstanceInitializer && this.DeclaringMethod.DeclaringType != null &&
-            !this.DeclaringMethod.DeclaringType.IsValueType) {
-          // by default, class constructors should be delayed
-          return !(this.DeclaringMethod.GetAttribute(ExtendedRuntimeTypes.NotDelayedAttribute) != null);
-        }
-        return (this.DeclaringMethod.GetAttribute(ExtendedRuntimeTypes.DelayedAttribute) != null);
-      }
-    }
-
-#endif
   }
-#if !MinimalReader && !CodeContracts
-  public class ThisBinding : This, IUniqueKey{
-    public This/*!*/ BoundThis;
-    public ThisBinding(This/*!*/ boundThis, SourceContext sctx) {
-      if (boundThis == null) throw new ArgumentNullException("boundThis");
-      this.BoundThis = boundThis;
-      this.SourceContext = sctx;
-      this.Type = boundThis.Type;
-      this.Name = boundThis.Name;
-      this.TypeExpression = boundThis.TypeExpression;
-      this.Attributes = boundThis.Attributes;
-      this.DefaultValue = boundThis.DefaultValue;
-      this.Flags = boundThis.Flags;
-      this.MarshallingInformation = boundThis.MarshallingInformation;
-      this.DeclaringMethod = boundThis.DeclaringMethod;
-      this.ParameterListIndex = boundThis.ParameterListIndex;
-      this.ArgumentListIndex = boundThis.ArgumentListIndex;
-      //^ base();
-    }
-    public override int GetHashCode(){
-      return this.BoundThis.GetHashCode();
-    }
-    public override bool Equals(object obj){
-      ThisBinding pb = obj as ThisBinding;
-      if (pb != null)
-        return this.BoundThis.Equals(pb.BoundThis);
-      else
-        return this.BoundThis.Equals(obj);
-    }
-    int IUniqueKey.UniqueId{
-      get {return this.BoundThis.UniqueKey;}
-    }
-    /// <summary>
-    /// Must forward type to underlying binding, since ThisBindings get built at times when
-    /// the bound This node does not have its final type yet.
-    /// </summary>
-    public override TypeNode Type {
-      get {
-        return BoundThis.Type;
-      }
-      set {
-        BoundThis.Type = value;
-      }
-    }
-  }
-  public class Base : Expression{
-    /// <summary>
-    /// When the source uses the C# compatibility mode, base calls cannot be put after non-null
-    /// field initialization, but must be put before the body. But the user can specify where
-    /// the base ctor call should be performed by using "base;" as a marker. During parsing
-    /// this flag is set so the right code transformations can be performed at code generation.
-    /// </summary>
-    public bool UsedAsMarker;
-    public bool IsCtorCall = false;
-    public Base()
-      : base(NodeType.Base){
-    }
-    public Base(SourceContext sctx, bool isCtorCall)
-      : base(NodeType.Base){
-      this.SourceContext = sctx;
-      this.IsCtorCall = isCtorCall;
-    }
-  }
-  public class ImplicitThis : Expression{
-    public int LexLevel;
-    public Class MostNestedScope;
-    public ImplicitThis()
-      : base(NodeType.ImplicitThis){
-    }
-    public ImplicitThis(Class mostNestedScope, int lexLevel)
-      : base(NodeType.ImplicitThis){
-      this.LexLevel = lexLevel;
-      this.MostNestedScope = mostNestedScope;
-    }
-  }
-  public class CurrentClosure : Expression{
-    public Method Method;
-    public CurrentClosure()
-      : base(NodeType.CurrentClosure){
-    }
-    public CurrentClosure(Method method, TypeNode type)
-      : base(NodeType.CurrentClosure){
-      this.Method = method;
-      this.Type = type;
-    }
-    public CurrentClosure(Method method, TypeNode type, SourceContext sctx)
-      : base(NodeType.CurrentClosure){
-      this.Method = method;
-      this.Type = type;
-      this.SourceContext = sctx;
-    }
-  }
-  public class SetterValue : Expression{
-    public SetterValue()
-      : base(NodeType.SetterValue){
-    }
-  }
-#endif
   public class Identifier : Expression{
     private readonly int hashCode;
     internal readonly int length;
-#if CodeContracts || FxCop
-    readonly 
-#endif
-    private string name;
+    private readonly string name;
     private readonly int offset;
-#if !FxCop && !CodeContracts
-    private DocumentText text;
-#endif
-#if !MinimalReader
     public readonly Identifier Prefix;
-#endif
     /// <summary>An identifier with the empty string ("") as its value.</summary>
     public static readonly Identifier/*!*/ Empty = new Identifier(""); // Should be thread-safe
-#if !FxCop && !CodeContracts
-    private Identifier(DocumentText/*!*/ text, int offset, int length)
-      : base(NodeType.Identifier){
-      this.text = text;
-      this.offset = offset;
-      this.length = length;
-      ulong hcode = 0;
-      for (int i = offset, n = length+i; i < n; i++){
-        char ch = text[i];
-        hcode = hcode*17 + ch;
-      }
-      this.hashCode = ((int)hcode) & int.MaxValue;
-    }
-    public static Identifier/*!*/ For(SourceContext sctx) {
-      DocumentText text = null;
-      if (sctx.Document != null) text = sctx.Document.Text;
-      if (text == null) text = new DocumentText("");
-      Identifier id = new Identifier(text, sctx.StartPos, sctx.EndPos-sctx.StartPos);
-      id.SourceContext = sctx;
-      return id;
-    }
-#endif
     public Identifier(string name)
       : base(NodeType.Identifier){
       if (name == null) name = "";
@@ -3265,12 +2660,10 @@ namespace System.Compiler{
       }
       this.hashCode = ((int)hcode) & int.MaxValue;
     }
-#if !MinimalReader
     public Identifier(string name, SourceContext sctx)
       : this(name){
       this.SourceContext = sctx;
     }
-#endif
     public static Identifier/*!*/ For(string/*!*/ name) {
       return new Identifier(name);
     }
@@ -3315,7 +2708,6 @@ namespace System.Compiler{
 
     internal unsafe static Identifier/*!*/ For(byte* pointer, int offset) {
       //TODO: first look for identifier in cache
-#if CodeContracts
       int length;
       ulong hcode;
       Identifier result;
@@ -3327,9 +2719,6 @@ namespace System.Compiler{
       result = new Identifier(pointer, offset);
       var uniqueKey = result.UniqueIdKey; // force hashtable entry
       return result;
-#else
-      return new Identifier(pointer, offset);
-#endif
     }
 
     private unsafe Identifier(byte* pointer, uint length)
@@ -3362,27 +2751,15 @@ namespace System.Compiler{
     }
     private static readonly object/*!*/ Lock = new object();
     private struct CanonicalIdentifier{
-#if CodeContracts
       readonly internal Identifier id;
       internal string Name { get { return this.id == null ? null : this.id.Name; } }
-#else
-      internal string/*!*/ Name;
-#endif
       readonly internal int UniqueIdKey;
       readonly internal int HashCode;
       internal CanonicalIdentifier(
-#if CodeContracts
         Identifier name
-#else
-        string/*!*/ name
-#endif
         , int uniqueIdKey, int hashCode
         ) {
-#if CodeContracts
         this.id = name;
-#else
-        this.Name = name;
-#endif
         this.UniqueIdKey = uniqueIdKey;
         this.HashCode = hashCode;
       }
@@ -3405,17 +2782,12 @@ namespace System.Compiler{
         int countp1 = count+1;
         Identifier.count = countp1;
         string name = this.Name; //Get a local copy of the name and drop any reference to a DocumentText instance
-#if !CodeContracts
-        hTable[i] = new CanonicalIdentifier(name, countp1, hcode);
-#else
         hTable[i] = new CanonicalIdentifier(this, countp1, hcode);
-#endif
         if (countp1 > length/2) Rehash(); //Threshold exceeded, need to rehash        
         return countp1;
       }
     }
 
-#if CodeContracts
     private static unsafe Identifier TryHashLookup(byte* ptr, int offset, int slen, int hcode) {
       lock (Identifier.Lock) {
         CanonicalIdentifier[] hTable = Identifier.HashTable;
@@ -3440,7 +2812,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#endif
 
     private unsafe bool HasSameNameAs(CanonicalIdentifier id) {
       int myLength = this.length;
@@ -3448,35 +2819,11 @@ namespace System.Compiler{
       if (myLength != idLength) return false;
       string myName = this.name;
       string idName = id.Name;
-#if !FxCop && !CodeContracts
-      if (myName == null){
-        int myOffset = this.offset;
-        if (this.text != null && this.text.Equals(idName, myOffset, myLength)){
-          this.name = idName;
-          this.text = null;
-          return true;
-        }
-        return false;
-      }
-#endif
       return myName == idName;
     }
     public string/*!*/ Name{ //TODO: need a better name for this property
       get{
-#if !FxCop && !CodeContracts
-        if (this.name != null) return this.name;
-        lock(this){
-          if (this.name != null) return this.name;
-          //^ assume this.text != null;
-          int length = this.length;
-          int offset = this.offset;
-          this.name = this.text.Substring(offset, length);
-          this.text = null;
-          return this.name;
-        }
-#else
         return this.name;
-#endif
       }
     }
     private static void Rehash(){
@@ -3498,10 +2845,8 @@ namespace System.Compiler{
       Identifier.HashTable = newhTable;
     }
     public override string/*!*/ ToString(){
-#if !MinimalReader
       if (this.Prefix != null)
         return this.Prefix.Name+":"+this.Name;
-#endif
       if (this.Name == null) return "";
       return this.Name;
     }
@@ -3526,174 +2871,10 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader && !CodeContracts
-  public class QualifiedIdentifier : Expression{
-    public Identifier Identifier;
-    public Expression Qualifier;
-    public Expression BoundMember;
-    public bool QualifierIsNamespace;
-
-    public QualifiedIdentifier()
-      : base(NodeType.QualifiedIdentifer){
-    }
-    public QualifiedIdentifier(Expression qualifier, Identifier identifier)
-      : base(NodeType.QualifiedIdentifer){
-      this.Identifier = identifier;
-      this.Qualifier = qualifier;
-    }
-    public QualifiedIdentifier(Expression qualifier, Identifier identifier, SourceContext sourceContext)
-      : base(NodeType.QualifiedIdentifer){
-      this.Identifier = identifier;
-      this.Qualifier = qualifier;
-      this.SourceContext = sourceContext;
-    }
-    public QualifiedIdentifier(Expression qualifier, Identifier identifier, SourceContext sourceContext, bool qualifierIsNamespace)
-      : base(NodeType.QualifiedIdentifer){
-      this.Identifier = identifier;
-      this.Qualifier = qualifier;
-      this.SourceContext = sourceContext;
-      this.QualifierIsNamespace = qualifierIsNamespace;
-    }
-    public override string/*!*/ ToString(){
-      string str = this.Identifier == null ? "" : this.Identifier.ToString();
-      if (this.Qualifier == null) return str;
-      string separator = this.QualifierIsNamespace ? "::" : "+";
-      return this.Qualifier.ToString()+separator+str;
-    }
-  }
-  public class Quantifier : Expression{
-    public NodeType QuantifierType;
-    public TypeNode SourceType; // the type of elements the quantifier consumes
-    public Comprehension Comprehension;
-    public Quantifier()
-      : base(NodeType.Quantifier){
-    }
-    public Quantifier(Comprehension comprehension)
-      : base(NodeType.Quantifier){
-      this.Comprehension = comprehension;
-    }
-    public Quantifier(NodeType t, Comprehension comprehension)
-      : base(NodeType.Quantifier){
-      this.QuantifierType = t;
-      this.Comprehension = comprehension;
-    }
-  }
-  public enum ComprehensionBindingMode {In, Gets};
-  public class ComprehensionBinding : Expression{
-    public ComprehensionBindingMode Mode = ComprehensionBindingMode.In;
-    public TypeNode TargetVariableType;
-    public TypeNode TargetVariableTypeExpression;
-    public Expression TargetVariable;
-
-    public TypeNode AsTargetVariableType;
-    public TypeNode AsTargetVariableTypeExpression;
-
-    public Expression SourceEnumerable;
-    public BlockScope ScopeForTemporaryVariables;
-    public ComprehensionBinding()
-      : base(NodeType.ComprehensionBinding){
-    }
-  }  
-  public enum ComprehensionMode {Reduction, Comprehension};
-  // {1,2,3} ==> Comprehension with BindingsAndFilters = null and Elements = [1,2,3]
-  // i.e., for a "display", there are no bindings and the elements have one entry per value in the comprehension
-  // { int x in A, P(x); T(x); default } ==> Comprehension with BindingsAndFilters = [int x in A, P(x)] and Elements = [T(x), default]
-  // i.e., for "true" comprehensions, the list of elements will always have either one or two elements (two if there is a default)
-  public class Comprehension : Expression{
-    public ComprehensionMode Mode = ComprehensionMode.Comprehension;
-    public ExpressionList BindingsAndFilters;
-    public ExpressionList Elements;
-
-    public Node nonEnumerableTypeCtor; // used only when the comprehension should generate code for an IList, e.g.
-    public Method AddMethod; // used only when the comprehension should generate code for an IList, e.g.
-    public TypeNode TemporaryHackToHoldType;
-
-    public Comprehension()
-      : base(NodeType.Comprehension){
-    }
-
-    public bool IsDisplay{ 
-      get{ 
-        return this.BindingsAndFilters == null;
-      }
-    }
-  }
-  public class NameBinding : Expression{
-    public Identifier Identifier;
-    public MemberList BoundMembers;
-    public Expression BoundMember;
-    public int LexLevel;
-    public Class MostNestedScope;
-    public NameBinding()
-      : base(NodeType.NameBinding){
-    }
-    public NameBinding(Identifier identifier, MemberList boundMembers)
-      : base(NodeType.NameBinding){
-      this.Identifier = identifier;
-      this.BoundMembers = boundMembers;
-    }
-    public NameBinding(Identifier identifier, MemberList boundMembers, SourceContext sctx)
-      : base(NodeType.NameBinding){
-      this.Identifier = identifier;
-      this.BoundMembers = boundMembers;
-      this.SourceContext = sctx;
-    }
-    public NameBinding(Identifier identifier, MemberList boundMembers, Class mostNestedScope, int lexLevel)
-      : base(NodeType.NameBinding){
-      this.Identifier = identifier;
-      this.BoundMembers = boundMembers;
-      this.LexLevel = lexLevel;
-      this.MostNestedScope = mostNestedScope;
-    }
-    public NameBinding(Identifier identifier, MemberList boundMembers, Class mostNestedScope, int lexLevel, SourceContext sctx)
-      : base(NodeType.NameBinding) {
-      this.Identifier = identifier;
-      this.BoundMembers = boundMembers;
-      this.LexLevel = lexLevel;
-      this.MostNestedScope = mostNestedScope;
-      this.SourceContext = sctx;
-    }
-    public override string ToString() {
-      return this.Identifier == null ? "" : this.Identifier.ToString();
-    }
-  }
-  public class TemplateInstance : Expression{
-    public Expression Expression;
-    public TypeNodeList TypeArguments;
-    public TypeNodeList TypeArgumentExpressions;
-    public bool IsMethodTemplate;
-    public MemberList BoundMembers;
-
-    public TemplateInstance()
-      : this(null, null){
-    }
-    public TemplateInstance(Expression expression, TypeNodeList typeArguments)
-      : base(NodeType.TemplateInstance){
-      this.Expression = expression;
-      this.TypeArguments = typeArguments;
-    }
-  }
-  public class StackAlloc : Expression{
-    public TypeNode ElementType;
-    public TypeNode ElementTypeExpression;
-    public Expression NumberOfElements;
-
-    public StackAlloc()
-      : base(NodeType.StackAlloc){
-    }
-    public StackAlloc(TypeNode elementType, Expression numberOfElements, SourceContext sctx)
-      : base(NodeType.StackAlloc){
-      this.ElementType = this.ElementTypeExpression = elementType;
-      this.NumberOfElements = numberOfElements;
-      this.SourceContext = sctx;
-    }
-  }
-#endif
   public class MethodCall : NaryExpression{
     private Expression callee;
     private TypeNode constraint;
     private bool isTailCall;     
-#if !MinimalReader
     public Expression CalleeExpression;
     public bool GiveErrorIfSpecialNameMethod;
     public bool ArgumentListIsIncomplete;
@@ -3705,16 +2886,12 @@ namespace System.Compiler{
       this.callee = this.CalleeExpression = callee;
       this.isTailCall = false;
     }
-#endif
     public MethodCall(Expression callee, ExpressionList arguments, NodeType typeOfCall)
       : base(arguments, typeOfCall){
       this.callee = callee;
-#if !MinimalReader      
       this.CalleeExpression = callee;
-#endif
       //this.isTailCall = false;
     }
-#if !MinimalReader
     public MethodCall(Expression callee, ExpressionList arguments, NodeType typeOfCall, TypeNode resultType)
       : this(callee, arguments, typeOfCall){
       this.Type = resultType;
@@ -3723,7 +2900,6 @@ namespace System.Compiler{
       : this(callee, arguments, typeOfCall, resultType){
       this.SourceContext = sctx;
     }
-#endif
     public Expression Callee{
       get{return this.callee;}
       set{this.callee = value;}
@@ -3739,9 +2915,7 @@ namespace System.Compiler{
   }
   public class Construct : NaryExpression{
     private Expression constructor;
-#if !MinimalReader
     public Expression Owner;
-#endif
     public Construct(){
       this.NodeType = NodeType.Construct;
     }
@@ -3749,7 +2923,6 @@ namespace System.Compiler{
       : base(arguments, NodeType.Construct){
       this.constructor = constructor;
     }
-#if !MinimalReader
     public Construct(Expression constructor, ExpressionList arguments, SourceContext sctx)
       : base(arguments, NodeType.Construct){
       this.constructor = constructor;
@@ -3766,7 +2939,6 @@ namespace System.Compiler{
       this.Type = type;
       this.SourceContext = sctx;
     }
-#endif
     public Expression Constructor{
       get{return this.constructor;}
       set{this.constructor = value;}
@@ -3775,11 +2947,9 @@ namespace System.Compiler{
   public class ConstructArray : NaryExpression{
     private TypeNode elementType;
     private int rank;
-#if !MinimalReader
     public TypeNode ElementTypeExpression;
     public ExpressionList Initializers;
     public Expression Owner;
-#endif
     public ConstructArray(){
       this.NodeType = NodeType.ConstructArray;
       this.rank = 1;
@@ -3789,11 +2959,8 @@ namespace System.Compiler{
       this.elementType = elementType;
       this.Operands = sizes;
       this.rank = sizes == null ? 1 : sizes.Count;
-#if !MinimalReader
       this.Initializers = initializers;
-#endif
     }
-#if !MinimalReader
     public ConstructArray(TypeNode elementType, ExpressionList initializers)
       : base(null, NodeType.ConstructArray){
       this.elementType = elementType;
@@ -3810,7 +2977,6 @@ namespace System.Compiler{
       if (elementType != null)
         this.Type = elementType.GetArrayType(1);
     }
-#endif
     public TypeNode ElementType{
       get{return this.elementType;}
       set{this.elementType = value;}
@@ -3820,7 +2986,6 @@ namespace System.Compiler{
       set{this.rank = value;}
     }
   }
-#if !MinimalReader
   public class ConstructFlexArray : NaryExpression{
     public TypeNode ElementType;
     public TypeNode ElementTypeExpression;
@@ -3885,12 +3050,9 @@ namespace System.Compiler{
       this.NodeType = NodeType.CoerceTuple;
     }
   }
-#endif
   public class Indexer : NaryExpression{
-#if !MinimalReader
     public Property CorrespondingDefaultIndexedProperty;
     public bool ArgumentListIsIncomplete;
-#endif
     public Indexer(){
       this.NodeType = NodeType.Indexer;
     }
@@ -3898,7 +3060,6 @@ namespace System.Compiler{
       : base(arguments, NodeType.Indexer){
       this.@object = @object;
     }
-#if !MinimalReader
     public Indexer(Expression Object, ExpressionList arguments, SourceContext sctx)
       : base(arguments, NodeType.Indexer){
       this.@object = Object;
@@ -3915,7 +3076,6 @@ namespace System.Compiler{
       this.elementType = this.Type = elementType;
       this.SourceContext = sctx;
     }
-#endif
     private Expression @object;
     public Expression Object{
       get{return this.@object;}
@@ -3931,7 +3091,6 @@ namespace System.Compiler{
       set{this.elementType = value;}
     }
   }
-#if !MinimalReader
   public class CollectionEnumerator : Expression{
     public Expression Collection;
     public Method DefaultIndexerGetter;
@@ -3968,8 +3127,6 @@ namespace System.Compiler{
       this.AssignmentStatement = assignment;
     }
   }
-#endif
-#if !MinimalReader || FxCop
   public class BlockExpression : Expression{
     public Block Block;
     public BlockExpression()
@@ -3991,8 +3148,7 @@ namespace System.Compiler{
       this.SourceContext = sctx;
     }
   }
-#endif
-#if !MinimalReader
+
   public class AnonymousNestedFunction : Expression{
     public ParameterList Parameters;
     public Block Body;
@@ -4014,7 +3170,7 @@ namespace System.Compiler{
       this.SourceContext = sctx;
     }
   }
-#endif
+
   public class Instruction : Node{
     private OpCode opCode;
     private int offset;
@@ -4048,76 +3204,33 @@ namespace System.Compiler{
     }
   }
   public class Statement : Node{
-#if FxCop
-    internal int ILOffset;
-#endif
-#if !FxCop && ILOFFSETS
     public int ILOffset;
-#endif
     public Statement(NodeType nodeType)
       : base(nodeType){
     }
-#if !MinimalReader
     public Statement(NodeType nodeType, SourceContext sctx)
       : base(nodeType) {
       this.SourceContext = sctx;
     }
-#endif
   }
   public class Block : Statement{
     private StatementList statements;
-#if !MinimalReader
     public bool Checked;
     public bool SuppressCheck;
-#endif
-#if !MinimalReader || !NoWriter
     public bool HasLocals;
-#endif
-#if !MinimalReader && !CodeContracts
-    public bool IsUnsafe;
-    public BlockScope Scope;
-#endif
     public Block()
       : base(NodeType.Block){
     }
     public Block(StatementList statements)
       : base(NodeType.Block){
-#if CLOUSOT || CodeContracts
       Contract.Ensures(this.Statements == statements);
-#endif
       this.statements = statements;
     }
-#if !MinimalReader && !CodeContracts
-    public Block(StatementList statements, SourceContext sourceContext)
-      : base(NodeType.Block){
-      this.SourceContext = sourceContext;
-      this.statements = statements;
-    }
-    public Block(StatementList statements, bool Checked, bool SuppressCheck, bool IsUnsafe)
-      : base(NodeType.Block){
-      this.Checked = Checked;
-      this.IsUnsafe = IsUnsafe;
-      this.SuppressCheck = SuppressCheck;
-      this.statements = statements;
-    }
-    public Block(StatementList statements, SourceContext sourceContext, bool Checked, bool SuppressCheck, bool IsUnsafe)
-      : base(NodeType.Block){
-      this.Checked = Checked;
-      this.IsUnsafe = IsUnsafe;
-      this.SuppressCheck = SuppressCheck;
-      this.SourceContext = sourceContext;
-      this.statements = statements;
-    }
-    public override string ToString() {
-      return "B#" + this.UniqueKey.ToString();
-    }
-#endif
     public StatementList Statements{    
       get{return this.statements;}
       set{this.statements = value;}
     }
   }
-#if !MinimalReader
   public class LabeledStatement : Block{
     public Identifier Label;
     public Statement Statement;
@@ -4168,16 +3281,13 @@ namespace System.Compiler{
       this.Condition = condition;
     }
   }
-#endif
   public class AssignmentStatement : Statement{
     private NodeType @operator;
     private Expression source;
     private Expression target;
-#if !MinimalReader
     public Method OperatorOverload;
     ///<summary>A Type two which both operands must be coerced before carrying out the operation (if any).</summary>
     public TypeNode UnifiedType;
-#endif
     public AssignmentStatement()
       : base(NodeType.AssignmentStatement){
       this.Operator = NodeType.Nop;
@@ -4185,24 +3295,20 @@ namespace System.Compiler{
     public AssignmentStatement(Expression target, Expression source)
       : this(target, source, NodeType.Nop){
     }
-#if !MinimalReader
     public AssignmentStatement(Expression target, Expression source, SourceContext context)
       : this(target, source, NodeType.Nop){
       this.SourceContext = context;
     }
-#endif
     public AssignmentStatement(Expression target, Expression source, NodeType @operator)
       : base(NodeType.AssignmentStatement){
       this.target = target;
       this.source = source;
       this.@operator = @operator;
     }
-#if !MinimalReader
     public AssignmentStatement(Expression target, Expression source, NodeType Operator, SourceContext context)
       : this(target, source, Operator){
       this.SourceContext = context;
     }
-#endif
     public NodeType Operator{
       get{return this.@operator;}
       set{this.@operator = value;}
@@ -4225,13 +3331,11 @@ namespace System.Compiler{
       : base(NodeType.ExpressionStatement){
       this.Expression = expression;
     }
-#if !MinimalReader
     public ExpressionStatement(Expression expression, SourceContext sctx)
       : base(NodeType.ExpressionStatement){
       this.Expression = expression;
       this.SourceContext = sctx;
     }
-#endif
     public Expression Expression{
       get{return this.expression;}
       set{this.expression = value;}
@@ -4246,7 +3350,6 @@ namespace System.Compiler{
     public Branch()
       : base(NodeType.Branch){
     }
-#if !MinimalReader
     public Branch(Expression condition, Block target)
       : this(condition, target, false, false, false){
     }
@@ -4259,7 +3362,6 @@ namespace System.Compiler{
       this.BranchIfUnordered = unordered;
       this.SourceContext = sourceContext;
     }
-#endif
     public Branch(Expression condition, Block target, bool shortOffset, bool unordered, bool leavesExceptionBlock)
       : base(NodeType.Branch){
       this.BranchIfUnordered = unordered;
@@ -4285,25 +3387,16 @@ namespace System.Compiler{
       set{this.target = value; }
     }
   }
-#if FxCop
-  public class ReturnNode : ExpressionStatement{
-    public ReturnNode()
-#else
+
   public class Return : ExpressionStatement{
     public Return()
-#endif
       : base(){
       this.NodeType = NodeType.Return;
     }
-#if FxCop
-    public ReturnNode(Expression expression)
-#else
     public Return(Expression expression)
-#endif
       : base(expression){
       this.NodeType = NodeType.Return;
     }
-#if !MinimalReader
     public Return(SourceContext sctx)
       : base() {
       this.NodeType = NodeType.Return;
@@ -4314,9 +3407,8 @@ namespace System.Compiler{
       this.NodeType = NodeType.Return;
       this.SourceContext = sctx;
     }
-#endif
   }
-#if !MinimalReader
+
   /// <summary>
   /// Represents the return value in a post condition
   /// </summary>
@@ -4343,115 +3435,15 @@ namespace System.Compiler{
     }
   }
 
-#if !CodeContracts
-  public class Yield : ExpressionStatement{
-    public Yield()
-      : base(){
-      this.NodeType = NodeType.Yield;
-    }
-    public Yield(Expression expression)
-      : base(expression){
-      this.NodeType = NodeType.Yield;
-    }
-    public Yield(Expression expression, SourceContext sctx)
-      : base(expression){
-      this.NodeType = NodeType.Yield;
-      this.SourceContext = sctx;
-    }
-  }
-  public class Try : Statement{
-    private CatchList catchers;
-    private FilterList filters;
-    private FaultHandlerList faultHandlers;
-    private Finally finallyClause;
-    private Block tryBlock;
-    public Try()
-      : base(NodeType.Try){
-    }
-    public Try(Block tryBlock, CatchList catchers, FilterList filters, FaultHandlerList faultHandlers, Finally Finally)
-      : base(NodeType.Try){
-      this.catchers = catchers;
-      this.faultHandlers = faultHandlers;
-      this.filters = filters;
-      this.finallyClause = Finally;
-      this.tryBlock = tryBlock;
-    }
-    public CatchList Catchers{
-      get{return this.catchers;}
-      set{this.catchers = value;}
-    }
-    public FilterList Filters{
-      get{return this.filters;}
-      set{this.filters = value;}
-    }
-    public FaultHandlerList FaultHandlers{
-      get{return this.faultHandlers;}
-      set{this.faultHandlers = value;}
-    }
-    public Finally Finally{
-      get{return this.finallyClause;}
-      set{this.finallyClause = value;}
-    }
-    public Block TryBlock{
-      get{return this.tryBlock;}
-      set{this.tryBlock = value;}
-    }
-  }
-  public class Catch : Statement{
-    private Block block;
-    private TypeNode type;
-    private Expression variable;
-    public TypeNode TypeExpression;
-    public Catch()
-      : base(NodeType.Catch){
-    }
-    public Catch(Block block, Expression variable, TypeNode type)
-      : base(NodeType.Catch){
-      this.block = block;
-      this.variable = variable;
-      this.type = type;
-    }
-    public Block Block{
-      get{return this.block;}
-      set{this.block = value;}
-    }
-    public TypeNode Type{
-      get{return this.type;}
-      set{this.type = value;}
-    }
-    public Expression Variable{
-      get{return this.variable;}
-      set{this.variable = value;}
-    }
-  }
-  public class Finally : Statement{
-    private Block block;
-    public Finally()
-      : base(NodeType.Finally){
-    }
-    public Finally(Block block)
-      : base(NodeType.Finally){
-      this.block = block;
-    }
-    public Block Block{
-      get{return this.block;}
-      set{this.block = value;}
-    }
-  }
-#endif
-#endif
   public class EndFinally : Statement{
     public EndFinally()
       : base(NodeType.EndFinally){
     }
   }
-#if !MinimalReader || FxCop
   public class Filter : Statement{
     private Block block;
     private Expression expression;
-#if FxCop
     internal int handlerEnd;
-#endif
     public Filter()
       : base(NodeType.Filter){
     }
@@ -4469,7 +3461,6 @@ namespace System.Compiler{
       set{this.expression = value;}
     }
   }
-#endif
   public class EndFilter : Statement{
     private Expression value;
     public EndFilter()
@@ -4484,12 +3475,9 @@ namespace System.Compiler{
       set{this.value = value;}
     }
   }
-#if !MinimalReader || FxCop
+
   public class FaultHandler : Statement{
     private Block block;
-#if FxCop
-    internal int handlerEnd;
-#endif
     public FaultHandler()
       : base(NodeType.FaultHandler){
     }
@@ -4502,22 +3490,8 @@ namespace System.Compiler{
       set{this.block = value;}
     }
   }
-#endif
-#if FxCop
-  public class ThrowNode : Statement{
-#else
   public class Throw : Statement{
-#endif
     private Expression expression;
-#if FxCop
-    public ThrowNode()
-      : base(NodeType.Throw){
-    }
-    public ThrowNode(Expression expression)
-      : base(NodeType.Throw){
-      this.expression = expression;
-    }
-#else
     public Throw()
       : base(NodeType.Throw){
     }
@@ -4525,133 +3499,16 @@ namespace System.Compiler{
       : base(NodeType.Throw){
       this.expression = expression;
     }
-#endif
-#if !MinimalReader
     public Throw(Expression expression, SourceContext context)
       : base(NodeType.Throw){
       this.expression = expression;
       this.SourceContext = context;
     }
-#endif
     public Expression Expression{
       get{return this.expression;}
       set{this.expression = value;}
     }
   }
-#if !MinimalReader && !CodeContracts
-  public class If : Statement{
-    public Expression Condition;
-    public Block TrueBlock;
-    public Block FalseBlock;
-    public SourceContext ConditionContext;
-    public SourceContext ElseContext;
-    public SourceContext EndIfContext;
-    public If()
-      : base(NodeType.If){
-    }
-    public If(Expression condition, Block trueBlock, Block falseBlock)
-      : base(NodeType.If){
-      this.Condition = condition;
-      if (condition != null)
-        this.ConditionContext = condition.SourceContext;
-      this.TrueBlock = trueBlock;
-      this.FalseBlock = falseBlock;
-    }
-  }
-  public class For : Statement{
-    public Block Body;
-    public Expression Condition;
-    public StatementList Incrementer;
-    public StatementList Initializer;
-    public ExpressionList Invariants;
-    public For()
-      : base(NodeType.For){
-    }
-    public For(StatementList initializer, Expression condition, StatementList incrementer, Block body)
-      : base(NodeType.For){
-      this.Body = body;
-      this.Condition = condition;
-      this.Incrementer = incrementer;
-      this.Initializer = initializer;
-    }
-  }
-  public class ForEach : Statement{
-    public Block Body;
-    public Expression SourceEnumerable;
-    public BlockScope ScopeForTemporaryVariables;
-    public Expression TargetVariable;
-    public TypeNode TargetVariableType;
-    public TypeNode TargetVariableTypeExpression;
-    public Expression InductionVariable;
-    public ExpressionList Invariants;
-    public bool StatementTerminatesNormallyIfEnumerableIsNull = true;
-    public bool StatementTerminatesNormallyIfEnumeratorIsNull = true;
-    public ForEach()
-      : base(NodeType.ForEach){
-    }
-    public ForEach(TypeNode targetVariableType, Expression targetVariable, Expression sourceEnumerable, Block body)
-      : base(NodeType.ForEach){
-      this.TargetVariable = targetVariable;
-      this.TargetVariableType = targetVariableType;
-      this.SourceEnumerable = sourceEnumerable;
-      this.Body = body;
-    }
-  }
-  public class Exit : Statement{
-    public Literal Level;
-    public Exit()
-      : base(NodeType.Exit){
-    }
-    public Exit(Literal level)
-      : base(NodeType.Exit){
-      this.Level = level;
-    }
-  }
-  public class Continue : Statement{
-    public Literal Level;
-    public Continue()
-      : base(NodeType.Continue){
-    }
-    public Continue(Literal level)
-      : base(NodeType.Continue){
-      this.Level = level;
-    }
-  }
-  public class Switch : Statement{
-    public SwitchCaseList Cases;
-    public Expression Expression;
-    public Local Nullable;
-    public Expression NullableExpression;
-    public BlockScope Scope;
-    public Switch()
-      : base(NodeType.Switch){
-    }
-    public Switch(Expression expression, SwitchCaseList cases)
-      : base(NodeType.Switch){
-      this.Cases = cases;
-      this.Expression = expression;
-    }
-  }
-  public class SwitchCase : Node{
-    public Block Body;
-    public Expression Label;
-    public SwitchCase()
-      : base(NodeType.SwitchCase){
-    }
-    public SwitchCase(Expression label, Block body)
-      : base(NodeType.SwitchCase){
-      this.Body = body;
-      this.Label = label;
-    }
-  }
-  public class GotoCase : Statement{
-    public Expression CaseLabel;
-    public GotoCase(Expression caseLabel)
-      : base(NodeType.GotoCase){
-      this.CaseLabel = caseLabel;
-    }
-  }
-#endif
   public class SwitchInstruction : Statement{
     private Expression expression;
     private BlockList targets;
@@ -4672,241 +3529,7 @@ namespace System.Compiler{
       set{this.targets = value;}
     }
   }
-#if !MinimalReader && !CodeContracts
-  public class Typeswitch : Statement{
-    public TypeswitchCaseList Cases;
-    public Expression Expression;
-    public Typeswitch()
-      : base(NodeType.Typeswitch){
-    }
-    public Typeswitch(Expression expression, TypeswitchCaseList cases)
-      : base(NodeType.Typeswitch){
-      this.Cases = cases;
-      this.Expression = expression;
-    }
-  }
-  public class TypeswitchCase : Node{
-    public Block Body;
-    public TypeNode LabelType;
-    public TypeNode LabelTypeExpression;
-    public Expression LabelVariable;
-    public TypeswitchCase()
-      : base(NodeType.TypeswitchCase){
-    }
-    public TypeswitchCase(TypeNode labelType, Expression labelVariable, Block body)
-      : base(NodeType.TypeswitchCase){
-      this.Body = body;
-      this.LabelType = labelType;
-      this.LabelVariable = labelVariable;
-    }
-  }
-  public class While : Statement{
-    public Expression Condition;
-    public ExpressionList Invariants;
-    public Block Body;
-    public While()
-      : base(NodeType.While){
-    }
-    public While(Expression condition, Block body)
-      : base(NodeType.While){
-      this.Condition = condition;
-      this.Body = body;
-    }
-  }
-  public class DoWhile : Statement{
-    public Expression Condition;
-    public ExpressionList Invariants;
-    public Block Body;
-    public DoWhile()
-      : base(NodeType.DoWhile){
-    }
-    public DoWhile(Expression condition, Block body)
-      : base(NodeType.DoWhile){
-      this.Condition = condition;
-      this.Body = body;
-    }
-  }
-  public class Repeat : Statement{
-    public Expression Condition;
-    public Block Body;
-    public Repeat()
-      : base(NodeType.Repeat){
-    }
-    public Repeat(Expression condition, Block body)
-      : base(NodeType.Repeat){
-      this.Condition = condition;
-      this.Body = body;
-    }
-  }
-  public class Fixed : Statement{
-    public Statement Declarators;
-    public Block Body;
-    public BlockScope ScopeForTemporaryVariables;
-    public Fixed()
-      : base(NodeType.Fixed){
-    }
-  }
-  public class Lock : Statement{
-    public Expression Guard;
-    public Block Body;
-    public BlockScope ScopeForTemporaryVariable;
-    public Lock()
-      : base(NodeType.Lock){
-    }
-  }
-  public class ResourceUse : Statement{
-    public Statement ResourceAcquisition;
-    public Block Body;
-    public BlockScope ScopeForTemporaryVariable;
-    public ResourceUse()
-      : base(NodeType.ResourceUse){
-    }
-  }
-  public class Goto : Statement{
-    public Identifier TargetLabel;
-    public Goto()
-      : base(NodeType.Goto){
-    }
-    public Goto(Identifier targetLabel)
-      : base(NodeType.Goto){
-      this.TargetLabel = targetLabel;
-    }
-  }
-  public class VariableDeclaration : Statement{
-    public Expression Initializer;
-    public Identifier Name;
-    public TypeNode Type;
-    public TypeNode TypeExpression;
-    public Field Field;
-    public VariableDeclaration()
-      : base(NodeType.VariableDeclaration){
-    }
-    public VariableDeclaration(Identifier name, TypeNode type, Expression initializer)
-      : base(NodeType.VariableDeclaration){
-      this.Initializer = initializer;
-      this.Name = name;
-      this.Type = type;
-    }
-  }
-  public class LocalDeclaration : Node{
-    public Field Field; 
-    public Identifier Name;
-    public Expression InitialValue;
-    /// <summary>
-    /// Used when converting a declaration with initializer into an assignment statement.
-    /// Usually Nop, but could be set to CopyReference to avoid dereferencing on either side.
-    /// </summary>
-    public NodeType AssignmentNodeType = NodeType.Nop;
-    public LocalDeclaration()
-      : base(NodeType.LocalDeclaration){
-    }
-    public LocalDeclaration(Identifier name, Expression initialValue)
-      : base(NodeType.LocalDeclaration){
-      this.Name = name;
-      this.InitialValue = initialValue;
-    }
-    public LocalDeclaration(Identifier name, Expression initialValue, NodeType assignmentNodeType)
-      : base(NodeType.LocalDeclaration){
-      this.Name = name;
-      this.InitialValue = initialValue;
-      this.AssignmentNodeType = assignmentNodeType;
-    }
 
-  }
-  public class LocalDeclarationsStatement : Statement{
-    public bool Constant;
-    public bool InitOnly;
-    public TypeNode Type;
-    public TypeNode TypeExpression;
-    public LocalDeclarationList Declarations;
-    public LocalDeclarationsStatement()
-      : base(NodeType.LocalDeclarationsStatement){
-    }
-    public LocalDeclarationsStatement(LocalDeclaration ldecl, TypeNode type)
-      : base(NodeType.LocalDeclarationsStatement){
-      Declarations = new LocalDeclarationList();
-      Declarations.Add(ldecl);
-      this.Type = type;
-    }
-  }
-  public class StatementSnippet : Statement{
-    public IParserFactory ParserFactory;
-
-    public StatementSnippet()
-      : base(NodeType.StatementSnippet){
-    }
-    public StatementSnippet(IParserFactory parserFactory, SourceContext sctx)
-      : base(NodeType.StatementSnippet){
-      this.ParserFactory = parserFactory;
-      this.SourceContext = sctx;
-    }
-  }
-  /// <summary>
-  /// Associates an identifier with a type or a namespace or a Uri or a list of assemblies. 
-  /// In C# alias identifiers are used as root identifiers in qualified expressions, or as identifier prefixes.
-  /// </summary>
-  public class AliasDefinition : Node{
-    
-    /// <summary>The identifier that serves as an alias for the type, namespace, Uri or list of assemblies.</summary>
-    public Identifier Alias;
-
-    /// <summary>The list of assemblies being aliased.</summary>
-    public AssemblyReferenceList AliasedAssemblies;
-    
-    /// <summary>The expression that was (or should be) resolved into a type, namespace or Uri.</summary>
-    public Expression AliasedExpression;
-    
-    /// <summary>The namespace being aliased.</summary>
-    public Identifier AliasedNamespace;
-    
-    /// <summary>A reference to the type being aliased.</summary>
-    public TypeReference AliasedType;
-    
-    /// <summary>The Uri being aliased.</summary>
-    public Identifier AliasedUri;
-
-    /// <summary>
-    /// If an alias definition conflicts with a type definition and this causes an ambiguity, the conflicting type is stored here
-    /// by the code that detects the ambiguity. A later visitor is expected to report an error if this is not null.
-    /// </summary>
-    public TypeNode ConflictingType;
-
-    public bool RestrictToInterfaces;
-    public bool RestrictToClassesAndInterfaces;
-
-    public AliasDefinition()
-      : base(NodeType.AliasDefinition){
-    }
-    public AliasDefinition(Identifier alias, Expression aliasedExpression)
-      : base(NodeType.AliasDefinition){
-      this.Alias = alias;
-      this.AliasedExpression = aliasedExpression;
-    }
-    public AliasDefinition(Identifier alias, Expression aliasedExpression, SourceContext sctx)
-      : base(NodeType.AliasDefinition){
-      this.Alias = alias;
-      this.AliasedExpression = aliasedExpression;
-      this.SourceContext = sctx;
-    }
-  }
-  public class UsedNamespace : Node{
-    public Identifier Namespace;
-    public Identifier URI;
-    public UsedNamespace()
-      : base(NodeType.UsedNamespace){
-    }
-    public UsedNamespace(Identifier Namespace)
-      : base(NodeType.UsedNamespace){
-      this.Namespace = Namespace;
-    }
-    public UsedNamespace(Identifier Namespace, SourceContext sctx)
-      : base(NodeType.UsedNamespace){
-      this.Namespace = Namespace;
-      this.SourceContext = sctx;
-    }
-  }
-#endif
-#if !FxCop
   public class ExceptionHandler : Node{
     private NodeType handlerType;
     private Block tryStartBlock;
@@ -4947,11 +3570,9 @@ namespace System.Compiler{
       set{this.filterType = value;}
     }
   }
-#endif
+
   public class AttributeNode : Node{
-#if !MinimalReader
     public bool IsPseudoAttribute;
-#endif
     public AttributeNode()
       : base(NodeType.Attribute){
     }
@@ -4961,14 +3582,12 @@ namespace System.Compiler{
       this.expressions = expressions;
       this.target = AttributeTargets.All;
     }
-#if !MinimalReader
     public AttributeNode(Expression constructor, ExpressionList expressions, AttributeTargets target)
       : base(NodeType.Attribute){
       this.constructor = constructor;
       this.expressions = expressions;
       this.target = target;
     }
-#endif
     private Expression constructor;
     public Expression Constructor{
       get{return this.constructor;}
@@ -5049,16 +3668,6 @@ namespace System.Compiler{
       if (args == null || args.Count < 1) return;
       Literal lit = args[0] as Literal;
       if (lit == null || !(lit.Value is int)) {
-#if ExtendedRuntime
-        MemberBinding mb = args[0] as MemberBinding;
-        if (mb != null) {
-          Field f = mb.BoundMember as Field;
-          if (f != null && f.IsLiteral) {
-            lit = f.Initializer as Literal;
-          }
-        }
-        if (lit == null || !(lit.Value is int))
-#endif
           return;
       }
       //^ assert lit.Value != null;
@@ -5076,7 +3685,6 @@ namespace System.Compiler{
           this.inherited = (bool)lit.Value;
         }
       }
-#if !MinimalReader
       if (!this.allowMultiple) {
         var n = attrType.Attributes.Count;
         for (int i = 0; i < n; i++) {
@@ -5089,10 +3697,8 @@ namespace System.Compiler{
           }
         }
       }
-#endif
     }
     public static readonly AttributeNode DoesNotExist = new AttributeNode();
-#if !NoReflection
     public virtual System.Attribute GetRuntimeAttribute(){
       MemberBinding mb = this.Constructor as MemberBinding;
       if (mb == null) return null;
@@ -5224,7 +3830,6 @@ namespace System.Compiler{
       }catch{}     
       return null;
     }
-#endif
     public Expression GetPositionalArgument(int position){
       if (this.Expressions == null || this.Expressions.Count <= position) return null;
       Expression e = this.Expressions[position];
@@ -5260,7 +3865,6 @@ namespace System.Compiler{
     protected string serializedPermissions;
     public string SerializedPermissions{
       get{
-#if !NoReflection || FxCop
         if (this.serializedPermissions == null && this.PermissionAttributes != null){
           lock (this){
             if (this.serializedPermissions != null) return this.serializedPermissions;
@@ -5273,14 +3877,12 @@ namespace System.Compiler{
             //assemblies with references to target platform assemblies
           }
         }
-#endif
         return this.serializedPermissions;
       }
       set{
         this.serializedPermissions = value;
       }
     }
-#if !NoReflection || FxCop
     protected System.Security.PermissionSet permissions;
     public System.Security.PermissionSet Permissions{
       get{
@@ -5288,16 +3890,12 @@ namespace System.Compiler{
           lock (this){
             if (this.permissions != null) return this.permissions;
             System.Security.PermissionSet permissions = null;
-#if !FxCop
             if (this.PermissionAttributes != null){
               permissions = this.InstantiatePermissionAttributes();
             }else if (this.serializedPermissions != null){
               permissions = new System.Security.PermissionSet(System.Security.Permissions.PermissionState.None);
               permissions.FromXml(this.GetSecurityElement());
             }
-#elif !TestBuild
-            permissions = PermissionsHelper.GetPermissions(this);
-#endif
             this.permissions = permissions;
           }
         }
@@ -5307,21 +3905,8 @@ namespace System.Compiler{
         this.permissions = value;
       }
     }
-#endif
-#if !NoReflection
     protected System.Security.SecurityElement GetSecurityElement(){
-#if WHIDBEY
       return System.Security.SecurityElement.FromString(this.serializedPermissions);
-#else
-      System.Reflection.Assembly mscorlib = CoreSystemTypes.SystemAssembly.GetRuntimeAssembly();
-      if (mscorlib == null) { Debug.Fail(""); return null; }
-      Type parserType = mscorlib.GetType("System.Security.Util.Parser", true, false);
-      if (parserType == null) { Debug.Fail(""); return null; }
-      System.Reflection.MethodInfo getTopElement = parserType.GetMethod("GetTopElement", BindingFlags.NonPublic|BindingFlags.Instance, null, new Type[]{}, null);
-      if (getTopElement == null) { Debug.Fail(""); return null; }
-      object parser = Activator.CreateInstance(parserType, BindingFlags.Instance|BindingFlags.NonPublic, null, new Object[]{this.serializedPermissions}, null);
-      return (System.Security.SecurityElement)getTopElement.Invoke(parser, null);
-#endif
     }
     protected System.Security.PermissionSet InstantiatePermissionAttributes(){
       System.Security.PermissionSet permissions = new System.Security.PermissionSet(System.Security.Permissions.PermissionState.None);
@@ -5360,7 +3945,6 @@ namespace System.Compiler{
       }catch{}
       return null;
     }
-#endif
   }
   public struct Resource{
     private bool isPublic;
@@ -5421,11 +4005,7 @@ namespace System.Compiler{
       set{this.data = value;}
     }
   }
-#if FxCop
-  public class ModuleNode : Node, IDisposable{
-#else
   public class Module : Node, IDisposable{
-#endif
     internal Reader reader;
     public delegate void TypeNodeListProvider(Module/*!*/ module);
     protected TypeNodeListProvider provideTypeNodeList;
@@ -5441,46 +4021,26 @@ namespace System.Compiler{
     public delegate AssemblyNode AssemblyReferenceResolver(AssemblyReference/*!*/ assemblyReference, Module/*!*/ referencingModule);
     public event AssemblyReferenceResolver AssemblyReferenceResolution;
     public event AssemblyReferenceResolver AssemblyReferenceResolutionAfterProbingFailed;
-#if !NoXml
     public delegate XmlDocument DocumentationResolver(Module referencingModule);
     public event DocumentationResolver DocumentationResolution = null;
-#endif
-#if !MinimalReader
     public bool IsNormalized;
-#endif
-#if !NoWriter
     public bool UsePublicKeyTokensForAssemblyReferences = true;
-#endif
     internal int FileAlignment = 512;
     internal ulong BaseAddress;
     internal long SizeOfStackReserve;
     internal readonly static object GlobalLock = new object();
-#if !NoWriter
     public bool StripOptionalModifiersFromLocals = true;
-#endif
-#if FxCop
-    public ModuleNode()
-#else
     public Module()
-#endif
       : base(NodeType.Module){
-#if !MinimalReader
       this.IsNormalized = false;
-#endif
     }
-#if FxCop
-    public ModuleNode(TypeNodeProvider provider, TypeNodeListProvider listProvider, CustomAttributeProvider provideCustomAttributes, ResourceProvider provideResources)
-#else
     public Module(TypeNodeProvider provider, TypeNodeListProvider listProvider, CustomAttributeProvider provideCustomAttributes, ResourceProvider provideResources)
-#endif
       : base(NodeType.Module){
       this.provideCustomAttributes = provideCustomAttributes;
       this.provideResources = provideResources;
       this.provideTypeNode = provider;
       this.provideTypeNodeList = listProvider;
-#if !MinimalReader
       this.IsNormalized = true;
-#endif
     }
     public virtual void Dispose(){ 
       if (this.reader != null) this.reader.Dispose();
@@ -5601,7 +4161,6 @@ namespace System.Compiler{
       get{return this.trackDebugData;}
       set{this.trackDebugData = value;}
     }
-#if !FxCop
     private ArrayList metadataImportErrors;
     /// <summary>
     /// If any exceptions were encountered while reading in this module, they are recorded here. Since reading is lazy,
@@ -5623,8 +4182,6 @@ namespace System.Compiler{
       set { this.metadataImportWarnings = value; }
     }
 
-
-#endif
     protected AttributeList attributes;
     /// <summary>
     /// The attributes associated with this module or assembly. This corresponds to C# custom attributes with the assembly or module target specifier.
@@ -5664,11 +4221,9 @@ namespace System.Compiler{
         this.securityAttributes = value;
       }
     }
-#if !MinimalReader
     /// <summary>The source code, if any, corresponding to the value in Documentation.</summary>
     public Node DocumentationNode;
-#endif
-#if !NoXml
+
     protected XmlDocument documentation;
     /// <summary>An XML Document Object Model for a document containing all of the documentation comments applicable to members
     /// defined in this module.</summary>
@@ -5716,7 +4271,6 @@ namespace System.Compiler{
       }
       return null;
     }
-#endif
     protected internal static readonly Method NoSuchMethod = new Method();
     protected Method entryPoint;
     /// <summary>If this module is an executable, this method is the one that gets called to start the execution of managed code.</summary>
@@ -5748,7 +4302,6 @@ namespace System.Compiler{
         this.moduleReferences = value;
       }
     }
-#if !MinimalReader
     public virtual bool ContainsModule(Module module) {
       if (module == null || this.ModuleReferences == null || this.ModuleReferences.Count == 0) return false;
       int n = this.ModuleReferences.Count;
@@ -5760,7 +4313,6 @@ namespace System.Compiler{
       }
       return false;
     }
-#endif
     protected ResourceList resources;
     /// <summary>
     /// A list of managed resources linked or embedded into this module or assembly.
@@ -5799,7 +4351,6 @@ namespace System.Compiler{
         this.win32Resources = value;
       }
     }
-#if !NoWriter
     public virtual void AddWin32ResourceFile(string win32ResourceFilePath){
       if (win32ResourceFilePath == null) return;
       Writer.AddWin32ResourceFileToModule(this, win32ResourceFilePath);
@@ -5819,7 +4370,6 @@ namespace System.Compiler{
       if (options == null) return;
       Writer.AddWin32VersionInfo(this, options);
     }
-#endif
     /// <summary>
     /// Gets the first attribute of the given type in the custom attribute list of this module. Returns null if none found.
     /// This should not be called until the module has been processed to replace symbolic references
@@ -5859,7 +4409,6 @@ namespace System.Compiler{
       }
       return foundAttributes;
     }
-#if !NoXml
     protected TrivialHashtable memberDocumentationCache;
     public TrivialHashtable GetMemberDocumentationCache(){
       TrivialHashtable cache = this.memberDocumentationCache;
@@ -5890,11 +4439,9 @@ namespace System.Compiler{
         return cache;
       }
     }
-#endif
     protected TrivialHashtable validNamespaces;
     public NamespaceList GetNamespaceList(){
       if (this.reader != null) return this.GetNamespaceListFromReader();
-#if !MinimalReader
       TypeNodeList types = this.Types;
       int n = types == null ? 0 : types.Count;
       if (this.namespaceList == null || n > this.savedTypesLength){
@@ -5922,7 +4469,6 @@ namespace System.Compiler{
           }
         }
       }
-#endif
       return this.namespaceList;
     }
     private NamespaceList GetNamespaceListFromReader()
@@ -6098,10 +4644,8 @@ namespace System.Compiler{
     /// <summary>The types contained in this module or assembly.</summary>
     public virtual TypeNodeList Types{
       get{
-#if CodeContracts
         Contract.Ensures(Contract.Result<TypeNodeList>() != null);
         
-#endif
         if (this.types != null) return this.types;
         if (this.provideTypeNodeList != null){
           lock (Module.GlobalLock){
@@ -6116,9 +4660,7 @@ namespace System.Compiler{
         this.types = value;
       }
     }
-#if !MinimalReader
     protected TrivialHashtable referencedModulesAndAssemblies;
-#endif
     public virtual bool HasReferenceTo(Module module){
       if (module == null) return false;
       AssemblyNode assembly = module as AssemblyNode;
@@ -6149,7 +4691,6 @@ namespace System.Compiler{
         this.AssemblyReferenceResolutionAfterProbingFailed = referringModule.AssemblyReferenceResolutionAfterProbingFailed;
       }
     }
-#if !MinimalReader
     public static Module GetModule(byte[] buffer){
       return Module.GetModule(buffer, null, false, false, true, false);
     }
@@ -6163,7 +4704,6 @@ namespace System.Compiler{
       if (buffer == null) return null;
       return (new Reader(buffer, cache, doNotLockFile, getDebugInfo, useGlobalCache, false)).ReadModule();
     }
-#endif
     public static Module GetModule(string location){
       return Module.GetModule(location, null, false, false, true, false);
     }
@@ -6188,7 +4728,6 @@ namespace System.Compiler{
       if (this.AssemblyReferenceResolutionAfterProbingFailed == null) return null;
       return this.AssemblyReferenceResolutionAfterProbingFailed(assemblyReference, this);
     }
-#if !NoWriter
     public virtual void WriteModule(string/*!*/ location, bool writeDebugSymbols) {
       this.Location = location;
       Writer.WritePE(location, writeDebugSymbols, this);
@@ -6206,8 +4745,6 @@ namespace System.Compiler{
       this.Location = location;
       Writer.WritePE(options, this);
     }
-#endif
-#if !NoXml
     public virtual void WriteDocumentation(System.IO.TextWriter doc){
       if (this.documentation == null) return;
       XmlTextWriter xwriter = new XmlTextWriter(doc);
@@ -6232,8 +4769,6 @@ namespace System.Compiler{
       xwriter.WriteEndElement();
       xwriter.Close();
     }
-#endif
-#if !NoWriter
     public delegate MethodBodySpecializer/*!*/ MethodBodySpecializerFactory(Module/*!*/ m, TypeNodeList/*!*/ pars, TypeNodeList/*!*/ args);
     public MethodBodySpecializerFactory CreateMethodBodySpecializer;
     public MethodBodySpecializer/*!*/ GetMethodBodySpecializer(TypeNodeList/*!*/ pars, TypeNodeList/*!*/ args) {
@@ -6241,17 +4776,11 @@ namespace System.Compiler{
         return this.CreateMethodBodySpecializer(this, pars, args);
       return new MethodBodySpecializer(this, pars, args);
     }
-#endif
   }
   public class AssemblyNode : Module{ //An assembly is a module with a strong name
-#if !NoWriter
     public string KeyContainerName;
     public byte[] KeyBlob;
-#endif
-#if !NoReflection
     private static Hashtable CompiledAssemblies;// so we can find in-memory compiled assemblies later (contains weak references)
-#endif
-#if !MinimalReader
     protected AssemblyNode contractAssembly;
     /// <summary>A separate assembly that supplied the type and method contracts for this assembly.</summary>
     public virtual AssemblyNode ContractAssembly{
@@ -6293,19 +4822,6 @@ namespace System.Compiler{
         }
         #endregion Copy over any external references from the contract assembly to this one (if needed)
 
-#if ExtendedRuntime
-        #region Copy over any assembly-level attributes from the Contracts namespace
-        int contractsNamespaceKey = SystemTypes.NonNullType.Namespace.UniqueIdKey;
-        // Copy the assembly-level contract attributes over to the shadowed assembly.
-        foreach(AttributeNode attr in contractAssembly.Attributes) {
-          if(attr.Type != SystemTypes.ShadowsAssemblyAttribute // can't copy this one or the real assembly will be treated as a shadow assembly!
-            &&
-            attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey)
-            this.Attributes.Add(attr);
-        }
-        #endregion Copy over any assembly-level attributes from the Contracts namespace
-#endif
-
         TypeNodeList instantiatedTypes = null;
         if (this.reader != null) instantiatedTypes = this.reader.GetInstantiatedTypes();
         if (instantiatedTypes != null)
@@ -6314,27 +4830,11 @@ namespace System.Compiler{
             if (t == null) continue;
 
             if (t.members == null) {
-#if ExtendedRuntime
-              // Then will never get to ApplyOutOfBandContracts and will never have any
-              // type-level attributes copied over. So need to do this here as well as
-              // within ApplyOutOfBandContracts
-              TypeNode contractType = this.ContractAssembly.GetType(t.Namespace, t.Name);
-              if (contractType == null) continue;
-              // Copy the type-level contract attributes over to the shadowed type.
-              foreach (AttributeNode attr in contractType.Attributes) {
-                if (attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey)
-                  t.Attributes.Add(attr);
-              }
-#endif
               continue;
             }
-#if ExtendedRuntime
-            t.ApplyOutOfBandContracts();
-#endif
-          }
+         }
       }
     }
-#endif
     internal static readonly AssemblyNode/*!*/ Dummy = new AssemblyNode();
     protected string strongName;
     /// <summary>
@@ -6404,11 +4904,9 @@ namespace System.Compiler{
       this.ContainingAssembly = this;
     }
     public override void Dispose(){
-#if !NoReflection
       if (this.cachedRuntimeAssembly != null)
         this.cachedRuntimeAssembly.Dispose();
       this.cachedRuntimeAssembly = null;
-#endif
       lock (Reader.StaticAssemblyCache) {
         foreach (object key in new ArrayList(Reader.StaticAssemblyCache.Keys)){
           if (Reader.StaticAssemblyCache[key] == this)
@@ -6487,7 +4985,6 @@ namespace System.Compiler{
         this.reader.getDebugSymbols = value;
       }
     }
-#if !MinimalReader
     public static AssemblyNode GetAssembly(byte[] buffer){
       return AssemblyNode.GetAssembly(buffer, null, false, false, true, false);
     }
@@ -6502,7 +4999,6 @@ namespace System.Compiler{
       if (CoreSystemTypes.SystemAssembly == null) Debug.Fail("");
       return (new Reader(buffer, cache, doNotLockFile, getDebugInfo, useGlobalCache, preserveShortBranches)).ReadModule() as AssemblyNode;
     }
-#endif
     public static AssemblyNode GetAssembly(string location){
       return AssemblyNode.GetAssembly(location, null, false, false, true, false);
     }
@@ -6515,7 +5011,6 @@ namespace System.Compiler{
     public static AssemblyNode GetAssembly(string location, IDictionary cache, bool doNotLockFile, bool getDebugInfo, bool useGlobalCache){
       return AssemblyNode.GetAssembly(location, cache, doNotLockFile, getDebugInfo, useGlobalCache, false);
     }
-#if !MinimalReader
     /// <summary>
     /// Calls the post load event only if the assembly is not already loaded/found in the cache.
     /// </summary>
@@ -6537,16 +5032,7 @@ namespace System.Compiler{
       if (CoreSystemTypes.SystemAssembly == null) Debug.Fail("");
       return (new Reader(location, cache, doNotLockFile, getDebugInfo, useGlobalCache, preserveShortBranches)).ReadModule(postLoadEvent) as AssemblyNode;
     }
-#else 
-    public static AssemblyNode GetAssembly(string location, IDictionary cache, bool doNotLockFile, bool getDebugInfo, bool useGlobalCache, bool preserveShortBranches)
-    {
-      if (location == null) return null;
-      if (CoreSystemTypes.SystemAssembly == null) Debug.Fail("");
-      return (new Reader(location, cache, doNotLockFile, getDebugInfo, useGlobalCache, preserveShortBranches)).ReadModule() as AssemblyNode;
-    }
-#endif
 
-#if !MinimalReader || !NoXml || !NoData
     public static AssemblyNode GetAssembly(AssemblyReference assemblyReference){
       return AssemblyNode.GetAssembly(assemblyReference, null, false, false, true, false);
     }
@@ -6565,8 +5051,7 @@ namespace System.Compiler{
       Reader reader = new Reader(cache, doNotLockFile, getDebugInfo, useGlobalCache, preserveShortBranches);
       return assemblyReference.Assembly = reader.GetAssemblyFromReference(assemblyReference);
     }
-#endif
-#if !NoReflection
+
     public static AssemblyNode GetAssembly(System.Reflection.Assembly runtimeAssembly){
       return AssemblyNode.GetAssembly(runtimeAssembly, null, false, true, false);
     }
@@ -6596,7 +5081,6 @@ namespace System.Compiler{
       //Need CLR support to handle such assemblies. For now return null.
       return null;
     }
-#endif
     public void SetupDebugReader(string pdbSearchPath){
       if (this.reader == null){Debug.Assert(false); return;}
       this.reader.SetupDebugReader(this.Location, pdbSearchPath);
@@ -6649,7 +5133,6 @@ namespace System.Compiler{
       }
       return this.assemblyName;
     }
-#if !NoReflection
     private sealed class CachedRuntimeAssembly : IDisposable{
       internal System.Reflection.Assembly Value;
       internal CachedRuntimeAssembly(System.Reflection.Assembly assembly){
@@ -6671,8 +5154,6 @@ namespace System.Compiler{
     public System.Reflection.Assembly GetRuntimeAssembly(){
       return this.GetRuntimeAssembly(null, null);
     }
-#endif
-#if !NoReflection
     public System.Reflection.Assembly GetRuntimeAssembly(System.Security.Policy.Evidence evidence){
       return this.GetRuntimeAssembly(evidence, null);
     }
@@ -6703,7 +5184,6 @@ namespace System.Compiler{
                 result = targetAppDomain.Load(this.GetAssemblyName());
             }
           }
-#if !NoWriter
           // without the writer, it is impossible to get the runtime
           // assembly for an AssemblyNode which does not correspond
           // to a file on disk, we will return null in that case.
@@ -6724,7 +5204,6 @@ namespace System.Compiler{
                 result = targetAppDomain.Load(executable);
             }        
           }
-#endif
           if (result != null && evidence == null && targetAppDomain == AppDomain.CurrentDomain){
             this.AddCachedAssembly(result);
             this.cachedRuntimeAssembly = new CachedRuntimeAssembly(result);
@@ -6738,13 +5217,11 @@ namespace System.Compiler{
         AssemblyNode.CompiledAssemblies = Hashtable.Synchronized(new Hashtable());
       AssemblyNode.CompiledAssemblies[runtimeAssembly] = new WeakReference(this);
     }
-#endif
     private static string GetKeyString(byte[] publicKey){
       if (publicKey == null) return null;
       int n = publicKey.Length;
       StringBuilder str;
       if (n > 8){
-#if !ROTOR
         System.Security.Cryptography.SHA1 sha1 = new System.Security.Cryptography.SHA1CryptoServiceProvider();
         publicKey = sha1.ComputeHash(publicKey);
         byte[] token = new byte[8];
@@ -6752,9 +5229,6 @@ namespace System.Compiler{
           token[i] = publicKey[m-i];
         publicKey = token;
         n = 8;
-#else
-        n = 0; //TODO: figure out how to compute the token on ROTOR
-#endif
       }
       if (n == 0)
         str = new StringBuilder(", PublicKeyToken=null");
@@ -6796,15 +5270,11 @@ namespace System.Compiler{
           byte[] tok = ar.PublicKeyToken;
           if (tok != null && this.PublicKeyOrToken != null) tok = this.PublicKeyToken;
           if (!ar.Matches(this.Name, ar.Version, ar.Culture, tok)) continue;
-#if !FxCop
         }catch(ArgumentException e){
           if (this.MetadataImportErrors == null) this.MetadataImportErrors = new ArrayList();
           this.MetadataImportErrors.Add(e.Message);
           continue;
         }
-#else
-        }finally{}
-#endif
         this.friends[assembly.UniqueKey] = this;
         return true;
       }
@@ -6865,18 +5335,13 @@ namespace System.Compiler{
         if (this.token != null) return this.token;
         if (this.PublicKeyOrToken == null || this.PublicKeyOrToken.Length == 0) return null;
         if (this.PublicKeyOrToken.Length == 8) return this.token = this.PublicKeyOrToken;
-#if !ROTOR
         System.Security.Cryptography.SHA1 sha1 = new System.Security.Cryptography.SHA1CryptoServiceProvider();
         byte[] hashedKey = sha1.ComputeHash(this.PublicKeyOrToken);
         byte[] token = new byte[8];
         for (int i = 0, n = hashedKey.Length-1; i < 8; i++) token[i] = hashedKey[n-i];
         return this.token = token;
-#else
-        return null;
-#endif
       }
     }
-#if !MinimalReader
     public override string ToString() {
       return this.Name;
     }
@@ -6886,12 +5351,9 @@ namespace System.Compiler{
     {
       return this.AfterAssemblyLoad;
     }
-#endif
   }
   public class AssemblyReference : Node{
-#if !MinimalReader
     public IdentifierList Aliases;
-#endif
     private byte[] token;
     internal Reader Reader;
     public AssemblyReference()
@@ -6910,12 +5372,10 @@ namespace System.Compiler{
       this.version = assembly.Version;
       this.assembly = assembly;
     }
-#if !MinimalReader
     public AssemblyReference(string assemblyStrongName, SourceContext sctx)
       : this(assemblyStrongName){
       this.SourceContext = sctx;
     }
-#endif
     public AssemblyReference(string assemblyStrongName)
       : base(NodeType.AssemblyReference){
       AssemblyFlags flags = AssemblyFlags.None;
@@ -6971,13 +5431,9 @@ namespace System.Compiler{
             n--;
           }
           for (i = 0; i < n; i += 2) {
-#if WHIDBEY
             byte b = 0;
             bool goodByte = byte.TryParse(token.Substring(i, 2), System.Globalization.NumberStyles.HexNumber, null, out b);
             Debug.Assert(goodByte);
-#else
-            byte b = byte.Parse(token.Substring(i, 2), System.Globalization.NumberStyles.HexNumber, null);
-#endif
             tokArr.Add(b);
           }
           tok = (byte[])tokArr.ToArray(typeof(byte));
@@ -7147,15 +5603,11 @@ namespace System.Compiler{
         if (this.token != null) return this.token;
         if (this.PublicKeyOrToken == null || this.PublicKeyOrToken.Length == 0) return null;
         if (this.PublicKeyOrToken.Length == 8) return this.token = this.PublicKeyOrToken;
-#if !ROTOR
         System.Security.Cryptography.SHA1 sha = new System.Security.Cryptography.SHA1CryptoServiceProvider();
         byte[] hashedKey = sha.ComputeHash(this.PublicKeyOrToken);
         byte[] token = new byte[8];
         for (int i = 0, n = hashedKey.Length-1; i < 8; i++) token[i] = hashedKey[n-i];
         return this.token = token;
-#else
-        return null;
-#endif
       }
     }
   }
@@ -7183,7 +5635,6 @@ namespace System.Compiler{
   /// A member of a Namespace or a TypeNode
   /// </summary>
   public abstract class Member : Node{
-#if !MinimalReader
     /// <summary>The namespace of which this node is a member. Null if this node is a member of type.</summary>
     public Namespace DeclaringNamespace;
     /// <summary>
@@ -7193,7 +5644,6 @@ namespace System.Compiler{
     public bool IsUnsafe;
     /// <summary>A list of other nodes that refer to this member. Must be filled in by client code.</summary>
     public NodeList References;
-#endif
     protected Member(NodeType nodeType)
       : base(nodeType){
     }
@@ -7215,9 +5665,6 @@ namespace System.Compiler{
       get{return this.name;}
       set{ this.name = value; }
     }
-#if ExtendedRuntime
-    private Anonymity anonymity;
-#endif
     protected AttributeList attributes;
     private bool notObsolete;
     private ObsoleteAttribute obsoleteAttribute;
@@ -7227,9 +5674,7 @@ namespace System.Compiler{
     /// </summary>
     public virtual AttributeList Attributes{
       get{
-#if CodeContracts
         CC.Contract.Ensures(CC.Contract.Result<AttributeList>() != null);
-#endif
         if (this.attributes != null) return this.attributes;
         return this.attributes = new AttributeList();
       }
@@ -7290,9 +5735,7 @@ namespace System.Compiler{
     /// This should not be called until the AST containing this member has been processed to replace symbolic references
     /// to members with references to the actual members.
     /// </summary>
-#if ExtendedRuntime || CodeContracts
     [Pure]
-#endif
     public virtual AttributeNode GetAttribute(TypeNode attributeType) {
       if (attributeType == null) return null;
       AttributeList attributes = this.Attributes;
@@ -7331,90 +5774,6 @@ namespace System.Compiler{
       }
       return filtered;
     }
-#if ExtendedRuntime
-    public virtual AttributeList GetAllAttributes(TypeNode attributeType)
-    {
-      AttributeList filtered = new AttributeList();
-      if (attributeType == null) return filtered;
-      AttributeList attributes = this.Attributes;
-      for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++) {
-        AttributeNode attr = attributes[i];
-        if (attr == null) continue;
-        MemberBinding mb = attr.Constructor as MemberBinding;
-        if (mb != null) {
-          if (mb.BoundMember != null && mb.BoundMember.DeclaringType == attributeType)
-            filtered.Add(attr);
-          continue;
-        }
-        Literal lit = attr.Constructor as Literal;
-        if (lit != null && (lit.Value as TypeNode) == attributeType)
-          filtered.Add(attr);
-      }
-      return filtered;
-    }
-
-    /// <summary>
-    /// If this is true, the name of the member is meaningless and the member is intended as an "invisible" container for other members.
-    /// The value of this property is controlled by the presence or absence of the Anonymous attribute.
-    /// </summary>
-    public bool IsAnonymous{
-      get{ 
-        switch (this.Anonymity){
-          case Anonymity.None:
-          case Anonymity.Unknown:
-            return false;
-          default:
-            return true;
-        }
-      }
-    }
-    /// <summary>
-    /// Exposes the value of the Anonymous attribute. The value is Anonimity.None if no attribute is present.
-    /// </summary>
-    public Anonymity Anonymity{
-      get{
-        if (this.anonymity == Anonymity.Unknown){
-          AttributeNode attr = this.GetAttribute(SystemTypes.AnonymousAttribute);
-          if (attr == null)
-            this.anonymity = Anonymity.None;
-          else{
-            this.anonymity = Anonymity.Structural; // default
-            if (attr.Expressions != null){
-              for (int i = 0, n = attr.Expressions.Count; i < n; i++){
-                NamedArgument na = attr.Expressions[i] as NamedArgument;
-                if (na == null || na.Name != null) continue;
-                if (na.Name.UniqueIdKey == StandardIds.Anonymity.UniqueIdKey){
-                  Literal lit = na.Value as Literal;
-                  if (lit == null) continue;
-                  this.anonymity = (Anonymity)lit.Value;
-                  break;
-                }
-              }
-            }
-          }
-        }
-        return this.anonymity;
-      }
-    }
-    CciMemberKind cciKind;
-    public CciMemberKind CciKind{
-      get{
-        if (cciKind == CciMemberKind.Unknown){
-          AttributeNode a = GetAttribute(SystemTypes.CciMemberKindAttribute);
-          if (a == null)
-            cciKind = CciMemberKind.Regular;
-          else
-            cciKind = (CciMemberKind) ((Literal) a.Expressions[0]).Value;
-        }
-        return cciKind;
-      }
-      set{
-        this.cciKind = value;
-      }
-    }
-
-
-#endif
     /// <summary>
     /// The concatenation of the FullName of the containing member and the name of this member. 
     /// Separated with a '.' character if the containing member is a namespace and a '+' character if the containing member is a Type.
@@ -7473,11 +5832,8 @@ namespace System.Compiler{
         this.notObsolete = false;
       }
     }
-#if !MinimalReader
     /// <summary>The source code, if any, corresponding to the value in Documentation.</summary>
     public Node DocumentationNode;
-#endif
-#if !NoXml
     protected XmlNode documentation;
     /// <summary>The body of an XML element containing a description of this member. Used to associated documentation (such as this comment) with members.
     /// The fragment usually conforms to the structure defined in the C# standard.</summary>
@@ -7675,26 +6031,7 @@ namespace System.Compiler{
           sb.Length -= 1;
       }
     }
-#endif
-#if FxCop
-    internal string GetName(MemberFormat options)
-    {
-      StringBuilder name = new StringBuilder();
-      GetName(options, name);
-      return name.ToString();
-    }
-    internal virtual void GetName(MemberFormat options, StringBuilder name)
-    {
-      if (options.Type.TypeName != TypeNameFormat.None && this.DeclaringType != null)
-      {
-        this.DeclaringType.GetName(options, name);
-        name.Append('.');
-      }
-      name.Append(this.Name.Name);
-    }
-#endif
 
-#if CodeContracts
     public void EnsureMangledName()
     {
       var name = this.Name.Name;
@@ -7711,68 +6048,15 @@ namespace System.Compiler{
         return;
       }
     }
-#endif
   }
-#if !MinimalReader && !CodeContracts
-  public class TypeMemberSnippet : Member{
-    public IParserFactory ParserFactory;
-
-    public TypeMemberSnippet()
-      : base(NodeType.TypeMemberSnippet){
-    }
-    public TypeMemberSnippet(IParserFactory parserFactory, SourceContext sctx)
-      : base(NodeType.TypeMemberSnippet){
-      this.ParserFactory = parserFactory;
-      this.SourceContext = sctx;
-    }
-    public override string/*!*/ FullName {
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsCompilerControlled{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsAssembly{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsFamily{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsFamilyAndAssembly{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsFamilyOrAssembly{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsPrivate{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsPublic{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsSpecialName{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsStatic{
-      get{throw new InvalidOperationException();}
-    }
-    public override bool IsVisibleOutsideAssembly {
-      get{throw new InvalidOperationException();}
-    }
-
-  }
-#endif
   /// <summary>
   /// The common base class for all types. This type should not be extended directly.
   /// Instead extend one of the standard subclasses such as Class, Struct or Interface, since in
   /// the CLR a type has to be an instance of one the subclasses, and a type which does not extend
   /// one of these types will have no equivalent in the CLR.
   /// </summary>
-  public abstract class TypeNode : Member
-#if CodeContracts
-  , IEquatable<TypeNode>
-#endif
+  public abstract class TypeNode : Member, IEquatable<TypeNode>
   {
-#if ExtendedRuntime || CodeContracts
     /// <summary>The invariants and modelfield contracts associated with this type (for now only classes, interfaces, structs).</summary>
     public TypeContract Contract
     {
@@ -7785,7 +6069,6 @@ namespace System.Compiler{
       set { this.contract = value; }
     }
     private TypeContract contract;
-#endif
     private int classSize;
     /// <summary>Specifies the total size in bytes of instances of types with prescribed layout.</summary>
     public int ClassSize{
@@ -7863,9 +6146,7 @@ namespace System.Compiler{
       set { this.interfaces = value; }
     }
     protected InterfaceList interfaces;
-#if !MinimalReader
     public InterfaceList InterfaceExpressions;
-#endif
     private Identifier @namespace;
     /// <summary>The namespace to which this type belongs. Null if the type is nested inside another type.</summary>
     public Identifier Namespace{
@@ -7878,17 +6159,14 @@ namespace System.Compiler{
       get{return this.packingSize;}
       set{this.packingSize = value;}
     }
-#if !MinimalReader
     /// <summary>If this type is the combined result of a number of partial type definitions, this lists the partial definitions.</summary>
     public TypeNodeList IsDefinedBy;
-#endif
     /// <summary>
     /// True if this type is the result of a template instantiation with arguments that are themselves template parameters. 
     /// Used to model template instantiations occurring inside templates.
     /// </summary>
     public bool IsNotFullySpecialized;
     public bool NewTemplateInstanceIsRecursive;
-#if !MinimalReader
     /// <summary>
     /// If this type is a partial definition, the value of this is the combined type resulting from all the partial definitions.
     /// </summary>
@@ -7970,12 +6248,10 @@ namespace System.Compiler{
     public override bool Equals(Object other){
       return this == (other as TypeNode);
     }
-#if CodeContracts
     public bool Equals(TypeNode other)
     {
       return this == other;
     }
-#endif
     public override int GetHashCode(){
       TypeNode tn = this.EffectiveTypeNode;
       if ((object)tn == (object)this){
@@ -7984,7 +6260,6 @@ namespace System.Compiler{
         return tn.GetHashCode();
       }
     }
-#endif
     /// <summary>
     /// A delegate that is called the first time Members is accessed, if non-null.
     /// Provides for incremental construction of the type node.
@@ -8030,9 +6305,6 @@ namespace System.Compiler{
     public object ProviderHandle;
     internal TypeNode(NodeType nodeType)
       : base(nodeType){
-#if ExtendedRuntime
-      this.Contract = new TypeContract(this, true);
-#endif
     }
     internal TypeNode(NodeType nodeType, NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
       : base(nodeType){
@@ -8040,12 +6312,7 @@ namespace System.Compiler{
       this.ProvideTypeAttributes = provideAttributes;
       this.ProvideTypeMembers = provideMembers;
       this.ProviderHandle = handle;
-#if !MinimalReader      
       this.isNormalized = true;
-#endif
-#if ExtendedRuntime
-      this.Contract = new TypeContract(this);
-#endif
   }
     internal TypeNode(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags flags,
       Identifier Namespace, Identifier name, InterfaceList interfaces, MemberList members, NodeType nodeType)
@@ -8056,9 +6323,6 @@ namespace System.Compiler{
       this.Interfaces = interfaces;
       this.members = members;
       this.Namespace = Namespace;
-#if ExtendedRuntime
-      this.Contract = new TypeContract(this, true);
-#endif
   }
     public override AttributeList Attributes{
       get{
@@ -8107,12 +6371,10 @@ namespace System.Compiler{
           case NodeType.DelegateNode: return CoreSystemTypes.MulticastDelegate;
           case NodeType.EnumNode: return CoreSystemTypes.Enum;
           case NodeType.Struct:
-#if !MinimalReader
           case NodeType.TupleType:
           case NodeType.TypeAlias: 
           case NodeType.TypeIntersection:
           case NodeType.TypeUnion: 
-#endif
             return CoreSystemTypes.ValueType;
           default: return null;
         }
@@ -8178,13 +6440,11 @@ namespace System.Compiler{
            return this.fullName = "";
        }
      }
-#if !MinimalReader
     // the same as FullName, except for dialects like Sing# with type extensions where names of
     // type extensions may get mangled; in that case, this reports the name of the effective type node.
     public virtual string FullNameDuringParsing {
       get{ return this.FullName; }
     }
-#endif
      public virtual string GetFullUnmangledNameWithoutTypeParameters(){
        if (this.DeclaringType != null)
          return this.DeclaringType.GetFullUnmangledNameWithoutTypeParameters()+"+"+this.GetUnmangledNameWithoutTypeParameters();
@@ -8242,7 +6502,6 @@ namespace System.Compiler{
       return name;
     }
 
-#if !MinimalReader
     public virtual string GetSerializedTypeName() {
       bool isAssemblyQualified = true;
       return this.GetSerializedTypeName(this, ref isAssemblyQualified);
@@ -8319,7 +6578,6 @@ namespace System.Compiler{
       sb.Append(argTypeName);
       if (isAssemQualified) sb.Append(']');
     }
-#endif
 
     /// <summary>
     /// Return the name the constructor should have in this type node.  By default, it's
@@ -8374,16 +6632,6 @@ namespace System.Compiler{
         this.isGeneric = value;
       }
     }
-#if ExtendedRuntime
-    public static bool IsImmutable(TypeNode type) {
-      type = TypeNode.StripModifiers(type);
-      if (type == null) return false;
-      if (type.TypeCode != TypeCode.Object) return true;
-      if (type.GetAttribute(SystemTypes.ImmutableAttribute) != null) return true;
-      if (type.IsValueType && type.DeclaringModule == CoreSystemTypes.SystemAssembly) return true; //hack.
-      return false;
-    }
-#endif
     public virtual bool IsNestedAssembly {
       get{return (this.Flags & TypeFlags.VisibilityMask) == TypeFlags.NestedAssembly;}
     }
@@ -8408,7 +6656,6 @@ namespace System.Compiler{
     public virtual bool IsNonPublic{
       get{return (this.Flags & TypeFlags.VisibilityMask) == TypeFlags.NotPublic;}
     }
-#if !MinimalReader
     protected bool isNormalized;
     /// <summary>
     /// True if the type node is in "normal" form. A node is in "normal" form if it is effectively a node in an AST formed directly
@@ -8424,7 +6671,6 @@ namespace System.Compiler{
         this.isNormalized = value;
       }
     }
-#endif
     public override bool IsPrivate{
       get{return (this.Flags & TypeFlags.VisibilityMask) == TypeFlags.NestedPrivate;}
     }
@@ -8569,11 +6815,7 @@ namespace System.Compiler{
     /// <summary>True if the type is a value type containing only fields of unmanaged types.</summary>
     public virtual bool IsUnmanaged{
       get{
-#if ExtendedRuntime
-        return IsPointerFree;
-#else
         return false;
-#endif
       }
     }
 
@@ -8605,28 +6847,16 @@ namespace System.Compiler{
       get{
         switch(this.NodeType){
           case NodeType.EnumNode:
-#if !MinimalReader
           case NodeType.ConstrainedType:
           case NodeType.TupleType:
           case NodeType.TypeAlias:
           case NodeType.TypeIntersection:
           case NodeType.TypeUnion: return true;
-#endif
           case NodeType.Struct: return true;
           default: return false;
         }
       }
     }
-#if ExtendedRuntime
-    /// <summary>True if the type is a value type containing no managed or unmanaged pointers.</summary>
-    public virtual bool IsPointerFree
-    {
-      get
-      {
-        return false;
-      }
-    }
-#endif
     /// <summary>
     /// Returns true if the type is definitely a reference type.
     /// </summary>
@@ -8680,9 +6910,8 @@ namespace System.Compiler{
     /// </summary>
     public virtual MemberList Members{
       get{
-#if CLOUSOT
         CC.Contract.Ensures(CC.Contract.Result<MemberList>() != null);
-#endif
+
         if (this.members == null || this.membersBeingPopulated)
           if (this.ProvideTypeMembers != null && this.ProviderHandle != null){
             lock (Module.GlobalLock){
@@ -8690,9 +6919,6 @@ namespace System.Compiler{
                 this.membersBeingPopulated = true;
                 this.ProvideTypeMembers(this, this.ProviderHandle);
                 this.membersBeingPopulated = false;
-#if ExtendedRuntime
-                this.ApplyOutOfBandContracts();
-#endif
             }
             }
           }else
@@ -8705,7 +6931,6 @@ namespace System.Compiler{
         this.memberTable = null;
         this.constructors = null;
         this.defaultMembers = null;
-#if !MinimalReader
         this.explicitCoercionFromTable = null;
         this.explicitCoercionMethods = null;
         this.explicitCoercionToTable = null;
@@ -8714,241 +6939,8 @@ namespace System.Compiler{
         this.implicitCoercionToTable = null;
         this.opFalse = null;
         this.opTrue = null;
-#endif
       }
   }
-#if ExtendedRuntime
-  protected internal TypeNode ContractType
-  {
-    get
-    {
-      AssemblyNode declaringAssembly = this.DeclaringModule as AssemblyNode;
-      if (declaringAssembly == null || declaringAssembly.ContractAssembly == null) return null;
-      if (this.DeclaringType == null)
-      {
-        return declaringAssembly.ContractAssembly.GetType(this.Namespace, this.Name);
-      }
-      else
-      {
-        TypeNode parentContractType = this.DeclaringType.ContractType;
-        if (parentContractType == null) return null;
-        return parentContractType.GetNestedType(this.Name);
-      }
-    }
-  }
-  protected internal virtual void ApplyOutOfBandContracts(){
-      if (this.members == null) return;
-      TypeNode contractType = this.ContractType;
-      if (contractType == null) return;
-
-      // Copy the type-level contract attributes over to the shadowed type, namely "this".
-      int contractsNamespaceKey = SystemTypes.NonNullType.Namespace.UniqueIdKey;
-      foreach (AttributeNode attr in contractType.Attributes) {
-        if (attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey)
-          this.Attributes.Add(attr);
-      }
-
-      if (this.BaseType != null) { MemberList junk = this.BaseType.Members; if (junk != null) junk = null; }
-      Hashtable contractByFullName = new Hashtable();
-      MemberList contractMembers = contractType.Members;
-      for (int i = 0, n = contractMembers == null ? 0 : contractMembers.Count; i < n; i++){
-        //^ assert contractMembers != null;
-        Field f = contractMembers[i] as Field;
-        if (f != null) {
-          contractByFullName[f.FullName] = f;
-          continue;
-        }
-        Method m = contractMembers[i] as Method;
-        if (m == null ) continue;
-        string methName = this.FullStrippedName(m);
-        contractByFullName[methName] = m;
-      }
-      for (int i = 0, n = members.Count; i < n; i++){
-        Field codeField = members[i] as Field;
-        if (codeField != null) {
-          Field contractField = contractByFullName[codeField.FullName] as Field;
-          if (contractField != null && contractField.Type != null && contractField.Type != codeField.Type) {
-            OptionalModifier optFieldType = contractField.Type as OptionalModifier;
-            if (optFieldType != null && codeField.Type != null) {
-              codeField.Type = OptionalModifier.For(optFieldType.Modifier, codeField.Type);
-              codeField.HasOutOfBandContract = true;
-            }
-          }
-          continue;
-        }
-        Method codeMethod = members[i] as Method;
-        if (codeMethod == null) continue;
-        // we include the return type since some conversion operators result
-        // in overloaded methods whose signatures differ only in return type
-        string methName = this.FullStrippedName(codeMethod);
-        Method contractMethod = contractByFullName[methName] as Method;
-        if (contractMethod != null) {
-          this.CopyContractToMethod(contractMethod, codeMethod);
-          if (codeMethod.OverridesBaseClassMember) {
-            Method overridden = this.FindNearestOverriddenMethod(contractMethod);
-            if (overridden != null)
-              this.CopyContractToMethod(overridden, codeMethod);
-          }
-        } else {
-          // Maybe there isn't a shadow method declared in contractType, but
-          // there still might be out-of-band contracts on an interface method
-          // that the codeMethod implements.
-          if (codeMethod.ImplementedInterfaceMethods != null && codeMethod.ImplementedInterfaceMethods.Count > 0) {
-            foreach (Method m in codeMethod.ImplementedInterfaceMethods) {
-              this.CopyContractToMethod(m, codeMethod);
-            }
-          } else if (codeMethod.ImplicitlyImplementedInterfaceMethods != null) {
-            foreach (Method m in codeMethod.ImplicitlyImplementedInterfaceMethods) {
-              this.CopyContractToMethod(m, codeMethod);
-            }
-          }
-        }
-      }
-    }
-    protected virtual string/*!*/ FullStrippedName(Method/*!*/ m) {
-      StringBuilder sb = new StringBuilder();
-      sb.Append(m.DeclaringType.GetFullUnmangledNameWithTypeParameters());
-      sb.Append('.');
-      if (m.NodeType == NodeType.InstanceInitializer)
-        sb.Append("#ctor");
-      else if (m.Name != null)
-        sb.Append(m.Name.ToString());
-      ParameterList parameters = m.Parameters;
-      for (int i = 0, n = parameters == null ? 0 : parameters.Count; i < n; i++){
-        Parameter par = parameters[i];
-        if (par == null || par.Type == null) continue;
-        TypeNode parType = TypeNode.DeepStripModifiers(par.Type);
-        Reference rt = parType as Reference;
-        if (rt != null && rt.ElementType != null)
-          parType = TypeNode.DeepStripModifiers(rt.ElementType).GetReferenceType();
-        //^ assert parType != null;
-        if (i == 0)
-          sb.Append('(');
-        else
-          sb.Append(',');        
-        sb.Append(parType.GetFullUnmangledNameWithTypeParameters());
-        if (i == n-1)
-          sb.Append(')');
-      }
-      if (m.ReturnType != null){
-        TypeNode retType = TypeNode.DeepStripModifiers(m.ReturnType);
-        //^ assert retType != null;
-        sb.Append(retType.GetFullUnmangledNameWithTypeParameters());
-      }
-      return sb.ToString();
-    }
-    protected virtual void CopyContractToMethod(Method/*!*/ contractMethod, Method/*!*/ codeMethod) {
-      codeMethod.HasOutOfBandContract = true;
-      if (codeMethod.Contract == null)
-        codeMethod.Contract = new MethodContract(codeMethod);
-      // setting them to null forces deserialization upon next access to the property
-      // NB: This means that out-of-band contracts can be applied *only* to code that
-      // does *not* have any contracts since this will wipe them out!!
-      codeMethod.Contract.Ensures = null;
-      codeMethod.Contract.Modifies = null;
-      codeMethod.Contract.Requires = null;
-
-      int contractsNamespaceKey = SystemTypes.NonNullType.Namespace.UniqueIdKey;
-      // Copy the method-level contract attributes over to the shadowed method.
-      for (int a = 0; a < contractMethod.Attributes.Count; a++){
-        AttributeNode attr = contractMethod.Attributes[a];
-        if (attr != null && attr.Type != null && attr.Type.Namespace != null &&
-          attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey)
-          codeMethod.Attributes.Add(attr);
-      }
-      // Copy over any return attributes to the shadowed method
-      for (int a = 0, n = contractMethod.ReturnAttributes == null ? 0 : contractMethod.ReturnAttributes.Count; a < n; a++) {
-          AttributeNode attr = contractMethod.ReturnAttributes[a];
-          if (attr != null) {
-              if (attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey) {
-                  if (codeMethod.ReturnAttributes == null) {
-                      codeMethod.ReturnAttributes = new AttributeList();
-                  }
-                  codeMethod.ReturnAttributes.Add(attr);
-              }
-          }
-      }
-
-
-      // Copy the parameter-level contract attributes and type over to the shadowed method's parameters.
-      ParameterList contractParameters = contractMethod.Parameters;
-      ParameterList codeParameters = codeMethod.Parameters;
-      if (contractParameters != null && codeParameters != null && contractParameters.Count <= codeParameters.Count) {
-        for (int i = 0, n = contractParameters.Count; i < n; i++) {
-          Parameter contractParameter = contractParameters[i];
-          Parameter codeParameter = codeParameters[i];
-          if (contractParameter == null || codeParameter == null) continue;
-          for (int a = 0, m = contractParameter.Attributes == null ? 0 : contractParameter.Attributes.Count; a < m; a++){
-            //^ assert contractParameter.Attributes != null;
-            AttributeNode attr = contractParameter.Attributes[a];
-            if (attr == null || attr.Type == null) continue;
-            if (attr.Type.Namespace != null && attr.Type.Namespace.UniqueIdKey == contractsNamespaceKey){
-              if (codeParameter.Attributes == null) codeParameter.Attributes = new AttributeList();
-              codeParameter.Attributes.Add(attr);
-            }
-          }
-          if (contractParameter.Type != codeParameter.Type)
-            codeParameter.Type = this.CopyModifier(contractParameter.Type, codeParameter.Type);
-        }
-      }
-      if (contractMethod.ReturnType != codeMethod.ReturnType)
-        codeMethod.ReturnType = this.CopyModifier(contractMethod.ReturnType, codeMethod.ReturnType);
-      codeMethod.fullName = null;
-    }
-    private TypeNode CopyModifier(TypeNode contractType, TypeNode codeType) {
-      if (contractType == null) return codeType;
-      Reference rcType = contractType as Reference;
-      if (rcType != null) {
-        contractType = rcType.ElementType;
-        if (contractType == null) return codeType;
-        Reference rcodeType = codeType as Reference;
-        if (rcodeType == null || rcodeType.ElementType == null) return codeType;
-        TypeNode t = CopyModifier(contractType, rcodeType.ElementType);
-        return t.GetReferenceType();
-      }
-      ArrayType acType = contractType as ArrayType;
-      if (acType != null) {
-        contractType = acType.ElementType;
-        if (contractType == null) return codeType;
-        ArrayType acodeType = codeType as ArrayType;
-        if (acodeType == null || acodeType.ElementType == null) return codeType;
-        TypeNode t = CopyModifier(contractType, acodeType.ElementType);
-        return t.GetArrayType(1);
-      }
-      OptionalModifier optModType = contractType as OptionalModifier;
-      if (optModType != null && optModType.Modifier != null) {
-        TypeNode t = CopyModifier(optModType.ModifiedType, codeType);
-        codeType = OptionalModifier.For(optModType.Modifier, t);
-      }
-      if (contractType.Template != null && codeType.Template != null && contractType.TemplateArguments != null && codeType.TemplateArguments != null) {
-        TypeNodeList args = contractType.TemplateArguments.Clone();
-        TypeNodeList codeArgs = codeType.TemplateArguments;
-        for (int i = 0, n = args.Count, m = codeArgs.Count; i < n && i < m; i++) {
-          TypeNode argType = args[i];
-          TypeNode codeArgType = codeArgs[i];
-          if (argType != codeArgType)
-            args[i] = this.CopyModifier(argType, codeArgType);
-        }
-        return codeType.Template.GetTemplateInstance(codeType, args);
-      }
-      return codeType;
-    }
-    public virtual Method FindNearestOverriddenMethod (Method method)
-      //^ requires method.IsVirtual;
-    {
-      if (method == null) return null;
-      if (!method.IsVirtual) return null;
-      int numParams = method.Parameters == null ? 0 : method.Parameters.Count;
-      TypeNode[] paramTypes = new TypeNode[numParams];
-      for (int i=0; i<numParams; i++) paramTypes[i] = method.Parameters[i].Type;
-      for (TypeNode scan = method.DeclaringType.BaseType; scan != null; scan = scan.BaseType){
-        Method overridden = scan.GetMethod(method.Name, paramTypes);
-        if (overridden != null) return overridden;
-      }
-      return null;
-    }
-    public TypeNodeList ReferencedTemplateInstances;
-#endif
     protected TypeNode template;
     /// <summary>The (generic) type template from which this type was instantiated. Null if this is not a (generic) type template instance.</summary>
     public virtual TypeNode Template{
@@ -8963,34 +6955,6 @@ namespace System.Compiler{
                 return null;
               return this.template;
           }
-#if ExtendedRuntime
-          for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++) {
-            AttributeNode attr = attributes[i];
-            if (attr == null) continue;
-            MemberBinding mb = attr.Constructor as MemberBinding;
-            if (mb == null || mb.BoundMember == null || mb.BoundMember.DeclaringType != SystemTypes.TemplateInstanceAttribute) continue;
-            ExpressionList exprs = attr.Expressions;
-            if (exprs == null || exprs.Count != 2) continue;
-            Literal lit = exprs[0] as Literal;
-            if (lit == null) continue;
-            TypeNode templ = lit.Value as TypeNode;
-            if (templ != null) {
-              lit = exprs[1] as Literal;
-              if (lit == null) continue;
-              object[] types = lit.Value as object[];
-              if (types == null) continue;
-              int m = types == null ? 0 : types.Length;
-              TypeNodeList templateArguments = new TypeNodeList(m);
-              for (int j = 0; j < m; j++) {
-                TypeNode t = types[j] as TypeNode;
-                if (t == null) continue;
-                templateArguments.Add(t);
-              }
-              this.TemplateArguments = templateArguments;
-              return this.template = templ;
-            }
-          }
-#endif
           if (result == null)
               this.template = TypeNode.NotSpecified;
           }
@@ -9002,9 +6966,7 @@ namespace System.Compiler{
         this.template = value;
       }
     }
-#if !MinimalReader
     public TypeNode TemplateExpression;
-#endif
     protected TypeNodeList templateArguments;
     /// <summary>The arguments used when this (generic) type template instance was instantiated.</summary>
     public virtual TypeNodeList TemplateArguments{
@@ -9019,9 +6981,7 @@ namespace System.Compiler{
         this.templateArguments = value;
       }
     }
-#if !MinimalReader
     public TypeNodeList TemplateArgumentExpressions;
-#endif
     internal TypeNodeList consolidatedTemplateArguments;
     public virtual TypeNodeList ConsolidatedTemplateArguments{
       get{
@@ -9035,30 +6995,6 @@ namespace System.Compiler{
     }
     private void AddTemplateParametersFromAttributeEncoding(TypeNodeList result)
     {
-#if ExtendedRuntime
-      if (result.Count == 0) {
-        AttributeList attributes = this.Attributes;
-        for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++) {
-          AttributeNode attr = attributes[i];
-          if (attr == null) continue;
-          MemberBinding mb = attr.Constructor as MemberBinding;
-          if (mb == null || mb.BoundMember == null || mb.BoundMember.DeclaringType != SystemTypes.TemplateAttribute) continue;
-          ExpressionList exprs = attr.Expressions;
-          if (exprs == null || exprs.Count != 1) continue;
-          Literal lit = exprs[0] as Literal;
-          if (lit == null) continue;
-          object[] types = lit.Value as object[];
-          if (types == null) continue;
-          for (int j = 0, m = types == null ? 0 : types.Length; j < m; j++) {
-            TypeNode t = types[j] as TypeNode;
-            if (t == null) continue;
-            if (t.NodeType == NodeType.TypeParameter || t.NodeType == NodeType.ClassParameter)
-              result.Add(t);
-          }
-          attributes[i] = null;
-        }
-      }
-#endif
     }
     internal TypeNodeList templateParameters;
     /// <summary>The type parameters of this type. Null if this type is not a (generic) type template.</summary>
@@ -9110,21 +7046,15 @@ namespace System.Compiler{
           case ElementType.Void : return System.TypeCode.Empty;
           default:
             if (this == CoreSystemTypes.String) return System.TypeCode.String;
-#if !MinimalReader
             if (this == CoreSystemTypes.Decimal) return System.TypeCode.Decimal;
             if (this == CoreSystemTypes.DateTime) return System.TypeCode.DateTime;
             if (this == CoreSystemTypes.DBNull) return System.TypeCode.DBNull;
-#endif
             return System.TypeCode.Object;
         }
       }
     }   
     private readonly static TypeNode NotSpecified = new Class();
-#if !FxCop
-    protected
-#endif
-   internal TrivialHashtableUsingWeakReferences structurallyEquivalentMethod;
-#if !MinimalReader
+    protected internal TrivialHashtableUsingWeakReferences structurallyEquivalentMethod;
     /// <summary>
     /// Returns the methods of an abstract type that have been left unimplemented. Includes methods inherited from
     /// base classes and interfaces, and methods from any (known) extensions.
@@ -9147,7 +7077,6 @@ namespace System.Compiler{
         }
       }
     }
-#endif
     protected internal TrivialHashtable szArrayTypes;
     /// <summary>
     /// Returns a type representing an array whose elements are of this type. Will always return the same instance for the same rank.
@@ -9217,7 +7146,6 @@ namespace System.Compiler{
     public virtual InstanceInitializer GetConstructor(params TypeNode[] types){
       return (InstanceInitializer)GetFirstMethod(this.GetConstructors(), types);
     }
-#if !NoXml
     protected override Identifier GetDocumentationId(){
       if (this.DeclaringType == null)
         return Identifier.For("T:"+this.FullName);
@@ -9244,7 +7172,6 @@ namespace System.Compiler{
       }
       sb.Append('}');
     }
-#endif
     internal TrivialHashtable modifierTable;
     internal TypeNode/*!*/ GetModified(TypeNode/*!*/ modifierType, bool optionalModifier) {
       if (this.modifierTable == null) this.modifierTable = new TrivialHashtable();
@@ -9254,9 +7181,7 @@ namespace System.Compiler{
       this.modifierTable[modifierType.UniqueKey] = result;
       return result;
     }
-#if CodeContracts
     [Pure]
-#endif
     public static bool IsCompleteTemplate(TypeNode t)
     {
       if (t == null) return true;
@@ -9285,44 +7210,6 @@ namespace System.Compiler{
 
       return result;
     }
-#if false
-    public virtual TypeNode/*!*/ OldGetGenericTemplateInstance(Module/*!*/ module, TypeNodeList/*!*/ consolidatedArguments) {
-      if (this.DeclaringType == null)
-        return this.GetTemplateInstance(module, null, null, consolidatedArguments);
-      TypeNodeList myArgs = this.GetOwnTemplateArguments(consolidatedArguments);
-      if (myArgs == consolidatedArguments)
-        return this.GetTemplateInstance(module, null, this.DeclaringType, consolidatedArguments);
-      int n = consolidatedArguments.Count;
-      int m = myArgs == null ? 0 : myArgs.Count;
-      int k = n - m;
-      Debug.Assert(k > 0);
-      TypeNodeList parentArgs = new TypeNodeList(k);
-      for (int i = 0; i < k; i++) parentArgs.Add(consolidatedArguments[i]);
-      TypeNode declaringType = this.DeclaringType.GetGenericTemplateInstance(module, parentArgs);
-      TypeNode nestedType = declaringType.GetNestedType(this.Name);
-      if (nestedType == null) {
-        // can happen if a new nested type is added to a template
-        // see if the type appears in the original parent template
-        TypeNode declaringTypeTemplate = declaringType.Template;
-        TypeNode nestedTemplate = declaringTypeTemplate.GetNestedType(this.Name);
-        
-        Duplicator duplicator = new Duplicator(module, null);
-        duplicator.RecordOriginalAsTemplate = true;
-        duplicator.SkipBodies = true;
-        duplicator.TypesToBeDuplicated[this.UniqueKey] = this;
-        nestedType = duplicator.VisitTypeNode(this, null, null, null, true);
-        Specializer specializer = new Specializer(module, declaringTypeTemplate.ConsolidatedTemplateParameters, declaringType.ConsolidatedTemplateArguments);
-        specializer.VisitTypeNode(nestedType);
-
-        nestedType.DeclaringType = declaringType;
-        declaringType.NestedTypes.Add(nestedType);
-
-        // Debug.Fail("template declaring type dummy instance does not have a nested type corresponding to template"); nestedType = this;
-      }
-      if (m == 0){Debug.Assert(nestedType.template != null); return nestedType;}
-      return nestedType.GetTemplateInstance(module, null, declaringType, myArgs);
-    }
-#endif
     public virtual TypeNode/*!*/ GetTemplateInstance(Module module, params TypeNode[] typeArguments) {
       return this.GetTemplateInstance(module, null, null, new TypeNodeList(typeArguments));
     }
@@ -9711,9 +7598,6 @@ namespace System.Compiler{
       if (ownArgs == null || ownArgs.Count == 0) return this;
       return this.GetGenericTemplateInstance(this.declaringModule, ownArgs);
     }
-#if ExtendedRuntime
-    private static MemberBinding templateInstanceAttribute = null;
-#endif
   protected internal Pointer pointerType;
     public virtual Pointer/*!*/ GetPointerType() {
       Pointer result = this.pointerType;
@@ -9750,9 +7634,7 @@ namespace System.Compiler{
     /// Returns an empty list if this type has no such members.
     /// </summary>
     public virtual MemberList/*!*/ GetMembersNamed(Identifier name) {
-#if CodeContracts
       CC.Contract.Ensures(CC.Contract.Result<MemberList>() != null);
-#endif
       if (name == null) return new MemberList(0);
       MemberList members = this.Members;
       int n = members == null ? 0 : members.Count;
@@ -9916,7 +7798,6 @@ namespace System.Compiler{
       }
       return null;
     }
-#if !MinimalReader
     protected internal MemberList explicitCoercionMethods;
     public virtual MemberList ExplicitCoercionMethods{
       get{
@@ -10104,8 +7985,6 @@ namespace System.Compiler{
         return null;
       }
     }
-#endif
-#if !NoReflection
     private static Hashtable typeMap; //contains weak references
     /// <summary>
     /// Gets a TypeNode instance corresponding to the given System.Type instance.
@@ -10123,7 +8002,7 @@ namespace System.Compiler{
         if (result == Class.DoesNotExist) return null;
         if (result != null) return result;
       }
-#if WHIDBEY
+
       if (type.IsGenericType && !type.IsGenericTypeDefinition){
         try{
           TypeNode template = TypeNode.GetTypeNode(type.GetGenericTypeDefinition());
@@ -10159,7 +8038,7 @@ namespace System.Compiler{
           return null;
         }
       }
-#endif
+
       if (type.HasElementType){
         TypeNode elemType = TypeNode.GetTypeNode(type.GetElementType());
         if (elemType == null) return null;
@@ -10199,7 +8078,7 @@ namespace System.Compiler{
       if (this.runtimeType == null){
         lock(this){
           if (this.runtimeType != null) return this.runtimeType;
-#if WHIDBEY
+
           if (this.IsGeneric && this.Template != null){
             try {
               TypeNode rootTemplate = this.Template;
@@ -10216,7 +8095,7 @@ namespace System.Compiler{
               return null;
             }
           }
-#endif
+
           if (this.DeclaringType != null){
             Type dt = this.DeclaringType.GetRuntimeType();
             if (dt != null){
@@ -10233,7 +8112,6 @@ namespace System.Compiler{
       }
       return this.runtimeType;
     }
-#endif
     public static TypeFlags GetVisibilityIntersection(TypeFlags vis1, TypeFlags vis2){
       switch (vis2){
         case TypeFlags.Public:
@@ -10317,7 +8195,6 @@ namespace System.Compiler{
       return null;
     }
 
-#if !MinimalReader
     internal bool ImplementsMethod(Method meth, bool checkPublic){
       return this.GetImplementingMethod(meth, checkPublic) != null;
     }
@@ -10335,7 +8212,6 @@ namespace System.Compiler{
         return this.BaseType.GetImplementingMethod(meth, true);
       return null;
     }
-#endif
     /// <summary>
     /// Returns true if the CLR CTS allows a value of this type may be assigned to a variable of the target type (possibly after boxing),
     /// either because the target type is the same or a base type, or because the target type is an interface implemented by this type or the implementor of this type,
@@ -10438,7 +8314,6 @@ namespace System.Compiler{
       }
       return false;
     }
-#if !MinimalReader
     //  Not thread safe code...
     bool isCheckingInheritedFrom = false;
     public virtual bool IsInheritedFrom(TypeNode otherType) {
@@ -10474,7 +8349,6 @@ namespace System.Compiler{
       this.isCheckingInheritedFrom = false;
       return result;
     }
-#endif
     public virtual bool IsStructurallyEquivalentTo(TypeNode type, Func<TypeNode,TypeNode> typeSubstitution = null){
       if (null == (object)type) return false;
       if (this == type) return true;
@@ -10527,7 +8401,6 @@ namespace System.Compiler{
       // Don't strip under pointers or refs. We only strip top-level modifiers.
       return type;
     }
-#if !MinimalReader
     public static TypeNode DeepStripModifiers(TypeNode type)
       //^ ensures type != null ==> result != null;
     {
@@ -10656,7 +8529,6 @@ namespace System.Compiler{
       }
       return type;
     }
-#endif
     public static bool HasModifier(TypeNode type, TypeNode modifier) {
       // Don't look under pointers or refs.
       TypeModifier tmod = type as TypeModifier;
@@ -10682,12 +8554,7 @@ namespace System.Compiler{
     /// <summary>
     /// Needed whenever we change the id of an existing member
     /// </summary>
-#if !MinimalReader
-    public
-#else
-    internal
-#endif
-    virtual void ClearMemberTable() {
+    public virtual void ClearMemberTable() {
       lock(this) {
         this.memberTable = null;
         this.memberCount = 0;
@@ -10728,7 +8595,6 @@ namespace System.Compiler{
       }
       return newMembers;
     }
-#if !NoXml
     public override void WriteDocumentation(XmlTextWriter xwriter){
       base.WriteDocumentation(xwriter);
       MemberList members = this.Members;
@@ -10738,124 +8604,28 @@ namespace System.Compiler{
         mem.WriteDocumentation(xwriter);
       }
     }
-#endif
-#if ExtendedRuntime
-    public TypeNode StripOptionalModifiers(out bool nonNull){
-      TypeNode t = this;
-      nonNull = false;
-      for(;;){
-        OptionalModifier m = t as OptionalModifier;
-        if (m == null)
-          break;
-        if (m.Modifier == SystemTypes.NonNullType)
-          nonNull = true;
-        t = m.ModifiedType;
-      }
-      return t;
-    }
-    public bool IsObjectReferenceType{
-      get{
-        bool nonNull;
-        TypeNode t = this.StripOptionalModifiers(out nonNull);
-        return t is Class || t is Interface || t is ArrayType || t is DelegateNode;
-      }
-    }
-#endif
     public override string ToString() {
-#if !FxCop
       return this.GetFullUnmangledNameWithTypeParameters();
-#else
-      return base.ToString() + ":" + this.GetFullUnmangledNameWithTypeParameters();
-#endif
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      GetName(options.Type, name);
-    }
-    internal virtual void GetName(TypeFormat options, StringBuilder name)
-    {
-      if (options.TypeName != TypeNameFormat.None)
-      {
-        if (this.DeclaringType != null && options.TypeName != TypeNameFormat.InnermostNested)
-        {
-          this.DeclaringType.GetName(options, name);
-          name.Append('+');
-        }
-        else if (options.TypeName == TypeNameFormat.FullyQualified && this.Namespace.Name.Length > 0)
-        {
-          name.Append(this.Namespace.Name);
-          name.Append('.');
-        }
-        string shortName = this.Name.Name;
-        int mangleChar = shortName.IndexOf(TargetPlatform.GenericTypeNamesMangleChar);
-        if (mangleChar != -1)
-          shortName = shortName.Substring(0, mangleChar);
-        name.Append(shortName);
-      }
-      TypeNodeList templateParameters = this.TemplateParameters;
-      if (this.Template != null) templateParameters = this.TemplateArguments;
-      if (templateParameters != null)
-      {
-        if (options.ShowGenericTypeArity)
-        {
-          name.Append(TargetPlatform.GenericTypeNamesMangleChar);
-          int parametersCount = templateParameters.Count;
-          name.Append(Convert.ToString(parametersCount, CultureInfo.InvariantCulture));
-        }
-        if (options.ShowGenericTypeParameterNames)
-        {
-          name.Append('<');
-          int parametersCount = templateParameters.Count;
-          for (int i = 0; i < parametersCount; ++i)
-          {
-            if (i > 0)
-            {
-              name.Append(',');
-              if (options.InsertSpacesBetweenTypeParameters) name.Append(' ');
-            }
-            templateParameters[i].GetName(options, name);
-          }
-          name.Append('>');
-        }
-      }
-    }
-#endif
   }
-#if FxCop
-  public class ClassNode : TypeNode{
-#else
   public class Class : TypeNode{
-#endif
     internal readonly static Class DoesNotExist = new Class();
     internal readonly static Class Dummy = new Class();
     internal Class baseClass;
-#if !MinimalReader
     public Class BaseClassExpression;
     public bool IsAbstractSealedContainerForStatics;
-#endif
-#if FxCop
-    public ClassNode()
-      : base(NodeType.Class){
-    }
-    public ClassNode(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(NodeType.Class, provideNestedTypes, provideAttributes, provideMembers, handle){
-    }
-#else
+
     public Class()
       : base(NodeType.Class){
     }
     public Class(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
       : base(NodeType.Class, provideNestedTypes, provideAttributes, provideMembers, handle){
     }
-#endif
-#if !MinimalReader    
     public Class(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags flags,
       Identifier Namespace, Identifier name, Class baseClass, InterfaceList interfaces, MemberList members)
       : base(declaringModule, declaringType, attributes, flags, Namespace, name, interfaces, members, NodeType.Class){
       this.baseClass = baseClass;
     }
-#endif
     /// <summary>
     /// The class from which this class has been derived. Null if this class is System.Object.
     /// </summary>
@@ -10870,7 +8640,6 @@ namespace System.Compiler{
         baseClass = value;
       }
     }
-#if !MinimalReader
     public override void GetAbstractMethods(MethodList/*!*/ result) {
       if (!this.IsAbstract) return;
       MethodList candidates = new MethodList();
@@ -10913,686 +8682,7 @@ namespace System.Compiler{
       }
       return false;
   }
-#endif
-#if ExtendedRuntime
-    public bool IsGuarded{
-      get{
-        Field f = this.GetField(Identifier.For("SpecSharp::frameGuard"));
-        return f != null;
-      }
-    }
-#endif
 }
-#if !MinimalReader && !CodeContracts
-  public class ClosureClass : Class{
-    public ClosureClass(){
-    }    
-  } 
-  /// <summary>
-  /// Does not model a real type, but leverages the symbol table methods of Class. In other words, this is implementation inheritance, not an ISA relationship.
-  /// </summary>
-  //TODO: use delegation rather than inheritance to achieve this
-  public class Scope : Class{
-    public Scope(){
-    }
-    public Scope(Scope outerScope){
-      this.OuterScope = outerScope;
-    }
-    protected Scope outerScope;
-    public SourceContext LexicalSourceExtent;
-    public Scope OuterScope{
-      get{
-        if (this.outerScope == null)
-          this.outerScope = (Scope)this.baseClass;
-        return this.outerScope;
-      }
-      set{
-        this.baseClass = this.outerScope = value;
-      }
-    }
-    public virtual TypeNode GetType(Identifier typeName){
-      return this.GetNestedType(typeName);
-    }
-  }
-  public class TypeScope : Scope{
-    public TypeNode Type;
-    public TypeScope(){}
-    public TypeScope(Scope parentScope, TypeNode/*!*/ type) {
-      this.baseClass = parentScope;
-      this.DeclaringModule = type.DeclaringModule;
-      this.Type = type;
-      if (type != null && type.PartiallyDefines != null) this.Type = type.PartiallyDefines;
-      this.templateParameters = type.TemplateParameters;
-      if (type != null)
-        this.LexicalSourceExtent = type.SourceContext;
-    }
-    public override MemberList/*!*/ GetMembersNamed(Identifier name) {
-      TypeNode t = this.Type;
-      MemberList result = null;
-      while (t != null){
-        result = t.GetMembersNamed(name);
-        if (result.Count > 0) return result;
-        t = t.BaseType;
-      }
-      if (result != null) return result;
-      return new MemberList(0);
-    }
-    public override MemberList Members{
-      get{
-        return this.Type.Members;
-      }
-      set{
-        base.Members = value;
-      }
-    }
-  }
-  public class MethodScope : Scope{
-    protected Class closureClass;
-    public virtual Class ClosureClass{
-      get{
-        //if (this.DeclaringMethod == null) return null;
-        Class c = this.closureClass;
-        if (c == null){
-          c = this.closureClass = new ClosureClass();
-          c.Name = Identifier.For("closure:"+this.UniqueKey);
-          c.BaseClass = CoreSystemTypes.Object;
-          Class bclass = this.BaseClass;
-          c.DeclaringModule = bclass.DeclaringModule;
-          TypeScope tscope = bclass as TypeScope;
-          if (tscope != null)
-            c.DeclaringType = tscope.Type;
-          else{
-            MethodScope mscope = bclass as MethodScope;
-            if (mscope != null)
-              c.DeclaringType = mscope.ClosureClass;
-            else
-              c.DeclaringType = ((BlockScope)bclass).ClosureClass;
-          }
-          c.IsGeneric = c.DeclaringType.IsGeneric || this.DeclaringMethod.IsGeneric;
-          c.TemplateParameters = this.CopyMethodTemplateParameters(c.DeclaringModule, c.DeclaringType);
-          c.Flags = TypeFlags.NestedPrivate|TypeFlags.SpecialName|TypeFlags.Sealed;
-          c.Interfaces = new InterfaceList(0);
-          if (this.ThisType != null){
-            Field f = new Field(c, null, FieldFlags.CompilerControlled | FieldFlags.SpecialName, StandardIds.ThisValue, this.ThisType, null);
-            this.ThisField = f;
-            c.Members.Add(f);
-          }
-        }
-        return c;
-      }
-    }
-    private TypeNodeList CopyMethodTemplateParameters(Module/*!*/ module, TypeNode/*!*/ type) 
-      //^ requires this.DeclaringMethod != null;
-    {
-      TypeNodeList methTemplParams = this.DeclaringMethod.TemplateParameters;
-      if (methTemplParams == null || methTemplParams.Count == 0) return null;
-      this.tpDup = new TemplateParameterDuplicator(module, type);
-      return this.tpDup.VisitTypeParameterList(methTemplParams);
-    }
-    private TemplateParameterDuplicator tpDup;
-    private class TemplateParameterDuplicator : Duplicator{
-      public TemplateParameterDuplicator(Module/*!*/ module, TypeNode/*!*/ type)
-        : base(module, type){
-      }
-
-      public override TypeNode VisitTypeParameter(TypeNode typeParameter){
-        if (typeParameter == null) return null;
-        TypeNode result = (TypeNode)this.DuplicateFor[typeParameter.UniqueKey];
-        if (result != null) return result;
-        MethodTypeParameter mtp = typeParameter as MethodTypeParameter;
-        if (mtp != null){
-          TypeParameter tp = new TypeParameter();
-          this.DuplicateFor[typeParameter.UniqueKey] = tp;
-          tp.Name = mtp.Name;
-          tp.Interfaces = this.VisitInterfaceReferenceList(mtp.Interfaces);
-          tp.TypeParameterFlags = mtp.TypeParameterFlags;
-          tp.DeclaringModule = mtp.DeclaringModule;
-          tp.DeclaringMember = this.TargetType;
-          result = tp;
-        }else{
-          MethodClassParameter mcp = typeParameter as MethodClassParameter;
-          if (mcp != null){
-            ClassParameter cp = new ClassParameter();
-            this.DuplicateFor[typeParameter.UniqueKey] = cp;
-            cp.Name = mcp.Name;
-            cp.BaseClass = (Class)this.VisitTypeReference(mcp.BaseClass);
-            cp.Interfaces = this.VisitInterfaceReferenceList(mcp.Interfaces);
-            cp.TypeParameterFlags = mcp.TypeParameterFlags;
-            cp.DeclaringModule = mcp.DeclaringModule;
-            cp.DeclaringMember = this.TargetType;
-            result = cp;
-          }
-        }
-        if (result == null) return typeParameter;
-        return result;
-      }
-      public override TypeNode VisitTypeReference(TypeNode type){
-        TypeNode result = base.VisitTypeReference(type);
-        if (result == type && (type is MethodClassParameter || type is MethodTypeParameter))
-          return this.VisitTypeParameter(type);
-        return result;
-      }
-    }
-    public virtual Class ClosureClassTemplateInstance {
-      get{
-        if (this.closureClassTemplateInstance == null) {
-          if (this.DeclaringMethod == null || !this.DeclaringMethod.IsGeneric)
-            this.closureClassTemplateInstance = this.ClosureClass;
-          else
-            this.closureClassTemplateInstance = (Class)this.ClosureClass.GetTemplateInstance(this.DeclaringMethod.DeclaringType, this.DeclaringMethod.TemplateParameters);
-        }
-        return this.closureClassTemplateInstance;
-      }
-    }
-    Class closureClassTemplateInstance;
-    public TypeNode FixTypeReference(TypeNode type) {
-      if (this.tpDup == null) return type;
-      return this.tpDup.VisitTypeReference(type);
-    }
-
-    public virtual Boolean CapturedForClosure{
-      get{
-        return this.closureClass != null;
-      }
-    }
-    public UsedNamespaceList UsedNamespaces;
-    public Field ThisField;
-    public TypeNode ThisType;
-    public TypeNode ThisTypeInstance;
-    public Method DeclaringMethod;
-    public MethodScope(){}
-    public MethodScope(Class/*!*/ parentScope, UsedNamespaceList usedNamespaces)
-      : this(parentScope, usedNamespaces, null){
-    }
-    public MethodScope(Class/*!*/ parentScope, UsedNamespaceList usedNamespaces, Method method) {
-      this.baseClass = parentScope;
-      this.UsedNamespaces = usedNamespaces;
-      this.DeclaringModule = parentScope.DeclaringModule;
-      this.DeclaringMethod = method;
-      if (method != null && (method.Flags & MethodFlags.Static) == 0)
-        this.ThisType = this.ThisTypeInstance = method.DeclaringType;
-      if (method != null)
-        this.LexicalSourceExtent = method.SourceContext;
-    }
-  }
-  public class BlockScope : Scope{
-    public Block AssociatedBlock;
-    public bool MembersArePinned;
-    public virtual Class ClosureClass{
-      get{
-        BlockScope bscope = this.BaseClass as BlockScope;
-        if (bscope != null) return bscope.ClosureClass;
-        MethodScope mscope = this.BaseClass as MethodScope;
-        if (mscope != null) return mscope.ClosureClass;
-        return ((TypeScope)this.BaseClass).Type as Class;
-      }
-    }
-    public virtual Boolean CapturedForClosure{
-      get{
-        BlockScope bscope = this.BaseClass as BlockScope;
-        if (bscope != null) return bscope.CapturedForClosure;
-        MethodScope mscope = this.BaseClass as MethodScope;
-        if (mscope != null) return mscope.CapturedForClosure;
-        return false;
-      }
-    }
-    public BlockScope(){
-    }
-    public BlockScope(Scope/*!*/ parentScope, Block associatedBlock) {
-      this.AssociatedBlock = associatedBlock;
-      if (associatedBlock != null){
-        associatedBlock.HasLocals = true; //TODO: set only if there really are locals
-        associatedBlock.Scope = this;
-      }
-      this.baseClass = parentScope;
-      this.DeclaringModule = parentScope.DeclaringModule;
-      if (associatedBlock != null)
-        this.LexicalSourceExtent = associatedBlock.SourceContext;
-    }
-  }
-  public class AttributeScope : Scope{
-    public AttributeNode AssociatedAttribute;
-    public AttributeScope(Scope parentScope, AttributeNode associatedAttribute){
-      this.AssociatedAttribute = associatedAttribute;
-      this.baseClass = parentScope;
-      if (associatedAttribute != null)
-        this.LexicalSourceExtent = associatedAttribute.SourceContext;
-    }
-  }
-  public class NamespaceScope : Scope{
-    public Namespace AssociatedNamespace;
-    public Module AssociatedModule;
-    public TrivialHashtable AliasedType;
-    public TrivialHashtable AliasedNamespace;
-    protected TrivialHashtable/*!*/ aliasFor = new TrivialHashtable();
-    protected TrivialHashtable/*!*/ typeFor = new TrivialHashtable();
-    protected TrivialHashtable/*!*/ namespaceFor = new TrivialHashtable();
-    protected TrivialHashtable/*!*/ nestedNamespaceFullName = new TrivialHashtable();
-    protected readonly static AliasDefinition/*!*/ noSuchAlias = new AliasDefinition();
-
-    public NamespaceScope(){
-    }
-    public NamespaceScope(Scope outerScope, Namespace associatedNamespace, Module associatedModule)
-      : base(outerScope){
-      //^ base;
-      this.AssociatedNamespace = associatedNamespace;
-      this.AssociatedModule = associatedModule;
-      this.DeclaringModule = associatedModule; //TODO: make this go away
-      if (associatedNamespace != null)
-        this.LexicalSourceExtent = associatedNamespace.SourceContext;
-    }
-    public virtual AliasDefinition GetAliasFor(Identifier name){
-      if (name == null || this.AssociatedNamespace == null || this.AssociatedModule == null || this.aliasFor == null){
-        Debug.Assert(false); return null;
-      }
-      AliasDefinition alias = (AliasDefinition)this.aliasFor[name.UniqueIdKey];
-      if (alias == noSuchAlias) return null;
-      if (alias != null) return alias;
-      //Check if there is an alias with this uri
-      Scope scope = this;
-      while (scope != null){
-        NamespaceScope nsScope = scope as NamespaceScope;
-        if (nsScope != null && nsScope.AssociatedNamespace != null){
-          AliasDefinitionList aliases = nsScope.AssociatedNamespace.AliasDefinitions;
-          if (aliases != null)
-            for (int i = 0, n = aliases.Count; i < n; i++){
-              AliasDefinition aliasDef = aliases[i];
-              if (aliasDef == null || aliasDef.Alias == null) continue;
-              if (aliasDef.Alias.UniqueIdKey == name.UniqueIdKey){alias = aliasDef; goto done;}
-            }
-        }
-        scope = scope.OuterScope;
-      }
-      done:
-        if (alias != null)
-          this.aliasFor[name.UniqueIdKey] = alias;
-        else
-          this.aliasFor[name.UniqueIdKey] = noSuchAlias;
-      return alias;
-    }
-    public virtual AliasDefinition GetConflictingAlias(Identifier name){
-      if (name == null || this.typeFor == null || this.AssociatedNamespace == null || this.AssociatedModule == null){
-        Debug.Assert(false); return null;
-      }
-      TypeNode type = this.AssociatedModule.GetType(this.AssociatedNamespace.FullNameId, name);
-      if (type != null) {
-        AliasDefinitionList aliases = this.AssociatedNamespace.AliasDefinitions;
-        for (int i = 0, n = aliases == null ? 0 : aliases.Count; i < n; i++){
-          //^ assert aliases != null;
-          AliasDefinition aliasDef = aliases[i];
-          if (aliasDef == null || aliasDef.Alias == null) continue;
-          if (aliasDef.Alias.UniqueIdKey == name.UniqueIdKey) return aliasDef;
-        }
-      }
-      Scope scope = this;
-      while (scope != null) {
-        NamespaceScope outerScope = scope.OuterScope as NamespaceScope;
-        if (outerScope != null) return outerScope.GetConflictingAlias(name);
-        scope = scope.OuterScope;
-      }
-      return null;
-    }
-    public virtual Identifier GetUriFor(Identifier name) {
-      AliasDefinition aliasDef = this.GetAliasFor(name);
-      if (aliasDef == null) return null;
-      return aliasDef.AliasedUri;
-    }
-    public virtual Identifier GetNamespaceFullNameFor(Identifier name){
-      if (name == null || this.AssociatedNamespace == null || this.AssociatedModule == null || this.nestedNamespaceFullName == null){
-        Debug.Assert(false); return null;
-      }
-      Identifier fullName = (Identifier)this.nestedNamespaceFullName[name.UniqueIdKey];
-      if (fullName == Identifier.Empty) return null;
-      if (fullName != null) return fullName;
-      //Check if there is an alias with this namespace
-      AliasDefinition aliasDef = this.GetAliasFor(name);
-      if (aliasDef != null && aliasDef.AliasedUri == null && aliasDef.AliasedType == null)
-        return aliasDef.AliasedExpression as Identifier;
-      //Check if module has a type with namespace equal to this namespace + name
-      fullName = name;
-      if (this.AssociatedNamespace.Name != null && this.AssociatedNamespace.Name.UniqueIdKey != Identifier.Empty.UniqueIdKey)
-        fullName = Identifier.For(this.AssociatedNamespace.FullName+"."+name);
-      if (this.AssociatedModule.IsValidNamespace(fullName)){
-        this.namespaceFor[fullName.UniqueIdKey] = new TrivialHashtable();
-        goto returnFullName;
-      }
-      // If an inner type shadows an outer namespace, don't return the namespace
-      if (this.AssociatedModule.IsValidTypeName(this.AssociatedNamespace.Name, name)) { return null; }
-      AssemblyReferenceList arefs = this.AssociatedModule.AssemblyReferences;
-      for (int i = 0, n = arefs == null ? 0 : arefs.Count; i < n; i++){
-        AssemblyReference ar = arefs[i];
-        if (ar == null || ar.Assembly == null) continue;
-        if (ar.Assembly.IsValidNamespace(fullName)) goto returnFullName;
-        // If an inner type shadows an outer namespace, don't return the namespace
-        if (ar.Assembly.IsValidTypeName(this.AssociatedNamespace.Name, name)) { return null; }
-      }
-      ModuleReferenceList mrefs = this.AssociatedModule.ModuleReferences;
-      if (mrefs != null)
-        for (int i = 0, n = mrefs.Count; i < n; i++){
-          ModuleReference mr = mrefs[i];
-          if (mr == null || mr.Module == null) continue;
-          if (mr.Module.IsValidNamespace(fullName)) goto returnFullName;
-          // If an inner type shadows an outer namespace, don't return the namespace
-          if (mr.Module.IsValidTypeName(this.AssociatedNamespace.Name, name)) { return null; }
-        }
-      Scope scope = this.OuterScope;
-      while (scope != null && !(scope is NamespaceScope)) scope = scope.OuterScope;
-      if (scope != null) return ((NamespaceScope)scope).GetNamespaceFullNameFor(name);
-      return null;
-    returnFullName:
-      this.nestedNamespaceFullName[name.UniqueIdKey] = fullName;
-      return fullName;
-    }
-    /// <summary>
-    /// Search this namespace for a type with this name nested in the given namespace. Also considers used name spaces.
-    /// If more than one type is found, a list is returned in duplicates.
-    /// </summary>
-    public virtual TypeNode GetType(Identifier Namespace, Identifier name, out TypeNodeList duplicates){
-      duplicates = null;
-      if (Namespace == null || name == null || this.AssociatedNamespace == null || this.AssociatedModule == null){
-        Debug.Assert(false); return null;
-      }
-      if (this.namespaceFor == null){
-        Debug.Assert(false);
-        this.namespaceFor = new TrivialHashtable();
-      }
-      TrivialHashtable typeFor = (TrivialHashtable)this.namespaceFor[Namespace.UniqueIdKey];
-      if (typeFor == null) this.namespaceFor[Namespace.UniqueIdKey] = typeFor = new TrivialHashtable();
-      TypeNode result = (TypeNode)typeFor[name.UniqueIdKey];
-      if (result == Class.DoesNotExist) return null;
-      if (result != null) return result;
-      //If the associated module declares a type with the given name in a nested namespace, it wins
-      Scope scope = this;
-      while (scope != null){
-        NamespaceScope nsScope = scope as NamespaceScope;
-        if (nsScope != null && nsScope.AssociatedNamespace != null){
-          Identifier nestedNamespace = Namespace;
-          if (nsScope.AssociatedNamespace.FullNameId != null && nsScope.AssociatedNamespace.FullNameId.UniqueIdKey != Identifier.Empty.UniqueIdKey)
-            nestedNamespace = Identifier.For(nsScope.AssociatedNamespace.FullName+"."+Namespace);
-          result = this.AssociatedModule.GetType(nestedNamespace, name);
-          if (result != null) break;
-        }
-        scope = scope.OuterScope;
-      }
-      if (result == null){
-        //Now get into situations where there might be duplicates.
-        duplicates = new TypeNodeList();
-        //Check the used namespaces of this and outer namespace scopes
-        TrivialHashtable alreadyUsed = new TrivialHashtable();
-        scope = this;
-        while (scope != null){
-          NamespaceScope nsScope = scope as NamespaceScope;
-          if (nsScope != null && nsScope.AssociatedNamespace != null){
-            UsedNamespaceList usedNamespaces = nsScope.AssociatedNamespace.UsedNamespaces;
-            int n = usedNamespaces == null ? 0 : usedNamespaces.Count;
-            if (usedNamespaces != null)
-              for (int i = 0; i < n; i++){
-                UsedNamespace usedNs = usedNamespaces[i];
-                if (usedNs == null || usedNs.Namespace == null) continue;
-                int key = usedNs.Namespace.UniqueIdKey;
-                if (alreadyUsed[key] != null) continue;
-                alreadyUsed[key] = usedNs.Namespace;
-                Identifier usedNestedNamespace = Identifier.For(usedNs.Namespace+"."+Namespace);
-                result = this.AssociatedModule.GetType(usedNestedNamespace, name);
-                if (result != null) duplicates.Add(result);
-              }
-          }
-          scope = scope.OuterScope;
-        }
-        if (duplicates.Count > 0) result = duplicates[0];
-      }
-      if (result == null){
-        //The associated module does not have a type by this name, so check its referenced modules and assemblies
-        int numDups = 0;
-        //Check this namespace and outer namespaces
-        scope = this;
-        while (scope != null && result == null){
-          NamespaceScope nsScope = scope as NamespaceScope;
-          if (nsScope != null && nsScope.AssociatedNamespace != null){
-            Identifier nestedNamespace = Namespace;
-            if (nsScope.AssociatedNamespace.FullNameId != null && nsScope.AssociatedNamespace.FullNameId.UniqueIdKey != Identifier.Empty.UniqueIdKey)
-              nestedNamespace = Identifier.For(nsScope.AssociatedNamespace.FullName+"."+Namespace);
-            nsScope.GetReferencedTypes(nestedNamespace, name, duplicates);
-            numDups = duplicates.Count;
-            for (int i = numDups-1; i >= 0; i--){
-              TypeNode dup = duplicates[i];
-              if (dup == null || !dup.IsPublic) numDups--;
-              result = dup;
-            }
-          }
-          scope = scope.OuterScope;
-        }
-        if (numDups == 0){
-          if (duplicates.Count > 0) duplicates = new TypeNodeList();
-          //Check the used namespaces of this and outer namespace scopes
-          TrivialHashtable alreadyUsed = new TrivialHashtable();
-          scope = this;
-          while (scope != null){
-            NamespaceScope nsScope = scope as NamespaceScope;
-            if (nsScope != null && nsScope.AssociatedNamespace != null){
-              UsedNamespaceList usedNamespaces = this.AssociatedNamespace.UsedNamespaces;
-              int n = usedNamespaces == null ? 0 : usedNamespaces.Count;
-              if (usedNamespaces != null)
-                for (int i = 0; i < n; i++){
-                  UsedNamespace usedNs = usedNamespaces[i];
-                  if (usedNs == null) continue;
-                  int key = usedNs.Namespace.UniqueIdKey;
-                  if (alreadyUsed[key] != null) continue;
-                  alreadyUsed[key] = usedNs.Namespace;
-                  Identifier usedNestedNamespace = Identifier.For(usedNs.Namespace+"."+Namespace);
-                  this.GetReferencedTypes(usedNestedNamespace, name, duplicates);
-                }
-            }
-            scope = scope.OuterScope;
-          }
-          numDups = duplicates.Count;
-          for (int i = numDups-1; i >= 0; i--){
-            TypeNode dup = duplicates[i];
-            if (dup == null || !dup.IsPublic) numDups--;
-            result = dup;
-          }
-        }
-        if (numDups <= 1) duplicates = null;
-      }
-      if (result == null)
-        typeFor[name.UniqueIdKey] = Class.DoesNotExist;
-      else
-        typeFor[name.UniqueIdKey] = result;
-      return result; 
-    }
-    /// <summary>
-    /// Searches this namespace for a type with this name. Also considers aliases and used name spaces, including those of outer namespaces.
-    /// If more than one type is found, a list is returned in duplicates. Types defined in the associated
-    /// module mask types defined in referenced modules and assemblies. Results are cached and duplicates are returned only when
-    /// there is a cache miss.
-    /// </summary>
-    public virtual TypeNode GetType(Identifier name, out TypeNodeList duplicates){
-      return this.GetType(name, out duplicates, false);
-    }
-    public virtual TypeNode GetType(Identifier name, out TypeNodeList duplicates, bool returnNullIfHiddenByNestedNamespace){
-      duplicates = null;
-      if (name == null || this.typeFor == null || this.AssociatedNamespace == null || this.AssociatedModule == null){
-        Debug.Assert(false); return null;
-      }
-      AssemblyNode associatedAssembly = this.AssociatedModule as AssemblyNode;
-      TypeNode result = (TypeNode)this.typeFor[name.UniqueIdKey];
-      if (result == Class.DoesNotExist) return null;
-      if (result != null) return result;
-      //If the associated module declares a type with the given name in this namespace, it wins
-      result = this.AssociatedModule.GetType(this.AssociatedNamespace.FullNameId, name);
-      if (result == null && returnNullIfHiddenByNestedNamespace){
-        //Do not proceed to outer namespaces or look at aliases. The nested namespace hides these.
-        Identifier fullName = name;
-        if (this.AssociatedNamespace.FullName != null && this.AssociatedNamespace.Name.UniqueIdKey != Identifier.Empty.UniqueIdKey)
-          fullName = Identifier.For(this.AssociatedNamespace.FullName+"."+name);
-        if (this.AssociatedModule.IsValidNamespace(fullName))
-          result = Class.DoesNotExist;
-      }
-      if (result == null){
-        //If the namespace (or an outer namespace) has an alias definition with this name it wins. (Expected to be mutually exclusive with above.)        
-        Scope scope = this;
-        while (scope != null && result == null){
-          NamespaceScope nsScope = scope as NamespaceScope;
-          if (nsScope != null && nsScope.AliasedType != null)
-            result = (TypeNode)nsScope.AliasedType[name.UniqueIdKey];
-          if (result == null && returnNullIfHiddenByNestedNamespace && nsScope != null && 
-          nsScope.AliasedNamespace != null && nsScope.AliasedNamespace[name.UniqueIdKey] != null)
-            result = Class.DoesNotExist;
-          scope = scope.OuterScope;
-        }
-      }
-      if (result == null){
-        //Now get into situations where there might be duplicates.
-        duplicates = new TypeNodeList();
-        //Check the used namespaces of this and outer namespace scopes
-        TrivialHashtable alreadyUsed = new TrivialHashtable();
-        Scope scope = this;
-        while (scope != null) {
-          NamespaceScope nsScope = scope as NamespaceScope;
-          if (nsScope != null && nsScope.AssociatedNamespace != null && nsScope.AssociatedModule != null) {
-            UsedNamespaceList usedNamespaces = nsScope.AssociatedNamespace.UsedNamespaces;
-            int n = usedNamespaces == null ? 0 : usedNamespaces.Count;
-            if (usedNamespaces != null)
-              for (int i = 0; i < n; i++) {
-                UsedNamespace usedNs = usedNamespaces[i];
-                if (usedNs == null || usedNs.Namespace == null) continue;
-                int key = usedNs.Namespace.UniqueIdKey;
-                if (alreadyUsed[key] != null) continue;
-                alreadyUsed[key] = usedNs.Namespace;
-                result = this.AssociatedModule.GetType(usedNs.Namespace, name);
-                //^ assert duplicates != null;
-                if (result != null) duplicates.Add(result);
-              }
-          }
-          if (returnNullIfHiddenByNestedNamespace) break; 
-          scope = scope.OuterScope;
-        }
-        if (duplicates.Count > 0) result = duplicates[0];
-      }
-      if (result == null)
-        //First see if the the current module has a class by this name in the empty namespace
-        result = this.AssociatedModule.GetType(Identifier.Empty, name);
-      if (result == null){
-        //The associated module does not have a type by this name, so check its referenced modules and assemblies
-        //First check this namespace
-        this.GetReferencedTypes(this.AssociatedNamespace.FullNameId, name, duplicates);
-        int numDups = duplicates.Count;
-        if (numDups == 1){
-          result = duplicates[0];
-          if (this.IsNotAccessible(associatedAssembly, result)) { numDups--; result = null; }
-        }else{
-          for (int i = numDups-1; i >= 0; i--){
-            TypeNode dup = duplicates[i];
-            if (this.IsNotAccessible(associatedAssembly, dup)) { numDups--; continue; }
-            result = dup;
-          }
-          if (numDups == 0 && duplicates.Count > 0){
-            result = duplicates[0];
-            numDups = duplicates.Count;
-          }
-        }
-        if (numDups == 0){
-          if (duplicates.Count > 0) duplicates = new TypeNodeList();
-          //Check the used namespaces of this and outer namespace scopes
-          TrivialHashtable alreadyUsed = new TrivialHashtable();
-          Scope scope = this;
-          while (scope != null) {
-            NamespaceScope nsScope = scope as NamespaceScope;
-            if (nsScope != null) {
-              UsedNamespaceList usedNamespaces = nsScope.AssociatedNamespace.UsedNamespaces;
-              int n = usedNamespaces == null ? 0 : usedNamespaces.Count;
-              if (usedNamespaces != null)
-                for (int i = 0; i < n; i++) {
-                  UsedNamespace usedNs = usedNamespaces[i];
-                  if (usedNs == null || usedNs.Namespace == null) continue;
-                  int key = usedNs.Namespace.UniqueIdKey;
-                  if (alreadyUsed[key] != null) continue;
-                  alreadyUsed[key] = usedNs.Namespace;
-                  this.GetReferencedTypes(usedNs.Namespace, name, duplicates);
-                }
-            }
-            scope = scope.OuterScope;
-            if (returnNullIfHiddenByNestedNamespace) break;
-          }
-          numDups = duplicates.Count;
-          for (int i = numDups-1; i >= 0; i--){
-            TypeNode dup = duplicates[i];
-            if (this.IsNotAccessible(associatedAssembly, dup)) { 
-              numDups--; continue;
-            }
-            result = dup;
-          }
-        }
-        if (numDups == 0){
-          if (duplicates.Count > 0) duplicates = new TypeNodeList();
-          this.GetReferencedTypes(Identifier.Empty, name, duplicates);
-          numDups = duplicates.Count;
-          for (int i = numDups-1; i >= 0; i--){
-            TypeNode dup = duplicates[i];
-            if (this.IsNotAccessible(associatedAssembly, dup)) { 
-              numDups--; continue;
-            }
-            result = dup;
-          }
-        }
-        if (numDups <= 1) duplicates = null;
-      }
-      if (result == null)
-        this.typeFor[name.UniqueIdKey] = Class.DoesNotExist;
-      else
-        this.typeFor[name.UniqueIdKey] = result;
-      if (result == Class.DoesNotExist) return null;
-      if (duplicates != null && duplicates.Count > 1 && this.AssociatedNamespace != null && this.AssociatedNamespace.Name != null && this.AssociatedNamespace.Name.Name != null) {
-        result = null;
-        for (int i = 0, n = duplicates.Count; i < n; i++) {
-          TypeNode t = duplicates[i];
-          if (t == null || t.Namespace == null) continue;
-          if (this.AssociatedNamespace.Name.Name.StartsWith(t.Namespace.Name)) {
-            if (result != null) {
-              result = null;
-              break;
-            }
-            result = t;
-          }
-        }
-        if (result != null)
-          duplicates = null;
-        else
-          result = duplicates[0];
-      }
-      return result; 
-    }
-    private bool IsNotAccessible(AssemblyNode associatedAssembly, TypeNode dup) {
-      if (dup == null) return false;
-      return !dup.IsPublic && (associatedAssembly == null || 
-              !associatedAssembly.MayAccessInternalTypesOf(dup.DeclaringModule as AssemblyNode)) && !this.AssociatedModule.ContainsModule(dup.DeclaringModule);
-    }
-    /// <summary>
-    /// Searches the module and assembly references of the associated module to find types
-    /// </summary>
-    public virtual void GetReferencedTypes(Identifier Namespace, Identifier name, TypeNodeList types){
-      if (Namespace == null || name == null || types == null || this.AssociatedModule == null) {Debug.Assert(false); return;}
-      AssemblyReferenceList arefs = this.AssociatedModule.AssemblyReferences;
-      for (int i = 0, n = arefs == null ? 0 : arefs.Count; i < n; i++){
-        AssemblyReference ar = arefs[i];
-        if (ar == null || ar.Assembly == null) continue;
-        TypeNode t = ar.Assembly.GetType(Namespace, name);
-        if (t == null) continue;
-        //TODO: deal with type forwarding
-        types.Add(t);
-      }
-      ModuleReferenceList mrefs = this.AssociatedModule.ModuleReferences;
-      if (mrefs != null)
-        for (int i = 0, n = mrefs.Count; i < n; i++){
-          ModuleReference mr = mrefs[i];
-          if (mr == null || mr.Module == null) continue;
-          TypeNode t = mr.Module.GetType(Namespace, name);
-          if (t == null) continue;
-          types.Add(t);
-        }
-    }
-  }
-#endif
   public class DelegateNode : TypeNode{
     internal static readonly DelegateNode/*!*/ Dummy = new DelegateNode();
     protected ParameterList parameters;
@@ -11635,16 +8725,13 @@ namespace System.Compiler{
         this.returnType = value;
       }
     }
-#if !MinimalReader
     public TypeNode ReturnTypeExpression;
-#endif
     public DelegateNode()
       : base(NodeType.DelegateNode){
     }
     public DelegateNode(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
       : base(NodeType.DelegateNode, provideNestedTypes, provideAttributes, provideMembers, handle){
     }
-#if !MinimalReader
     public DelegateNode(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags flags,
       Identifier Namespace, Identifier name, TypeNode returnType, ParameterList parameters)
       : base(declaringModule, declaringType, attributes, flags, Namespace, name, null, null, NodeType.DelegateNode){
@@ -11718,9 +8805,7 @@ namespace System.Compiler{
         }
       }
     }
-#endif
   }
-#if !MinimalReader
   public class FunctionType : DelegateNode{
     private FunctionType(Identifier name, TypeNode returnType, ParameterList parameters){
       this.Flags = TypeFlags.Public|TypeFlags.Sealed;
@@ -11841,7 +8926,6 @@ namespace System.Compiler{
       return true;
     }
   }
-#endif
   public class EnumNode : TypeNode{
     internal readonly static EnumNode/*!*/ Dummy = new EnumNode();
 
@@ -11855,14 +8939,12 @@ namespace System.Compiler{
       this.typeCode = ElementType.ValueType;
       this.Flags |= TypeFlags.Sealed;
     }
-#if !MinimalReader
     public EnumNode(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags typeAttributes,
       Identifier Namespace, Identifier name, InterfaceList interfaces, MemberList members)
       : base(declaringModule, declaringType, attributes, typeAttributes, Namespace, name, interfaces, members, NodeType.EnumNode){
       this.typeCode = ElementType.ValueType;
       this.Flags |= TypeFlags.Sealed;
     }
-#endif
     public override bool IsUnmanaged{
       get{
         return true;
@@ -11902,44 +8984,14 @@ namespace System.Compiler{
         this.Members.Add(new Field(this, null, FieldFlags.Public|FieldFlags.SpecialName|FieldFlags.RTSpecialName, StandardIds.Value__, value, null));
       }
     }
-#if ExtendedRuntime
-    public override bool IsPointerFree
-    {
-      get
-      {
-        return true;
-      }
-    }
-#endif
-#if !MinimalReader
     public TypeNode UnderlyingTypeExpression;
-#endif
   }
-#if FxCop
-  public class InterfaceNode : TypeNode{
-#else
   public class Interface : TypeNode{
-#endif
     protected TrivialHashtable jointMemberTable;
     protected MemberList jointDefaultMembers;
 
     internal static readonly Interface/*!*/ Dummy = new Interface();
 
-#if FxCop
-    public InterfaceNode()
-      : base(NodeType.Interface){
-      this.Flags = TypeFlags.Interface|TypeFlags.Abstract;
-    }
-    public InterfaceNode(InterfaceList baseInterfaces)
-      : base(NodeType.Interface){
-      this.Interfaces = baseInterfaces;
-      this.Flags = TypeFlags.Interface|TypeFlags.Abstract;
-    }
-    public InterfaceNode(InterfaceList baseInterfaces, NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(NodeType.Interface, provideNestedTypes, provideAttributes, provideMembers, handle){
-      this.Interfaces = baseInterfaces;
-    }
-#else
     public Interface()
       : base(NodeType.Interface){
       this.Flags = TypeFlags.Interface|TypeFlags.Abstract;
@@ -11953,8 +9005,6 @@ namespace System.Compiler{
       : base(NodeType.Interface, provideNestedTypes, provideAttributes, provideMembers, handle){
       this.Interfaces = baseInterfaces;
     }
-#endif
-#if !MinimalReader
     public Interface(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags flags,
       Identifier Namespace, Identifier name, InterfaceList baseInterfaces, MemberList members)
       : base(declaringModule, declaringType, attributes, flags, Namespace, name, baseInterfaces, members, NodeType.Interface){
@@ -12012,7 +9062,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#endif
   }
   public class Struct : TypeNode{
     internal static readonly Struct/*!*/ Dummy = new Struct();
@@ -12026,7 +9075,6 @@ namespace System.Compiler{
       : base(NodeType.Struct, provideNestedTypes, provideAttributes, provideMembers, handle){
       this.typeCode = ElementType.ValueType;
     }
-#if !MinimalReader
     public Struct(Module declaringModule, TypeNode declaringType, AttributeList attributes, TypeFlags flags,
       Identifier Namespace, Identifier name, InterfaceList interfaces, MemberList members)
       : base(declaringModule, declaringType, attributes, flags, Namespace, name, interfaces, members, NodeType.Struct){
@@ -12050,40 +9098,10 @@ namespace System.Compiler{
           if (f == null || f.Type == null || f.IsStatic) continue;
           if (!f.Type.IsUnmanaged){isUnmanaged = false; break;}
         }
-#if ExtendedRuntime
-        this.cachedUnmanaged = isUnmanaged || IsPointerFree;
-#else
         this.cachedUnmanaged = isUnmanaged;
-#endif
         return this.cachedUnmanaged;
       }
     }
-#endif
-#if ExtendedRuntime
-    protected bool cachedPointerFree;
-    protected bool cachedPointerFreeIsValid;
-    /// <summary>True if the type is a value type containing no managed or unmanaged pointers.</summary>
-    public override bool IsPointerFree
-    {
-      get
-      {
-        if (this.cachedPointerFreeIsValid) return this.cachedPointerFree;
-        // Note: not threadsafe
-        this.cachedPointerFreeIsValid = true; //protect against cycles
-        this.cachedPointerFree = true; //Self references should not influence the answer
-        if (this.IsPrimitive) return this.cachedPointerFree = true;
-        MemberList members = this.Members;
-        bool isPointerFree = true;
-        for (int i = 0, n = members == null ? 0 : members.Count; i < n; i++)
-        {
-          Field f = members[i] as Field;
-          if (f == null || f.Type == null || f.IsStatic) continue;
-          if (!f.Type.IsPointerFree) { isPointerFree = false; break; }
-        }
-        return this.cachedPointerFree = isPointerFree;
-      }
-    }
-#endif
   }
   public interface ITypeParameter{
     Member DeclaringMember{get;set;}
@@ -12095,17 +9113,12 @@ namespace System.Compiler{
     bool IsCovariant { get; }
     bool IsContravariant { get; }
     bool IsUnmanaged { get; }
-#if ExtendedRuntime
-    bool IsPointerFree { get; }
-#endif
-#if !MinimalReader
     Identifier Name { get; }
     Module DeclaringModule { get; }
     TypeNode DeclaringType { get; }
     SourceContext SourceContext { get; }
     int UniqueKey { get; }
     TypeFlags Flags { get; }
-#endif
   }
   public class TypeParameter : Interface, ITypeParameter{
     
@@ -12127,7 +9140,6 @@ namespace System.Compiler{
       set{this.declaringMember = value;}
     }
     private Member declaringMember;
-#if !NoReflection && WHIDBEY
     public override Type GetRuntimeType() {
       TypeNode t = this.DeclaringMember as TypeNode;
       if (t == null) return null;
@@ -12137,7 +9149,6 @@ namespace System.Compiler{
       if (this.ParameterListIndex >= typeParameters.Length) return null;
       return typeParameters[this.ParameterListIndex];
     }
-#endif
     /// <summary>
     /// Zero based index into a parameter list containing this parameter.
     /// </summary>
@@ -12146,33 +9157,12 @@ namespace System.Compiler{
       set{this.parameterListIndex = value;}
     }
     private int parameterListIndex;
-#if ExtendedRuntime
-    private bool typeParameterFlagsIsValid = false;
-#endif
     public TypeParameterFlags TypeParameterFlags{
       get{
-#if ExtendedRuntime
-        if (!typeParameterFlagsIsValid) {
-          // check if we have the corresponding attribute
-          for (int i=0; i < (this.Attributes == null?0:this.Attributes.Count); i++) {
-            if (this.Attributes[i].Type == SystemTypes.TemplateParameterFlagsAttribute) {
-              Literal lit = this.Attributes[i].Expressions[0] as Literal;
-              if (lit != null && lit.Value is int) {
-                this.typeParameterFlags = (TypeParameterFlags)((int)lit.Value);
-              }
-              break;
-            }
-          }
-          this.typeParameterFlagsIsValid = true;
-        }
-#endif
         return this.typeParameterFlags;
       }
       set{
         this.typeParameterFlags = value;
-#if ExtendedRuntime
-        this.typeParameterFlagsIsValid = true;
-#endif
     }
     }
     private TypeParameterFlags typeParameterFlags;
@@ -12198,66 +9188,6 @@ namespace System.Compiler{
         return ((this.TypeParameterFlags & TypeParameterFlags.ReferenceTypeConstraint) == TypeParameterFlags.ReferenceTypeConstraint);
       }
     }
-#if ExtendedRuntime
-    private bool isUnmanagedIsValid = false;
-    private bool isUnmanaged = false;
-    public override bool IsUnmanaged{
-      get{
-        if (!isUnmanagedIsValid && SystemTypes.UnmanagedStructTemplateParameterAttribute != null){
-          // check if we have the corresponding attribute
-          for (int i=0; i < (this.Attributes == null?0:this.Attributes.Count); i++){
-            AttributeNode attr = this.Attributes[i];
-            if (attr == null) continue;
-            if (attr.Type == SystemTypes.UnmanagedStructTemplateParameterAttribute){
-              isUnmanaged = true;
-              break;
-            }
-#if ExtendedRuntime
-            if (!isUnmanaged) { isUnmanaged = IsPointerFree; }
-#endif
-          }
-          isUnmanagedIsValid = true;
-        }
-        return isUnmanaged;
-      }
-    }
-    public void SetIsUnmanaged(){
-      this.isUnmanaged = true;
-      this.isUnmanagedIsValid = true;
-    }
-    private bool isPointerFreeIsValid = false;
-    private bool isPointerFree = false;
-    public override bool IsPointerFree
-    {
-      get
-      {
-        if (!isPointerFreeIsValid && SystemTypes.PointerFreeStructTemplateParameterAttribute != null)
-        {
-          // check if we have the corresponding attribute
-          for (int i = 0; i < (this.Attributes == null ? 0 : this.Attributes.Count); i++)
-          {
-            AttributeNode attr = this.Attributes[i];
-            if (attr == null) continue;
-            if (attr.Type == SystemTypes.PointerFreeStructTemplateParameterAttribute)
-            {
-              isPointerFree = true;
-              break;
-            }
-          }
-          isPointerFreeIsValid = true;
-        }
-        return isPointerFree;
-      }
-    }
-    public void SetIsPointerFree()
-    {
-      this.isPointerFree = true;
-      this.isPointerFreeIsValid = true;
-      // implies unmanaged
-      SetIsUnmanaged();
-    }
-#endif
-#if !NoXml
     public override XmlNode Documentation{
       get{
         if (this.documentation == null && this.declaringMember != null && this.Name != null){
@@ -12292,7 +9222,6 @@ namespace System.Compiler{
         this.helpText = value;
       }
     }
-#endif
     protected internal TypeNodeList structuralElementTypes;
     public override TypeNodeList StructuralElementTypes{
       get{
@@ -12309,7 +9238,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       if (TargetPlatform.GenericTypeNamesMangleChar != 0) {
         int n = methodTypeParameters == null ? 0 : methodTypeParameters.Count;
@@ -12334,7 +9262,6 @@ namespace System.Compiler{
       }
       sb.Append(this.FullName);
     }
-#endif
     public override string GetFullUnmangledNameWithoutTypeParameters(){
       return this.GetUnmangledNameWithoutTypeParameters();
     }
@@ -12367,24 +9294,9 @@ namespace System.Compiler{
       }
       return true;
     }
-#if !MinimalReader
     Module ITypeParameter.DeclaringModule { get { return this.DeclaringModule; } }
     TypeFlags ITypeParameter.Flags { get { return this.Flags; } }
     SourceContext ITypeParameter.SourceContext { get { return this.SourceContext; } }
-#endif
-#if FxCop
-    internal override void GetName(TypeFormat options, StringBuilder name)
-    {
-      if (options.TypeName == TypeNameFormat.FullyQualified)
-      {
-        TypeFormat typeFormat = options.Clone();
-        typeFormat.TypeName = TypeNameFormat.Short;
-        base.GetName(typeFormat, name);
-        return;
-      }
-      base.GetName(options, name);
-    }
-#endif
   }
   public class MethodTypeParameter : TypeParameter{
     public MethodTypeParameter()
@@ -12393,16 +9305,12 @@ namespace System.Compiler{
       this.Flags = TypeFlags.Interface|TypeFlags.NestedPublic|TypeFlags.Abstract;
       this.Namespace = StandardIds.TypeParameter;
     }
-#if !MinimalReader
     public MethodTypeParameter(InterfaceList baseInterfaces, NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
       : base(baseInterfaces, provideNestedTypes, provideAttributes, provideMembers, handle) {
       this.NodeType = NodeType.TypeParameter;
       this.Flags = TypeFlags.Interface|TypeFlags.NestedPublic|TypeFlags.Abstract;
       this.Namespace = StandardIds.TypeParameter;
     }
-#endif
-#if !NoReflection
-#if WHIDBEY
     public override Type GetRuntimeType() {
       Method m = this.DeclaringMember as Method;
       if (m == null) return null;
@@ -12412,8 +9320,6 @@ namespace System.Compiler{
       if (this.ParameterListIndex >= typeParameters.Length) return null;
       return typeParameters[this.ParameterListIndex];
     }
-#endif
-#endif
     public override bool IsStructurallyEquivalentTo(TypeNode type, Func<TypeNode,TypeNode> typeSubstitution = null) {
       if (object.ReferenceEquals(this, type)) return true;
       if (typeSubstitution != null && this == typeSubstitution(type)) return true;
@@ -12448,7 +9354,6 @@ namespace System.Compiler{
       set{this.declaringMember = value;}
     }
     private Member declaringMember;
-#if !MinimalReader
     public virtual MemberList GetAllMembersNamed(Identifier/*!*/ name) {
       lock (this) {
         TrivialHashtable memberTable = this.jointMemberTable;
@@ -12481,9 +9386,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#endif
-
-#if !NoReflection && WHIDBEY
     public override Type GetRuntimeType() {
       TypeNode t = this.DeclaringMember as TypeNode;
       if (t == null) return null;
@@ -12493,7 +9395,6 @@ namespace System.Compiler{
       if (this.ParameterListIndex >= typeParameters.Length) return null;
       return typeParameters[this.ParameterListIndex];
     }
-#endif
 
     /// <summary>
     /// Zero based index into a parameter list containing this parameter.
@@ -12532,62 +9433,6 @@ namespace System.Compiler{
                || (this.baseClass != null && this.baseClass != SystemTypes.Object && this.baseClass.IsReferenceType);
       }
     }
-#if ExtendedRuntime
-    private bool isUnmanagedIsValid = false;
-    private bool isUnmanaged = false;
-    public override bool IsUnmanaged{
-      get{
-        if (!isUnmanagedIsValid && SystemTypes.UnmanagedStructTemplateParameterAttribute != null){
-          // check if we have the corresponding attribute
-          for (int i=0; i < (this.Attributes == null?0:this.Attributes.Count); i++){
-            if (this.Attributes[i].Type == SystemTypes.UnmanagedStructTemplateParameterAttribute){
-              isUnmanaged = true;
-              break;
-            }
-          }
-#if ExtendedRuntime
-          if (!isUnmanaged) { isUnmanaged = IsPointerFree; }
-#endif
-          isUnmanagedIsValid = true;
-        }
-        return isUnmanaged;
-      }
-    }
-    public void SetIsUnmanaged(){
-      this.isUnmanaged = true;
-      this.isUnmanagedIsValid = true;
-    }
-    private bool isPointerFreeIsValid = false;
-    private bool isPointerFree = false;
-    public override bool IsPointerFree
-    {
-      get
-      {
-        if (!isPointerFreeIsValid && SystemTypes.PointerFreeStructTemplateParameterAttribute != null)
-        {
-          // check if we have the corresponding attribute
-          for (int i = 0; i < (this.Attributes == null ? 0 : this.Attributes.Count); i++)
-          {
-            if (this.Attributes[i].Type == SystemTypes.PointerFreeStructTemplateParameterAttribute)
-            {
-              isPointerFree = true;
-              break;
-            }
-          }
-          isPointerFreeIsValid = true;
-        }
-        return isPointerFree;
-      }
-    }
-    public void SetIsPointerFree()
-    {
-      this.isPointerFree = true;
-      this.isPointerFreeIsValid = true;
-      // pointerfree implies Unmanaged
-      SetIsUnmanaged();
-    }
-#endif
-#if !NoXml
   public override XmlNode Documentation{
       get{
         if (this.documentation == null && this.declaringMember != null && this.Name != null){
@@ -12622,7 +9467,6 @@ namespace System.Compiler{
         this.helpText = value;
       }
     }
-#endif
     protected internal TypeNodeList structuralElementTypes;
     public override TypeNodeList StructuralElementTypes{
       get{
@@ -12639,7 +9483,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       if (TargetPlatform.GenericTypeNamesMangleChar != 0) {
         int n = methodTypeParameters == null ? 0 : methodTypeParameters.Count;
@@ -12664,7 +9507,6 @@ namespace System.Compiler{
       }
       sb.Append(this.FullName);
     }
-#endif
     public override string GetFullUnmangledNameWithoutTypeParameters(){
       return this.GetUnmangledNameWithoutTypeParameters();
     }
@@ -12697,24 +9539,9 @@ namespace System.Compiler{
       }
       return true;
     }
-#if !MinimalReader
     SourceContext ITypeParameter.SourceContext { get { return this.SourceContext; } }
     Module ITypeParameter.DeclaringModule { get { return this.DeclaringModule; } }
     TypeFlags ITypeParameter.Flags { get { return this.Flags; } }
-#endif
-#if FxCop
-    internal override void GetName(TypeFormat options, StringBuilder name)
-    {
-      if (options.TypeName == TypeNameFormat.FullyQualified)
-      {
-        TypeFormat typeFormat = options.Clone();
-        typeFormat.TypeName = TypeNameFormat.Short;
-        base.GetName(typeFormat, name);
-        return;
-      }
-      base.GetName(options, name); 
-    }
-#endif
   }
   public class MethodClassParameter : ClassParameter{
     public MethodClassParameter()
@@ -12724,7 +9551,6 @@ namespace System.Compiler{
       this.Flags = TypeFlags.NestedPublic|TypeFlags.Abstract;
       this.Namespace = StandardIds.TypeParameter;
     }
-#if !NoReflection && WHIDBEY
     public override Type GetRuntimeType() {
       Method m = this.DeclaringMember as Method;
       if (m == null) return null;
@@ -12734,8 +9560,6 @@ namespace System.Compiler{
       if (this.ParameterListIndex >= typeParameters.Length) return null;
       return typeParameters[this.ParameterListIndex];
     }
-#endif
-#if !MinimalReader
     public override bool IsStructurallyEquivalentTo(TypeNode type, Func<TypeNode,TypeNode> typeSubstitution = null) {
       if (object.ReferenceEquals(this, type)) return true;
       if (typeSubstitution != null && this == typeSubstitution(type)) return true;
@@ -12747,7 +9571,6 @@ namespace System.Compiler{
       }
       return base.IsStructurallyEquivalentTo(type as MethodClassParameter, typeSubstitution);
     }
-#endif
   }
   public class ArrayType : TypeNode{
     private TypeNode/*!*/ elementType;
@@ -12781,9 +9604,6 @@ namespace System.Compiler{
         this.typeCode = Metadata.ElementType.Array;
       if (elementType == null || elementType.Name == null) return;
       StringBuilder name = new StringBuilder(this.ElementType.Name.ToString());
-#if FxCop
-      GetNameSuffix(name, false);
-#else
       name.Append('[');
       int k = this.Sizes == null ? 0 : this.Sizes.Length;
       int m = this.LowerBounds == null ? 0 : this.LowerBounds.Length;
@@ -12799,7 +9619,6 @@ namespace System.Compiler{
           name.Append(',');
       }
       name.Append(']');
-#endif
       this.Name = Identifier.For(name.ToString());
       this.Namespace = elementType.Namespace;
     }
@@ -12881,7 +9700,6 @@ namespace System.Compiler{
           return "";
       }
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       if (this.ElementType == null) return;
       this.ElementType.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
@@ -12901,7 +9719,6 @@ namespace System.Compiler{
       }
       sb.Append(']');
     }
-#endif
     public virtual void SetLowerBoundToUnknown(){
       CC.Contract.Assume(this.Rank == 1);
       this.typeCode = Metadata.ElementType.Array;
@@ -12947,31 +9764,18 @@ namespace System.Compiler{
       }else
         return new MemberList(0);
     }
-#if !NoReflection
     public override Type GetRuntimeType(){
       if (this.runtimeType == null){
         if (this.ElementType == null) return null;
         Type eType = this.ElementType.GetRuntimeType();
         if (eType == null) return null;
-#if WHIDBEY
         if (this.IsSzArray())
           this.runtimeType = eType.MakeArrayType();
         else
           this.runtimeType = eType.MakeArrayType(this.Rank);
-#else
-        StringBuilder sb = new StringBuilder(eType.FullName);
-        sb.Append('[');
-        for (int i = 1, n = this.Rank; i < n; i++) sb.Append(',');
-        sb.Append(']');
-        if (eType.Assembly != null)
-          this.runtimeType = eType.Assembly.GetType(sb.ToString(), false);
-        else if (eType.Module != null)
-          this.runtimeType = eType.Module.GetType(sb.ToString(), false);
-#endif
       }
       return this.runtimeType;
     }
-#endif
     public Method Constructor{
       get{
         if (this.ctorList == null){
@@ -13111,12 +9915,6 @@ namespace System.Compiler{
       if (this.Rank != 1 || targetArrayType.Rank != 1) return false;
       TypeNode thisElementType = this.ElementType;
       if (thisElementType == null) return false;
-#if ExtendedRuntime
-      thisElementType = TypeNode.StripModifier(thisElementType, ExtendedRuntimeTypes.NonNullType);
-      // DelayedAttribute is used as a modifier on some array allocation types to mark it as 
-      // an explictly delayed allocation.
-      thisElementType = TypeNode.StripModifier(thisElementType, ExtendedRuntimeTypes.DelayedAttribute);
-#endif
       if (thisElementType == targetArrayType.ElementType) return true;
       if (thisElementType.IsValueType) return false;
       return thisElementType.IsAssignableTo(targetArrayType.ElementType, targetTypeSubstitution);
@@ -13157,38 +9955,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      this.ElementType.GetName(options, name);
-      GetNameSuffix(name, options.InsertSpacesBetweenMethodTypeParameters);
-    }
-    private void GetNameSuffix(StringBuilder name, bool insertSpacesBetweenParameters)
-    {
-      name.Append('[');
-      int k = this.Sizes == null ? 0 : this.Sizes.Length;
-      int m = this.LowerBounds == null ? 0 : this.LowerBounds.Length;
-      for (int i = 0, n = this.Rank; i < n; i++)
-      {
-        if (i < k && this.Sizes[i] != 0)
-        {
-          if (i < m && this.LowerBounds[i] != 0)
-          {
-            name.Append(this.LowerBounds[i].ToString("0", CultureInfo.InvariantCulture));
-            name.Append(':');
-          }
-          name.Append(this.Sizes[i].ToString("0", CultureInfo.InvariantCulture));
-        }
-        if (i < n - 1)
-        {
-          name.Append(',');
-          if (insertSpacesBetweenParameters)
-            name.Append(' ');
-        }
-      }
-      name.Append(']');
-    }
-#endif
   }
   public class Pointer : TypeNode{
     internal Pointer(TypeNode/*!*/ elementType)
@@ -13215,31 +9981,20 @@ namespace System.Compiler{
           return "";
       }
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       if (this.elementType == null) return;
       this.elementType.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
       sb.Append('*');
     }
-#endif
-#if !NoReflection
     public override Type GetRuntimeType(){
       if (this.runtimeType == null){
         if (this.ElementType == null) return null;
         Type eType = this.ElementType.GetRuntimeType();
         if (eType == null) return null;
-#if WHIDBEY
         this.runtimeType = eType.MakePointerType();
-#else
-        if (eType.Assembly != null)
-          this.runtimeType = eType.Assembly.GetType(eType.FullName+"*", false);
-        else
-          this.runtimeType = eType.Module.GetType(eType.FullName+"*", false);
-#endif
       }
       return this.runtimeType;
     }
-#endif
     public override bool IsAssignableTo(TypeNode targetType, Func<TypeNode,TypeNode> targetTypeSubstitution = null){
       if (targetType == this) return true;
       if (targetTypeSubstitution != null && this == targetTypeSubstitution(targetType)) return true;
@@ -13282,13 +10037,6 @@ namespace System.Compiler{
       if (this.ElementType == null || t.ElementType == null) return false;
       return this.ElementType == t.ElementType || this.ElementType.IsStructurallyEquivalentTo(t.ElementType, typeSubstitution);
     }
-#if FxCop
-    internal override void GetName(TypeFormat options, StringBuilder name)
-    {
-      this.ElementType.GetName(options, name);
-      name.Append('*');
-    }
-#endif
   }
   public class Reference : TypeNode{
     internal Reference(TypeNode/*!*/ elementType)
@@ -13303,13 +10051,11 @@ namespace System.Compiler{
       get{return this.elementType;}
       set{this.elementType = value;}
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       if (this.elementType == null) return;
       this.elementType.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
       sb.Append('@');
     }
-#endif
     public override bool IsAssignableTo(TypeNode targetType, Func<TypeNode,TypeNode> targetTypeSubstitution = null){
       if (targetType == this) return true;
       if (targetTypeSubstitution != null && this == targetTypeSubstitution(targetType)) return true;
@@ -13335,24 +10081,15 @@ namespace System.Compiler{
           return "";
       }
     }
-#if !NoReflection
     public override Type GetRuntimeType(){
       if (this.runtimeType == null){
         if (this.ElementType == null) return null;
         Type eType = this.ElementType.GetRuntimeType();
         if (eType == null) return null;
-#if WHIDBEY
         this.runtimeType = eType.MakeByRefType();
-#else
-        if (eType.Assembly != null)
-          this.runtimeType = eType.Assembly.GetType(eType.FullName+"&", false);
-        else
-          this.runtimeType = eType.Module.GetType(eType.FullName+"&", false);
-#endif
       }
       return this.runtimeType;
     }
-#endif
     public override bool IsStructural{
       get{return true;}
     }
@@ -13375,1284 +10112,12 @@ namespace System.Compiler{
       if (this.ElementType == null || t.ElementType == null) return false;
       return this.ElementType == t.ElementType || this.ElementType.IsStructurallyEquivalentTo(t.ElementType, typeSubstitution);
     }
-#if FxCop
-    internal override void GetName(TypeFormat options, StringBuilder name)
-    {
-      this.ElementType.GetName(options, name);
-      name.Append('&');
-    }
-#endif
   }
-#if ExtendedRuntime
-  public class TupleType : Struct{
-    private TupleType(FieldList domains, Identifier/*!*/ name, TypeNode/*!*/ referringType, TypeFlags visibility) {
-      referringType.DeclaringModule.StructurallyEquivalentType[name.UniqueIdKey] = this;
-      this.DeclaringModule = referringType.DeclaringModule;
-      this.NodeType = NodeType.TupleType;
-      this.Flags = TypeFlags.Sealed;
-      this.Namespace = StandardIds.StructuralTypes;
-      this.Name = name;
-      this.isNormalized = true;
-      switch (visibility){
-        case TypeFlags.NestedFamANDAssem:
-        case TypeFlags.NestedFamily:
-        case TypeFlags.NestedPrivate:
-          referringType.Members.Add(this);
-          this.DeclaringType = referringType;
-          this.Flags |= TypeFlags.NestedPrivate;
-          break;
-        default:
-          referringType.DeclaringModule.Types.Add(this);
-          this.Flags |= TypeFlags.Public;
-          break;
-      }
-      int n = domains == null ? 0 : domains.Count;
-      MemberList members = this.members = new MemberList(n);
-      TypeNodeList types = new TypeNodeList(n);
-      for (int i = 0; i < n; i++){
-        //^ assert domains != null;
-        Field f = domains[i];
-        if (f == null) continue;
-        f = (Field)f.Clone();
-        f.DeclaringType = this;
-        members.Add(f);
-        if (f.Type != null)
-          types.Add(f.Type);       
-      }
-      TypeNode elemType = null;
-      if (n == 1)
-        elemType = types[0]; //TODO: get element type of stream?
-      else{
-        TypeUnion tu = TypeUnion.For(types, referringType);
-        //^ assume tu != null;
-        elemType = tu;
-        if (tu.Types.Count == 1) elemType = tu.Types[0];
-      }
-      if (elemType == null) elemType = CoreSystemTypes.Object;
-      Interface ienumerable = (Interface)SystemTypes.GenericIEnumerable.GetTemplateInstance(referringType, elemType);
-      Interface ienumerator = (Interface)SystemTypes.GenericIEnumerator.GetTemplateInstance(referringType, elemType);
-      this.Interfaces = new InterfaceList(SystemTypes.TupleType, ienumerable, SystemTypes.IEnumerable);
-
-      This ThisParameter = new This(this.GetReferenceType());
-      StatementList statements = new StatementList(1);
-      TypeNode tEnumerator = TupleEnumerator.For(this, n, elemType, ienumerator, referringType);
-      InstanceInitializer cons = tEnumerator.GetConstructor(this);
-      if (cons == null) { Debug.Fail(""); return; }
-      ExpressionList args = new ExpressionList(new AddressDereference(ThisParameter, this));
-      statements.Add(new Return(new Construct(new MemberBinding(null, cons), args)));
-      Block body = new Block(statements);
-      Method getEnumerator = new Method(this, null, StandardIds.GetEnumerator, null, ienumerator, body);
-      getEnumerator.Flags = MethodFlags.Public|MethodFlags.Virtual;
-      getEnumerator.CallingConvention = CallingConventionFlags.HasThis;
-      getEnumerator.ThisParameter = ThisParameter;
-      this.members.Add(getEnumerator);
-
-      //IEnumerable.GetEnumerator
-      ThisParameter = new This(this.GetReferenceType());
-      statements = new StatementList(1);
-      MethodCall mcall = new MethodCall(new MemberBinding(ThisParameter, getEnumerator), new ExpressionList(0), NodeType.Call, SystemTypes.IEnumerator);
-      statements.Add(new Return(mcall));
-      getEnumerator = new Method(this, null, StandardIds.IEnumerableGetEnumerator, null, SystemTypes.IEnumerator, new Block(statements));
-      getEnumerator.ThisParameter = ThisParameter;
-      getEnumerator.ImplementedInterfaceMethods = new MethodList(SystemTypes.IEnumerable.GetMethod(StandardIds.GetEnumerator));
-      getEnumerator.CallingConvention = CallingConventionFlags.HasThis;
-      getEnumerator.Flags = MethodFlags.Private | MethodFlags.Virtual | MethodFlags.SpecialName;
-      this.members.Add(getEnumerator);
-    }
-    internal TupleType(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(provideNestedTypes, provideAttributes, provideMembers, handle) {
-      this.NodeType = NodeType.TupleType;
-      this.typeCode = ElementType.ValueType;
-    }
-    public static TupleType For(FieldList domains, TypeNode referringType){
-      if (referringType == null) return null;
-      Module module = referringType.DeclaringModule;
-      if (module == null) return null;
-      TypeFlags visibility = TypeFlags.Public;
-      StringBuilder name = new StringBuilder();
-      name.Append("Tuple");
-      int n = domains == null ? 0 : domains.Count;
-      for (int i = 0; i < n; i++) {
-        //^ assert domains != null;
-        Field f = domains[i];
-        if (f == null || f.Type == null || f.Type.Name == null) continue;
-        visibility = TypeNode.GetVisibilityIntersection(visibility, f.Type.Flags & TypeFlags.VisibilityMask);
-        name.Append('_');
-        name.Append(f.Type.Name.ToString());
-        if (f.Name != null && !f.IsSpecialName) {
-          name.Append('_');
-          name.Append(f.Name.ToString());
-        }
-      }
-      TupleType tup = null;
-      int tCount = 0;
-      string tNameString = name.ToString();
-      Identifier tName = Identifier.For(tNameString);
-      TypeNode result = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      while (result != null) {
-        //Mangled name is the same. But mangling is not unique (types are not qualified with assemblies), so check for equality.
-        tup = result as TupleType;
-        bool goodMatch = tup != null;
-        if (goodMatch) {
-          //^ assert tup != null;
-          MemberList tMembers = tup.Members;
-          int m = tMembers == null ? 0 : tMembers.Count;
-          goodMatch = n == m-2;
-          if (goodMatch) {
-            //^ assert domains != null;
-            //^ assert tMembers != null;
-            for (int i = 0; goodMatch && i < n; i++) {
-              Field f1 = domains[i];
-              Field f2 = tMembers[i] as Field;
-              goodMatch = f1 != null && f2 != null && f1.Type == f2.Type && 
-              f1.Name != null && f2.Name != null && f1.Name.UniqueIdKey == f2.Name.UniqueIdKey;
-            }
-          }
-        }
-        if (goodMatch) return tup;
-        //Mangle some more
-        tName = Identifier.For(tNameString+(++tCount).ToString());
-        result = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      }
-      tup = new TupleType(domains, tName, referringType, visibility);
-      return tup;
-    }
-    public override bool IsStructural{
-      get{return true;}
-    }
-    protected TypeNodeList structuralElementTypes;
-    public override TypeNodeList StructuralElementTypes{
-      get{
-        TypeNodeList result = this.structuralElementTypes;
-        if (result != null) return result;
-        this.structuralElementTypes = result = new TypeNodeList(1);
-        MemberList members = this.Members;
-        for (int i = 0, n = members == null ? 0 : members.Count; i < n; i++){
-          Field f = members[i] as Field;
-          if (f == null || f.Type == null) continue;
-          result.Add(f.Type);
-        }
-        return result;
-      }
-    }
-    public override bool IsStructurallyEquivalentTo(TypeNode type){
-      if (type == null) return false;
-      if (this == type) return true;
-      TupleType t = type as TupleType;
-      if (t == null) return false;
-      if (this.Members == null) return t.Members == null;
-      if (t.Members == null) return false;
-      int n = this.Members.Count; if (n != t.Members.Count) return false;
-      for (int i = 0; i < n; i++){
-        Member m1 = this.Members[i];
-        Member m2 = t.Members[i];
-        if (m1 == null || m2 == null) return false;
-        Field f1 = m1 as Field;
-        Field f2 = m2 as Field;
-        if (f1 == null && f2 == null) continue;
-        if (f1 == null || f2 == null) return false;
-        if (f1.Name == null || f2.Name == null) return false;
-        if (f1.Type == null || f2.Type == null) return false;
-        if (f1.Name.UniqueIdKey != f2.Name.UniqueIdKey) return false;
-        if (f1.Type != f2.Type && !f1.Type.IsStructurallyEquivalentTo(f2.Type)) return false;
-      }
-      return true;
-    }
-  }
-  internal sealed class TupleEnumerator{
-    private TupleEnumerator(){}
-    internal static TypeNode/*!*/ For(TupleType/*!*/ tuple, int numDomains, TypeNode/*!*/ elementType, Interface/*!*/ targetIEnumerator, TypeNode/*!*/ referringType) {
-      Identifier id = Identifier.For("Enumerator"+tuple.Name);
-      InterfaceList interfaces = new InterfaceList(targetIEnumerator, SystemTypes.IDisposable, SystemTypes.IEnumerator);
-      MemberList members = new MemberList(5);
-      Class enumerator = new Class(referringType.DeclaringModule, null, null, TypeFlags.Sealed, targetIEnumerator.Namespace, id, CoreSystemTypes.Object, interfaces, members);
-      enumerator.IsNormalized = true;
-      if ((tuple.Flags & TypeFlags.VisibilityMask) == TypeFlags.Public){
-        enumerator.Flags |= TypeFlags.Public;
-        referringType.DeclaringModule.Types.Add(enumerator);
-      }else{
-        enumerator.Flags |= TypeFlags.NestedPrivate;
-        referringType.Members.Add(enumerator);
-        enumerator.DeclaringType = referringType;
-      }
-      //Field to hold tuple
-      Field tField = new Field(enumerator, null, FieldFlags.Private, StandardIds.Value, tuple, null);
-      members.Add(tField);
-      //Field to hold current position
-      Field pField = new Field(enumerator, null, FieldFlags.Private, StandardIds.Position, CoreSystemTypes.Int32, null);
-      members.Add(pField);
-      //Constructor
-      Parameter par = new Parameter(null, ParameterFlags.None, StandardIds.Value, tuple, null, null);
-      StatementList statements = new StatementList(4);
-      InstanceInitializer constr = CoreSystemTypes.Object.GetConstructor();
-      if (constr == null) { Debug.Fail(""); return enumerator; }
-      This thisParameter = new This(enumerator);
-      MethodCall mcall = new MethodCall(new MemberBinding(thisParameter, constr), new ExpressionList(0), NodeType.Call, CoreSystemTypes.Void);
-      statements.Add(new ExpressionStatement(mcall));
-      statements.Add(new AssignmentStatement(new MemberBinding(thisParameter, tField), par));
-      statements.Add(new AssignmentStatement(new MemberBinding(thisParameter, pField), Literal.Int32MinusOne));
-      statements.Add(new Return());
-      InstanceInitializer econs = new InstanceInitializer(enumerator, null, new ParameterList(par), new Block(statements));
-      econs.ThisParameter = thisParameter;
-      econs.Flags |= MethodFlags.Public;
-      members.Add(econs);
-      //get_Current
-      thisParameter = new This(enumerator);
-      statements = new StatementList(numDomains+1);
-      BlockList blocks = new BlockList(numDomains);
-      statements.Add(new SwitchInstruction(new MemberBinding(thisParameter, pField), blocks));
-      constr = SystemTypes.InvalidOperationException.GetConstructor();
-      if (constr == null) { Debug.Fail(""); return enumerator; }
-      statements.Add(new Throw(new Construct(new MemberBinding(null, constr), null)));
-      for (int i = 0; i < numDomains; i++){
-        Field f = (Field)tuple.members[i];
-        MemberBinding mb = new MemberBinding(new UnaryExpression(new MemberBinding(thisParameter, tField), NodeType.AddressOf), f);
-        Block b = new Block();
-        statements.Add(b);
-        blocks.Add(b);
-        if (f.Type == elementType || f.Type == null)
-          b.Statements = new StatementList(new Return(mb));
-        else{
-          TypeUnion tUnion = elementType as TypeUnion;
-          Debug.Assert(tUnion != null);
-          if (tUnion != null){
-            Method m = tUnion.GetImplicitCoercionFromMethod(f.Type);
-            if (m != null){
-              MethodCall mCall = new MethodCall(new MemberBinding(null, m), new ExpressionList(mb));
-              b.Statements = new StatementList(new Return(mCall));
-            }else{
-              TypeUnion eUnion = f.Type as TypeUnion;
-              if (eUnion != null){
-                Method getTagAsType = eUnion.GetMethod(StandardIds.GetTagAsType);
-                Method getValue = eUnion.GetMethod(StandardIds.GetValue);
-                Method fromObject = tUnion.GetMethod(StandardIds.FromObject, CoreSystemTypes.Object, CoreSystemTypes.Type);
-                if (getTagAsType == null || getValue == null || fromObject == null) {
-                  Debug.Fail(""); return enumerator;
-                }
-                Local temp = new Local(Identifier.Empty, eUnion);
-                Expression tempAddr = new UnaryExpression(temp, NodeType.AddressOf);
-                StatementList stats = new StatementList(2);
-                stats.Add(new AssignmentStatement(temp, mb));
-                ExpressionList arguments = new ExpressionList(2);
-                arguments.Add(new MethodCall(new MemberBinding(tempAddr, getValue), null));
-                arguments.Add(new MethodCall(new MemberBinding(tempAddr, getTagAsType), null));
-                stats.Add(new Return(new MethodCall(new MemberBinding(null, fromObject), arguments)));
-                b.Statements = stats;
-              }else{
-                Debug.Assert(false);
-              }
-            }
-          }
-        }
-      }
-      Method getCurrent = new Method(enumerator, null, StandardIds.getCurrent, null, elementType, new Block(statements));
-      getCurrent.Flags = MethodFlags.Public|MethodFlags.Virtual|MethodFlags.NewSlot|MethodFlags.HideBySig|MethodFlags.SpecialName;
-      getCurrent.CallingConvention = CallingConventionFlags.HasThis;
-      getCurrent.ThisParameter = thisParameter;
-      members.Add(getCurrent);
-
-      //IEnumerator.GetCurrent
-      statements = new StatementList(1);
-      This ThisParameter = new This(enumerator);
-      MethodCall callGetCurrent = new MethodCall(new MemberBinding(ThisParameter, getCurrent), new ExpressionList(0), NodeType.Call, elementType); 
-      MemberBinding etExpr = new MemberBinding(null, elementType);
-      statements.Add(new Return(new BinaryExpression(callGetCurrent, etExpr, NodeType.Box, CoreSystemTypes.Object)));
-      Method ieGetCurrent = new Method(enumerator, null, StandardIds.IEnumeratorGetCurrent, null, CoreSystemTypes.Object, new Block(statements));
-      ieGetCurrent.ThisParameter = ThisParameter;
-      ieGetCurrent.ImplementedInterfaceMethods = new MethodList(SystemTypes.IEnumerator.GetMethod(StandardIds.getCurrent));
-      ieGetCurrent.CallingConvention = CallingConventionFlags.HasThis;
-      ieGetCurrent.Flags = MethodFlags.Private|MethodFlags.Virtual|MethodFlags.SpecialName;
-      members.Add(ieGetCurrent);
-
-      //IEnumerator.Reset
-      statements = new StatementList(2);
-      ThisParameter = new This(enumerator);
-      statements.Add(new AssignmentStatement(new MemberBinding(ThisParameter, pField), Literal.Int32Zero));
-      statements.Add(new Return());
-      Method reset = new Method(enumerator, null, StandardIds.IEnumeratorReset, null, CoreSystemTypes.Void, new Block(statements));
-      reset.ThisParameter = ThisParameter;
-      reset.ImplementedInterfaceMethods = new MethodList(SystemTypes.IEnumerator.GetMethod(StandardIds.Reset));
-      reset.CallingConvention = CallingConventionFlags.HasThis;
-      reset.Flags = MethodFlags.Private|MethodFlags.Virtual|MethodFlags.SpecialName;
-      members.Add(reset);
-
-      //MoveNext
-      ThisParameter = new This(enumerator);
-      statements = new StatementList(5);
-      MemberBinding pos = new MemberBinding(ThisParameter, pField);
-      Expression comparison = new BinaryExpression(pos, new Literal(numDomains, CoreSystemTypes.Int32), NodeType.Lt);
-      Block returnTrue = new Block();
-      statements.Add(new AssignmentStatement(pos, new BinaryExpression(pos, Literal.Int32One, NodeType.Add)));
-      statements.Add(new Branch(comparison, returnTrue));
-      statements.Add(new Return(Literal.False));
-      statements.Add(returnTrue);
-      statements.Add(new Return(Literal.True));
-      Method moveNext = new Method(enumerator, null, StandardIds.MoveNext, null, CoreSystemTypes.Boolean, new Block(statements));
-      moveNext.Flags = MethodFlags.Public|MethodFlags.Virtual|MethodFlags.NewSlot|MethodFlags.HideBySig;
-      moveNext.CallingConvention = CallingConventionFlags.HasThis;
-      moveNext.ThisParameter = ThisParameter;
-      members.Add(moveNext);
-      //IDispose.Dispose
-      statements = new StatementList(1);
-      statements.Add(new Return());
-      Method dispose = new Method(enumerator, null, StandardIds.Dispose, null, CoreSystemTypes.Void, new Block(statements));
-      dispose.CallingConvention = CallingConventionFlags.HasThis;
-      dispose.Flags = MethodFlags.Public|MethodFlags.Virtual;
-      enumerator.Members.Add(dispose);
-      return enumerator;
-    }
-  }
-  public class TypeAlias : Struct{
-    protected TypeNode aliasedType;
-    public TypeNode AliasedTypeExpression;
-    public bool RequireExplicitCoercionFromUnderlyingType;
-    public TypeAlias()
-      : this(null, null){
-    }
-    internal TypeAlias(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle, bool requireExplicitCoercionFromUnderlyingType)
-      : base(provideNestedTypes, provideAttributes, provideMembers, handle) {
-      this.RequireExplicitCoercionFromUnderlyingType = requireExplicitCoercionFromUnderlyingType;
-    }
-    public TypeAlias(TypeNode aliasedType, Identifier name)
-      : base(){
-      this.NodeType = NodeType.TypeAlias;
-      this.AliasedType = aliasedType;
-      this.Name = name;
-    }
-    public TypeNode AliasedType{
-      get{
-        if (this.aliasedType == null){
-          Field f = this.GetField(StandardIds.Value);
-          if (f != null)
-            this.aliasedType = f.Type;
-        }
-        return this.aliasedType;
-      }
-      set{
-        this.aliasedType = value;
-      }
-    }
-    public virtual void ProvideMembers(){
-      if (this.AliasedType == null) return;
-      this.Interfaces = new InterfaceList(1);
-      if (this.RequireExplicitCoercionFromUnderlyingType)
-        this.Interfaces.Add(SystemTypes.TypeDefinition);
-      else
-        this.Interfaces.Add(SystemTypes.TypeAlias);
-      MemberList members = this.members;
-      if (members == null) members = this.members = new MemberList();
-      //Value field
-      Field valueField = new Field(this, null, FieldFlags.Private, StandardIds.Value, this.AliasedType, null);
-      members.Add(valueField);
-      //Implicit conversion from this type to underlying type
-      ParameterList parameters = new ParameterList(1);
-      Parameter valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, this, null, null);
-      parameters.Add(valuePar);
-      Method toAliasedType = new Method(this, null, StandardIds.opImplicit, parameters, this.AliasedType, null); 
-      toAliasedType.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-      members.Add(toAliasedType);
-      StatementList statements = new StatementList(1);
-      statements.Add(new Return(new MemberBinding(new UnaryExpression(valuePar, NodeType.AddressOf), valueField)));
-      toAliasedType.Body = new Block(statements);
-      //Implicit or explicit conversion from underlying type to this type
-      Identifier opId = this.RequireExplicitCoercionFromUnderlyingType ? StandardIds.opExplicit : StandardIds.opImplicit;
-      parameters = new ParameterList(1);
-      parameters.Add(valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, this.AliasedType, null, null));
-      Method fromAliasedType = new Method(this, null, opId, parameters, this, null); 
-      fromAliasedType.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-      members.Add(fromAliasedType);
-      statements = new StatementList(2);
-      Local loc = new Local(this);
-      statements.Add(new AssignmentStatement(new MemberBinding(new UnaryExpression(loc, NodeType.AddressOf), valueField), valuePar));
-      statements.Add(new Return(loc));
-      fromAliasedType.Body = new Block(statements);
-      this.AddCoercionWrappers(this.AliasedType.ExplicitCoercionMethods, StandardIds.opExplicit, fromAliasedType, toAliasedType);
-      this.AddCoercionWrappers(this.AliasedType.ImplicitCoercionMethods, StandardIds.opImplicit, fromAliasedType, toAliasedType);
-    }
-    private void AddCoercionWrappers(MemberList coercions, Identifier id, Method/*!*/ fromAliasedType, Method/*!*/ toAliasedType) 
-      //^ requires this.members != null;
-    {
-      if (coercions == null) return;
-      MemberList members = this.members;
-      for (int i = 0, n = coercions.Count; i < n; i++){
-        Method coercion = coercions[i] as Method;
-        if (coercion == null || coercion.Parameters == null || coercion.Parameters.Count != 1) continue;
-        ParameterList parameters = new ParameterList(1);
-        Parameter valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, null, null, null);
-        parameters.Add(valuePar);
-        Method m = new Method(this, null, id, parameters, null, null);
-        m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-        Expression arg = valuePar;
-        MethodCall call = new MethodCall(new MemberBinding(null, coercion), new ExpressionList(arg));
-        if (coercion.ReturnType == this.AliasedType){
-          m.ReturnType = this;
-          if (this.RequireExplicitCoercionFromUnderlyingType) m.Name = StandardIds.opExplicit;
-          valuePar.Type = coercion.Parameters[0].Type;
-          call = new MethodCall(new MemberBinding(null, fromAliasedType), new ExpressionList(call));
-        }else{
-          m.ReturnType = coercion.ReturnType;
-          valuePar.Type = this;
-          //^ assume call.Operands != null;
-          call.Operands[0] = new MethodCall(new MemberBinding(null, toAliasedType), new ExpressionList(arg));
-        }
-        m.Body = new Block(new StatementList(new Return(call)));
-        members.Add(m);
-      }
-    }
-    public override bool IsStructural{
-      get{return this.RequireExplicitCoercionFromUnderlyingType;}
-    }
-    protected TypeNodeList structuralElementTypes;
-    public override TypeNodeList StructuralElementTypes{
-      get{
-        TypeNodeList result = this.structuralElementTypes;
-        if (result != null) return result;
-        this.structuralElementTypes = result = new TypeNodeList(1);
-        result.Add(this.AliasedType);
-        return result;
-      }
-    }
-    public override bool IsStructurallyEquivalentTo(TypeNode type){
-      if (type == null) return false;
-      if (this == type) return true;
-      if (this.RequireExplicitCoercionFromUnderlyingType) return false;
-      TypeAlias t = type as TypeAlias;
-      if (t == null) return false;
-      if (t.RequireExplicitCoercionFromUnderlyingType) return false;
-      if (this.AliasedType == null || t.AliasedType == null) return false;
-      return this.AliasedType == t.AliasedType || this.AliasedType.IsStructurallyEquivalentTo(t.AliasedType);
-    }
-  }
-  public class TypeIntersection : Struct{
-    private TypeNodeList types; //sorted by UniqueKey
-    public TypeNodeList Types{
-      get{
-        if (this.types != null) return this.types;
-        if (this.ProvideTypeMembers != null) { MemberList mems = this.Members; if (mems != null) mems = null; }
-        return this.types;          
-      }
-      set{
-        this.types = value;
-      }
-    }
-
-    private TypeIntersection(TypeNodeList types, Identifier name) {
-      this.NodeType = NodeType.TypeIntersection;
-      this.Flags = TypeFlags.Public|TypeFlags.Sealed;
-      this.Namespace = StandardIds.StructuralTypes;
-      this.Name = name;
-      this.Types = types;
-      int n = types == null ? 0 : types.Count;
-      InterfaceList ifaces = this.Interfaces = new InterfaceList(n+1);
-      ifaces.Add(SystemTypes.TypeIntersection);
-      if (types != null)
-        for (int i = 0; i < n; i++){
-          Interface iface = types[i] as Interface;
-          if (iface == null) continue;
-          ifaces.Add(iface);
-        }
-      this.isNormalized = true;
-    }
-    internal TypeIntersection(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(provideNestedTypes, provideAttributes, provideMembers, handle) {
-      this.NodeType = NodeType.TypeIntersection;
-      this.typeCode = ElementType.ValueType;
-    }
-    public static TypeIntersection For(TypeNodeList types, Module module) {
-      if (module == null) return null;   
-      if (types != null && !TypeUnion.AreNormalized(types))   
-        types = TypeUnion.Normalize(types);
-      TypeFlags visibility = TypeFlags.Public;
-      string name = TypeUnion.BuildName(types, "And", ref visibility);
-      Identifier tName = Identifier.For(name);
-      int tCount = 0;
-      TypeIntersection result = null;
-      TypeNode t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      while (t != null){
-        //Mangled name is the same. But mangling is not unique, so check for equality.
-        TypeIntersection ti = t as TypeIntersection;
-        if (ti != null){
-          TypeNodeList ts = ti.Types;
-          int n = types == null ? 0 : types.Count;
-          bool goodMatch = ts != null && ts.Count == n;
-          for (int i = 0; goodMatch && i < n; i++) {
-            //^ assert types != null && ts != null;
-            goodMatch = types[i] == ts[i];
-          }
-          if (goodMatch) return ti;
-        }
-        //Mangle some more
-        tName = Identifier.For(name+(++tCount).ToString());
-        t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      }
-      result = new TypeIntersection(types, tName);
-      result.DeclaringModule = module;
-      module.Types.Add(result);
-      module.StructurallyEquivalentType[tName.UniqueIdKey] = result;
-      return result;
-    }
-    public static TypeIntersection For(TypeNodeList types, TypeNode referringType) {
-      if (referringType == null) return null;
-      Module module = referringType.DeclaringModule;
-      if (module == null) return null;   
-      if (types != null && !TypeUnion.AreNormalized(types))   
-        types = TypeUnion.Normalize(types);
-      TypeFlags visibility = TypeFlags.Public;
-      string name = TypeUnion.BuildName(types, "And", ref visibility);
-      Identifier tName = Identifier.For(name);
-      int tCount = 0;
-      TypeIntersection result = null;
-      TypeNode t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      while (t != null){
-        //Mangled name is the same. But mangling is not unique, so check for equality.
-        TypeIntersection ti = t as TypeIntersection;
-        if (ti != null){
-          TypeNodeList ts = ti.Types;
-          int n = types == null ? 0 : types.Count;
-          bool goodMatch = ts != null && ts.Count == n;
-          for (int i = 0; goodMatch && i < n; i++) {
-            //^ assert ts != null && types != null;
-            goodMatch = types[i] == ts[i];
-          }
-          if (goodMatch) return ti;
-        }
-        //Mangle some more
-        tName = Identifier.For(name+(++tCount).ToString());
-        t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      }
-      result = new TypeIntersection(types, tName);
-      result.DeclaringModule = module;
-      switch (visibility){
-        case TypeFlags.NestedFamANDAssem:
-        case TypeFlags.NestedFamily:
-        case TypeFlags.NestedPrivate:
-          referringType.Members.Add(result);
-          result.DeclaringType = referringType;
-          result.Flags &= ~TypeFlags.VisibilityMask;
-          result.Flags |= TypeFlags.NestedPrivate;
-          break;
-        default:
-          module.Types.Add(result);
-          break;
-      }
-      module.StructurallyEquivalentType[tName.UniqueIdKey] = result;
-      return result;
-    }   
-    public override bool IsAssignableTo(TypeNode targetType){
-      return targetType == this || targetType == CoreSystemTypes.Object;
-    } 
-    public override bool IsStructural{
-      get{return true;}
-    }
-    protected TypeNodeList structuralElementTypes;
-    public override TypeNodeList StructuralElementTypes{
-      get{
-        TypeNodeList result = this.structuralElementTypes;
-        if (result != null) return result;
-        this.structuralElementTypes = result = new TypeNodeList(1);
-        TypeNodeList types = this.Types;
-        for (int i = 0, n = types == null ? 0 : types.Count; i < n; i++){
-          TypeNode t = types[i]; 
-          if (t == null) continue;
-          result.Add(t);
-        }
-        return result;
-      }
-    }
-    public override bool IsStructurallyEquivalentTo(TypeNode type){
-      if (type == null) return false;
-      if (this == type) return true;
-      TypeIntersection t = type as TypeIntersection;
-      if (t == null) return false;
-      return this.IsStructurallyEquivalentList(this.Types, t.Types);
-    }
-    private TrivialHashtable/*!*/ interfaceMethodFor = new TrivialHashtable();
-    public override MemberList Members{
-      get{
-        MemberList members = this.members;
-        if (members == null || this.membersBeingPopulated){
-          if (this.ProvideTypeMembers != null){
-            lock(this){
-              if (this.members != null) return this.members;
-              members = base.Members;
-              MemberList coercions = this.ExplicitCoercionMethods;
-              int n = coercions == null ? 0 : coercions.Count;
-              TypeNodeList typeList = this.Types = new TypeNodeList(n);
-              for (int i = 0; i < n; i++){
-                Method coercion = coercions[i] as Method;
-                if (coercion == null) continue;
-                typeList.Add(coercion.ReturnType);
-              }
-            }
-            return this.members;
-          }
-          members = this.Members = new MemberList();
-          //Value field
-          members.Add(new Field(this, null, FieldFlags.Private, StandardIds.Value, CoreSystemTypes.Object, null));
-          //FromObject
-          ParameterList parameters = new ParameterList(1);
-          parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, CoreSystemTypes.Object, null, null));
-          Method m = new Method(this, null, StandardIds.FromObject, parameters, this, null); 
-          m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-          members.Add(m);
-          //coercion operators
-          parameters = new ParameterList(1);
-          parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, CoreSystemTypes.Object, null, null));
-          m = new Method(this, null, StandardIds.opExplicit, parameters, this, null); 
-          m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-          members.Add(m);
-          parameters = new ParameterList(1);
-          parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, this, null, null));
-          m = new Method(this, null, StandardIds.opImplicit, parameters, CoreSystemTypes.Object, null); 
-          m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-          members.Add(m);
-          TypeNodeList types = this.Types;
-          for (int i = 0, n = types.Count; i < n; i++){
-            TypeNode t = types[i];
-            parameters = new ParameterList(1);
-            parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, this, null, null));
-            m = new Method(this, null, StandardIds.opImplicit, parameters, t, null); 
-            m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-            members.Add(m);
-          }
-          //Routines to forward interface calls to embedded object
-          InterfaceList ifaces = this.Interfaces;
-          if (ifaces != null){
-            for (int i = 0, n = ifaces.Count; i < n; i++){
-              Interface iface = ifaces[i];
-              if (iface == null) continue;
-              MemberList imembers = iface.Members;
-              if (imembers == null) continue;
-              for (int j = 0, k = imembers.Count; j < k; j++){
-                Method imeth = imembers[j] as Method;
-                if (imeth == null) continue;
-                if (imeth.IsStatic) continue;
-                Method meth = (Method)imeth.Clone();
-                meth.Flags &= ~MethodFlags.Abstract;
-                meth.DeclaringType = this;
-                members.Add(meth);
-                meth.Parameters = (imeth.Parameters == null ? null : imeth.Parameters.Clone());
-                for (int a = 0, b = meth.Parameters == null ? 0 : meth.Parameters.Count; a < b; a++){
-                  Parameter par = meth.Parameters[a];
-                  if (par == null) continue;
-                  meth.Parameters[a] = par = (Parameter)par.Clone();
-                  par.DeclaringMethod = meth;
-                }
-                this.interfaceMethodFor[meth.UniqueKey] = imeth;
-              }
-            }
-          }
-          this.ProvideBodiesForMethods();
-        }
-        return members;
-      }
-      set{
-        this.members = value;
-      }
-    }
-    private void ProvideBodiesForMethods()
-      //^ requires this.members != null;
-    {
-      MemberList members = this.members;
-      Field valueField = (Field)members[0];
-      //FromObject
-      Method fromObject = (Method)members[1];
-      StatementList statements = new StatementList(2);
-      Local resultLoc = new Local(Identifier.Empty, this);
-      Expression param = fromObject.Parameters[0];
-      statements.Add(new AssignmentStatement(new MemberBinding(new UnaryExpression(resultLoc, NodeType.AddressOf), valueField), param));
-      statements.Add(new Return(resultLoc));
-      fromObject.Body = new Block(statements);
-      //to coercion
-      Method toMethod = (Method)members[2];
-      statements = new StatementList(2);
-      resultLoc = new Local(Identifier.Empty, this);
-      param = toMethod.Parameters[0];
-      Expression castExpr = param;
-      TypeNodeList types = this.Types;
-      int n = types.Count;
-      for (int i = 0; i < n; i++){
-        TypeNode t = types[i];
-        castExpr = new BinaryExpression(castExpr, new Literal(t, CoreSystemTypes.Type), NodeType.Castclass);
-      }
-      statements.Add(new AssignmentStatement(new MemberBinding(new UnaryExpression(resultLoc, NodeType.AddressOf), valueField), castExpr));
-      statements.Add(new Return(resultLoc));
-      toMethod.Body = new Block(statements);
-      //from coercions
-      Method opImplicit = (Method)members[3];
-      opImplicit.Body = new Block(statements = new StatementList(1));
-      Expression val = new MemberBinding(new UnaryExpression(opImplicit.Parameters[0], NodeType.AddressOf), valueField);
-      statements.Add(new Return(val));
-      for (int i = 0; i < n; i++){
-        TypeNode t = types[i];
-        opImplicit = (Method)members[4+i];
-        opImplicit.Body = new Block(statements = new StatementList(1));
-        val = new MemberBinding(new UnaryExpression(opImplicit.Parameters[0], NodeType.AddressOf), valueField);
-        val = new BinaryExpression(val, new Literal(t, CoreSystemTypes.Type), NodeType.Castclass);
-        statements.Add(new Return(val));
-      }
-      //Routines to forward interface calls to embedded object
-      for (int i = 4+n, m = members.Count; i < m; i++){
-        Method meth = (Method)members[i];
-        Method imeth = (Method)this.interfaceMethodFor[meth.UniqueKey];
-        Interface iface = (Interface)imeth.DeclaringType;
-        statements = new StatementList(2);
-        ParameterList parameters = meth.Parameters;
-        int k = parameters == null ? 0 : parameters.Count;
-        ExpressionList arguments = new ExpressionList(k);
-        if (parameters != null)
-          for (int j = 0; j < k; j++) arguments.Add(parameters[j]);
-        Expression obj = new BinaryExpression(new MemberBinding(meth.ThisParameter, valueField), new Literal(iface, CoreSystemTypes.Type), NodeType.Castclass);
-        MethodCall mcall = new MethodCall(new MemberBinding(obj, imeth), arguments, NodeType.Callvirt);
-        mcall.Type = imeth.ReturnType;
-        statements.Add(new ExpressionStatement(mcall));
-        statements.Add(new Return());
-        meth.Body = new Block(statements);
-      }
-    }
-  }
-  public class TypeUnion : Struct{
-    private TypeNodeList types; //sorted by UniqueKey
-    public TypeNodeList Types{
-      get{
-        if (this.types != null) return this.types;
-        if (this.ProvideTypeMembers != null) { MemberList mems = this.Members; if (mems != null) mems = null; }
-        return this.types;          
-      }
-      set{
-        this.types = value;
-      }
-    }
-
-    private TypeUnion(TypeNodeList types, Identifier tName){
-      this.NodeType = NodeType.TypeUnion;
-      this.Flags = TypeFlags.Public|TypeFlags.Sealed;
-      this.Namespace = StandardIds.StructuralTypes;
-      this.Name = tName;
-      this.Types = types;
-      this.Interfaces = new InterfaceList(SystemTypes.TypeUnion);
-      this.isNormalized = true;
-    }
-    internal TypeUnion(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(provideNestedTypes, provideAttributes, provideMembers, handle) {
-      this.NodeType = NodeType.TypeUnion;
-      this.typeCode = ElementType.ValueType;
-    }
-
-    internal static string/*!*/ BuildName(TypeNodeList types, string separator, ref TypeFlags visibility) {
-      int n = types == null ? 0 : types.Count;
-      if (n == 0) return "EmtpyUnion";
-      StringBuilder sb = new StringBuilder();
-      if (types != null)
-        for (int i = 0; i < n; i++){
-          TypeNode t = types[i];
-          if (t == null) continue;
-          visibility = TypeNode.GetVisibilityIntersection(visibility, t.Flags & TypeFlags.VisibilityMask);
-          sb.Append(t.Name.ToString());
-          if (i < n-1) sb.Append(separator);
-        }
-      return sb.ToString();
-    }
-    public static bool AreNormalized(TypeNodeList/*!*/ types) {
-      int id = 0;
-      for (int i = 0, n = types.Count; i < n; i++){
-        TypeNode type = types[i];
-        if (type == null) continue;
-        if (type.UniqueKey <= id || type is TypeUnion) return false;
-        id = type.UniqueKey;
-      }
-      return true;
-    }
-    public static TypeNodeList/*!*/ Normalize(TypeNodeList/*!*/ types) {
-      if (types.Count == 0) return types;
-      Hashtable ht = new Hashtable();
-      for (int i = 0, n = types.Count; i < n; i++){
-        TypeNode type = types[i];
-        if (type == null) continue; // error already reported.
-        TypeUnion tu = type as TypeUnion;
-        if (tu != null){
-          for (int ti = 0, tn = tu.Types.Count; ti < tn; ti++){
-            type = tu.Types[ti];
-            ht[type.UniqueKey] = type;
-          }
-        }else{
-          ht[type.UniqueKey] = type;
-        }
-      }
-      SortedList list = new SortedList(ht);
-      TypeNodeList result = new TypeNodeList(list.Count);
-      foreach (TypeNode t in list.Values)
-        result.Add(t);
-      return result;
-    }
-    public static TypeUnion For(TypeNodeList types, Module module) {
-      if (module == null) return null;   
-      if (types != null && !TypeUnion.AreNormalized(types))   
-        types = TypeUnion.Normalize(types);
-      TypeFlags visibility = TypeFlags.Public;
-      string name = TypeUnion.BuildName(types, "Or", ref visibility);
-      Identifier tName = Identifier.For(name);
-      int tCount = 0;
-      TypeUnion result = null;
-      TypeNode t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      while (t != null){
-        //Mangled name is the same. But mangling is not unique, so check for equality.
-        TypeUnion tu = t as TypeUnion;
-        if (tu != null){
-          TypeNodeList ts = tu.Types;
-          int n = types == null ? 0 : types.Count;
-          bool goodMatch = ts != null && ts.Count == n;
-          for (int i = 0; goodMatch && i < n; i++) {
-            //^ assert types != null && ts != null;
-            goodMatch = types[i] == ts[i];
-          }
-          if (goodMatch) return tu;
-        }
-        //Mangle some more
-        tName = Identifier.For(name+(++tCount).ToString());
-        t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      }
-      result = new TypeUnion(types, tName);
-      result.DeclaringModule = module;
-      module.Types.Add(result);
-      module.StructurallyEquivalentType[tName.UniqueIdKey] = result;
-      return result;
-    }
-    public static TypeUnion For(TypeNodeList/*!*/ types, TypeNode/*!*/ referringType) {
-      Module module = referringType.DeclaringModule;
-      if (module == null) return null;
-      if (!TypeUnion.AreNormalized(types))   
-        types = TypeUnion.Normalize(types);
-      TypeFlags visibility = TypeFlags.Public;
-      string name = TypeUnion.BuildName(types, "Or", ref visibility);
-      Identifier tName = Identifier.For(name);
-      int tCount = 0;
-      TypeUnion result = null;
-      TypeNode t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      while (t != null){
-        //Mangled name is the same. But mangling is not unique, so check for equality.
-        TypeUnion tu = t as TypeUnion;
-        if (tu != null){
-          TypeNodeList ts = tu.Types;
-          int n = types.Count;
-          bool goodMatch = ts != null && ts.Count == n;
-          for (int i = 0; goodMatch && i < n; i++) {
-            //^ assert ts != null;
-            goodMatch = types[i] == ts[i];
-          }
-          if (goodMatch) return tu;
-        }
-        //Mangle some more
-        tName = Identifier.For(name+(++tCount).ToString());
-        t = module.GetStructurallyEquivalentType(StandardIds.StructuralTypes, tName);
-      }
-      result = new TypeUnion(types, tName);
-      result.DeclaringModule = module;
-      switch (visibility){
-        case TypeFlags.NestedFamANDAssem:
-        case TypeFlags.NestedFamily:
-        case TypeFlags.NestedPrivate:
-          referringType.Members.Add(result);
-          result.DeclaringType = referringType;
-          result.Flags &= ~TypeFlags.VisibilityMask;
-          result.Flags |= TypeFlags.NestedPrivate;
-          break;
-        default:
-          module.Types.Add(result);
-          break;
-      }
-      module.StructurallyEquivalentType[tName.UniqueIdKey] = result;
-      return result;
-    }    
-    public override bool IsAssignableTo(TypeNode targetType){
-      return targetType == this || targetType == CoreSystemTypes.Object;
-    }
-    public override bool IsStructural{
-      get{return true;}
-    }
-    public override bool IsStructurallyEquivalentTo(TypeNode type){
-      if (type == null) return false;
-      if (this == type) return true;
-      TypeUnion t = type as TypeUnion;
-      if (t == null) return false;
-      return this.IsStructurallyEquivalentList(this.Types, t.Types);
-    }
-    protected TypeNodeList structuralElementTypes;
-    public override TypeNodeList StructuralElementTypes{
-      get{
-        TypeNodeList result = this.structuralElementTypes;
-        if (result != null) return result;
-        this.structuralElementTypes = result = new TypeNodeList(1);
-        TypeNodeList types = this.Types;
-        for (int i = 0, n = types == null ? 0 : types.Count; i < n; i++){
-          TypeNode t = types[i]; 
-          if (t == null) continue;
-          result.Add(t);
-        }
-        return result;
-      }
-    }
-    protected TypeUnion unlabeledUnion = null;
-    public virtual TypeUnion UnlabeledUnion{
-      get{
-        TypeUnion result = this.unlabeledUnion;
-        if (result != null) return result;
-        if (this.Types == null) return this.unlabeledUnion = this;
-        TypeNodeList types = this.Types.Clone();
-        bool noChange = true;
-        for (int i = 0, n = types.Count; i < n; i++){
-          TupleType tup = types[i] as TupleType;
-          if (tup != null && tup.Members != null && tup.Members.Count == 3 && tup.Members[0] is Field){
-            types[i] = ((Field)tup.Members[0]).Type;
-            noChange = false;
-          }
-        }
-        if (noChange) 
-          return this.unlabeledUnion = this;
-        else
-          return this.unlabeledUnion = new TypeUnion(types, Identifier.Empty);
-      }
-    }
-    public override MemberList Members{
-      get{
-        MemberList members = this.members;
-        if (members == null || this.membersBeingPopulated){
-          if (this.ProvideTypeMembers != null){
-            lock(this){
-              if (this.members != null) return this.members;
-              members = base.Members;
-              MemberList coercions = this.ExplicitCoercionMethods;
-              int n = coercions == null ? 0 : coercions.Count;
-              TypeNodeList typeList = this.Types = new TypeNodeList(n);
-              for (int i = 0; i < n; i++){
-                Method coercion = coercions[i] as Method;
-                if (coercion == null) continue;
-                typeList.Add(coercion.ReturnType);
-              }
-              return this.members;
-            }
-          }
-          members = this.Members = new MemberList();
-          //Value field
-          members.Add(new Field(this, null, FieldFlags.Private, StandardIds.Value, CoreSystemTypes.Object, null));
-          //Tag field
-          members.Add(new Field(this, null, FieldFlags.Private, StandardIds.Tag, CoreSystemTypes.UInt32, null));
-          //GetValue method (used to convert from subtype to supertype via FromObject on the superType)
-          ParameterList parameters = new ParameterList(0);
-          Method m = new Method(this, null, StandardIds.GetValue, parameters, CoreSystemTypes.Object, null);
-          m.Flags = MethodFlags.SpecialName|MethodFlags.Public; m.CallingConvention = CallingConventionFlags.HasThis;
-          members.Add(m);
-          //GetTag method (used in typeswitch)
-          parameters = new ParameterList(0);
-          m = new Method(this, null, StandardIds.GetTag, parameters, CoreSystemTypes.UInt32, null);
-          m.Flags = MethodFlags.SpecialName|MethodFlags.Public; m.CallingConvention = CallingConventionFlags.HasThis;
-          members.Add(m);
-          //GetTagAsType method (used to convert from subtype to supertype via FromObject on the superType)
-          parameters = new ParameterList(0);
-          m = new Method(this, null, StandardIds.GetTagAsType, parameters, CoreSystemTypes.Type, null);
-          m.Flags = MethodFlags.SpecialName|MethodFlags.Public; m.CallingConvention = CallingConventionFlags.HasThis;
-          members.Add(m);
-          //GetType
-          parameters = new ParameterList(0);
-          m = new Method(this, null, StandardIds.GetType, parameters, CoreSystemTypes.Type, null);
-          m.Flags = MethodFlags.Public; m.CallingConvention = CallingConventionFlags.HasThis;
-          members.Add(m);
-          //FromObject
-          parameters = new ParameterList(2);
-          parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, CoreSystemTypes.Object, null, null));
-          parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.TagType, CoreSystemTypes.Type, null, null));
-          m = new Method(this, null, StandardIds.FromObject, parameters, this, null); 
-          m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-          members.Add(m);
-          //coercion operators
-          TypeNodeList types = this.Types;
-          for (int i = 0, n = types.Count; i < n; i++){
-            TypeNode t = types[i];
-            parameters = new ParameterList(1);
-            parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, t, null, null));
-            m = new Method(this, null, StandardIds.opImplicit, parameters, this, null); 
-            m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-            members.Add(m);
-            parameters = new ParameterList(1);
-            parameters.Add(new Parameter(null, ParameterFlags.None, StandardIds.Value, this, null, null));
-            m = new Method(this, null, StandardIds.opExplicit, parameters, t, null); 
-            m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-            members.Add(m);
-          }
-          this.ProvideBodiesForMethods();
-        }
-        return members;
-      }
-      set{
-        this.members = value;
-      }
-    }
-    public void ProvideBodiesForMethods(){
-      Method objectGetType = CoreSystemTypes.Object.GetMethod(StandardIds.GetType);
-      Method typeGetTypeFromHandle = (Method)CoreSystemTypes.Type.GetMembersNamed(Identifier.For("GetTypeFromHandle"))[0];
-      Method typeGetTypeHandle = (Method)CoreSystemTypes.Type.GetMembersNamed(Identifier.For("get_TypeHandle"))[0];
-      Method runtimeTypeHandleGetValue = (Method)CoreSystemTypes.RuntimeTypeHandle.GetMembersNamed(Identifier.For("get_Value"))[0];
-      if (objectGetType == null || typeGetTypeFromHandle == null || typeGetTypeHandle == null || runtimeTypeHandleGetValue == null) {
-        Debug.Fail(""); return;
-      }
-      MemberList members = this.members;
-      if (members == null) return;
-      Field valueField = (Field)members[0];
-      Field tagField = (Field)members[1];
-      //GetValue
-      Method getValueMethod = (Method)members[2];
-      StatementList statements = new StatementList(1);
-      statements.Add(new Return(new MemberBinding(getValueMethod.ThisParameter, valueField)));
-      getValueMethod.Body = new Block(statements);
-      //GetTag
-      Method getTagMethod = (Method)members[3];
-      statements = new StatementList(1);
-      statements.Add(new Return(new MemberBinding(getTagMethod.ThisParameter, tagField)));
-      getTagMethod.Body = new Block(statements);
-      //GetTagAsType
-      Method getTagAsTypeMethod = (Method)members[4];
-      TypeNodeList types = this.Types;
-      int n = types.Count;
-      Block returnBlock = new Block();
-      statements = new StatementList(n+4);
-      getTagAsTypeMethod.Body = new Block(statements);
-      BlockList targets = new BlockList(n);
-      SwitchInstruction sw = new SwitchInstruction(new MemberBinding(getTagAsTypeMethod.ThisParameter, tagField), targets);
-      statements.Add(sw);
-      //TODO: throw an exception
-      statements.Add(new ExpressionStatement(new UnaryExpression(new Literal(CoreSystemTypes.Object, CoreSystemTypes.Type), NodeType.Ldtoken))); 
-      statements.Add(returnBlock);
-      for (int i = 0; i < n; i++){
-        TypeNode t = types[i];
-        StatementList ldToken = new StatementList(2);
-        ldToken.Add(new ExpressionStatement(new UnaryExpression(new Literal(t, CoreSystemTypes.Type), NodeType.Ldtoken)));
-        ldToken.Add(new Branch(null, returnBlock));
-        Block ldtokBlock = new Block(ldToken);
-        targets.Add(ldtokBlock);
-        statements.Add(ldtokBlock);
-      }
-      statements = returnBlock.Statements = new StatementList(1);
-      statements.Add(new Return(new MethodCall(new MemberBinding(null, typeGetTypeFromHandle), null)));
-      //GetType
-      Method getTypeMethod = (Method)members[5];
-      statements = new StatementList(4);
-      getTypeMethod.Body = new Block(statements);
-      MemberBinding mb = new MemberBinding(getTypeMethod.ThisParameter, valueField);
-      Local loc = new Local(CoreSystemTypes.Object);
-      statements.Add(new AssignmentStatement(loc, mb));
-      Block callGetTagAsType = new Block();
-      statements.Add(new Branch(new UnaryExpression(loc, NodeType.LogicalNot), callGetTagAsType));
-      statements.Add(new Return(new MethodCall(new MemberBinding(loc, objectGetType), null)));
-      statements.Add(callGetTagAsType);
-      statements.Add(new Return(new MethodCall(new MemberBinding(getTypeMethod.ThisParameter, getTagAsTypeMethod), null)));
-      //FromObject
-      Method fromObjectMethod = (Method)members[6];
-      fromObjectMethod.InitLocals = true;
-      statements = new StatementList(n+8); //TODO: get the right expression
-      fromObjectMethod.Body = new Block(statements);
-      MethodCall getTypeHandle = new MethodCall(new MemberBinding(fromObjectMethod.Parameters[1], typeGetTypeHandle), null, NodeType.Callvirt);
-      Local handle = new Local(Identifier.Empty, CoreSystemTypes.RuntimeTypeHandle);
-      statements.Add(new AssignmentStatement(handle, getTypeHandle));
-      MethodCall getValue = new MethodCall(new MemberBinding(new UnaryExpression(handle, NodeType.AddressOf), runtimeTypeHandleGetValue), null);
-      getValue.Type = CoreSystemTypes.UIntPtr; 
-      statements.Add(new ExpressionStatement(getValue));
-      Local temp = new Local(Identifier.Empty, CoreSystemTypes.UInt32);
-      Local result = new Local(Identifier.Empty, this);
-      Expression dup = new Expression(NodeType.Dup);
-      Block next = new Block();
-      Block curr = new Block();
-      Block setTag = new Block();
-      for (int i = 0; i < n; i++){
-        TypeNode t = types[i];
-        StatementList stats = curr.Statements = new StatementList(4);
-        UnaryExpression ldtok = new UnaryExpression(new Literal(t, CoreSystemTypes.Type), NodeType.Ldtoken);
-        stats.Add(new AssignmentStatement(handle, ldtok));
-        getValue = new MethodCall(new MemberBinding(new UnaryExpression(handle, NodeType.AddressOf), runtimeTypeHandleGetValue), null);
-        Expression compare = new BinaryExpression(dup, getValue, NodeType.Eq);
-        stats.Add(new Branch(compare, next));
-        stats.Add(new AssignmentStatement(temp, new Literal(i, CoreSystemTypes.UInt32)));
-        if (i < n-1)
-          stats.Add(new Branch(null, setTag));
-        statements.Add(curr);
-        curr = next;
-        next = new Block();
-      }
-      statements.Add(curr);
-      statements.Add(setTag);
-      statements.Add(new ExpressionStatement(new UnaryExpression(null, NodeType.Pop)));
-      Expression resultAddr = new UnaryExpression(result, NodeType.AddressOf);
-      statements.Add(new AssignmentStatement(new MemberBinding(resultAddr, tagField), temp));
-      statements.Add(new AssignmentStatement(new MemberBinding(resultAddr, valueField), fromObjectMethod.Parameters[0]));
-      statements.Add(new Return(result));
-      for (int i = 0; i < n; i++){
-        TypeNode t = types[i];
-        if (t == null) continue;
-        bool isValueType = t.IsValueType;
-        MemberBinding tExpr = new MemberBinding(null, t);
-        Method opImplicit = (Method)members[7+i*2];
-        opImplicit.Body = new Block(statements = new StatementList(3));
-        statements.Add(new AssignmentStatement(new MemberBinding(resultAddr, tagField), new Literal(i, CoreSystemTypes.UInt32)));
-        Parameter p0 = opImplicit.Parameters[0];
-        p0.Type = t;
-        Expression val = p0;
-        if (isValueType) val = new BinaryExpression(val, tExpr, NodeType.Box, CoreSystemTypes.Object);
-        statements.Add(new AssignmentStatement(new MemberBinding(resultAddr, valueField), val));
-        statements.Add(new Return(result));
-        Method opExplicit = (Method)members[8+i*2];
-        opExplicit.ReturnType = t;
-        opExplicit.Body = new Block(statements = new StatementList(1));
-        Expression loadValue = new MemberBinding(new UnaryExpression(opExplicit.Parameters[0], NodeType.AddressOf), valueField);
-        if (isValueType)
-          val = new AddressDereference(new BinaryExpression(loadValue, tExpr, NodeType.Unbox), t);
-        else
-          val = new BinaryExpression(loadValue, tExpr, NodeType.Castclass);
-        statements.Add(new Return(val));
-      }
-    }
-  }
-  /// <summary>
-  /// Bundles a type with a boolean expression. The bundle is a subtype of the given type.
-  /// The class is a struct with a single private field of the given type and implicit coercions to and from the underlying type.
-  /// The to coercion checks that the constraint is satisfied and throws ArgumentOutOfRangeException if not.
-  /// </summary>
-  public class ConstrainedType : Struct{
-    protected TypeNode underlyingType;
-    public TypeNode UnderlyingTypeExpression;
-    public Expression Constraint;
-    public ConstrainedType(TypeNode/*!*/ underlyingType, Expression/*!*/ constraint) {
-      this.NodeType = NodeType.ConstrainedType;
-      this.underlyingType = underlyingType;
-      this.Flags = TypeFlags.Public|TypeFlags.Sealed|TypeFlags.SpecialName;
-      this.Constraint = constraint;
-      this.Namespace = StandardIds.StructuralTypes;
-      this.Name = Identifier.For("Constrained type:"+base.UniqueKey);
-      this.Interfaces = new InterfaceList(SystemTypes.ConstrainedType);
-    }
-    public ConstrainedType(TypeNode/*!*/ underlyingType, Expression/*!*/ constraint, TypeNode/*!*/ declaringType) {
-      this.NodeType = NodeType.ConstrainedType;
-      this.underlyingType = underlyingType;
-      this.Flags = TypeFlags.NestedPublic|TypeFlags.Sealed|TypeFlags.SpecialName;
-      this.Constraint = constraint;
-      this.Namespace = StandardIds.StructuralTypes;
-      this.Name = Identifier.For("Constrained type:"+base.UniqueKey);
-      this.Interfaces = new InterfaceList(SystemTypes.ConstrainedType);
-      this.DeclaringType = declaringType;
-      this.DeclaringModule = declaringType.DeclaringModule;
-      declaringType.Members.Add(this);
-    }
-    internal ConstrainedType(NestedTypeProvider provideNestedTypes, TypeAttributeProvider provideAttributes, TypeMemberProvider provideMembers, object handle)
-      : base(provideNestedTypes, provideAttributes, provideMembers, handle) {
-      this.NodeType = NodeType.ConstrainedType;
-      this.typeCode = ElementType.ValueType;
-    }
-    public override bool IsStructural{
-      get{return true;}
-    }
-    protected TypeNodeList structuralElementTypes;
-    public override TypeNodeList StructuralElementTypes{
-      get{
-        TypeNodeList result = this.structuralElementTypes;
-        if (result != null) return result;
-        this.structuralElementTypes = result = new TypeNodeList(1);
-        result.Add(this.UnderlyingType);
-        return result;
-      }
-    }
-    public virtual void ProvideMembers(){
-      MemberList members = this.members = new MemberList();
-      //Value field
-      Field valueField = new Field(this, null, FieldFlags.Assembly, StandardIds.Value, this.underlyingType, null);
-      members.Add(valueField);
-      //Implicit conversion from this type to underlying type
-      ParameterList parameters = new ParameterList(1);
-      Parameter valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, this, null, null);
-      parameters.Add(valuePar);
-      Method toUnderlying = new Method(this, null, StandardIds.opImplicit, parameters, this.underlyingType, null); 
-      toUnderlying.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-      members.Add(toUnderlying);
-      //Implicit conversion from underlying type to this type
-      parameters = new ParameterList(1);
-      parameters.Add(valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, this.underlyingType, null, null));
-      Method fromUnderlying = new Method(this, null, StandardIds.opImplicit, parameters, this, null); 
-      fromUnderlying.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-      members.Add(fromUnderlying);
-      this.AddCoercionWrappers(this.UnderlyingType.ExplicitCoercionMethods, StandardIds.opExplicit, fromUnderlying, toUnderlying);
-      this.AddCoercionWrappers(this.UnderlyingType.ImplicitCoercionMethods, StandardIds.opImplicit, fromUnderlying, toUnderlying);
-    }
-    private void AddCoercionWrappers(MemberList/*!*/ coercions, Identifier/*!*/ id, Method/*!*/ fromUnderlying, Method/*!*/ toUnderlying) {
-      MemberList members = this.members;
-      for (int i = 0, n = coercions.Count; i < n; i++){
-        Method coercion = coercions[i] as Method;
-        if (coercion == null || coercion.Parameters == null || coercion.Parameters.Count != 1) continue;
-        ParameterList parameters = new ParameterList(1);
-        Parameter valuePar = new Parameter(null, ParameterFlags.None, StandardIds.Value, null, null, null);
-        parameters.Add(valuePar);
-        Method m = new Method(this, null, id, parameters, null, null);
-        m.Flags = MethodFlags.Static|MethodFlags.SpecialName|MethodFlags.Public;
-        Expression arg = valuePar;
-        MethodCall call = new MethodCall(new MemberBinding(null, coercion), new ExpressionList(arg));
-        if (coercion.ReturnType == this.UnderlyingType){
-          m.ReturnType = this;
-          valuePar.Type = coercion.Parameters[0].Type;
-          call = new MethodCall(new MemberBinding(null, fromUnderlying), new ExpressionList(call));
-        }else{
-          m.ReturnType = coercion.ReturnType;
-          valuePar.Type = this;
-          call.Operands[0] = new MethodCall(new MemberBinding(null, toUnderlying), new ExpressionList(arg));
-        }
-        m.Body = new Block(new StatementList(new Return(call)));
-        members.Add(m);
-      }
-    }
-    public void ProvideBodiesForMethods(){
-      MemberList members = this.members;
-      if (members == null) return;
-      Field valueField = (Field)members[0];
-      //Implicit conversion from this type to underlying type
-      Method toUnderlying = (Method)members[1];
-      Parameter valuePar = toUnderlying.Parameters[0];
-      StatementList statements = new StatementList(1);
-      statements.Add(new Return(new MemberBinding(new UnaryExpression(valuePar, NodeType.AddressOf), valueField)));
-      toUnderlying.Body = new Block(statements);
-      //Implicit conversion from underlying type to this type
-      Method fromUnderlying = (Method)members[2];
-      valuePar = fromUnderlying.Parameters[0];
-      statements = new StatementList(4);
-      fromUnderlying.Body = new Block(statements);
-      Block succeed = new Block();
-      Local temp = new Local(Identifier.Empty, this);
-      statements.Add(new Branch(this.Constraint, succeed));
-      InstanceInitializer constr = SystemTypes.ArgumentOutOfRangeException.GetConstructor();
-      if (constr == null) { Debug.Fail(""); return; }
-      MemberBinding argException = new MemberBinding(null, constr);
-      statements.Add(new Throw(new Construct(argException, null)));
-      statements.Add(succeed);
-      statements.Add(new AssignmentStatement(new MemberBinding(new UnaryExpression(temp, NodeType.AddressOf), valueField), valuePar));
-      statements.Add(new Return(temp));
-    }
-    public TypeNode UnderlyingType{
-      get{
-        TypeNode underlyingType = this.underlyingType;
-        if (underlyingType == null){
-          Field f = this.GetField(StandardIds.Value);
-          if (f != null)
-            this.underlyingType = underlyingType = f.Type;
-        }
-        return underlyingType;
-      }
-      set{
-        this.underlyingType = value;
-      }
-    }
-  }
-#endif
   public abstract class TypeModifier : TypeNode{
     private TypeNode/*!*/ modifier;
     private TypeNode/*!*/ modifiedType;
-#if !MinimalReader
     public TypeNode ModifierExpression;
     public TypeNode ModifiedTypeExpression;
-#endif
     internal TypeModifier(NodeType type, TypeNode/*!*/ modifier, TypeNode/*!*/ modified)
       : base(type){
       this.modifier = modifier;
@@ -14723,12 +10188,6 @@ namespace System.Compiler{
       }
     }
 
-#if ExtendedRuntime
-    public override bool IsPointerFree
-    {
-      get { return this.ModifiedType.IsPointerFree; }
-    }
-#endif
     public override bool IsReferenceType
     {
       get
@@ -14753,17 +10212,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#if FxCop
-    internal override void GetName(TypeFormat options, StringBuilder name)
-    {
-      if (options.ShowTypeModifiers)
-      {
-        base.GetName(options, name);
-        return;
-      }
-      this.modifiedType.GetName(options, name);
-    }
-#endif
   }
   public class OptionalModifier : TypeModifier{
     internal OptionalModifier(TypeNode/*!*/ modifier, TypeNode/*!*/ modified)
@@ -14773,13 +10221,11 @@ namespace System.Compiler{
       if (modified == null || modifier == null) return null;
       return (OptionalModifier)modified.GetModified(modifier, true);
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       this.ModifiedType.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
       sb.Append('!');
       this.Modifier.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
     }
-#endif
   }
   public class RequiredModifier : TypeModifier{
     internal RequiredModifier(TypeNode/*!*/ modifier, TypeNode/*!*/ modified)
@@ -14788,15 +10234,12 @@ namespace System.Compiler{
     public static RequiredModifier/*!*/ For(TypeNode/*!*/ modifier, TypeNode/*!*/ modified) {
       return (RequiredModifier)modified.GetModified(modifier, false);
     }
-#if !NoXml
     internal override void AppendDocumentIdMangledName(StringBuilder/*!*/ sb, TypeNodeList methodTypeParameters, TypeNodeList typeParameters) {
       this.ModifiedType.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
       sb.Append('|');
       this.Modifier.AppendDocumentIdMangledName(sb, methodTypeParameters, typeParameters);
     }
-#endif
   }
-#if !MinimalReader
   public class OptionalModifierTypeExpression : TypeNode, ISymbolicTypeReference{
     public TypeNode ModifiedType;
     public TypeNode Modifier;
@@ -14844,7 +10287,6 @@ namespace System.Compiler{
     }
 
   }
-#endif  
   public class FunctionPointer : TypeNode{
     internal FunctionPointer(TypeNodeList parameterTypes, TypeNode/*!*/ returnType, Identifier name)
       : base(NodeType.FunctionPointer){
@@ -14952,7 +10394,6 @@ namespace System.Compiler{
   }
   public interface ISymbolicTypeReference{
   }
-#if !MinimalReader
   public class ArrayTypeExpression : ArrayType, ISymbolicTypeReference{
     //TODO: add expressions for elementType, rank, sizes and lowerbounds
     public bool LowerBoundIsUnknown;
@@ -15014,7 +10455,6 @@ namespace System.Compiler{
       this.SourceContext = sctx;
     }
   }
-#endif
   public class InterfaceExpression : Interface, ISymbolicTypeReference{
     private Expression expression;
     public InterfaceExpression(Expression expression)
@@ -15022,20 +10462,17 @@ namespace System.Compiler{
       this.NodeType = NodeType.InterfaceExpression;
       this.Expression = expression;
     }
-#if !MinimalReader
     public InterfaceExpression(Expression expression, SourceContext sctx)
       : base(null){
       this.NodeType = NodeType.InterfaceExpression;
       this.Expression = expression;
       this.SourceContext = sctx;
     }
-#endif
     public Expression Expression{
       get{return this.expression;}
       set{this.expression = value;}
     }
   }
-#if !MinimalReader
   public class FlexArrayTypeExpression : TypeNode, ISymbolicTypeReference{
     public TypeNode ElementType;
     public FlexArrayTypeExpression(TypeNode elementType)
@@ -15325,239 +10762,7 @@ namespace System.Compiler{
     }
 
   }
-#endif
-#if ExtendedRuntime
-  public delegate Expression Coercer(Expression source, TypeNode targetType, TypeViewer typeViewer);
-  public sealed class StreamAdapter{
-    private StreamAdapter(){}
-    public static TypeNode For(Interface/*!*/ sourceStream, Interface/*!*/ targetStream, Module/*!*/ module, Coercer/*!*/ coercer, SourceContext sctx) {
-      return StreamAdapter.For(sourceStream, targetStream, null, module, coercer, sctx);
-    }
-    public static TypeNode For(Interface /*!*/sourceStream, Interface/*!*/ targetStream, TypeNode/*!*/ referringType, Coercer/*!*/ coercer, SourceContext sctx) {
-      if (referringType == null){Debug.Assert(false); return null;}
-      return StreamAdapter.For(sourceStream, targetStream, referringType, referringType.DeclaringModule, coercer, sctx);
-    }
-    public static TypeNode For(Interface/*!*/ sourceStream, Interface/*!*/ targetStream, TypeNode referringType, Module/*!*/ module, Coercer/*!*/ coercer, SourceContext sctx) {
-      Debug.Assert(sourceStream.Template == SystemTypes.GenericIEnumerable && targetStream.Template == SystemTypes.GenericIEnumerable);
-      Identifier id = Identifier.For("AdapterFor" + sourceStream.Name + "To" + targetStream.Name);
-      for (int i = 1; ;i++){
-        TypeNode t = module.GetStructurallyEquivalentType(targetStream.Namespace, id);
-        if (t == null) break;
-        if (t.IsAssignableTo(targetStream)){
-          InstanceInitializer cons = t.GetConstructor(sourceStream);
-          if (cons != null) return t;
-        }
-        id = Identifier.For(id.ToString()+i);
-      }
-      Method sGetEnumerator = sourceStream.GetMethod(StandardIds.GetEnumerator);
-      Method tGetEnumerator = targetStream.GetMethod(StandardIds.GetEnumerator);
-      if (sGetEnumerator == null || tGetEnumerator == null) { Debug.Fail(""); return null; }
-      Interface sGetEnumeratorReturnType = (Interface)TypeNode.StripModifiers(sGetEnumerator.ReturnType);
-      Interface tGetEnumeratorReturnType = (Interface)TypeNode.StripModifiers(tGetEnumerator.ReturnType);
-      //^ assert sGetEnumeratorReturnType != null && tGetEnumeratorReturnType != null;
-      TypeNode enumeratorAdapter = null;
-      if (referringType != null)
-        enumeratorAdapter = EnumeratorAdapter.For(id, sGetEnumeratorReturnType, tGetEnumeratorReturnType, referringType, coercer, sctx);
-      else
-        enumeratorAdapter = EnumeratorAdapter.For(id, sGetEnumeratorReturnType, tGetEnumeratorReturnType, module, coercer, sctx);
-      if (enumeratorAdapter == null) return null;
-      InterfaceList interfaces = new InterfaceList(targetStream);
-      MemberList members = new MemberList(3);
-      Class adapter = new Class(module, null, null, TypeFlags.Sealed, targetStream.Namespace, id, CoreSystemTypes.Object, interfaces, members);
-      adapter.IsNormalized = true;
-      if (referringType == null ||
-      (sourceStream.Flags & TypeFlags.VisibilityMask) == TypeFlags.Public && (targetStream.Flags & TypeFlags.VisibilityMask) == TypeFlags.Public){
-        adapter.Flags |= TypeFlags.Public;
-        module.Types.Add(adapter);
-      }else{
-        adapter.Flags |= TypeFlags.NestedPrivate;
-        referringType.Members.Add(adapter);
-        adapter.DeclaringType = referringType;
-      }
-      module.StructurallyEquivalentType[id.UniqueIdKey] = adapter;
-
-      //Field to hold source stream
-      Field ssField = new Field(adapter, null, FieldFlags.Private, StandardIds.Value, sourceStream, null);
-      members.Add(ssField);
-
-      //Constructor
-      This ThisParameter = new This(adapter);
-      Parameter par = new Parameter(null, ParameterFlags.None, StandardIds.Value, sourceStream, null, null);
-      StatementList statements = new StatementList(3);
-      InstanceInitializer cstr = CoreSystemTypes.Object.GetConstructor();
-      if (cstr == null) { Debug.Fail(""); return adapter; }
-      MethodCall mcall = new MethodCall(new MemberBinding(ThisParameter, cstr), new ExpressionList(0), NodeType.Call, CoreSystemTypes.Void);
-      statements.Add(new ExpressionStatement(mcall));
-      statements.Add(new AssignmentStatement(new MemberBinding(ThisParameter, ssField), par));
-      statements.Add(new Return());
-      InstanceInitializer acons = new InstanceInitializer(adapter, null, new ParameterList(par), new Block(statements));
-      acons.Flags |= MethodFlags.Public;
-      acons.ThisParameter = ThisParameter;
-      members.Add(acons);
-
-      //GetEnumerator
-      ThisParameter = new This(adapter);
-      statements = new StatementList(1);
-      mcall = new MethodCall(new MemberBinding(new MemberBinding(ThisParameter, ssField), sGetEnumerator),
-        new ExpressionList(0), NodeType.Callvirt, sGetEnumerator.ReturnType);
-      cstr = enumeratorAdapter.GetConstructor(sGetEnumerator.ReturnType);
-      if (cstr == null) { Debug.Fail(""); return adapter; }
-      Construct constr = new Construct(new MemberBinding(null, cstr), new ExpressionList(mcall));
-      statements.Add(new Return(constr));
-      Method getEnumerator = new Method(adapter, null, StandardIds.GetEnumerator, null, tGetEnumerator.ReturnType, new Block(statements));
-      getEnumerator.Flags = MethodFlags.Public | MethodFlags.Virtual | MethodFlags.NewSlot | MethodFlags.HideBySig;
-      getEnumerator.CallingConvention = CallingConventionFlags.HasThis;
-      getEnumerator.ThisParameter = ThisParameter;
-      members.Add(getEnumerator);
-
-      //IEnumerable.GetEnumerator
-      Method ieGetEnumerator = SystemTypes.IEnumerable.GetMethod(StandardIds.GetEnumerator);
-      if (ieGetEnumerator == null) { Debug.Fail(""); return adapter; }
-      ThisParameter = new This(adapter);
-      statements = new StatementList(1);
-      mcall = new MethodCall(new MemberBinding(new MemberBinding(ThisParameter, ssField), ieGetEnumerator),
-        new ExpressionList(0), NodeType.Callvirt, SystemTypes.IEnumerator);
-      statements.Add(new Return(mcall));
-      getEnumerator = new Method(adapter, null, StandardIds.IEnumerableGetEnumerator, null, SystemTypes.IEnumerator, new Block(statements));
-      getEnumerator.ThisParameter = ThisParameter;
-      getEnumerator.ImplementedInterfaceMethods = new MethodList(ieGetEnumerator);
-      getEnumerator.CallingConvention = CallingConventionFlags.HasThis;
-      getEnumerator.Flags = MethodFlags.Private | MethodFlags.Virtual | MethodFlags.SpecialName;
-      members.Add(getEnumerator);
-
-      return adapter;
-    }
-  }
-  internal sealed class EnumeratorAdapter{
-    private EnumeratorAdapter(){}
-    internal static TypeNode For(Identifier/*!*/ id, Interface/*!*/ sourceIEnumerator, Interface/*!*/ targetIEnumerator, Module/*!*/ module, Coercer/*!*/ coercer, SourceContext sctx) {
-      return EnumeratorAdapter.For(id, sourceIEnumerator, targetIEnumerator, null, module, coercer, sctx);
-    }
-    internal static TypeNode For(Identifier/*!*/ id, Interface/*!*/ sourceIEnumerator, Interface/*!*/ targetIEnumerator, TypeNode/*!*/ referringType, Coercer/*!*/ coercer, SourceContext sctx) {
-      if (referringType == null){Debug.Assert(false); return null;}
-      return EnumeratorAdapter.For(id, sourceIEnumerator, targetIEnumerator, referringType, referringType.DeclaringModule, coercer, sctx);
-    }
-    private static TypeNode For(Identifier/*!*/ id, Interface/*!*/ sourceIEnumerator, Interface/*!*/ targetIEnumerator, TypeNode referringType, Module/*!*/ module, Coercer/*!*/ coercer, SourceContext sctx) {
-      Method sGetCurrent = sourceIEnumerator.GetMethod(StandardIds.getCurrent);
-      if (sGetCurrent == null) { Debug.Fail(""); return null; }
-      Method sMoveNext = sourceIEnumerator.GetMethod(StandardIds.MoveNext);
-      if (sMoveNext == null) sMoveNext = SystemTypes.IEnumerator.GetMethod(StandardIds.MoveNext);
-      Method tGetCurrent = targetIEnumerator.GetMethod(StandardIds.getCurrent);
-      if (tGetCurrent == null) { Debug.Fail(""); return null; }
-      Method tMoveNext = targetIEnumerator.GetMethod(StandardIds.MoveNext);
-      if (tMoveNext == null) tMoveNext = SystemTypes.IEnumerator.GetMethod(StandardIds.MoveNext);
-      Local loc = new Local(sGetCurrent.ReturnType);
-      Expression curr = coercer(loc, tGetCurrent.ReturnType, null);
-      if (curr == null) return null;
-      id = Identifier.For("Enumerator"+id.ToString());
-      InterfaceList interfaces = new InterfaceList(targetIEnumerator, SystemTypes.IDisposable);
-      MemberList members = new MemberList(5);
-      Class adapter = new Class(module, null, null, TypeFlags.Public, targetIEnumerator.Namespace, id, CoreSystemTypes.Object, interfaces, members);
-      adapter.IsNormalized = true;
-      if (referringType == null ||
-      (sourceIEnumerator.Flags & TypeFlags.VisibilityMask) == TypeFlags.Public && (targetIEnumerator.Flags & TypeFlags.VisibilityMask) == TypeFlags.Public){
-        adapter.Flags |= TypeFlags.Public;
-        module.Types.Add(adapter);
-      }else{
-        adapter.Flags |= TypeFlags.NestedPrivate;
-        referringType.Members.Add(adapter);
-        adapter.DeclaringType = referringType;
-      }
-      //Field to hold source enumerator
-      Field seField = new Field(adapter, null, FieldFlags.Private, StandardIds.Value, sourceIEnumerator, null);
-      members.Add(seField);
-
-      //Constructor
-      Parameter par = new Parameter(null, ParameterFlags.None, StandardIds.Value, sourceIEnumerator, null, null);
-      StatementList statements = new StatementList(3);
-      This ThisParameter = new This(adapter);
-      InstanceInitializer constr = CoreSystemTypes.Object.GetConstructor();
-      if (constr == null) { Debug.Fail(""); return null; }
-      MethodCall mcall = new MethodCall(new MemberBinding(ThisParameter, constr),
-        new ExpressionList(0), NodeType.Call, CoreSystemTypes.Void);
-      statements.Add(new ExpressionStatement(mcall));
-      statements.Add(new AssignmentStatement(new MemberBinding(ThisParameter, seField), par));
-      statements.Add(new Return());
-      InstanceInitializer acons = new InstanceInitializer(adapter, null, new ParameterList(par), new Block(statements));
-      acons.Flags |= MethodFlags.Public;
-      acons.ThisParameter = ThisParameter;
-      members.Add(acons);
-
-      //get_Current
-      statements = new StatementList(2);
-      ThisParameter = new This(adapter);
-      mcall = new MethodCall(new MemberBinding(new MemberBinding(ThisParameter, seField), sGetCurrent),
-        new ExpressionList(0), NodeType.Callvirt, sGetCurrent.ReturnType);
-      mcall.SourceContext = sctx;
-      statements.Add(new AssignmentStatement(loc, mcall));
-      statements.Add(new Return(curr));
-      Method getCurrent = new Method(adapter, null, StandardIds.getCurrent, null, tGetCurrent.ReturnType, new Block(statements));
-      getCurrent.Flags = MethodFlags.Public | MethodFlags.Virtual | MethodFlags.NewSlot | MethodFlags.HideBySig | MethodFlags.SpecialName;
-      getCurrent.CallingConvention = CallingConventionFlags.HasThis;
-      getCurrent.ThisParameter = ThisParameter;
-      members.Add(getCurrent);
-
-      //IEnumerator.GetCurrent
-      statements = new StatementList(1);
-      ThisParameter = new This(adapter);
-      MethodCall callGetCurrent = new MethodCall(new MemberBinding(ThisParameter, getCurrent), new ExpressionList(0), NodeType.Call, getCurrent.ReturnType);
-      if (getCurrent.ReturnType.IsValueType) {
-        MemberBinding etExpr = new MemberBinding(null, getCurrent.ReturnType);
-        statements.Add(new Return(new BinaryExpression(callGetCurrent, etExpr, NodeType.Box, CoreSystemTypes.Object)));
-      }else
-        statements.Add(new Return(callGetCurrent));
-      Method ieGetCurrent = new Method(adapter, null, StandardIds.IEnumeratorGetCurrent, null, CoreSystemTypes.Object, new Block(statements));
-      ieGetCurrent.ThisParameter = ThisParameter;
-      ieGetCurrent.ImplementedInterfaceMethods = new MethodList(SystemTypes.IEnumerator.GetMethod(StandardIds.getCurrent));
-      ieGetCurrent.CallingConvention = CallingConventionFlags.HasThis;
-      ieGetCurrent.Flags = MethodFlags.Private | MethodFlags.Virtual | MethodFlags.SpecialName;
-      members.Add(ieGetCurrent);
-
-      //IEnumerator.Reset
-      Method ieReset = SystemTypes.IEnumerator.GetMethod(StandardIds.Reset);
-      if (ieReset == null) { Debug.Fail(""); return null; }
-      statements = new StatementList(2);
-      ThisParameter = new This(adapter);
-      MethodCall callSourceReset = new MethodCall(new MemberBinding(ThisParameter, ieReset), new ExpressionList(0), NodeType.Callvirt, CoreSystemTypes.Object);
-      statements.Add(new ExpressionStatement(callSourceReset));
-      statements.Add(new Return());
-      Method reset = new Method(adapter, null, StandardIds.IEnumeratorReset, null, CoreSystemTypes.Void, new Block(statements));
-      reset.ThisParameter = ThisParameter;
-      reset.ImplementedInterfaceMethods = new MethodList(ieReset);
-      reset.CallingConvention = CallingConventionFlags.HasThis;
-      reset.Flags = MethodFlags.Private | MethodFlags.Virtual | MethodFlags.SpecialName;
-      members.Add(reset);
-
-      //MoveNext
-      if (sMoveNext == null) { Debug.Fail(""); return null; }
-      statements = new StatementList(1);
-      ThisParameter = new This(adapter);
-      mcall = new MethodCall(new MemberBinding(new MemberBinding(ThisParameter, seField), sMoveNext),
-        new ExpressionList(0), NodeType.Callvirt, CoreSystemTypes.Boolean);
-      statements.Add(new Return(mcall));
-      Method moveNext = new Method(adapter, null, StandardIds.MoveNext, null, CoreSystemTypes.Boolean, new Block(statements));
-      moveNext.Flags = MethodFlags.Public | MethodFlags.Virtual | MethodFlags.NewSlot | MethodFlags.HideBySig;
-      moveNext.CallingConvention = CallingConventionFlags.HasThis;
-      moveNext.ThisParameter = ThisParameter;
-      members.Add(moveNext);
-
-      //IDispose.Dispose
-      statements = new StatementList(1);
-      //TODO: call Dispose on source enumerator
-      statements.Add(new Return());
-      Method dispose = new Method(adapter, null, StandardIds.Dispose, null, CoreSystemTypes.Void, new Block(statements));
-      dispose.CallingConvention = CallingConventionFlags.HasThis;
-      dispose.Flags = MethodFlags.Public | MethodFlags.Virtual;
-      adapter.Members.Add(dispose);
-      return adapter;
-    }
-  }
-#endif
-#if FxCop
-  public class EventNode : Member{
-#else
   public class Event : Member{
-#endif
     private EventFlags flags;
     private Method handlerAdder;
     private Method handlerCaller;
@@ -15565,7 +10770,6 @@ namespace System.Compiler{
     private Method handlerRemover;
     private TypeNode handlerType;
     private MethodList otherMethods;
-#if !MinimalReader
     public TypeNode HandlerTypeExpression;
     /// <summary>The list of types (just one in C#) that contain abstract or virtual events that are explicity implemented or overridden by this event.</summary>
     public TypeNodeList ImplementedTypes;
@@ -15573,15 +10777,9 @@ namespace System.Compiler{
     /// <summary>Provides a delegate instance that is added to the event upon initialization.</summary>
     public Expression InitialHandler;
     public Field BackingField;
-#endif
-#if FxCop
-    public EventNode()
-#else
     public Event()
-#endif
       : base(NodeType.Event){
     }
-#if !MinimalReader
     public Event(TypeNode declaringType, AttributeList attributes, EventFlags flags, Identifier name, 
       Method handlerAdder, Method handlerCaller, Method handlerRemover, TypeNode handlerType)
       : base(declaringType, attributes, name, NodeType.Event){
@@ -15591,7 +10789,6 @@ namespace System.Compiler{
       this.HandlerRemover = handlerRemover;
       this.HandlerType = handlerType;
     }
-#endif
     /// <summary>Bits characterizing this event.</summary>
     public EventFlags Flags{
       get{return this.flags;}
@@ -15634,7 +10831,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#if !NoXml
     protected override Identifier GetDocumentationId(){
       StringBuilder sb = new StringBuilder();
       sb.Append("E:");
@@ -15645,8 +10841,6 @@ namespace System.Compiler{
       sb.Append(this.Name.Name);
       return Identifier.For(sb.ToString());
     }
-#endif
-#if !NoReflection
     public static Event GetEvent(System.Reflection.EventInfo eventInfo){
       if (eventInfo == null) return null;
       TypeNode tn = TypeNode.GetTypeNode(eventInfo.DeclaringType);
@@ -15667,7 +10861,6 @@ namespace System.Compiler{
       }
       return this.eventInfo;
     }
-#endif
     /// <summary>
     /// True if the methods constituting this event are abstract.
     /// </summary>
@@ -15806,16 +10999,8 @@ namespace System.Compiler{
         this.overriddenMember = value;
       }
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      base.GetName(options, name);
-      Method.AppendReturnType(options.ReturnType, this.HandlerType, name);
-    }
-#endif
   }
 
-#if ExtendedRuntime || CodeContracts
   public abstract class MethodContractElement : Node{
     protected MethodContractElement(NodeType nodeType)
       : base(nodeType){
@@ -15827,13 +11012,10 @@ namespace System.Compiler{
     public SourceContext DefSite;
     public bool UsesModels;
     public bool Inherited;
-#if !FxCop && ILOFFSETS
     public int ILOffset;
     // a string that a user wants associated with a particular element
     public Expression UserMessage;
     public Literal SourceConditionText;
-
-#endif
     public abstract Expression Assertion { get; }
   }
   public abstract class Requires : MethodContractElement {
@@ -15861,9 +11043,8 @@ namespace System.Compiler{
     public virtual bool IsWithException
     {
       get {
-#if CLOUSOT
         Contract.Ensures(!Contract.Result<bool>() || this.ExceptionType != null);
-#endif
+
         return this.ExceptionType != null; 
       }
     }
@@ -15945,11 +11126,6 @@ namespace System.Compiler{
     }
   }
 
-#if !CodeContracts
-  public class ContractDeserializerContainer{
-    public static IContractDeserializer ContractDeserializer;
-  }
-#endif
   public class MethodContract : Node{
     public Method/*!*/ DeclaringMethod;
     public Method/*!*/ OriginalDeclaringMethod;
@@ -15977,46 +11153,6 @@ namespace System.Compiler{
     protected internal bool? isPure;
     protected internal EnsuresList asyncEnsures;
 
-#if ExtendedRuntime
-    private static SourceContext SetContext(string/*!*/ filename, int startLine, int startCol, int endLine, int endCol, string/*!*/ sourceText) {
-      SourceContext context;
-      context.Document = new DocumentWithPrecomputedLineNumbers(filename, startLine, startCol, endLine, endCol);
-      context.StartPos = 0;
-      context.EndPos = sourceText.Length;
-      context.Document.Text = new DocumentText(sourceText);
-      context.Document.Text.Length = sourceText.Length;
-      return context;
-    }
-    public static SourceContext GetSourceContext(AttributeNode/*!*/ attr) {
-      string filename = "";
-      int startLine = 0;
-      int startCol = 0;
-      int endLine = 0;
-      int endCol = 0;
-      string sourceText = "";
-      if (attr.Expressions != null) {
-        for (int expIndex = 1, expLen = attr.Expressions.Count; expIndex < expLen; expIndex++) {
-          NamedArgument na = attr.Expressions[expIndex] as NamedArgument;
-          if (na == null || na.Name == null) continue;
-          Literal lit = na.Value as Literal;
-          if (lit == null) continue;
-          switch (na.Name.Name) {
-            case "Filename":
-            case "FileName":
-              filename = (string)lit.Value; break;
-            case "StartColumn": startCol = (int)lit.Value; break;
-            case "StartLine": startLine = (int)lit.Value; break;
-            case "EndColumn": endCol = (int)lit.Value; break;
-            case "EndLine": endLine = (int)lit.Value; break;
-            case "SourceText": sourceText = (string)lit.Value; break;
-            default: break;
-          }
-        }
-      }
-      SourceContext ctx = SetContext(filename, startLine, startCol, endLine, endCol,sourceText);
-      return ctx;
-    }
-#endif
     public Block ContractInitializer
     {
       get
@@ -16043,10 +11179,9 @@ namespace System.Compiler{
     {
       get
       {
-#if CLOUSOT
         Contract.Ensures(Contract.Result<int>() == 0 || this.Requires != null);
         Contract.Ensures(this.Requires == null || Contract.Result<int>() == this.Requires.Count);
-#endif
+
         var reqs = this.Requires;
         if (reqs == null) return 0;
         return reqs.Count;
@@ -16056,10 +11191,9 @@ namespace System.Compiler{
     {
       get
       {
-#if CLOUSOT
         Contract.Ensures(Contract.Result<int>() == 0 || this.Ensures != null);
         Contract.Ensures(this.Ensures == null || Contract.Result<int>() == this.Ensures.Count);
-#endif
+
         var ens = this.Ensures;
         if (ens == null) return 0;
         return ens.Count;
@@ -16067,10 +11201,9 @@ namespace System.Compiler{
     }
     public int ModelEnsuresCount {
       get {
-#if CLOUSOT
         Contract.Ensures(Contract.Result<int>() == 0 || this.ModelEnsures != null);
         Contract.Ensures(this.ModelEnsures == null || Contract.Result<int>() == this.ModelEnsures.Count);
-#endif
+
         var ens = this.ModelEnsures;
         if (ens == null) return 0;
         return ens.Count;
@@ -16080,10 +11213,9 @@ namespace System.Compiler{
     {
         get
         {
-#if CLOUSOT
         Contract.Ensures(Contract.Result<int>() == 0 || this.AsyncEnsures != null);
         Contract.Ensures(this.AsyncEnsures == null || Contract.Result<int>() == this.AsyncEnsures.Count);
-#endif
+
             var ens = this.AsyncEnsures;
             if (ens == null) return 0;
             return ens.Count;
@@ -16129,50 +11261,7 @@ namespace System.Compiler{
     }
     public RequiresList Requires{
       get{
-#if CodeContracts
         return this.requires;
-#else
-        if (this.requires != null) return this.requires;
-        RequiresList rs = this.requires = new RequiresList();
-        if (this.DeclaringMethod != null){
-          AttributeList attributes = this.DeclaringMethod.Attributes;
-          if (attributes == null || attributes.Count == 0) return rs;
-          IContractDeserializer ds = Cci.ContractDeserializerContainer.ContractDeserializer;
-          if (ds != null){
-            TypeNode t = this.DeclaringMethod.DeclaringType;
-            Module savedCurrentAssembly = ds.CurrentAssembly;
-            ds.CurrentAssembly = t == null ? null : t.DeclaringModule;
-            for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++){
-              AttributeNode attr = attributes[i];
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb != null){
-                if (mb.BoundMember == null) continue;
-                if (mb.BoundMember.DeclaringType != SystemTypes.RequiresAttribute) continue;
-                if (attr.Expressions == null || !(attr.Expressions.Count > 0)) continue;
-
-                Literal l = attr.Expressions[0] as Literal;
-                if (l == null) continue;
-                string s = (string) l.Value;
-                Expression e = null;
-                try {
-                  e = ds.ParseContract(this,s,null);
-                } catch {
-                  continue; //return this.requires = new RequiresList();
-                }
-                if (e != null){
-                  RequiresPlain rp = new RequiresPlain(e);
-                  SourceContext ctx = MethodContract.GetSourceContext(attr);
-                  e.SourceContext = ctx;
-                  rs.Add(rp);
-                }
-              }
-            }
-            ds.CurrentAssembly = savedCurrentAssembly;
-          }
-        }
-        return this.requires;
-#endif
       }
       set{
         this.requires = value;
@@ -16180,82 +11269,7 @@ namespace System.Compiler{
     }
     public EnsuresList Ensures{
       get{
-#if CodeContracts
         return this.ensures;
-#else
-        if (this.ensures != null) return this.ensures;
-        EnsuresList es = this.ensures = new EnsuresList();
-        if (this.DeclaringMethod != null){
-          AttributeList attributes = this.DeclaringMethod.Attributes;
-          if (attributes == null || attributes.Count == 0) return es;
-          IContractDeserializer ds = Cci.ContractDeserializerContainer.ContractDeserializer;
-          if (ds != null){
-            TypeNode t = this.DeclaringMethod.DeclaringType;
-            Module savedCurrentAssembly = ds.CurrentAssembly;
-            ds.CurrentAssembly = t == null ? null : t.DeclaringModule;
-            for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++){
-              AttributeNode attr = attributes[i];
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb != null){
-                if (mb.BoundMember == null) continue;
-                if (mb.BoundMember.DeclaringType == SystemTypes.ThrowsAttribute) {
-                  EnsuresExceptional ee = null;
-                  Literal eeType = attr.Expressions[0] as Literal;
-                  if (eeType == null) continue;
-                  if (eeType.Type == SystemTypes.Type) {
-                    TypeNode tn = (TypeNode)eeType.Value;
-                    ee = new EnsuresExceptional();
-                    ee.Type = tn;
-                    es.Add(ee);
-                  }
-                  if (ee != null && attr.Expressions.Count > 1) {
-                    Literal eeCondition = attr.Expressions[1] as Literal;
-                    if (eeCondition != null) {
-                      string eeString = (string)eeCondition.Value;
-                      Expression deserializedEECondition = null;
-                      try {
-                        deserializedEECondition = ds.ParseContract(this, eeString, null);
-                        Comprehension cmp = deserializedEECondition as Comprehension;
-                        if (cmp != null) {
-                          // See notes in Serializer for how this is represented
-                          ComprehensionBinding cmpB = (ComprehensionBinding)cmp.BindingsAndFilters[0];
-                          ee.Variable = cmpB.TargetVariable;
-                          ee.PostCondition = cmp.Elements[0];
-                        } else {
-                          ee.PostCondition = deserializedEECondition;
-                        }
-                        SourceContext eeSourceContext = MethodContract.GetSourceContext(attr);
-                        ee.PostCondition.SourceContext = eeSourceContext;
-                      }
-                      catch {
-                        continue; //return this.ensures = new EnsuresList();
-                      }
-                    }
-                  }
-                }
-                if (mb.BoundMember.DeclaringType != SystemTypes.EnsuresAttribute) continue;
-                if (attr.Expressions == null || !(attr.Expressions.Count > 0)) continue;
-                Literal l = attr.Expressions[0] as Literal;
-                if (l == null) continue;
-                string s = (string) l.Value;
-                Expression e = null;
-                try {
-                  e = ds.ParseContract(this,s,null);
-                } catch {
-                  continue; //return this.ensures = new EnsuresList();
-                }
-                EnsuresNormal ens = new EnsuresNormal(e);
-                SourceContext ctx = MethodContract.GetSourceContext(attr);
-                e.SourceContext = ctx;
-                es.Add(ens);
-              }
-            }
-            ds.CurrentAssembly = savedCurrentAssembly;
-          }
-        }
-        return this.ensures;
-#endif
       }
       set{
         this.ensures = value;
@@ -16329,43 +11343,7 @@ namespace System.Compiler{
     }
     public ExpressionList Modifies{
       get{
-#if CodeContracts
         return null;
-#else
-        if (this.modifies != null) return this.modifies;
-        ExpressionList ms = this.modifies = new ExpressionList();
-        if (this.DeclaringMethod != null){
-          AttributeList attributes = this.DeclaringMethod.Attributes;
-          if (attributes == null || attributes.Count == 0) return ms;
-          IContractDeserializer ds = Cci.ContractDeserializerContainer.ContractDeserializer;
-          if (ds != null){
-            TypeNode t = this.DeclaringMethod.DeclaringType;
-            Module savedCurrentAssembly = ds.CurrentAssembly;
-            ds.CurrentAssembly = t == null ? null : t.DeclaringModule;
-            for (int i = 0, n = attributes == null || attributes.Count == 0 ? 0 : attributes.Count; i < n; i++) {
-              AttributeNode attr = attributes[i];
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb != null){
-                if (mb.BoundMember == null) continue;
-                if (mb.BoundMember.DeclaringType != SystemTypes.ModifiesAttribute) continue;
-                if (attr.Expressions == null || !(attr.Expressions.Count > 0)) continue;
-
-                Literal l = attr.Expressions[0] as Literal;
-                if (l == null) continue;
-                string s = (string) l.Value;
-                Expression e = ds.ParseContract(this,s,null);
-                if (e == null) continue;
-                SourceContext ctx = MethodContract.GetSourceContext(attr);
-                e.SourceContext = ctx;
-                ms.Add(e);
-              }
-            }
-            ds.CurrentAssembly = savedCurrentAssembly;
-          }
-        }
-        return this.modifies;
-#endif
       }
       set{
         this.modifies = value;
@@ -16375,113 +11353,6 @@ namespace System.Compiler{
       : base(NodeType.MethodContract) {
       this.DeclaringMethod = this.OriginalDeclaringMethod = declaringMethod;
     }
-
-#if !CodeContracts
-    public void CopyFrom(MethodContract sourceContract) {
-      if ( sourceContract == null ) return;
-      this.OriginalDeclaringMethod = sourceContract.OriginalDeclaringMethod;
-      
-      // Force deserialization (if necessary) to make sure sourceContract is fully populated
-      // This is needed for LocalForResult: it is populated in the sourceContract only if the
-      // postconditions have been deserialized.
-      int dummy = sourceContract.RequiresCount;
-      dummy = sourceContract.EnsuresCount + dummy;
-
-      TypeNode t = this.DeclaringMethod.DeclaringType;
-      Module m = t.DeclaringModule;
-      Duplicator dup = new Duplicator(m,t);
-      // Set up DuplicateFor table: all references to parameters from the source contract should be replaced
-      // with references to the equivalent parameter from the target contract.
-      // These references can be of type "Parameter" or "ParameterField".
-      // Also, the local that holds the "result" of the method should be likewise mapped.
-      // Also, the "this" parameter should be mapped.
-      Method sourceMethod = sourceContract.DeclaringMethod;
-      if (sourceMethod != null){
-        MethodScope sourceScope = sourceMethod.Scope;
-        Method targetMethod = this.DeclaringMethod;
-        if (targetMethod != null){
-          #region Map the self parameter
-          if (sourceMethod.ThisParameter != null && targetMethod.ThisParameter != null){
-            dup.DuplicateFor[sourceMethod.ThisParameter.UniqueKey] = targetMethod.ThisParameter;
-          }
-          #endregion
-          #region Map the method parameters
-          if (sourceMethod.Parameters != null && targetMethod.Parameters != null
-            && sourceMethod.Parameters.Count == targetMethod.Parameters.Count){
-            for (int i = 0, n = sourceMethod.Parameters.Count; i < n; i++){
-              dup.DuplicateFor[sourceMethod.Parameters[i].UniqueKey] = targetMethod.Parameters[i];
-            }
-          }
-          #endregion
-          #region Map the ParameterFields
-          MethodScope targetScope = targetMethod.Scope;
-          if (sourceScope != null && targetScope != null){
-            MemberList sourceScopeMembers = sourceScope.Members;
-            for (int i = 0, n = sourceScopeMembers != null ? sourceScopeMembers.Count : 0; i < n; i++){
-              ParameterField sourcePF = sourceScopeMembers[i] as ParameterField;
-              if (sourcePF == null) continue;
-              Parameter sourceP = sourcePF.Parameter;
-              if (sourceP == null){ Debug.Assert(false); continue; }
-              int index = sourceP.ParameterListIndex;
-              if (targetMethod.Parameters == null || targetMethod.Parameters.Count <= index || index < 0){
-                Debug.Assert(false); continue;
-              }
-              Parameter targetParameter = targetMethod.Parameters[index];
-              Field f = targetScope.GetField(targetParameter.Name);
-              if (f == null){ Debug.Assert(false); continue; }
-              ParameterField targetPF = f as ParameterField;
-              if (targetPF == null){ Debug.Assert(false); continue; }
-              dup.DuplicateFor[sourcePF.UniqueKey] = targetPF;
-            }
-          }
-          #endregion
-        }
-      }
-      MethodContract duplicatedMC = dup.VisitMethodContract(sourceContract);
-      duplicatedMC.isPure = sourceContract.IsPure; // force looking at attributes
-      if (duplicatedMC != null && duplicatedMC.Requires != null && duplicatedMC.Requires.Count > 0) {
-        RequiresList reqList = new RequiresList();
-        for (int i = 0, n = duplicatedMC.Requires.Count; i< n; i++){
-          Requires r = duplicatedMC.Requires[i];
-          if (r != null) r.Inherited = true;
-          reqList.Add(r);
-        }
-        if (this.requires != null)
-        {
-          foreach (Requires r in this.requires)
-          {
-            reqList.Add(r);
-          }
-        }
-        this.Requires = reqList;
-      }
-      if (duplicatedMC != null && duplicatedMC.Ensures != null && duplicatedMC.Ensures.Count > 0 ) {
-        EnsuresList enList = new EnsuresList();
-        for(int i = 0, n = duplicatedMC.Ensures.Count; i < n; i++) {
-          Ensures e = duplicatedMC.Ensures[i];
-          if (e == null) continue;
-          e.Inherited = true;
-          enList.Add(e);
-        }
-        if (this.ensures != null)
-        {
-          foreach (Ensures e in this.ensures)
-          {
-            enList.Add(e);
-          }
-        }
-        this.Ensures = enList;
-      }
-      if (duplicatedMC != null && duplicatedMC.Modifies != null && duplicatedMC.Modifies.Count > 0) {
-        ExpressionList modlist = this.Modifies = (this.Modifies == null ? new ExpressionList() : this.Modifies);
-        for (int i = 0, n = duplicatedMC.Modifies.Count; i < n; i++)
-          modlist.Add(duplicatedMC.Modifies[i]);
-      }
-      this.contractInitializer = duplicatedMC.ContractInitializer;
-      this.postPreamble = duplicatedMC.PostPreamble;
-      return;
-    }
-#endif
   }
 
   /// <summary>
@@ -16489,26 +11360,12 @@ namespace System.Compiler{
   /// </summary>
   public class Invariant : Method{
     public Expression Condition;
-#if !FxCop && ILOFFSETS
     public int ILOffset;
     // a string that a user wants associated with a particular element
     public Literal UserMessage;
     public Literal SourceConditionText;
     public bool UsesModels;
-#endif
 
-#if !CodeContracts
-    public Invariant(TypeNode declaringType, AttributeList attributes, Identifier name)
-    {
-      this.NodeType = NodeType.Invariant;
-      this.attributes = attributes;
-      this.DeclaringType = declaringType;
-      this.Name = name;
-      // this is called from the parser, so we have to avoid triggering CoreSystemType initialization.
-      this.ReturnType = new TypeExpression(new Literal(TypeCode.Boolean), 0);
-      this.ReturnTypeExpression = new TypeExpression(new Literal(TypeCode.Boolean), 0);
-    }
-#endif
     // called from Foxtrot
     public Invariant(TypeNode declaringType, Expression invariant, string name)
     {
@@ -16524,384 +11381,19 @@ namespace System.Compiler{
     }
   }
 
-#if ExtendedRuntime
-  public class ModelfieldContract : Node {
-    protected Field mf; //the modelfield this contract applies to (might be a temporary modelfield that stores unresolved override information)
-    protected Property ifaceMf; //the interface modelfield this contract applies to.
-    //invariant mf != null && ifaceMF == null || mf == null && ifaceMf != null;
-
-    public Expression Witness = null;
-    public bool HasExplicitWitness = false; //set to true if this modelfield has an explicitly specified witness. NOTE: Not serialized, i.e., not available in boogie!
-    public ExpressionList/*!*/ SatisfiesList = new ExpressionList();            
-
-    public TypeNode DeclaringType;
-
-    public Member/*!*/ Modelfield { get { return this.mf == null ? (Member)this.ifaceMf : (Member)this.mf; } }
-    public TypeNode/*!*/ ModelfieldType { get { return this.mf == null ? this.ifaceMf.Type : this.mf.Type; } }    
-    private bool isOverride = false;
-    public bool IsOverride {
-      //slighty complicated to work both before and after serialization, and before and after update of modelfield reference if this contract is overriding a baseclass contract. 
-      get {
-        if (this.isOverride == true) return true;
-        return !(this.Modelfield.DeclaringType == this.DeclaringType);
-      }
-      set {
-        //requires value == true; (setting to false has no real meaning or effect)
-        isOverride = value;
-      }
-    }
-
-    private bool isSealed = false;  //set to true if modelfield itself is sealed (i.e., has the keyword).
-    public bool IsSealed {
-      get { if (this.isSealed) return true;
-            if (this.DeclaringType == null) return false; //defensive check
-            return this.DeclaringType.IsSealed;        
-      }
-      set { //requires value == true and the modelfield(contract) itself is sealed</summary>
-        this.isSealed = value; }
-    }    
-
-    /// <summary>      
-    /// ensures that the result is a new modelfieldcontract with an empty set of satisfies clauses and a default witness.
-    /// ensures that the SourceContext of the result and the default witness are set to name.SourceContext.
-    /// requires all attributes to be non-null
-    /// </summary>    
-    public ModelfieldContract(TypeNode declaringType, AttributeList attrs, TypeNode type, Identifier name, SourceContext sctx)
-      : base(NodeType.ModelfieldContract)
-    {
-      this.DeclaringType = declaringType;            
-      this.SourceContext = sctx;      
-      if (declaringType is Class) {
-        this.mf = new Field(declaringType, attrs, FieldFlags.Public, name, type, null); //note: if the modelfield has an override modifier, then mf is a placeholder. This will be signalled by a 'Private' flag.        
-        this.mf.IsModelfield = true;
-        this.mf.SourceContext = this.SourceContext;
-      } else if (declaringType is Interface) {
-        //Treat as a property with a getter that will return a modelfield from an implementing class        
-        #region create a default abstract getter method getM
-        Method getM = new Method(declaringType, new AttributeList(), new Identifier("get_" + name.Name), new ParameterList(), type, null);
-        getM.SourceContext = this.SourceContext;
-        getM.CallingConvention = CallingConventionFlags.HasThis; //needs to be changed when we want to allow static modelfields
-        //Give getM [NoDefaultContract] so that it can easily be called in specs
-        InstanceInitializer ndCtor = SystemTypes.NoDefaultContractAttribute.GetConstructor();        
-        if (ndCtor != null)
-          getM.Attributes.Add(new AttributeNode(new MemberBinding(null, ndCtor), null, AttributeTargets.Method));
-        //Give getM "confined" (otherwise it still can't be called in specs, as it has NoDefaultContract)
-        // That means make it [Pure][Reads(Reads.Owned)]
-        InstanceInitializer pCtor = SystemTypes.PureAttribute.GetConstructor();        
-        if (pCtor != null)
-          getM.Attributes.Add(new AttributeNode(new MemberBinding(null, pCtor), null, AttributeTargets.Method));
-        InstanceInitializer rCtor = SystemTypes.ReadsAttribute.GetConstructor(); // can use nullary ctor since default is confined
-        if (rCtor != null)
-          getM.Attributes.Add(new AttributeNode(new MemberBinding(null, rCtor), null, AttributeTargets.Method));
-        //To the user, a modelfield on an interface is a field. Therefore, the user should be allowed to give it a [Rep] attribute.
-        //But we treat the modelfield as a property, which is not a valid target for [Rep].  
-        //We convert a [Rep] on the property to an [Owned] on the getter.                                        
-        int nrOfAttrs = (attrs == null ? 0 : attrs.Count);
-        for (int i = 0, j = 0; i < nrOfAttrs; i++) {          
-          Identifier attrI = (attrs[i].Constructor as Identifier); //seems we need a HACK: Constructor has not been processed yet (by Looker).
-          if (i == j && attrI != null && attrI.Name == "Rep") { //test i == j for slightly improved error handling on multiple [Rep]'s
-            InstanceInitializer oCtor = SystemTypes.RepAttribute.GetConstructor();
-            if (oCtor != null) { 
-              getM.Attributes.Add(new AttributeNode(new MemberBinding(null, oCtor), null, AttributeTargets.Method));
-              attrs[i] = null;
-            }
-          } else {
-            attrs[j] = attrs[i];
-            j = j + 1;
-          }
-        }
-        declaringType.Members.Add(getM);
-        getM.Flags = MethodFlags.Public | MethodFlags.Abstract | MethodFlags.NewSlot | MethodFlags.Virtual | MethodFlags.SpecialName | MethodFlags.HideBySig;        
-        #endregion
-        ifaceMf = new Property(declaringType, attrs, PropertyFlags.None, name, getM, null);
-        ifaceMf.IsModelfield = true;
-        ifaceMf.SourceContext = this.SourceContext;
-        getM.DeclaringMember = ifaceMf;
-      }      
-    }
-    
-    /// <summary>
-    /// ensures result.Modelfield == modelfield.    
-    /// </summary>  
-    public ModelfieldContract(TypeNode/* ! */ declaringType, Field/* ! */ modelfield)
-      : base(NodeType.ModelfieldContract) {
-      this.DeclaringType = declaringType;
-      this.SourceContext = modelfield.SourceContext;      
-      this.mf = modelfield;      
-      if (modelfield.DeclaringType != declaringType)
-        this.IsOverride = true;
-    }    
-
-    /// <summary>
-    /// requires this.IsOverride == true;
-    /// requires that newMf is a member of a superclass of mfC.DeclaringType;
-    /// ensures this.Modelfield == newMf;
-    /// this method can be used to update the modelfield of an overriding modelfieldcontract to the modelfield that is overridden.
-    /// </summary>
-    /// <param name="newMf">The overridden modelfield that this modelfieldContract applies to</param>
-    public void UpdateModelfield(Field newMf) {
-      this.mf = newMf;      
-    }
-    
-    private ModelfieldContract nearestOverriddenContract; //null when this not an overriding contract (or when getNearestContractContract has not yet been called) 
-    /// <summary>
-    /// ensures: if this contract overrides a superclass contract, then result is the nearest overridden contract, else result == null. 
-    /// </summary>       
-    public ModelfieldContract NearestOverriddenContract {
-      get {
-        if (this.nearestOverriddenContract != null) return this.nearestOverriddenContract;
-
-        if (this.mf == null) return null; //interface modelfieldContracts can't override
-        if (!this.IsOverride) return null;
-        #region scan superclasses until nearest overriden contract is found, then return that contract.
-        for (Class currentClass = this.DeclaringType.BaseType as Class; currentClass != null; currentClass = currentClass.BaseClass) {
-          foreach (ModelfieldContract currentMfC in currentClass.Contract.ModelfieldContracts) {
-            if (currentMfC.Modelfield == this.mf) {
-              this.nearestOverriddenContract = currentMfC;
-              return this.nearestOverriddenContract;
-            }
-          }
-        }
-        Debug.Assert(false);  //an overridden contract should have been found and returned.  
-        return this.nearestOverriddenContract;
-        #endregion
-      }
-    }
-
-  }
-
-  public sealed class ModelfieldContractList {
-    private ModelfieldContract[]/*!*/ elements;
-    private int count = 0;
-    public ModelfieldContractList() {
-      this.elements = new ModelfieldContract[8];
-      //^ base();
-    }
-    public ModelfieldContractList(int n) {
-      this.elements = new ModelfieldContract[n];
-      //^ base();
-    }
-    public ModelfieldContractList(params ModelfieldContract[] elements) {
-      if (elements == null) elements = new ModelfieldContract[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(ModelfieldContract element) {
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n) {
-        int m = n * 2; if (m < 8) m = 8;
-        ModelfieldContract[] newElements = new ModelfieldContract[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public ModelfieldContractList/*!*/ Clone() {
-      ModelfieldContract[] elements = this.elements;
-      int n = this.count;
-      ModelfieldContractList result = new ModelfieldContractList(n);
-      result.count = n;
-      ModelfieldContract[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count {
-      get { return this.count; }
-      set { this.count = value; }
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length {
-      get { return this.count; }
-      set { this.count = value; }
-    }
-    public ModelfieldContract this[int index] {
-      get {
-        return this.elements[index];
-      }
-      set {
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator() {
-      return new Enumerator(this);
-    }
-    public struct Enumerator {
-      private int index;
-      private readonly ModelfieldContractList/*!*/ list;
-      public Enumerator(ModelfieldContractList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public ModelfieldContract Current {
-        get {
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext() {
-        return ++this.index < this.list.count;
-      }
-      public void Reset() {
-        this.index = -1;
-      }
-    }
-  }
-#endif
-
   public class TypeContract : Node {
     public TypeNode DeclaringType;
-#if ExtendedRuntime
-    protected internal ModelfieldContractList modelfieldContracts;
-
-    /// <summary> 
-    /// Deserializes attr.Expressions[i] as expression E.
-    /// requires attr.Expressions.Count > i;    
-    /// requires this.DeclaringType != null;
-    /// </summary> 
-    /// <returns>E if succesfull, null otherwise.</returns>
-    private Expression getIndexFromAttribute(AttributeNode attr, int i) {      
-      Debug.Assert(attr != null && attr.Expressions.Count > i && this.DeclaringType != null); //something's wrong with the IL we are deserializing, should have generated an error while constructing the IL.
-      IContractDeserializer ds = Cci.ContractDeserializerContainer.ContractDeserializer;
-      if (ds == null) return null;
-      ds.CurrentAssembly = this.DeclaringType.DeclaringModule;
-      Literal l = attr.Expressions[i] as Literal;
-      if (l == null) return null;
-      string s = (string)l.Value;
-      return ds.ParseContract(this, s, null);      
-    }
-
-
-    /// <summary>
-    /// requires attr.Expressions.Count > 0
-    /// ensures if attr.Expressions[0] can be deserialized as modelfield F, then:
-    ///   if F key in contractLookup, then returns matching value, else returns new ModelfieldContract mfC for F
-    /// else returns null
-    /// ensures if new mfC created, then  (F, mfC) in contractLookup and mfC in this.ModelfieldContracts
-    /// </summary>
-    private ModelfieldContract getContractFor(AttributeNode attr, Dictionary<Field, ModelfieldContract> contractLookup) {
-      Expression mfBinding = this.getIndexFromAttribute(attr, 0);
-      
-      //extract modelfield from mfBinding
-      if (!(mfBinding is MemberBinding)) return null;
-      Field modelfield = (mfBinding as MemberBinding).BoundMember as Field;
-      if (modelfield == null) return null;
-
-      //If this modelfield does not yet have a contract, then create one now and add <modelfield,mfC> to createdContracts       
-      ModelfieldContract mfC = null;
-      if (!contractLookup.TryGetValue(modelfield, out mfC)) {                
-        mfC = new ModelfieldContract(this.DeclaringType, modelfield);        
-        this.modelfieldContracts.Add(mfC);
-        contractLookup.Add(modelfield, mfC);
-      }
-
-      return mfC;
-    }
-
-    public ModelfieldContractList/*!*/ ModelfieldContracts {
-      get {
-        if (this.modelfieldContracts == null) {                  
-          this.modelfieldContracts = new ModelfieldContractList();
-          #region deserialize the modelfieldcontracts if needed
-          Dictionary<Field,ModelfieldContract> createdContracts = new Dictionary<Field,ModelfieldContract>(); //key = modelfield memberbinding, value = contract for that modelfield (if one was created already)
-          if (this.DeclaringType != null) {                      
-            foreach (AttributeNode attr in this.DeclaringType.Attributes) {                
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb == null || mb.BoundMember == null) continue;
-              if (mb.BoundMember.DeclaringType == SystemTypes.ModelfieldContractAttribute) {
-                ModelfieldContract mfC = this.getContractFor(attr, createdContracts);
-                Expression witness = this.getIndexFromAttribute(attr, 1);
-                if (witness == null) continue;
-                witness.SourceContext = MethodContract.GetSourceContext(attr);
-                mfC.Witness = witness;
-              } else if (mb.BoundMember.DeclaringType == SystemTypes.SatisfiesAttribute) {                
-                ModelfieldContract mfC = this.getContractFor(attr, createdContracts);
-                Expression satClause = this.getIndexFromAttribute(attr, 1);
-                if (satClause == null) continue;
-                satClause.SourceContext = MethodContract.GetSourceContext(attr);
-                mfC.SatisfiesList.Add(satClause);              
-              }                               
-            }
-          }
-          #endregion
-        }
-        return this.modelfieldContracts;  
-      }
-      set { this.modelfieldContracts = value; }
-    }
-#endif
 
     public InvariantList InheritedInvariants;
     protected internal InvariantList invariants;
     public InvariantList Invariants{
       get{
-#if CodeContracts
         return this.invariants;
-#else 
-        if (this.invariants != null) return this.invariants;
-        InvariantList invs = this.invariants = new InvariantList();
-        if (this.DeclaringType != null){
-          AttributeList attributes = this.DeclaringType.Attributes;
-          IContractDeserializer ds = Cci.ContractDeserializerContainer.ContractDeserializer;
-          if (ds != null){
-            Module savedCurrentAssembly = ds.CurrentAssembly;
-            ds.CurrentAssembly = this.DeclaringType == null ? null : this.DeclaringType.DeclaringModule;
-            for (int i = 0, n = attributes == null || attributes.Count == 0 ? 0 : attributes.Count; i < n; i++){
-              AttributeNode attr = attributes[i];
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb != null){
-                if (mb.BoundMember == null) continue;
-                if (mb.BoundMember.DeclaringType != SystemTypes.InvariantAttribute) continue;
-                if (attr.Expressions == null || !(attr.Expressions.Count > 0)) continue;
-
-                Literal l = attr.Expressions[0] as Literal;
-                if (l == null) continue;
-                string s = (string) l.Value;
-                Expression e = ds.ParseContract(this,s,null);
-                if (e != null){
-                  Invariant inv = new Invariant(this.DeclaringType,null,Identifier.For("invariant"+i));
-                  SourceContext ctx = MethodContract.GetSourceContext(attr);
-                  inv.SourceContext = ctx;
-                  inv.Condition = e;
-                  invs.Add(inv);
-                }
-              }
-            }
-            // Make the type contract look as it does when the type is compiled from source
-            this.FramePropertyGetter = this.DeclaringType.GetMethod(Identifier.For("get_SpecSharp::FrameGuard"), null);
-            this.InitFrameSetsMethod = this.DeclaringType.GetMethod(Identifier.For("SpecSharp::InitGuardSets"), null);
-            this.InvariantMethod = this.DeclaringType.GetMethod(Identifier.For("SpecSharp::CheckInvariant"), CoreSystemTypes.Boolean);
-            this.FrameProperty = this.DeclaringType.GetProperty(Identifier.For("SpecSharp::FrameGuard"));
-            this.FrameField = this.DeclaringType.GetField(Identifier.For("SpecSharp::frameGuard"));
-            ds.CurrentAssembly = savedCurrentAssembly;
-          }
-        }
-        return this.invariants;
-#endif
       }
       set{
         this.invariants = value;
       }
     }
-#if ExtendedRuntime
-    // when non-null, points to the method added to the DeclaringType that will have the invariants in its body
-    // needed so when each invariant is visited, the proper environment can be set up for it.
-    // NB: Dont' visit it as part of StandardVisitor
-    public Field FrameField;
-    public Property FrameProperty;
-    public Method FramePropertyGetter;
-    public Method InitFrameSetsMethod;
-
-    public Method InvariantMethod;// when non-null, points to the method added to the DeclaringType that will have the invariants in its body
-
-    /// <summary>
-    /// Microsoft.Contracts.FrameGuardGetter implementation for this class.
-    /// </summary>
-    public Method GetFrameGuardMethod;
-#endif
     /// <summary>
     /// When types get constructed via the Reader, we let the Invariants be initialized on demand.
     /// When the parser creates a type, we want the type contract to contain the empty invariant list
@@ -16919,24 +11411,7 @@ namespace System.Compiler{
       }
     }
     public int InvariantCount { get { return Invariants == null ? 0 : Invariants.Count; } }
-#if ExtendedRuntime
-    public int ModelfieldContractCount { get { return ModelfieldContracts == null ? 0 : ModelfieldContracts.Count; } }
-#endif
   }
-#if !CodeContracts
-  public interface IContractDeserializer{
-    // when text is a requires, ensures, or modifies
-    Expression ParseContract(MethodContract mc, string text, ErrorNodeList errors);
-    // when text is an assertion or an assume in code
-    Expression ParseContract(Method m, string text, ErrorNodeList errs);
-    // when text is an invariant
-    Expression ParseContract(TypeContract/*!*/ tc, string text, ErrorNodeList errs);
-    Module CurrentAssembly { get; set; }
-    ErrorNodeList ErrorList { get; set; }
-  }
-#endif
-#endif
-#if CodeContracts
   public class ExtraPDBInfo
   {
     byte[] MD2;
@@ -16961,26 +11436,6 @@ namespace System.Compiler{
       }
       return null;
     }
-
-#if false
-    static byte[] GetSymAttribute(uint parent, String name, ISymUnmanagedReader reader)
-    {
-      try
-      {
-        byte[] Data;
-        uint cData = 0;
-        reader.GetSymAttribute(parent, name, 0, ref cData, null);
-        if (cData <= 0) return null;
-        Data = new byte[cData];
-        reader.GetSymAttribute(parent, name, cData, ref cData, Data);
-        return Data;
-      }
-      catch
-      {
-        return null;
-      }
-    }
-#endif
 
     internal void Write(uint token, ISymUnmanagedWriter writer, Ir2md ir2md)
     {
@@ -17119,126 +11574,21 @@ namespace System.Compiler{
       }
       this.asyncMethodInfo = asyncMethodInfo.ToArray();
     }
-#if false
-    private void ReadMD2(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      byte version;
-      bits.ReadUInt8(out version);
-      if (version == 4)
-      {
-        byte count;
-        bits.ReadUInt8(out count);
-        bits.Align(4);
-        while (count-- > 0)
-          this.ReadCustomMetadata(bits);
-      }
-
-    }
-    private void ReadCustomMetadata(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      int savedPosition = bits.Position;
-      byte version;
-      bits.ReadUInt8(out version);
-      if (version != 4)
-      {
-        throw new PdbDebugException("Unknown custom metadata item version: {0}", version);
-      }
-      byte kind;
-      bits.ReadUInt8(out kind);
-      bits.Align(4);
-      uint numberOfBytesInItem;
-      bits.ReadUInt32(out numberOfBytesInItem);
-      switch (kind)
-      {
-        case 0: this.ReadUsingInfo(bits); break;
-        case 1: this.ReadForwardInfo(bits); break;
-        case 2: break; // this.ReadForwardedToModuleInfo(bits); break;
-        case 3: this.ReadIteratorLocals(bits); break;
-        case 4: this.ReadForwardIterator(bits); break;
-        default: throw new PdbDebugException("Unknown custom metadata item kind: {0}", kind);
-      }
-      bits.Position = savedPosition + (int)numberOfBytesInItem;
-    }
-
-    private void ReadForwardIterator(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      this.iteratorClass = bits.ReadString();
-    }
-
-    private void ReadIteratorLocals(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      uint numberOfLocals;
-      bits.ReadUInt32(out numberOfLocals);
-      this.iteratorScopes = new List<ILocalScope>((int)numberOfLocals);
-      while (numberOfLocals-- > 0)
-      {
-        uint ilStartOffset;
-        uint ilEndOffset;
-        bits.ReadUInt32(out ilStartOffset);
-        bits.ReadUInt32(out ilEndOffset);
-        this.iteratorScopes.Add(new PdbIteratorScope(ilStartOffset, ilEndOffset - ilStartOffset));
-      }
-    }
-
-    //private void ReadForwardedToModuleInfo(BitAccess bits) {
-    //}
-
-    private void ReadForwardInfo(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      bits.ReadUInt32(out this.tokenOfMethodWhoseUsingInfoAppliesToThisMethod);
-      this.MethodWhoseUsingInfoAppliesToThisMethod = reader.pdbInfo.GetMethodFromPdbToken(this.tokenOfMethodWhoseUsingInfoAppliesToThisMethod);
-    }
-
-    private void ReadUsingInfo(Microsoft.Cci.Pdb.BitAccess bits)
-    {
-      ushort numberOfNamespaces;
-      bits.ReadUInt16(out numberOfNamespaces);
-      this.usingCounts = new ushort[numberOfNamespaces];
-      for (ushort i = 0; i < numberOfNamespaces; i++)
-      {
-        bits.ReadUInt16(out this.usingCounts[i]);
-      }
-    }
-#endif
-
-
     internal ExtraPDBInfo(Reader reader)
     {
       this.reader = reader;
     }
   }
-#endif
 
-  public class Method : Member
-#if CodeContracts
-    , IEquatable<Method>
-#endif
+  public class Method : Member, IEquatable<Method>
   {
-#if ExtendedRuntime
-    /// <summary>
-    /// Gets the first attribute of the given type in the attribute list of this method, or in the attribute list
-    /// of the method's declaring member (if it exists).
-    /// Returns null if none found.
-    /// This should not be called until the AST containing this member has been processed to replace symbolic references
-    /// to members with references to the actual members.
-    /// </summary>
-    public virtual AttributeNode GetAttributeFromSelfOrDeclaringMember (TypeNode attributeType) {
-      AttributeNode a = base.GetAttribute(attributeType);
-      if (a == null && this.DeclaringMember != null) {
-        a = this.DeclaringMember.GetAttribute(attributeType);
-      }
-      return a;
-    }
-#endif
-#if CodeContracts
     #region IEquatable<Method> members
     public bool Equals(Method other)
     {
       return this == other;
     }
     #endregion
-#endif
-#if ExtendedRuntime || CodeContracts
+
     public delegate void MethodContractProvider(Method/*!*/ method, object/*!*/ handle);
     internal MethodContractProvider ProvideContract;
 
@@ -17283,18 +11633,7 @@ namespace System.Compiler{
       }
       this.contract = null;
     }
-#endif
-#if !MinimalReader && !CodeContracts
-    public TypeNodeList ImplementedTypes;
-    public TypeNodeList ImplementedTypeExpressions;
-    public bool HasCompilerGeneratedSignature = true;
-    public TypeNode ReturnTypeExpression;
-    /// <summary>Provides a way to retrieve the parameters and local variables defined in this method given their names.</summary>
-    public MethodScope Scope;
-    public bool HasOutOfBandContract = false;
-    protected TrivialHashtable/*!*/ Locals = null;
-#endif
-#if !FxCop
+
     public LocalList LocalList;
     protected SecurityAttributeList securityAttributes;
     /// <summary>Contains declarative security information associated with the type.</summary>
@@ -17312,51 +11651,15 @@ namespace System.Compiler{
         this.securityAttributes = value;
       }
     }
-#else
-    internal SecurityAttributeList securityAttributes;
-    public SecurityAttributeList SecurityAttributes{
-      get{return this.securityAttributes;}
-      internal set{this.securityAttributes = value;}
-    }
-    private LocalCollection locals;
-    public LocalCollection Locals{
-      get{
-        if (locals == null) this.Body = this.Body;
-        return this.locals;
-      }
-      internal set {
-        this.locals = value;
-      }
-    }
-    /// <summary>
-    ///     Gets a value indicating whether the method is a property or event accessor.
-    /// </summary>
-    /// <value>
-    ///     <see langword="true"/> if the <see cref="Method"/> is a property or event
-    ///     accessor; otherwise, <see langword="false"/>.
-    /// </value>
-    /// <remarks>
-    ///     <see cref="IsAccessor"/> returns <see langword="true"/> if 
-    ///     <see cref="DeclaringMember"/> is not <see langword="null"/>.
-    /// </remarks>
-    public bool IsAccessor{
-      get{return this.declaringMember != null;}
-    }
-    internal static bool EnforceMethodRepresentationCreationPolicy;
-    internal static int PopulatedBodiesCount;
-    internal static int PopulatedInstructionsCount;
-#endif
     public delegate void MethodBodyProvider(Method/*!*/ method, object/*!*/ handle, bool asInstructionList);
     public MethodBodyProvider ProvideBody;
     public object ProviderHandle; //Opaque information to be used by the method body provider
-#if ILOFFSETS
     public readonly int MethodToken;
     public Method(MethodBodyProvider provider, object handle, int methodToken)
       : this(provider, handle)
     {
       this.MethodToken = methodToken;
     }
-#endif
     public Method()
       : base(NodeType.Method){
     }
@@ -17386,7 +11689,6 @@ namespace System.Compiler{
       get{return this.implementedInterfaceMethods;}
       set{this.implementedInterfaceMethods = value;}
     }
-#if !MinimalReader
     private MethodList implicitlyImplementedInterfaceMethods;
     /// <summary>
     /// Computes the implicitly implemented methods for any method, not necessarily being compiled.
@@ -17480,7 +11782,6 @@ namespace System.Compiler{
         return this.shallowImplicitlyImplementedInterfaceMethods;
       }
     }
-#endif
     private CallingConventionFlags callingConvention;
     public CallingConventionFlags CallingConvention{
       get{return this.callingConvention;}
@@ -17517,10 +11818,8 @@ namespace System.Compiler{
     {
       get
       {
-#if CodeContracts
         CC.Contract.Ensures(CC.Contract.Result<int>() >= 0);
         CC.Contract.Ensures(CC.Contract.Result<int>() == 0 || this.Parameters != null);
-#endif
         if (this.parameters == null) return 0;
         return this.parameters.Count;
       }
@@ -17593,20 +11892,12 @@ namespace System.Compiler{
           lock (Module.GlobalLock){
             if (this.body == null){
               this.ProvideBody(this, this.ProviderHandle, false);
-#if FxCop
-              if (EnforceMethodRepresentationCreationPolicy && this.body.Statements.Count > 0)
-                System.Threading.Interlocked.Increment(ref Method.PopulatedBodiesCount);
-#endif
             }
           }
         }
         return this.body;
       }
       set{
-#if FxCop
-        if (EnforceMethodRepresentationCreationPolicy && value == null && this.body != null && this.body.Statements.Count > 0)
-          System.Threading.Interlocked.Decrement(ref Method.PopulatedBodiesCount);
-#endif
         this.body = value;
       }
     }
@@ -17637,20 +11928,12 @@ namespace System.Compiler{
         this.attributes = value;
       }
     }
-#if FxCop
-    internal void ClearBody(){
-#else
     public void ClearBody(){
-#endif
       lock(Module.GlobalLock){
         this.Body = new Block(); // otherwise the code provider may repopulate it.
         this.Instructions = new InstructionList();
         this.ExceptionHandlers = null;
-#if !FxCop
         this.LocalList = null;
-#else
-        this.Locals = null;
-#endif
       }
     }
     protected string conditionalSymbol;
@@ -17687,24 +11970,15 @@ namespace System.Compiler{
           lock (Module.GlobalLock){
             if (this.instructions == null){
               this.ProvideBody(this, this.ProviderHandle, true);
-#if FxCop
-              if (EnforceMethodRepresentationCreationPolicy)
-                  System.Threading.Interlocked.Increment(ref Method.PopulatedInstructionsCount);
-#endif
             }
           }
         }
         return this.instructions;
       }
       set{
-#if FxCop
-        if (EnforceMethodRepresentationCreationPolicy && this.instructions != null && value == null)
-          System.Threading.Interlocked.Decrement(ref Method.PopulatedInstructionsCount);
-#endif
         this.instructions = value;
       }
     }
-#if !FxCop
     protected ExceptionHandlerList exceptionHandlers;
     public virtual ExceptionHandlerList ExceptionHandlers{
       get{
@@ -17717,8 +11991,6 @@ namespace System.Compiler{
         this.exceptionHandlers = value;
       }
     }
-#endif
-#if !NoXml
     protected override Identifier GetDocumentationId(){
       if (this.Template != null) return this.Template.GetDocumentationId();
       StringBuilder sb = new StringBuilder(this.DeclaringType.DocumentationId.ToString());
@@ -17753,7 +12025,6 @@ namespace System.Compiler{
       }
       return Identifier.For(sb.ToString());
     }
-#endif
     protected internal string fullName;
     public override string/*!*/ FullName {
       get{
@@ -17782,83 +12053,6 @@ namespace System.Compiler{
         return this.fullName = sb.ToString();
       }
     }
-#if ExtendedRuntime
-    public override string HelpText {
-      get {
-        if (this.helpText != null)
-          return this.helpText;
-        StringBuilder sb = new StringBuilder(base.HelpText);
-        // if there is already some help text, start the contract on a new line
-        bool startWithNewLine = (sb.Length != 0);
-        if (this.Contract != null){
-          MethodContract mc = this.Contract;
-          RequiresList rs = mc.Requires;
-          if (rs != null && rs.Count == 0) { mc.Requires = null; rs = mc.Requires; }
-          for (int i = 0, n = rs == null ? 0 : rs.Count; i < n; i++){
-            Requires r = rs[i];
-            if (r == null) continue;
-            Expression e = r.Condition;
-            if (e.SourceContext.StartPos < e.SourceContext.EndPos && e.SourceContext.SourceText != ""){
-              if (startWithNewLine) sb.Append('\n');
-              sb.Append("requires ");
-              sb.Append(e.SourceContext.SourceText);
-              sb.Append(";");
-              startWithNewLine = true;
-            }
-          }
-          EnsuresList es = mc.Ensures;
-          if (es != null && es.Count == 0) { mc.Ensures = null; es = mc.Ensures; }
-          if (es != null) {
-            for (int i = 0, n = es.Count; i < n; i++) {
-              Ensures e = es[i];
-              if (e == null) continue;
-              if (startWithNewLine) sb.Append('\n');
-              EnsuresExceptional ee = e as EnsuresExceptional;
-              if (ee != null) {
-                sb.Append("throws ");
-                if (ee.Variable != null) { sb.Append("("); }
-                sb.Append(ee.Type.Name.ToString());
-                if (ee.Variable != null) {
-                  sb.Append(" ");
-                  sb.Append(ee.Variable.SourceContext.SourceText);
-                  sb.Append(")");
-                }
-              }
-              if (e.PostCondition != null) {
-                if (ee != null) {
-                  sb.Append(" ");
-                }
-                Expression cond = e.PostCondition;
-                sb.Append("ensures ");
-                sb.Append(cond.SourceContext.SourceText);
-              }
-              sb.Append(";");
-              startWithNewLine = true;
-            }
-          }
-          ExpressionList exps = mc.Modifies;
-          // Force deserialization in case that is needed
-          if (exps != null && exps.Count == 0) { mc.Modifies = null; exps = mc.Modifies; }
-          if (exps != null) {
-            for (int i = 0, n = exps.Count; i < n; i++) {
-              Expression mod = exps[i];
-              if (mod != null && mod.SourceContext.StartPos < mod.SourceContext.EndPos && mod.SourceContext.SourceText != "") {
-                if (startWithNewLine) sb.Append('\n');
-                sb.Append("modifies ");
-                sb.Append(mod.SourceContext.SourceText);
-                sb.Append(";");
-                startWithNewLine = true;
-              }
-            }
-          }
-        }
-        return this.helpText = sb.ToString();
-      }
-      set {
-        base.HelpText = value;
-      }
-    }
-#endif
     public virtual string GetUnmangledNameWithoutTypeParameters(){
       return this.GetUnmangledNameWithoutTypeParameters(false);
     }
@@ -17890,11 +12084,9 @@ namespace System.Compiler{
           sb.Append(',');
         sb.Append(par.Type.GetFullUnmangledNameWithTypeParameters());
         if (i == n - 1) {
-#if !MinimalReader
           if (this.IsVarArg) {
             sb.Append(", __arglist");
           }
-#endif
           sb.Append(')');
         }
       }
@@ -17999,7 +12191,6 @@ namespace System.Compiler{
           return vis2;
       }
     }
-#if !NoReflection
     public virtual object Invoke(object targetObject, params object[] arguments){
       System.Reflection.MethodInfo methInfo = this.GetMethodInfo();
       if (methInfo == null) return null;
@@ -18015,8 +12206,6 @@ namespace System.Compiler{
         }
       return new Literal(this.Invoke(targetObject.Value, args));
     }
-#endif
-#if !MinimalReader
     protected bool isNormalized;
     public virtual bool IsNormalized{
       get{
@@ -18028,7 +12217,6 @@ namespace System.Compiler{
         this.isNormalized = value;
       }
     }
-#endif
     public virtual bool IsAbstract{
       get{return (this.Flags & MethodFlags.Abstract) != 0;}
     }
@@ -18053,11 +12241,9 @@ namespace System.Compiler{
     public virtual bool IsFinal{
       get{return (this.Flags & MethodFlags.Final) != 0;}
     }
-#if !MinimalReader
     public virtual bool IsInternalCall {
       get { return (this.ImplFlags & MethodImplFlags.InternalCall) != 0; }
     }
-#endif
     public override bool IsPrivate {
       get{return (this.Flags & MethodFlags.MethodAccessMask) == MethodFlags.Private;}
     }
@@ -18076,7 +12262,6 @@ namespace System.Compiler{
     public virtual bool IsVirtual{
       get{return (this.Flags & MethodFlags.Virtual) != 0;}
     }
-#if !MinimalReader
     public virtual bool IsNonSealedVirtual{
       get{
         return (this.Flags & MethodFlags.Virtual) != 0 && (this.Flags & MethodFlags.Final) == 0 && 
@@ -18088,7 +12273,6 @@ namespace System.Compiler{
         return (this.Flags & MethodFlags.Virtual) != 0 && (this.DeclaringType == null || !(this.DeclaringType is Struct));
       }
     }
-#endif
     public override bool IsVisibleOutsideAssembly{
       get{
         if (this.DeclaringType != null && !this.DeclaringType.IsVisibleOutsideAssembly) return false;
@@ -18110,39 +12294,6 @@ namespace System.Compiler{
         }
       }
     }
-#if ExtendedRuntime
-    /// <summary>
-    /// VERY IMPORTANT! This property is true only for those pure methods that are *neither*
-    /// confined [Reads(Owned)] *nor* state independent [Reads(Nothing)]
-    /// </summary>
-    public bool IsPure{
-      get{
-        AttributeNode attr = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.PureAttribute);
-        if (attr == null) return false; // no [Pure] at all
-        ExpressionList exprs = attr.Expressions;
-        if (exprs != null && 0 < exprs.Count) {
-          Literal lit = exprs[0] as Literal;
-          if (lit != null && (lit.Value is bool)) {
-            bool val = (bool)lit.Value;
-            if (!val) return false; // [Pure(false)]
-          }
-        }
-        // pure methods must be marked as [Pure] *and* [Reads(Everything)]
-        AttributeNode a = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.ReadsAttribute);
-        if (a == null) return false;
-        Literal l = a.GetPositionalArgument(0) as Literal;
-        if (l == null) return false; // because default ctor for Reads sets it to "Owned", not "Everything"
-        Microsoft.Contracts.ReadsAttribute.Reads r = (Microsoft.Contracts.ReadsAttribute.Reads)l.Value;
-        return r == Microsoft.Contracts.ReadsAttribute.Reads.Everything;
-      }
-    }
-    public bool ApplyDefaultContract {
-      get{
-        return this.GetAttribute(SystemTypes.NoDefaultContractAttribute) == null;
-      }
-    }
-#endif
-#if ExtendedRuntime || CodeContracts
     public bool IsPropertyGetter{
       get{
         if (this.DeclaringMember == null) return false;
@@ -18169,90 +12320,6 @@ namespace System.Compiler{
         return false;
       }
     }
-#endif
-#if ExtendedRuntime
-    public bool IsConfined {
-      get{
-        if (this.DeclaringType is Struct || this.IsStatic) return false; // structs can't own anything
-
-        // default: instance property getters are confined
-        if (this.ApplyDefaultContract && this.IsPropertyGetter &&
-           this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.PureAttribute) == null) {
-          return true;
-        }
-        
-        // TODO: Remove the next if test after LKG > 11215 (20 December 2007)
-        if (this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.ConfinedAttribute) != null) return true;
-
-        AttributeNode attr = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.PureAttribute);
-        if (attr == null)
-          return false; // not pure at all, so how could it be confined?
-        // Make sure it isn't [Pure(false)]
-        ExpressionList exprs = attr.Expressions;
-        if (exprs != null && 0 < exprs.Count) {
-          Literal lit = exprs[0] as Literal;
-          if (lit != null && (lit.Value is bool)) {
-            bool val = (bool)lit.Value;
-            if (!val) return false; // [Pure(false)]
-          }
-        }
-
-        AttributeNode a = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.ReadsAttribute);
-        if (a == null) {
-          // [Pure] by itself means confined on an instance method in a class
-          // otherwise, must specify Reads(Owned) in order to be considered confined
-          return !this.IsStatic;
-        }
-        Literal l = a.GetPositionalArgument(0) as Literal;
-        if (l == null) return true; // because default ctor for Reads sets it that way
-        Microsoft.Contracts.ReadsAttribute.Reads r = (Microsoft.Contracts.ReadsAttribute.Reads)l.Value;
-        return r == Microsoft.Contracts.ReadsAttribute.Reads.Owned;
-      }
-    }
-    public bool IsWriteConfined {
-      get {
-        return this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.WriteConfinedAttribute) != null
-            || IsConfined || IsStateIndependent;
-      }
-    }
-    public bool IsStateIndependent{
-      get{
-        if (this.ApplyDefaultContract && this.IsPropertyGetter && (this.DeclaringType is Struct || this.IsStatic) &&
-           this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.PureAttribute) == null) {
-          return true;
-        }
-        
-        // TODO: Remove the next if test after LKG > 11215 (20 December 2007)
-        if (this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.StateIndependentAttribute) != null) return true;
-
-        AttributeNode attr = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.PureAttribute);
-        if (attr == null)
-          return false; // not pure at all, so how could it be confined?
-        // Make sure it isn't [Pure(false)]
-        ExpressionList exprs = attr.Expressions;
-        if (exprs != null && 0 < exprs.Count) {
-          Literal lit = exprs[0] as Literal;
-          if (lit != null && (lit.Value is bool)) {
-            bool val = (bool)lit.Value;
-            if (!val) return false; // [Pure(false)]
-          }
-        }
-
-        AttributeNode a = this.GetAttributeFromSelfOrDeclaringMember(SystemTypes.ReadsAttribute);
-        if (a == null) {
-          // [Pure] by itself means state independent on an instance method in a struct
-          // or any a static method (either in a struct or in a class)
-          // otherwise, must specify Reads(Nothing) in order to be considered state independent
-          return this.IsStatic || this.DeclaringType is Struct;
-        }
-        Literal l = a.GetPositionalArgument(0) as Literal;
-        if (l == null) return false; // because default ctor for Reads sets it that way
-        Microsoft.Contracts.ReadsAttribute.Reads r = (Microsoft.Contracts.ReadsAttribute.Reads)l.Value;
-        return r == Microsoft.Contracts.ReadsAttribute.Reads.Nothing;
-      }
-    }
-#endif
-#if !MinimalReader
     public bool IsVarArg {
       get { return (this.CallingConvention & CallingConventionFlags.VarArg) != 0; }
     }
@@ -18262,7 +12329,6 @@ namespace System.Compiler{
         return false;
       }
     }
-#endif
     public override Member HiddenMember{
       get{
         return this.HiddenMethod;
@@ -18354,10 +12420,8 @@ namespace System.Compiler{
         this.overriddenMember = value;
       }
     }
-#if !NoReflection
     public static Method GetMethod(System.Reflection.MethodInfo methodInfo){
       if (methodInfo == null) return null;
-#if WHIDBEY
       if (methodInfo.IsGenericMethod && !methodInfo.IsGenericMethodDefinition){
         try{
           Method template = Method.GetMethod(methodInfo.GetGenericMethodDefinition());
@@ -18371,7 +12435,6 @@ namespace System.Compiler{
           return null;
         }
       }
-#endif
       TypeNode tn = TypeNode.GetTypeNode(methodInfo.DeclaringType);
       if (tn == null) return null;
       System.Reflection.ParameterInfo[] paramInfos = methodInfo.GetParameters();
@@ -18394,57 +12457,11 @@ namespace System.Compiler{
       }
       return null;
     }
-#endif
-#if !NoReflection && !MinimalReader && WHIDBEY && !CodeContracts
-    protected System.Reflection.Emit.DynamicMethod dynamicMethod;
-    public virtual System.Reflection.Emit.DynamicMethod GetDynamicMethod(){
-      return this.GetDynamicMethod(false);
-    }
-    public virtual System.Reflection.Emit.DynamicMethod GetDynamicMethod(bool skipVisibility)
-      //^ requires this.DeclaringType != null && this.DeclaringType.DeclaringModule != null && this.IsNormalized && this.Name != null  && this.ReturnType != null;
-      //^ requires (this.CallingConvention & CallingConventionFlags.ArgumentConvention) == CallingConventionFlags.StandardCall;
-      //^ requires !this.IsGeneric;
-    {
-      if (this.dynamicMethod == null){
-        if (this.DeclaringType == null || this.DeclaringType.DeclaringModule == null || !this.IsNormalized || this.Name == null || this.ReturnType == null){
-          Debug.Assert(false); return null;
-        }
-        if ((this.CallingConvention & CallingConventionFlags.ArgumentConvention) != CallingConventionFlags.StandardCall || this.IsGeneric){
-          Debug.Assert(false); return null;
-        }
-        string name = this.Name.Name;
-        System.Reflection.MethodAttributes attrs = (System.Reflection.MethodAttributes)this.Flags;
-        System.Reflection.CallingConventions callConv = System.Reflection.CallingConventions.Standard;
-        callConv |= (System.Reflection.CallingConventions)(this.CallingConvention & ~CallingConventionFlags.ArgumentConvention);
-        System.Type rtype = this.ReturnType.GetRuntimeType();
-        System.Type owner = this.DeclaringType.GetRuntimeType();
-        if (owner == null) { Debug.Fail(""); return null; }
-        System.Reflection.Module module = owner.Module;
-        System.Reflection.Emit.DynamicMethod dmeth;
-        int numPars = this.Parameters == null ? 0 : this.Parameters.Count;
-        System.Type[] paramTypes = new Type[numPars];
-        for (int i = 0; i < numPars; i++){
-          Parameter par = this.Parameters[i];
-          if (par == null || par.Type == null){Debug.Assert(false); return null;}
-          paramTypes[i] = par.Type.GetRuntimeType();
-        }
-        if (this.DeclaringType == this.DeclaringType.DeclaringModule.Types[0])
-          dmeth = new System.Reflection.Emit.DynamicMethod(name, attrs, callConv, rtype, paramTypes, module, skipVisibility);
-        else
-          dmeth = new System.Reflection.Emit.DynamicMethod(name, attrs, callConv, rtype, paramTypes, owner, skipVisibility);
-        dmeth.InitLocals = true;
-        ReGenerator reGenerator = new ReGenerator(dmeth.GetILGenerator());
-        reGenerator.VisitMethod(this);
-      }
-      return this.dynamicMethod;
-    }
-#endif
-#if !NoReflection
     protected System.Reflection.MethodInfo methodInfo;
     public virtual System.Reflection.MethodInfo GetMethodInfo(){
       if (this.methodInfo == null){
         if (this.DeclaringType == null) return null;
-#if WHIDBEY
+
         if (this.IsGeneric && this.Template != null){
           try{
             System.Reflection.MethodInfo templateInfo = this.Template.GetMethodInfo();
@@ -18458,7 +12475,7 @@ namespace System.Compiler{
             return null;
           }
         }
-#endif
+
         Type t = this.DeclaringType.GetRuntimeType();
         if (t == null) return null;
         Type retType = typeof(object);
@@ -18487,7 +12504,7 @@ namespace System.Compiler{
           if (meth == null) continue;
           if (meth.IsStatic != this.IsStatic) continue;
           if (meth.ReturnType != retType) continue;
-#if WHIDBEY
+
           if (meth.IsGenericMethodDefinition) {
             TypeNodeList templateParams = this.TemplateParameters;
             Type[] genericArgs = meth.GetGenericArguments();
@@ -18498,7 +12515,7 @@ namespace System.Compiler{
               if (t1 == null || t2 == null || t1.Name == null || t1.Name.Name != t2.Name) goto tryNext;
             }
           }
-#endif
+
           System.Reflection.ParameterInfo[] parameters = meth.GetParameters();
           int parCount = parameters == null ? 0 : parameters.Length;
           if (parCount != n) continue;
@@ -18520,8 +12537,6 @@ namespace System.Compiler{
       }
       return this.methodInfo;
     }
-#endif
-#if !MinimalReader
     protected TypeNode[] parameterTypes;
     public virtual TypeNode[]/*!*/ GetParameterTypes() {
       if (this.parameterTypes != null) return this.parameterTypes;
@@ -18535,7 +12550,6 @@ namespace System.Compiler{
       }
       return types;
     }
-#endif
     public virtual bool ParametersMatch(ParameterList parameters){
       ParameterList pars = this.Parameters;
       int n = pars == null ? 0 : pars.Count;
@@ -18550,7 +12564,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#if !MinimalReader
     public virtual bool ParametersMatchExceptLast(ParameterList parameters){
       ParameterList pars = this.Parameters;
       int n = pars == null ? 0 : pars.Count;
@@ -18565,7 +12578,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#endif
     public virtual bool ParametersMatchStructurally(ParameterList parameters){
       ParameterList pars = this.Parameters;
       int n = pars == null ? 0 : pars.Count;
@@ -18581,7 +12593,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#if !MinimalReader
     public virtual bool ParametersMatchStructurallyIncludingOutFlag(ParameterList parameters){
       return this.ParametersMatchStructurallyIncludingOutFlag(parameters, false);
     }
@@ -18633,7 +12644,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#endif
     public virtual bool ParameterTypesMatch(TypeNodeList argumentTypes){
       int n = this.Parameters == null ? 0 : this.Parameters.Count;
       int m = argumentTypes == null ? 0 : argumentTypes.Count;
@@ -18681,22 +12691,6 @@ namespace System.Compiler{
       }
       return true;
     }
-#if UseSingularityPDB
-    internal TrivialHashtable contextForOffset;
-    internal void RecordSequencePoints(PdbFunction methodInfo) {
-      if (methodInfo == null || this.contextForOffset != null) return;
-      this.contextForOffset = new TrivialHashtable();
-      for (int i = 0, n = methodInfo.lines == null ? 0 : methodInfo.lines.Length; i < n; i++) {
-        PdbLines lines = methodInfo.lines[i];
-        PdbDocument doc = new PdbDocument(lines);
-        for (int j = 0, m = lines.lines.Length; j < m; j++) {
-          PdbLine line = lines.lines[j];
-          if (line.line != 0xfeefee)
-            this.contextForOffset[(int)line.offset+1] = new SourceContext(doc, j*2, j*2+1 );
-        }
-      }
-    }
-#elif !ROTOR
     internal TrivialHashtable contextForOffset;
     internal void RecordSequencePoints(ISymUnmanagedMethod methodInfo, System.Collections.Generic.Dictionary<IntPtr,UnmanagedDocument> documentCache){
       if (methodInfo == null || this.contextForOffset != null) return;
@@ -18719,78 +12713,24 @@ namespace System.Compiler{
         {
           var doc = UnmanagedDocument.For(documentCache, docPtrs[i]);
           this.contextForOffset[(int)offsets[i] + 1] = 
-#if !FxCop
             new SourceContext(doc, -1, -1);
-#else
-            new SourceContext(null, MagicHidden, 0, 0, 0);
-#endif
         }
         else
         {
           var doc = UnmanagedDocument.For(documentCache, docPtrs[i]);
           this.contextForOffset[(int)offsets[i] + 1] =
-#if !FxCop
             new SourceContext(doc, doc.GetOffset(startLines[i], startCols[i]), doc.GetOffset(endLines[i], endCols[i]));
-#else
-            new SourceContext(doc.Name, startLines[i], endLines[i], startCols[i], endCols[i]);
-#endif
         }
       }
       for (int i = 0; i < count; i++)
         System.Runtime.InteropServices.Marshal.Release(docPtrs[i]);
     }
-#endif
     private static Method NotSpecified = new Method();
     private Method template;
     /// <summary>The (generic) method template from which this method was instantiated. Null if this is not a (generic) method template instance.</summary>
     public Method Template{
       get{
         Method result = this.template;
-#if ExtendedRuntime
-        if (result == null){
-          AttributeList attributes = this.Attributes;
-          lock(this){
-            if (this.template != null) return this.template;
-            for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++){
-              AttributeNode attr = attributes[i];
-              if (attr == null) continue;
-              MemberBinding mb = attr.Constructor as MemberBinding;
-              if (mb == null || mb.BoundMember == null || mb.BoundMember.DeclaringType != SystemTypes.TemplateInstanceAttribute) continue;
-              ExpressionList exprs = attr.Expressions;
-              if (exprs == null || exprs.Count != 2) continue;
-              Literal lit = exprs[0] as Literal;
-              if (lit == null) continue;
-              TypeNode templ = lit.Value as TypeNode;
-              if (templ != null){
-                lit = exprs[1] as Literal;
-                if (lit == null) continue;
-                object[] types = lit.Value as object[];
-                if (types == null) continue;
-                int m = types == null ? 0 : types.Length;
-                TypeNodeList templateArguments = new TypeNodeList(m);
-                for (int j = 0; j < m; j++){
-                  //^ assert types != null;
-                  TypeNode t = types[j] as TypeNode;
-                  if (t == null) continue;
-                  templateArguments.Add(t);
-                }
-                this.TemplateArguments = templateArguments;
-                MemberList members = templ.GetMembersNamed(this.Name);
-                if (members != null)
-                  for (int j = 0, k = members.Count; j < k; j++){
-                    Method meth = members[j] as Method;
-                    if (meth == null) continue;
-                    if (meth.ParametersMatch(this.Parameters)){
-                      this.template = result = meth; break;
-                    }
-                  }
-              }
-            }
-            if (result == null)
-              this.template = Method.NotSpecified;
-          }
-        }else 
-#endif
           if (result == Method.NotSpecified)
           return null;
         return result;
@@ -18808,52 +12748,20 @@ namespace System.Compiler{
       set{this.templateArguments = value;}
     }
     internal TypeNodeList templateParameters;
-#if CodeContracts
     public ExtraPDBInfo ExtraDebugInfo;
     public bool IsAsync;
     public int? MoveNextStartState;
-#endif
     public virtual TypeNodeList TemplateParameters{
       get{
-#if CodeContracts
         CC.Contract.Ensures(CC.Contract.Result<TypeNodeList>() == null
           || CC.Contract.ForAll(0, CC.Contract.Result<TypeNodeList>().Count, i => ((ITypeParameter)CC.Contract.Result<TypeNodeList>()[i]).ParameterListIndex == i));
-#endif
 
         TypeNodeList result = this.templateParameters;
-#if ExtendedRuntime
-        if (result == null && this.Template == null){
-          this.TemplateParameters = result = new TypeNodeList();
-          AttributeList attributes = this.Attributes;
-          for (int i = 0, n = attributes == null ? 0 : attributes.Count; i < n; i++){
-            AttributeNode attr = attributes[i];
-            if (attr == null) continue;
-            MemberBinding mb = attr.Constructor as MemberBinding;
-            if (mb == null || mb.BoundMember == null || mb.BoundMember.DeclaringType != SystemTypes.TemplateAttribute) continue;
-            ExpressionList exprs = attr.Expressions;
-            if (exprs == null || exprs.Count != 1) continue;
-            Literal lit = exprs[0] as Literal;
-            if (lit == null) continue;
-            object[] types = lit.Value as object[];
-            if (types == null) continue;
-            for (int j = 0, m = types == null ? 0 : types.Length; j < m; j++){
-              TypeNode t = types[j] as TypeNode;
-              if (t == null) continue;
-              if (t.NodeType == NodeType.TypeParameter || t.NodeType == NodeType.ClassParameter)
-                result.Add(t);
-            }
-            attributes[i] = null;
-          }
-        }
-        if (result == null || result.Count == 0) return null;
-#endif
         return result;
       }
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Contracts", "RequiresAtCall-value == null || CC.Contract.ForAll(0, value.Count, i => ((ITypeParameter)value[i]).ParameterListIndex == i)")]
       set{
-#if CodeContracts
         CC.Contract.Requires(value == null || CC.Contract.ForAll(0, value.Count, i => ((ITypeParameter)value[i]).ParameterListIndex == i)); 
-#endif
         this.templateParameters = value;
       }
     }
@@ -18899,9 +12807,7 @@ namespace System.Compiler{
         result.TemplateArguments = typeArguments;
         TypeNodeList templateParameters = result.TemplateParameters;
         result.TemplateParameters = null;
-#if !MinimalReader
         result.IsNormalized = true;
-#endif
         if (!this.IsGeneric){
           ParameterList pars = this.Parameters;
           ParameterList rpars = result.Parameters;
@@ -18944,23 +12850,6 @@ namespace System.Compiler{
         if (list1[i] != list2[i]) return false;
       return true;
     }
-#if !MinimalReader && !CodeContracts
-    /// <summary>
-    /// Returns the local associated with the given field, allocating a new local if necessary.
-    /// </summary>
-    public virtual Local/*!*/ GetLocalForField(Field/*!*/ f){
-      if (this.Locals == null)
-      {
-        this.Locals = new TrivialHashtable();
-      }
-      Local loc = (Local)this.Locals[f.UniqueKey];
-      if (loc == null){
-        this.Locals[f.UniqueKey] = loc = new Local(f.Name, f.Type);
-        loc.SourceContext = f.Name.SourceContext;
-      }
-      return loc;
-    }
-#endif
     //TODO: Also need to add a method for allocating locals
     public Method CreateExplicitImplementation(TypeNode implementingType, ParameterList parameters, StatementList body){
       Method m = new Method(implementingType, null, this.Name, parameters, this.ReturnType, new Block(body));
@@ -18980,96 +12869,13 @@ namespace System.Compiler{
     public override string ToString() {
       return this.DeclaringType.GetFullUnmangledNameWithTypeParameters() + "." + this.Name;
     }
-#if !MinimalReader && !CodeContracts
-    public bool GetIsCompilerGenerated() {
-      InstanceInitializer ii = this as InstanceInitializer;
-      return this.HasCompilerGeneratedSignature || (ii != null && ii.IsCompilerGenerated);
-    }
-#endif
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      base.GetName(options, name);
-      AppendTypeParameters(options, name);
-      AppendParametersAndReturnType(options, this.Parameters, '(', ')', this.ReturnType, name);
-    }
-    private void AppendTypeParameters(MemberFormat options, StringBuilder name)
-    {
-      if (options.ShowGenericMethodTypeParameterNames == false
-        || this.templateParameters == null
-        || this.templateParameters.Count == 0)
-        return;
-
-        name.Append('<');
-        TypeNodeList templateParameters = this.TemplateParameters;
-        for (int i = 0; i < templateParameters.Count; i++)
-        {
-          TypeNode templateParameter = templateParameters[i];
-          if (i != 0)
-          {
-            name.Append(',');
-            if (options.InsertSpacesBetweenMethodTypeParameters)
-              name.Append(' ');
-          }
-          name.Append(templateParameter.Name.Name);
-        }
-        name.Append('>');
-    }
-
-    internal static void AppendParametersAndReturnType(MemberFormat options, ParameterCollection parameters, char parametersPrefix, char parametersSuffix, TypeNode returnType, StringBuilder name)
-    {
-      AppendParameters(options.Parameters, parameters, parametersPrefix, parametersSuffix, name);
-      AppendReturnType(options.ReturnType, returnType, name);     
-    }
-
-    internal static void AppendParameters(ParameterFormat options, ParameterCollection parameters, char prefix, char suffix, StringBuilder name)
-    {
-        if (parameters == null)
-            return;
-
-        if (options.TypeName == TypeNameFormat.None && options.ShowParameterNames == false)
-          return;
-
-        name.Append(prefix);
-        for (int i = 0; i < parameters.Count; ++i)
-        {
-          Parameter parameter = parameters[i];
-          if (i > 0)
-          {
-            name.Append(',');
-            if (options.InsertSpacesBetweenParameters)
-              name.Append(' ');
-          }
-          if (options.TypeName != TypeNameFormat.None)
-          {
-            parameter.Type.GetName(options, name);
-            if (options.ShowParameterNames) name.Append(' ');
-          }
-          if (options.ShowParameterNames)
-            name.Append(parameter.Name.Name);
-        }
-        name.Append(suffix);
-    }
-
-    internal static void AppendReturnType(TypeFormat options, TypeNode returnType, StringBuilder name)
-    {
-      if (options.TypeName == TypeNameFormat.None)
-        return;
-
-      name.Append(':');
-      returnType.GetName(options, name);
-    }
-#endif
   }
-#if !MinimalReader
   public class ProxyMethod : Method{
     public Method ProxyFor;
     public ProxyMethod(TypeNode declaringType, AttributeList attributes, Identifier name, ParameterList parameters, TypeNode returnType, Block body)
       : base(declaringType, attributes, name, parameters, returnType, body) { }
   }
-#endif
   public class InstanceInitializer : Method{
-#if !MinimalReader
     /// <summary>
     /// True if this constructor calls a constructor declared in the same class, as opposed to the base class.
     /// </summary>
@@ -19083,7 +12889,6 @@ namespace System.Compiler{
     public bool ContainsBaseMarkerBecauseOfNonNullFields;
     public Block BaseOrDefferingCallBlock;
     public bool IsCompilerGenerated = false;
-#endif
     public InstanceInitializer()
       : base(){
       this.NodeType = NodeType.InstanceInitializer;
@@ -19096,14 +12901,11 @@ namespace System.Compiler{
       : base(provider, handle){
       this.NodeType = NodeType.InstanceInitializer;
     }
-#if ILOFFSETS
     public InstanceInitializer(MethodBodyProvider provider, object handle, int methodToken)
       : base(provider, handle, methodToken)
     {
       this.NodeType = NodeType.InstanceInitializer;
     }
-#endif
-#if !MinimalReader
     public InstanceInitializer(TypeNode declaringType, AttributeList attributes, ParameterList parameters, Block body) 
       : this(declaringType, attributes, parameters, body, CoreSystemTypes.Void){
     }
@@ -19115,8 +12917,6 @@ namespace System.Compiler{
       this.Name = StandardIds.Ctor;
       this.ReturnType = returnType;
     }
-#endif
-#if !NoReflection
     protected System.Reflection.ConstructorInfo constructorInfo;
     public virtual System.Reflection.ConstructorInfo GetConstructorInfo(){
       if (this.constructorInfo == null){
@@ -19150,8 +12950,6 @@ namespace System.Compiler{
       }
       return this.constructorInfo;
     }
-#endif
-#if !NoReflection
     public override System.Reflection.MethodInfo GetMethodInfo(){
       return null;
     }
@@ -19170,7 +12968,6 @@ namespace System.Compiler{
         }
       return new Literal(this.Invoke(args));
     }
-#endif
     //initializers never override a base class initializer
     public override bool OverridesBaseClassMember {
       get { return false; }
@@ -19187,7 +12984,6 @@ namespace System.Compiler{
     public override string ToString() {
       return this.DeclaringType.GetFullUnmangledNameWithTypeParameters() + "(" + this.Parameters + ")";
     }
-#if !MinimalReader
     public virtual MemberList GetAttributeConstructorNamedParameters() {
       TypeNode type = this.DeclaringType;
       if (type == null || !type.IsAssignableTo(SystemTypes.Attribute) || type.Members == null)
@@ -19209,23 +13005,6 @@ namespace System.Compiler{
       }
       return ml;
     }
-#endif
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      GetInitializerName(options, this.DeclaringType, this.Parameters, name, StandardIds.Ctor.Name);
-    }
-    internal static void GetInitializerName(MemberFormat options, TypeNode declaringType, ParameterCollection parameters, StringBuilder name, string methodName)
-    {
-      if (options.Type.TypeName != TypeNameFormat.None)
-      {
-        declaringType.GetName(options, name);
-        name.Append('.');
-      }
-      name.Append(methodName);
-      AppendParameters(options.Parameters, parameters, '(', ')', name);
-    }
-#endif
   }
   public class StaticInitializer : Method{
     public StaticInitializer()
@@ -19235,18 +13014,15 @@ namespace System.Compiler{
       this.Name = StandardIds.CCtor;
       this.ReturnType = CoreSystemTypes.Void;
     }
-#if ILOFFSETS
     public StaticInitializer(MethodBodyProvider provider, object handle, int methodToken)
       : base(provider, handle, methodToken)
     {
       this.NodeType = NodeType.StaticInitializer;
     }
-#endif
     public StaticInitializer(MethodBodyProvider provider, object handle)
       : base(provider, handle){
       this.NodeType = NodeType.StaticInitializer;
     }
-#if !MinimalReader
     public StaticInitializer(TypeNode declaringType, AttributeList attributes, Block body)
       : base(declaringType, attributes, StandardIds.CCtor,  null, null, body){
       this.NodeType = NodeType.StaticInitializer;
@@ -19261,8 +13037,6 @@ namespace System.Compiler{
       this.Name = StandardIds.CCtor;
       this.ReturnType = voidTypeExpression;
     }
-#endif
-#if !NoReflection
     protected System.Reflection.ConstructorInfo constructorInfo;
     public virtual System.Reflection.ConstructorInfo GetConstructorInfo(){
       if (this.constructorInfo == null){
@@ -19299,7 +13073,6 @@ namespace System.Compiler{
     public override System.Reflection.MethodInfo GetMethodInfo(){
       return null;
     }
-#endif
     //initializers never override a base class initializer
     public override bool OverridesBaseClassMember {
       get { return false; }
@@ -19313,14 +13086,7 @@ namespace System.Compiler{
       get { return null; }
       set {}
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      InstanceInitializer.GetInitializerName(options, this.DeclaringType, this.Parameters, name, StandardIds.CCtor.Name);
-    }
-#endif
   }
-#if !MinimalReader
   public class FieldInitializerBlock : Block{
     public TypeNode Type;
     public bool IsStatic;
@@ -19335,8 +13101,6 @@ namespace System.Compiler{
       this.IsStatic = isStatic;
     }
   }
-#endif
-#if !MinimalReader
   public class ParameterField : Field{
     protected Parameter parameter;
     public ParameterField(){
@@ -19354,7 +13118,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   /// <summary>
   /// Used to transmit info from il reader to dummy member generator
   /// </summary>
@@ -19363,7 +13126,6 @@ namespace System.Compiler{
     public bool IsStatic;
   }
   public class Field : Member{
-#if !MinimalReader
     /// <summary>Provides a value that is assigned to the field upon initialization.</summary>
     public Expression Initializer;
     public TypeNode TypeExpression;
@@ -19373,7 +13135,6 @@ namespace System.Compiler{
     // if this is the backing field for some event, then ForEvent is that event
     public Event ForEvent;
     public bool IsModelfield = false; //set to true if this field serves as the representation of a modelfield in a class
-#endif
     public Field()
       : base(NodeType.Field){
     }
@@ -19440,7 +13201,6 @@ namespace System.Compiler{
         return result;
       }
     }
-#if !NoXml
     protected override Identifier GetDocumentationId(){
         if (this.DeclaringType == null) return Identifier.Empty;
         if (this.Name == null) return Identifier.Empty;
@@ -19450,16 +13210,12 @@ namespace System.Compiler{
         sb.Append(this.Name.Name);
         return Identifier.For(sb.ToString());
     }
-#endif
-#if !NoReflection
     public static Field GetField(System.Reflection.FieldInfo fieldInfo){
       if (fieldInfo == null) return null;
       TypeNode tn = TypeNode.GetTypeNode(fieldInfo.DeclaringType);
       if (tn == null) return null;
       return tn.GetField(Identifier.For(fieldInfo.Name));
     }
-#endif
-#if !NoReflection
     protected System.Reflection.FieldInfo fieldInfo;
     public virtual System.Reflection.FieldInfo GetFieldInfo(){
       if (this.fieldInfo == null){
@@ -19474,7 +13230,6 @@ namespace System.Compiler{
       }
       return this.fieldInfo;
     }
-#endif
     /// <summary>True if all references to the field are replaced with a value that is determined at compile-time.</summary>
     public virtual bool IsLiteral{
       get{return (this.Flags & FieldFlags.Literal) != 0;}
@@ -19524,7 +13279,6 @@ namespace System.Compiler{
         }
       }
     }    
-#if !NoReflection
     public virtual object GetValue(object targetObject){
       System.Reflection.FieldInfo fieldInfo = this.GetFieldInfo();
       if (fieldInfo == null) return null;
@@ -19541,134 +13295,25 @@ namespace System.Compiler{
     public virtual void SetValue(Literal/*!*/ targetObject, Literal/*!*/ value) {
       this.SetValue(targetObject.Value, value.Value);
     }
-#endif    
-#if ExtendedRuntime
-    ReferenceFieldSemantics referenceSemantics;
-    public ReferenceFieldSemantics ReferenceSemantics{
-      get{
-        if (this.referenceSemantics == ReferenceFieldSemantics.NotComputed){
-          ReferenceFieldSemantics referenceKind;
-          TypeNode t = this.Type;
-          if (t == null) return this.referenceSemantics;
-          if (t is Struct){
-            TypeNodeList args;
-            bool b = t.IsAssignableToInstanceOf(SystemTypes.GenericIEnumerable, out args);
-            if ( b && args!= null && args.Count > 0 && args[0] != null && args[0].IsObjectReferenceType)
-              referenceKind = ReferenceFieldSemantics.EnumerableStructOfReferences;
-            else if (t.IsAssignableTo(SystemTypes.IEnumerable))
-              referenceKind = ReferenceFieldSemantics.EnumerableStructOfReferences;
-            else
-              referenceKind = ReferenceFieldSemantics.NonReference;
-          }else if (t != null && t.IsObjectReferenceType)
-            referenceKind = ReferenceFieldSemantics.Reference;
-          else
-            referenceKind = ReferenceFieldSemantics.NonReference;
-          if (referenceKind == ReferenceFieldSemantics.NonReference)
-            this.referenceSemantics = referenceKind | ReferenceFieldSemantics.None;
-          else{
-            if (this.GetAttribute(SystemTypes.LockProtectedAttribute) != null)
-              this.referenceSemantics = referenceKind | ReferenceFieldSemantics.LockProtected;
-            else if (this.GetAttribute(SystemTypes.ImmutableAttribute) != null)
-              this.referenceSemantics = referenceKind | ReferenceFieldSemantics.Immutable;
-            else if (this.GetAttribute(SystemTypes.RepAttribute) != null)
-              this.referenceSemantics = referenceKind | ReferenceFieldSemantics.Rep;
-            else if (this.GetAttribute(SystemTypes.PeerAttribute) != null)
-              this.referenceSemantics = referenceKind | ReferenceFieldSemantics.Peer;
-            else {
-              ReferenceFieldSemantics r = ReferenceFieldSemantics.None;
-              this.referenceSemantics = referenceKind | r;
-            }
-          }
-        }
-        return this.referenceSemantics;
-      }
-      set {
-        this.referenceSemantics = value;
-      }
-    }
-    public bool IsOwned{
-      get{
-        return this.IsRep || this.IsPeer;
-      }
-    }
-      public bool IsOnce
-      {
-          get {
-              return this.GetAttribute(SystemTypes.OnceAttribute) != null;
-          }
-      }
-
-    public bool IsRep{
-      get {
-        return this.ReferenceSemantics == (ReferenceFieldSemantics.Rep | ReferenceFieldSemantics.Reference);
-      }
-    }
-    public bool IsPeer {
-      get {
-        return this.ReferenceSemantics == (ReferenceFieldSemantics.Peer | ReferenceFieldSemantics.Reference);
-      }
-    }
-    public bool IsLockProtected {
-      get{
-        return this.ReferenceSemantics == (ReferenceFieldSemantics.LockProtected | ReferenceFieldSemantics.Reference);
-      }
-    }
-    public bool IsStrictReadonly {
-      get {
-        return this.GetAttribute(ExtendedRuntimeTypes.StrictReadonlyAttribute) != null;
-      }
-    }
-#endif
     public override string ToString() {
       return this.DeclaringType.GetFullUnmangledNameWithTypeParameters() + "." + this.Name;
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      base.GetName(options, name);
-      Method.AppendReturnType(options.ReturnType, this.Type, name);
-    }
-#endif
   }
-#if ExtendedRuntime
-  /// <summary>
-  /// The behavior of a field in the Spec# object invariants/ownership/concurrency methodology.
-  /// </summary>
-  public enum ReferenceFieldSemantics{
-    NotComputed,
-    None,
-    Rep,
-    LockProtected,
-    Immutable,
-    Peer,
-    SemanticsMask = 0xff,
-    Reference = 0x100,
-    EnumerableStructOfReferences = 0x200,
-    NonReference = 0x300,
-    ReferenceMask = 0xff00,
-  }
-#endif
-#if FxCop
-  public class PropertyNode : Member{
-#else
   public class Property : Member{
-#endif
-#if !MinimalReader
+
+
     /// <summary>
     /// The list of types (just one in C#) that contain abstract or virtual properties that are explicity implemented or overridden by this property.
     /// </summary>
     public TypeNodeList ImplementedTypes;
     public TypeNodeList ImplementedTypeExpressions;
     public bool IsModelfield = false;   //set to true if this property serves as the representation of a modelfield in an interface
-#endif
-#if FxCop
-    public PropertyNode()
-#else
+
     public Property()
-#endif
+
       : base(NodeType.Property){
     }
-#if !MinimalReader
+
     public Property(TypeNode declaringType, AttributeList attributes, PropertyFlags flags, Identifier name, 
       Method getter, Method setter)
       : base(declaringType, attributes, name, NodeType.Property){
@@ -19678,7 +13323,7 @@ namespace System.Compiler{
       if (getter != null) getter.DeclaringMember = this;
       if (setter != null) setter.DeclaringMember = this;
     }
-#endif
+
     private PropertyFlags flags;
     public PropertyFlags Flags{
       get{return this.flags;}
@@ -19726,7 +13371,7 @@ namespace System.Compiler{
         return this.fullName = sb.ToString();
       }
     }
-#if !MinimalReader
+
     public virtual Method GetBaseGetter() {
       if (this.HidesBaseClassMember) return null;
       TypeNode t = this.DeclaringType;
@@ -19759,8 +13404,8 @@ namespace System.Compiler{
       }
       return null;
     }
-#endif
-#if !NoXml
+
+
     protected override Identifier GetDocumentationId(){
       StringBuilder sb = new StringBuilder(this.DeclaringType.DocumentationId.ToString());
       sb[0] = 'P';
@@ -19781,8 +13426,8 @@ namespace System.Compiler{
       }
       return Identifier.For(sb.ToString());
     }
-#endif
-#if !NoReflection
+
+
     public static Property GetProperty(System.Reflection.PropertyInfo propertyInfo){
       if (propertyInfo == null) return null;
       TypeNode tn = TypeNode.GetTypeNode(propertyInfo.DeclaringType);
@@ -19798,9 +13443,7 @@ namespace System.Compiler{
         }
       return tn.GetProperty(Identifier.For(propertyInfo.Name), parameterTypes);
     }
-#endif
 
-#if !NoReflection
     protected System.Reflection.PropertyInfo propertyInfo;
     public virtual System.Reflection.PropertyInfo GetPropertyInfo(){
       if (this.propertyInfo == null){
@@ -19868,8 +13511,6 @@ namespace System.Compiler{
       if (propInfo == null) throw new InvalidOperationException();
       propInfo.SetValue(targetObject.Value, value.Value, inds);
     }
-#endif
-#if !NoXml
     public override string HelpText {
       get {
         if (this.helpText != null)
@@ -19902,7 +13543,6 @@ namespace System.Compiler{
         base.HelpText = value;
       }
     }
-#endif
     public override bool IsAssembly{
       get{return Method.GetVisibilityUnion(this.Getter, this.Setter) == MethodFlags.Assembly;}
     }
@@ -20084,29 +13724,17 @@ namespace System.Compiler{
         this.type = value;
       }
     }
-#if !MinimalReader
     public TypeNode TypeExpression;
-#endif
+
     public override string ToString() {
       return this.DeclaringType.GetFullUnmangledNameWithTypeParameters() + "." + this.Name;
     }
-#if FxCop
-    internal override void GetName(MemberFormat options, StringBuilder name)
-    {
-      base.GetName(options, name);
-      ParameterCollection parameters = this.parameters.Count > 0 ? this.parameters : null;
-      // AppendParametersAndReturnType will not emit the paramters
-      // prefix and suffix if a null ParameterCollection is provided to it.
-      // This prevents a parameterless property from being rendered as MyProperty[]
-      Method.AppendParametersAndReturnType(options, parameters, '[', ']', this.Type, name);
-    }
-#endif
   }
   public class Variable : Expression{
     private Identifier name;
-#if !MinimalReader
+
     public TypeNode TypeExpression;
-#endif
+
     public Variable(NodeType type)
       :base(type){
     }
@@ -20171,7 +13799,7 @@ namespace System.Compiler{
       this.Name = name;
       this.Type = type;
     }
-#if !MinimalReader
+
     public Parameter(AttributeList attributes, ParameterFlags flags, Identifier name, TypeNode type, 
       Literal defaultValue, MarshallingInformation marshallingInformation)
       : base(NodeType.Parameter){
@@ -20182,7 +13810,7 @@ namespace System.Compiler{
       this.Name = name;
       this.Type = type;
     }
-#endif
+
     /// <summary>
     /// True if the corresponding argument value is used by the callee. (This need not be the case for a parameter marked as IsOut.) 
     /// </summary>
@@ -20225,7 +13853,7 @@ namespace System.Compiler{
           this.Flags &= ~ParameterFlags.Out;
       }
     }
-#if !MinimalReader
+
     protected internal TypeNode paramArrayElementType = null;
     /// <summary>
     /// If the parameter is a param array, this returns the element type of the array. If not, it returns null.
@@ -20303,27 +13931,14 @@ namespace System.Compiler{
       }
       return null;
     }
-#endif
-#if ExtendedRuntime
-    public virtual bool IsUniversallyDelayed {
-      get {
-        // Special handling of delegate constructors. Their first argument is delayed.
-        if (this.DeclaringMethod != null && this.DeclaringMethod.DeclaringType is DelegateNode) {
-          if (this.DeclaringMethod.Parameters[0] == this) { // first parameter (not including this)
-            return true;
-          }
-        }
-        return (this.GetAttribute(ExtendedRuntimeTypes.DelayedAttribute) != null);
-      }
-    }
-#endif
+
     public override string ToString() {
       if (this.Name == null) return "";
       if (this.Type == null) return this.Name.ToString();
       return this.Type.ToString() + " " + this.Name.ToString();
     }
   }
-#if !MinimalReader
+
   public class ParameterBinding : Parameter, IUniqueKey{
     public Parameter/*!*/ BoundParameter;
 
@@ -20357,13 +13972,11 @@ namespace System.Compiler{
       get {return this.BoundParameter.UniqueKey;}
     }
   }
-#endif
+
   public class Local : Variable{   
-#if !MinimalReader
     public Block DeclaringBlock;
     public bool InitOnly;
     public int Index;
-#endif
     public Local()
       : base(NodeType.Local){
     }
@@ -20377,7 +13990,7 @@ namespace System.Compiler{
       : this(type){
       this.Name = name;
     }
-#if !MinimalReader
+
     public Local(TypeNode type, SourceContext context)
       : this(Identifier.Empty, type, null){
       this.SourceContext = context;
@@ -20393,13 +14006,13 @@ namespace System.Compiler{
       if (type == null) type = CoreSystemTypes.Object;
       this.Type = type;
     }
-#endif
+
     private bool pinned;
     public bool Pinned{
       get{return this.pinned;}
       set{this.pinned = value;}
     }
-#if !MinimalReader
+
     public override bool Equals(object obj){
       LocalBinding binding = obj as LocalBinding;
       return obj == this || binding != null && binding.BoundLocal == this;
@@ -20418,10 +14031,8 @@ namespace System.Compiler{
     /// Returns true if the local has no name in the IL code
     /// </summary>
     public bool Anonymous { get; internal set; }
-#endif
 
   }
-#if !MinimalReader
   public class LocalBinding : Local, IUniqueKey{
     public Local/*!*/ BoundLocal;
 
@@ -20452,7 +14063,6 @@ namespace System.Compiler{
       get {return this.BoundLocal.UniqueKey;}
     }
   }
-#endif
   /// <summary>
   /// A named container of types and nested namespaces. 
   /// The name of the container implicitly qualifies the names of the contained types and namespaces.
@@ -20460,26 +14070,6 @@ namespace System.Compiler{
   public class Namespace : Member{
     /// <summary>The FullName of the namespace in the form of an Identifier rather than in the form of a string.</summary>
     public Identifier FullNameId;
-#if !MinimalReader && !CodeContracts
-    /// <summary>
-    /// Provides alternative names for types and nested namespaces. Useful for introducing shorter names or for resolving name clashes.
-    /// The names should be added to the scope associated with this namespace.
-    /// </summary>
-    public AliasDefinitionList AliasDefinitions;
-    /// <summary>
-    /// The list of namespaces that are fully contained inside this namespace.
-    /// </summary>
-    public NamespaceList NestedNamespaces;
-    /// <summary>
-    /// The Universal Resource Identifier that should be associated with all declarations inside this namespace.
-    /// Typically used when the types inside the namespace are serialized as an XML Schema Definition. (XSD)
-    /// </summary>
-    public Identifier URI;
-    /// <summary>
-    /// The list of the namespaces of types that should be imported into the scope associated with this namespace.
-    /// </summary>
-    public UsedNamespaceList UsedNamespaces;
-#endif
     /// <summary>
     /// A delegate that is called the first time Types is accessed. Provides for incremental construction of the namespace node.
     /// </summary>
@@ -20507,29 +14097,6 @@ namespace System.Compiler{
       if (name != null)
         this.fullName = name.ToString();
     }
-#if !MinimalReader && !CodeContracts
-    public Namespace(Identifier name, TypeProvider provideTypes, object providerHandle)
-      : base(NodeType.Namespace){
-      this.Name = name;
-      this.FullNameId = name;
-      if (name != null)
-        this.fullName = name.ToString();
-      this.ProvideTypes = provideTypes;
-      this.ProviderHandle = providerHandle;
-    }
-    public Namespace(Identifier name, Identifier fullName, AliasDefinitionList aliasDefinitions,  UsedNamespaceList usedNamespaces, 
-      NamespaceList nestedNamespaces, TypeNodeList types)
-      : base(NodeType.Namespace){
-      this.Name = name;
-      this.FullNameId = fullName;
-      if (fullName != null)
-        this.fullName = fullName.ToString();
-      this.AliasDefinitions = aliasDefinitions;
-      this.NestedNamespaces = nestedNamespaces;
-      this.Types = types;
-      this.UsedNamespaces = usedNamespaces;
-    }
-#endif
     public override string/*!*/ FullName {
       get{return this.fullName == null ? "" : this.fullName;}
     }
@@ -20566,474 +14133,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader && !CodeContracts
-  /// <summary>
-  /// The root node of an Abstract Syntax Tree. Typically corresponds to multiple source files compiled to form a single target.
-  /// </summary>
-  public class Compilation : Node{
-    /// <summary>
-    /// The compilation parameters that are used for this compilation.
-    /// </summary>
-    public System.CodeDom.Compiler.CompilerParameters CompilerParameters;
-    /// <summary>
-    /// The target code object that is produced as a result of this compilation.
-    /// </summary>
-    public Module TargetModule;
-    /// <summary>
-    /// A list of all the compilation units (typically source files) that make up this compilation.
-    /// </summary>
-    public CompilationUnitList CompilationUnits;
-    /// <summary>
-    /// A scope for symbols that belong to the compilation as a whole. No C# equivalent. Null if not applicable.
-    /// </summary>
-    public Scope GlobalScope;
-    /// <summary>
-    /// A list of compilations that produce assemblies and modules that are referenced by this compilation and hence need to be
-    /// compiled before this Compilation is compiled. This list is not intended to include already compiled framework assemblies
-    /// such as system.dll.
-    /// </summary>
-    public CompilationList ReferencedCompilations;
-    public DateTime LastModified = DateTime.Now;
-    public DateTime LastCompiled = DateTime.MinValue;
-
-    public Compilation()
-      : base(NodeType.Compilation){
-    }
-    public Compilation(Module targetModule, CompilationUnitList compilationUnits, System.CodeDom.Compiler.CompilerParameters compilerParameters, Scope globalScope)
-      : base(NodeType.Compilation){
-      this.CompilationUnits = compilationUnits;
-      this.TargetModule = targetModule;
-      this.CompilerParameters = compilerParameters;
-      this.GlobalScope = globalScope;
-    }
-    public virtual Compilation CloneCompilationUnits(){
-      Compilation clone = (Compilation)base.Clone();
-      CompilationUnitList cus = this.CompilationUnits;
-      if (cus != null){
-        clone.CompilationUnits = cus = cus.Clone();
-        for (int i = 0, n = cus.Count; i < n; i++){
-          CompilationUnit cu = cus[i];
-          if (cu == null) continue;
-          cus[i] = cu = (CompilationUnit)cu.Clone();
-          cu.Compilation = clone;
-          cu.Nodes = null;
-        }
-      }
-      return clone;
-    }
-  }
-  /// <summary>
-  /// The root node of an Abstract Syntax Tree. Corresponds to the starting production of the syntax. Equivalent to C# compilation-unit.
-  /// Typically a compilation unit corresponds to a single source file.
-  /// </summary>
-  public class CompilationUnit : Node{
-    /// <summary>
-    /// An identifier that can be used to retrieve the source text of the compilation unit.
-    /// </summary>
-    public Identifier Name;
-    /// <summary>
-    /// An anonymous (name is Identifier.Empty) namespace holding types and nested namespaces.
-    /// </summary>
-    public NodeList Nodes;
-    /// <summary>
-    /// The preprocessor symbols that are to treated as defined when compiling this CompilationUnit into the TargetModule.
-    /// </summary>
-    public Hashtable PreprocessorDefinedSymbols;
-    /// <summary>
-    /// Pragma warning information.
-    /// </summary>
-    public TrivialHashtable PragmaWarnInformation;
-    /// <summary>
-    /// The compilation of which this unit forms a part.
-    /// </summary>
-    public Compilation Compilation;
-
-    public CompilationUnit()
-      : base(NodeType.CompilationUnit){
-    }
-    public CompilationUnit(Identifier name)
-      : base(NodeType.CompilationUnit){
-      this.Name = name;
-    }
-  }
-  public class CompilationUnitSnippet : CompilationUnit{
-    public DateTime LastModified = DateTime.Now;
-    public IParserFactory ParserFactory;
-    public Method ChangedMethod;
-    public int OriginalEndPosOfChangedMethod;
-
-    public CompilationUnitSnippet(){
-      this.NodeType = NodeType.CompilationUnitSnippet;
-    }
-    public CompilationUnitSnippet(Identifier name, IParserFactory parserFactory, SourceContext sctx){
-      this.NodeType = NodeType.CompilationUnitSnippet;
-      this.Name = name;
-      this.ParserFactory = parserFactory;
-      this.SourceContext = sctx;
-    }
-  }
-  public abstract class Composer{
-    public abstract Node Compose (Node node, Composer context, bool hasContextReference, Class scope);
-    private class NullComposer: Composer{
-      public override Node Compose(Node node, Composer context, bool hasContextReference, Class scope){
-        return node;
-      }
-    }
-    public static readonly Composer Null = new NullComposer();
-  }
-  public class Composition: Expression{
-    public Expression Expression;
-    public Composer Composer;
-    public Class Scope;
-    public Composition(Expression exp, Composer composer, Class scope)
-      : base(NodeType.Composition){
-      this.Expression = exp;
-      this.Composer = composer;
-      this.Scope = scope;
-      if (exp != null) this.Type = exp.Type;
-    }
-  }
-#endif
-#if ExtendedRuntime  
-  // query nodes
-  public class QueryAlias: QueryExpression{
-    public Identifier Name;
-    public Expression Expression;
-    public QueryAlias(): base(NodeType.QueryAlias){
-    }
-  }   
-  public abstract class Accessor{
-  }
-  public class MemberAccessor: Accessor{
-    public Member Member;
-    public TypeNode Type;
-    public bool Yield;
-    public Accessor Next;
-    public MemberAccessor(Member member){
-      this.Member = member;
-    }
-  }
-  public class SequenceAccessor: Accessor{
-    public ArrayList Accessors; // member accessors only
-    public SequenceAccessor(){
-      this.Accessors = new ArrayList();
-    }
-  }
-  public class SwitchAccessor: Accessor{
-    public TypeUnion Type;
-    public Hashtable Accessors;  // key == type
-    public SwitchAccessor(){
-      this.Accessors = new Hashtable();
-    }
-  }
-  public enum Cardinality{
-    None,       // reference type
-    One,        // !
-    ZeroOrOne,  // ?
-    OneOrMore,  // +
-    ZeroOrMore  // *
-  }
-  public class QueryAxis: QueryExpression{
-    public Expression Source;
-    public bool IsDescendant;
-    public Identifier Name;
-    public Identifier Namespace;
-    public TypeNode TypeTest;
-    public Accessor AccessPlan;
-    public Cardinality Cardinality;
-    public int YieldCount;
-    public TypeNodeList YieldTypes;
-    public bool IsCyclic;
-    public bool IsIterative;
-    public QueryAxis (Expression source, bool isDescendant, Identifier name, TypeNode typeTest)
-      : base(NodeType.QueryAxis){
-      this.Source = source;
-      this.IsDescendant = isDescendant;
-      this.Name = name;
-      this.TypeTest = typeTest;
-    }
-  }   
-  public class QueryAggregate: QueryExpression{ 
-    public Identifier Name;
-    public TypeNode AggregateType;
-    public Expression Expression;
-    public ContextScope Context;
-    public QueryGroupBy Group;
-    public QueryAggregate(): base(NodeType.QueryAggregate){
-    }
-  }
-  public class ContextScope{
-    public ContextScope Previous;
-    public TypeNode Type;
-    public Expression Target;
-    public Expression Position;
-    public Block PreFilter;
-    public Block PostFilter;
-    public ContextScope(ContextScope previous, TypeNode type){
-      this.Previous = previous;
-      this.Type = type;
-    }
-  }
-  public class QueryContext: QueryExpression{
-    public ContextScope Scope;
-    public QueryContext()
-      : base(NodeType.QueryContext){
-    }    
-    public QueryContext(ContextScope scope): base(NodeType.QueryContext){
-      this.Scope = scope;
-      if (scope != null) this.Type = scope.Type;
-    }    
-  }   
-  public class QueryDelete: QueryExpression{
-    public Expression Source;    
-    public Expression Target;
-    public ContextScope Context;
-    public Expression SourceEnumerable;
-    public QueryDelete(): base(NodeType.QueryDelete){      
-    }
-  } 
-  public class QueryDistinct: QueryExpression{
-    public Expression Source;
-    public ContextScope Context;
-    public QueryGroupBy Group;
-    public Expression GroupTarget;
-    public QueryDistinct(): base(NodeType.QueryDistinct){
-    }
-  }  
-  public class QueryDifference: QueryExpression{
-    public Expression LeftSource;
-    public Expression RightSource;
-    public QueryDifference() : base(NodeType.QueryDifference){
-    }
-  }  
-  public class QueryExists: QueryExpression{
-    public Expression Source;
-    public QueryExists() : base(NodeType.QueryExists){
-    }
-  }  
-  public abstract class QueryExpression: Expression{
-    protected QueryExpression(NodeType nt): base(nt){
-    }
-  }
-  public class QueryFilter: QueryExpression{
-    public Expression Source;
-    public Expression Expression;
-    public ContextScope Context;
-    public QueryFilter(): base(NodeType.QueryFilter){
-    }    
-    public QueryFilter (Expression source, Expression filter): this(){
-      this.Source = source;
-      this.Expression = filter;
-    }
-  } 
-  public class QueryYielder: Statement{
-    public Expression Source;
-    public Expression Target;
-    public Expression State;
-    public Block Body;
-    public QueryYielder(): base(NodeType.QueryYielder){
-    }
-  }
-  public class QueryGeneratedType: Statement{
-    public TypeNode Type;
-    public QueryGeneratedType(TypeNode type): base(NodeType.QueryGeneratedType){
-      this.Type = type;
-    }
-  }
-  public class QueryGroupBy: QueryExpression{
-    public Expression Source;
-    public ContextScope GroupContext;
-    public ExpressionList GroupList;
-    public ExpressionList AggregateList;
-    public Expression Having;
-    public ContextScope HavingContext;
-    public QueryGroupBy(): base(NodeType.QueryGroupBy){
-      this.GroupList = new ExpressionList();
-      this.AggregateList = new ExpressionList();
-    }
-  }  
-  public class QueryInsert: QueryExpression{
-    public Expression Location;
-    public QueryInsertPosition Position;
-    public ExpressionList InsertList;
-    public ExpressionList HintList;
-    public ContextScope Context;
-    public bool IsBracket;
-    public QueryInsert(): base(NodeType.QueryInsert){
-      this.InsertList = new ExpressionList();
-      this.HintList = new ExpressionList();
-    }
-  }    
-  public enum QueryInsertPosition{
-    After,
-    At,
-    Before,
-    First,
-    In,
-    Last
-  }  
-  public class QueryIntersection: QueryExpression{
-    public Expression LeftSource;
-    public Expression RightSource;
-    public QueryIntersection(): base(NodeType.QueryIntersection){
-    }
-  }
-  public class QueryScope: BlockScope{
-    public QueryScope(Scope/*!*/ parentScope)
-      : base(parentScope, null) {
-    }
-  }
-  public class QueryIterator: QueryAlias{
-    public TypeNode ElementType;
-    public TypeNode TypeExpression;
-    public ExpressionList HintList;
-    public QueryIterator(): base(){
-      this.NodeType = NodeType.QueryIterator;      
-      this.HintList = new ExpressionList();
-    }
-  }   
-  public class QueryJoin: QueryExpression{
-    public Expression LeftOperand;
-    public Expression RightOperand;
-    public QueryJoinType JoinType;
-    public Expression JoinExpression;
-    public ContextScope JoinContext;
-    public QueryJoin(): base(NodeType.QueryJoin){
-    }
-  }  
-  public enum QueryJoinType{
-    Inner,
-    LeftOuter,
-    RightOuter,
-    FullOuter
-  }
-  public class QueryLimit: QueryExpression{
-    public Expression Source;
-    public Expression Expression;
-    public bool IsPercent;
-    public bool IsWithTies;
-    public QueryLimit(): base(NodeType.QueryLimit){
-    }
-  }  
-  public class QueryOrderBy: QueryExpression{
-    public Expression Source;
-    public ContextScope Context;
-    public ExpressionList OrderList;
-    public QueryOrderBy(): base(NodeType.QueryOrderBy){
-      this.OrderList = new ExpressionList();
-    }
-  }
-  public enum QueryOrderType{
-    Ascending,
-    Descending,
-    Document
-  }  
-  public class QueryOrderItem: QueryExpression{
-    public Expression Expression;
-    public QueryOrderType OrderType = QueryOrderType.Ascending;
-    public QueryOrderItem(): base(NodeType.QueryOrderItem){
-    }
-  }  
-  public class QueryPosition: QueryExpression{
-    public ContextScope Context;
-    public QueryPosition(ContextScope context): base(NodeType.QueryPosition){
-      this.Context = context;
-      this.Type = CoreSystemTypes.Int32;
-    }
-    public static readonly Identifier Id = Identifier.For("position");
-  } 
-  public class QueryProject: QueryExpression{
-    public Expression Source;
-    public ContextScope Context;
-    public ExpressionList ProjectionList;
-    public TypeNode ProjectedType;
-    public MemberList Members;
-    public QueryProject(): base(NodeType.QueryProject){
-      this.ProjectionList = new ExpressionList();
-    }
-  }   
-  public class QueryQuantifiedExpression: QueryExpression{
-    public QueryQuantifier Left;
-    public QueryQuantifier Right;
-    public Expression Expression;
-    public QueryQuantifiedExpression(): base(NodeType.QueryQuantifiedExpression){
-    }
-  }
-  public class QueryQuantifier: QueryExpression{
-    public Expression Expression;
-    public Expression Target;
-    public QueryQuantifier(NodeType nt): base(nt){
-    }
-  }
-  public class QuerySingleton: QueryExpression{
-    public Expression Source;
-    public QuerySingleton(): base(NodeType.QuerySingleton){
-    }
-  }
-  public class QuerySelect: QueryExpression{
-    public Expression Source;
-    public QueryCursorDirection Direction;
-    public QueryCursorAccess Access;
-    public QuerySelect(Expression source): base(NodeType.QuerySelect){
-      if (source != null){
-        this.Source = source;
-        this.Type = source.Type;
-      }
-    }
-  } 
-  public enum QueryCursorDirection{
-    ForwardOnly,
-    Scrollable
-  }  
-  public enum QueryCursorAccess{
-    ReadOnly,
-    Updatable
-  }  
-
-  public abstract class QueryStatement: Statement{
-    protected QueryStatement(NodeType nt): base(nt){
-    }
-  }  
-  public class QueryTypeFilter: QueryExpression{
-    public Expression Source;
-    public TypeNode Constraint;
-    public QueryTypeFilter(): base(NodeType.QueryTypeFilter){     
-    }
-  }   
-  public class QueryUnion: QueryExpression{
-    public Expression LeftSource;
-    public Expression RightSource;
-    public QueryUnion() : base(NodeType.QueryUnion){
-    }
-  }  
-  public class QueryUpdate: QueryExpression{
-    public Expression Source;
-    public ExpressionList UpdateList;
-    public ContextScope Context;
-    public QueryUpdate() : base(NodeType.QueryUpdate){
-      this.UpdateList = new ExpressionList();
-    }
-  }
-  public class QueryTransact: Statement{
-    public Expression Source;
-    public Expression Isolation;
-    public Block Body;
-    public Block CommitBody;
-    public Block RollbackBody;
-    public Expression Transaction;
-    public QueryTransact(): base(NodeType.QueryTransact){
-    }
-  }
-  public class QueryCommit: Statement{
-    public QueryCommit(): base(NodeType.QueryCommit){
-    }
-  }
-  public class QueryRollback: Statement{
-    public QueryRollback(): base(NodeType.QueryRollback){
-    }
-  }
-#endif
-#if !MinimalReader
   /// <summary>
   /// An object that knows how to produce a particular scope's view of a type.
   /// </summary>
@@ -21058,267 +14157,16 @@ namespace System.Compiler{
       return type.EffectiveTypeNode;
     }
   }
-#endif
-#if WHIDBEY
-  static
-#endif
-  class PlatformHelpers {
+
+  static class PlatformHelpers {
     internal static bool TryParseInt32(String s, out Int32 result) {
-#if WHIDBEY
       return Int32.TryParse(s, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out result);
-#else
-      result = 0;
-      bool succeeded = false;
-      try {
-        result = Int32.Parse(s, NumberFormatInfo.InvariantInfo);
-        succeeded = true;
-      }catch(ArgumentException){
-      }catch(FormatException){
-      }catch(OverflowException){}
-      return succeeded;
-#endif
     }
     internal static int StringCompareOrdinalIgnoreCase(string strA, int indexA, string strB, int indexB, int length) {
-#if WHIDBEY
       return string.Compare(strA, indexA, strB, indexB, length, StringComparison.OrdinalIgnoreCase);
-#else
-      return string.Compare(strA, indexA, strB, indexB, length, true, CultureInfo.InvariantCulture); 
-#endif
     }
     internal static int StringCompareOrdinalIgnoreCase(string strA, string strB) {
-#if WHIDBEY
       return string.Compare(strA, strB, StringComparison.OrdinalIgnoreCase);
-#else
-      return string.Compare(strA, strB, true, CultureInfo.InvariantCulture); 
-#endif
     }  
   }
-#if FxCop
-  public class CatchNode : Statement{
-    private Block block;
-    private TypeNode type;
-    private Expression variable;
-    private Filter filter;
-    internal int handlerEnd;
-    internal CatchNode()
-      : base(NodeType.Catch){
-    }
-    internal CatchNode(Block block, Expression variable, TypeNode type)
-      : this(block, variable, type, null){
-    }
-    internal CatchNode(Block block, Expression variable, TypeNode type, Filter filter)
-      : base(NodeType.Catch){
-      this.block = block;
-      this.variable = variable;
-      this.type = type;
-      this.filter = filter;
-    }
-    public Block Block{
-      get{return this.block;}
-      internal set{this.block = value;}
-    }
-    public Filter Filter{
-      get{return this.filter;}
-      internal set{this.filter = value;}
-    }
-    public TypeNode Type{
-      get{return this.type;}
-      internal set{this.type = value;}
-    }
-    public Expression Variable{
-      get{return this.variable;}
-      internal set{this.variable = value;}
-    }
-  }
-  public class FinallyNode : Statement{
-    private Block block;
-    internal int handlerEnd;
-    internal FinallyNode()
-      : base(NodeType.Finally){
-    }
-    internal FinallyNode(Block block)
-      : base(NodeType.Finally){
-      this.block = block;
-    }
-    public Block Block{
-      get{return this.block;}
-      internal set{this.block = value;}
-    }
-  }
-  public class TryNode : Statement {
-    private CatchNodeCollection catchers = new CatchNodeCollection();
-    private FaultHandler faultHandler;
-    private FinallyNode finallyClause;
-    private Block block;
-    internal TryNode()
-      : base(NodeType.Try) {
-    }
-    internal TryNode(Block block, CatchNodeCollection catchers, FaultHandler faultHandler, FinallyNode @finally)
-      : base(NodeType.Try) {
-      this.catchers = catchers;
-      this.faultHandler = faultHandler;
-      this.finallyClause = @finally;
-      this.block = block;
-    }
-    internal int tryEnd;
-    internal int handlersEnd;
-    public CatchNodeCollection Catchers {
-      get { return this.catchers; }
-      internal set { this.catchers = value; }
-    }
-    public FaultHandler FaultHandler {
-      get { return this.faultHandler; }
-      internal set { this.faultHandler = value; }
-    }
-    public FinallyNode Finally {
-      get { return this.finallyClause; }
-      internal set { this.finallyClause = value; }
-    }
-    public Block Block {
-      [DebuggerStepThrough] get { return this.block; }
-      [DebuggerStepThrough] internal set { this.block = value; }
-    }
-  }
-    public abstract class FormatOptions
-    {
-        internal Options m_options;
-
-        protected FormatOptions() { }
-
-        internal void SetOptions(Options options, bool enable)
-        {
-            if (enable)
-            {
-                this.m_options |= options;
-                return;
-            }
-            this.m_options &= ~options;
-        }
-
-        internal bool IsSet(Options options)
-        {
-            return (this.m_options & options) == options;
-        }
-
-        [Flags]
-        internal enum Options
-        {
-            None = 0x0,
-            InsertSpacesBetweenParameters = 0x1,
-            InsertSpacesBetweenTypeParameters = 0x2,
-            InsertSpacesBetweenMethodTypeParameters = 0x4,
-            ShowGenericTypeArity = 0x8,
-            ShowGenericMethodTypeParameterNames = 0x10,
-            ShowGenericTypeParameterNames = 0x20,
-            ShowTypeModifiers = 0x40,
-            ShowParameterNames = 0x80
-        }
-    }
-    internal class MemberFormat : FormatOptions
-    {
-        TypeFormat m_declaringTypeFormat;
-        TypeFormat m_returnTypeFormat;
-        ParameterFormat m_parameterFormat;
-    
-        public MemberFormat()
-        {
-            this.m_declaringTypeFormat = new TypeFormat();
-            this.m_returnTypeFormat = new TypeFormat();
-            this.m_parameterFormat = new ParameterFormat();
-        }
-    
-        public TypeFormat Type
-        {
-            get { return this.m_declaringTypeFormat; }
-        }
-    
-        public TypeFormat ReturnType
-        {
-            get { return this.m_returnTypeFormat; }
-        }
-    
-        public ParameterFormat Parameters
-        {
-            get { return this.m_parameterFormat; }
-        }
-    
-        public bool ShowGenericMethodTypeParameterNames
-        {
-            get { return IsSet(Options.ShowGenericMethodTypeParameterNames); }
-            set { SetOptions(Options.ShowGenericMethodTypeParameterNames, value); }
-        }
-    
-        public bool InsertSpacesBetweenMethodTypeParameters
-        {
-            get { return IsSet(Options.InsertSpacesBetweenMethodTypeParameters); }
-            set { SetOptions(Options.InsertSpacesBetweenMethodTypeParameters, value); }
-        }
-    }
-    internal class ParameterFormat : TypeFormat
-    {
-        public ParameterFormat() { }
-    
-        public bool InsertSpacesBetweenParameters
-        {
-            get { return IsSet(Options.InsertSpacesBetweenParameters); }
-            set { SetOptions(Options.InsertSpacesBetweenParameters, value); }
-        }
-    
-        public bool ShowParameterNames
-        {
-            get { return IsSet(Options.ShowParameterNames); }
-            set { SetOptions(Options.ShowParameterNames, value); }
-        }
-    }
-    internal class TypeFormat : FormatOptions
-    {
-        private TypeNameFormat m_typeName;
-        public TypeFormat() { }
-
-        public TypeFormat Clone()
-        {
-            TypeFormat clone = new TypeFormat();
-            clone.m_typeName = this.m_typeName;
-            clone.m_options = this.m_options;
-            return clone;
-        }
-
-        public bool InsertSpacesBetweenTypeParameters
-        {
-            get { return IsSet(Options.InsertSpacesBetweenTypeParameters); }
-            set { SetOptions(Options.InsertSpacesBetweenTypeParameters, value); }
-        }
-
-        public bool ShowGenericTypeArity
-        {
-            get { return IsSet(Options.ShowGenericTypeArity); }
-            set { SetOptions(Options.ShowGenericTypeArity, value); }
-        }
-
-        public bool ShowGenericTypeParameterNames
-        {
-            get { return IsSet(Options.ShowGenericTypeParameterNames); }
-            set { SetOptions(Options.ShowGenericTypeParameterNames, value); }
-        }
-
-        public bool ShowTypeModifiers
-        {
-            get { return IsSet(Options.ShowTypeModifiers); }
-            set { SetOptions(Options.ShowTypeModifiers, value); }
-        }
-
-        public TypeNameFormat TypeName
-        {
-            get { return this.m_typeName; }
-            set { this.m_typeName = value; }
-        }
-    }
-    internal enum TypeNameFormat
-    {
-        None = 0,
-        InnermostNested,    
-        Short,
-        FullyQualified
-    }
-#endif
 }

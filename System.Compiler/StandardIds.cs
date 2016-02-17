@@ -14,15 +14,8 @@
 
 using System;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !FxCop
-  public
-#endif
-  class StandardIds{
+  public class StandardIds{
     private StandardIds(){}
     public static readonly Identifier/*!*/ Address = Identifier.For("Address");
     public static readonly Identifier/*!*/ AllowMultiple = Identifier.For("AllowMultiple");
@@ -39,11 +32,8 @@ namespace System.Compiler{
     public static readonly Identifier/*!*/ TypeParameter = Identifier.For("type parameter");
     public static readonly Identifier/*!*/ Value__ = Identifier.For("value__");
     public static readonly Identifier/*!*/ _Deleted = Identifier.For("_Deleted");
-#if !NoXml || !MinimalReader
     public static readonly Identifier/*!*/ opExplicit = Identifier.For("op_Explicit");
     public static readonly Identifier/*!*/ opImplicit = Identifier.For("op_Implicit");
-#endif
-#if !MinimalReader
     public static readonly Identifier/*!*/ Add = Identifier.For("Add");
     public static readonly Identifier/*!*/ AllowMultipleAttribute = Identifier.For("AllowMultipleAttribute");
     public static readonly Identifier/*!*/ Anonymity = Identifier.For("Anonymity");
@@ -167,11 +157,7 @@ namespace System.Compiler{
     public static readonly Identifier/*!*/ ToObject = Identifier.For("ToObject");
     public static readonly new Identifier/*!*/ ToString = Identifier.For("ToString");
     public static readonly Identifier/*!*/ TypeName = Identifier.For("TypeName");
-#if CCINamespace
-    public static readonly Identifier/*!*/ CciTypeExtensions = Identifier.For("Microsoft.Cci.TypeExtensions");
-#else
     public static readonly Identifier/*!*/ CciTypeExtensions = Identifier.For("System.Compiler.TypeExtensions");
-#endif
     public static readonly Identifier/*!*/ Value = Identifier.For("value");
     public static readonly Identifier/*!*/ Var = Identifier.For("var");
     public static readonly Identifier/*!*/ WindowsFoundation = Identifier.For("Windows.Foundation");
@@ -187,6 +173,5 @@ namespace System.Compiler{
     public static readonly Identifier/*!*/ WindowsUIXamlMediaAnimation = Identifier.For("Windows.UI.Xaml.Media.Animation");
     public static readonly Identifier/*!*/ WindowsUIXamlMediaMedia3D = Identifier.For("Windows.UI.Xaml.Media.Media3D");
     public static readonly Identifier/*!*/ __Arglist = Identifier.For("__arglist");
-#endif
   }
 }

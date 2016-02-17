@@ -14,60 +14,15 @@
 
 using System;
 using System.Collections;
-#if FxCop
-using System.Collections.Generic;
-using AssemblyReferenceList = Microsoft.Cci.AssemblyReferenceCollection;
-using AttributeList = Microsoft.Cci.AttributeNodeCollection;
-using BlockList = Microsoft.Cci.BlockCollection;
-using ExpressionList = Microsoft.Cci.ExpressionCollection;
-using InstructionList = Microsoft.Cci.InstructionCollection;
-using Int32List = System.Collections.Generic.List<int>;
-using InterfaceList = Microsoft.Cci.InterfaceCollection;
-using LocalList = Microsoft.Cci.LocalCollection;
-using MemberList = Microsoft.Cci.MemberCollection;
-using MethodList = Microsoft.Cci.MethodCollection;
-using ModuleReferenceList = Microsoft.Cci.ModuleReferenceCollection;
-using NamespaceList = Microsoft.Cci.NamespaceCollection;
-using ParameterList = Microsoft.Cci.ParameterCollection;
-using ResourceList = Microsoft.Cci.ResourceCollection;
-using SecurityAttributeList = Microsoft.Cci.SecurityAttributeCollection;
-using StatementList = Microsoft.Cci.StatementCollection;
-using TypeNodeList = Microsoft.Cci.TypeNodeCollection;
-using Win32ResourceList = Microsoft.Cci.Win32ResourceCollection;
-using Property = Microsoft.Cci.PropertyNode;
-using Module = Microsoft.Cci.ModuleNode;
-using Class = Microsoft.Cci.ClassNode;
-using Interface = Microsoft.Cci.InterfaceNode;
-using Event = Microsoft.Cci.EventNode;
-using Return = Microsoft.Cci.ReturnNode;
-using Throw = Microsoft.Cci.ThrowNode;
-using SerializedTypeNameList = System.Collections.Generic.List<SerializedTypeName>;
-#if NoWriter
-using StringList = System.Collections.Generic.List<string>;
-#endif
-#endif
-#if UseSingularityPDB
-using Microsoft.Singularity.PdbInfo;
-using Microsoft.Singularity.PdbInfo.Features;
-#endif
-#if CCINamespace
-using Microsoft.Cci;
-#else
 using System.Compiler;
-#endif
 using System.Diagnostics;
 using System.Globalization;
 using Marshal = System.Runtime.InteropServices.Marshal;
 using System.Runtime.InteropServices;
 using System.IO;
 
-#if CCINamespace
-namespace Microsoft.Cci.Metadata{
-#else
 namespace System.Compiler.Metadata{
-#endif
 
-#if !ROTOR && !UseSingularityPDB
   enum CorOpenFlags : uint{
     ofRead      =   0x00000000,     // Open scope for read
     ofWrite     =   0x00000001,     // Open scope for write.
@@ -178,7 +133,6 @@ namespace System.Compiler.Metadata{
     void GetLocals(uint size, out uint length, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] IntPtr[] locals);
     void GetNamespaces(uint size, out uint length, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] IntPtr[] namespaces);
   }
-#endif
   internal sealed class UnmanagedBuffer : IDisposable{
     internal IntPtr Pointer;
     internal UnmanagedBuffer(int length){
@@ -210,24 +164,14 @@ namespace System.Compiler.Metadata{
     //^ [Microsoft.Contracts.SpecInternal]
     private TrivialHashtable namespaceTable;
     internal NamespaceList namespaceList;
-#if CodeContracts
     internal PdbInfo pdbInfo;
-#endif
-#if UseSingularityPDB
-    internal PdbFunction[] pdbFunctions;
-#elif !ROTOR
     internal ISymUnmanagedReader debugReader;
     private System.Collections.Generic.Dictionary<IntPtr,UnmanagedDocument> debugDocuments;
-#endif
-#if FxCop
-    internal static bool probeGAC = true;
-#endif
     internal bool getDebugSymbols;
     private bool getDebugSymbolsFailed;
     private TypeNodeList currentTypeParameters;
     private TypeNodeList currentMethodTypeParameters;
     internal bool preserveShortBranches;
-#if !MinimalReader
     internal unsafe Reader(byte[]/*!*/ buffer, IDictionary localAssemblyCache, bool doNotLockFile, bool getDebugInfo, bool useStaticCache, bool preserveShortBranches) {
       Debug.Assert(buffer != null);
       if (localAssemblyCache == null) localAssemblyCache = new Hashtable();
@@ -242,7 +186,6 @@ namespace System.Compiler.Metadata{
       byte* pb = (byte*)this.unmanagedBuffer.Pointer;
       for (int i = 0; i < n; i++) *pb++ = buffer[i];
     }
-#endif
     internal Reader(string/*!*/ fileName, IDictionary localAssemblyCache, bool doNotLockFile, bool getDebugInfo, bool useStaticCache, bool preserveShortBranches){
       if (localAssemblyCache == null) localAssemblyCache = new Hashtable();
       this.localAssemblyCache = localAssemblyCache;
@@ -272,37 +215,29 @@ namespace System.Compiler.Metadata{
       if (this.tables != null)
         this.tables.Dispose();
       //this.tables = null;
-#if !ROTOR && !UseSingularityPDB
       if (this.debugReader != null)
         Marshal.ReleaseComObject(this.debugReader);
       this.debugReader = null;
       this.debugDocuments = null;
-#endif
     }
     private unsafe void SetupReader(){
       Debug.Assert(this.localAssemblyCache != null);
-#if !ROTOR
       if (this.doNotLockFile){
-#endif
         using (System.IO.FileStream inputStream = new System.IO.FileStream(this.fileName, 
                  System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read)){
           this.ReadFileIntoUnmanagedBuffer(inputStream);
         }
-#if !ROTOR
       }
       if (this.unmanagedBuffer == null)
         this.tables = new MetadataReader(this.fileName); //Uses a memory map that locks the file
       else
-#endif
         this.tables = new MetadataReader((byte*)this.unmanagedBuffer.Pointer, this.bufferLength);
       //^ assume this.tables.tablesHeader != null;
       this.sortedTablesMask = this.tables.tablesHeader.maskSorted;
     }
-#if !ROTOR
     [DllImport("kernel32", SetLastError=true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     static extern unsafe bool ReadFile(IntPtr FileHandle, byte* Buffer, int NumberOfBytesToRead, int* NumberOfBytesRead, IntPtr Overlapped);
-#endif
     private unsafe void ReadFileIntoUnmanagedBuffer(System.IO.FileStream/*!*/ inputStream) {
       long size = inputStream.Seek(0, System.IO.SeekOrigin.End);
       if (size > int.MaxValue) throw new System.IO.FileLoadException();
@@ -311,26 +246,9 @@ namespace System.Compiler.Metadata{
       this.bufferLength = n;
       this.unmanagedBuffer = new UnmanagedBuffer(n);
       byte* pb = (byte*)this.unmanagedBuffer.Pointer;
-#if !ROTOR
-#if WHIDBEY && !OldWhidbey
       if (!Reader.ReadFile(inputStream.SafeFileHandle.DangerousGetHandle(), pb, n, &n, IntPtr.Zero)) throw new System.IO.FileLoadException();
-#else
-      if (!Reader.ReadFile(inputStream.Handle, pb, n, &n, IntPtr.Zero)) throw new System.IO.FileLoadException();
-#endif
-#else
-      //Read a fixed length block at a time, so that the GC does not come under pressure from lots of large byte arrays.
-      int bufferLen = 8096;
-      byte[] buffer = new byte[bufferLen];
-      while (n > 0){
-        if (n < bufferLen) bufferLen = n;
-        inputStream.Read(buffer, 0, bufferLen);
-        for (int i = 0; i < bufferLen; i++) *pb++ = buffer[i];
-        n -= bufferLen;
-      }
-#endif
     }
     internal void SetupDebugReader(string filename, string pdbSearchPath){
-#if CodeContracts
       string pdbFileName = BetterPath.ChangeExtension(filename, "pdb");
       this.getDebugSymbolsFailed = true;
       //TODO: use search path
@@ -343,19 +261,7 @@ namespace System.Compiler.Metadata{
           this.getDebugSymbolsFailed = false;
         }
       }
-#endif
-#if UseSingularityPDB
-      string pdbFileName = BetterPath.ChangeExtension(filename, "pdb");
-      this.getDebugSymbolsFailed = true;
-      //TODO: use search path
-      if (System.IO.File.Exists(pdbFileName)) {
-        using (System.IO.FileStream inputStream = new System.IO.FileStream(pdbFileName,
-                 System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read)) {
-          this.pdbFunctions = PdbFile.LoadFunctions(inputStream, true);
-          this.getDebugSymbolsFailed = false;
-        }
-      }
-#elif !ROTOR
+
       if (filename == null) return;
       CorSymBinder binderObj1 = null;
       CorSymBinder2 binderObj2 = null;
@@ -366,11 +272,7 @@ namespace System.Compiler.Metadata{
         try{
           binderObj2 = new CorSymBinder2();
           ISymUnmanagedBinder2 binder2 = (ISymUnmanagedBinder2)binderObj2;
-#if !NoWriter          
             importer = new Ir2md(new Module());
-#else
-            importer = new EmptyImporter();
-#endif
           hresult = binder2.GetReaderForFile(importer, filename, pdbSearchPath, out this.debugReader);
         }
         catch (COMException e){
@@ -387,43 +289,31 @@ namespace System.Compiler.Metadata{
           case 0x0: break; 
           case 0x806d0005:  // EC_NOT_FOUND
           case 0x806d0014 : // EC_INVALID_EXE_TIMESTAMP
-#if FxCop
-            this.getDebugSymbols = false;
-            this.getDebugSymbolsFailed = true;
-#else
             // Sometimes GetReaderForFile erroneously reports missing pdb files as being "out of date", 
             // so we check if the file actually exists before reporting the error.
             // The mere absence of a pdb file is not an error. If not present, do not report.
             if (System.IO.File.Exists(System.IO.Path.ChangeExtension(filename, ".pdb")))
               throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, ExceptionStrings.PdbAssociatedWithFileIsOutOfDate, filename));
-#endif            
             break;
           default:
             throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, 
               ExceptionStrings.GetReaderForFileReturnedUnexpectedHResult, hresult.ToString("X")));
         }
-#if !FxCop
       }catch (Exception e){
         this.getDebugSymbols = false;
         this.getDebugSymbolsFailed = true;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
-#endif
       }finally{
         if (binderObj1 != null) Marshal.ReleaseComObject(binderObj1);
         if (binderObj2 != null) Marshal.ReleaseComObject(binderObj2);
       }
-#endif // !ROTOR
     }
-#if !MinimalReader
     private AssemblyNode ReadAssembly()
     {
       return ReadAssembly(null);
     }
     private AssemblyNode ReadAssembly(AssemblyNode.PostAssemblyLoadProcessor postLoadEvent){
-#else
-    private AssemblyNode ReadAssembly(){
-#endif
       try{
         AssemblyNode assembly = new AssemblyNode(new Module.TypeNodeProvider(this.GetTypeFromName), 
           new Module.TypeNodeListProvider(this.GetTypeList), new Module.CustomAttributeProvider(this.GetCustomAttributesFor),
@@ -437,14 +327,11 @@ namespace System.Compiler.Metadata{
         AssemblyNode cachedAssembly = this.GetCachedAssembly(assembly);
         if (cachedAssembly != null) return cachedAssembly;
         if (this.getDebugSymbols) assembly.SetupDebugReader(null);
-#if !MinimalReader
         if (postLoadEvent != null) {
           assembly.AfterAssemblyLoad += postLoadEvent;
           postLoadEvent(assembly);
         }
-#endif
         return assembly;
-#if !FxCop
       }
       catch(Microsoft.Cci.Pdb.NoNameStreamPdbException e)
       {
@@ -459,9 +346,6 @@ namespace System.Compiler.Metadata{
         this.module.MetadataImportErrors.Add(e);
         return this.module as AssemblyNode;
       }
-#else
-      }finally{}
-#endif
     }
     private AssemblyNode GetCachedAssembly(AssemblyNode/*!*/ assembly) {
       //Always return the one true mscorlib. Things get too weird if more than one mscorlib is being read at the same time.
@@ -561,13 +445,8 @@ namespace System.Compiler.Metadata{
               return null;
             }
             if (cachedAssembly.reader != this && cachedAssembly.reader != null) {
-#if UseSingularityPDB
-              if (this.getDebugSymbols && cachedAssembly.reader.pdbFunctions == null && !cachedAssembly.reader.getDebugSymbolsFailed)
-                cachedAssembly.SetupDebugReader(null);
-#elif !ROTOR
               if (this.getDebugSymbols && cachedAssembly.reader.debugReader == null && !cachedAssembly.reader.getDebugSymbolsFailed)
                 cachedAssembly.SetupDebugReader(null);
-#endif
               this.Dispose();
             }
             return cachedAssembly;
@@ -578,15 +457,11 @@ namespace System.Compiler.Metadata{
       }
       return null;
     }
-#if !MinimalReader
     internal Module ReadModule()
     {
       return ReadModule(null);
     }
     internal Module ReadModule(AssemblyNode.PostAssemblyLoadProcessor postLoadEvent){
-#else
-    internal Module ReadModule(){
-#endif
       try{
         if (this.fileName != null){
           if (!System.IO.File.Exists(this.fileName)) return null;
@@ -606,11 +481,7 @@ namespace System.Compiler.Metadata{
         }
         this.SetupReader();
         if (this.tables.AssemblyTable.Length > 0)
-#if !MinimalReader
           return this.ReadAssembly(postLoadEvent);
-#else
-          return this.ReadAssembly();
-#endif
         Module module = this.module = new Module(new Module.TypeNodeProvider(this.GetTypeFromName), 
           new Module.TypeNodeListProvider(this.GetTypeList), new Module.CustomAttributeProvider(this.GetCustomAttributesFor),
           new Module.ResourceProvider(this.GetResources));
@@ -621,16 +492,12 @@ namespace System.Compiler.Metadata{
         this.ReadModuleReferences(module);
         if (this.getDebugSymbols) this.SetupDebugReader(this.fileName, null);
         return module;
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return null;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
         return module;
       }
-#else
-      }finally{}
-#endif
     }
     private void ReadModuleProperties(Module/*!*/ module){
       ModuleRow[] mods = this.tables.ModuleTable;
@@ -799,62 +666,6 @@ namespace System.Compiler.Metadata{
         if ((par.Flags & ParameterFlags.HasFieldMarshal) != 0)
           par.MarshallingInformation = this.GetMarshallingInformation((i << 1)|1);
         par.Name = tables.GetIdentifier(pr.Name);
-#if ExtendedRuntime
-        for (int k = 0, al = par.Attributes == null ? 0 : par.Attributes.Count; k < al; k++) {
-          if (par.Attributes[k].Type == ExtendedRuntimeTypes.NotNullAttribute) {
-            Reference r = par.Type as Reference;
-            if (r != null){
-              // need to make it a reference to a non-null type and not a non-null wrapper around the reference
-              // also *must* make it a new Reference.
-              OptionalModifier om = OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, r.ElementType);
-              par.Type = om.GetReferenceType();
-            }else{
-              par.Type = OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, par.Type);
-            }
-            // Someone putting an attribute directly on the "real" method is still a
-            // kind of out-of-band contract.
-            // This marking is the way to signal that any override or implementing method being compiled
-            // should not have its non-null annotations persisted as optional modifiers.
-            par.DeclaringMethod.HasOutOfBandContract = true;
-          } else if (par.Attributes[k].Type == ExtendedRuntimeTypes.NotNullArrayElementsAttribute) {
-            Stack s = new Stack();
-            Reference r = par.Type as Reference;
-            TypeNode t;
-            if (r != null) {
-              // need to make it a reference to an array of non-null type and not a non-null wrapper around the reference
-              t = r.ElementType;
-            }
-            else {
-              t = par.Type;
-            }
-            while (t is OptionalModifier) {
-              OptionalModifier om = t as OptionalModifier;
-              s.Push(om.Modifier);
-              t = om.ModifiedType;
-            }
-            ArrayType at = t as ArrayType;
-            if (at != null) { // just silently ignore if attribute is on a non-array type?
-              TypeNode newTypeForParameter;
-              OptionalModifier om = OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, at.ElementType);
-              while (0 < s.Count) {
-                om = OptionalModifier.For((TypeNode)s.Pop(), om);
-              }
-              // also *must* make it a new array type, can't set the ElementType.
-              newTypeForParameter = om.GetArrayType(1);
-              if (r != null) {
-                // also *must* make it a new Reference, can't set the ElementType.
-                newTypeForParameter = newTypeForParameter.GetReferenceType();
-              }
-              par.Type = newTypeForParameter;
-              // Someone putting an attribute directly on the "real" method is still a
-              // kind of out-of-band contract.
-              // This marking is the way to signal that any override or implementing method being compiled
-              // should not have its non-null annotations persisted as optional modifiers.
-              par.DeclaringMethod.HasOutOfBandContract = true;
-            }
-          }
-        }
-#endif
       }
     }
     private void AddPropertiesToType(TypeNode/*!*/ type, PropertyRow[]/*!*/ propertyDefs, PropertyPtrRow[]/*!*/ propertyPtrs, int start, int end) 
@@ -1004,16 +815,6 @@ namespace System.Compiler.Metadata{
       }
       throw new InvalidMetadataException(ExceptionStrings.BadTypeDefOrRef);
     }
-#if ExtendedRuntime
-    private Interface GetInterfaceIfNotGenericInstance(int codedIndex){
-      if (codedIndex == 0) return null;
-      switch(codedIndex & 0x3){
-        case 0x00 : return this.GetTypeFromDef(codedIndex >> 2) as Interface;
-        case 0x01 : return this.GetTypeFromRef(codedIndex >> 2, false) as Interface;
-      }
-      return null;
-    }
-#endif
     private TypeNode GetTypeIfNotGenericInstance(int codedIndex){
       if (codedIndex == 0) return null;
       switch(codedIndex & 0x3){
@@ -1057,11 +858,8 @@ namespace System.Compiler.Metadata{
             AssemblyNode platformAssembly = aRef.assembly;
             if (platformAssembly == null){
               Debug.Assert(aRef.Location != null);
-#if MinimalReader
-              platformAssembly = AssemblyNode.GetAssembly(aRef.Location, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
+
               platformAssembly = AssemblyNode.GetAssembly(aRef.Location, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             }
             if (platformAssembly != null){
               if (strongName == null) strongName = assemblyReference.Name;
@@ -1106,11 +904,7 @@ namespace System.Compiler.Metadata{
         if (this.directory != null){
           string fileName = System.IO.Path.Combine(this.directory, assemblyReference.Name+".dll");
           if (System.IO.File.Exists(fileName)){
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               if (strongName == null) goto cacheIt; //found something
@@ -1120,11 +914,7 @@ namespace System.Compiler.Metadata{
           }
           fileName = System.IO.Path.Combine(this.directory, assemblyReference.Name+".exe");
           if (System.IO.File.Exists(fileName)){
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               if (strongName == null) goto cacheIt; //found something
@@ -1134,11 +924,7 @@ namespace System.Compiler.Metadata{
           }
           fileName = System.IO.Path.Combine(this.directory, assemblyReference.Name+".winmd");
           if (System.IO.File.Exists(fileName)) {
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null) {
               if (strongName == null) goto cacheIt; //found something
               //return assembly only if it matches the strong name of the reference
@@ -1147,11 +933,7 @@ namespace System.Compiler.Metadata{
           }
           fileName = System.IO.Path.Combine(this.directory, assemblyReference.Name+".ill");
           if (System.IO.File.Exists(fileName)) {
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               if (strongName == null) goto cacheIt; //found something
@@ -1163,11 +945,7 @@ namespace System.Compiler.Metadata{
         //Look for an assembly in the same directory as the application using Reader.
         { string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyReference.Name+".dll");
           if (System.IO.File.Exists(fileName)){
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               if (strongName == null) goto cacheIt; //found something
@@ -1177,11 +955,7 @@ namespace System.Compiler.Metadata{
           }
           fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyReference.Name+".exe");
           if (System.IO.File.Exists(fileName)){
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               if (strongName == null) goto cacheIt; //found something
@@ -1191,11 +965,7 @@ namespace System.Compiler.Metadata{
           }
           fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyReference.Name+".winmd");
           if (System.IO.File.Exists(fileName)) {
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(fileName, this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null) {
               if (strongName == null) goto cacheIt; //found something
               //return assembly only if it matches the strong name of the reference
@@ -1206,24 +976,13 @@ namespace System.Compiler.Metadata{
         assembly = null;
 
         //Probe the GAC
-#if FxCop
-        if(probeGAC){
-#endif
         string gacLocation = null;
         if (strongName != null){
-#if !ROTOR
           //Look for the assembly in the system's Global Assembly Cache
           gacLocation = GlobalAssemblyCache.GetLocation(assemblyReference);
           if (gacLocation != null && gacLocation.Length == 0) gacLocation = null;
-#else
-          //TODO: look in the ROTOR GAC
-#endif
           if (gacLocation != null){
-#if MinimalReader
-            assembly = AssemblyNode.GetAssembly(gacLocation, this.useStaticCache ? Reader.StaticAssemblyCache : this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache);
-#else
             assembly = AssemblyNode.GetAssembly(gacLocation, this.useStaticCache ? Reader.StaticAssemblyCache : this.localAssemblyCache, this.doNotLockFile, this.getDebugSymbols, this.useStaticCache, this.ReferringAssemblyPostLoad);
-#endif
             if (assembly != null)
             {
               lock (Reader.StaticAssemblyCache) {
@@ -1238,9 +997,6 @@ namespace System.Compiler.Metadata{
             }
           }
         }
-#if FxCop
-        }
-#endif
         goto done;
       cacheIt:
         if (strongName == null){
@@ -1250,10 +1006,8 @@ namespace System.Compiler.Metadata{
           this.localAssemblyCache[strongName] = assembly;
           if (assembly.Location != null) this.localAssemblyCache[assembly.Location] = assembly;
         }
-#if !MinimalReader
         // the post load event should fire when we load the assembly the first time
 //        assembly.InitializePostAssemblyLoadAndFire(this.module);
-#endif
       done:
         if (assembly != null)
           assembly.InitializeAssemblyReferenceResolution(this.module);
@@ -1274,7 +1028,6 @@ namespace System.Compiler.Metadata{
         return assembly;
       }
     }
-#if !MinimalReader
     private AssemblyNode.PostAssemblyLoadProcessor ReferringAssemblyPostLoad
     {
       get
@@ -1284,7 +1037,6 @@ namespace System.Compiler.Metadata{
         return assem.GetAfterAssemblyLoad();
       }
     }
-#endif
     private static void GetAndCheckSignatureToken(int expectedToken, MemoryCursor/*!*/ sigReader) {
       int tok = sigReader.ReadCompressedInt();
       if (tok != expectedToken) throw new InvalidMetadataException(ExceptionStrings.MalformedSignature);
@@ -1421,14 +1173,10 @@ namespace System.Compiler.Metadata{
       return new AttributeNode(new MemberBinding(null, cons), arguments);
     }
     private static void HandleError(Module mod, string errorMessage){
-#if !FxCop
       if (mod != null && (mod.ContainingAssembly == null || (mod.ContainingAssembly.Flags & AssemblyFlags.ContainsForeignTypes) == 0)){
         if (mod.MetadataImportErrors == null) mod.MetadataImportErrors = new ArrayList();
         mod.MetadataImportErrors.Add(new InvalidMetadataException(errorMessage));
       }
-#else
-      throw new InvalidMetadataException(String.Format(CultureInfo.CurrentCulture, ExceptionStrings.ModuleError, mod.Name, errorMessage));
-#endif
     }
     private AttributeNode GetCustomAttribute(int i){
       CustomAttributeRow ca = this.tables.CustomAttributeTable[i];
@@ -1453,14 +1201,10 @@ namespace System.Compiler.Metadata{
         object val = null;
         try{
           val = this.GetCustomAttributeLiteralValue(sigReader, ref pt);
-#if !FxCop        
         }catch (Exception e){ 
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
           this.module.MetadataImportErrors.Add(e);
         }
-#else
-        }finally{}
-#endif
         Literal lit = val as Literal;
         if (lit == null) lit = new Literal(val, pt);
         arguments.Add(lit);
@@ -1517,7 +1261,6 @@ namespace System.Compiler.Metadata{
         case ElementType.ValueType:
           EnumNode etype = GetCustomAttributeEnumNode(ref type);
           var enumVal = this.GetCustomAttributeLiteralValue(sigReader, etype.UnderlyingType);
-#if !MinimalReader
           if (this.module.ContainingAssembly != null && (this.module.ContainingAssembly.Flags & AssemblyFlags.ContainsForeignTypes) != 0) {
             if (etype == SystemTypes.AttributeTargets) {
               switch ((int)enumVal) {
@@ -1537,7 +1280,6 @@ namespace System.Compiler.Metadata{
               }
             }
           }
-#endif
           return enumVal;
         case ElementType.Class: return this.GetTypeFromSerializedName(ReadSerString(sigReader));
         case ElementType.SzArray:
@@ -1691,16 +1433,12 @@ namespace System.Compiler.Metadata{
         assembly.SecurityAttributes = this.GetSecurityAttributesFor((1 << 2)|2);
         assembly.Attributes = this.GetCustomAttributesNonNullFor((1 << 5) | 14);
         assembly.ModuleAttributes = this.GetCustomAttributesNonNullFor((1 << 5) | 7);
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
         module.Attributes = new AttributeList(0);
       }
-#else
-      }finally{}
-#endif
     }
     private AttributeList/*!*/ GetCustomAttributesNonNullFor(int parentIndex) {
       var result = GetCustomAttributesFor(parentIndex);
@@ -1738,15 +1476,11 @@ namespace System.Compiler.Metadata{
             attributes.Add(this.GetCustomAttribute(i));
           else if (sorted)
             break;
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return attributes;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
       }
-#else
-      }finally{}
-#endif
       return attributes;
     }
     private SecurityAttributeList GetSecurityAttributesFor(int parentIndex){
@@ -1771,15 +1505,11 @@ namespace System.Compiler.Metadata{
             attributes.Add(this.GetSecurityAttribute(i));
           else if (sorted)
             break;
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return attributes;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
       }
-#else
-      }finally{}
-#endif
       return attributes;
     }
     private void GetTypeParameterConstraints(int parentIndex, TypeNodeList parameters){
@@ -1945,16 +1675,7 @@ namespace System.Compiler.Metadata{
       Block block = (Block)blockMap[address+1];
       if (block == null){
         blockMap[address+1] = block = new Block(new StatementList());
-#if !FxCop && !CodeContracts
-        var sctx = block.SourceContext;
-        sctx.StartPos = address;
-        block.SourceContext = sctx;
-#else
         block.ILOffset = address;
-#endif
-#if ILOFFSETS
-        block.ILOffset = address;
-#endif
       }
       return block;
     }
@@ -2114,15 +1835,7 @@ namespace System.Compiler.Metadata{
       throw new InvalidMetadataException(ExceptionStrings.BadConstantParentIndex);
     }
     internal FunctionPointer GetCalliSignature(int ssigToken){
-#if !FxCop
       StandAloneSigRow ssr = this.tables.StandAloneSigTable[(ssigToken&0xFFFFFF)-1];      
-#else
-      int index = (ssigToken & 0xFFFFFF) - 1;
-      if (index < 0 || index >= this.tables.StandAloneSigTable.Length)
-        return null;
-
-      StandAloneSigRow ssr = this.tables.StandAloneSigTable[index];
-#endif
       MemoryCursor sigReader = this.tables.GetBlobCursor(ssr.Signature);
       return this.ParseFunctionPointer(sigReader);
     }
@@ -2138,12 +1851,7 @@ namespace System.Compiler.Metadata{
         var hasPDBInfo = localSourceNames.TryGetValue(i, out localInfo);
         string lookupName = localInfo.Name;
         bool hasNoPDBName = String.IsNullOrEmpty(lookupName);
-#if !FxCop
-        
         var name = hasNoPDBName ? "local" + i : lookupName;
-#else
-        string name = hasNoPDBName ? "local$"+i : lookupName;
-#endif
         bool pinned = false;
         TypeNode locType = this.ParseTypeSignature(sigReader, ref pinned);
 
@@ -2159,7 +1867,6 @@ namespace System.Compiler.Metadata{
         locals.Add(loc);
       }
     }
-#if !ROTOR && !UseSingularityPDB
     internal void GetLocalSourceNames(ISymUnmanagedScope/*!*/ scope, System.Collections.Generic.Dictionary<int,LocalInfo>/*!*/ localSourceNames) {
       uint numLocals = scope.GetLocalCount();
       IntPtr[] localPtrs = new IntPtr[numLocals];
@@ -2200,7 +1907,6 @@ namespace System.Compiler.Metadata{
         //TODO: need to figure out how map these scope to blocks and set HasLocals on those blocks
       }
     }
-#endif
     private MarshallingInformation GetMarshallingInformation(int parentCodedIndex){
       FieldMarshalRow[] mtypes = this.tables.FieldMarshalTable;
       bool sorted = (this.sortedTablesMask >> (int)TableIndices.FieldMarshal) % 2 == 1;
@@ -2279,24 +1985,13 @@ namespace System.Compiler.Metadata{
         }else
           statements = new StatementList(0);
         method.Body = new Block(statements);
-#if FxCop
-        if (statements.Count > 0) {
-          SourceContext context = statements[0].SourceContext;
-          method.SourceContext = context;
-          method.Body.SourceContext = context;
-        }
-#endif
-#if !MinimalReader
         method.Body.HasLocals = true;
-#endif
-#if !FxCop
       }catch(Exception e){
         if (this.module != null){
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
           this.module.MetadataImportErrors.Add(e);
         }
         method.Body = new Block(new StatementList(0));
-#endif
       }finally{
         this.currentMethodTypeParameters = savedCurrentMethodTypeParameters;
         this.currentType = savedCurrentType;
@@ -2306,11 +2001,6 @@ namespace System.Compiler.Metadata{
     private void GetMethodDebugSymbols(Method/*!*/ method, uint methodToken)
       //^ requires this.debugReader != null;
     {
-#if UseSingularityPDB
-      PdbFunction pdbFunc = this.GetPdbFunction(methodToken);
-      if (pdbFunc != null)
-        method.RecordSequencePoints(pdbFunc);
-#elif !ROTOR
       ISymUnmanagedMethod methodInfo = null;
       try{
         try{
@@ -2324,25 +2014,7 @@ namespace System.Compiler.Metadata{
         if (methodInfo != null)
           Marshal.ReleaseComObject(methodInfo);
       }
-#endif
     }
-#if UseSingularityPDB
-    internal PdbFunction GetPdbFunction(uint methodToken) {
-      PdbFunction[] pdbFunctions = this.pdbFunctions;
-      int i = 0, n = pdbFunctions == null ? 0 : pdbFunctions.Length, j = n-1;
-      while (i < j) {
-        int k = (i+j) / 2;
-        if (pdbFunctions[k].token < methodToken)
-          i = k+1;
-        else
-          j = k;
-      }
-      while (i > 0 && pdbFunctions[i-1].token == methodToken) i--;
-      if (0 <= i && i < n && pdbFunctions[i].token == methodToken)
-        return pdbFunctions[i];
-      return null;
-    }
-#endif
     private void GetMethodInstructions(Method/*!*/ method, object/*!*/ i) {
       TypeNodeList savedCurrentMethodTypeParameters = this.currentMethodTypeParameters;
       this.currentMethodTypeParameters = method.templateParameters;
@@ -2355,14 +2027,12 @@ namespace System.Compiler.Metadata{
           method.Instructions = this.ParseMethodInstructions(method, (int)i, meth.RVA);
         }else
           method.Instructions = new InstructionList(0);
-#if !FxCop
       }catch(Exception e){
         if (this.module != null){
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
           this.module.MetadataImportErrors.Add(e);
         }
         method.Instructions = new InstructionList(0);
-#endif
       }finally{
         this.currentMethodTypeParameters = savedCurrentMethodTypeParameters;
         this.currentType = savedCurrentType;
@@ -2444,36 +2114,21 @@ namespace System.Compiler.Metadata{
       {
         if (name.Name == ".ctor")
         {
-#if ILOFFSETS
           method = methodDefs[index - 1].Method = new InstanceInitializer(provider, index, (int)TableIndices.Method << 24 | index);
-#else
-          method = methodDefs[index - 1].Method = new InstanceInitializer(provider, index);
-#endif
         }
         else if (name.Name == ".cctor")
         {
-#if ILOFFSETS
           method = methodDefs[index - 1].Method = new StaticInitializer(provider, index, (int)TableIndices.Method << 24 | index);
-#else
-          method = methodDefs[index - 1].Method = new StaticInitializer(provider, index);
-#endif
         }
         else
         {
-#if ILOFFSETS
           method = methodDefs[index - 1].Method = new Method(provider, index, (int)TableIndices.Method << 24 | index);
-#else
-          method = methodDefs[index - 1].Method = new Method(provider, index);
-#endif
+
         }
       }
       else
       {
-#if ILOFFSETS
         method = methodDefs[index - 1].Method = new Method(provider, index, (int)TableIndices.Method << 24 | index);
-#else
-        method = methodDefs[index - 1].Method = new Method(provider, index);
-#endif
       }
       method.ProvideMethodAttributes = new Method.MethodAttributeProvider(this.GetMethodAttributes);
       //method.Attributes = this.GetCustomAttributesFor((index << 5)|0); //TODO: get attributes lazily
@@ -2509,12 +2164,6 @@ namespace System.Compiler.Metadata{
       }
       int numParams = sigReader.ReadCompressedInt();
       method.ReturnType = this.ParseTypeSignature(sigReader);
-#if false
-      if (declaringType != null && declaringType.IsValueType)
-        method.ThisParameter = new This(declaringType.GetReferenceType());
-      else
-        method.ThisParameter = new This(declaringType);
-#endif // materialized on demand
       ParameterList paramList = method.Parameters = new ParameterList(numParams);
       if (numParams > 0){
         int offset = method.IsStatic ? 0 : 1;
@@ -2560,40 +2209,7 @@ namespace System.Compiler.Metadata{
           }
         }
       }
-#if ExtendedRuntime
-      for (int k = 0, al = method.ReturnAttributes == null ? 0 : method.ReturnAttributes.Count; k < al; k++) {
-        if (method.ReturnAttributes[k].Type == ExtendedRuntimeTypes.NotNullAttribute) {
-          method.ReturnType = OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, method.ReturnType);
-          // Someone putting an attribute directly on the "real" method is still a
-          // kind of out-of-band contract.
-          // This marking is the way to signal that any override or implementing method being compiled
-          // should not have its non-null annotations persisted as optional modifiers.
-          method.HasOutOfBandContract = true;
-        } else  if (method.ReturnAttributes[k].Type == ExtendedRuntimeTypes.NotNullArrayElementsAttribute) {
-          Stack s = new Stack();
-          TypeNode t = method.ReturnType;
-          while (t is OptionalModifier) {
-            OptionalModifier om = t as OptionalModifier;
-            s.Push(om.Modifier);
-            t = om.ModifiedType;
-          }
-          ArrayType at = t as ArrayType;
-          if (at != null) { // just silently ignore if attribute is on a non-array type?
-            OptionalModifier om = OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, at.ElementType);
-            while (0 < s.Count) {
-              om = OptionalModifier.For((TypeNode)s.Pop(), om);
-            }
-            // also *must* make it a new array type, can't set the ElementType.
-            method.ReturnType = om.GetArrayType(1);
-            // Someone putting an attribute directly on the "real" method is still a
-            // kind of out-of-band contract.
-            // This marking is the way to signal that any override or implementing method being compiled
-            // should not have its non-null annotations persisted as optional modifiers.
-            method.HasOutOfBandContract = true;
-          }
-        }
-      }
-#endif
+
       //if ((method.Flags & MethodFlags.HasSecurity) != 0)
       //  method.SecurityAttributes = this.GetSecurityAttributesFor((index << 2)|1);
       if ((method.Flags & MethodFlags.PInvokeImpl) != 0){
@@ -2644,7 +2260,6 @@ namespace System.Compiler.Metadata{
         //Get security attributes
         if ((method.Flags & MethodFlags.HasSecurity) != 0)
           method.SecurityAttributes = this.GetSecurityAttributesFor((index << 2)|1);
-#if !FxCop
       } catch (Exception e) {
         if (this.module != null) {
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
@@ -2654,9 +2269,6 @@ namespace System.Compiler.Metadata{
         this.currentTypeParameters = savedCurrentTypeParameters;
         this.currentMethodTypeParameters = savedCurrentMethodTypeParameters;
       }
-#else
-      }finally{}
-#endif
     }
     private Method/*!*/ GetMethodFromSpec(int i) {
       MethodSpecRow[] methodSpecs = this.tables.MethodSpecTable;
@@ -2964,13 +2576,11 @@ namespace System.Compiler.Metadata{
       TypeNode savedCurrentType = this.currentType;
       try{
         return this.GetTypeFromDefHelper(i);
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return new Class();
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
         return new Class();
-#endif
       }finally{
         this.currentTypeParameters = savedCurrentTypeParameters;
         this.currentType = savedCurrentType;
@@ -3111,18 +2721,6 @@ namespace System.Compiler.Metadata{
       TypeNode.NestedTypeProvider nestedTypeProvider = new TypeNode.NestedTypeProvider(this.GetNestedTypes);
       TypeNode.TypeMemberProvider memberProvider = new TypeNode.TypeMemberProvider(this.GetTypeMembers);
       bool isTemplateParameter = false;
-#if ExtendedRuntime
-      InterfaceImplRow[] intfaces = this.tables.InterfaceImplTable;
-      Interface firstInterface = null;
-      Interface lastInterface = null;
-      if (firstInterfaceIndex >= 0){
-        firstInterface = this.GetInterfaceIfNotGenericInstance(intfaces[firstInterfaceIndex].Interface);
-        if (firstInterface != null){
-          lastInterface = this.GetInterfaceIfNotGenericInstance(intfaces[lastInterfaceIndex].Interface);
-          isTemplateParameter = CoreSystemTypes.IsInitialized && lastInterface != null && lastInterface == ExtendedRuntimeTypes.ITemplateParameter;
-        }
-      }        
-#endif
       if ((flags & TypeFlags.Interface) != 0){
         if (isTemplateParameter)
           result = new TypeParameter(interfaces, nestedTypeProvider, attributeProvider, memberProvider, i);
@@ -3140,43 +2738,10 @@ namespace System.Compiler.Metadata{
             result = new EnumNode(nestedTypeProvider, attributeProvider, memberProvider, i);
           else if (baseClass == CoreSystemTypes.ValueType &&
             !(isSystemEnum && (flags & TypeFlags.Sealed) == 0)){
-#if ExtendedRuntime
-            Struct st = null;
-            if (firstInterface != null){
-              if (namesp.UniqueIdKey == StandardIds.StructuralTypes.UniqueIdKey){
-                if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.TupleType)
-                  st = new TupleType(nestedTypeProvider, attributeProvider, memberProvider, i);
-                else if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.TypeIntersection)
-                  st = new TypeIntersection(nestedTypeProvider, attributeProvider, memberProvider, i);
-                else if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.TypeUnion)
-                  st = new TypeUnion(nestedTypeProvider, attributeProvider, memberProvider, i);
-                else if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.ConstrainedType)
-                  st = new ConstrainedType(nestedTypeProvider, attributeProvider, memberProvider, i);
-                else
-                  st = new Struct(nestedTypeProvider, attributeProvider, memberProvider, i);
-              }
-              else if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.TypeAlias)
-                st = new TypeAlias(nestedTypeProvider, attributeProvider, memberProvider, i, false);
-              else if (CoreSystemTypes.IsInitialized && firstInterface == ExtendedRuntimeTypes.TypeDefinition)
-                st = new TypeAlias(nestedTypeProvider, attributeProvider, memberProvider, i, true);
-            }
-            if (st == null && lastInterface != null) {
-              result = this.GetTypeExtensionFromDef(nestedTypeProvider, attributeProvider, memberProvider, i, baseClass, lastInterface);
-            }
-            else {
-              result = st;
-            }
-            if (result == null)
-#endif
               result = new Struct(nestedTypeProvider, attributeProvider, memberProvider, i);
           }
         }
         if (result == null){
-#if ExtendedRuntime
-          if (lastInterface != null)
-            result = this.GetTypeExtensionFromDef(nestedTypeProvider, attributeProvider, memberProvider, i, baseClass, lastInterface);
-          if (result == null)
-#endif
             result = new Class(nestedTypeProvider, attributeProvider, memberProvider, i);
         }
       }
@@ -3184,7 +2749,6 @@ namespace System.Compiler.Metadata{
       result.Interfaces = interfaces;
       return result;
     }
-#if !MinimalReader
     private TrivialHashtable/*<Ident,TypeExtensionProvider>*//*!*/ TypeExtensionTable = new TrivialHashtable();
     delegate TypeNode TypeExtensionProvider(TypeNode.NestedTypeProvider nprovider, TypeNode.TypeAttributeProvider aprovider, TypeNode.TypeMemberProvider mprovider, TypeNode baseType, object handle);
 
@@ -3227,7 +2791,6 @@ namespace System.Compiler.Metadata{
       }
       return null;
     }
-#endif
     private static int GetInheritedTypeParameterCount(TypeNode type){
       if (type == null) return 0;
       int n = 0;
@@ -3285,16 +2848,12 @@ namespace System.Compiler.Metadata{
         if (ti == null) return this.GetForwardedTypeFromName(Namespace, name);
         TypeNode t = this.GetTypeFromDef((int)ti);
         return t;
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return null;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
         return null;
       }
-#else
-      }finally{}
-#endif
     }
     private TypeNode GetForwardedTypeFromName(Identifier/*!*/ Namespace, Identifier/*!*/ name) {
       ExportedTypeRow[] exportedTypes = this.tables.ExportedTypeTable;
@@ -3310,7 +2869,6 @@ namespace System.Compiler.Metadata{
       return this.GetReplacedTypeFromName(Namespace, name);
     }
     private TypeNode GetReplacedTypeFromName(Identifier/*!*/ Namespace, Identifier/*!*/ name) {
-#if !MinimalReader
       if (this.module.ContainingAssembly == null || (this.module.ContainingAssembly.Flags & AssemblyFlags.ContainsForeignTypes) == 0) return null;
       if (!SystemTypes.Initialized || this.module.ContainingAssembly == null) return null;
       int nsKey = Namespace.UniqueIdKey;
@@ -3371,7 +2929,6 @@ namespace System.Compiler.Metadata{
       } else if (nsKey == StandardIds.WindowsUIXamlMediaMedia3D.UniqueIdKey) {
         if (nKey == SystemTypes.Matrix3D.Name.UniqueIdKey && SystemTypes.Matrix3D.DeclaringModule.Location != "unknown:location") return SystemTypes.Matrix3D;
       }
-#endif
       return null;
     }
     internal bool IsValidTypeName(Identifier/*!*/ Namespace, Identifier/*!*/ name) {
@@ -3381,16 +2938,12 @@ namespace System.Compiler.Metadata{
         TrivialHashtable nsTable = (TrivialHashtable)this.namespaceTable[Namespace.UniqueIdKey];
         if (nsTable == null) return false;
         return nsTable[name.UniqueIdKey] != null;
-#if !FxCop
       }catch(Exception e){
         if (this.module == null) return false;
         if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
         this.module.MetadataImportErrors.Add(e);
         return false;
       }
-#else
-      }finally{}
-#endif
     }
     internal TypeNode/*!*/ GetTypeFromRef(int i) {
       return this.GetTypeFromRef(i, false);
@@ -3496,29 +3049,11 @@ namespace System.Compiler.Metadata{
         }
         result.Attributes = attributes;
       }
-#if ExtendedRuntime
-      for (int j = 0, n = attributes.Count; j < n; j++) {
-        if (attributes[j].Type == SystemTypes.NotNullGenericArgumentsAttribute) {
-          Literal l = (Literal)attributes[j].Expressions[0];
-          string s = (string)l.Value;
-          TypeNodeList ts = new TypeNodeList(s.Length);
-          for (int k = 0, m = s.Length; k < m; k++) {
-            if (s[k] == '!')
-              ts.Add(OptionalModifier.For(ExtendedRuntimeTypes.NonNullType, result.ConsolidatedTemplateArguments[k]));
-            else
-              ts.Add(result.ConsolidatedTemplateArguments[k]);
-          }
-          result = result.Template.GetGenericTemplateInstance(this.module, ts);
-          //^ assume result != null;
-        }
-      }
-#endif
       if (!isTypeArgument && Reader.CanCacheTypeNode(result))
         this.tables.TypeSpecTable[i-1].Type = result;
       return result;
     }
     private static bool CanCacheTypeNode(TypeNode/*!*/ type) {
-#if WHIDBEY
       if (!type.IsGeneric && (type.Template == null || !type.IsNotFullySpecialized) &&
       type.NodeType != NodeType.TypeParameter && type.NodeType != NodeType.ClassParameter &&
       type.NodeType != NodeType.InterfaceExpression) {
@@ -3528,9 +3063,6 @@ namespace System.Compiler.Metadata{
         return true;
       }
       return false;
-#else
-      return true;
-#endif
     }
     private static Module GetNestedModule(Module module, string modName, ref string modLocation){
       if (module == null || modName == null){Debug.Assert(false); return null;}
@@ -3636,10 +3168,8 @@ namespace System.Compiler.Metadata{
     private void GetNestedTypes(TypeNode/*!*/ type, object/*!*/ handle) {
       type.nestedTypes = null;
       TypeNodeList result = new TypeNodeList();
-#if !FxCop
       TypeNodeList savedCurrentTypeParameters = this.currentTypeParameters;
       TypeNode savedCurrentType = this.currentType;
-#endif
       try{
         if (type.IsGeneric){
           if (type.templateParameters == null) type.templateParameters = new TypeNodeList(0);
@@ -3676,7 +3206,6 @@ namespace System.Compiler.Metadata{
           }
         }
         type.nestedTypes = result;
-#if !FxCop
       }catch (Exception e){
         if (this.module != null){
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
@@ -3687,9 +3216,6 @@ namespace System.Compiler.Metadata{
         this.currentTypeParameters = savedCurrentTypeParameters;
         this.currentType = savedCurrentType;
       }
-#else
-      }finally{}
-#endif
     }
     private void GetTypeMembers(TypeNode/*!*/ type, object/*!*/ handle) {
       TypeNodeList savedCurrentTypeParameters = this.currentTypeParameters;
@@ -3784,7 +3310,6 @@ namespace System.Compiler.Metadata{
           this.currentMethodTypeParameters = savedMethodTypeParameters;
         }
         this.currentTypeParameters = savedCurrentTypeParameters;
-#if !FxCop
       }catch(Exception e){
         if (this.module != null){
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
@@ -3796,9 +3321,6 @@ namespace System.Compiler.Metadata{
         this.currentTypeParameters = savedCurrentTypeParameters;
         this.currentType = savedCurrentType;
       }
-#else
-      }finally{}
-#endif
     }
     private void GetTypeAttributes(TypeNode/*!*/ type, object/*!*/ handle) {
       Debug.Assert(TypeNode.IsCompleteTemplate(type));
@@ -3818,7 +3340,6 @@ namespace System.Compiler.Metadata{
         //Get security attributes
         if ((type.Flags & TypeFlags.HasSecurity) != 0)
           type.SecurityAttributes = this.GetSecurityAttributesFor((typeTableIndex << 2)|0);
-#if !FxCop
       }catch(Exception e){
         if (this.module != null){
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
@@ -3827,9 +3348,6 @@ namespace System.Compiler.Metadata{
         type.Attributes = new AttributeList(0);
         this.currentTypeParameters = savedCurrentTypeParameters;
       }
-#else
-      }finally{}
-#endif
     }
     private void GetTypeParameterAttributes(TypeNode/*!*/ type, object/*!*/ handle) {
       TypeNodeList savedCurrentTypeParameters = this.currentTypeParameters;
@@ -3844,7 +3362,6 @@ namespace System.Compiler.Metadata{
         //Get custom attributes   
         type.Attributes = this.GetCustomAttributesNonNullFor((genericParamIndex << 5)|19);
         this.currentTypeParameters = savedCurrentTypeParameters;
-#if !FxCop
       } catch (Exception e) {
         if (this.module != null) {
           if (this.module.MetadataImportErrors == null) this.module.MetadataImportErrors = new ArrayList();
@@ -3853,9 +3370,6 @@ namespace System.Compiler.Metadata{
         type.Attributes = new AttributeList(0);
         this.currentTypeParameters = savedCurrentTypeParameters;
       }
-#else
-      }finally{}
-#endif
     }
     private TypeNodeList/*!*/ ParseTypeList(MemoryCursor/*!*/ sigReader) {
       int n = sigReader.ReadCompressedInt();
@@ -4497,11 +4011,7 @@ namespace System.Compiler.Metadata{
       this.reader = reader;
       this.bodyReader = reader.tables.GetNewCursor();
       this.method = method;
-#if !FxCop
       this.method.LocalList = this.locals;
-#else
-      this.method.Locals = this.locals;
-#endif
       this.methodIndex = methodIndex;
       this.RVA = RVA;
       //^ base();
@@ -4536,13 +4046,6 @@ namespace System.Compiler.Metadata{
           this.ParseExceptionHandlerEntry((header & 0x40) == 0);
         }
         var localSourceNames = new System.Collections.Generic.Dictionary<int,LocalInfo>();
-#if UseSingularityPDB
-        if (this.reader.getDebugSymbols && this.reader.pdbFunctions != null) {
-          PdbFunction pdbFunc = this.reader.GetPdbFunction(0x6000000|(uint)methodIndex);
-          if (pdbFunc != null)
-            this.GetLocalNames(pdbFunc.scopes, localSourceNames);
-        }
-#elif !ROTOR
         if (this.reader.getDebugSymbols && this.reader.debugReader != null){
           ISymUnmanagedMethod methodInfo = null;
           try{
@@ -4552,9 +4055,7 @@ namespace System.Compiler.Metadata{
                 ISymUnmanagedScope rootScope = methodInfo.GetRootScope();
                 try{
                   this.reader.GetLocalSourceNames(rootScope, localSourceNames);
-#if CodeContracts
                   method.ExtraDebugInfo = ExtraPDBInfo.Parse(methodInfo.GetToken(), method, this.reader.debugReader, this.reader);
-#endif
                 }
                 finally{
                   if (rootScope != null)
@@ -4573,22 +4074,9 @@ namespace System.Compiler.Metadata{
               Marshal.ReleaseComObject(methodInfo);
           }
         }
-#endif
         this.reader.GetLocals(localIndex, this.locals, localSourceNames);
       }
     }
-
-#if UseSingularityPDB
-    private void GetLocalNames(PdbScope[] scopes, Hashtable localSourceNames) {
-      for (int i = 0, n = scopes == null ? 0 : scopes.Length; i < n; i++) {
-        PdbScope scope = scopes[i];
-        foreach (PdbSlot slot in scope.slots)
-          localSourceNames[(int)slot.slot] = slot.name;
-        this.GetLocalNames(scope.scopes, localSourceNames);
-      }
-    }
-#endif
-
 
     abstract protected void ParseExceptionHandlerEntry(bool smallSection);
     protected byte GetByte(){
@@ -4649,7 +4137,6 @@ namespace System.Compiler.Metadata{
       : base(reader, method, methodIndex, RVA){
       //^ base;
     }
-#if !FxCop
     override protected void ParseExceptionHandlerEntry(bool smallSection){
       int dataSize = this.reader.tables.GetByte();
       int n = (int)(ushort)this.reader.tables.GetInt16();
@@ -4698,7 +4185,6 @@ namespace System.Compiler.Metadata{
         this.method.ExceptionHandlers.Add(eh);
       }
     }
-#endif
     private AssignmentStatement/*!*/ ParseArrayElementAssignment(OpCode opCode) {
       Expression rhvalue = PopOperand();
       ExpressionList indexers = new ExpressionList(1);
@@ -4905,7 +4391,6 @@ namespace System.Compiler.Metadata{
       result.Type = type.GetArrayType(1);
       return result;
     }
-#if !FxCop
     internal StatementList/*!*/ ParseStatements() {
       this.ParseHeader();
       if (this.size == 0) return new StatementList(0);
@@ -4915,9 +4400,7 @@ namespace System.Compiler.Metadata{
       while (this.counter < size){
         if (currentBlock == null){
           currentBlock = Reader.GetOrCreateBlock(this.blockMap, this.counter);
-#if ILOFFSETS
           currentBlock.SourceContext = lastSourceContext;
-#endif
           result.Add(currentBlock);
         }
         bool endOfBasicBlock = this.ParseStatement(currentBlock);
@@ -4926,7 +4409,6 @@ namespace System.Compiler.Metadata{
       result.Add(Reader.GetOrCreateBlock(this.blockMap, this.counter));
       return result;
     }
-#endif
     private bool ParseStatement(Block/*!*/ block) {
       //parse instructions and put in expression tree until an assignment, void call, branch target, or branch is encountered
       StatementList statementList = block.Statements;
@@ -4934,40 +4416,20 @@ namespace System.Compiler.Metadata{
       Statement statement = null;
       bool transferStatement = false;
       int startingAddress = 0;
-#if !FxCop
       SourceContext sourceContext = new SourceContext();
-#if !CodeContracts
-      sourceContext.StartPos = this.counter;
-#endif
-#endif
-#if !ROTOR
       if (this.method.contextForOffset != null){
         object sctx = this.method.contextForOffset[this.counter+1];
         if (sctx != null) sourceContext = (SourceContext)sctx;
-#if ILOFFSETS
         else
         {
           sourceContext = this.lastSourceContext;
         }
-#endif
       }
-#endif
       while (true){
         bool isStatement = false;
         startingAddress = this.counter+1; //Add one so that it is never zero (the latter means no entry to the TrivialHashtable)
-#if FxCop || ILOFFSETS
         this.ilOffset = this.counter;
         this.opCode = this.GetOpCode();
-#else
-        OpCode opCode = this.GetOpCode();
-#endif
-#if FxCop
-        if (this.handlerMap.TryGetValue(this.ilOffset, out expr)){
-          expr.sourceContext = sourceContext;
-          expr.ILOffset = this.ilOffset;
-          this.operandStack.Push(expr);
-        }
-#endif
         switch (opCode){
           case OpCode.Nop: statement = new Statement(NodeType.Nop); goto done;
           case OpCode.Break: statement = new Statement(NodeType.DebugBreak); goto done;
@@ -4989,19 +4451,11 @@ namespace System.Compiler.Metadata{
           case OpCode.Ldloc_S: expr = this.locals[this.GetByte()]; break;
           case OpCode.Ldloca_S: expr = SetType(new UnaryExpression(this.locals[this.GetByte()], NodeType.AddressOf)); break;
           case OpCode.Stloc_S: statement = new AssignmentStatement(this.locals[this.GetByte()], PopOperand()); goto done;
-#if true || CodeContracts
           case OpCode.Ldnull: expr = Literal.Null; break;
           case OpCode.Ldc_I4_M1: expr = Literal.Int32MinusOne; break;
           case OpCode.Ldc_I4_0: expr = Literal.Int32Zero; break;
           case OpCode.Ldc_I4_1: expr = Literal.Int32One; break;
           case OpCode.Ldc_I4_2: expr = Literal.Int32Two; break;
-#else
-          case OpCode.Ldnull: expr = new Literal(null, CoreSystemTypes.Object); break;
-          case OpCode.Ldc_I4_M1: expr = new Literal(-1, CoreSystemTypes.Int32); break;
-          case OpCode.Ldc_I4_0: expr = new Literal(0, CoreSystemTypes.Int32); break;
-          case OpCode.Ldc_I4_1: expr = new Literal(1, CoreSystemTypes.Int32); break;
-          case OpCode.Ldc_I4_2: expr = new Literal(2, CoreSystemTypes.Int32); break;
-#endif
           case OpCode.Ldc_I4_3: expr = new Literal(3, CoreSystemTypes.Int32); break;
           case OpCode.Ldc_I4_4: expr = new Literal(4, CoreSystemTypes.Int32); break;
           case OpCode.Ldc_I4_5: expr = new Literal(5, CoreSystemTypes.Int32); break;
@@ -5212,12 +4666,7 @@ namespace System.Compiler.Metadata{
           goto done;
         }
         //^ assume expr != null;
-#if FxCop
-        expr.sourceContext = sourceContext;
-#endif
-#if FxCop || ILOFFSETS
         expr.ILOffset = this.ilOffset;
-#endif
         this.operandStack.Push(expr);
         this.isReadOnly = false;
         this.isVolatile = false;
@@ -5229,33 +4678,18 @@ namespace System.Compiler.Metadata{
         Expression e = this.operandStack.elements[i];
         //^ assume e != null;
         Statement s = new ExpressionStatement(e);
-#if FxCop
-        s.SourceContext = this.sourceContext;
-        s.ILOffset = this.ilOffset;
-#endif
-#if ILOFFSETS
         s.ILOffset = this.ilOffset;
         s.SourceContext = sourceContext;
-#endif
         statementList.Add(s);
       }
       this.operandStack.top = -1;
       if (statement == null) {
         statement = new ExpressionStatement(expr);
-#if FxCop
-        expr.sourceContext = this.sourceContext;
-#endif
-#if FxCop || ILOFFSETS
         expr.ILOffset = this.ilOffset;
-#endif
       }
       statement.SourceContext = sourceContext;
-#if FxCop || ILOFFSETS
       statement.ILOffset = this.ilOffset;
-#endif
-#if ILOFFSETS
       this.lastSourceContext = sourceContext;
-#endif
       statementList.Add(statement);
       if (transferStatement) return true;
       return this.blockMap[this.counter+1] != null;
@@ -5407,221 +4841,10 @@ namespace System.Compiler.Metadata{
     {
         return this.operandStack.Pop();
     }
-#if FxCop || ILOFFSETS
     private OpCode opCode;
     private int ilOffset;
-#endif
-#if ILOFFSETS
     SourceContext lastSourceContext;
-#endif
-#if FxCop
-    private SourceContext sourceContext;
-    private Block currentBlock;
-    private Dictionary<Block, List<TryNode>> tryMap;
-    private Dictionary<int, Expression> handlerMap;
-    internal StatementList/*!*/ ParseStatements() {
-      this.tryMap = new Dictionary<Block, List<TryNode>>();
-      this.handlerMap = new Dictionary<int, Expression>();
-      this.ParseHeader();
-      this.CreateBlocksForBranchTargets();
-      currentBlock = null;
-      this.sourceContext = new SourceContext();
-      while (this.counter < size) {
-        if (currentBlock == null) {
-          currentBlock = Reader.GetOrCreateBlock(this.blockMap, this.counter);
-        }
-        bool endOfBasicBlock = this.ParseStatement(currentBlock);
-        if (endOfBasicBlock) {
-          currentBlock.SourceContext = currentBlock.Statements[0].SourceContext;
-          currentBlock = null;
-        }
-      }
-      Reader.GetOrCreateBlock(this.blockMap, this.counter);
-      int counter = 0;
-      Block block = new Block();
-      block.Statements = new StatementList();
-      ProcessBlock(block, ref counter, this.size, null);
-      return block.Statements;
-    }
-    override protected void ParseExceptionHandlerEntry(bool smallSection) {
-      int dataSize = this.reader.tables.GetByte();
-      int n = (int)(ushort)this.reader.tables.GetInt16();
-      if (smallSection)
-        n = dataSize / 12;
-      else
-        n = (dataSize + (n << 8)) / 24;
-      for (int i = 0; i < n; i++) {
-        int flags, tryOffset, tryLength, handlerOffset, handlerLength, tokenOrOffset;
-        if (smallSection) {
-          flags = this.reader.tables.GetInt16();
-          tryOffset = this.reader.tables.GetUInt16();
-          tryLength = this.reader.tables.GetByte();
-          handlerOffset = this.reader.tables.GetUInt16();
-          handlerLength = this.reader.tables.GetByte();
-        }
-        else {
-          flags = this.reader.tables.GetInt32();
-          tryOffset = this.reader.tables.GetInt32();
-          tryLength = this.reader.tables.GetInt32();
-          handlerOffset = this.reader.tables.GetInt32();
-          handlerLength = this.reader.tables.GetInt32();
-        }
-        tokenOrOffset = this.reader.tables.GetInt32();
-        Block tryStartBlock = Reader.GetOrCreateBlock(this.blockMap, tryOffset);
-        Block blockAfterTryEnd = Reader.GetOrCreateBlock(this.blockMap, tryOffset + tryLength);
-        Block handlerStartBlock = Reader.GetOrCreateBlock(this.blockMap, handlerOffset);
-        Block blockAfterHandlerEnd = Reader.GetOrCreateBlock(this.blockMap, handlerOffset + handlerLength);
-        List<TryNode> tryList = null;
-        if (!this.tryMap.TryGetValue(tryStartBlock, out tryList)) {
-          this.tryMap[tryStartBlock] = tryList = new List<TryNode>();
-        }
-        TryNode currentTry = null;
-        int tryEnd = tryOffset + tryLength;
-        foreach (TryNode t in tryList) {
-          if (t.tryEnd == tryEnd) {
-            currentTry = t;
-            break;
-          }
-        }
-        if (currentTry == null) {
-          currentTry = new TryNode();
-          currentTry.tryEnd = tryEnd;
-          tryList.Add(currentTry);
-        }
-        int handlerEnd = handlerOffset + handlerLength;
-        if (currentTry.handlersEnd < handlerEnd)
-          currentTry.handlersEnd = handlerEnd;
 
-        Debug.Assert((int)flags != 3);
-        Debug.Assert((int)flags < 5);
-
-        switch (flags) {
-          case 0x00:
-            // for a catch handler, tokenOrOffset represents
-            // the metadata token of the handler type. handlerOffset
-            // is the literal offset for the catch block
-            int pos = this.reader.tables.GetCurrentPosition();
-            TypeNode filterType = (TypeNode)this.reader.GetMemberFromToken(tokenOrOffset);
-            this.reader.tables.SetCurrentPosition(pos);
-            string variableName = "$exception" + this.handlerMap.Count.ToString(CultureInfo.InvariantCulture);
-            StackVariable exception = new StackVariable(filterType, variableName);
-            CatchNode c = new CatchNode(handlerStartBlock, exception, filterType);
-            c.handlerEnd = handlerEnd;
-            currentTry.Catchers.Add(c);
-            this.handlerMap[handlerOffset] = exception;
-            break;
-          case 0x01:
-            // for a filter, tokenOrOffset represents the IL offset
-            // of the filter block. handlerOffset represents
-            // the IL offset of the associated catch handler
-            Block filterExpression = Reader.GetOrCreateBlock(blockMap, tokenOrOffset);
-            variableName = "$exception" + this.handlerMap.Count.ToString(CultureInfo.InvariantCulture);
-            exception = new StackVariable(CoreSystemTypes.Object, variableName);
-            Filter filter = new Filter(filterExpression, exception);
-            filter.handlerEnd = handlerOffset;
-            c = new CatchNode(handlerStartBlock, exception, null, filter);
-            c.handlerEnd = handlerEnd;
-            currentTry.Catchers.Add(c);
-            // note that handlerOffset would not be correct here!
-            this.handlerMap[tokenOrOffset] = exception;
-            break;
-          case 0x02:
-            FinallyNode f = new FinallyNode(handlerStartBlock);
-            f.handlerEnd = handlerEnd;
-            currentTry.Finally = f;
-            break;
-          case 0x04:
-            FaultHandler fh = new FaultHandler(handlerStartBlock);
-            fh.handlerEnd = handlerEnd;
-            currentTry.FaultHandler = fh;
-            break;
-        }
-      }
-    }
-    private void ProcessBlock(Block currentBlock, ref int counter, int blockEnd, Node blockNode) {
-      while (true) {
-        int lastCounter = counter;
-        Block block = GetNextBlock(ref counter);
-        if (block == null || block.ILOffset >= blockEnd) {
-          counter = lastCounter;
-          if (blockNode != null)
-            blockNode.SourceContext = currentBlock.Statements[0].SourceContext;
-          return;
-        }
-        if (this.tryMap.ContainsKey(block)) {
-          ProcessTryBlock(currentBlock, block, ref counter);
-        }
-        else {
-          if (currentBlock.Statements.Count == 0)
-            currentBlock.SourceContext = block.SourceContext;
-          currentBlock.Statements.Add(block);
-        }
-      }
-    }
-    private void ProcessTryBlock(Block outerBlock, Block currentBlock, ref int counter) {
-      List<TryNode> tryList = this.tryMap[currentBlock];
-      TryNode outerTry = tryList[tryList.Count - 1];
-      outerBlock.Statements.Add(outerTry);
-      tryList.Remove(outerTry);
-      if (tryList.Count > 0) {
-        outerTry.Block = new Block();
-        outerTry.Block.Statements = new StatementList();
-        ProcessTryBlock(outerTry.Block, currentBlock, ref counter);
-      }
-      else {
-        outerTry.Block = currentBlock;
-      }
-      this.tryMap.Remove(currentBlock);
-      ProcessBlock(outerTry.Block, ref counter, outerTry.tryEnd, outerTry);
-      while (true) {
-        int lastCounter = counter;
-        Block block = GetNextBlock(ref counter);
-        if (counter >= outerTry.handlersEnd) {
-          counter = lastCounter;
-          return;
-        }
-        int handlerEnd;
-        Node handlerNode;
-        GetHandlerEnd(outerTry, block, out handlerEnd, out handlerNode);
-        ProcessBlock(block, ref counter, handlerEnd, handlerNode);
-      }
-    }
-    private Block GetNextBlock(ref int counter) {
-      while (true) {
-        Block result = this.blockMap[counter + 1] as Block;
-        ++counter;
-        if (result != null || counter >= this.size)
-          return result;
-      }
-    }
-    private void GetHandlerEnd(TryNode t, Block block, out int handlerEnd, out Node handlerNode) {
-      handlerEnd = Int32.MaxValue;
-      handlerNode = null;
-      int startPos = block.ILOffset;
-      if (t.Finally != null
-        && t.Finally.handlerEnd > startPos
-        && t.Finally.handlerEnd < handlerEnd) {
-        handlerEnd = t.Finally.handlerEnd;
-        handlerNode = t.Finally;
-      }
-      foreach (CatchNode c in t.Catchers) {
-        if (c.handlerEnd > startPos && c.handlerEnd < handlerEnd) {
-          handlerEnd = c.handlerEnd;
-          handlerNode = c;
-        }
-        if (c.Filter != null && c.Filter.handlerEnd > startPos && c.Filter.handlerEnd < handlerEnd) {
-          handlerEnd = c.Filter.handlerEnd;
-          handlerNode = c.Filter;
-        }
-      }
-      if (t.FaultHandler != null
-        && t.FaultHandler.handlerEnd > startPos
-        && t.FaultHandler.handlerEnd < handlerEnd) {
-        handlerEnd = t.FaultHandler.handlerEnd;
-        handlerNode = t.FaultHandler;
-      }
-    }
-#endif
   }
   internal class InstructionParser : ILParser{
     private readonly TrivialHashtable/*!*/ ehMap;
@@ -5693,12 +4916,10 @@ namespace System.Compiler.Metadata{
       InstructionList instructions = (InstructionList)this.ehMap[offset+1];
       if (instructions == null) this.ehMap[offset+1] = instructions = new InstructionList(2);
       instructions.Add(instruction);
-#if !ROTOR
       if (this.method.contextForOffset != null){
         object sctx = this.method.contextForOffset[offset + 1];
         if (sctx != null) instruction.SourceContext = (SourceContext)sctx;
       }
-#endif
       return instruction;
     }
     private Int32List ParseSwitchInstruction(){
@@ -5734,12 +4955,10 @@ namespace System.Compiler.Metadata{
       if (this.counter >= this.size) 
         return null;
       int offset = this.counter;
-#if !ROTOR
       if (this.method.contextForOffset != null){
         object sctx = this.method.contextForOffset[offset+1];
         if (sctx != null) this.sourceContext = (SourceContext)sctx;
       }
-#endif
       object value = null;
       OpCode opCode = this.GetOpCode();    
       switch(opCode){
@@ -6147,23 +5366,4 @@ namespace System.Compiler.Metadata{
       this.enumerator.Reset();
     }
   }
-#if !ROTOR && NoWriter
-  [ComVisible(true), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("7DAC8207-D3AE-4c75-9B67-92801A497D44")]
-  internal interface IMetaDataImport{}
-  internal class EmptyImporter : IMetaDataImport{}
-#endif
-#if FxCop
-  class StackVariable : Local {
-    internal StackVariable(TypeNode type, string name)
-      : base(type) {
-      this.NodeType = NodeType.StackVariable;
-      this.Name = Identifier.For(name);
-    }
-    internal StackVariable(TypeNode type, int index)
-      : base(type) {
-      this.NodeType = NodeType.StackVariable;
-      this.Name = Identifier.For("stack$" + index.ToString(CultureInfo.InvariantCulture));
-    }
-  }
-#endif
 }

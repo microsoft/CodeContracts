@@ -12,89 +12,10 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if !FxCop
 using System;
-#if CLOUSOT
 using System.Diagnostics.Contracts;
-#endif
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !MinimalReader && !CodeContracts
-  public sealed class AliasDefinitionList{
-    private AliasDefinition[]/*!*/ elements;
-    private int count = 0;
-    public AliasDefinitionList(){
-      this.elements = new AliasDefinition[4];
-      //^ base();
-    }
-    public AliasDefinitionList(int capacity){
-      this.elements = new AliasDefinition[capacity];
-      //^ base();
-    }
-    public void Add(AliasDefinition element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        AliasDefinition[] newElements = new AliasDefinition[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public AliasDefinitionList/*!*/ Clone() {
-      AliasDefinition[] elements = this.elements;
-      int n = this.count;
-      AliasDefinitionList result = new AliasDefinitionList(n);
-      result.count = n;
-      AliasDefinition[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count {
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public AliasDefinition this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly AliasDefinitionList/*!*/ list;
-      public Enumerator(AliasDefinitionList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public AliasDefinition Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-#endif
   public sealed class AssemblyNodeList
   {
     private AssemblyNode[]/*!*/ elements;
@@ -396,307 +317,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader && !CodeContracts
-  public sealed class CatchList{
-    private Catch[]/*!*/ elements;
-    private int count = 0;
-    public CatchList(){
-      this.elements = new Catch[4];
-      //^ base();
-    }
-    public CatchList(int n){
-      this.elements = new Catch[n];
-      //^ base();
-    }
-    public void Add(Catch element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        Catch[] newElements = new Catch[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public CatchList/*!*/ Clone() {
-      Catch[] elements = this.elements;
-      int n = this.count;
-      CatchList result = new CatchList(n);
-      result.count = n;
-      Catch[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public Catch this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly CatchList/*!*/ list;
-      public Enumerator(CatchList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public Catch Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-  public sealed class CompilationList{
-    private Compilation[]/*!*/ elements;
-    private int count = 0;
-    public CompilationList(){
-      this.elements = new Compilation[4];
-      //^ base();
-    }
-    public CompilationList(int n){
-      this.elements = new Compilation[n];
-      //^ base();
-    }
-    public CompilationList(params Compilation[] elements){
-      if (elements == null) elements = new Compilation[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(Compilation element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        Compilation[] newElements = new Compilation[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public CompilationList/*!*/ Clone() {
-      Compilation[] elements = this.elements;
-      int n = this.count;
-      CompilationList result = new CompilationList(n);
-      result.count = n;
-      Compilation[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public Compilation this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly CompilationList/*!*/ list;
-      public Enumerator(CompilationList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public Compilation Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-  public sealed class CompilationUnitList{
-    private CompilationUnit[]/*!*/ elements;
-    private int count = 0;
-    public CompilationUnitList(){
-      this.elements = new CompilationUnit[4];
-      //^ base();
-    }
-    public CompilationUnitList(int n){
-      this.elements = new CompilationUnit[n];
-      //^ base();
-    }
-    public CompilationUnitList(params CompilationUnit[] elements){
-      if (elements == null) elements = new CompilationUnit[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(CompilationUnit element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        CompilationUnit[] newElements = new CompilationUnit[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public CompilationUnitList/*!*/ Clone(){
-      CompilationUnit[] elements = this.elements;
-      int n = this.count;
-      CompilationUnitList result = new CompilationUnitList(n);
-      result.count = n;
-      CompilationUnit[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public CompilationUnit this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly CompilationUnitList/*!*/ list;
-      public Enumerator(CompilationUnitList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public CompilationUnit Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-  public sealed class CompilationUnitSnippetList{
-    private CompilationUnitSnippet[]/*!*/ elements;
-    private int count = 0;
-    public CompilationUnitSnippetList(){
-      this.elements = new CompilationUnitSnippet[4];
-      //^ base();
-    }
-    public CompilationUnitSnippetList(int n){
-      this.elements = new CompilationUnitSnippet[n];
-      //^ base();
-    }
-    public CompilationUnitSnippetList(params CompilationUnitSnippet[] elements){
-      if (elements == null) elements = new CompilationUnitSnippet[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(CompilationUnitSnippet element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        CompilationUnitSnippet[] newElements = new CompilationUnitSnippet[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public CompilationUnitSnippetList/*!*/ Clone() {
-      CompilationUnitSnippet[] elements = this.elements;
-      int n = this.count;
-      CompilationUnitSnippetList result = new CompilationUnitSnippetList(n);
-      result.count = n;
-      CompilationUnitSnippet[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public CompilationUnitSnippet this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly CompilationUnitSnippetList/*!*/ list;
-      public Enumerator(CompilationUnitSnippetList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public CompilationUnitSnippet Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-#endif
-#if !NoWriter
   public sealed class EventList{
     private Event[]/*!*/ elements;
     private int count = 0;
@@ -757,123 +377,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if !MinimalReader && !CodeContracts
-  public sealed class ErrorNodeList{
-    private ErrorNode[]/*!*/ elements;
-    private int count = 0;
-    public ErrorNodeList(){
-      this.elements = new ErrorNode[8];
-      //^ base();
-    }
-    public ErrorNodeList(int n){
-      this.elements = new ErrorNode[n];
-      //^ base();
-    }
-    public void Add(ErrorNode element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 8) m = 8;
-        ErrorNode[] newElements = new ErrorNode[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public ErrorNode this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly ErrorNodeList/*!*/ list;
-      public Enumerator(ErrorNodeList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public ErrorNode Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-    private int FindNextEntry(ErrorNode[]/*!*/ errors, int index, int count, ErrorNodeComparer comparer) 
-    {
-      int res = -1;
-      for(int i = index; i < index + count; i++) {
-            if (errors[i] != null  && 
-                !errors[i].GetMessage(System.Threading.Thread.CurrentThread.CurrentUICulture).Contains("(trace position)")) {
-              //we have found an error to consider
-              if(res == -1 || comparer.Compare(errors[res],errors[i]) > 0)
-                res = i;
-            }
-          }
-      return res;  
-    }
-    public void Sort(int index, int count)
-    {
-          // we cannot simply call Array.Sort because we have to make sure that trace positions
-          // stay with their error messages.
-          ErrorNode[]/*!*/ to = new ErrorNode[elements.Length];
-          Array.Copy(elements, to, elements.Length);
-
-          int free = index;
-          int next = index;
-          ErrorNode cur;
-          ErrorNodeComparer comparer = new ErrorNodeComparer();
-          while ((next = FindNextEntry(to, index, count, comparer)) != -1)
-          {
-              do {
-                  cur = to[next];
-                  to[next++] = null;
-                  elements[free++] = cur;
-              } while(next < index + count &&      // repeat until we do not have a related info
-                      to[next] != null &&
-                      to[next].GetMessage(System.Threading.Thread.CurrentThread.CurrentUICulture).Contains("(trace position)"));
-          }
-    }
-  }
-
-  public class ErrorNodeComparer : System.Collections.Generic.IComparer<ErrorNode/*!*/>
-  {
-      public int Compare(ErrorNode/*!*/ e1, ErrorNode/*!*/ e2)
-      {
-          if (e1.SourceContext.Document == null || e2.SourceContext.Document == null) return 0;
-
-          int loc1 = e1.SourceContext.StartLine * 1000 + e1.SourceContext.StartColumn;
-          int loc2 = e2.SourceContext.StartLine * 1000 + e2.SourceContext.StartColumn;
-          if (loc1 == loc2)
-          {
-              string message1 = e1.GetMessage(System.Threading.Thread.CurrentThread.CurrentUICulture);
-              string message2 = e2.GetMessage(System.Threading.Thread.CurrentThread.CurrentUICulture);
-              return String.Compare(message1, message2, false, System.Globalization.CultureInfo.InvariantCulture);
-          }
-          if (loc1 > loc2) return 1;
-          return -1;
-      }
-  }
-#endif
   public sealed class ExpressionList{
     private Expression[]/*!*/ elements;
     private int count = 0;
@@ -1021,7 +524,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader
   public sealed class FaultHandlerList{
     private FaultHandler[]/*!*/ elements;
     private int count = 0;
@@ -1092,8 +594,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if !NoWriter || !MinimalReader
   public sealed class FieldList{
     private Field[]/*!*/ elements; 
     private int count = 0;
@@ -1170,8 +670,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if !MinimalReader
   public sealed class FilterList{
     private Filter[]/*!*/ elements;
     private int count = 0;
@@ -1304,7 +802,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class InstructionList{
     private Instruction[]/*!*/ elements; 
     private int count = 0;
@@ -1465,7 +962,6 @@ namespace System.Compiler{
       }
     }
   }
-#if ExtendedRuntime || CodeContracts
   public sealed class InvariantList{
     private Invariant[]/*!*/ elements;
     private int count = 0;
@@ -1544,7 +1040,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class Int32List{
     private Int32[]/*!*/ elements;
     private int count = 0;
@@ -1611,145 +1106,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader && !CodeContracts
-  public sealed class ISourceTextList{
-    private ISourceText[]/*!*/ elements = new ISourceText[4];
-    private int count = 0;
-    public ISourceTextList(){
-      this.elements = new ISourceText[4];
-      //^ base();
-    }
-    public ISourceTextList(int capacity){
-      this.elements = new ISourceText[capacity];
-      //^ base();
-    }
-    public ISourceTextList(params ISourceText[] elements){
-      if (elements == null) elements = new ISourceText[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(ISourceText element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        ISourceText[] newElements = new ISourceText[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public ISourceText this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly ISourceTextList/*!*/ list;
-      public Enumerator(ISourceTextList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public ISourceText Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-  public sealed class LocalDeclarationList{
-    private LocalDeclaration[]/*!*/ elements;
-    private int count = 0;
-    public LocalDeclarationList(){
-      this.elements = new LocalDeclaration[8];
-      //^ base();
-    }
-    public LocalDeclarationList(int capacity){
-      this.elements = new LocalDeclaration[capacity];
-      //^ base();
-    }
-    public void Add(LocalDeclaration element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 8) m = 8;
-        LocalDeclaration[] newElements = new LocalDeclaration[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public LocalDeclarationList/*!*/ Clone() {
-      LocalDeclaration[] elements = this.elements;
-      int n = this.count;
-      LocalDeclarationList result = new LocalDeclarationList(n);
-      result.count = n;
-      LocalDeclaration[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public LocalDeclaration this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly LocalDeclarationList/*!*/ list;
-      public Enumerator(LocalDeclarationList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public LocalDeclaration Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }  
-#endif
-#if ExtendedRuntime || CodeContracts
   public sealed class RequiresList{
     private Requires[]/*!*/ elements;
     private int count = 0;
@@ -1791,10 +1147,9 @@ namespace System.Compiler{
     }
     public Requires this[int index]{
       get{
-#if CLOUSOT
         Contract.Requires(index >= 0);
         Contract.Requires(index < Count);
-#endif
+
         return this.elements[index];
       }
       set{
@@ -1977,7 +1332,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class LocalList{
     private Local[]/*!*/ elements; 
     private int count = 0;
@@ -2063,7 +1417,6 @@ namespace System.Compiler{
       }
       this.elements[i] = element;
     }
-#if !MinimalReader
     public bool Contains(Member element) {
       int n = this.count;
       for (int i = 0; i < n; i++)
@@ -2098,7 +1451,6 @@ namespace System.Compiler{
         }
       }
     }
-#endif
     public void RemoveAt(int index) {
       if (index >= this.count || index < 0) return;
       int n = this.count;
@@ -2159,7 +1511,6 @@ namespace System.Compiler{
       return m;
     }
   }
-#if !MinimalReader
   public sealed class MemberBindingList{
     private MemberBinding[]/*!*/ elements; 
     private int count = 0;
@@ -2220,7 +1571,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class MethodList{
     private Method[]/*!*/ elements; 
     private int count = 0;
@@ -2297,7 +1647,7 @@ namespace System.Compiler{
       }
     }
   }
-#if !NoWriter
+
   public sealed class ModuleList{
     private Module[]/*!*/ elements;
     private int count = 0;
@@ -2358,7 +1708,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class ModuleReferenceList{
     private ModuleReference[]/*!*/ elements;
     private int count = 0;
@@ -2505,10 +1854,7 @@ namespace System.Compiler{
       }
     }
   }
-#if !FxCop
-  public
-#endif  
-  sealed class NodeList{
+  public sealed class NodeList{
     private Node[]/*!*/ elements;
     private int count = 0;
     public NodeList(){
@@ -2674,7 +2020,7 @@ namespace System.Compiler{
       return res;
     }
   }
-#if !NoWriter
+
   public sealed class PropertyList{
     private Property[]/*!*/ elements; 
     private int count = 0;
@@ -2735,7 +2081,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class ResourceList{
     private Resource[]/*!*/ elements;
     private int count = 0;
@@ -2806,111 +2151,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader && !CodeContracts
-  public sealed class ScopeList{
-    private Scope[]/*!*/ elements;
-    private int count = 0;
-    public ScopeList(){
-      this.elements = new Scope[32];
-      //^ base();
-    }
-    public ScopeList(int capacity){
-      this.elements = new Scope[capacity];
-      //^ base();
-    }
-    public ScopeList(params Scope[] elements){
-      if (elements == null) elements = new Scope[0];
-      this.elements = elements;
-      this.count = elements.Length;
-      //^ base();
-    }
-    public void Add(Scope element){
-      Scope[] elements = this.elements;
-      int n = elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 32) m = 32;
-        Scope[] newElements = new Scope[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public ScopeList/*!*/ Clone() {
-      Scope[] elements = this.elements;
-      int n = this.count;
-      ScopeList result = new ScopeList(n);
-      result.count = n;
-      Scope[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public void Insert(Scope element, int index){
-      Scope[] elements = this.elements;
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (index >= i) throw new IndexOutOfRangeException();
-      if (i == n){
-        int m = n*2; if (m < 32) m = 32;
-        Scope[] newElements = new Scope[m];
-        for (int j = 0; j < index; j++) newElements[j] = elements[j];
-        newElements[index] = element;
-        for (int j = index; j < n; j++) newElements[j+1] = elements[j];
-        return;
-      }
-      for (int j = index; j < i; j++){
-        Scope t = elements[j];
-        elements[j] = element;
-        element = t;
-      }
-      elements[i] = element;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public int SearchFor(Scope element){
-      Scope[] elements = this.elements;
-      for (int i = 0, n = this.count; i < n; i++)
-        if ((object)elements[i] == (object)element) return i;
-      return -1;
-    }
-    public Scope this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly ScopeList/*!*/ list;
-      public Enumerator(ScopeList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public Scope Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-#endif
   public sealed class SecurityAttributeList{
     private SecurityAttribute[]/*!*/ elements;
     private int count = 0;
@@ -2981,7 +2221,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !MinimalReader
   public sealed class SourceChangeList{
     private SourceChange[]/*!*/ elements;
     private int count = 0;
@@ -3058,7 +2297,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
   public sealed class StatementList{
     private Statement[]/*!*/ elements;
     private int count = 0;
@@ -3099,9 +2337,8 @@ namespace System.Compiler{
     }
     public int Count{
       get{
-#if CLOUSOT
         Contract.Ensures(Contract.Result<int>() >= 0);
-#endif
+
         return this.count;
       }
       set{this.count = value;}
@@ -3113,10 +2350,9 @@ namespace System.Compiler{
     }
     public Statement this[int index]{
       get{
-#if CLOUSOT
         System.Diagnostics.Contracts.Contract.Requires(index >= 0);
         System.Diagnostics.Contracts.Contract.Requires(index < Count);
-#endif
+
         return this.elements[index];
       }
       set{
@@ -3146,7 +2382,6 @@ namespace System.Compiler{
       }
     }
   }
-#if !NoWriter
   public sealed class StringList{
     private string[]/*!*/ elements = new string[4];
     private int count = 0;
@@ -3219,79 +2454,6 @@ namespace System.Compiler{
       }
     }
   }
-#endif
-#if !MinimalReader && !CodeContracts
-  public sealed class SwitchCaseList{
-    private SwitchCase[]/*!*/ elements = new SwitchCase[16];
-    private int count = 0;
-    public SwitchCaseList(){
-      this.elements = new SwitchCase[16];
-      //^ base();
-    }
-    public SwitchCaseList(int capacity){
-      this.elements = new SwitchCase[capacity];
-      //^ base();
-    }
-    public void Add(SwitchCase element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 16) m = 16;
-        SwitchCase[] newElements = new SwitchCase[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public SwitchCaseList/*!*/ Clone() {
-      SwitchCase[] elements = this.elements;
-      int n = this.count;
-      SwitchCaseList result = new SwitchCaseList(n);
-      result.count = n;
-      SwitchCase[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public SwitchCase this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly SwitchCaseList/*!*/ list;
-      public Enumerator(SwitchCaseList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public SwitchCase Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-#endif
   public sealed class TypeNodeList{
     private TypeNode[]/*!*/ elements;
     private int count = 0;
@@ -3400,209 +2562,6 @@ namespace System.Compiler{
       return SearchFor(asType) >= 0;
     }
   }
-#if !MinimalReader && !CodeContracts
-  public sealed class TypeswitchCaseList{
-    private TypeswitchCase[]/*!*/ elements = new TypeswitchCase[16];
-    private int count = 0;
-    public TypeswitchCaseList(){
-      this.elements = new TypeswitchCase[16];
-      //^ base();
-    }
-    public TypeswitchCaseList(int capacity){
-      this.elements = new TypeswitchCase[capacity];
-      //^ base();
-    }
-    public void Add(TypeswitchCase element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 16) m = 16;
-        TypeswitchCase[] newElements = new TypeswitchCase[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public TypeswitchCaseList/*!*/ Clone() {
-      TypeswitchCase[] elements = this.elements;
-      int n = this.count;
-      TypeswitchCaseList result = new TypeswitchCaseList(n);
-      result.count = n;
-      TypeswitchCase[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public TypeswitchCase this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly TypeswitchCaseList/*!*/ list;
-      public Enumerator(TypeswitchCaseList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public TypeswitchCase Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-  public sealed class UsedNamespaceList{
-    private UsedNamespace[]/*!*/ elements;
-    private int count = 0;
-    public UsedNamespaceList(){
-      this.elements = new UsedNamespace[4];
-      //^ base();
-    }
-    public UsedNamespaceList(int capacity){
-      this.elements = new UsedNamespace[capacity];
-      //^ base();
-    }
-    public void Add(UsedNamespace element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        UsedNamespace[] newElements = new UsedNamespace[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public UsedNamespaceList/*!*/ Clone() {
-      UsedNamespace[] elements = this.elements;
-      int n = this.count;
-      UsedNamespaceList result = new UsedNamespaceList(n);
-      result.count = n;
-      UsedNamespace[] newElements = result.elements;
-      for (int i = 0; i < n; i++)
-        newElements[i] = elements[i];
-      return result;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public UsedNamespace this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly UsedNamespaceList/*!*/ list;
-      public Enumerator(UsedNamespaceList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public UsedNamespace Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-
-  public sealed class VariableDeclarationList{
-    private VariableDeclaration[]/*!*/ elements;
-    private int count = 0;
-    public VariableDeclarationList(){
-      this.elements = new VariableDeclaration[4];
-      //^ base();
-    }
-    public VariableDeclarationList(int capacity){
-      this.elements = new VariableDeclaration[capacity];
-      //^ base();
-    }
-    public void Add(VariableDeclaration element){
-      int n = this.elements.Length;
-      int i = this.count++;
-      if (i == n){
-        int m = n*2; if (m < 4) m = 4;
-        VariableDeclaration[] newElements = new VariableDeclaration[m];
-        for (int j = 0; j < n; j++) newElements[j] = elements[j];
-        this.elements = newElements;
-      }
-      this.elements[i] = element;
-    }
-    public int Count{
-      get{return this.count;}
-    }
-    [Obsolete("Use Count property instead.")]
-    public int Length{
-      get{return this.count;}
-    }
-    public VariableDeclaration this[int index]{
-      get{
-        return this.elements[index];
-      }
-      set{
-        this.elements[index] = value;
-      }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this);
-    }
-    public struct Enumerator{
-      private int index;
-      private readonly VariableDeclarationList/*!*/ list;
-      public Enumerator(VariableDeclarationList/*!*/ list) {
-        this.index = -1;
-        this.list = list;
-      }
-      public VariableDeclaration Current{
-        get{
-          return this.list[this.index];
-        }
-      }
-      public bool MoveNext(){
-        return ++this.index < this.list.count;
-      }
-      public void Reset(){
-        this.index = -1;
-      }
-    }
-  }
-#endif
   public sealed class Win32ResourceList{
     private Win32Resource[]/*!*/ elements;
     private int count = 0;
@@ -3758,263 +2717,3 @@ namespace System.Compiler{
     }
   }
 }
-#else
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace Microsoft.Cci
-{
-  public abstract class MetadataCollection<T> : IList<T>, IList{
-    private List<T> innerList;
-    internal MetadataCollection() : this(new List<T>()){}
-    internal MetadataCollection(int capacity) : this(new List<T>(capacity)){}
-    internal MetadataCollection(List<T> innerList){
-      this.innerList = innerList;
-    }
-    internal MetadataCollection(ICollection<T> collection) : this(collection == null ? 0 : collection.Count){
-      if (collection != null){
-        this.innerList.AddRange(collection);
-      }
-    }
-    public T this[int index]{
-      get { return this.innerList[index]; }
-      internal set { this.innerList[index] = value; }
-    }
-    public int IndexOf(T item){
-      return this.innerList.IndexOf(item);
-    }
-    public bool Contains(T item){
-      return this.innerList.Contains(item);
-    }
-    public void CopyTo(T[] array, int arrayIndex){
-      this.innerList.CopyTo(array, arrayIndex);
-    }
-    public int Count{
-      get { return this.innerList.Count; }
-    }
-    public bool IsReadOnly{
-      get { return true; }
-    }
-    public Enumerator GetEnumerator(){
-      return new Enumerator(this.innerList.GetEnumerator());
-    }
-    public struct Enumerator{
-      private List<T>.Enumerator enumerator;
-      public Enumerator(List<T>.Enumerator enumerator){
-        this.enumerator = enumerator;
-      }
-      public bool MoveNext(){
-        return this.enumerator.MoveNext();
-      }
-      public T Current{
-        get { return this.enumerator.Current; }
-      }
-    }
-    internal void Add(T item){
-      this.innerList.Add(item);
-    }
-    void ICollection<T>.Add(T item){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    void ICollection<T>.Clear(){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    bool ICollection<T>.Remove(T item){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    IEnumerator<T> IEnumerable<T>.GetEnumerator(){
-      return this.innerList.GetEnumerator();
-    }
-    void IList<T>.Insert(int index, T item){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    void IList<T>.RemoveAt(int index){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    T IList<T>.this[int index]{
-      get { return this[index]; }
-      set { throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly); }
-    }
-    void ICollection.CopyTo(Array array, int index){
-      ICollection list = this.innerList;
-      list.CopyTo(array, index);
-    }
-    bool ICollection.IsSynchronized{
-      get { return false; }
-    }
-    object ICollection.SyncRoot{
-      get {
-        ICollection list = this.innerList;
-        return list.SyncRoot; 
-      }
-    }
-    IEnumerator IEnumerable.GetEnumerator(){
-      IEnumerable list = this.innerList;
-      return list.GetEnumerator();
-    }
-    int IList.Add(object value){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    bool IList.Contains(object value){
-      IList list = this.innerList;
-      return list.Contains(value);
-    }
-    int IList.IndexOf(object value){
-      IList list = this.innerList;
-      return list.IndexOf(value);
-    }
-    void IList.Insert(int index, object value){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    bool IList.IsFixedSize{
-      get { return true; }
-    }
-    void IList.Remove(object value){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    void IList.RemoveAt(int index){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-    object IList.this[int index]{
-      get { return this[index]; }
-      set { throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly); }
-    }
-    void IList.Clear(){
-      throw new NotSupportedException(ExceptionStrings.CollectionIsReadOnly);
-    }
-  }
-  public sealed class AssemblyNodeCollection : MetadataCollection<AssemblyNode> {
-    internal AssemblyNodeCollection() : base(){}
-    internal AssemblyNodeCollection(int capacity) : base(capacity) { }
-    internal AssemblyNodeCollection(ICollection<AssemblyNode> collection) : base(collection) { }
-    internal AssemblyNodeCollection Clone() {
-      return new AssemblyNodeCollection(this);
-    }
-  }
-  public sealed class AssemblyReferenceCollection : MetadataCollection<AssemblyReference> {
-    internal AssemblyReferenceCollection() : base(){}
-    internal AssemblyReferenceCollection(int capacity) : base(capacity){}
-  }
-  public sealed class AttributeNodeCollection : MetadataCollection<AttributeNode> {
-    internal AttributeNodeCollection() : base(){}
-    internal AttributeNodeCollection(int capacity) : base(capacity){}
-    internal AttributeNodeCollection(ICollection<AttributeNode> collection) : base(collection) { }
-    internal AttributeNodeCollection Clone() {
-      return new AttributeNodeCollection(this);
-    }
-  }
-  public sealed class BlockCollection : MetadataCollection<Block> {
-    internal BlockCollection() : base(){}
-    internal BlockCollection(int capacity) : base(capacity) { }
-    internal BlockCollection(ICollection<Block> collection) : base(collection) { }
-    internal BlockCollection Clone() {
-      return new BlockCollection(this);
-    }
-  }
-  public sealed class CatchNodeCollection : MetadataCollection<CatchNode> {
-    internal CatchNodeCollection() : base(){}
-    internal CatchNodeCollection(int capacity) : base(capacity) { }
-  }
-  public sealed class ExpressionCollection : MetadataCollection<Expression> {
-    internal ExpressionCollection() : base(){}
-    internal ExpressionCollection(int capacity) : base(capacity){}
-    internal ExpressionCollection(ICollection<Expression> collection) : base(collection) { }
-    internal ExpressionCollection Clone() {
-      return new ExpressionCollection(this);
-    }
-  }
-  public sealed class InstructionCollection : MetadataCollection<Instruction> {
-    internal InstructionCollection() : base(){}
-    internal InstructionCollection(int capacity) : base(capacity){}
-  }
-  public sealed class InterfaceCollection : MetadataCollection<InterfaceNode> {
-    internal InterfaceCollection() : base(){}
-    internal InterfaceCollection(int capacity) : base(capacity){}
-    internal InterfaceCollection(params InterfaceNode[] range) : base(range) {}   
-    internal InterfaceCollection(ICollection<InterfaceNode> collection) : base(collection) { }
-    internal InterfaceCollection Clone() {
-      return new InterfaceCollection(this);
-    }
-  }
-  public sealed class LocalCollection : MetadataCollection<Local> {
-    internal LocalCollection() : base(){}
-    internal LocalCollection(int capacity) : base(capacity){}
-  }
-  public sealed class MemberCollection : MetadataCollection<Member> {
-    internal MemberCollection() : base(){}
-    internal MemberCollection(int capacity) : base(capacity){}
-    internal MemberCollection(ICollection<Member> collection) : base(collection) { }
-    internal MemberCollection Clone() {
-      return new MemberCollection(this);
-    }
-  }
-  public sealed class MethodCollection : MetadataCollection<Method> {
-    internal MethodCollection() : base(){}
-    internal MethodCollection(int capacity) : base(capacity){}
-    internal MethodCollection(params Method[] range) : base(range) {}
-  }
-  public sealed class ModuleReferenceCollection : MetadataCollection<ModuleReference> {
-    internal ModuleReferenceCollection() : base(){}
-    internal ModuleReferenceCollection(int capacity) : base(capacity){}
-  }
-  public sealed class NamespaceCollection : MetadataCollection<Namespace> {
-    internal NamespaceCollection() : base(){}
-    internal NamespaceCollection(int capacity) : base(capacity){}
-  }
-  public sealed class NodeCollection : MetadataCollection<Node> {
-    internal NodeCollection() : base(){}
-    internal NodeCollection(int capacity) : base(capacity){}
-    internal NodeCollection(ICollection<Node> collection) : base(collection) { }
-    internal NodeCollection Clone() {
-      return new NodeCollection(this);
-    }
-  }
-  public sealed class ParameterCollection : MetadataCollection<Parameter> {
-    internal ParameterCollection() : base(){}
-    internal ParameterCollection(int capacity) : base(capacity){}
-    internal ParameterCollection(ICollection<Parameter> collection) : base(collection) { }
-    internal ParameterCollection Clone() {
-      return new ParameterCollection(this);
-    }
-  }
-  public sealed class ResourceCollection : MetadataCollection<Resource> {
-    internal ResourceCollection() : base(){}
-    internal ResourceCollection(int capacity) : base(capacity){}
-  }
-  public sealed class SecurityAttributeCollection : MetadataCollection<SecurityAttribute> {
-    internal SecurityAttributeCollection() : base(){}
-    internal SecurityAttributeCollection(int capacity) : base(capacity){}
-    internal SecurityAttributeCollection(ICollection<SecurityAttribute> collection) : base(collection) { }
-    internal SecurityAttributeCollection Clone() {
-      return new SecurityAttributeCollection(this);
-    }
-  }
-  public sealed class StackVariableCollection : MetadataCollection<Local> {
-    internal StackVariableCollection() : base(){}
-    internal StackVariableCollection(int capacity) : base(capacity) { }
-  }
-  public sealed class StatementCollection : MetadataCollection<Statement> {
-    internal StatementCollection() : base(){}
-    internal StatementCollection(int capacity) : base(capacity){}
-    internal StatementCollection(ICollection<Statement> collection) : base(collection) { }
-    internal StatementCollection Clone() {
-      return new StatementCollection(this);
-    }
-  }
-  public sealed class TypeNodeCollection : MetadataCollection<TypeNode> {
-    internal TypeNodeCollection() : base(){}
-    internal TypeNodeCollection(int capacity) : base(capacity){}
-    internal TypeNodeCollection(params TypeNode[] range) : base(range) {}
-    internal TypeNodeCollection(ICollection<TypeNode> collection) : base(collection) { }
-    internal TypeNodeCollection Clone() {
-      return new TypeNodeCollection(this);
-    }
-  }
-  public sealed class Win32ResourceCollection : MetadataCollection<Win32Resource> {
-    internal Win32ResourceCollection() : base(){}
-    internal Win32ResourceCollection(int capacity) : base(capacity) { }
-  }
-}
-#endif

@@ -12,7 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if !ROTOR
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -20,21 +19,13 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-#if CCINamespace
-namespace Microsoft.Cci{
-#else
 namespace System.Compiler{
-#endif
-#if !FxCop
-  public
-#endif
-  class GlobalAssemblyCache{
+
+  public class GlobalAssemblyCache{
     private GlobalAssemblyCache(){}
     private static readonly object Lock = new object();
     private static bool FusionLoaded;
-#if CodeContracts
     public static bool probeGAC = true;
-#endif
 
     /// <param name="codeBaseUri">Uri pointing to the assembly</param>
     public static bool Contains(Uri codeBaseUri){
@@ -61,11 +52,7 @@ namespace System.Compiler{
             try{
               Uri foundUri = new Uri(assemblyName.CodeBase);
               if (codeBaseUri.Equals(foundUri)) return true;
-#if !FxCop
             }catch(Exception){
-#else
-            }finally{
-#endif
             }
           }
         }
@@ -77,9 +64,7 @@ namespace System.Compiler{
     /// If the corresponding assembly is not in the GAC, null is returned.
     /// </summary>
     public static string GetLocation(AssemblyReference assemblyReference){
-#if CodeContracts
       if (!probeGAC) return null;
-#endif
       if (assemblyReference == null) { Debug.Fail("assemblyReference == null"); return null; }
       lock(GlobalAssemblyCache.Lock){
         if (!GlobalAssemblyCache.FusionLoaded){
@@ -342,6 +327,3 @@ namespace System.Compiler{
     int Clone(out IAssemblyEnum ppEnum);
   }
 }
-#else
-//TODO: provide a way to query ROTOR GAC
-#endif
