@@ -73,10 +73,6 @@ namespace Microsoft.Research.Graphs
             
             foreach (Node n in nodesSortedByDecreasingFinishingTime)
             {
-                // debug
-#if false
-                Console.WriteLine("Node {0}, finish time {1}", n, dfs.DepthFirstInfo(n).FinishTime);
-#endif
                 transposedDFS.VisitSubGraph(n);
                 startNewGroup = true;
             }

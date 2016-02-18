@@ -173,24 +173,6 @@ namespace Microsoft.Research.DataStructures
             }
         }
 
-#if false
-        public Value this[Key key]
-        {
-            get
-            {
-                if (dictionary == null)
-                {
-                    throw new KeyNotFoundException(key.ToString());
-                }
-                return dictionary[key];
-            }
-            set
-            {
-                var dict = Ensure();
-                dict[key] = value;
-            }
-        }
-#endif
         [ContractVerification(false)]
         public bool TryGetValue(Key key, out Value value)
         {

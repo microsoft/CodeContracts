@@ -37,7 +37,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,7 +70,6 @@
     <Compile Include="LinearProgramInterface.cs" />
     <Compile Include="LowerTriangEtaMatrix.cs" />
     <Compile Include="StandardSimplex\LP.cs" />
-    <Compile Include="LPTestSolver.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="PermutationMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

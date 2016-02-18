@@ -156,27 +156,6 @@ namespace Microsoft.Research.Graphs
     {
       return this.edgemap.ContainsKey(node);
     }
-
-#if false
-        public IEnumerable<IEdge<Node, EdgeInfo>/*!*/>/*!*/ Successors(Node node)
-        {
-            Dictionary<Node, Edge> edges = null;
-            this.edgemap.TryGetValue(node, out edges);
-            if (edges != null)
-            {
-                Dictionary<Node, Edge>/*!*/ nnedges = edges;
-                foreach (Node target in nnedges.Keys)
-                {
-                    yield return nnedges[target];
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Node is not in graph");
-            }
-            yield break;
-        }
-#endif
     #endregion
 
 

@@ -11,16 +11,6 @@ using System.Diagnostics.Contracts;
 
 namespace Microsoft.Research.DataStructures
 {
-#if false && DEBUG
-    /// <summary>
-    /// This type causes errors where the ordinay Dictionary&lt;&gt; is used;
-    /// use CDictionary&lt;&gt; instead.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="U"></typeparam>
-    public class Dictionary<T, U> { }
-#endif
-
     /// <summary>
     /// A dictionary.
     /// </summary>

@@ -104,9 +104,6 @@ namespace Microsoft.Glee.Optimization
       get { return Dim; }
       set
       {
-#if DEBUGGLEE
-                throw new Exception("The method or operation is not implemented.");
-#endif
       }
     }
 

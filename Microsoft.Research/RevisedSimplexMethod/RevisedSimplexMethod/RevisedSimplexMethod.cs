@@ -168,11 +168,7 @@ namespace Microsoft.Glee.Optimization
     public double[] MinimalSolution()
     {
       if (costs == null)
-        throw new InvalidOperationException(
-#if DEBUG
-"costs are not set"
-#endif
-);
+        throw new InvalidOperationException();
       Minimize();
       if (Status == Status.Optimal)
       {

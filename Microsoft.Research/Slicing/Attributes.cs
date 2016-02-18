@@ -55,13 +55,6 @@ namespace Microsoft.Research.Slicing
       Contract.Requires(metaDataDecoder != null);
       Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out mhAttr) != null);
 
-#if false // dead code???
-      if (false && method.Equals(cache.One)) // problem: successive analyses are run in the same worker
-      {
-        mhAttr = cache.Two;
-        return mhAttr != null;
-      }
-#endif
       mhAttr = null;
       foreach (var attr in metaDataDecoder.GetAttributes(method))
       {
@@ -78,18 +71,6 @@ namespace Microsoft.Research.Slicing
 
       return mhAttr != null;
     }
-
-#if false
-    public static ThreeValued MethodHashAttributeDoAnalyze<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(
-      this IDecodeMetaData<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> metaDataDecoder,
-      Method method)
-    {
-      MethodHashAttribute mhAttr;
-      if (metaDataDecoder.TryGetMethodHashAttribute(method, out mhAttr))
-        return new ThreeValued(mhAttr.DoAnalyze);
-      return new ThreeValued();
-    }
-#endif
 
     public static MethodHashAttributeFlags GetMethodHashAttributeFlags<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(
       this IDecodeMetaData<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> metaDataDecoder,

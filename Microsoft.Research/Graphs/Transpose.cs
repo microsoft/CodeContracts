@@ -80,15 +80,6 @@ namespace Microsoft.Research.Graphs
         DepthFirst.Visitor<Node, OldEdgeInfo> v = new DepthFirst.Visitor<Node, OldEdgeInfo>(orig, this);
         // Visit all edges to compute the transpose
         v.VisitAll();
-
-        // debug
-#if false
-                foreach (Node n in this.orig.Nodes)
-                {
-                    DepthFirst.Info info = v.DepthFirstInfo(n);
-                    Console.WriteLine("Depthfirst info: {0}: Start:{1}, Finish:{2}", n, info.StartTime, info.FinishTime);
-                }
-#endif
       }
 
 

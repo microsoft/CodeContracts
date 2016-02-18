@@ -71,21 +71,9 @@ namespace Microsoft.Glee.Optimization
       Contract.Requires(x.Length > 0);
 
       this.reducedCostEps = epsForReducedCosts;
-#if DEBUGSIMPLEX
-      if(x.Length==0)
-        throw new InvalidOperationException();//"wrong lengths");
-#endif
 
       tableau.UpdateMatrix(X, x.Length, X.Length / x.Length);
       tableau.SetSolution(x);
-
-      //	if(X.Length/x.Length!=c.Length)
-      //	  throw new System.Exception("wrong lengths");
-#if DEBUGSIMPLEX
-			for(int i=0;i<basis.Length;i++)
-				if(basis[i]>=c.Length||basis[i]<0)
-					throw new InvalidOperationException();//"wrong basis");
-#endif
 
       for (int i = 0; i < basis.Length; i++)
       {

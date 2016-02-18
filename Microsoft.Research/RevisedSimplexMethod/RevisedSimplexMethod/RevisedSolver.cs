@@ -200,19 +200,6 @@ namespace Microsoft.Glee.Optimization
       U = new UMatrix(basis.Length);
     }
 
-#if DEBUGGLEE
-        double CurrentCost{
-            get{
-                double r=0;
-                for(int i=0;i<costs.Length;i++){
-                    r+=this.xStar[i]*this.costs[i];
-                }
-                return r;
-                    
-            }
-        }
-#endif
-
     [ContractVerification(false)]
     internal void Solve()
     {
@@ -294,27 +281,6 @@ namespace Microsoft.Glee.Optimization
         // }
       } while (status != Status.Unbounded && status != Status.Optimal);
     }
-
-#if DEBUGGLEE
-        private void CheckCorrectness() {
-            for (int i = 0; i < this.y.Length; i++)
-                y[i] = this.xStar[basis[i]];
-
-            BMatrix B = new BMatrix(basis, A);
-           Vector rs = (Vector)(B * (new Vector(y)));
-
-            double err = 0;
-            for (int i = 0; i < y.Length; i++) {
-                double d = Math.Abs(this.constraints[i].rightSide - rs[i]);
-                if (d > err)
-                    err = d;
-            }
-
-            if (err > this.pivotEpsilon)
-                Console.WriteLine("error is big {0}", err);
-        }
-
-#endif
 
     double BoundOnEnteringVar(int enteringVariable, bool enteringHasToGrow)
     {

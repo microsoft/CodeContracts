@@ -22,12 +22,7 @@ namespace Microsoft.Glee.Optimization
   /// <summary>
   /// Differs from the unit matrix in one arbitrary column 
   /// </summary>
-#if DEBUGGLEE
-    public
-#else
-  internal
-#endif
- class EtaMatrix : Matrix
+  internal class EtaMatrix : Matrix
   {
 
     [ContractInvariantMethod]

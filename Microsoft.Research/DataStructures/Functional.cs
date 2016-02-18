@@ -1533,11 +1533,6 @@ namespace Microsoft.Research.DataStructures
             get
             {
                 return keys.GetEnumerable();
-#if false
-                List<A> result = new List<A>();
-                fimap.Visit(delegate (FList<Pair<A/*!*/, B>>/*?*/ list) { while (list != null) { result.Add(list.Head.One); list = list.Tail; } });
-                return result;
-#endif
             }
         }
 
@@ -1631,9 +1626,6 @@ namespace Microsoft.Research.DataStructures
         {
             get
             {
-#if false
-                return this.keys.GetEnumerable();
-#else
                 if (keyCache == null)
                 {
                     List<A> l = new List<A>();
@@ -1641,7 +1633,6 @@ namespace Microsoft.Research.DataStructures
                     keyCache = l;
                 }
                 return keyCache;
-#endif
             }
         }
 

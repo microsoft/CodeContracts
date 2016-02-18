@@ -4860,18 +4860,6 @@ namespace Microsoft.Research.CodeAnalysis
     }
     #endregion
 
-    #region MB: suggested change for IChain
-#if false
-    public interface IType<M, F, T>
-    {
-        T Type { get; }
-        IEnumerable<F> Fields { get; }
-        IEnumerable<M> Methods { get; }
-        IEnumerable<IType<M, F, T>> NestedTypes { get; }
-    }
-#endif
-    #endregion
-
     public enum ChainTag
     {
         Field,

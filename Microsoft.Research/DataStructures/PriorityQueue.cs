@@ -169,10 +169,6 @@ namespace Microsoft.Research.DataStructures
 
         public T Pull()
         {
-#if false
-            Console.WriteLine("Priority Queue Pull");
-            Dump(Console.Out);
-#endif
             if (HeapSize < 1) throw new InvalidOperationException("priority queue is empty");
 
             T max = this[1];
@@ -181,9 +177,6 @@ namespace Microsoft.Research.DataStructures
 
             Heapify(1);
             basis.Remove(max);
-#if false
-            Console.WriteLine("  returning {0}", max.ToString());
-#endif
             return max;
         }
     }

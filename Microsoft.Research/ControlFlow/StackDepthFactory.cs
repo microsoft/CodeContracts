@@ -2264,13 +2264,6 @@ namespace Microsoft.Research.CodeAnalysis
               lab, new StackDecoder<Data, Result, Visitor>(this, visitor), data);
         }
 
-#if false
-        public Transformer<APC, Data, Result> CacheForwardDecoder<Data, Result>(IVisitMSIL<APC, Local, Parameter, Method, Field, Type, StackTemp, StackTemp, Data, Result> visitor)
-        {
-            return ilDecoder.CacheForwardDecoder<Data, Result>(new StackDecoder<Data, Result, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, StackTemp, StackTemp, Data, Result>>(this, visitor));
-        }
-#endif
-
         public IStackContext<Field, Method> Context { get { return this; } }
 
         public bool IsUnreachable(APC pc) { return false; }
@@ -2514,13 +2507,6 @@ namespace Microsoft.Research.CodeAnalysis
         {
             get { return cfg.LoopHeads; }
         }
-
-#if false
-        void ICFG.EmitTransferEquations(TextWriter tw, InvariantQuery<APC> invariantDB, AssumptionFinder<APC> assumptionFinder, CrossBlockRenamings<APC> renamings, RenamedVariables<APC> renamed)
-        {
-            cfg.EmitTransferEquations(tw, invariantDB, assumptionFinder, renamings, renamed);
-        }
-#endif
         #endregion
 
 

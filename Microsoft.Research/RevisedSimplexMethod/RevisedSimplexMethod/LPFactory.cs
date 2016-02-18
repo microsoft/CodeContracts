@@ -31,10 +31,6 @@ namespace Microsoft.Glee
             string lp = Environment.GetEnvironmentVariable("LP", EnvironmentVariableTarget.User);
             if (lp != null && lp.ToLower() == "lp")
                 return new Optimization.LP(true); //true is to look for zero columns
-#if DEBUGGEE
-            else if (lp != null && lp.ToLower() == "test")
-                return new Microsoft.Glee.Optimization.LPTestSolver(lookForZeroColumns);
-#endif
 
             return new Optimization.RevisedSimplexMethod();
         }

@@ -25,22 +25,6 @@ namespace Microsoft.Glee.Optimization
   [ContractClass(typeof(MatrixContracts))]
   public abstract class Matrix
   {
-
-#if DEBUGGLEE
-  
-
-        static public  double Dist(Matrix a, Matrix b) {
-
-            double d = 0;
-            double t;
-            for (int i = 0; i < a.NumberOfRows; i++) for (int j = 0; j < b.NumberOfColumns; j++)
-                    if ((t = Math.Abs(a[i, j] - b[i, j])) > d)
-                        d = t;
-            return d;
-        }
-     
-#endif
-
     abstract public int NumberOfRows
     {
       get;
@@ -244,64 +228,6 @@ namespace Microsoft.Glee.Optimization
 
       return s;
     }
-
-    /// <summary>
-    /// We solve the system Ax=b, were lpList*A=uMatrix*eList
-    /// </summary>
-    /// <param name="lpList">the list of L or P matrix</param>
-    /// <param name="uMatrix">U matrix, upper triangualar matrix with ones at the diagonal</param>
-    /// <param name="b">right side, will be changed</param>
-    /// <param name="x">the answer will be put into x</param>
-    //        static 
-    //#if DEBUGGLEE
-    //            public
-    //#else
-    //            internal
-    //#endif
-    //            void SolveSystem(List<Matrix> lpList, Matrix uMatrix, List<EtaMatrix> eList, Vector b, Vector x) { 
-    //            //Transform the system to U*eList*x=lpList*b by multiplying both side by lpList. 
-    //            for (int i = lpList.Count - 1; i >= 0; i--)
-    //                b  =(Vector) (lpList[i]*b);
-
-    //            //to solve U*eList*x=b we first solve U*x=b
-    //            for (int i = b.Length - 1; i >= 0; i--) {
-    //                double r = b[i];
-    //                for (int k = i + 1; k < b.Length; k++)
-    //                    r -= uMatrix[i, k] * x[k];
-
-    //                x[i] = r;
-    //            }
-
-    //            //now we solve eList*y=x
-    //            for (int i = 0; i < eList.Count; i++) {
-    //                Solve(eList[i], x);
-    //            }
-    //        }
-    /// <summary>
-    /// solve etaMatrix*y=x and puts the answer into x
-    /// </summary>
-    /// <param name="etaMatrix"></param>
-    /// <param name="x"></param>
-    //private static void Solve(EtaMatrix etaMatrix, Vector x) {
-    //    int k = etaMatrix.EtaIndex;
-    //    double[]column=etaMatrix.EtaColumn;
-    //    System.Diagnostics.Debug.Assert(column[0]>10.0e-8);
-    //    double t=x[k]/=column[0];
-    //    for (int i = 1; i < column.Length; i++)
-    //        x[k + i] -= t * column[i];
-    //}
-
-    ///// <summary>
-    ///// returns the j-th column
-    ///// </summary>
-    ///// <param name="j"></param>
-    ///// <returns></returns>
-    //internal void FillColumn(int j,double[]col) {
-    //    for (int i = 0; i < this.NumberOfRows; i++)
-    //        col[i] = this[i, j];
-
-    //}
-
   }
 
   [ContractClassFor(typeof(Matrix))]

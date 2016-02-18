@@ -66,11 +66,6 @@ namespace Microsoft.Glee.Optimization
       InitMatrixUAndMarkovichNumbers();
       CalculateInitialFactorization();
 
-#if DEBUGGLEE
-         //   if(calls>=63)
-       //     CheckFactorization();
-#endif
-
     }
 
     [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant")]
@@ -116,31 +111,6 @@ namespace Microsoft.Glee.Optimization
       }
     }
 
-#if DEBUGGLEE
-        internal void CheckFactorization(Matrix A) {
-            Matrix ls = A;  
-            foreach (Matrix lp in this.LP)
-                ls = lp * ls;
-
-            Matrix f = U;
-            foreach (Matrix e in this.etaList)
-                f = f * e;
-
-            double dist = Matrix.Dist(ls, f);
-            Console.WriteLine("dist={0}", dist);
-        }
-
-        double det() {
-            double r = 1;
-            for (int i = 0; i < this.dim; i++)
-                r *= U[i, i];
-            foreach (EtaMatrix e in this.etaList) {
-                int j = e.EtaIndex;
-                r *= e[j, j];
-            }
-            return r;
-        }
-#endif
     [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant")]
     unsafe void CalculateInitialFactorization()
     {
@@ -363,80 +333,6 @@ namespace Microsoft.Glee.Optimization
       return FindLargestPivot(k);
     }
 
-    #region
-#if DEBUGGLEE   // debugging routines
-        private void CheckMatrix(UMatrix U,int k) {
-            for (int i = 0; i < this.dim; i++)
-                CheckMatrixRow(i, U,k);
-            CheckBelowInTheColumn(U, k);
-
-        }
-
-        private void CheckBelowInTheColumn(UMatrix U, int k) {
-            if(U[k,k]!=1)
-                Console.WriteLine();
-            bool allZero=true;
-            for (int j = k + 1; j < dim&&allZero; j++)
-                if (U[j, k] != 0)
-                    allZero = false;
-            if (allZero==false)
-                Console.WriteLine();
-        }
-
-        private void CheckMatrixRow(int i, UMatrix U, int k) {
-            bool allZero=false;
-            int j=0;
-            for (; j < dim; j++)
-                if (U[i, j]!= 0) {
-                    allZero = false;
-                    break;
-                }
-
-            if (allZero)
-                Console.WriteLine("all zero row");
-
-
-        }
-
-        private void CheckBasisOnZeroColumns(Matrix B) {
-            for (int i = 0; i < B.NumberOfColumns; i++)
-                CheckColumnOnZero( i,B);
-        }
-
-        private bool CheckColumnOnZero(int p, Matrix B) {
-            for (int i = 0; i < B.NumberOfRows; i++)
-                if (B[i, p] != 0)
-                    return false;
-            return true;
-
-        }
-#endif
-    #endregion
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="k">looking for the pivot in the k-th column and rows k,...,n-1</param>
-    ///// <param name="pivotI"></param>
-    //int FindPivotCloseToOne(int k, double eps) {
-
-    //    double distFromOne = Double.MaxValue;
-    //    int pivotRow = -1;
-    //    for (int i = k; i < dim; i++) {
-    //        double d = Math.Abs(U[i, k]);
-    //        if (d > eps) {
-    //            d = Math.Abs(Math.Log(d));
-    //            if (d < distFromOne) {
-    //                distFromOne = d;
-    //                pivotRow = i;
-    //                if (d == 0)
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //    return pivotRow;
-    //}
-
     [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant")]
     unsafe int FindLargestPivot(int k)
     {
@@ -444,27 +340,7 @@ namespace Microsoft.Glee.Optimization
 
       Contract.Ensures(Contract.Result<int>() >= -1);
       Contract.Ensures(Contract.Result<int>() < this.dim);
-
-      /* the safe version
-      double maxPivot = 0;
-      int minP = Int32.MaxValue;//number of zeroes in the row
-      int pivotRow = -1;
-      for (int i = k; i < dim; i++) {
-          double d = Math.Abs(U[i, k]);///rowMax[i];
-          if (d > maxPivot) {
-              minP = markovitzNumbers[i];
-              pivotRow = i;
-              maxPivot = d;
-          } else if (d == maxPivot && d > 0) {
-              int r = markovitzNumbers[i];//markovitz number
-              if (r < minP) {
-                  pivotRow = i;
-                  minP = r;
-              }
-          }
-      }
-       */
-
+        
       double maxPivot = 0;
       int pivotRow = -1;
       fixed (double* uPin = this.U.Coeffs)
@@ -484,15 +360,7 @@ namespace Microsoft.Glee.Optimization
       }
       return pivotRow;
     }
-    /*
-    private void InitMarkowitzNumbers() {
-        markovitzNumbers = new int[dim]; 
-        for (int i = 0; i < dim; i++)
-            for (int j = 0; j < A.NumberOfColumns; j++)
-                if (A[i, j]!=0) 
-                    markovitzNumbers[i]++;                    
-    }
-    */
+
     internal override void Solve_yBEquals_cB(double[] y)
     {
       /*
