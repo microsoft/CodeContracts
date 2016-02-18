@@ -35,19 +35,12 @@ namespace Adornments {
         return LineTransformBehavior.Above;//return _lineTransformBehavior; //TODO: Fix properley, dead code now exists that attempts to change the LineTransformBehavior
       }
     }
-#if LINE_BEHAVIOR
-    LineTransformBehavior _lineTransformBehavior = LineTransformBehavior.Below;
-#endif
     public override bool IsPure {
       get {
         return base.IsPure;
       }
       set {
         base.IsPure = value;
-#if LINE_BEHAVIOR
-        if (value && !IsCollapsedByUser)
-          _lineTransformBehavior = Adornments.LineTransformBehavior.BelowWithOneLineAbove;//TODO: Dead?
-#endif
       }
     }
     Rectangle _grayBar;
@@ -146,10 +139,6 @@ namespace Adornments {
 
     protected override void OnExpanded() {
       base.OnExpanded();
-#if LINE_BEHAVIOR
-      if (IsPure)
-        _lineTransformBehavior = Adornments.LineTransformBehavior.BelowWithOneLineAbove;
-#endif
       Opacity = opaqueHi;
       if (_grayBar != null)
         _grayBar.Visibility = Visibility.Visible;
@@ -158,9 +147,6 @@ namespace Adornments {
     }
     protected override void OnCollapsed() {
       base.OnCollapsed();
-#if LINE_BEHAVIOR
-      _lineTransformBehavior = Adornments.LineTransformBehavior.Below;
-#endif
       if (!IsFocusedOnAdornment)
         Opacity = opaqueLo;
       if (_grayBar != null)

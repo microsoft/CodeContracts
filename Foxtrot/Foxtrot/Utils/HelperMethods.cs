@@ -2698,51 +2698,6 @@ namespace Microsoft.Contracts.Foxtrot
             return true;
         }
 
-#if false
-    internal static bool IsClosureType(TypeNode containingMethodDeclaringType, TypeNode typeNode)
-    {
-      if (!IsCompilerGenerated(typeNode)) return false;
-      // same declaration level
-      var closureDT = typeNode.DeclaringType;
-      if (closureDT == null) return false;
-      closureDT = Unspecialize(closureDT);
-      var methodDT = Unspecialize(containingMethodDeclaringType);
-
-      if (IsCompilerGenerated(methodDT) && methodDT.DeclaringType != null)
-      {
-        methodDT = Unspecialize(methodDT.DeclaringType);
-      }
-      if (methodDT != closureDT) return false;
-      return true;
-    }
-#endif
-
-#if false
-    /// <summary>
-    /// Gets the type T specified in [typeOfAttribute(typeof(T))] if specified.
-    /// </summary>
-    /// <param name="type">Type possibly having the attribute named "typeofAttribute".</param>
-    /// <param name="typeOfAttribute">The type of the attribute that has the type T as its argument.</param>
-    /// <returns>TypeNode for the type specified in the attribute, or null if the attribute is not present.</returns>
-    internal static TypeNode/*?*/ GetTypeFromAttribute(TypeNode type, TypeNode typeOfAttribute) {
-      if (type == null) return null;
-      AttributeNode contractClass = type.GetAttribute(typeOfAttribute);
-      if (contractClass == null)
-        return null;
-      Expression typeExpr = contractClass.GetPositionalArgument(0);
-      if (typeExpr == null)
-        return null;
-      Literal typeLiteral = typeExpr as Literal;
-      if (typeLiteral == null)
-        return null;
-      TypeNode typeNode = typeLiteral.Value as TypeNode;
-      if (typeNode == null)
-        return null;
-      return typeNode;
-    }
-
-#endif
-
         [Pure]
         public static AttributeNode GetAttribute(this AttributeList attributes, Identifier attributeName)
         {
@@ -3132,25 +3087,6 @@ namespace Microsoft.Contracts.Foxtrot
                 {
                     // already copied type previously
                     dup.DuplicateFor[nestedType.UniqueKey] = duplicatedNestedType;
-#if false
-        if (nestedType.ConsolidatedTemplateArguments != null)
-        {
-            // populate the self specialization forwarding
-            //  NestedType<Self1,Self2> -> NewNestedType<NewSelf1,NewSelf2>
-            var origSelfInstantiation = nestedType.DeclaringType.GetTemplateInstance(nestedType, nestedType.DeclaringType.TemplateParameters).GetNestedType(nestedType.Name);
-            var newSelfInstantiation = duplicatedNestedType.GetGenericTemplateInstance(targetModule, duplicatedNestedType.ConsolidatedTemplateParameters);
-            dup.DuplicateFor[origSelfInstantiation.UniqueKey] = newSelfInstantiation;
-            // Also forward ContractType<A,B>.NestedType instantiated at target ContractType<X,Y>.NestedType to
-            // TargetType<X,Y,Z>.NewNestedType<X,Y>, since this reference may appear in the contract itself.
-            var consolidatedContractTemplateArguments = sourceMethod.DeclaringType.ConsolidatedTemplateArguments;
-            var instantiatedNestedOriginal = nestedType.DeclaringType.GetGenericTemplateInstance(targetModule, consolidatedContractTemplateArguments).GetNestedType(nestedType.Name);
-            dup.DuplicateFor[instantiatedNestedOriginal.UniqueKey] = duplicatedNestedType.GetTemplateInstance(targetType, consolidatedContractTemplateArguments);
-        }
-        else
-        {
-            Debugger.Break();
-        }
-#endif
                 }
             }
             else if (closureInstanceMethod != null && closureMethodTemplate != null &&

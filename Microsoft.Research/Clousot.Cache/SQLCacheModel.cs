@@ -12,8 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#define EF5
-
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -31,13 +29,7 @@ using Microsoft.Research.CodeAnalysis;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Infrastructure;
 // Entityframework v5:
-#if EF5 
 using System.Data.Objects;
-#else
-// Entity Framework v6
-using System.Data.Entity.Core.Objects;
-#endif
-
 using System.Linq.Expressions;
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -422,11 +414,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
       Contract.Requires(getStored != null);
       Contract.Assume(this.ChangeTracker != null);
       Contract.Assume(this.ChangeTracker.Entries<T>() != null);
-#if EF5
       var pendingAssemblyInfo = this.ChangeTracker.Entries<T>().AssumeNotNull().Where(a => a.State == System.Data.EntityState.Added);
-#else
-      var pendingAssemblyInfo = this.ChangeTracker.Entries<T>().AssumeNotNull().Where(a => a.State == System.Data.Entity.EntityState.Added);
-#endif
       foreach (var p in pendingAssemblyInfo)
       {
         Contract.Assume(p != null);

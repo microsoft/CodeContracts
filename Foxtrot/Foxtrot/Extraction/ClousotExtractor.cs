@@ -96,8 +96,6 @@ namespace Microsoft.Contracts.Foxtrot
 
         private bool insideInvariant;
 
-#if true // ExtractorVisitor now does this
-
         /// <summary>
         /// Performs a bunch of transformations that the basic Extractor doesn't seem to do:
         ///  - Turns calls to Old contract method into OldExpressions
@@ -166,7 +164,5 @@ namespace Microsoft.Contracts.Foxtrot
                 this.insideInvariant = false;
             }
         }
-
-#endif
     }
 }

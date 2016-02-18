@@ -140,12 +140,6 @@ namespace ContractAdornments {
       ContractsPackageAccessor.Current = this;
       _startTime = DateTime.Now;
 
-#if false
-      if (!System.Diagnostics.Debugger.IsAttached)
-      {
-          System.Diagnostics.Debugger.Launch();
-      }
-#endif
       this.logger = new Logger(PublicEntryException, QueueWorkItem,
         (s) => {
           if (_outputPane != null) {
@@ -181,11 +175,6 @@ namespace ContractAdornments {
           Logger.WriteAlways("Error: Options page 'Code Contracts Editor Extensions' could not be found!");
         }
         Logger.EnableLogging = VSOptionsPage.Logging;
-
-#if LEADERBOARD
-        //Tell leaderboard our startup options
-        LeaderBoard.LeaderBoardAPI.SendLeaderBoardFeatureUse(VSOptionsPage.Options.GetId() | (int)LeaderBoardMasks.CodeContractsHelperId);
-#endif
 
         QueueWorkItem(() => {
           _outputPane = GetOutputPane(VSConstants.SID_SVsGeneralOutputWindowPane, "Code Contracts Editor Extensions");
@@ -482,11 +471,6 @@ namespace ContractAdornments {
     void AskToReportError(Exception exn) {
       Contract.Requires(exn != null);
 
-#if LEADERBOARD
-      //Report to leaderboard
-      LeaderBoard.LeaderBoardAPI.SendLeaderBoardFailure(LeaderBoardToolId, typeof(VSServiceProvider).Assembly.GetName().Version);
-#endif
-
       var messageBoxMessage = new StringBuilder();
       messageBoxMessage.Append("An exception was thrown while the Code Contracts Editor Extension was running. Please assist our development team by sending the crash details. \n\nSend crash details?");
       var result = System.Windows.MessageBox.Show(messageBoxMessage.ToString(), "Sorry!", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Information, System.Windows.MessageBoxResult.OK, System.Windows.MessageBoxOptions.None);
@@ -637,17 +621,6 @@ namespace ContractAdornments {
           foreach (var compiler in _compilerHost.Compilers)
           {
             if (compiler == null) continue;
-#if false
-              foreach (var sourceFile in compiler.SourceFiles.Values)
-              {
-                  var reportNewSourceFile = this.NewSourceFile;
-                  if (reportNewSourceFile != null)
-                  {
-                      sources++;
-                      reportNewSourceFile(sourceFile);
-                  }
-              }
-#endif
               var compilation = compiler.GetCompilation(textBuffer);
               var reportNewCompilation = this.NewCompilation;
               if (reportNewCompilation != null)
@@ -716,44 +689,6 @@ namespace ContractAdornments {
       return 0;
     }
 
-#if false
-    /// <summary>
-    /// Don't call this!!!
-    /// </summary>
-    [Obsolete]
-    static public bool IsModelReady(IDECompilerHost compilerHost) {
-      Contract.Requires(compilerHost != null);
-
-      try {
-
-        if (compilerHost == null || compilerHost.Compilers == null)
-          return false;
-
-
-        foreach (var compiler in compilerHost.Compilers) {
-          var comp = compiler.GetCompilation();
-
-          foreach (var sourceFile in compiler.SourceFiles.Values) {
-            var parseTree = sourceFile.GetParseTree();
-            var rootNode = parseTree.RootNode;
-          }
-        }
-
-      } catch (InvalidOperationException e) {
-        if (e.Message.Contains(InvalidOperationExceptionMessage_TheSnapshotIsOutOfDate))
-          return false;
-        else
-          throw e;
-      } catch (COMException e) {
-        if (e.Message.Contains(COMExceptionMessage_BindingFailed))
-          return false;
-        else
-          throw e;
-      }
-
-      return true;
-    }
-#endif
     #region Not Implemented
     public int FContinueMessageLoop(uint uReason, IntPtr pvLoopData, MSG[] pMsgPeeked) { return 1; }
     public int FPreTranslateMessage(MSG[] pMsg) { return 1; }
@@ -806,14 +741,6 @@ namespace ContractAdornments {
             tracker.OnBuildDone();
           }
         }
-#if false
-        if (project != null)
-        {
-          OnProjectBuildBegin(project);
-          OnProjectBuildEnd(project);
-          // pretend its a build
-        }
-#endif
       }
       catch { }
       return 0;

@@ -12,11 +12,7 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if CCINamespace
-using Cci = Microsoft.Cci;
-#else
 using Cci = System.Compiler;
-#endif
 
 namespace System.Compiler.Analysis
 {
@@ -271,13 +267,6 @@ namespace System.Compiler.Analysis
 
     #region Methods
 
-#if false
-    public bool TryGetImplementingMethod(TypeNode type, Method baseMethod, out Method implementing)
-    {
-      return TryGetImplementingMethod(type, baseMethod, out implementing);
-    }
-#endif
-
     public bool TryGetImplementingMethod(TypeNode type, Method baseMethod, out Method implementing)
     {
       if (type == null) { implementing = null; return false; }
@@ -428,20 +417,6 @@ namespace System.Compiler.Analysis
       {
         yield return method.OverriddenMethod;
       }
-#if false
-      if (method.OverridesBaseClassMember && method.DeclaringType != null && method.OverriddenMethod != null)
-      {
-        for (TypeNode super = method.DeclaringType.BaseType; super != null; super = super.BaseType)
-        {
-          Method baseMethod = super.GetImplementingMethod(method.OverriddenMethod, false);
-          if (baseMethod != null)
-          {
-            yield return baseMethod;
-            yield break;
-          }
-        }
-      }
-#endif
       #endregion
     }
 
@@ -1084,13 +1059,6 @@ namespace System.Compiler.Analysis
     public IEnumerable<Field> Fields(TypeNode type)
     {
       TypeNode node = TypeNode.StripModifiers(type);
-#if false
-      if (type.Template == null && type.TemplateParameters != null)
-      {
-        // Turn C.f into C<T>.f where T is C's own type argument list
-        node = type.GetGenericTemplateInstance(type.DeclaringModule, type.ConsolidatedTemplateParameters);
-      }
-#endif
       for (int i = 0; i < node.Members.Count; i++)
       {
         Field f = node.Members[i] as Field;
@@ -1102,13 +1070,7 @@ namespace System.Compiler.Analysis
     public IEnumerable<Property> Properties(TypeNode type)
     {
       TypeNode node = TypeNode.StripModifiers(type);
-#if false
-      if (type.Template == null && type.TemplateParameters != null)
-      {
-        // Turn C.f into C<T>.f where T is C's own type argument list
-        node = type.GetGenericTemplateInstance(type.DeclaringModule, type.ConsolidatedTemplateParameters);
-      }
-#endif
+
       for (int i = 0; i < node.Members.Count; i++)
       {
         Property p = node.Members[i] as Property;
@@ -1124,13 +1086,6 @@ namespace System.Compiler.Analysis
     public IEnumerable<Event> Events(TypeNode type)
     {
       TypeNode node = TypeNode.StripModifiers(type);
-#if false
-      if (type.Template == null && type.TemplateParameters != null)
-      {
-        // Turn C.f into C<T>.f where T is C's own type argument list
-        node = type.GetGenericTemplateInstance(type.DeclaringModule, type.ConsolidatedTemplateParameters);
-      }
-#endif
       for (int i = 0; i < node.Members.Count; i++)
       {
         Event e = node.Members[i] as Event;
@@ -1517,24 +1472,6 @@ namespace System.Compiler.Analysis
       int result = tp.ParameterListIndex;
       // CCI1 seems to return the normalized index already
       return result;
-#if false
-      TypeNode declaringType = tp.DeclaringType;
-      if (declaringType == null)
-      {
-        declaringType = (TypeNode)tp.DeclaringMember;
-      }
-      Debug.Assert(declaringType != null);
-      TypeNode parent = declaringType.DeclaringType;
-      while (parent != null)
-      {
-        if (parent.TemplateParameters != null)
-        {
-          result += parent.TemplateParameters.Count;
-        }
-        parent = parent.DeclaringType;
-      }
-      return result;
-#endif
     }
 
     public TypeNode FormalTypeParameterDefiningType(TypeNode type)
@@ -2088,89 +2025,6 @@ namespace System.Compiler.Analysis
       {
         return CCIMDDecoder.HasAttributeWithName(assembly.Attributes, "ContractDeclarativeAssemblyAttribute");
       }
-
-#if false
-      private Cci.AssemblyNode ResolveAssemblyReference(Cci.AssemblyReference aref, Cci.Module referencingModule)
-      {
-        return FindAssemblyWithLibPaths(aref.Name);
-      }
-
-      private Cci.AssemblyNode FindAssemblyWithLibPaths(string assemblyName)
-      {
-        Cci.AssemblyNode assembly = FindFrameworkAssembly(assemblyName);
-        if (assembly != null) return assembly;
-        if (resolvedPaths != null)
-        {
-          foreach (string candidate in resolvedPaths)
-          {
-            var candidateAssemblyName = Path.GetFileNameWithoutExtension(candidate);
-            if (String.Compare(candidateAssemblyName, assemblyName, true) != 0) continue;
-
-            if (File.Exists(candidate))
-            {
-              assembly = Cci.AssemblyNode.GetAssembly(candidate, this.assemblyCache, true, true, true, this.AttachContracts);
-              if (assembly != null) return assembly;
-            }
-          }
-        }
-        // use directories in libPaths
-        foreach (string path in libPaths)
-        {
-          string file = Path.Combine(path, assemblyName + ".dll");
-          if (File.Exists(file))
-          {
-            assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-            if (assembly != null) return assembly;
-          }
-          file = Path.Combine(path, assemblyName + ".winmd");
-          if (File.Exists(file))
-          {
-            assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-            if (assembly != null) return assembly;
-          }
-          file = Path.Combine(path, assemblyName + ".exe");
-          if (File.Exists(file))
-          {
-            assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-            if (assembly != null) return assembly;
-          }
-          // try without extension
-          file = Path.Combine(path, assemblyName);
-          if (File.Exists(file))
-          {
-            assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-            if (assembly != null) return assembly;
-          }
-        }
-        return null;
-      }
-
-      private AssemblyNode FindFrameworkAssembly(string assemblyName)
-      {
-        Cci.AssemblyNode assembly;
-        string path = System.Compiler.TargetPlatform.PlatformAssembliesLocation;
-        if (path == null) { path = Path.GetDirectoryName(typeof(object).Assembly.Location); }
-        string file = Path.Combine(path, assemblyName + ".dll");
-        if (File.Exists(file))
-        {
-          assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-          if (assembly != null) return assembly;
-        }
-        file = Path.Combine(path, assemblyName + ".winmd");
-        if (File.Exists(file))
-        {
-          assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-          if (assembly != null) return assembly;
-        }
-        file = Path.Combine(path, assemblyName + ".exe");
-        if (File.Exists(file))
-        {
-          assembly = Cci.AssemblyNode.GetAssembly(file, this.assemblyCache, true, true, true, this.AttachContracts);
-          if (assembly != null) return assembly;
-        }
-        return null;
-      }
-#endif
     }
 
     private ContractAttacher contractAttacher;
@@ -3098,24 +2952,6 @@ namespace System.Compiler.Analysis
     #endregion
   }
 
-#if false
-  public struct TypeNode : IEquatable<TypeNode> {
-    public readonly TypeNode Reference;
-    private TypeNode(TypeNode node) {
-      this = node;
-    }
-    public static TypeNode AdaptorOf(TypeNode node) {
-      return new TypeNode(node);
-    }
-    public bool Equals(TypeNode other) {
-      return (this == other);
-    }
-    public override string ToString()
-    {
-      return Reference.ToString();
-    }
-  }
-#endif
   internal struct ParameterListIndexer : IIndexable<Parameter>
   {
     readonly ParameterList/*?*/ pl;
@@ -3979,78 +3815,6 @@ namespace System.Compiler.Analysis
         return asgAD.Type.IsValueType || asgAD.Type is ITypeParameter;
     }
 
-#if false
-    public R Decode<T, R>(T data, CCIILProvider.PC label, ICodeQuery<CCIILProvider.PC, Local, Parameter, Method, Field, TypeNode, T, R> query) {
-
-      Node nestedAggregate;
-      Node finalOperation = Decode(label, out nestedAggregate);
-
-      if (IsAtomicNested(nestedAggregate)) {
-          return query.Atomic(data, label);
-      }
-      if (nestedAggregate != null) {
-        return query.Aggregate(data, label, new PC(nestedAggregate), nestedAggregate is Block);
-      }
-      if (finalOperation == null)
-      {
-        // happens when a nested aggregate is null (e.g. a block statement element)
-        // or special encoding for say begin_old
-        if (label.Node != null && label.Node.NodeType == NodeType.OldExpression && label.Index == 0)
-        {
-          return query.BeginOld(data, label);
-        }
-        // treat it as NOP
-        return query.Nop(data, label);
-      }
-      switch (finalOperation.NodeType) {
-        case NodeType.Return:
-          return query.Return(data, label);
-
-        case NodeType.Throw:
-        case NodeType.Rethrow:
-          return query.Throw(data, label);
-
-        case NodeType.Branch:
-          Branch branch = (Branch)finalOperation;
-          if (branch.Condition == null) {
-            return query.Branch(data, label, SingletonPC(branch.Target));
-          }
-          else {
-            return query.BranchCond(data, label, SingletonPC(branch.Target), true, true, new PC());
-          }
-
-        case NodeType.SwitchInstruction:
-          SwitchInstruction switchInst = (SwitchInstruction)finalOperation;
-          return query.BranchSwitch(data, label, Adapt(SystemTypes.Int32), ListOfPCs(switchInst.Targets), true, true, new PC());
-
-        case NodeType.EndFinally:
-          return query.EndFinally(data, label);
-
-        case NodeType.Callvirt:
-        case NodeType.Call:
-          MethodCall call = (MethodCall)finalOperation;
-          MemberBinding callee = (MemberBinding)call.Callee;
-          Method method = (Method)callee.BoundMember;
-          return query.Call(data, label, method, finalOperation.NodeType == NodeType.Callvirt);
-
-        case NodeType.Construct:
-          Construct construct = (Construct)finalOperation;
-          MemberBinding calledConstructor = (MemberBinding)construct.Constructor;
-          Method constructorMethod = (Method)calledConstructor.BoundMember;
-          return query.NewObj(data, label, constructorMethod);
-
-        case NodeType.OldExpression:
-          return query.EndOld(data, label);
-
-        case NodeType.Nop:
-          return query.Nop(data, label);
-
-        default:
-          return query.Atomic(data, label);
-      }
-
-    }
-#endif
     public Node Lookup(CCIILProvider.PC label)
     {
       return null;
@@ -4130,26 +3894,6 @@ namespace System.Compiler.Analysis
     {
       return new PC(info.BlockAfterHandlerEnd);
     }
-
-#if false
-    public void PrintCodeAt(PC label, string indent, TextWriter tw) {
-      Node subEval;
-      Node current = Decode(label, out subEval);
-      if (IsAtomicNested(subEval)) {
-        this.printer(label, indent, tw);
-        return;
-      }
-      if (subEval != null) {
-        return; // this is a skip step.
-      }
-      if (current == null)
-      {
-        this.printer(label, indent, tw);
-      }
-      if (current.NodeType == NodeType.Block) return;
-      this.printer(label, indent, tw);
-    }
-#endif
 
     #endregion
 
@@ -4854,14 +4598,6 @@ namespace System.Compiler.Analysis
         node.SourceContext = expression.SourceContext;
       }
     }
-
-#if false
-    public Transformer<PC, Data, Result> CacheForwardDecoder<Data, Result>(IVisitMSIL<PC, Local, Parameter, Method, Field, TypeNode, Unit, Unit, Data, Result> visitor)
-    {
-      // can't further cache
-      return delegate(PC label, Data data) { return this.Decode<Data,Result,IVisitMSIL<PC,Local,Parameter,Method,Field,TypeNode,Unit,Unit,Data,Result>>(label, visitor, data); };
-    }
-#endif
     public Unit GetContext { get { return Unit.Value; } }
 
 

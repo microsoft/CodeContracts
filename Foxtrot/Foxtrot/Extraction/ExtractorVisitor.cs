@@ -2143,58 +2143,9 @@ namespace Microsoft.Contracts.Foxtrot
 
             if (state0Block.Statements == null) return -1;
 
-#if true
             TypeNode closureType;
             currentIndex = HelperMethods.MovePastClosureInit(iteratorMethod, state0Block, contractNodes,
                 contractInitializer, null, currentIndex, ref dupStackTracker, out closureType);
-#else
-      int indexForClosureCreationStatement = currentIndex;
-      TypeNode closureType = null;
-      while (indexForClosureCreationStatement < state0Block.Statements.Count)
-      {
-        closureType = HelperMethods.IsClosureCreation(iteratorMethod, state0Block.Statements[indexForClosureCreationStatement]);
-        if (closureType != null)
-        {
-          break;
-        }
-        indexForClosureCreationStatement++;
-      }
-      if (closureType != null && indexForClosureCreationStatement < state0Block.Statements.Count)
-      { // then there is a set of statements to add to the preamble block
-        // up to and including "this.<>local := new ClosureClass();"
-        for (int i = currentIndex; i <= indexForClosureCreationStatement; i++)
-        {
-          // preambleBlock.Statements.Add(state0Block.Statements[i]);
-          if (state0Block.Statements[i] == null) continue;
-          contractInitializer.Add((Statement)state0Block.Statements[i].Clone());
-          // state0Block.Statements[i] = null; 
-        }
-        // Some number of assignment statements of the form "this.local.f := f;" where "f" is a parameter
-        // Or of the form local.f := f;
-        // that is captured by the closure.
-        int endOfAssignmentsToClosureFields = indexForClosureCreationStatement + 1;
-        for (; endOfAssignmentsToClosureFields < state0Block.Statements.Count; endOfAssignmentsToClosureFields++)
-        {
-          Statement s = state0Block.Statements[endOfAssignmentsToClosureFields];
-          if (s == null) continue;
-          if (s.NodeType == NodeType.Nop) continue;
-          AssignmentStatement assign = s as AssignmentStatement;
-          if (assign == null) break;
-          MemberBinding mb = assign.Target as MemberBinding;
-          if (mb == null) break;
-          if (mb.TargetObject == null) break;
-          if (mb.TargetObject.Type != closureType) break;
-        }
-        for (int i = indexForClosureCreationStatement + 1; i < endOfAssignmentsToClosureFields; i++)
-        {
-          // preambleBlock.Statements.Add(state0Block.Statements[i]);
-          if (state0Block.Statements[i] == null) continue;
-          contractInitializer.Add((Statement)state0Block.Statements[i].Clone());
-          // state0Block.Statements[i] = null; // need to null them out so search below can be done starting at beginning of m's body
-        }
-        currentIndex = endOfAssignmentsToClosureFields;
-      }
-#endif
             return currentIndex;
         }
 

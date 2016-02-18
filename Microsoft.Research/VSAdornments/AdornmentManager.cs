@@ -47,13 +47,7 @@ namespace Adornments {
       }
     }
     readonly IList<IStaticAdornment> _staticAdornments = new List<IStaticAdornment>();
-    ///// <summary>
-    ///// An array of "Adorments"'s keys sorted by appearance in text view.
-    ///// </summary>
-    //public object[] SortedAdornmentKeys;
-#if TRACKING_REMOVED_ADORNMENTS
-    bool _adornmentWasRemoved = false;
-#endif
+
     /// <summary>
     /// Checks to see if this AdornmentManager has an adornment for the method specified by a given "Tag".
     /// </summary>
@@ -172,13 +166,9 @@ namespace Adornments {
     /// </remarks>
     void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e) {
       try {
-        //if (adornmentWasRemoved) {
         foreach (var line in e.NewOrReformattedLines)
           CreateVisuals(line);
-#if TRACKING_REMOVED_ADORNMENTS
-        _adornmentWasRemoved = false;
-#endif
-        //}
+
         if (_newStaticAdornments)
           UpdateStaticAdornments(null, null);
       } catch (Exception exn) {
@@ -262,14 +252,6 @@ namespace Adornments {
     void CreateVisuals() {
       foreach (var line in _textView.TextViewLines)
         CreateVisuals(line);
-#if TRACKING_REMOVED_ADORNMENTS
-      _adornmentWasRemoved = false;
-#endif
-      //foreach (var entry in adornments) {
-      //  IAdornment adornment = entry.Value;
-      //  object tag = entry.Key;
-      //  CreateVisual(adornment, tag);
-      //}
     }
     /// <summary>
     /// Adds all of this's adornments that pertain to a particular text view line back onto this's text view's adornment layer.
@@ -361,10 +343,6 @@ namespace Adornments {
     /// Notifies this AdornmentManager that an adornment was removed so that on the next layout update, this's adornments can be updated.
     /// </summary>
     void OnAdornmentRemoved(object tag, UIElement visual) {
-      //Public Entry
-#if TRACKING_REMOVED_ADORNMENTS
-      _adornmentWasRemoved = true;
-#endif
     }
 
     /// <summary>

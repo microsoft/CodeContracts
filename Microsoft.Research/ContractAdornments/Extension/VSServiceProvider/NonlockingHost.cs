@@ -90,10 +90,6 @@ namespace ContractAdornments {
     public AssemblyIdentity ReloadIfLoaded(string location) {
       Contract.Requires(!String.IsNullOrEmpty(location));
 
-#if false
-      if (!_locationsToAssemblyReferences.ContainsKey(location))
-        return null;
-#endif
       var unit = LoadUnitFrom(location, true);
       RegisterAsLatest(unit);
 

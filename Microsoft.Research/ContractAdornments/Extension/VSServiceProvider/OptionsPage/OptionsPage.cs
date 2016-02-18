@@ -24,17 +24,6 @@ namespace ContractAdornments.OptionsPage {
   [System.ComponentModel.DesignerCategoryAttribute("code")]
   public class ContractOptionsPage : MSVSIP.DialogPage, IContractOptionsPage
   {
-#if false
-    [Category("Contracts")]
-    [Description("Display adornments with inherited contract information on method headers.")]
-    [DefaultValue(true)]
-    public bool InheritanceOnMethods { get; set; }
-
-    [Category("Contracts")]
-    [Description("Display adornments with inherited contract information on property accessors.")]
-    [DefaultValue(true)]
-    public bool InheritanceOnProperties { get; set; }
-#endif
     [Category("Metadata")]
     [Description("Display adornments in metadata files with contract information.")]
     [DefaultValue(true)]
@@ -94,10 +83,6 @@ namespace ContractAdornments.OptionsPage {
     public override void ResetSettings() {
       base.ResetSettings();
 
-#if false
-      InheritanceOnMethods = true;
-      InheritanceOnProperties = true;
-#endif
       Metadata = true;
       QuickInfo = true;
       SignatureHelp = true;

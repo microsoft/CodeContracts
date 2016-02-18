@@ -770,13 +770,6 @@ namespace Microsoft.Contracts.Foxtrot
 
                     if (method.Contract != null)
                     {
-#if false
-            if (IsNonTrivial(method.Contract.ContractInitializer))
-            {
-              this.HandleError(new Error(1061, "Contract abbreviator validator method '" + method.FullName + "' may not use closures.'",
-                HelperMethods.SourceContextOfMethod(method)));
-            }
-#endif
                         if (method.Contract.HasLegacyValidations)
                         {
                             this.HandleError(
@@ -1053,13 +1046,6 @@ namespace Microsoft.Contracts.Foxtrot
 
                     if (method.Contract != null)
                     {
-#if false
-            if (IsNonTrivial(method.Contract.ContractInitializer))
-            {
-              this.HandleError(new Error(1051, "Contract argument validator method '" + method.FullName + "' may not use closures.'",
-                HelperMethods.SourceContextOfMethod(method)));
-            }
-#endif
                         if (!method.Contract.HasLegacyValidations)
                         {
                             this.HandleError(new Warning(1053,
@@ -1527,13 +1513,6 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 // don't visit nested types...
             }
-
-#if false // We should visit method contracts as they may refer to object invariant methods
-      public override void VisitMethodContract(MethodContract contract)
-      {
-        // don't visit again...
-      }
-#endif
 
             public override void VisitMemberBinding(MemberBinding mb)
             {
