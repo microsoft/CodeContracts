@@ -20,12 +20,10 @@ namespace System.Windows.Forms
 {
 	public class DataGridViewCellCollection : BaseCollection, IList, ICollection, IEnumerable
 	{
-		// Fields
 		private ArrayList items;
 		private CollectionChangeEventHandler onCollectionChanged;
 		private DataGridViewRow owner;
 
-		// Events
 		public event CollectionChangeEventHandler CollectionChanged;
 
 		public DataGridViewCellCollection(DataGridViewRow dataGridViewRow)
@@ -33,6 +31,84 @@ namespace System.Windows.Forms
 			Contract.Requires(dataGridViewRow != null);
 			Contract.Ensures(this.items != null);
 			Contract.Ensures(this.owner != null);
+		}
+
+		public virtual int Add(DataGridViewCell dataGridViewCell)
+		{
+			Contract.Requires(dataGridViewCell != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
+			return default(int);
+		}
+
+		internal int AddInternal(DataGridViewCell dataGridViewCell)
+		{
+			Contract.Requires(dataGridViewCell != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
+			return default(int);
+		}
+
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public virtual void AddRange(params DataGridViewCell[] dataGridViewCells)
+		{
+			Contract.Requires(dataGridViewCells != null);
+			Contract.Requires(Contract.ForAll(dataGridViewCells, (cell) => { return cell != null; }));
+		}
+
+		public virtual void Clear()
+		{
+			
+		}
+
+		public virtual bool Contains(DataGridViewCell dataGridViewCell)
+		{
+			return default(bool);
+		}
+
+		public void CopyTo(DataGridViewCell[] array, int index)
+		{
+			Contract.Requires(array != null);
+		}
+
+		public int IndexOf(DataGridViewCell dataGridViewCell)
+		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
+			return default(int);
+		}
+
+		public virtual void Insert(int index, DataGridViewCell dataGridViewCell)
+		{
+			Contract.Requires(dataGridViewCell != null);
+			Contract.Requires(index >= 0);
+			Contract.Requires(index <= this.Count);
+		}
+
+		internal void InsertInternal(int index, DataGridViewCell dataGridViewCell)
+		{
+			Contract.Requires(dataGridViewCell != null);
+			Contract.Requires(index >= 0);
+			Contract.Requires(index <= this.Count);
+		}
+
+		protected void OnCollectionChanged(CollectionChangeEventArgs e)
+		{
+
+		}
+
+		public virtual void Remove(DataGridViewCell cell)
+		{
+			Contract.Requires(cell != null);
+		}
+
+		public virtual void RemoveAt(int index)
+		{
+			Contract.Requires(index >= 0);
+			Contract.Requires(index < this.Count);
+		}
+
+		internal void RemoveAtInternal(int index)
+		{
+			Contract.Requires(index >= 0);
+			Contract.Requires(index < this.Count);
 		}
 
 		void ICollection.CopyTo(Array array, int index)
@@ -84,24 +160,63 @@ namespace System.Windows.Forms
 		{
 			get
 			{
+				Contract.Requires(index >= 0);
+				Contract.Requires(index < this.Count);
+				Contract.Ensures(Contract.Result<DataGridViewCell>() != null);
 				return default(DataGridViewCell);
 			}
 			set
 			{
+				Contract.Requires(index >= 0);
+				Contract.Requires(index < this.Count);
 			}
 		}
 
-		object IList.this[int index]
+		public DataGridViewCell this[string columnName]
 		{
 			get
 			{
-				return default(object);
+				Contract.Ensures(Contract.Result<DataGridViewCell>() != null);
+				return default(DataGridViewCell);
 			}
 			set
 			{
+				
 			}
 		}
 
+		protected override ArrayList List
+		{
+			get
+			{
+				Contract.Ensures(Contract.Result<ArrayList>() != null);
+				return default(ArrayList);
+			}
+		}
+
+		int ICollection.Count
+		{
+			get
+			{
+				return default(int);
+			}
+		}
+
+		bool ICollection.IsSynchronized
+		{
+			get
+			{
+				return default(bool);
+			}
+		}
+
+		object ICollection.SyncRoot
+		{
+			get
+			{
+				return default(ICollection);
+			}
+		}
 
 		bool IList.IsFixedSize
 		{
@@ -110,5 +225,26 @@ namespace System.Windows.Forms
 				return default(bool);
 			}
 		}
+
+		bool IList.IsReadOnly
+		{
+			get
+			{
+				return default(bool);
+			}
+		}
+
+		object IList.this[int index]
+		{
+			get
+			{
+				Contract.Ensures(Contract.Result<DataGridViewCell>() != null);
+				return default(object);
+			}
+			set
+			{
+			}
+		}
+
 	}
 }
