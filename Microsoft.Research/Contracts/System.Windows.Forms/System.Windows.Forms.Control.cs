@@ -449,17 +449,24 @@ namespace System.Windows.Forms
     ////     the mouse pointer is over the control.
     //[AmbientValue("")]
     //public virtual Cursor Cursor { get; set; }
-    ////
-    //// Summary:
-    ////     Gets the data bindings for the control.
-    ////
-    //// Returns:
-    ////     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
-    ////     objects for the control.
-    //[ParenthesizePropertyName(true)]
-    //[RefreshProperties(RefreshProperties.All)]
-    //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    //public ControlBindingsCollection DataBindings { get; }
+    //
+    // Summary:
+    //     Gets the data bindings for the control.
+    //
+    // Returns:
+    //     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
+    //     objects for the control.
+    [ParenthesizePropertyName(true)]
+    [RefreshProperties(RefreshProperties.All)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    public ControlBindingsCollection DataBindings
+	{
+		get
+		{
+				Contract.Ensures(Contract.Result<ControlBindingsCollection>() != null);
+				return default(ControlBindingsCollection);
+		}
+	}
     ////
     //// Summary:
     ////     Gets the default background color of the control.
