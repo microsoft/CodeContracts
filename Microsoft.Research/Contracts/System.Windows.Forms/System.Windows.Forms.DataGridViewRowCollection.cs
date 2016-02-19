@@ -122,6 +122,18 @@ namespace System.Windows.Forms
 			}
 		}
 
+		private DataGridView dataGridView;
+		private RowArrayList items;
+		private CollectionChangeEventHandler onCollectionChanged;
+		private int rowCountsVisible;
+		private int rowCountsVisibleFrozen;
+		private int rowCountsVisibleSelected;
+		private int rowsHeightVisible;
+		private int rowsHeightVisibleFrozen;
+		private List<DataGridViewElementStates> rowStates;
+
+		public event CollectionChangeEventHandler CollectionChanged;
+
 		public DataGridViewRowCollection(DataGridView dataGridView)
 		{
 			Contract.Requires(dataGridView != null);
@@ -132,6 +144,7 @@ namespace System.Windows.Forms
 
 		public virtual int Add()
 		{
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
@@ -143,12 +156,14 @@ namespace System.Windows.Forms
 		public virtual int Add(params object[] values)
 		{
 			Contract.Requires(values != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
 		public virtual int Add(DataGridViewRow dataGridViewRow)
 		{
 			Contract.Requires(dataGridViewRow != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
@@ -195,11 +210,13 @@ namespace System.Windows.Forms
 		internal int AddInternal(DataGridViewRow dataGridViewRow)
 		{
 			Contract.Requires(dataGridViewRow != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
 		internal int AddInternal(bool newRow, object[] values)
 		{
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
@@ -236,41 +253,52 @@ namespace System.Windows.Forms
 
 		public int GetFirstRow(DataGridViewElementStates includeFilter)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 		public int GetFirstRow(DataGridViewElementStates includeFilter, DataGridViewElementStates excludeFilter)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
-
-
 		public int GetLastRow(DataGridViewElementStates includeFilter)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		public int GetNextRow(int indexStart, DataGridViewElementStates includeFilter)
 		{
+			Contract.Requires(indexStart >= -1);
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		internal int GetNextRow(int indexStart, DataGridViewElementStates includeFilter, int skipRows)
 		{
+			Contract.Requires(indexStart >= -1);
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		public int GetNextRow(int indexStart, DataGridViewElementStates includeFilter, DataGridViewElementStates excludeFilter)
 		{
+			Contract.Requires(indexStart >= -1);
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		public int GetPreviousRow(int indexStart, DataGridViewElementStates includeFilter)
 		{
+			Contract.Requires(indexStart <= this.Count);
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		public int GetPreviousRow(int indexStart, DataGridViewElementStates includeFilter, DataGridViewElementStates excludeFilter)
 		{
+			Contract.Requires(indexStart <= this.Count);
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
@@ -281,6 +309,7 @@ namespace System.Windows.Forms
 
 		internal int GetRowCount(DataGridViewElementStates includeFilter, int fromRowIndex, int toRowIndex)
 		{
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
@@ -308,6 +337,7 @@ namespace System.Windows.Forms
 
 		public int IndexOf(DataGridViewRow dataGridViewRow)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
@@ -346,7 +376,6 @@ namespace System.Windows.Forms
 			Contract.Requires(indexDestination >= 0);
 			Contract.Requires(this.Count >= indexDestination);
 			Contract.Requires(count > 0);
-			//goes to InsertCopiesPrivate(row, etc)
 		}
 
 		private void InsertCopiesPrivate(DataGridViewRow rowTemplate, DataGridViewElementStates rowTemplateState, int indexDestination, int count)
@@ -356,7 +385,10 @@ namespace System.Windows.Forms
 
 		public virtual void InsertCopy(int indexSource, int indexDestination)
 		{
-			//goes to InsertCopies(int, int)
+			Contract.Requires(indexSource >= 0);
+			Contract.Requires(this.Count > indexSource);
+			Contract.Requires(indexDestination >= 0);
+			Contract.Requires(this.Count >= indexDestination);
 		}
 
 		private void InsertDuplicateRow(int indexDestination, DataGridViewRow rowTemplate, bool firstInsertion, ref Point newCurrentCell)
@@ -483,7 +515,7 @@ namespace System.Windows.Forms
 
 		void ICollection.CopyTo(Array array, int index)
 		{
-			Contract.Requires(array != null);
+
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -493,8 +525,6 @@ namespace System.Windows.Forms
 
 		int IList.Add(object value)
 		{
-			Contract.Requires(value != null);
-			Contract.Requires(value is DataGridViewRow);
 			return default(int);
 		}
 
@@ -515,10 +545,7 @@ namespace System.Windows.Forms
 
 		void IList.Insert(int index, object value)
 		{
-			Contract.Requires(index >= 0);
-			Contract.Requires(this.Count >= index);
-			Contract.Requires(value != null);
-			Contract.Requires(value is DataGridViewRow);
+
 		}
 
 		void IList.Remove(object value)
@@ -528,8 +555,7 @@ namespace System.Windows.Forms
 
 		void IList.RemoveAt(int index)
 		{
-			Contract.Requires(index >= 0);
-			Contract.Requires(index < this.Count);
+
 		}
 
 		private void UnshareRow(int rowIndex)
@@ -601,7 +627,6 @@ namespace System.Windows.Forms
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<int>() >= 0);
 				return default(int);
 			}
 		}
@@ -643,8 +668,6 @@ namespace System.Windows.Forms
 		{
 			get
 			{
-				Contract.Requires(index >= 0);
-				Contract.Requires(index < this.Count);
 				Contract.Ensures(Contract.Result<DataGridViewRow>() != null);
 				return default(DataGridViewRow);
 			}
@@ -653,17 +676,5 @@ namespace System.Windows.Forms
 				throw new NotSupportedException();
 			}
 		}
-
-		public event CollectionChangeEventHandler CollectionChanged;
-
-		private DataGridView dataGridView;
-		private RowArrayList items;
-		private CollectionChangeEventHandler onCollectionChanged;
-		private int rowCountsVisible;
-		private int rowCountsVisibleFrozen;
-		private int rowCountsVisibleSelected;
-		private int rowsHeightVisible;
-		private int rowsHeightVisibleFrozen;
-		private List<DataGridViewElementStates> rowStates;
 	}
 }
