@@ -55,11 +55,13 @@ namespace System.Windows.Forms
 		public virtual int Add(DataGridViewColumn dataGridViewColumn)
 		{
 			Contract.Requires(dataGridViewColumn != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
 		public virtual int Add(string columnName, string headerText)
 		{
+			Contract.Ensures(Contract.Result<int>() >= 0);
 			return default(int);
 		}
 
@@ -71,6 +73,7 @@ namespace System.Windows.Forms
 
 		public virtual void Clear()
 		{
+			Contract.Ensures(this.Count == 0);
 		}
 
 		internal int ColumnIndexToActualDisplayIndex(int columnIndex, DataGridViewElementStates includeFilter)
@@ -116,11 +119,13 @@ namespace System.Windows.Forms
 
 		internal float GetColumnsFillWeight(DataGridViewElementStates includeFilter)
 		{
+			Contract.Ensures(Contract.Result<float>() >= 0.0f);
 			return default(float);
 		}
 
 		private int GetColumnSortedIndex(DataGridViewColumn dataGridViewColumn)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
@@ -159,11 +164,14 @@ namespace System.Windows.Forms
 
 		public int IndexOf(DataGridViewColumn dataGridViewColumn)
 		{
+			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
 		public virtual void Insert(int columnIndex, DataGridViewColumn dataGridViewColumn)
 		{
+			Contract.Requires(columnIndex >= 0);
+			Contract.Requires(columnIndex <= this.Count);
 			Contract.Requires(dataGridViewColumn != null);
 		}
 
@@ -241,14 +249,11 @@ namespace System.Windows.Forms
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			Contract.Ensures(Contract.Result<IEnumerator>() != null);
 			return default(IEnumerator);
 		}
 
 		int IList.Add(object value)
 		{
-			Contract.Requires(value != null);
-			Contract.Requires(value is DataGridViewColumn);
 			return default(int);
 		}
 
@@ -269,19 +274,17 @@ namespace System.Windows.Forms
 
 		void IList.Insert(int index, object value)
 		{
-			Contract.Requires(value != null);
-			Contract.Requires(value is DataGridViewColumn);
+
 		}
 
 		void IList.Remove(object value)
 		{
-			Contract.Requires(value != null);
+
 		}
 
 		void IList.RemoveAt(int index)
 		{
-			Contract.Requires(index >= 0);
-			Contract.Requires(index < this.Count);
+
 		}
 
 		private void UpdateColumnCaches(DataGridViewColumn dataGridViewColumn, bool adding)
@@ -359,7 +362,6 @@ namespace System.Windows.Forms
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<object>() != null);
 				return default(ICollection);
 			}
 		}

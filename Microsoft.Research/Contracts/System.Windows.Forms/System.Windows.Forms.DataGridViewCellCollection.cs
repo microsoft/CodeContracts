@@ -56,7 +56,7 @@ namespace System.Windows.Forms
 
 		public virtual void Clear()
 		{
-			
+			Contract.Ensures(this.Count == 0);
 		}
 
 		public virtual bool Contains(DataGridViewCell dataGridViewCell)
