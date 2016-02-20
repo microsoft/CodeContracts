@@ -80,7 +80,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>CONTRACTS_FULL</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0660 0661 0626 824 649 626 1591</NoWarn>
     <DebugType>full</DebugType>

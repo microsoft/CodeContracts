@@ -31,12 +31,6 @@ namespace Microsoft.Research
             var elapsed = DateTime.Now - now;
             var count = 0;
 
-#if TRACEPERFORMANCE
-            if (warnIfOperationTakesTooLong && elapsed > LongSingleOperation)
-            {
-                Console.WriteLine("Time performing action #{0}: {1} (invocationCounter = {2})", slot, elapsed, invocationCounter);
-            }
-#endif
             lock (performanceCounters)
             {
                 Tuple<int, TimeSpan> prev;
