@@ -118,7 +118,14 @@ namespace System.Windows.Forms
     //
     // Returns:
     //     The collection of images.
-    //public ImageList.ImageCollection Images { get; }
+    public ImageList.ImageCollection Images
+	{
+		get
+		{
+				Contract.Ensures(Contract.Result<ImageCollection>() != null);
+				return default(ImageCollection);
+		}
+	}
 
 
     //

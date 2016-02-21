@@ -194,6 +194,7 @@
     <Compile Include="System.Windows.Forms.BaseCollection.cs" />
     <Compile Include="System.Windows.Forms.BindingContext.cs" />
     <Compile Include="System.Windows.Forms.BindingsCollection.cs" />
+    <Compile Include="System.Windows.Forms.ButtonBase.cs" />
     <Compile Include="System.Windows.Forms.ControlBindingsCollection.cs" />
     <Compile Include="System.Windows.Forms.DataGridViewBand.cs" />
     <Compile Include="System.Windows.Forms.Application.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="System.Windows.Forms.DomainUpDown.cs" />
     <Compile Include="System.Windows.Forms.DragEventArgs.cs" />
     <Compile Include="System.Windows.Forms.DrawTreeNodeEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.FlatButtonAppearance.cs" />
     <Compile Include="System.Windows.Forms.Form.cs" />
     <Compile Include="System.Windows.Forms.FormCollection.cs" />
     <Compile Include="System.Windows.Forms.GiveFeedbackEventArgs.cs" />
