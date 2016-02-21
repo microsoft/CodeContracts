@@ -31,7 +31,10 @@ namespace System.Data.SqlClient
   {
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class.
-    //public SqlParameter();
+    public SqlParameter()
+	{
+		
+	}
     //
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class
@@ -43,7 +46,10 @@ namespace System.Data.SqlClient
     //
     //   value:
     //     An System.Object that is the value of the System.Data.SqlClient.SqlParameter.
-    //public SqlParameter(string parameterName, object value);
+    public SqlParameter(string parameterName, object value)
+	{
+		
+	}
     //
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class
@@ -59,7 +65,10 @@ namespace System.Data.SqlClient
     // Exceptions:
     //   System.ArgumentException:
     //     The value supplied in the dbType parameter is an invalid back-end data type.
-    //public SqlParameter(string parameterName, SqlDbType dbType);
+    public SqlParameter(string parameterName, SqlDbType dbType)
+	{
+		
+	}
     //
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class
@@ -78,7 +87,10 @@ namespace System.Data.SqlClient
     // Exceptions:
     //   System.ArgumentException:
     //     The value supplied in the dbType parameter is an invalid back-end data type.
-    //public SqlParameter(string parameterName, SqlDbType dbType, int size);
+    public SqlParameter(string parameterName, SqlDbType dbType, int size)
+	{
+		
+	}
     //
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class
@@ -101,7 +113,10 @@ namespace System.Data.SqlClient
     // Exceptions:
     //   System.ArgumentException:
     //     The value supplied in the dbType parameter is an invalid back-end data type.
-    //public SqlParameter(string parameterName, SqlDbType dbType, int size, string sourceColumn);
+    public SqlParameter(string parameterName, SqlDbType dbType, int size, string sourceColumn)
+	{
+		
+	}
     //
     // Summary:
     //     Initializes a new instance of the System.Data.SqlClient.SqlParameter class

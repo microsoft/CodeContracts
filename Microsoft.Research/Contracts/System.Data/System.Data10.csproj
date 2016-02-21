@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -222,6 +222,8 @@
     <Compile Include="System.Data.SqlClient.SqlCommandBuilder.cs" />
     <Compile Include="System.Data.SqlClient.SqlDataReader.cs" />
     <Compile Include="System.Data.SqlClient.SqlParameter.cs" />
+    <Compile Include="System.Data.SqlClient.SqlParameterCollection.cs" />
+    <Compile Include="System.Data.SqlDbType.cs" />
     <Compile Include="System.Data.SqlTypes.SqlBinary.cs" />
     <Compile Include="System.Data.SqlTypes.SqlBoolean.cs" />
     <Compile Include="System.Data.SqlTypes.SqlByte.cs" />
