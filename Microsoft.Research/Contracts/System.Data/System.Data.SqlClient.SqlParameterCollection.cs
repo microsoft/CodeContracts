@@ -22,11 +22,13 @@ namespace System.Data.SqlClient
 		internal SqlParameterCollection()
 		{
 		}
+
 		public SqlParameter Add(SqlParameter value)
 		{
 			Contract.Ensures(value == null || Contract.Result<SqlParameter>() != null);
 			return default(SqlParameter);
 		}
+
 		public override int Add(object value)
 		{
 			return default(int);

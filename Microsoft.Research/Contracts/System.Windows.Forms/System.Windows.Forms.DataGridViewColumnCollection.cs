@@ -21,35 +21,29 @@ namespace System.Windows.Forms
 {
 	public class DataGridViewColumnCollection : BaseCollection, IList, ICollection, IEnumerable
 	{
-		private class ColumnOrderComparer : IComparer
+		/*private class ColumnOrderComparer : IComparer
 		{
 			// Methods
 			public int Compare(object x, object y)
 			{
 				return default(int);
 			}
-		}
+		}*/
 
 		//private int columnCountsVisible;
 		//private int columnCountsVisibleSelected;
 		//private static ColumnOrderComparer columnOrderComparer;
 		//private int columnsWidthVisible;
 		//private int columnsWidthVisibleFrozen;
-		private DataGridView dataGridView;
-		private ArrayList items;
-		private ArrayList itemsSorted;
+		//private DataGridView dataGridView;
+		//private ArrayList items;
+		//private ArrayList itemsSorted;
 		//private int lastAccessedSortedIndex;
 		//private CollectionChangeEventHandler onCollectionChanged;
 
 		public DataGridViewColumnCollection(DataGridView dataGridView)
 		{
 			Contract.Requires(dataGridView != null);
-			Contract.Ensures(items != null);
-			Contract.Ensures(this.dataGridView != null);
-		}
-		internal int ActualDisplayIndexToColumnIndex(int actualDisplayIndex, DataGridViewElementStates includeFilter)
-		{
-			return default(int);
 		}
 
 		public virtual int Add(DataGridViewColumn dataGridViewColumn)
@@ -76,11 +70,6 @@ namespace System.Windows.Forms
 			Contract.Ensures(this.Count == 0);
 		}
 
-		internal int ColumnIndexToActualDisplayIndex(int columnIndex, DataGridViewElementStates includeFilter)
-		{
-			return default(int);
-		}
-
 		public virtual bool Contains(string columnName)
 		{
 			Contract.Requires(columnName != null);
@@ -97,35 +86,8 @@ namespace System.Windows.Forms
 			Contract.Requires(array != null);
 		}
 
-		internal bool DisplayInOrder(int columnIndex1, int columnIndex2)
-		{
-			return default(bool);
-		}
-
-		internal DataGridViewColumn GetColumnAtDisplayIndex(int displayIndex)
-		{
-			return default(DataGridViewColumn);
-		}
-
 		public int GetColumnCount(DataGridViewElementStates includeFilter)
 		{
-			return default(int);
-		}
-
-		internal int GetColumnCount(DataGridViewElementStates includeFilter, int fromColumnIndex, int toColumnIndex)
-		{
-			return default(int);
-		}
-
-		internal float GetColumnsFillWeight(DataGridViewElementStates includeFilter)
-		{
-			Contract.Ensures(Contract.Result<float>() >= 0.0f);
-			return default(float);
-		}
-
-		private int GetColumnSortedIndex(DataGridViewColumn dataGridViewColumn)
-		{
-			Contract.Ensures(Contract.Result<int>() >= -1);
 			return default(int);
 		}
 
@@ -175,47 +137,7 @@ namespace System.Windows.Forms
 			Contract.Requires(dataGridViewColumn != null);
 		}
 
-		internal void InvalidateCachedColumnCount(DataGridViewElementStates includeFilter)
-		{
-			
-		}
-
-		internal void InvalidateCachedColumnCounts()
-		{
-			
-		}
-
-		internal void InvalidateCachedColumnsOrder()
-		{
-			
-		}
-
-		internal void InvalidateCachedColumnsWidth(DataGridViewElementStates includeFilter)
-		{
-			
-		}
-
-		internal void InvalidateCachedColumnsWidths()
-		{
-			
-		}
-
 		protected virtual void OnCollectionChanged(CollectionChangeEventArgs e)
-		{
-			
-		}
-
-		private void OnCollectionChanged(CollectionChangeEventArgs ccea, bool changeIsInsertion, Point newCurrentCell)
-		{
-			Contract.Requires(ccea != null);
-		}
-
-		private void OnCollectionChanged_PostNotification(CollectionChangeEventArgs ccea, bool changeIsInsertion, Point newCurrentCell)
-		{
-			Contract.Requires(ccea != null);
-		}
-
-		private void OnCollectionChanged_PreNotification(CollectionChangeEventArgs ccea)
 		{
 			
 		}
@@ -231,12 +153,6 @@ namespace System.Windows.Forms
 		}
 
 		public virtual void RemoveAt(int index)
-		{
-			Contract.Requires(index >= 0);
-			Contract.Requires(index < this.Count);
-		}
-
-		internal void RemoveAtInternal(int index, bool force)
 		{
 			Contract.Requires(index >= 0);
 			Contract.Requires(index < this.Count);
@@ -286,26 +202,6 @@ namespace System.Windows.Forms
 		{
 
 		}
-
-		private void UpdateColumnCaches(DataGridViewColumn dataGridViewColumn, bool adding)
-		{
-
-		}
-
-		private void UpdateColumnOrderCache()
-		{
-			Contract.Ensures(this.itemsSorted != null);
-		}
-
-		internal static IComparer ColumnCollectionOrderComparer
-		{
-			get
-			{
-				Contract.Ensures(Contract.Result<IComparer>() != null);
-				return default(IComparer);
-			}
-		}
-
 		protected DataGridView DataGridView
 		{
 			get
@@ -338,7 +234,7 @@ namespace System.Windows.Forms
 			get
 			{
 				Contract.Ensures(Contract.Result<ArrayList>() != null);
-				return this.items;
+				return default(ArrayList);
 			}
 		}
 

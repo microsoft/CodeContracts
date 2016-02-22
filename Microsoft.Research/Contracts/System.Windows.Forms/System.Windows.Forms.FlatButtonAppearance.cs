@@ -18,9 +18,9 @@ namespace System.Windows.Forms
 {
 	public class FlatButtonAppearance
 	{
-		internal FlatButtonAppearance(ButtonBase owner)
+		private FlatButtonAppearance()
 		{
-			Contract.Requires(owner != null);
+
 		}
 	}
 }

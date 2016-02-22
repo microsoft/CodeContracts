@@ -20,10 +20,5 @@ namespace System.Windows.Forms
 		{
 			
 		}
-
-		internal DataGridViewElement(DataGridViewElement dgveTemplate)
-		{
-			
-		}
 	}
 }

@@ -26,18 +26,6 @@ namespace System.Windows.Forms
 		{
 		}
 
-		public ISite Site
-		{
-			get
-			{
-				return default(ISite);
-			}
-			set
-			{
-				
-			}
-		}
-
 		//public event EventHandler Disposed;
 	}
 }

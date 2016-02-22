@@ -459,7 +459,7 @@ namespace System.Windows.Forms
     [ParenthesizePropertyName(true)]
     [RefreshProperties(RefreshProperties.All)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ControlBindingsCollection DataBindings
+    public virtual ControlBindingsCollection DataBindings
 	{
 		get
 		{

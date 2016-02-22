@@ -20,27 +20,18 @@ namespace System.Windows.Forms
 {
 	public class DataGridViewCellCollection : BaseCollection, IList, ICollection, IEnumerable
 	{
-		private ArrayList items;
+		//private ArrayList items;
 		//private CollectionChangeEventHandler onCollectionChanged;
-		private DataGridViewRow owner;
+		//private DataGridViewRow owner;
 
 		//public event CollectionChangeEventHandler CollectionChanged;
 
 		public DataGridViewCellCollection(DataGridViewRow dataGridViewRow)
 		{
 			Contract.Requires(dataGridViewRow != null);
-			Contract.Ensures(this.items != null);
-			Contract.Ensures(this.owner != null);
 		}
 
 		public virtual int Add(DataGridViewCell dataGridViewCell)
-		{
-			Contract.Requires(dataGridViewCell != null);
-			Contract.Ensures(Contract.Result<int>() >= 0);
-			return default(int);
-		}
-
-		internal int AddInternal(DataGridViewCell dataGridViewCell)
 		{
 			Contract.Requires(dataGridViewCell != null);
 			Contract.Ensures(Contract.Result<int>() >= 0);
@@ -82,13 +73,6 @@ namespace System.Windows.Forms
 			Contract.Requires(index <= this.Count);
 		}
 
-		internal void InsertInternal(int index, DataGridViewCell dataGridViewCell)
-		{
-			Contract.Requires(dataGridViewCell != null);
-			Contract.Requires(index >= 0);
-			Contract.Requires(index <= this.Count);
-		}
-
 		protected void OnCollectionChanged(CollectionChangeEventArgs e)
 		{
 
@@ -100,12 +84,6 @@ namespace System.Windows.Forms
 		}
 
 		public virtual void RemoveAt(int index)
-		{
-			Contract.Requires(index >= 0);
-			Contract.Requires(index < this.Count);
-		}
-
-		internal void RemoveAtInternal(int index)
 		{
 			Contract.Requires(index >= 0);
 			Contract.Requires(index < this.Count);
