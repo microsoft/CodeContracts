@@ -48,4 +48,4 @@ namespace System.Data.SqlClient
 		Variant = 0x17,
 		Xml = 0x19
 	}
-
+}

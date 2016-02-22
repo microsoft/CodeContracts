@@ -21,10 +21,10 @@ namespace System.Windows.Forms
 	public class DataGridViewCellCollection : BaseCollection, IList, ICollection, IEnumerable
 	{
 		private ArrayList items;
-		private CollectionChangeEventHandler onCollectionChanged;
+		//private CollectionChangeEventHandler onCollectionChanged;
 		private DataGridViewRow owner;
 
-		public event CollectionChangeEventHandler CollectionChanged;
+		//public event CollectionChangeEventHandler CollectionChanged;
 
 		public DataGridViewCellCollection(DataGridViewRow dataGridViewRow)
 		{

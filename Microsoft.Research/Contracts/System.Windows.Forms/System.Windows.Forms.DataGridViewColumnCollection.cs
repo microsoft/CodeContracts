@@ -30,16 +30,16 @@ namespace System.Windows.Forms
 			}
 		}
 
-		private int columnCountsVisible;
-		private int columnCountsVisibleSelected;
-		private static ColumnOrderComparer columnOrderComparer;
-		private int columnsWidthVisible;
-		private int columnsWidthVisibleFrozen;
+		//private int columnCountsVisible;
+		//private int columnCountsVisibleSelected;
+		//private static ColumnOrderComparer columnOrderComparer;
+		//private int columnsWidthVisible;
+		//private int columnsWidthVisibleFrozen;
 		private DataGridView dataGridView;
 		private ArrayList items;
 		private ArrayList itemsSorted;
-		private int lastAccessedSortedIndex;
-		private CollectionChangeEventHandler onCollectionChanged;
+		//private int lastAccessedSortedIndex;
+		//private CollectionChangeEventHandler onCollectionChanged;
 
 		public DataGridViewColumnCollection(DataGridView dataGridView)
 		{
@@ -395,6 +395,6 @@ namespace System.Windows.Forms
 			}
 		}
 
-		public event CollectionChangeEventHandler CollectionChanged;
+		//public event CollectionChangeEventHandler CollectionChanged;
 	}
 }

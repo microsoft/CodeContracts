@@ -55,13 +55,13 @@ namespace System.Windows.Forms
 		private class RowComparer
 		{
 			// Fields
-			private bool ascending;
-			private IComparer customComparer;
+			//private bool ascending;
+			//private IComparer customComparer;
 			private DataGridView dataGridView;
 			private DataGridViewRowCollection dataGridViewRows;
-			private DataGridViewColumn dataGridViewSortedColumn;
+			//private DataGridViewColumn dataGridViewSortedColumn;
 			private static ComparedObjectMax max = new ComparedObjectMax();
-			private int sortedColumnIndex;
+			//private int sortedColumnIndex;
 
 			// Methods
 			public RowComparer(DataGridViewRowCollection dataGridViewRows, IComparer customComparer, bool ascending)
@@ -124,15 +124,15 @@ namespace System.Windows.Forms
 
 		private DataGridView dataGridView;
 		private RowArrayList items;
-		private CollectionChangeEventHandler onCollectionChanged;
-		private int rowCountsVisible;
-		private int rowCountsVisibleFrozen;
-		private int rowCountsVisibleSelected;
-		private int rowsHeightVisible;
-		private int rowsHeightVisibleFrozen;
+		//private CollectionChangeEventHandler onCollectionChanged;
+		//private int rowCountsVisible;
+		//private int rowCountsVisibleFrozen;
+		//private int rowCountsVisibleSelected;
+		//private int rowsHeightVisible;
+		//private int rowsHeightVisibleFrozen;
 		private List<DataGridViewElementStates> rowStates;
 
-		public event CollectionChangeEventHandler CollectionChanged;
+		//public event CollectionChangeEventHandler CollectionChanged;
 
 		public DataGridViewRowCollection(DataGridView dataGridView)
 		{

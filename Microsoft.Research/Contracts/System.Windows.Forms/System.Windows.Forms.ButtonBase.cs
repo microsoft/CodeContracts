@@ -18,8 +18,8 @@ namespace System.Windows.Forms
 {
 	public abstract class ButtonBase : Control
 	{
-		public event EventHandler AutoSizeChanged;
-		public event EventHandler ImeModeChanged;
+		//public event EventHandler AutoSizeChanged;
+		//public event EventHandler ImeModeChanged;
 
 		protected ButtonBase()
 		{

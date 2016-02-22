@@ -16,7 +16,7 @@ using System.ComponentModel;
 
 namespace System.Windows.Forms
 {
-	public class DataGridViewColumn : DataGridViewBand, IComponent, IDisposable
+	public class DataGridViewColumn : DataGridViewBand//, IComponent, IDisposable
 	{
 		public DataGridViewColumn() : this(null)
 		{
@@ -38,6 +38,6 @@ namespace System.Windows.Forms
 			}
 		}
 
-		public event EventHandler Disposed;
+		//public event EventHandler Disposed;
 	}
 }
