@@ -1065,7 +1065,15 @@ namespace System.Windows.Forms
     //[Bindable(true)]
     //[Localizable(true)]
     //[DispId(-517)]
-    //public virtual string Text { get; set; }
+    public virtual string Text
+	{
+		get
+		{
+			Contract.Ensures(Contract.Result<string>() != null);
+			return default(string);
+		}
+		set;
+	}
     ////
     //// Summary:
     ////     Gets or sets the distance, in pixels, between the top edge of the control
