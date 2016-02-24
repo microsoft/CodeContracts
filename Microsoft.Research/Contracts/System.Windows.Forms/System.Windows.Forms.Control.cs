@@ -1072,7 +1072,10 @@ namespace System.Windows.Forms
 			Contract.Ensures(Contract.Result<string>() != null);
 			return default(string);
 		}
-		set;
+		set
+		{
+
+		}
 	}
     ////
     //// Summary:
