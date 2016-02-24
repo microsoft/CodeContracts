@@ -116,6 +116,7 @@
     <Compile Include="RewriterTests\AsyncTestsDataSource.cs" />
     <Compile Include="RewriterTests\RewriterTest.cs" />
     <TestSources Include="Sources\OptimizedIterator.cs" />
+    <TestSources Include="Sources\ArrayCreationInPrecondition.cs" />
     <Compile Include="TestDriver.cs" />
     <TestSources Include="Sources\InheritExists.cs" />
     <TestSources Include="Sources\InheritGenericExists.cs" />
