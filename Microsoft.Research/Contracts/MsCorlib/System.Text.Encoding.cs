@@ -159,7 +159,7 @@ namespace System.Text
     {
       Contract.Requires(bytes != null);
       Contract.Requires(index >= 0 && index <= bytes.Length);
-      Contract.Requires(count >= 0 && index + count <= bytes.Length);
+      Contract.Requires(count >= 0 && count <= bytes.Length - index);
       Contract.Ensures(Contract.Result<string>() != null);
 
       return default(string);
@@ -203,9 +203,9 @@ namespace System.Text
     public virtual int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
     {
       Contract.Requires(bytes != null);
-      Contract.Requires(byteIndex >= 0 && byteIndex <= bytes.Length);
-      Contract.Requires(byteCount >= 0 && byteIndex + byteCount <= bytes.Length);
       Contract.Requires(chars != null);
+      Contract.Requires(byteIndex >= 0 && byteIndex <= bytes.Length);
+      Contract.Requires(byteCount >= 0 && byteCount <= bytes.Length - byteIndex);
       Contract.Requires(charIndex >= 0 && charIndex <= chars.Length);
 
       Contract.Ensures(Contract.Result<int>() >= 0);
@@ -217,7 +217,7 @@ namespace System.Text
     {
       Contract.Requires(bytes != null);
       Contract.Requires(index >= 0 && index <= bytes.Length);
-      Contract.Requires(count >= 0 && index + count <= bytes.Length);
+      Contract.Requires(count >= 0 && count <= bytes.Length - index);
       Contract.Ensures(Contract.Result<char[]>() != null);
 
       return default(char[]);
@@ -235,7 +235,7 @@ namespace System.Text
     {
       Contract.Requires(bytes != null);
       Contract.Requires(index >= 0 && index <= bytes.Length);
-      Contract.Requires(count >= 0 && index + count <= bytes.Length);
+      Contract.Requires(count >= 0 && count <= bytes.Length - index);
       Contract.Ensures(Contract.Result<int>() >= 0);
 
       return default(int);
@@ -251,9 +251,9 @@ namespace System.Text
     public virtual int GetBytes(string s, int charIndex, int charCount, byte[] bytes, int byteIndex)
     {
       Contract.Requires(s != null);
-      Contract.Requires(charIndex >= 0 && charIndex <= s.Length);
-      Contract.Requires(charCount >= 0 && charIndex + charCount <= s.Length);
       Contract.Requires(bytes != null);
+      Contract.Requires(charIndex >= 0 && charIndex <= s.Length);
+      Contract.Requires(charCount >= 0 && charCount <= s.Length - charIndex);
       Contract.Requires(byteIndex >= 0 && byteIndex <= bytes.Length);
 
       Contract.Ensures(Contract.Result<int>() >= 0);
@@ -271,9 +271,9 @@ namespace System.Text
     public virtual int GetBytes(char[] chars, int charIndex, int charCount, byte[] bytes, int byteIndex)
     {
       Contract.Requires(chars != null);
-      Contract.Requires(charIndex >= 0 && charIndex <= chars.Length);
-      Contract.Requires(charCount >= 0 && charIndex + charCount <= chars.Length);
       Contract.Requires(bytes != null);
+      Contract.Requires(charIndex >= 0 && charIndex <= chars.Length);
+      Contract.Requires(charCount >= 0 && charCount <= chars.Length - charIndex);
       Contract.Requires(byteIndex >= 0 && byteIndex <= bytes.Length);
 
       Contract.Ensures(Contract.Result<int>() >= 0);
@@ -285,7 +285,7 @@ namespace System.Text
     {
       Contract.Requires(chars != null);
       Contract.Requires(index >= 0 && index <= chars.Length);
-      Contract.Requires(count >= 0 && index + count <= chars.Length);
+      Contract.Requires(count >= 0 && count <= chars.Length - index);
       Contract.Ensures(Contract.Result<byte[]>() != null);
 
       return default(byte[]);
@@ -303,7 +303,7 @@ namespace System.Text
     {
       Contract.Requires(chars != null);
       Contract.Requires(index >= 0 && index <= chars.Length);
-      Contract.Requires(count >= 0 && index + count <= chars.Length);
+      Contract.Requires(count >= 0 && count <= chars.Length - index);
       Contract.Ensures(Contract.Result<int>() >= 0);
 
       return default(int);
@@ -354,7 +354,7 @@ namespace System.Text
       Contract.Requires(dstEncoding != null);
       Contract.Requires(bytes != null);
       Contract.Requires(index >= 0 && index <= bytes.Length);
-      Contract.Requires(count >= 0 && index + count <= bytes.Length);
+      Contract.Requires(count >= 0 && count <= bytes.Length - index);
       Contract.Ensures(Contract.Result<byte[]>() != null);
       return default(byte[]);
     }
