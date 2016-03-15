@@ -936,6 +936,15 @@ namespace System
     }
 #endif
 
+#if NETFRAMEWORK_4_6
+    public static T[] Empty<T>()
+    {
+      Contract.Ensures(Contract.Result<T>() != null);
+      Contract.Ensures(Contract.Result<T[]>().Length == 0);
+      return default(T[]);
+    }
+#endif
+
     #region ICollection Members
 
 

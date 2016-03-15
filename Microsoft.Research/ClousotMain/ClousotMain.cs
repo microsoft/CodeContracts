@@ -63,10 +63,6 @@ namespace Microsoft.Research.CodeAnalysis
       where Type : IEquatable<Type>
       where Method : IEquatable<Method>
     {
-
-      // We do it here becase we hope we can trigger some work of the jit 
-      args = PipesUtils.WaitForArgsIfNeeded(args);
-
       using (var binder = new TypeBinder<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(
         args, mdDecoder, contractDecoder, assemblyCache, outputFactory, cacheAccessorFactories
         ))

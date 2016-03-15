@@ -7,7 +7,6 @@ namespace System.ComponentModel
    {
        public PropertyChangedEventArgs(string propertyName)
        {
-           Contract.Requires(!string.IsNullOrEmpty(Contract.Result<string>()));
            Contract.Ensures(this.PropertyName == propertyName);
        }
 
@@ -19,8 +18,6 @@ namespace System.ComponentModel
        {
            get
            {
-               Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-
                return default(string);
            }
         }

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="nonnull2" storage="c:\maf\singsharp2\microsoft.research\regressiontest\nonnulltests\nonnull2.generictest" id="ba944add-407b-438b-8ce8-8099f4f0b672" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations;unreached -NonNull NonNullTests.dll -define regular" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

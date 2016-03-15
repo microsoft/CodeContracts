@@ -72,6 +72,21 @@ namespace Microsoft.Contracts.Foxtrot
                         dup.DuplicateFor[sourceMethod.Parameters[i].UniqueKey] = targetMethod.Parameters[i];
                     }
                 }
+
+                // This code makes sure that generic method parameters used by contracts inherited from contract class
+                // are correctly replaced by the one defined in the target method.
+                // Without this mapping <c>CheckPost</c> method in generated async closure class would contain an invalid
+                // reference to a generic contract method parameter instead of generic async closure type parameter.
+                // For more about this problem see comments for Microsoft.Contracts.Foxtrot.EmitAsyncClosure.GenericTypeMapper class
+                // and issue #380.
+                if (sourceMethod.TemplateParameters != null && targetMethod.TemplateParameters != null
+                    && sourceMethod.TemplateParameters.Count == targetMethod.TemplateParameters.Count)
+                {
+                    for (int i = 0, n = sourceMethod.TemplateParameters.Count; i < n; i++)
+                    {
+                        dup.DuplicateFor[sourceMethod.TemplateParameters[i].UniqueKey] = targetMethod.TemplateParameters[i];
+                    }
+                }
             }
 
             var originalType = HelperMethods.IsContractTypeForSomeOtherType(sourceMethod.DeclaringType, contractNodes);

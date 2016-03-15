@@ -285,7 +285,19 @@ namespace Tests
 
                 if (!options.ReleaseMode)
                 {
-                    arguments = "/debug " + arguments;
+                    if (options.PdbOnly)
+                    {
+                        arguments = "/debug:pdbonly " + arguments;
+                    }
+                    else
+                    {
+                        arguments = "/debug:full " + arguments;
+                    }
+                }
+
+                if (options.Optimize)
+                {
+                    arguments = "/optimize " + arguments;
                 }
 
                 var exitCode = RunProcess(testOutputHelper, sourcedir, compilerPath, arguments, true);

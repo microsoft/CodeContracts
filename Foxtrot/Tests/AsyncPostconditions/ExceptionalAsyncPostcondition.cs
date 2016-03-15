@@ -40,7 +40,7 @@ namespace Tests.Sources
         {
             try
             {
-                // If async postcondition are implemented properly
+                // When async postcondition are implemented properly
                 // they should not affect exception handling when the method throws.
                 await new Foo().FooAsync();
             }

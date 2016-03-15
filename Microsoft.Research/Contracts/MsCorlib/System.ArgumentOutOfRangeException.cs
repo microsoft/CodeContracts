@@ -12,48 +12,41 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System.Diagnostics.Contracts;
 using System;
+using System.Diagnostics.Contracts;
 
 namespace System
 {
 
-  public class ArgumentOutOfRangeException
+  public class ArgumentOutOfRangeException : Exception
   {
-
-    extern public object ActualValue
-    {
-      get;
-    }
-
-    extern public string Message
-    {
-      get;
-    }
-
-    public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-    {
-      Contract.Requires(info != null);
-
-    }
-    public ArgumentOutOfRangeException(string paramName, object actualValue, string message)
-    {
-
-      return default(ArgumentOutOfRangeException);
-    }
-    public ArgumentOutOfRangeException(string paramName, string message)
-    {
-
-      return default(ArgumentOutOfRangeException);
-    }
-    public ArgumentOutOfRangeException(string paramName)
-    {
-
-      return default(ArgumentOutOfRangeException);
-    }
-    public ArgumentOutOfRangeException()
-    {
-      return default(ArgumentOutOfRangeException);
-    }
+    //public object ActualValue
+    //{
+    //  get;
+    //}
+    //
+    //public override string Message
+    //{
+    //  get;
+    //}
+	//
+    //public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+    //{
+    //  Contract.Requires(info != null);
+    //
+    //}
+	//
+    //public ArgumentOutOfRangeException(string paramName, object actualValue, string message)
+    //{
+    //}
+    //public ArgumentOutOfRangeException(string paramName, string message)
+    //{
+    //}
+    //public ArgumentOutOfRangeException(string paramName)
+    //{
+    //}
+    //public ArgumentOutOfRangeException()
+    //{
+    //}
   }
 }

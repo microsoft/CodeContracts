@@ -195,6 +195,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.Drawing.Imaging.BitmapData.cs" />
     <Compile Include="System.Drawing.Imaging.ColorPalette.cs" />
+    <Compile Include="System.Drawing.Imaging.EncoderParameter.cs" />
+    <Compile Include="System.Drawing.Imaging.EncoderParameters.cs" />
     <Compile Include="System.Drawing.Imaging.FrameDimension.cs" />
     <Compile Include="System.Drawing.Imaging.ImageFormat.cs" />
     <Compile Include="System.Drawing.Imaging.ImageLockMode.cs" />
@@ -212,8 +214,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

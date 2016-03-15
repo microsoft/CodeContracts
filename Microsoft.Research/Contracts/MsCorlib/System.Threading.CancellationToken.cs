@@ -78,7 +78,14 @@ namespace System.Threading
     //
     // Returns:
     //     true if cancellation has been requested for this token; otherwise false.
-    //public bool IsCancellationRequested { get; }
+    public bool IsCancellationRequested
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
+
     //
     // Summary:
     //     Returns an empty CancellationToken value.

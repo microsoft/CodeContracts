@@ -222,27 +222,27 @@ namespace CodeToolsUpdate
         #region Install for a specific msbuild version
         private string TargetsFile(string msbuildVersion)
         {
-            string msbuildRoot = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\MSBuild\\";
+            string msbuildRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "MSBuild");
 
             if (CompareVersion(msbuildVersion, "4.0") < 0)
             {
                 if (kind == importAfter)
                 {
-                    return msbuildRoot + "v" + msbuildVersion + "\\Custom.After.Microsoft.Common.targets";
+                    return Path.Combine(msbuildRoot, "v" + msbuildVersion, "Custom.After.Microsoft.Common.targets");
                 }
                 else if (kind == importBefore)
                 {
-                    return msbuildRoot + "v" + msbuildVersion + "\\Custom.Before.Microsoft.Common.targets";
+                    return Path.Combine(msbuildRoot, "v" + msbuildVersion, "Custom.Before.Microsoft.Common.targets");
                 }
                 else
                 {
                     //not good :-(
-                    return msbuildRoot + "v" + msbuildVersion + "\\Custom." + kind + ".Microsoft.Common.targets";
+                    return Path.Combine(msbuildRoot, "v" + msbuildVersion, "Custom." + kind + ".Microsoft.Common.targets");
                 }
             }
             else
             {
-                return msbuildRoot + msbuildVersion + "\\Microsoft.Common.Targets\\" + kind + "\\" + tool.ToolName + targetName + ".targets";
+                return Path.Combine(msbuildRoot, msbuildVersion, "Microsoft.Common.Targets", kind, tool.ToolName + targetName + ".targets");
             }
         }
 

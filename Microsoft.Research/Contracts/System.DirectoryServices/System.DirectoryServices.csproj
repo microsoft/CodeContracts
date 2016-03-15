@@ -104,8 +104,8 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.5\Profile\Client\Target;Microsoft\Framework\v3.5\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target;Microsoft\Framework\.NETFramework\v4.5\Profile\Client\Target;Microsoft\Framework\v3.5\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\System.DirectoryServices.ActiveDirectoryAccessRule.cs" />

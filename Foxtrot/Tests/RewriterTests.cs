@@ -126,6 +126,18 @@ namespace Tests
             get
             {
                 yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\AsyncPostconditions\SynchronousPostcondition.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new[] { @"System.dll", @"System.Core.dll", @"System.Threading.Tasks.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+
+                yield return new Options(
                     sourceFile: @"Foxtrot\Tests\AsyncPostconditions\CancelledAsyncPostcondition.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,
@@ -1120,6 +1132,20 @@ namespace Tests
                     useBinDir: false,
                     useExe: true,
                     mustSucceed: true);
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\Sources\OptimizedIterator.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: null,
+                    references: new string[0],
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true,
+                    optimize: true,
+                    releaseMode: true,
+                    pdbOnly: false);
             }
         }
 
@@ -1136,7 +1162,60 @@ namespace Tests
         {
             get
             {
+                // TODO: reduce code duplication by separating sequence of files from options.
                 yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ConstructorWithCapturingLambda.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ExpressionsInRequires.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ConstructorWithCapturingLambda2.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ExpressionsInRequires.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ConstructorWithCapturingLambda3.cs",
+                    foxtrotOptions: @"",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll", @"System.Linq.Expressions.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);yield return new Options(
                     sourceFile: @"Foxtrot\Tests\RoslynCompatibility\ExpressionsInRequires.cs",
                     foxtrotOptions: @"",
                     useContractReferenceAssemblies: true,

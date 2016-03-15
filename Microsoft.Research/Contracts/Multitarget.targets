@@ -23,7 +23,8 @@
      SILVERLIGHT;SILVERLIGHT_5_0
      NETFRAMEWORK;NETFRAMEWORK_3_5
      NETFRAMEWORK;NETFRAMEWORK_4_0
-     NETFRAMEWORK;NETFRAMEWORK_4_5
+     NETFRAMEWORK;NETFRAMEWORK_4_0;NETFRAMEWORK_4_5
+     NETFRAMEWORK;NETFRAMEWORK_4_0;NETFRAMEWORK_4_5;NETFRAMEWORK_4_6
 
   ======================================================================-->
   <Import Project="AsmMeta.MsBuild.Tasks"/>
@@ -81,6 +82,12 @@
       <TargetDefinesCS>NETFRAMEWORK%3BNETFRAMEWORK_4_0%3BNETFRAMEWORK_4_5</TargetDefinesCS>
       <TargetDefinesVB>NETFRAMEWORK=-1%2CNETFRAMEWORK_4_0=-1%2CNETFRAMEWORK_4_5=-1</TargetDefinesVB>
       <TargetDir>.NETFramework\v4.5\</TargetDir>
+    </ReferenceAssemblyDirectories>
+    <ReferenceAssemblyDirectories Include="Microsoft\Framework\.NETFramework\v4.6\Target">
+      <TargetFramework>NetFramework</TargetFramework>
+      <TargetDefinesCS>NETFRAMEWORK%3BNETFRAMEWORK_4_0%3BNETFRAMEWORK_4_5%3BNETFRAMEWORK_4_6</TargetDefinesCS>
+      <TargetDefinesVB>NETFRAMEWORK=-1%2CNETFRAMEWORK_4_0=-1%2CNETFRAMEWORK_4_5=-1%2CNETFRAMEWORK_4_6=-1</TargetDefinesVB>
+      <TargetDir>.NETFramework\v4.6\</TargetDir>
     </ReferenceAssemblyDirectories>
   </ItemGroup>
 
@@ -493,10 +500,22 @@
        LibPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
        WritePDB="true"
        />
-
+     
+    <ItemGroup>
+      <OriginalAssemblies
+        Include="@(MultiTargetReferencePaths)"
+        Condition="Exists('%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <OriginalAssembly>@(OriginalAssemblies->'%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')</OriginalAssembly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(OriginalAssembly)' != '' AND $(OriginalAssembly.IndexOf(';')) > -1">
+      <OriginalAssembly>$(OriginalAssembly.Substring(0, $(OriginalAssembly.IndexOf(';'))))</OriginalAssembly>
+    </PropertyGroup>
+  
     <Exec
        Condition="'$(CodeContractsCheckReferenceAssembly)'=='true'"
-       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(AbsoluteContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+       Command='"$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe" "$(AbsoluteContractReferenceAssemblyOutput)" "$(OriginalAssembly)"' />
 
     <ItemGroup>
       <FileWrites
@@ -562,8 +581,20 @@
     <Message Text="crasantitizer on $(_ContractReferenceAssemblyOutput)"
              Importance="high"/>
 
+    <ItemGroup>
+      <OriginalAssemblies
+        Include="@(MultiTargetReferencePaths)"
+        Condition="Exists('%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <OriginalAssembly>@(OriginalAssemblies->'%(FullPath)$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)')</OriginalAssembly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(OriginalAssembly)' != '' AND $(OriginalAssembly.IndexOf(';')) > -1">
+      <OriginalAssembly>$(OriginalAssembly.Substring(0, $(OriginalAssembly.IndexOf(';'))))</OriginalAssembly>
+    </PropertyGroup>
+
     <Exec
-       Command="$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe $(_ContractReferenceAssemblyOutput) $(ReferenceAssemblyRoot)\$(CurrentRelativeInputDirectory)$(TargetName)$(TargetExt)" />
+     Command='"$(MSBuildProjectDirectory)\..\CRASanitizer\bin\Debug\crasanitizer.exe" "$(_ContractReferenceAssemblyOutput)" "$(OriginalAssembly)"' />
   </Target>
 
   <Target

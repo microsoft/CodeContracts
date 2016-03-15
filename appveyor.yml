@@ -2,11 +2,11 @@ version: 1.9.10000.{build}
 os: Visual Studio 2015
 init:
 - ps: git config --global core.autocrlf true
-- ps: Update-AppveyorBuild -Version "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
+- ps: Update-AppveyorBuild -Version "1.10.1$(Get-Date -format MMdd).$env:appveyor_build_number"
 install:
 - set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
 build_script:
-- ps: ./buildCC "1.9.1$(Get-Date -format MMdd).$env:appveyor_build_number"
+- ps: ./buildCC "1.10.1$(Get-Date -format MMdd).$env:appveyor_build_number"
 - ps: msbuild "/nologo" "/logger:${env:ProgramFiles}\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" "/t:build" "/p:Configuration=Debug" "/p:Platform=Any CPU" "/p:CodeContractsRunCodeAnalysis=false" CodeContracts.sln
 test:
   assemblies:
@@ -18,3 +18,6 @@ artifacts:
 - path: '**\ManagedContract.Setup\devlab9ts\Microsoft.Contracts.*.nupkg'
 - path: '**\ManagedContract.Setup\devlab9ts\msi\Contracts.devlab9ts.msi'
 - path: '**\ContractAdornments\Extension\bin\Devlab9\CodeContractsHelper.vsix'
+# preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
+cache:
+  - packages -> **\packages.config

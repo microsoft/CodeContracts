@@ -200,6 +200,39 @@ namespace System
       Contract.Ensures(Contract.Result<String>() != null);
       return default(String);
     }
+
+#if NETFRAMEWORK_4_6
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Format(IFormatProvider provider, String format, object arg0, object arg1, object arg2)
+    {
+        Contract.Requires(format != null);
+
+        Contract.Ensures(Contract.Result<String>() != null);
+        return default(String);
+    }
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Format(IFormatProvider provider, String format, object arg0, object arg1)
+    {
+        Contract.Requires(format != null);
+
+        Contract.Ensures(Contract.Result<String>() != null);
+        return default(String);
+    }
+
+    [Pure]
+    [Reads(ReadsAttribute.Reads.Nothing)]
+    public static String Format(IFormatProvider provider, String format, object arg0)
+    {
+        Contract.Requires(format != null);
+
+        Contract.Ensures(Contract.Result<String>() != null);
+        return default(String);
+    }
+#endif
+
     [Pure]
     [Reads(ReadsAttribute.Reads.Nothing)]
     public static String Format(String format, object[] args)

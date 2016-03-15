@@ -1333,25 +1333,26 @@ namespace Microsoft.Contracts.Foxtrot.Driver
             }
 
             // Extract the contracts from the code (includes checking the contracts)
+            
+            string contractFileName = Path.GetFileNameWithoutExtension(assemblyNode.Location) + ".Contracts";
+
+            if (options.contracts == null || options.contracts.Count <= 0) contractFileName = null;
+
+            if (options.contracts != null &&
+                !options.contracts.Exists(name => name.Equals(assemblyNode.Name + ".Contracts.dll", StringComparison.OrdinalIgnoreCase)))
+            {
+                contractFileName = null;
+            }
+
+            AssemblyNode contractAssembly = null;
+            if (contractFileName != null)
+            {
+                contractAssembly = resolver.ProbeForAssembly(contractFileName, assemblyNode.Directory,
+                    resolver.DllExt);
+            }
 
             if (!options.passthrough)
             {
-                string contractFileName = Path.GetFileNameWithoutExtension(assemblyNode.Location) + ".Contracts";
-
-                if (options.contracts == null || options.contracts.Count <= 0) contractFileName = null;
-
-                if (options.contracts != null &&
-                    !options.contracts.Exists(
-                        name => name.Equals(assemblyNode.Name + ".Contracts.dll", StringComparison.OrdinalIgnoreCase)))
-                    contractFileName = null;
-
-                AssemblyNode contractAssembly = null;
-                if (contractFileName != null)
-                {
-                    contractAssembly = resolver.ProbeForAssembly(contractFileName, assemblyNode.Directory,
-                        resolver.DllExt);
-                }
-
                 ContractNodes usedContractNodes;
 
                 Extractor.ExtractContracts(assemblyNode, contractAssembly, contractNodes, backupContracts, contractNodes,
@@ -1472,6 +1473,13 @@ namespace Microsoft.Contracts.Foxtrot.Driver
 
                 rewriter.Verbose = 0 < options.verbose;
                 rewriter.Visit(assemblyNode);
+
+                // Perform this check only when there are no out-of-band contracts in use due to rewriter bug #336
+                if (contractAssembly == null)
+                {
+                    PostRewriteChecker checker = new PostRewriteChecker(options.EmitError);
+                    checker.Visit(assemblyNode);
+                }
             }
 
             //Console.WriteLine(">>>Finished Rewriting<<<");
