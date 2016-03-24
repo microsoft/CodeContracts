@@ -529,9 +529,9 @@ namespace RoslynCSharpCompiler
     // We want to mask the array accesses via fields but keep them in the medium warning
     [ClousotRegressionTest]
 #if MEDIUM || FULL
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant 0 instead of 1? ",PrimaryILOffset=97,MethodILOffset=0)]
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant 1 instead of 2? ",PrimaryILOffset=105,MethodILOffset=0)]
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant 0 instead of 1? ",PrimaryILOffset=73,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean 0 instead of 1? ",PrimaryILOffset=97,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean 1 instead of 2? ",PrimaryILOffset=105,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean 0 instead of 1? ",PrimaryILOffset=73,MethodILOffset=0)]
 #endif
 #if FULL
     [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. The static checker determined that the condition '0 < this.nodes.Length' should hold on entry. Nevertheless, the condition may be too strong for the callers. If you think it is ok, add an explicit assumption at entry to document it: Contract.Assume(0 < this.nodes.Length);",PrimaryILOffset=89,MethodILOffset=0)]

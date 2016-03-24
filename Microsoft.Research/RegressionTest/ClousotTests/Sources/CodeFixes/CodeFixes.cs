@@ -470,14 +470,14 @@ namespace CodeFixes
   {    
 
     [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.False,Message="Array access IS above the upper bound. Did you meant 0 instead of 1? ",PrimaryILOffset=21,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.False,Message="Array access IS above the upper bound. Did you mean 0 instead of 1? ",PrimaryILOffset=21,MethodILOffset=0)]
     [RegressionOutcome("Contract.Ensures(Contract.Result<System.String>() != null);")]
 #if SHORTCODEFIXES
     [RegressionOutcome("0")]
     [RegressionOutcome("2")]
 #else
     [RegressionOutcome("Consider initializing the array with a value larger than 1. Fix: 2")]
-    [RegressionOutcome("Possible off-by one: did you meant indexing with 0 instead of 1?. Fix: 0")]
+    [RegressionOutcome("Possible off-by one: did you mean indexing with 0 instead of 1?. Fix: 0")]
  #endif
     public static string GetString(string key)    
     {
@@ -1154,7 +1154,7 @@ namespace CodeFixes
     }
 
     [ClousotRegressionTest]
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant index - 1 instead of index? ",PrimaryILOffset=28,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean index - 1 instead of index? ",PrimaryILOffset=28,MethodILOffset=0)]
     [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Possible use of a null array 'b'",PrimaryILOffset=14,MethodILOffset=0)]
     [RegressionOutcome("Contract.Requires(b != null);")]
     [RegressionOutcome("Contract.Requires(index < b.Length);")]
@@ -1162,7 +1162,7 @@ namespace CodeFixes
 #if SHORTCODEFIXES
     [RegressionOutcome("index - 1")]
 #else         
-    [RegressionOutcome("Possible off-by one: did you meant indexing with index - 1 instead of index?. Fix: index - 1")]
+    [RegressionOutcome("Possible off-by one: did you mean indexing with index - 1 instead of index?. Fix: index - 1")]
 #endif
     public bool Simple_Ok(bool[] b, int index)
     {
@@ -1180,14 +1180,14 @@ namespace CodeFixes
 
     [ClousotRegressionTest]
 #if SHORTCODEFIXES
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant 0 instead of 1? Or, Maybe the guard a.Length > 0 is too weak? ",PrimaryILOffset=21,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean 0 instead of 1? Or, Maybe the guard a.Length > 0 is too weak? ",PrimaryILOffset=21,MethodILOffset=0)]
     [RegressionOutcome("Contract.Requires((a.Length <= 0 || 1 < a.Length));")]
     [RegressionOutcome("0")]
     [RegressionOutcome("a.Length > 1")]
 #else
-    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you meant 0 instead of 1? Or, Maybe the guard a.Length > 0 is too weak? ",PrimaryILOffset=21,MethodILOffset=0)]
+    [RegressionOutcome(Outcome=ProofOutcome.Top,Message="Array access might be above the upper bound. Did you mean 0 instead of 1? Or, Maybe the guard a.Length > 0 is too weak? ",PrimaryILOffset=21,MethodILOffset=0)]
     [RegressionOutcome("Contract.Requires((a.Length <= 0 || 1 < a.Length));")] // makes sense: if a.Length > 0 ==> a.Length > 1
-    [RegressionOutcome("Possible off-by one: did you meant indexing with 0 instead of 1?. Fix: 0")]
+    [RegressionOutcome("Possible off-by one: did you mean indexing with 0 instead of 1?. Fix: 0")]
     [RegressionOutcome("Consider replacing a.Length > 0. Fix: a.Length > 1")]
 #endif    
     public void Arrays(int[] a)

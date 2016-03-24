@@ -91,7 +91,7 @@ namespace PreInference
     [RegressionOutcome("Contract.Requires(arr != null);")]
     [RegressionOutcome("Contract.Requires(0 <= k);")]
     [RegressionOutcome("Contract.Requires((k + 2) < arr.Length);")]
-    [RegressionOutcome("Possible off-by one: did you meant indexing with k instead of k + 1?. Fix: k")]
+    [RegressionOutcome("Possible off-by one: did you mean indexing with k instead of k + 1?. Fix: k")]
     public void RedundantWithPostfixIncrement(byte[] arr, int k)
     {
       arr[k] = 1;
@@ -561,7 +561,7 @@ namespace mscorlib
 	[RegressionOutcome("This condition should hold: ((mscorlib.MyAppDomainSetup)info).Value != null. Add an assume, a postcondition to method get_Value, or consider a different initialization. Fix: Add (after) Contract.Assume(((mscorlib.MyAppDomainSetup)info).Value != null);")]
     // When we infer a test strengthening, we check that at least one of the vars in the fix is in the condition. We do not extend this for accesspaths
     //[RegressionOutcome("Consider strengthening the guard. Fix: Add && 1 < info.Value.Length")]
-    [RegressionOutcome("Possible off-by one: did you meant indexing with 0 instead of 1?. Fix: 0")]
+    [RegressionOutcome("Possible off-by one: did you mean indexing with 0 instead of 1?. Fix: 0")]
     private void SetupFusionStore(MyAppDomainSetup info, MyAppDomainSetup oldInfo)
     {
       if (oldInfo == null)
@@ -816,7 +816,7 @@ namespace mscorlib
 //    [RegressionOutcome("Contract.Requires((length + offset) <= str.Length);")] // Now we have a better requires
 
     // This is wrong!!! We should not correct the preconditions for the callers
-	//[RegressionOutcome("Did you meant i <= str.Length instead of i < str.Length?. Fix: i <= str.Length")]
+	//[RegressionOutcome("Did you mean i <= str.Length instead of i < str.Length?. Fix: i <= str.Length")]
 
 	[RegressionOutcome("Contract.Requires((offset >= (length + offset) || (length + offset) <= str.Length));")]
 	[RegressionOutcome("Consider adding the assumption (length + offset) <= str.Length. Fix: Add Contract.Assume((length + offset) <= str.Length);")]
