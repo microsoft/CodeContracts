@@ -1043,7 +1043,7 @@ namespace MyStringBuilder
     // Appends all of the characters in value to the current instance.
     unsafe public StringBuilder Append(char[] value)
     {
-      // F: Split the test in two tests, as Clousot does not undestand it yet
+      // F: Split the test in two tests, as Clousot does not understand it yet
       // Begin Old
       // if (null != value && value.Length > 0)
       // End Old
