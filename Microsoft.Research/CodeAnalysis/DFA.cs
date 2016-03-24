@@ -465,11 +465,15 @@ namespace Microsoft.Research.CodeAnalysis
                             && (0 < Controller.ModifiedAtCall[current.Block].Count || TypeNode.StripModifiers(calledMethod.ReturnType) != SystemTypes.Void))
                         {
                             // TODO(wuestholz): Maybe only do this if the call actually led to imprecision by comparing with the pre-state.
-                            // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations.
+                            // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations or pretending the call was a skip provided there is no postcondition.
                             if (Controller.ReachedCall(result, current, suspended)) { goto nextPending; }
                         }
 
-                        if (Controller != null && (IsFieldRead(current) || (calledMethod != null && calledMethod.IsPropertyGetter)) && Controller.ReachedFieldRead(result, current, suspended)) { goto nextPending; }
+                        if (Controller != null && (IsFieldRead(current) || (calledMethod != null && calledMethod.IsPropertyGetter)) && Controller.ReachedFieldRead(result, current, suspended))
+                        {
+                            // TODO(wuestholz): Maybe assume that reference fields are non-null and continue.
+                            goto nextPending;
+                        }
 
                         if (Controller != null && Controller.ReachedStep(result, current, suspended)) { goto nextPending; }
 
@@ -1761,7 +1765,7 @@ namespace Microsoft.Research.CodeAnalysis
 
         public void PrintStatisticsCSVHeader(TextWriter wr)
         {
-          wr.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", "method", "analysis", "imprecisions", "errors", "unreached", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
+          wr.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}", "method", "analysis", "imprecisions", "errors", "unreached", "errors_definite", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
           headerWasWritten = true;
         }
 
@@ -1775,6 +1779,7 @@ namespace Microsoft.Research.CodeAnalysis
           {
             string errors = "?";
             string unreached = "?";
+            string definite = "?";
             string obls = "?";
             var start = DateTime.UtcNow;
             var end = start;
@@ -1784,6 +1789,7 @@ namespace Microsoft.Research.CodeAnalysis
               var s = stats.Value;
               errors = (s.Top + s.False).ToString();
               unreached = s.Bottom.ToString();
+              definite = s.False.ToString();
               obls = (s.Bottom + s.True).ToString();
             }
 
@@ -1795,6 +1801,7 @@ namespace Microsoft.Research.CodeAnalysis
                 var s = FailingObligations(result);
                 errors = (s.Top + s.False).ToString();
                 unreached = s.Bottom.ToString();
+                definite = s.False.ToString();
                 obls = s.Total.ToString();
               }
               catch (Exception e)
@@ -1816,7 +1823,7 @@ namespace Microsoft.Research.CodeAnalysis
                 IsChecking = false;
               }
             }
-            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8:F0}\t{9:F0}\t{10}", methodName, analysisName, imprecisions, errors, unreached, obls, source, ReachedAPCs.Count, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9:F0}\t{10:F0}\t{11}", methodName, analysisName, imprecisions, errors, unreached, definite, obls, source, ReachedAPCs.Count, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
           }
         }
 
