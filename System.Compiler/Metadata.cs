@@ -318,7 +318,7 @@ namespace System.Compiler.Metadata{
     internal int   addressOfEntryPoint;
     internal int   baseOfCode;
     internal int   baseOfData;
-    internal long   imageBase;
+    internal ulong imageBase;
     internal int   sectionAlignment;
     internal int   fileAlignment;
     internal ushort majorOperatingSystemVersion;
@@ -365,7 +365,7 @@ namespace System.Compiler.Metadata{
       this.magic = 0x10B;
       this.majorLinkerVersion = 6;
       this.baseOfCode = 0x2000;
-      this.imageBase = 0x400000; //TODO: make this settable
+      this.imageBase = 0x400000;
       this.sectionAlignment = 8192;
       this.fileAlignment = 512;
       this.majorOperatingSystemVersion = 4;
@@ -523,6 +523,8 @@ namespace System.Compiler.Metadata{
     readonly private MemoryCursor/*!*/ cursor;
     internal int entryPointToken;
     internal int fileAlignment;
+    internal ulong baseAddress;
+    internal long sizeOfStackReserve;
     internal ModuleKindFlags moduleKind;
     internal PEKindFlags peKind;
     internal bool TrackDebugData;
@@ -924,6 +926,8 @@ namespace System.Compiler.Metadata{
       this.linkerMajorVersion = ntHeader.majorLinkerVersion;
       this.linkerMinorVersion = ntHeader.minorLinkerVersion;
       this.fileAlignment = ntHeader.fileAlignment;
+      this.baseAddress = ntHeader.imageBase;
+      this.sizeOfStackReserve = ntHeader.sizeOfStackReserve;
       if ((ntHeader.characteristics & 0x2000) != 0)
         this.moduleKind = ModuleKindFlags.DynamicallyLinkedLibrary;
       else
@@ -2058,10 +2062,10 @@ namespace System.Compiler.Metadata{
       header.baseOfCode                  = c.ReadInt32();
       if (header.magic == 0x10B){
         header.baseOfData                = c.ReadInt32();
-        header.imageBase                 = c.ReadInt32();
+        header.imageBase                 = c.ReadUInt32();
       }else{
         header.baseOfData                = 0;
-        header.imageBase                 = c.ReadInt64();
+        header.imageBase                 = c.ReadUInt64();
       }
       header.sectionAlignment            = c.ReadInt32();
       header.fileAlignment               = c.ReadInt32();
@@ -2208,6 +2212,8 @@ namespace System.Compiler.Metadata{
     internal TypeSpecRow[] typeSpecTable;
     internal int entryPointToken;
     internal int fileAlignment;
+    internal ulong baseAddress;
+    internal long sizeOfStackReserve;
     internal ModuleKindFlags moduleKind;
     internal ushort dllCharacteristics;
     internal PEKindFlags peKind;
@@ -3414,9 +3420,9 @@ namespace System.Compiler.Metadata{
           writer.Write(this.sectionHeaders[1].virtualAddress);  //baseOfData
         else
           writer.Write((int)0);
-        writer.Write((int)ntHeader.imageBase);
+        writer.Write((int)this.baseAddress); // imageBase
       }else{
-        writer.Write(ntHeader.imageBase);
+        writer.Write(this.baseAddress); // imageBase
       }
       writer.Write(ntHeader.sectionAlignment);
       writer.Write(this.fileAlignment);
@@ -3435,12 +3441,12 @@ namespace System.Compiler.Metadata{
       writer.Write(ntHeader.subsystem);
       writer.Write(ntHeader.dllCharacteristics);
       if (ntHeader.magic == 0x10B){
-        writer.Write((int)ntHeader.sizeOfStackReserve);
+        writer.Write((int)this.sizeOfStackReserve);
         writer.Write((int)ntHeader.sizeOfStackCommit);
         writer.Write((int)ntHeader.sizeOfHeapReserve);
         writer.Write((int)ntHeader.sizeOfHeapCommit);
       }else{
-        writer.Write(ntHeader.sizeOfStackReserve);
+        writer.Write(this.sizeOfStackReserve);
         writer.Write(ntHeader.sizeOfStackCommit);
         writer.Write(ntHeader.sizeOfHeapReserve);
         writer.Write(ntHeader.sizeOfHeapCommit);

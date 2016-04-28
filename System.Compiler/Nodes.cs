@@ -5452,6 +5452,8 @@ namespace System.Compiler{
     public bool UsePublicKeyTokensForAssemblyReferences = true;
 #endif
     internal int FileAlignment = 512;
+    internal ulong BaseAddress;
+    internal long SizeOfStackReserve;
     internal readonly static object GlobalLock = new object();
 #if !NoWriter
     public bool StripOptionalModifiersFromLocals = true;

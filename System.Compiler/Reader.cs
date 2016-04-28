@@ -639,6 +639,8 @@ namespace System.Compiler.Metadata{
       module.reader = this;
       module.DllCharacteristics = this.tables.dllCharacteristics;
       module.FileAlignment = this.tables.fileAlignment;
+      module.BaseAddress = this.tables.baseAddress;
+      module.SizeOfStackReserve = this.tables.sizeOfStackReserve;
       module.HashValue = this.tables.HashValue;
       module.Kind = this.tables.moduleKind;
       module.Location = this.fileName;
