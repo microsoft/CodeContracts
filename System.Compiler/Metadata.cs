@@ -365,7 +365,7 @@ namespace System.Compiler.Metadata{
       this.magic = 0x10B;
       this.majorLinkerVersion = 6;
       this.baseOfCode = 0x2000;
-      this.imageBase = 0x400000;
+      this.imageBase = 0x400000; //TODO: make this settable
       this.sectionAlignment = 8192;
       this.fileAlignment = 512;
       this.majorOperatingSystemVersion = 4;
@@ -3420,7 +3420,7 @@ namespace System.Compiler.Metadata{
           writer.Write(this.sectionHeaders[1].virtualAddress);  //baseOfData
         else
           writer.Write((int)0);
-        writer.Write((int)this.baseAddress); // imageBase
+        writer.Write((int)ntHeader.imageBase); // don't use the imageBase read in from the input assembly: it creates bad modules.
       }else{
         writer.Write(this.baseAddress); // imageBase
       }
