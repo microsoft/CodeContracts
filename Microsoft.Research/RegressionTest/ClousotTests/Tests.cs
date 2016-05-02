@@ -228,7 +228,6 @@ namespace Tests
                     references: new string[0],
                     libPaths: new string[0],
                     compilerCode: "CS");
-                    yield break;
                 #endregion
 
                 yield return new Options( // #0
