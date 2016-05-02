@@ -28,6 +28,8 @@ namespace Microsoft.Research.CodeAnalysis
 
     double Validate(IOutputResults output, ContractInferenceManager inferenceManager, IFactQuery<HighLevelExpression, Variable> query);
 
+    void ResetCachedOutcomes();
+
     bool PCWithProofObligation(APC pc);
 
     /// <summary>
@@ -60,6 +62,11 @@ namespace Microsoft.Research.CodeAnalysis
       Contract.Requires(inferenceManager != null);
       Contract.Requires(query != null);
 
+      throw new NotImplementedException();
+    }
+
+    public void ResetCachedOutcomes()
+    {
       throw new NotImplementedException();
     }
 
@@ -100,7 +107,7 @@ namespace Microsoft.Research.CodeAnalysis
   public interface IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T>
     where Type : IEquatable<Type>
   {
-    T Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis);
+    T Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis, DFAController controller);
   }
 
   public interface IMethodAnalysis
@@ -127,7 +134,7 @@ namespace Microsoft.Research.CodeAnalysis
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs,
-        IFactQuery<BoxedExpression, Variable> factQuery
+        IFactQuery<BoxedExpression, Variable> factQuery, DFAController controller
       )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -137,7 +144,7 @@ namespace Microsoft.Research.CodeAnalysis
       string fullMethodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       Predicate<APC> cachePCs,
-      IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+      IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>

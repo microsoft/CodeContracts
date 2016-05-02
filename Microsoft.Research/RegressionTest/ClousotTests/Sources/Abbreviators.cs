@@ -63,7 +63,7 @@ namespace ClousotTests
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.False, Message = "ensures is false: X == Contract.OldValue(X)", PrimaryILOffset = 19, MethodILOffset = 20)]
+        [RegressionOutcome(Outcome = ProofOutcome.False, Message = "ensures is false: this.X == Contract.OldValue(this.X)", PrimaryILOffset = 19, MethodILOffset = 20)]
         [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 43, MethodILOffset = 20)]
         [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"ensures unreachable", PrimaryILOffset = 67, MethodILOffset = 20)]
         public void Work4()

@@ -188,7 +188,7 @@ namespace Microsoft.Research.CodeAnalysis
       EnumerableHelper<Local, Parameter, Method, Field, Property, Event, Type, Variable, Attribute, Assembly, Expression, ILogOptions> helper =
         new EnumerableHelper<Local, Parameter, Method, Field, Property, Event, Type, Variable, Attribute, Assembly, Expression, ILogOptions>(methodDriver);
       Domain initVal = new Domain();
-      methodDriver.ValueLayer.CreateForward(helper, new DFAOptions { })(initVal);
+      methodDriver.ValueLayer.CreateForward(helper, new DFAOptions { }, null)(initVal);
       return helper.ToBeAnalyzed;
     }
   }

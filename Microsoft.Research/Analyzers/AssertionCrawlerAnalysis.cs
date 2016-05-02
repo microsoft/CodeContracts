@@ -793,7 +793,7 @@ namespace Microsoft.Research.CodeAnalysis
           this.checkConditions = mdriver.Options.CheckConditions;
 
           var codeLayer = mdriver.ValueLayer;
-          var closure = codeLayer.CreateForward<Data>(this, new DFAOptions() { Trace = mdriver.Options.TraceDFA });
+          var closure = codeLayer.CreateForward<Data>(this, new DFAOptions() { Trace = mdriver.Options.TraceDFA }, null);
           closure(Data.Top);   // Do the analysis 
 
           this.mdriver = null;
@@ -1189,6 +1189,14 @@ skip:
           obl.Validate(query, preManager, output);
         }
         return 0.0;
+      }
+
+      public void ResetCachedOutcomes()
+      {
+        foreach (var obl in this.assertions)
+        {
+          obl.ResetCachedOutcome();
+        }
       }
 
       public bool PCWithProofObligation(APC pc)

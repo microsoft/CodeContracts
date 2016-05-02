@@ -36,16 +36,16 @@ namespace Microsoft.Research.CodeAnalysis
       string methodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       List<Analyzers.Buffers.Options> options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
       where Type : IEquatable<Type>
     {
       var analysis =
-       new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.BufferAnalysis(methodName, driver, options, cachePCs);
+       new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.BufferAnalysis(methodName, driver, options, cachePCs, controller);
 
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis); 
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis, controller); 
     }
 
     /// <summary>
@@ -120,9 +120,9 @@ namespace Microsoft.Research.CodeAnalysis
           string methodName,
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
           List<Analyzers.Buffers.Options> optionsList,
-          Predicate<APC> cachePCs
+          Predicate<APC> cachePCs, DFAController controller
         )
-          : base(methodName, mdriver, optionsList[0], cachePCs)
+          : base(methodName, mdriver, optionsList[0], cachePCs, controller)
           // : base(methodName, mdriver, optionsList)
         {
           Contract.Requires(mdriver != null);

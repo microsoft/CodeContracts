@@ -261,7 +261,7 @@ namespace Microsoft.Research.CodeAnalysis
 
           while (todo.Count != 0)
           {
-            this.timeout.CheckTimeOut();
+            this.timeout.CheckTimeOut("backwards postcondition propagation");
 
             var next = todo.ExtractFirst();
 
@@ -275,7 +275,7 @@ namespace Microsoft.Research.CodeAnalysis
               APC pred;
               while (CFG.HasSinglePredecessor(nextPC, out pred) && !CFG.IsJoinPoint(nextPC))
               {
-                this.timeout.CheckTimeOut();
+                this.timeout.CheckTimeOut("backwards postcondition propagation (block)");
 
                 //var post = CFG.Predecessors(nextPC).First();
                 newPre = this.Mdriver.BackwardTransfer(nextPC, pred, newPre, this);

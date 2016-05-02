@@ -74,7 +74,7 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (!this.noObl)
           {
-            this.Run(mdriver.ValueLayer);
+            this.Run(mdriver.ValueLayer, null);
           }
         }
 

@@ -36,13 +36,13 @@ namespace Microsoft.Research.CodeAnalysis
 
   public enum SuggestionsAsWarnings { requires, propertyensures, methodensures, nonnullreturn, necessaryensures, arrayrequires, arraypurity, objectinvariants, objectinvariantsforward, assumes, codefixes, codefixesshort, readonlyfields, requiresbase, callinvariants, calleeassumes, redundantassume, unusedsuppress, asserttocontracts }  
 
-  public enum StatOptions { valid, time, mem, perMethod, arithmetic, asserts, methodasserts, slowmethods, abstractdomains, program, egraph, phases, inference, timeperMethod }
+  public enum StatOptions { valid, time, mem, perMethod, arithmetic, asserts, methodasserts, slowmethods, abstractdomains, program, egraph, phases, inference, timeperMethod, controller }
 
   public enum CheckOptions { assertions, exists, assumptions, falseassumptions, inferredrequires, conditionsvalidity, falsepostconditions, entrycontradictions }
 
   public enum AnalyzeOptions { closures, movenext, compilergenerated }
 
-  public enum TraceOptions { dfa, heap, expressions, egraph, assumptions, partitions, wp, arrays, numerical, timings, memory, cache, checks, inference, loading, cachehashing, warningcontexts, movenext }
+  public enum TraceOptions { dfa, heap, expressions, egraph, assumptions, partitions, wp, arrays, numerical, timings, memory, cache, checks, inference, loading, cachehashing, warningcontexts, movenext, suspended }
 
   public enum ShowOptions { progress, il, errors, validations, unreached, progressnum, progressbar, obligations, paths, invariants, warnranks, analysisphases, scores, inferencetrace, externallyvisiblemembersonly, cachemisses }
 
@@ -493,8 +493,20 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Analysis timeout per method (in seconds)")]
     public int timeout = 180;
 
-    [OptionDescription("Analysis timeout per method (in symbolic ticks)")]
-    public int symbolicTimeout = -1;
+    [OptionDescription("Maximum number of calls per method and analysis")]
+    public int maxCalls = Int32.MaxValue;
+
+    [OptionDescription("Maximum number of field reads per method and analysis")]
+    public int maxFieldReads = Int32.MaxValue;
+
+    [OptionDescription("Maximum number of joins per method and analysis")]
+    public int maxJoins = Int32.MaxValue;
+
+    [OptionDescription("Maximum number of widenings per method and analysis")]
+    public int maxWidenings = Int32.MaxValue;
+
+    [OptionDescription("Maximum number of steps per method and analysis")]
+    public int maxSteps = Int32.MaxValue;
 
     [OptionDescription("Adaptive analyses (Use weaker domains for huge methods)")]
     public bool adaptive = false;
@@ -690,6 +702,8 @@ namespace Microsoft.Research.CodeAnalysis
     public bool TraceCache { get { return this.trace.Contains(TraceOptions.cache); } }
     public bool TraceCacheHashing { get { return this.trace.Contains(TraceOptions.cachehashing); } }
    
+    public bool TraceSuspended { get { return this.trace.Contains(TraceOptions.suspended); } }
+
     //public bool TraceCacheHashing(int methodNumber) { return this.trace.Contains(TraceOptions.cachehashing) || methodNumber == this.focusHash; }
     public bool TraceInference { get { return this.trace.Contains(TraceOptions.inference); } }
     public bool TraceLoading { get { return this.trace.Contains(TraceOptions.loading); } }
@@ -700,8 +714,11 @@ namespace Microsoft.Research.CodeAnalysis
     public bool EmitErrorOnCacheLookup { get { return this.emitErrorOnCacheLookup; } }
     public bool PrintIL { get { return this.show.Contains(ShowOptions.il); } }
     public int Timeout { get { return this.timeout; } }
-    // TODO(wuestholz): Propagate this value just like 'Timeout'.
-    public int SymbolicTimeout { get { return this.symbolicTimeout; } }
+    public int MaxCalls { get { return this.maxCalls; } }
+    public int MaxFieldReads { get { return this.maxFieldReads; } }
+    public int MaxJoins { get { return this.maxJoins; } }
+    public int MaxWidenings { get { return this.maxWidenings; } }
+    public int MaxSteps { get { return this.maxSteps; } }
     public int AnalyzeTo { get { return this.analyzeTo; } }
     public int AnalyzeFrom { get { return this.analyzeFrom; } }
     public int IterationsBeforeWidening { get { return this.joinsBeforeWiden; } }
@@ -1198,6 +1215,7 @@ namespace Microsoft.Research.CodeAnalysis
     public bool PrintEGraphStats { get { return this.stats.Contains(StatOptions.egraph); } }
     public bool PrintPhaseStats { get { return this.stats.Contains(StatOptions.phases); } }
     public bool PrintInferenceStats { get { return this.stats.Contains(StatOptions.inference); } }
+    public bool PrintControllerStats { get { return this.stats.Contains(StatOptions.controller); } }
 
     #endregion
 

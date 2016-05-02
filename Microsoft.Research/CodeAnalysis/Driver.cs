@@ -35,6 +35,8 @@ namespace Microsoft.Research.CodeAnalysis
           , IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, LogOptions>
           , IFactBase<SymbolicValue>
         {
+            public IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
+
             private OptimisticHeapAnalyzer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> optimisticHeapAnalysis;
             private Converter<ExternalExpression<APC, SymbolicValue>, string> expr2String;
             private IFullExpressionDecoder<Type, SymbolicValue, ExternalExpression<APC, SymbolicValue>> expressionDecoder;
@@ -90,7 +92,7 @@ namespace Microsoft.Research.CodeAnalysis
             public Converter<SymbolicValue, int> KeyNumber { get { return SymbolicValue.GetUniqueKey; } }
             public Comparison<SymbolicValue> VariableComparer { get { return SymbolicValue.Compare; } }
 
-            public void RunHeapAndExpressionAnalyses()
+            public void RunHeapAndExpressionAnalyses(DFAController controller)
             {
                 if (optimisticHeapAnalysis != null) return;
 
@@ -99,7 +101,7 @@ namespace Microsoft.Research.CodeAnalysis
                 optimisticHeapAnalysis.IgnoreExplicitAssumptions = this.Options.IgnoreExplicitAssumptions;
                 optimisticHeapAnalysis.TraceAssumptions = this.Options.TraceAssumptions;
                 var heapsolver = this.StackLayer.CreateForward(optimisticHeapAnalysis,
-                                    new DFAOptions { Trace = this.Options.TraceHeapAnalysis });
+                                    new DFAOptions { Trace = this.Options.TraceHeapAnalysis }, controller);
 
                 heapsolver(optimisticHeapAnalysis.InitialValue());
 
@@ -124,7 +126,7 @@ namespace Microsoft.Research.CodeAnalysis
                   optimisticHeapAnalysis.IsUnreachable
                   );
                 var exprsolver = this.ValueLayer.CreateForward(exprAnalysis.CreateExpressionAnalyzer(),
-                                                               new DFAOptions { Trace = this.Options.TraceExpressionAnalysis });
+                                                               new DFAOptions { Trace = this.Options.TraceExpressionAnalysis }, controller);
 
                 exprsolver(exprAnalysis.InitialValue(SymbolicValue.GetUniqueKey));
 
@@ -192,6 +194,7 @@ namespace Microsoft.Research.CodeAnalysis
 
                     #endregion
                 }
+                ModifiedAtCall = optimisticHeapAnalysis.ModifiedAtCall;
             }
 
             public Converter<ExternalExpression<APC, SymbolicValue>, string> ExpressionToString { get { return expr2String; } }

@@ -48,12 +48,12 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName, 
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver, 
         Predicate<APC> cachePCs,
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var analysis = new AnalysisWrapper.TypeBindings<Local,Parameter,Method,Field,Property,Event,Type,Attribute,Assembly,Expression,Variable>.
           StringValueAnalysis(methodName, driver, options[0], cachePCs);
-        return factory.Create(analysis);
+        return factory.Create(analysis, controller);
       }
 
       override public IMethodResult<Variable>
@@ -61,13 +61,13 @@ namespace Microsoft.Research.CodeAnalysis
       (
         string fullMethodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
        // where Variable : IEquatable<Variable>
        // where Expression : IEquatable<Expression>
        // where Type : IEquatable<Type>
       {
-        var result = AnalysisWrapper.AnalyzeStrings(fullMethodName, mdriver, this.options[0], cachePCs);
+        var result = AnalysisWrapper.AnalyzeStrings(fullMethodName, mdriver, this.options[0], cachePCs, controller);
         return result;
       }
 

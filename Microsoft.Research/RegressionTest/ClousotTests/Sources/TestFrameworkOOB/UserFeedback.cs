@@ -883,7 +883,7 @@ namespace UserFeedback
             [ClousotRegressionTest]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 8, MethodILOffset = 0)]
             [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"valid non-null reference (as receiver)", PrimaryILOffset = 15, MethodILOffset = 0)]
-            [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"requires unproven: Prop2 != 0", PrimaryILOffset = 13, MethodILOffset = 15)]
+            [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"requires unproven: this.Prop2 != 0", PrimaryILOffset = 13, MethodILOffset = 15)]
             private static void Test()
             {
                 Foo foo = new Foo();

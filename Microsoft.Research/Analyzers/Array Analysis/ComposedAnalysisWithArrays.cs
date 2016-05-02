@@ -43,7 +43,7 @@ namespace Microsoft.Research.CodeAnalysis
       List<NumericalOptions> numericaloptions,
       Analyzers.NonNull nonnull,
       bool isEnumAnalysisSelected,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -52,7 +52,7 @@ namespace Microsoft.Research.CodeAnalysis
     {
       var numericalAnalysis =
         new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.
-          NumericalAnalysis<NumericalOptions>(methodName, driver, numericaloptions, cachePCs);
+          NumericalAnalysis<NumericalOptions>(methodName, driver, numericaloptions, cachePCs, controller);
 
       var nonnullAnalysis =
         nonnull != null ?
@@ -68,7 +68,7 @@ namespace Microsoft.Research.CodeAnalysis
        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.
          ArrayAnalysis<Analyzers.Arrays.ArrayOptions, NumericalOptions>(methodName, arrayAnalysis, numericalAnalysis, nonnullAnalysis, isEnumAnalysisSelected, driver, options, cachePCs);
 
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis);
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis, controller);
     }
 
     public static partial class TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>

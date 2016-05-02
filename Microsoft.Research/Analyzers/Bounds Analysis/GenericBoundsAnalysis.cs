@@ -46,7 +46,7 @@ namespace Microsoft.Research.CodeAnalysis
       string methodName, 
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver, 
       List<Options> options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -54,9 +54,9 @@ namespace Microsoft.Research.CodeAnalysis
       where Options : Analyzers.ValueAnalysisOptions<Options>
     {
       var analysis = 
-        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.NumericalAnalysis<Options>(methodName, driver, options, cachePCs);
+        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.NumericalAnalysis<Options>(methodName, driver, options, cachePCs, controller);
 
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis); 
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis, controller); 
     }
 
     public static IMethodResult<Variable> 
@@ -66,7 +66,7 @@ namespace Microsoft.Research.CodeAnalysis
       ADomainKind adomain,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       Options options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
       )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -74,9 +74,9 @@ namespace Microsoft.Research.CodeAnalysis
       where Options : Analyzers.ValueAnalysisOptions<Options>
     {
       var analysis =
-        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.NumericalAnalysis<Options>(methodName, adomain, driver, options, cachePCs);
+        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.NumericalAnalysis<Options>(methodName, adomain, driver, options, cachePCs, controller);
 
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis);
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis, controller);
     }
 
 
@@ -159,9 +159,9 @@ namespace Microsoft.Research.CodeAnalysis
           ADomainKind abstractDomain,
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable,ILogOptions> mdriver,
           Options options,
-          Predicate<APC> cachePCs
+          Predicate<APC> cachePCs, DFAController controller
         )
-          : base(methodName, mdriver, options, cachePCs)
+          : base(methodName, mdriver, options, cachePCs, controller)
         {
           this.optionsList = new List<Options>();
 
@@ -179,9 +179,9 @@ namespace Microsoft.Research.CodeAnalysis
           string methodName,
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
           List<Options> optionsList,
-          Predicate<APC> cachePCs
+          Predicate<APC> cachePCs, DFAController controller
         )
-          : this(methodName, optionsList[0].Type, mdriver, optionsList[0], cachePCs)
+          : this(methodName, optionsList[0].Type, mdriver, optionsList[0], cachePCs, controller)
         {
           //Contract.Requires(optionsList.Count > 0);
 
@@ -338,7 +338,7 @@ namespace Microsoft.Research.CodeAnalysis
                 {
 
                   var run = AnalysisWrapper.RunTheAnalysis(this.MethodName, opt.Type, this.MethodDriver, opt,
-                    (APC pc) => false) as NumericalAnalysis<Options>;
+                    (APC pc) => false, Controller == null || !Controller.HasReachedEnd ? null : Controller) as NumericalAnalysis<Options>;
                   result = run.fixpointInfo;
                 }
                 else

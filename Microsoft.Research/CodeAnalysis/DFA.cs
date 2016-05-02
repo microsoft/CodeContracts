@@ -9,11 +9,14 @@ using System.IO;
 
 using Microsoft.Research.DataStructures;
 
+using System.Compiler;
+
 namespace Microsoft.Research.CodeAnalysis
 {
     using SubroutineContext = FList<Microsoft.Research.DataStructures.STuple<CFGBlock, CFGBlock, string>>;
     using System.Diagnostics.Contracts;
     using System.Threading;
+    using System.Linq;
 
     public class DFAOptions
     {
@@ -109,6 +112,10 @@ namespace Microsoft.Research.CodeAnalysis
             this.timeCounter = new TimeCounter();
         }
 
+        #endregion
+
+        #region Analysis Controller
+        internal DFAController Controller;
         #endregion
     }
 
@@ -280,7 +287,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// a) it is a join point and requires a join
         /// b) whether to just cache the state
         /// </summary>
-        public virtual void PushState(APC current, APC next, AState state)
+        public virtual void PushState(APC current, APC next, AState state, object result, ISet<APC> suspended)
         {
             // since we store this away, we need to get an immutable version
             state = ImmutableVersion(state, next);
@@ -288,7 +295,7 @@ namespace Microsoft.Research.CodeAnalysis
             if (RequiresJoining(next))
             {
                 Pair<APC, APC> edge = new Pair<APC, APC>(current, next);
-                if (JoinStateAtBlock(edge, state))
+                if (JoinStateAtBlock(edge, state, result, suspended))
                 {
                     this.pending.Add(next);
                 }
@@ -337,7 +344,7 @@ namespace Microsoft.Research.CodeAnalysis
 #endif
         #endregion
 
-        protected virtual bool JoinStateAtBlock(Pair<APC, APC> edge, AState state)
+        protected virtual bool JoinStateAtBlock(Pair<APC, APC> edge, AState state, object result, ISet<APC> suspended)
         {
             AState/*?*/ existing;
 
@@ -350,11 +357,14 @@ namespace Microsoft.Research.CodeAnalysis
 
                 bool changed = Join(edge, state, existing, out joined, widen);
 
-                if (changed)
+                bool suspend = (changed && Controller != null && (widen ? Controller.ReachedWidening(result, edge.Two, suspended) : Controller.ReachedJoin(result, edge.Two, suspended)));
+                
+                if (changed && !suspend)
                 {
                     joinState[edge.Two] = this.ImmutableVersion(joined, edge.Two);
+                    return true;
                 }
-                return changed;
+                return false;
             }
             else
             {
@@ -394,93 +404,129 @@ namespace Microsoft.Research.CodeAnalysis
             return MutableVersion(state, pc);
         }
 
+        protected bool FixpointComputed;
 
-        protected virtual void ComputeFixpoint()
+        public abstract bool IsFieldRead(APC pc);
+
+        protected virtual void ComputeFixpoint(object result)
         {
-            var timeout = TimeOut;
-
-            if (this.Options.EnforceFairJoin)
+            if (Controller != null) { Controller.ReachedStart(result); }
+            var suspended = new HashSet<APC>();
+            try
             {
-                widenStrategy = new EdgeBasedWidening(this.Options.IterationsBeforeWidening);
-            }
-            else
-            {
-                widenStrategy = new BlockBasedWidening(this.Options.IterationsBeforeWidening);
-            }
+                var timeout = TimeOut;
 
-            while (pending.Count > 0)
-            {
-                var next = pending.Pull();
-                var state = MutableVersion(joinState[next], next);
-                var alreadyCached = true;
-                APC current;
-
-                if (Options.Trace)
+                if (this.Options.EnforceFairJoin)
                 {
-                    Console.WriteLine("State before {0}", next);
-                    Dump(state);
+                    widenStrategy = new EdgeBasedWidening(this.Options.IterationsBeforeWidening);
+                }
+                else
+                {
+                    widenStrategy = new BlockBasedWidening(this.Options.IterationsBeforeWidening);
                 }
 
-                if (this.Options.TraceTimePerInstruction)
+                while (pending.Count > 0)
                 {
-                    this.timeCounter.Start();
-                }
-
-                do
-                {
-                    current = next;
-
-                    if (IsBottom(current, state))
-                    {
-                        goto nextPending;
-                    }
-
-                    if (!alreadyCached && this.CacheThisPC(current))
-                    {
-                        state = this.Cache(current, state);
-                    }
-
-                    state = Transfer(current, state);
-
-                    // TODO(wuestholz): Probably add this in other places as well.
-                    timeCounter.SpendSymbolicTime(1);
+                    var next = pending.Pull();
+                    var state = MutableVersion(joinState[next], next);
+                    var alreadyCached = true;
+                    APC current;
 
                     if (Options.Trace)
                     {
-                        Console.WriteLine("State after {0}", current);
+                        Console.WriteLine("State before {0}", next);
                         Dump(state);
                     }
 
                     if (this.Options.TraceTimePerInstruction)
                     {
-                        this.timeCounter.Stop();
-                        Console.WriteLine("Elapsed time for {0} : {1}", current, timeCounter);
+                        this.timeCounter.Start();
                     }
 
-                    this.TraceMemoryUsageIfEnabled("after instruction", current);
+                    do
+                    {
+                        current = next;
 
-                    // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
-                    timeout.CheckTimeOut("fixpoint computation");
+                        if (IsBottom(current, state))
+                        {
+                            goto nextPending;
+                        }
 
-                    alreadyCached = false;
-                } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
+                        if (!alreadyCached && this.CacheThisPC(current))
+                        {
+                            state = this.Cache(current, state);
+                        }
+
+                        Method calledMethod = null;
+                        bool isNewObj, isVirtual;
+                        if (Controller != null
+                            && current.Block.IsMethodCallBlock(out calledMethod, out isNewObj, out isVirtual)
+                            && Controller.ModifiedAtCall.ContainsKey(current.Block)
+                            && (0 < Controller.ModifiedAtCall[current.Block].Count || TypeNode.StripModifiers(calledMethod.ReturnType) != SystemTypes.Void))
+                        {
+                            // TODO(wuestholz): Maybe only do this if the call actually led to imprecision by comparing with the pre-state.
+                            // TODO(wuestholz): Maybe perform an underapproximation here by assuming concrete values for modified locations or pretending the call was a skip provided there is no postcondition.
+                            if (Controller.ReachedCall(result, current, suspended)) { goto nextPending; }
+                        }
+
+                        if (Controller != null && (IsFieldRead(current) || (calledMethod != null && calledMethod.IsPropertyGetter)) && Controller.ReachedFieldRead(result, current, suspended))
+                        {
+                            // TODO(wuestholz): Maybe assume that reference fields are non-null and continue.
+                            goto nextPending;
+                        }
+
+                        if (Controller != null && Controller.ReachedStep(result, current, suspended)) { goto nextPending; }
+
+                        state = Transfer(current, state);
+
+                        if (Options.Trace)
+                        {
+                            Console.WriteLine("State after {0}", current);
+                            Dump(state);
+                        }
+
+                        if (this.Options.TraceTimePerInstruction)
+                        {
+                            this.timeCounter.Stop();
+                            Console.WriteLine("Elapsed time for {0} : {1}", current, timeCounter);
+                        }
+
+                        this.TraceMemoryUsageIfEnabled("after instruction", current);
+
+                        // The transfer function of some abstract domains can take *really* a lot of time, this is the reason why we check the timeout here
+                        timeout.CheckTimeOut("fixpoint computation", result);
+
+                        alreadyCached = false;
+                    } while (this.HasSingleSuccessor(current, out next) && !RequiresJoining(next));
 
 
-                foreach (APC succ in this.Successors(current).AssumeNotNull())
-                {
-                    if (IsBottom(succ, state)) continue;
+                    foreach (APC succ in this.Successors(current).AssumeNotNull())
+                    {
+                        if (IsBottom(succ, state)) continue;
 
-                    PushState(current, succ, state);
+                        PushState(current, succ, state, result, suspended);
+                    }
+                    timeout.CheckTimeOut("fixpoint computation", result);
+
+                nextPending:
+                    ;
                 }
-                timeout.CheckTimeOut("fixpoint computation");
 
-            nextPending:
-                ;
+                if (Options.Trace)
+                {
+                    Console.WriteLine("DFA done");
+                }
             }
-
-            if (Options.Trace)
+            catch (TimeoutExceptionFixpointComputation e)
             {
-                Console.WriteLine("DFA done");
+                if (e.Result == null) { e.Result = result; }
+                if (Controller != null) { Controller.ReachedTimeout(result, e.Reason); }
+                throw e;
+            }
+            finally
+            {
+                FixpointComputed = true;
+                if (Controller != null) { Controller.ReachedEnd(result, suspended); }
             }
         }
 
@@ -608,7 +654,11 @@ namespace Microsoft.Research.CodeAnalysis
 
         virtual protected void CachePreState(APC apc, AState value)
         {
-            preStateCache.Add(apc, value);
+            // TODO(wuestholz): Should we really only cache if the fixpoint was computed?
+            if (FixpointComputed)
+            {
+                preStateCache.Add(apc, value);
+            }
         }
 
         /// <summary>
@@ -801,8 +851,12 @@ namespace Microsoft.Research.CodeAnalysis
                 result = MutableVersion(preState, apc);
                 result = this.Transfer(apc, result);
             }
-            // cache
-            postState.Add(apc, result);
+            // TODO(wuestholz): Should we really only cache if the fixpoint was computed?
+            if (FixpointComputed)
+            {
+                // cache
+                postState.Add(apc, result);
+            }
             return true;
         }
 
@@ -814,11 +868,11 @@ namespace Microsoft.Research.CodeAnalysis
         /// <summary>
         /// State state must be immutable.
         /// </summary>
-        public void Run(AState startState)
+        public void Run(AState startState, object result = null)
         {
             Seed(cfg.Entry, startState);
 
-            ComputeFixpoint();
+            ComputeFixpoint(result);
         }
 
         #region Forward specific overrides
@@ -884,7 +938,7 @@ namespace Microsoft.Research.CodeAnalysis
             base.Seed(cfg.NormalExit, normalExit);
             base.Seed(cfg.ExceptionExit, exceptionExit);
 
-            ComputeFixpoint();
+            ComputeFixpoint(null);
         }
 
         #region Backward specific overrides
@@ -1013,13 +1067,22 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region Overrides
 
+        public override bool IsFieldRead(APC pc)
+        {
+          var sw = new StringWriter();
+          printer(pc, "", sw);
+          var s = sw.ToString();
+          // TODO(wuestholz): Make this check more efficient.
+          return s.Contains(" = ldfld ") || s.Contains(" = ldsfld ");
+        }
+
         /// <summary>
         /// Gives us a chance to let client rename variables prior to storing away the state
         /// </summary>
         /// <param name="edge"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public override void PushState(APC pc, APC next, AState state)
+        public override void PushState(APC pc, APC next, AState state, object result, ISet<APC> suspended)
         {
             var edgeData = edgeDataGetter(pc, next);
             if (this.Options.Trace)
@@ -1049,7 +1112,7 @@ namespace Microsoft.Research.CodeAnalysis
             }
             this.TraceMemoryUsageIfEnabled("after renaming", null);
 
-            base.PushState(pc, next, transformed);
+            base.PushState(pc, next, transformed, result, suspended);
         }
 
         protected override bool TryRename(APC prev, APC next, AState currState, out AState renamed)
@@ -1189,7 +1252,7 @@ namespace Microsoft.Research.CodeAnalysis
         {
             foreach (APC target in this.cfg.ExceptionHandlers<Type, object>(atThrow, null, null))
             {
-                PushState(atThrow, target, state);
+                PushState(atThrow, target, state, null, null);
             }
         }
 
@@ -1409,7 +1472,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// Check that we did not timed out.
         /// If the timeout was not started, starts it
         /// </summary>
-        public void CheckTimeOut(string reason = "")
+        public void CheckTimeOut(string reason, object result = null)
         {
             this.Start();
 
@@ -1433,9 +1496,10 @@ namespace Microsoft.Research.CodeAnalysis
                     Console.WriteLine("Timeout hit: Reason {0}", reason);
                 }
 #endif
+
                 if (exception == null)
                 {
-                    exception = new TimeoutExceptionFixpointComputation();
+                    exception = new TimeoutExceptionFixpointComputation(reason, result);
                 }
                 throw exception;
             }
@@ -1452,6 +1516,10 @@ namespace Microsoft.Research.CodeAnalysis
         [ThreadStatic]
         private static uint count;
 
+        public object Result;
+
+        public readonly string Reason;
+
         static public uint ThrownExceptions
         {
             get
@@ -1460,9 +1528,11 @@ namespace Microsoft.Research.CodeAnalysis
             }
         }
 
-        public TimeoutExceptionFixpointComputation()
+        public TimeoutExceptionFixpointComputation(string reason = null, object result = null)
         {
             count++;
+            this.Result = result;
+            this.Reason = reason;
         }
     }
 
@@ -1546,4 +1616,324 @@ namespace Microsoft.Research.CodeAnalysis
             return new Pair<APC, APC>(from, to);
         }
     }
+
+    public class DFAController
+    {
+        private readonly int maxCalls;
+        private int calls;
+
+        private readonly int maxFieldReads;
+        private int fieldReads;
+
+        private readonly int maxJoins;
+        private int joins;
+
+        private readonly int maxWidenings;
+        private int widenings;
+
+        private readonly int maxSteps;
+        private int steps;
+
+        private long imprecisions;
+
+        private readonly string analysisName;
+
+        private readonly string methodName;
+
+        private TextWriter output;
+
+        public ISet<APC> SuspendedAPCs { get; private set; }
+
+        public readonly ISet<APC> ReachedAPCs = new HashSet<APC>();
+
+        public readonly Func<object, AnalysisStatistics> FailingObligations;
+
+        private DateTime startTime;
+
+        private TimeSpan totalChecking;
+
+        public bool IsChecking { get; private set; }
+
+        public readonly bool checkObligations;
+
+        public bool HasReachedEnd { get; private set; }
+
+        public bool HasReachedStart { get; private set; }
+
+        public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall;
+
+        private Func<SuspensionReason, object, bool> shouldBeSuspended;
+
+        private static string dummy = "dummy";
+
+        private static bool headerWasWritten;
+
+        public DFAController(string an, string mn, int mc, int mfr, int mj, int mw, int ms, Func<object, AnalysisStatistics> fo, bool printControllerStats, IDictionary<CFGBlock, IFunctionalSet<ESymValue>> modifiedAtCall, Func<SuspensionReason, object, bool> shouldBeSuspended = null, bool checkObligations = false)
+        {
+            analysisName = an;
+            methodName = mn;
+            maxCalls = mc;
+            calls = 0;
+            maxFieldReads = mfr;
+            fieldReads = 0;
+            maxJoins = mj;
+            joins = 0;
+            maxWidenings = mw;
+            widenings = 0;
+            maxSteps = ms;
+            steps = 0;
+            FailingObligations = fo;
+            startTime = DateTime.UtcNow;
+            totalChecking = TimeSpan.Zero;
+            ModifiedAtCall = modifiedAtCall;
+            this.shouldBeSuspended = shouldBeSuspended;
+            this.checkObligations = checkObligations;
+
+            if (printControllerStats)
+            {
+                output = new StringWriter();
+            }
+        }
+
+        public void ReachedStart(object result)
+        {
+            if (IsChecking) { return; }
+
+            Debug.Assert(!HasReachedStart || HasReachedEnd);
+
+            // TODO(wuestholz): Maybe we should check here that this is only called once.
+            calls = 0;
+            joins = 0;
+            widenings = 0;
+            steps = 0;
+            imprecisions = 0;
+            // TODO(wuestholz): Maybe we shouldn't reset the suspended APCs.
+            SuspendedAPCs = null;
+            ReachedAPCs.Clear();
+            startTime = DateTime.UtcNow;
+            totalChecking = TimeSpan.Zero;
+            HasReachedStart = true;
+            HasReachedEnd = false;
+
+            PrintStatisticsCSVData(result, "start");
+        }
+
+        public bool ReachedCall(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxCalls <= calls;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxFieldReads);
+            }
+
+            ReachedPossibleImprecision(result, "call");
+
+            calls++;
+            return suspend;
+        }
+
+        public bool ReachedFieldRead(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxFieldReads <= fieldReads;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxFieldReads);
+            }
+
+            ReachedPossibleImprecision(result, "reads");
+
+            fieldReads++;
+            return suspend;
+        }
+
+        protected void ReachedPossibleImprecision(object result, string source)
+        {
+          Contract.Requires(source != null);
+
+          imprecisions++;
+
+          PrintStatisticsCSVData(result, source);
+        }
+
+        public void PrintStatisticsCSVHeader(TextWriter wr)
+        {
+          wr.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}", "method", "analysis", "imprecisions", "errors", "unreached", "errors_definite", "obligations", "source", "reached locations", "ms (total)", "ms (checking)", "info"));
+          headerWasWritten = true;
+        }
+
+        protected void PrintStatisticsCSVData(object result, string source, string info = null, AnalysisStatistics? stats = null)
+        {
+          Contract.Requires(source != null);
+
+          info = (info == null ? "" : info);
+
+          if (output != null)
+          {
+            string errors = "?";
+            string unreached = "?";
+            string definite = "?";
+            string obls = "?";
+            var start = DateTime.UtcNow;
+            var end = start;
+
+            if (stats != null && stats.HasValue)
+            {
+              var s = stats.Value;
+              errors = (s.Top + s.False).ToString();
+              unreached = s.Bottom.ToString();
+              definite = s.False.ToString();
+              obls = (s.Bottom + s.True).ToString();
+            }
+
+            if (checkObligations && !IsChecking && FailingObligations != null)
+            {
+              try
+              {
+                IsChecking = true;
+                var s = FailingObligations(result);
+                errors = (s.Top + s.False).ToString();
+                unreached = s.Bottom.ToString();
+                definite = s.False.ToString();
+                obls = s.Total.ToString();
+              }
+              catch (Exception e)
+              {
+                string exInfo = "exception: " + e.GetType();
+                if (string.IsNullOrEmpty(info))
+                {
+                  info = exInfo;
+                }
+                else
+                {
+                  info = string.Format("{0}, {1}", info, exInfo);
+                }
+              }
+              finally
+              {
+                end = DateTime.UtcNow;
+                totalChecking = totalChecking.Add(end.Subtract(start));
+                IsChecking = false;
+              }
+            }
+            output.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9:F0}\t{10:F0}\t{11}", methodName, analysisName, imprecisions, errors, unreached, definite, obls, source, ReachedAPCs.Count, end.Subtract(startTime).TotalMilliseconds, totalChecking.TotalMilliseconds, info));
+          }
+        }
+
+        public bool ReachedJoin(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxJoins <= joins;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxJoins);
+            }
+
+            ReachedPossibleImprecision(result, "join");
+
+            joins++;
+            return suspend;
+        }
+
+        public void ReachedTimeout(object result, string reason)
+        {
+            if (IsChecking) { return; }
+
+            PrintStatisticsCSVData(result, "timeout", reason != null ? "reason: " + reason : null);
+        }
+
+        public bool ReachedWidening(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxWidenings <= widenings;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxWidenings);
+            }
+
+            ReachedPossibleImprecision(result, "widening");
+
+            widenings++;
+            return suspend;
+        }
+
+        public void ReachedEnd(object result, ISet<APC> suspended, AnalysisStatistics? stats = null)
+        {
+            if (IsChecking) { return; }
+
+            SuspendedAPCs = suspended;
+
+            PrintStatisticsCSVData(result, "end", stats: stats);
+
+            if (output != null)
+            {
+                lock(dummy)
+                {
+                    using (var fs = File.Open("dfa_statistics.csv", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                    using (var wr = new StreamWriter(fs))
+                    {
+                        if (!headerWasWritten)
+                        {
+                            PrintStatisticsCSVHeader(wr);
+                        }
+                        wr.Write(output.ToString());
+                        output = new StringWriter();
+                    }
+                }
+            }
+
+            HasReachedEnd = true;
+        }
+
+        public bool ReachedStep(object result, APC apc, ISet<APC> suspended)
+        {
+            if (IsChecking) { return false; }
+
+            ReachedAPCs.Add(apc);
+
+            bool suspend = maxSteps <= steps;
+            if (suspend)
+            {
+                SuspendAPC(result, apc, suspended, SuspensionReason.ReachedMaxSteps);
+            }
+
+            PrintStatisticsCSVData(result, "step");
+
+            steps++;
+            return suspend;
+        }
+
+        protected void SuspendAPC(object result, APC apc, ISet<APC> suspended, SuspensionReason reason)
+        {
+            if (suspended != null)
+            {
+                if (shouldBeSuspended == null || shouldBeSuspended(reason, result))
+                {
+                    suspended.Add(apc);
+                }
+            }
+        }
+    }
+
+    public enum SuspensionReason
+    {
+        ReachedMaxFieldReads,
+        ReachedFieldReads,
+        ReachedMaxJoins,
+        ReachedMaxWidenings,
+        ReachedMaxSteps
+    };
 }
