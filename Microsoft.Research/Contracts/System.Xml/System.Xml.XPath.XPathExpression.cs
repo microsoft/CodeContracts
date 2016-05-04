@@ -84,7 +84,7 @@ namespace System.Xml.XPath
     //   lang:
     //     The language to use for comparison. Uses the System.Globalization.CultureInfo
     //     class that can be passed to the Overload:System.String.Compare method for
-    //     the language types, for example, "us-en" for U.S. English. If an empty string
+    //     the language types, for example, "en-us" for U.S. English. If an empty string
     //     is specified, the system environment is used to determine the System.Globalization.CultureInfo.
     //
     //   dataType:
