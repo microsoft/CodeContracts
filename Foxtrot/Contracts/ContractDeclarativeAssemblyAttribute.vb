@@ -7,6 +7,7 @@
 '
 <Assembly: ContractDeclarativeAssemblyAttribute()> 
 
+<ContractVerification(False)>
 NotInheritable Class ContractDeclarativeAssemblyAttribute
     Inherits Global.System.Attribute
 End Class
