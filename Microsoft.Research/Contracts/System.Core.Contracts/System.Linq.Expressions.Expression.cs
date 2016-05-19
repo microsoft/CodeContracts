@@ -7666,7 +7666,6 @@ namespace System.Linq.Expressions
     {
       Contract.Requires(type != null);
       Contract.Requires(initializers != null);
-      Contract.Requires(initializers.Length >= 1);
       Contract.Ensures(Contract.Result<NewArrayExpression>() != null);
       return default(NewArrayExpression);
     }
