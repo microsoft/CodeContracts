@@ -5,9 +5,9 @@
 '  This file is included when building a contract declarative assembly
 '  in order to mark it as such for recognition by the tools
 '
-<Assembly: ContractDeclarativeAssemblyAttribute()> 
+<Assembly: ContractDeclarativeAssemblyAttribute()>
 
-<ContractVerification(False)>
+<System.Diagnostics.Contracts.ContractVerification(False)>
 NotInheritable Class ContractDeclarativeAssemblyAttribute
     Inherits Global.System.Attribute
 End Class
