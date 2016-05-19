@@ -870,6 +870,7 @@ namespace System
     public virtual MethodInfo[] GetMethods(BindingFlags arg0)
     {
       Contract.Ensures(Contract.Result<MethodInfo[]>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<MethodInfo[]>(), el => el != null));
 
       return default(MethodInfo[]);
     }
