@@ -1657,7 +1657,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       public override string SuggestMessage()
       {
-        return string.Format("Did you meant {1} instead of {0}?", this.OriginalExp, this.FixedExp);
+        return string.Format("Did you mean {1} instead of {0}?", this.OriginalExp, this.FixedExp);
       }
 
       public override string SuggestCode()
@@ -1688,7 +1688,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       public override string SuggestMessage()
       {
-        return string.Format("Possible off-by one: did you meant indexing with {1} instead of {0}?", this.OriginalExp, this.FixedExp);
+        return string.Format("Possible off-by one: did you mean indexing with {1} instead of {0}?", this.OriginalExp, this.FixedExp);
       }
 
       public override string SuggestCode()
@@ -1698,7 +1698,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       public override string GetMessageForSourceObligation()
       {
-        return string.Format("Did you meant {1} instead of {0}?", this.OriginalExp, this.FixedExp);
+        return string.Format("Did you mean {1} instead of {0}?", this.OriginalExp, this.FixedExp);
       }
       
       public override CodeFixKind Kind
