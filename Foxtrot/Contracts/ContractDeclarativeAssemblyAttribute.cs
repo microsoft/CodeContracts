@@ -11,6 +11,7 @@
 namespace System.Diagnostics.Contracts
 {
     [AttributeUsage(global::System.AttributeTargets.Assembly)]
+    [ContractVerification(false)]
     internal sealed class ContractDeclarativeAssemblyAttribute : global::System.Attribute
     {
     }
