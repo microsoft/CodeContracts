@@ -141,10 +141,7 @@ namespace Microsoft.Contracts.Foxtrot
                 methodName.Matches(ContractNodes.EndContractBlockName))
             {
                 string message = string.Format(Resources.Error_ContractNotRewritten_ContractName_MemberName, method.FullName, this.visitedMembers.Peek().FullName);
-                if (this.handleError != null)
-                {
-                    this.handleError(new Error(1080, message, binding.SourceContext));
-                }
+                this.handleError(new Error(1080, message, binding.SourceContext));
             }
         }
         
