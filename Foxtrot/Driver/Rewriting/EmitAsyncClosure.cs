@@ -127,7 +127,7 @@ namespace Microsoft.Contracts.Foxtrot
             // Mapping between enclosing generic type and closure generic type.
             // This is a simple list not a dictionary, because number of generic arguments is very small.
             // So linear complexity will not harm performance.
-            private List<TypeNodePair> typeParametersMapping = new List<TypeNodePair>();
+            readonly List<TypeNodePair> typeParametersMapping = new List<TypeNodePair>();
 
             public bool IsEmpty { get { return typeParametersMapping.Count == 0; } }
 
