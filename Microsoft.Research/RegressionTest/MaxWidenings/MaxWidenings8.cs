@@ -16,9 +16,9 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace WideningDepth
+namespace MaxWidenings
 {
-  public class WideningDepth
+  public class MaxWidenings
   {
     [ClousotRegressionTest]
     [RegressionOutcome(Outcome=ProofOutcome.True,Message="valid non-null reference (as receiver)",PrimaryILOffset=1,MethodILOffset=0)]

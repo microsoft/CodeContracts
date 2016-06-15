@@ -16,9 +16,9 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace JoinDepth
+namespace MaxJoins
 {
-    public class JoinDepth
+    public class MaxJoins
     {
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 29, MethodILOffset = 0)]

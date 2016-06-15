@@ -16,9 +16,9 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace WideningDepth
+namespace MaxWidenings
 {
-    public class WideningDepth
+    public class MaxWidenings
     {
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = "assert is valid", PrimaryILOffset = 76, MethodILOffset = 0)]
