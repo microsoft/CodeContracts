@@ -258,21 +258,6 @@ namespace Microsoft.Research.CodeAnalysis
       this.expectedOutcomes = outcomes;
     }
 
-
-#if INCLUDE_PEXINTEGRATION
-    protected static ClousotRegression.ProofOutcome Translate(ProofOutcome outcome)
-    {
-      switch (outcome)
-      {
-        case ProofOutcome.Bottom: return Microsoft.Research.ClousotRegression.ProofOutcome.Bottom;
-        case ProofOutcome.False: return Microsoft.Research.ClousotRegression.ProofOutcome.False;
-        case ProofOutcome.Top: return Microsoft.Research.ClousotRegression.ProofOutcome.Top;
-        case ProofOutcome.True: return Microsoft.Research.ClousotRegression.ProofOutcome.True;
-        default: throw new NotImplementedException();
-      }
-    }
-#endif
-
     public virtual bool Passed(bool ignoreExtra)
     {
       if (this.errorCount == 0 && !ignoreExtra)
@@ -333,7 +318,8 @@ namespace Microsoft.Research.CodeAnalysis
         {
           var outcome = (ProofOutcome)(byte)GetNamedArgOrDefault<int, Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(mdDecoder, "Outcome", attr);
 
-          string msg = (string)mdDecoder.NamedArgument("Message", attr);
+          // at some places we have "this.x" instead of "x", both should be treated equal.
+          string msg = ((string)mdDecoder.NamedArgument("Message", attr)).Replace("this.", string.Empty);
           int primaryOffset = GetNamedArgOrDefault<int, Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(mdDecoder, "PrimaryILOffset", attr);
           int methodOffset = GetNamedArgOrDefault<int, Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(mdDecoder, "MethodILOffset", attr);
 
@@ -385,6 +371,9 @@ namespace Microsoft.Research.CodeAnalysis
 
     public virtual bool CheckOutcome<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(IOutput output, Method method, ProofOutcome outcome, string message, int primaryILOffset, int methodILOffset, IDecodeMetaData<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly> mdDecoder)
     {
+      // at some places we get "this.x" instead of "x", both should be treated equal.
+      message = message.Replace("this.", string.Empty);
+
       string canonical = CanonicalFormat(outcome, message, primaryILOffset, methodILOffset);
       this.actualOutcomes.Add(canonical);
       if (!this.expectedOutcomes.Contains(canonical))

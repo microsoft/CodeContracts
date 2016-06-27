@@ -744,6 +744,11 @@ namespace Microsoft.Research.AbstractDomains.Numerical
 
                     // [a,b] % [c, d]
                     {
+                        if (0 < rightLow && leftLow < rightLow && leftUpp < rightLow)
+                        {
+                            return Interval.For(leftLow, rightLow);
+                        }
+
                         var ll = leftLow % rightLow;
                         var lu = leftLow % rightUpp;
                         var ul = leftUpp % rightLow;

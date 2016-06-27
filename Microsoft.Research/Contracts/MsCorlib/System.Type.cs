@@ -870,6 +870,7 @@ namespace System
     public virtual MethodInfo[] GetMethods(BindingFlags arg0)
     {
       Contract.Ensures(Contract.Result<MethodInfo[]>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<MethodInfo[]>(), el => el != null));
 
       return default(MethodInfo[]);
     }
@@ -888,7 +889,7 @@ namespace System
       Contract.Ensures(Contract.Result<MethodInfo[]>() != null);
       Contract.Ensures(Contract.ForAll(Contract.Result<MethodInfo[]>(), el => el != null));
 
-      return default( MethodInfo[]);
+      return default(MethodInfo[]);
     }
 
     [Pure]
@@ -896,7 +897,7 @@ namespace System
     {
       Contract.Requires(name != null);
 
-      return default( MethodInfo);
+      return default(MethodInfo);
     }
 
     [Pure]
@@ -904,7 +905,7 @@ namespace System
     {
       Contract.Requires(name != null);
 
-      return default( MethodInfo);
+      return default(MethodInfo);
     }
 
     [Pure]
@@ -913,7 +914,7 @@ namespace System
       Contract.Requires(name != null);
       Contract.Requires(types != null);
 
-      return default( MethodInfo);
+      return default(MethodInfo);
     }
     //public  MethodInfo GetMethod(string name, Type[] types,  ParameterModifier[] modifiers)
     //{
@@ -942,7 +943,7 @@ namespace System
     {
       Contract.Ensures(Contract.Result< ConstructorInfo[]>() != null);
 
-      return default( ConstructorInfo[]);
+      return default(ConstructorInfo[]);
     }
 
     [Pure]
@@ -951,14 +952,14 @@ namespace System
       Contract.Ensures(Contract.Result< ConstructorInfo[]>() != null);
       Contract.Ensures(Contract.ForAll(Contract.Result<ConstructorInfo[]>(), el => el != null));
 
-      return default( ConstructorInfo[]);
+      return default(ConstructorInfo[]);
     }
 
     [Pure]
     public virtual ConstructorInfo GetConstructor(Type[] types)
     {
 
-      return default( ConstructorInfo);
+      return default(ConstructorInfo);
     }
 
 #if false

@@ -639,6 +639,8 @@ namespace System.Compiler.Metadata{
       module.reader = this;
       module.DllCharacteristics = this.tables.dllCharacteristics;
       module.FileAlignment = this.tables.fileAlignment;
+      module.BaseAddress = this.tables.baseAddress;
+      module.SizeOfStackReserve = this.tables.sizeOfStackReserve;
       module.HashValue = this.tables.HashValue;
       module.Kind = this.tables.moduleKind;
       module.Location = this.fileName;
@@ -4257,6 +4259,18 @@ namespace System.Compiler.Metadata{
             this.currentItr++;
             switch (c) {
               case ',':
+                    // A comma may separate a type name from its assembly name or a type argument from
+                    // another type argument.
+                    // If processing non-type argument or a type argument with assembly name,
+                    // process the characters after the comma as an assembly name.
+                    //
+                    // If the next character is whitespace, assume that it delineates the start of an assembly name so
+                    // end the current identifier by going to done label.
+                    if (this.currentItr < this.typeNameString.Length && char.IsWhiteSpace(this.typeNameString[this.currentItr]))
+                    {
+                        goto done;
+                    }
+                    break;
               case '[':
               case ']':
               case '&':

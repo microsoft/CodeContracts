@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Compiler;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,6 +58,127 @@ namespace Microsoft.Contracts.Foxtrot
     /// </remarks>
     internal class EmitAsyncClosure : StandardVisitor
     {
+        /// <summary>
+        /// Class that maps generic arguments of the enclosed class/method to the generic arguments of the closure.
+        /// </summary>
+        /// <remarks>
+        /// The problem.
+        /// Original implementation of the Code Contract didn't support async postconditions in generics.
+        /// Here is why:
+        /// Suppose we have following function (in class <c>Foo</c>:
+        /// <code><![CDATA[
+        /// public static Task<T> FooAsync() where T: class
+        /// {
+        ///     Contract.Ensures(Contract.Result<T>() != null);
+        /// }
+        /// ]]></code>
+        /// In this case, ccrewrite will generate async closure class called <c>Foo.AsyncContractClosure_0&lt;T&gt;</c>
+        /// with following structure:
+        /// <code><![CDATA[
+        /// [CompilerGenerated]
+        /// private class <Foo>AsyncContractClosure_0<T> where T : class
+        /// {
+        /// 	public Task<T> CheckPost(Task<T> task)
+        /// 	{
+        /// 		TaskStatus status = task.Status;
+        /// 		if (status == TaskStatus.RanToCompletion)
+        /// 		{
+        /// 			RewriterMethods.Ensures(task.Result != null, null, "Contract.Result<T>() != null");
+        /// 		}
+        /// 		return task;
+        /// 	}
+        /// }
+        /// ]]>
+        /// </code>
+        /// The code looks good, but the IL could be invalid (without the trick that this class provides).
+        /// Postcondition of the method in our case is declared in the generic method (in <code>FooAsync</code>)
+        /// but ccrewrite moves it into non-generic method (<code>CheckPost</code>) of the generic class (closure).
+        /// 
+        /// But on IL level there is different instructions for referencing method generic arguments and type generic arguments.
+        /// 
+        /// After changing <code>Contract.Result</code> to <code>task.Result</code> and moving postcondition to <code>CheckPost</code>
+        /// method, following IL would be generated:
+        /// 
+        /// <code> <![CDATA[
+        /// IL_0011: call instance !0 class [mscorlib]System.Threading.Tasks.Task`1<!T>::get_Result()
+        /// IL_0016: box !!0 // <-- here is our problem!
+        /// ]]>
+        /// </code>
+        ///
+        /// This means that method <code>CheckPost</code> would contains a reference to generic method argument of the
+        /// original method.
+        /// 
+        /// The goal of this class is to store a mapping between enclosing generic types and closure generic types.
+        /// </remarks>
+        private class GenericTypeMapper
+        {
+            class TypeNodePair
+            {
+                public TypeNodePair(TypeNode enclosingGenericType, TypeNode closureGenericType)
+                {
+                    EnclosingGenericType = enclosingGenericType;
+                    ClosureGenericType = closureGenericType;
+                }
+
+                public TypeNode EnclosingGenericType { get; private set; }
+                public TypeNode ClosureGenericType { get; private set; }
+            }
+
+            // Mapping between enclosing generic type and closure generic type.
+            // This is a simple list not a dictionary, because number of generic arguments is very small.
+            // So linear complexity will not harm performance.
+            private List<TypeNodePair> typeParametersMapping = new List<TypeNodePair>();
+
+            public bool IsEmpty { get { return typeParametersMapping.Count == 0; } }
+
+            public void AddMapping(TypeNode enclosingGenericType, TypeNode closureGenericType)
+            {
+                typeParametersMapping.Add(new TypeNodePair(enclosingGenericType, closureGenericType));
+            }
+
+            /// <summary>
+            /// Returns associated generic type of the closure class by enclosing generic type (for instance, by
+            /// generic type of the enclosing generic method that uses current closure).
+            /// </summary>
+            /// <remarks>
+            /// Function returns the same argument if the matching argument does not exists.
+            /// </remarks>
+            public TypeNode GetClosureTypeParameterByEnclosingTypeParameter(TypeNode enclosingType)
+            {
+                if (enclosingType == null)
+                {
+                    return null;
+                }
+
+                var gen = enclosingType;
+                if (gen.ConsolidatedTemplateParameters != null && gen.ConsolidatedTemplateParameters.Count != 0)
+                {
+                    gen = gen.ConsolidatedTemplateParameters[0];
+                }
+
+                var candidate = typeParametersMapping.FirstOrDefault(t => t.EnclosingGenericType == enclosingType);
+                return candidate != null ? candidate.ClosureGenericType : enclosingType;
+            }
+            
+            /// <summary>
+            /// Returns associated generic type of the closure class by enclosing generic type (for instance, by
+            /// generic type of the enclosing generic method that uses current closure).
+            /// </summary>
+            /// <remarks>
+            /// Function returns the same argument if the matching argument does not exists.
+            /// </remarks>
+            public TypeNode GetEnclosingTypeParameterByClosureTypeParameter(TypeNode closureType)
+            {
+                if (closureType == null)
+                {
+                    return null;
+                }
+
+                var candidate = typeParametersMapping.FirstOrDefault(t => t.ClosureGenericType == closureType);
+                return candidate != null ? candidate.EnclosingGenericType : closureType;
+            }
+        }
+
         // This assembly should be in this class but not in the SystemTypes from System.CompilerCC.
         // Moving this type there will lead to test failures and assembly resolution errors.
         private static readonly AssemblyNode/*!*/ SystemCoreAssembly = SystemTypes.GetSystemCoreAssembly(false, true);
@@ -91,6 +211,8 @@ namespace Microsoft.Contracts.Foxtrot
         private Local originalResultLocal;
         private Parameter checkMethodTaskParameter;
         private readonly TypeNode checkMethodTaskType;
+
+        private readonly GenericTypeMapper genericTypeMapper = new GenericTypeMapper();
 
         public EmitAsyncClosure(Method from, Rewriter rewriter)
         {
@@ -132,21 +254,30 @@ namespace Microsoft.Contracts.Foxtrot
             this.func2Type = new Cache<TypeNode>(() =>
                 HelperMethods.FindType(SystemTypes.SystemAssembly, StandardIds.System, Identifier.For("Func`2")));
 
-            if (from.IsGeneric)
+            // Should distinguish between generic enclosing method and non-generic method in enclosing type.
+            // In both cases generated closure should be generic.
+            var enclosingTemplateParameters = GetGenericTypesFrom(from);
+
+            if (!enclosingTemplateParameters.IsNullOrEmpty())
             {
-                this.closureClass.TemplateParameters = CreateTemplateParameters(closureClass, from, declaringType);
+                this.closureClass.TemplateParameters = CreateTemplateParameters(closureClass, enclosingTemplateParameters, declaringType);
 
                 this.closureClass.IsGeneric = true;
                 this.closureClass.EnsureMangledName();
 
                 this.forwarder = new Specializer(
                     targetModule: this.declaringType.DeclaringModule,
-                    pars: from.TemplateParameters,
+                    pars: enclosingTemplateParameters,
                     args: this.closureClass.TemplateParameters);
 
                 this.forwarder.VisitTypeParameterList(this.closureClass.TemplateParameters);
 
                 taskType = this.forwarder.VisitTypeReference(taskType);
+
+                for (int i = 0; i < enclosingTemplateParameters.Count; i++)
+                {
+                    this.genericTypeMapper.AddMapping(enclosingTemplateParameters[i], closureClass.TemplateParameters[i]);
+                }
             }
             else
             {
@@ -180,11 +311,13 @@ namespace Microsoft.Contracts.Foxtrot
                     consArgs.Add(this.closureClass.DeclaringType.ConsolidatedTemplateParameters[i]);
                 }
 
-                var methodCount = from.TemplateParameters == null ? 0 : from.TemplateParameters.Count;
-                for (int i = 0; i < methodCount; i++)
+                if (!enclosingTemplateParameters.IsNullOrEmpty())
                 {
-                    consArgs.Add(from.TemplateParameters[i]);
-                    args.Add(from.TemplateParameters[i]);
+                    for (int i = 0; i < enclosingTemplateParameters.Count; i++)
+                    {
+                        consArgs.Add(enclosingTemplateParameters[i]);
+                        args.Add(enclosingTemplateParameters[i]);
+                    } 
                 }
 
                 this.closureClassInstance =
@@ -197,8 +330,7 @@ namespace Microsoft.Contracts.Foxtrot
             this.closureLocal = new Local(this.ClosureClass);
             this.ClosureInitializer = new Block(new StatementList());
 
-            // TODO: What is this?
-            // Add ClosureLocal instantiation?
+            // Generate constructor call that initializes closure instance
             this.ClosureInitializer.Statements.Add(
                 new AssignmentStatement(
                     this.closureLocal,
@@ -219,8 +351,6 @@ namespace Microsoft.Contracts.Foxtrot
             Contract.Requires(taskBasedResult != null);
             Contract.Requires(asyncPostconditions.Count > 0);
 
-            Contract.Assume(taskBasedResult.Type == checkMethodTaskType);
-
             // Async postconditions are impelemented using custom closure class
             // with CheckPost method that checks postconditions when the task
             // is finished.
@@ -230,6 +360,14 @@ namespace Microsoft.Contracts.Foxtrot
 
             // Add task.ContinueWith().Unwrap(); method call to returnBlock
             AddContinueWithMethodToReturnBlock(returnBlock, taskBasedResult);
+
+            ChangeThisReferencesToClosureLocals();
+        }
+
+        private void ChangeThisReferencesToClosureLocals()
+        {
+            var fieldRewriter = new FieldRewriter(this);
+            fieldRewriter.Visit(this.checkPostMethod);
         }
 
         /// <summary>
@@ -262,20 +400,54 @@ namespace Microsoft.Contracts.Foxtrot
         {
             get { return (InstanceInitializer)this.closureClassInstance.GetMembersNamed(StandardIds.Ctor)[0]; }
         }
-        
-        [Pure]
-        private static TypeNodeList CreateTemplateParameters(Class closureClass, Method @from, TypeNode declaringType)
+
+        private static TypeNodeList GetGenericTypesFrom(Method method)
         {
+            if (method.IsGeneric)
+            {
+                return method.TemplateParameters;
+            }
+
+            if (method.DeclaringType.IsGeneric)
+            {
+                return GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(method.DeclaringType);
+            }
+
+            return null;
+        }
+
+        private static TypeNodeList GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(TypeNode node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            if (node.TemplateParameters != null && node.TemplateParameters.Count != 0)
+            {
+                return node.TemplateParameters;
+            }
+
+            return GetFirstNonEmptyGenericListWalkingUpDeclaringTypes(node.DeclaringType);
+        }
+
+        [Pure]
+        private static TypeNodeList CreateTemplateParameters(Class closureClass, TypeNodeList inputTemplateParameters, TypeNode declaringType)
+        {
+            Contract.Requires(closureClass != null);
+            Contract.Requires(inputTemplateParameters != null);
+            Contract.Requires(declaringType != null);
+
             var dup = new Duplicator(declaringType.DeclaringModule, declaringType);
 
             var templateParameters = new TypeNodeList();
 
             var parentCount = declaringType.ConsolidatedTemplateParameters.CountOrDefault();
 
-            for (int i = 0; i < from.TemplateParameters.Count; i++)
+            for (int i = 0; i < inputTemplateParameters.Count; i++)
             {
                 var tp = HelperMethods.NewEqualTypeParameter(
-                    dup, (ITypeParameter)from.TemplateParameters[i],
+                    dup, (ITypeParameter)inputTemplateParameters[i],
                     closureClass, parentCount + i);
 
                 templateParameters.Add(tp);
@@ -332,10 +504,11 @@ namespace Microsoft.Contracts.Foxtrot
                 // but allows to throw postconditions violations).
 
                 // Generating: result.ContinueWith(closure.CheckPost);
+                var taskContinuationOption = new Literal(TaskContinuationOptions.ExecuteSynchronously);
                 var continueWithCall =
                     new MethodCall(
                         new MemberBinding(taskBasedResult, continueWithMethodLocal),
-                        new ExpressionList(funcLocal));
+                        new ExpressionList(funcLocal, taskContinuationOption));
 
                 // Generating: TaskExtensions.Unwrap(result.ContinueWith(...))
                 var unwrapMethod = GetUnwrapMethod(checkMethodTaskType);
@@ -447,6 +620,15 @@ namespace Microsoft.Contracts.Foxtrot
 
             Method contractEnsuresMethod = this.rewriter.RuntimeContracts.EnsuresMethod;
 
+            // For generic types need to 'fix' generic type parameters that are used in the closure method. 
+            // See comment to the GenericTypeMapper for more details.
+            TypeParameterFixerVisitor fixer = null;
+
+            if (!this.genericTypeMapper.IsEmpty)
+            {
+                fixer = new TypeParameterFixerVisitor(genericTypeMapper);
+            }
+
             foreach (Ensures e in GetTaskResultBasedEnsures(asyncPostconditions))
             {
                 // TODO: Not sure that 'break' is enough! It seems that this is possible
@@ -462,6 +644,11 @@ namespace Microsoft.Contracts.Foxtrot
                 //
 
                 ExpressionList args = new ExpressionList();
+                if (fixer != null)
+                {
+                    fixer.Visit(e.PostCondition);
+                }
+
                 args.Add(e.PostCondition);
 
                 args.Add(e.UserMessage ?? Literal.Null);
@@ -505,7 +692,10 @@ namespace Microsoft.Contracts.Foxtrot
             methodBodyBlock.Statements.Add(new Block(checkStatusStatements));
 
             // Emit a check for __ContractsRuntime.insideContractEvaluation around Ensures
-            this.rewriter.EmitRecursionGuardAroundChecks(this.checkPostMethod, methodBodyBlock, ensuresChecks);
+            // TODO ST: there is no sense to add recursion check in async postcondition that can be checked in different thread!
+            methodBodyBlock.Statements.Add(new Block(ensuresChecks));
+            // Emit a check for __ContractsRuntime.insideContractEvaluation around Ensures
+            //this.rewriter.EmitRecursionGuardAroundChecks(this.checkPostMethod, methodBodyBlock, ensuresChecks);
 
             // Now, normal postconditions are written to the method body. 
             // We need to add endOfNormalPostcondition block as a marker.
@@ -573,6 +763,83 @@ namespace Microsoft.Contracts.Foxtrot
             methodBody.Add(returnBlock);
         }
 
+        /// <summary>
+        /// Helper visitor class that changes all references to type parameters to appropriate once.
+        /// </summary>
+        private class TypeParameterFixerVisitor : StandardVisitor
+        {
+            private readonly GenericTypeMapper genericParametersMapping;
+
+            public TypeParameterFixerVisitor(GenericTypeMapper genericParametersMapping)
+            {
+                Contract.Requires(genericParametersMapping != null);
+                this.genericParametersMapping = genericParametersMapping;
+            }
+
+            public override Expression VisitAddressDereference(AddressDereference addr)
+            {
+                // Replacing initobj !!0 to initobj !0
+                var newType = genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(addr.Type);
+                if (newType != addr.Type)
+                {
+                    return new AddressDereference(addr.Address, newType, addr.Volatile, addr.Alignment, addr.SourceContext);
+                }
+                
+                return base.VisitAddressDereference(addr);
+            }
+
+            // Literal is used when contract result compares to null: Contract.Result<T>() != null
+            public override Expression VisitLiteral(Literal literal)
+            {
+                var origin = literal.Value as TypeNode;
+                if (origin == null)
+                {
+                    return base.VisitLiteral(literal);
+                }
+
+                var newLiteralType = this.genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(origin);
+                if (newLiteralType != origin)
+                {
+                    return new Literal(newLiteralType);
+                }
+
+                return base.VisitLiteral(literal);
+            }
+
+            public override TypeNode VisitTypeParameter(TypeNode typeParameter)
+            {
+                var fixedVersion = this.genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(typeParameter);
+                if (fixedVersion != typeParameter)
+                {
+                    return fixedVersion;
+                }
+
+                return base.VisitTypeParameter(typeParameter);
+            }
+
+            public override TypeNode VisitTypeReference(TypeNode type)
+            {
+                var fixedVersion = this.genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(type);
+                if (fixedVersion != type)
+                {
+                    return fixedVersion;
+                }
+
+                return base.VisitTypeReference(type);
+            }
+
+            public override TypeNode VisitTypeNode(TypeNode typeNode)
+            {
+                var fixedVersion = this.genericParametersMapping.GetClosureTypeParameterByEnclosingTypeParameter(typeNode);
+                if (fixedVersion != typeNode)
+                {
+                    return fixedVersion;
+                }
+
+                return base.VisitTypeNode(typeNode);
+            }
+        }
+
         private static IEnumerable<Ensures> GetTaskResultBasedEnsures(List<Ensures> asyncPostconditions)
         {
             return asyncPostconditions.Where(post => !(post is EnsuresExceptional));
@@ -587,7 +854,7 @@ namespace Microsoft.Contracts.Foxtrot
         /// Returns TaskExtensions.Unwrap method.
         /// </summary>
         [Pure]
-        private static Member GetUnwrapMethod(TypeNode checkMethodTaskType)
+        private Member GetUnwrapMethod(TypeNode checkMethodTaskType)
         {
             Contract.Requires(checkMethodTaskType != null);
             Contract.Ensures(Contract.Result<Member>() != null);
@@ -615,7 +882,17 @@ namespace Microsoft.Contracts.Foxtrot
             {
                 // We need to "instantiate" generic first.
                 // I.e. for Task<int> we need to have Unwrap(Task<Task<int>>): Task<int>
-                return genericUnwrapCandidate.GetTemplateInstance(null, checkMethodTaskType.TemplateArguments[0]);
+                
+                // In this case we need to map back generic types.
+                // CheckPost method is a non-generic method from (potentially) generic closure class.
+                // In this case, if enclosing method is generic we need to map generic types back
+                // and use !!0 (reference to method template arg) instead of using !0 (which is reference
+                // to closure class template arg).
+                var enclosingGeneritType = 
+                    this.genericTypeMapper.GetEnclosingTypeParameterByClosureTypeParameter(
+                        checkMethodTaskType.TemplateArguments[0]);
+
+                return genericUnwrapCandidate.GetTemplateInstance(null, enclosingGeneritType);
             }
 
             return nonGenericUnwrapCandidate;
@@ -857,37 +1134,45 @@ namespace Microsoft.Contracts.Foxtrot
         /// <summary>
         /// Returns correct version of the ContinueWith method.
         /// </summary>
+        /// <remarks>
+        /// This function returns ContinueWith overload that takes TaskContinuationOptions.
+        /// </remarks>
         private static Method GetContinueWithMethod(Class closureClass, TypeNode taskTemplate, TypeNode taskType)
         {
             var continueWithCandidates = taskTemplate.GetMembersNamed(Identifier.For("ContinueWith"));
+            
+            // Looking for an overload with TaskContinuationOptions
+            const int expectedNumberOfArguments = 2;
 
             for (int i = 0; i < continueWithCandidates.Count; i++)
             {
                 var cand = continueWithCandidates[i] as Method;
                 if (cand == null) continue;
 
-                // For non-generic version we're looking for ContinueWith(Action<Task>)
+                // For non-generic version we're looking for ContinueWith(Action<Task>, TaskContinuationOptions)
 
-                //if (taskType.TemplateArgumentsCount() == 0)
                 if (!taskType.IsGeneric)
                 {
                     if (cand.IsGeneric) continue;
 
-                    if (cand.ParameterCount != 1) continue;
+                    if (cand.ParameterCount != expectedNumberOfArguments) continue;
 
                     if (cand.Parameters[0].Type.GetMetadataName() != "Action`1") continue;
+                    
+                    if (cand.Parameters[1].Type.GetMetadataName() != "TaskContinuationOptions") continue;
 
                     return cand;
                 }
 
-                // For generic version we're looking for ContinueWith(Func<Task, T>)
+                // For generic version we're looking for ContinueWith(Func<Task, T>, TaskContinuationOptions)
                 if (!cand.IsGeneric) continue;
 
                 if (cand.TemplateParameters.Count != 1) continue;
 
-                if (cand.ParameterCount != 1) continue;
+                if (cand.ParameterCount != expectedNumberOfArguments) continue;
 
                 if (cand.Parameters[0].Type.GetMetadataName() != "Func`2") continue;
+                if (cand.Parameters[1].Type.GetMetadataName() != "TaskContinuationOptions") continue;
 
                 // now create instance, first of task
                 var taskInstance = taskTemplate.GetTemplateInstance(
@@ -927,8 +1212,64 @@ namespace Microsoft.Contracts.Foxtrot
             return this.checkPostMethod.ReturnType == SystemTypes.Void;
         }
 
-        // Visitor for changing closure locals to fields
+        class FieldRewriter : StandardVisitor
+        {
+            private readonly EmitAsyncClosure closure;
+            private Field enclosingInstance;
 
+            public FieldRewriter(EmitAsyncClosure closure)
+            {
+                this.closure = closure;
+            }
+
+            public override Expression VisitMemberBinding(MemberBinding memberBinding)
+            {
+                // Original postcondition could have an access to the instance state via Contract.Ensures(_state == "foo");
+                // Now postcondition body resides in the different class and all references to 'this' pointer should be changed.
+                // If member binding references 'this', then we need to initialize '_this' field that points to the enclosing class
+                // and redirect the binding to this field.
+                var thisNode = memberBinding != null ? memberBinding.TargetObject as This : null;
+                if (thisNode != null && thisNode.DeclaringMethod != null && thisNode.DeclaringMethod.DeclaringType != null &&
+                    // Need to change only when 'this' belongs to enclosing class instance
+                    thisNode.DeclaringMethod.DeclaringType.Equals(this.closure.declaringType))
+                {
+                    var thisField = EnsureClosureInitialization(memberBinding.TargetObject);
+
+                    return new MemberBinding(
+                            new MemberBinding(this.closure.checkPostMethod.ThisParameter, thisField),
+                            memberBinding.BoundMember);
+                }
+
+                return base.VisitMemberBinding(memberBinding);
+            }
+
+            /// <summary>
+            /// Ensures that async closure has a field with enclosing class field, like public EnclosingType _this.
+            /// </summary>
+            private Field EnsureClosureInitialization(Expression targetObject)
+            {
+                if (this.enclosingInstance == null)
+                {
+                    var localType = this.closure.forwarder != null ? this.closure.forwarder.VisitTypeReference(targetObject.Type) : targetObject.Type;
+
+                    var enclosedTypeField = new Field(
+                        this.closure.closureClass, null, FieldFlags.Public, new Identifier("_this"), localType, null);
+                    this.closure.closureClass.Members.Add(enclosedTypeField);
+
+                    // initialize the closure field
+                    var instantiatedField = Rewriter.GetMemberInstanceReference(enclosedTypeField, this.closure.closureClassInstance);
+                    this.closure.ClosureInitializer.Statements.Add(
+                        new AssignmentStatement(
+                            new MemberBinding(this.closure.closureLocal, instantiatedField), targetObject));
+
+                    this.enclosingInstance = enclosedTypeField;
+                }
+
+                return this.enclosingInstance;
+            }
+        }
+
+        // Visitor for changing closure locals to fields
         public override Expression VisitLocal(Local local)
         {
             if (HelperMethods.IsClosureType(this.declaringType, local.Type))
@@ -937,6 +1278,16 @@ namespace Microsoft.Contracts.Foxtrot
                 if (!closureLocals.TryGetValue(local, out mb))
                 {
                     // TODO ST: not clear what's going on here!
+                    // Clarification: this method changes access to local variables to apropriate fields.
+                    // Consider following example:
+                    // public async Task<int> FooAsync(int[] arguments, int length)
+                    // {
+                    //    Contract.Ensures(Contract.ForAll(arguments, i => i == Contract.Result<int>() && i == length)); 
+                    // }
+                    // In this case, CheckPost method should reference length that will become a field of the generated
+                    // closure class.
+                    // So this code will change all locals (like length) to appropriate fields of the async closure instance.
+
                     // Forwarder would be null, if enclosing method with async closure is not generic
                     var localType = forwarder != null ? forwarder.VisitTypeReference(local.Type) : local.Type;
 

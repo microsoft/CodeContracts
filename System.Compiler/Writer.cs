@@ -556,6 +556,8 @@ namespace System.Compiler{
       writer.peKind = module.PEKind;
       writer.TrackDebugData = module.TrackDebugData;
       writer.fileAlignment = module.FileAlignment;
+      writer.baseAddress = module.BaseAddress;
+      writer.sizeOfStackReserve = module.SizeOfStackReserve;
       if (writer.fileAlignment < 512) writer.fileAlignment = 512;
       writer.PublicKey = this.PublicKey;
       writer.SignatureKeyLength = this.SignatureKeyLength;
@@ -2779,6 +2781,9 @@ namespace System.Compiler{
             this.methodBodyHeap.Write((ushort)pi);
           }
           this.IncrementStackHeight();
+          return;
+        case NodeType.This:
+          this.methodBodyHeap.Write((byte)0x02);
           return;
       }
     }

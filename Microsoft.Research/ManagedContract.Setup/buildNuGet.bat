@@ -37,7 +37,7 @@ echo     Building NuGet Package
 echo ************************************
 set packageRootFolder=%expandedFolder%\layout\[ProgramFilesFolder]\Microsoft\Contracts
 copy %contractFolder%\Microsoft.Contracts.ds %packageRootFolder%\Microsoft.Contracts.ds /Y
-NugetBinaries\NuGet.exe pack -Verbosity detailed -NoPackageAnalysis -NoDefaultExcludes Microsoft.Contracts.nuspec -OutputDirectory %contractFolder%\%releaseConfig% -Version %version% -BasePath "%packageRootFolder%"
+NugetBinaries\NuGet.exe pack -Verbosity detailed -NoPackageAnalysis -NoDefaultExcludes DotNet.Contracts.nuspec -OutputDirectory %contractFolder%\%releaseConfig% -Version %version% -BasePath "%packageRootFolder%"
 
 
 

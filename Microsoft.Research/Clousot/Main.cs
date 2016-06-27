@@ -12,8 +12,6 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#undef USECLOUDOT
-
 using System;
 using System.Collections.Generic;
 using System.Compiler.Analysis;
@@ -29,9 +27,6 @@ namespace Microsoft.Research.CodeAnalysis
 {
   public class CCI1Driver 
   {
-
-    const int CloudotAnalysesRetry = 3;
-
     public static int Main(string[] args)
     {
       return Main(args, null, null);
@@ -51,52 +46,9 @@ namespace Microsoft.Research.CodeAnalysis
     {
       Contract.Requires(args != null);
 
-#if USECLOUDOT
-      if (OptionsHelper.UseCloudot(args))
-      {
-        // Just an horrible shortcut to invoke the debugger
-        if (args.Contains("-break"))
-        {
-          System.Diagnostics.Debugger.Launch();
-        }
-
-        for (var i = 0; i < CloudotAnalysesRetry; i++)
-        {
-          string[] clousotArgs = null;
-          try
-          {
-            return ClousotViaService.Main(args, out clousotArgs);
-          }
-          catch (Exception e)
-          {
-            Console.WriteLine("Connection to Cloudot terminated with an exception".PrefixWithCurrentTime());
-            Console.WriteLine("Exception details: {0}", e.ToString());
-
-            if(i == CloudotAnalysesRetry -1 )
-            {
-              Console.WriteLine("We gave up with the service. Reverting to local execution");
-            }
-            else
-            {
-              Console.WriteLine("Try to use the Cloudot again (remaining {0})", CloudotAnalysesRetry - (i-1));
-            }
-
-            args = clousotArgs; // We use the service specific options in the case we revert to local execution
-          }
-        }
-      }
-#endif
       var assemblyCache = new Hashtable();
       try
       {
-#if DEBUG
-#if USECLOUDOT
-        if (args != null)
-#endif
-        {
-          args = args.Where(s => s != StringConstants.DoNotUseCloudot).ToArray();
-        }
-#endif
         return Clousot.ClousotMain(args, CCIMDDecoder.Value, CCIContractDecoder.Value, assemblyCache, outputFactory, cacheAccessorFactories);
       }
       catch (ExitRequestedException e)

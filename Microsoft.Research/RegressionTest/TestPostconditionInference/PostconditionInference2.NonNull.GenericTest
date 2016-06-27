@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="postconditioninference2.nonnull" storage="c:\cci\microsoft.research\regressiontest\testpostconditioninference\postconditioninference2.nonnull.generictest" id="a00ecc5a-a535-4582-888d-9e579c1bdaab" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot2.exe" arguments="-regression -show validations -nonnull TestPostconditionInference.dll -infer methodensures  -infer requires -define nonnull -prefrompost=false" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

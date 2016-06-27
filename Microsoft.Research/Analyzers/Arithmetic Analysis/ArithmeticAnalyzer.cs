@@ -95,12 +95,12 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
         Predicate<APC> cachePCs, 
-        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory
+        IMethodAnalysisClientFactory<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, T> factory, DFAController controller
       )
       {
         var adomain = options[0].Type;
-        var analysis = new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.ArithmeticAnalysis(methodName, driver, options[0], adomain, cachePCs);
-        return factory.Create(analysis);
+        var analysis = new AnalysisWrapper.TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.ArithmeticAnalysis(methodName, driver, options[0], adomain, cachePCs, controller);
+        return factory.Create(analysis, controller);
       }
       /// <summary>
       ///  Run the analysis for the arithmetic checking
@@ -109,14 +109,14 @@ namespace Microsoft.Research.CodeAnalysis
       (
         string methodFullName,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> methodDriver,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
         //where Variable : IEquatable<Variable>
         //where Expression : IEquatable<Expression>
         //where Type : IEquatable<Type> 
       {
         // F: For the moment we do not have iterative application of the analysis for those
-        var result = AnalysisWrapper.RunTheArithmeticAnalysis(methodFullName, methodDriver, options[0].Type, options[0], cachePCs);
+        var result = AnalysisWrapper.RunTheArithmeticAnalysis(methodFullName, methodDriver, options[0].Type, options[0], cachePCs, controller);
         return result;
       }
 

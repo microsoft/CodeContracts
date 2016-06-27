@@ -16,7 +16,22 @@ namespace Microsoft.Research.DataStructures
 
         public void SpendSymbolicTime(long amount)
         {
-            System.Threading.Interlocked.Add(ref elapsedSymbolic, amount);
+            if (this.IsRunning)
+            {
+                System.Threading.Interlocked.Add(ref elapsedSymbolic, amount);
+            }
+        }
+
+        public new void Reset()
+        {
+            System.Threading.Interlocked.Exchange(ref elapsedSymbolic, 0);
+            base.Reset();
+        }
+
+        public new void Restart()
+        {
+            System.Threading.Interlocked.Exchange(ref elapsedSymbolic, 0);
+            base.Restart();
         }
     }
 
@@ -41,7 +56,10 @@ namespace Microsoft.Research.DataStructures
 
         public void SpendSymbolicTime(long amount)
         {
-            watch.SpendSymbolicTime(amount);
+            if (watch.IsRunning)
+            {
+                watch.SpendSymbolicTime(amount);
+            }
         }
 
         #region Start/Stop

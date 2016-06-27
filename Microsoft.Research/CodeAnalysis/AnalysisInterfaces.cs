@@ -442,7 +442,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// <returns>A delegate that starts the fixpoint computation if provided an initial abstract value</returns>
         Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(
           IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis,
-          DFAOptions options
+          DFAOptions options, DFAController controller
         );
     }
 
@@ -492,7 +492,7 @@ namespace Microsoft.Research.CodeAnalysis
             get { throw new NotImplementedException(); }
         }
 
-        public Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis, DFAOptions options)
+        public Func<AnalysisState, IFixpointInfo<APC, AnalysisState>> CreateForward<AnalysisState>(IAnalysis<APC, AnalysisState, IVisitMSIL<APC, Local, Parameter, Method, Field, Type, Expression, Variable, AnalysisState, AnalysisState>, EdgeConversionData> analysis, DFAOptions options, DFAController controller)
         {
             Contract.Ensures(Contract.Result<Func<AnalysisState, IFixpointInfo<APC, AnalysisState>>>() != null);
 
@@ -910,7 +910,9 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         void EndAnalysis();
 
-        void RunHeapAndExpressionAnalyses();
+        void RunHeapAndExpressionAnalyses(DFAController controller);
+
+        IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
 
         /// <summary>
         /// Returns a query interface for truths about variables and reachable pc's independent of higher-level analysis,
@@ -937,6 +939,8 @@ namespace Microsoft.Research.CodeAnalysis
       where LogOptions : IFrameworkLogOptions
       where Type : IEquatable<Type>
     {
+        public IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall { get; set; }
+
         public ICodeLayer<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Variable, Variable, IValueContext<Local, Parameter, Method, Field, Type, Variable>, IFunctionalMap<Variable, FList<Variable>>>
           ValueLayer
         {
@@ -1034,7 +1038,7 @@ namespace Microsoft.Research.CodeAnalysis
             throw new NotImplementedException();
         }
 
-        public void RunHeapAndExpressionAnalyses()
+        public void RunHeapAndExpressionAnalyses(DFAController controller)
         {
             throw new NotImplementedException();
         }

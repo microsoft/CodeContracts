@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="TestKarrWithOthers" storage="c:\ccisnapshot\microsoft.research\regressiontest\basic\testkarr\testkarrwithothers.generictest" id="08a76394-da76-46a3-a7ac-14908e13d54f" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression -show validations -define karrothers -bounds:type:PentagonsKarrLeq TestKarr.dll" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

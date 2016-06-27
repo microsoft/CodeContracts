@@ -560,7 +560,7 @@ namespace Microsoft.Research.AbstractDomains.Numerical
             {
                 if (watch.Elapsed.Minutes >= 5)
                 {
-                    throw new TimeoutExceptionFixpointComputation();
+                    throw new TimeoutExceptionFixpointComputation("basis exploration");
                 }
 
                 for (int i = 0; i < comb.Current.Length; i++)

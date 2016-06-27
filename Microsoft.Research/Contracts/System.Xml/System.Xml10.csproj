@@ -205,7 +205,6 @@
     <Compile Include="System.Xml.Schema.XmlSchemaComplexType.cs" />
     <Compile Include="System.Xml.Schema.XmlSchemaGroupBase.cs" />
     <Compile Include="System.Xml.Schema.XmlSchemaObjectCollection.cs" />
-    <Compile Include="System.Xml.SchemaSet.cs" />
     <Compile Include="System.Xml.Serialization.IXmlSerializable.cs" />
     <Compile Include="System.Xml.XmlAttribute.cs" />
     <Compile Include="System.Xml.XmlCDataSection.cs" />
@@ -232,6 +231,7 @@
     <Compile Include="System.Xml.XmlReaderSettings.cs" />
     <Compile Include="System.Xml.XmlResolver.cs" />
     <Compile Include="System.Xml.XmlSchemaObjectTable.cs" />
+    <Compile Include="System.Xml.XmlSchemaSet.cs" />
     <Compile Include="System.Xml.XmlSignificantWhiteSpace.cs" />
     <Compile Include="System.Xml.XmlText.cs" />
     <Compile Include="System.Xml.XmlWhiteSpace.cs" />
@@ -256,8 +256,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
-    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;..\$(OutputPath)" />
+    <BuildTargetList Include="Microsoft\Framework\v3.5\Target;Microsoft\Framework\.NETFramework\v4.0\Target;Microsoft\Framework\.NETFramework\v4.5\Target;Microsoft\Framework\.NETFramework\v4.6\Target;Microsoft\Framework\Silverlight\v3.0\Target;Microsoft\Framework\Silverlight\v4.0\Target;Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Target;Microsoft\Framework\Silverlight\v5.0\Target" />
+    <MultiTargetReferencePaths Include="..\..\Imported\ReferenceAssemblies\;$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\;..\$(OutputPath)" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

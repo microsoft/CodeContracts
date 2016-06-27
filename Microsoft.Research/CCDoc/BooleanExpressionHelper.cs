@@ -341,5 +341,23 @@ namespace CCDoc {
       }
       return base.Rewrite(conditional);
     }
+
+      public override IExpression Rewrite(IGreaterThan greaterThan)
+      {
+          // Catch use of the x > null idiom used by Roslyn as generated
+          // code for x != null statements.
+          if (ExpressionHelper.IsNullLiteral(greaterThan.RightOperand))
+          {
+              var c = new NotEquality
+              {
+                  LeftOperand = greaterThan.LeftOperand,
+                  RightOperand = greaterThan.RightOperand,
+                  Type = greaterThan.Type
+              };
+              return c;
+          }
+
+          return base.Rewrite(greaterThan);
+      }
   }
 }

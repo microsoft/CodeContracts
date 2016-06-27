@@ -36,13 +36,13 @@ namespace Microsoft.Research.CodeAnalysis
       string methodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       ADomainKind adomain, Analyzers.Arithmetic.ArithmeticOptions options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
      )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
       where Type : IEquatable<Type>
     {
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.HelperForRunTheArithmeticAnalysis(methodName, adomain, driver, options, cachePCs);
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.HelperForRunTheArithmeticAnalysis(methodName, adomain, driver, options, cachePCs, controller);
     }
 
 
@@ -56,10 +56,10 @@ namespace Microsoft.Research.CodeAnalysis
         string methodName, ADomainKind adomain,
         IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions>/*!*/ driver,
         Analyzers.Arithmetic.ArithmeticOptions options,
-        Predicate<APC> cachePCs
+        Predicate<APC> cachePCs, DFAController controller
       )
       {
-        return RunTheAnalysis(methodName, driver, new ArithmeticAnalysis(methodName, driver, options, adomain, cachePCs));
+        return RunTheAnalysis(methodName, driver, new ArithmeticAnalysis(methodName, driver, options, adomain, cachePCs, controller), controller);
       }
 
       #region Facility to forward operations on the abstract domain (implementation of IAbstractDomainOperations)
@@ -125,9 +125,9 @@ namespace Microsoft.Research.CodeAnalysis
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver,
           Analyzers.Arithmetic.ArithmeticOptions options,
           ADomainKind abstractDomain,
-          Predicate<APC> cachePCs
+          Predicate<APC> cachePCs, DFAController controller
         )
-          : base(methodName, abstractDomain, mdriver, options, cachePCs)
+          : base(methodName, abstractDomain, mdriver, options, cachePCs, controller)
         {
           this.myOptions = options;
         }

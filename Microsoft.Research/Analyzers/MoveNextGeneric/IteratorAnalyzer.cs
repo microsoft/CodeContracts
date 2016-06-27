@@ -98,9 +98,9 @@ namespace Microsoft.Research.CodeAnalysis
 
         #region IMethodAnalysisClientFactory<Local,Parameter,Method,Field,Property,Event,Type,Attribute,Assembly,Expression,Variable,IteratorClient> Members
 
-        public IIteratorClient<Variable> Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis)
+        public IIteratorClient<Variable> Create<AState>(IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis, DFAController controller)
         {
-          return new IteratorClient<AState>(this.mdriver, this.startState, analysis);
+          return new IteratorClient<AState>(this.mdriver, this.startState, analysis, controller);
         }
 
         #endregion
@@ -117,7 +117,7 @@ namespace Microsoft.Research.CodeAnalysis
         public IteratorClient(
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> iMethodDriver,
           int startState,
-          IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis
+          IAbstractAnalysis<Local, Parameter, Method, Field, Property, Type, Expression, Attribute, Assembly, AState, Variable> analysis, DFAController controller
         )
         {
           this.mdriver = iMethodDriver;
@@ -137,8 +137,8 @@ namespace Microsoft.Research.CodeAnalysis
               Console.WriteLine("[MoveNext state analysis] current state {0}", currentState);
             }
 
-            var preAnalyzer = new IteratorStateAnalysis(mdriver, startState, currentState);
-            var fixpoint = mdriver.HybridLayer.CreateForward(preAnalyzer, new DFAOptions { Trace = mdriver.Options.TraceMoveNext })(preAnalyzer.GetTopValue());
+            var preAnalyzer = new IteratorStateAnalysis(mdriver, startState, currentState, controller);
+            var fixpoint = mdriver.HybridLayer.CreateForward(preAnalyzer, new DFAOptions { Trace = mdriver.Options.TraceMoveNext }, controller)(preAnalyzer.GetTopValue());
             stateInfo.Add(currentState, apc =>
             {
               INumericalAbstractDomain<BoxedVariable<Variable>, BoxedExpression> d;
@@ -446,10 +446,10 @@ namespace Microsoft.Research.CodeAnalysis
         private int currentState;
         private Dictionary<int, Set<APC>> stateReturnPoints = new Dictionary<int, Set<APC>>();
 
-        public IteratorStateAnalysis(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver, int startState, int currentState)
+        public IteratorStateAnalysis(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> mdriver, int startState, int currentState, DFAController controller)
           : base(mdriver.MetaDataDecoder.Name(mdriver.CurrentMethod),mdriver, 
                  new List<Analyzers.Bounds.BoundsOptions>() { new Analyzers.Bounds.BoundsOptions(mdriver.Options){ type= Analyzers.DomainKind.SubPolyhedra} },
-                 apc => true)
+                 apc => true, controller)
         {
           // TODO: Complete member initialization
           this.mdriver = mdriver;

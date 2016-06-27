@@ -2251,9 +2251,9 @@ namespace Microsoft.Contracts.Foxtrot
                 // Roslyn is not introducing local variable for holding an array.
                 // Instead of that it uses "dup" instruction and assignes parameter expression
                 // directly to the stack slot.
-                // This change should be addressed here, because otherwise ccrewrite will fail
+                // This change is addressed here, because otherwise ccrewrite will fail
                 // with an error.
-                if (idxr != null && (idxr.Object is Local || ExpressionTreeInitialization(assignment)))
+                if (idxr != null && (idxr.Object is Local || IsConstructedArrayIndexer(idxr) || ExpressionTreeInitialization(assignment)))
                     targetIsLocal = true;
                 
                 // Assignments to locals that are structs show up as address deference
@@ -2284,7 +2284,7 @@ namespace Microsoft.Contracts.Foxtrot
 
                 base.VisitAssignmentStatement(assignment);
             }
-
+            
             /// <summary>
             /// Returns true the assignment was done from local variable that holds parameter expression
             /// to the indexer.
@@ -2297,7 +2297,35 @@ namespace Microsoft.Contracts.Foxtrot
                 var sourceAsLocal = assignment.Source as Local;
                 return NameUtils.IsExpressionTreeLocal(sourceAsLocal);
             }
+            
+            /// <summary>
+            ///     Determines whether the specified indexer refers to an array
+            ///     created in the currently validated contract.
+            /// </summary>
+            /// <param name="indexer">
+            ///     An indexer which references object origin shall be determined.
+            /// </param>
+            /// <returns>
+            ///     <see langword="true"/> if the specified indexer refers to an array
+            ///     created in the currently validated contract;
+            ///     <see langword="false"/>, otherwise.
+            /// </returns>
+            private bool IsConstructedArrayIndexer(Indexer indexer)
+            {
+                if (!seenConstructArray || !seenDup)
+                {
+                    return false;
+                }
 
+                Node obj = indexer.Object;
+                if (obj == null)
+                {
+                    return false;
+                }
+
+                return obj.NodeType == NodeType.Pop;
+            }
+            
             /// <summary>
             /// Verifies that method calls are to pure methods.
             /// </summary>
@@ -2374,35 +2402,48 @@ namespace Microsoft.Contracts.Foxtrot
             }
 
             private bool seenDup;
+            private bool seenConstructArray;
 
             public override void VisitEnsuresExceptional(EnsuresExceptional exceptional)
             {
                 seenDup = false;
+                seenConstructArray = false;
                 base.VisitEnsuresExceptional(exceptional);
             }
 
             public override void VisitEnsuresNormal(EnsuresNormal normal)
             {
                 seenDup = false;
+                seenConstructArray = false;
                 base.VisitEnsuresNormal(normal);
             }
 
             public override void VisitInvariant(Invariant invariant)
             {
                 seenDup = false;
+                seenConstructArray = false;
                 base.VisitInvariant(invariant);
             }
 
             public override void VisitRequiresOtherwise(RequiresOtherwise otherwise)
             {
                 seenDup = false;
+                seenConstructArray = false;
                 base.VisitRequiresOtherwise(otherwise);
             }
 
             public override void VisitRequiresPlain(RequiresPlain plain)
             {
                 seenDup = false;
+                seenConstructArray = false;
                 base.VisitRequiresPlain(plain);
+            }
+
+            public override void VisitConstructArray(ConstructArray consArr)
+            {
+                this.seenConstructArray = true;
+
+                base.VisitConstructArray(consArr);
             }
 
             public void VisitPop()

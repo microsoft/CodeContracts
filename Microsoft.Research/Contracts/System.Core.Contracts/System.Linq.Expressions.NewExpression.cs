@@ -68,7 +68,6 @@ namespace System.Linq.Expressions
     {
       get
       {
-        Contract.Ensures(Contract.Result<ReadOnlyCollection<MemberInfo>>() != null);
         return default(ReadOnlyCollection<MemberInfo>);
       }
     }

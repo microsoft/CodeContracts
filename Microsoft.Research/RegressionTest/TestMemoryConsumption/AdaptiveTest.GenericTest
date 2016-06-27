@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<GenericTest name="AdaptiveTest" storage="c:\cci\microsoft.research\regressiontest\testmemoryconsumption\adaptivetest.generictest" id="6070e54d-1738-4536-b3bd-da7be3cfb636" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <Css projectStructure="" iteration="" />
-  <Owners>
-    <Owner name="" />
-  </Owners>
-  <Command filename="%testlocation%\bin\debug\clousot.exe" arguments="-regression  -bounds    -define outofmem  -show validations -timeout 3600 -show progress  TestMemoryConsumption.dll -show analysisphases -adaptive" workingDirectory="%testlocation%\bin\debug" />
-  <SummaryXmlFile path="%TestOutputDirectory%\&lt;Enter summary file name here&gt;" />
-</GenericTest>

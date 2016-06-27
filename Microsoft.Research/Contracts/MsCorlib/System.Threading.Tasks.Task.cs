@@ -258,7 +258,13 @@ namespace System.Threading.Tasks
     // Returns:
     //     The System.AggregateException that caused the System.Threading.Tasks.Task
     //     to end prematurely.
-    //public AggregateException Exception { get; }
+    public AggregateException Exception
+    {
+      get
+      {
+        return default(AggregateException);
+      }
+    }
     //
     // Summary:
     //     Provides access to factory methods for creating System.Threading.Tasks.Task
@@ -268,12 +274,12 @@ namespace System.Threading.Tasks
     //     The default System.Threading.Tasks.TaskFactory for the current task.
     public static TaskFactory Factory 
     { 
-    get
-{
-Contract.Ensures(Contract.Result<TaskFactory>() != null);
-return null;
-} 
-}
+      get
+      {
+        Contract.Ensures(Contract.Result<TaskFactory>() != null);
+        return null;
+      }
+    }
     //
     // Summary:
     //     Gets a unique ID for this System.Threading.Tasks.Task instance.
@@ -288,14 +294,26 @@ return null;
     //
     // Returns:
     //     true if the task has completed due to being canceled; otherwise false.
-    //public bool IsCanceled { get; }
+    public bool IsCanceled
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets whether this System.Threading.Tasks.Task has completed.
     //
     // Returns:
     //     true if the task has completed; otherwise false.
-    //public bool IsCompleted { get; }
+    public virtual bool IsCompleted
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets whether the System.Threading.Tasks.Task completed due to an unhandled
@@ -303,15 +321,26 @@ return null;
     //
     // Returns:
     //     true if the task has thrown an unhandled exception; otherwise false.
-    //public bool IsFaulted { get; }
+    public bool IsFaulted
+    {
+      get
+      {
+        return default(bool);
+      }
+    }
     //
     // Summary:
     //     Gets the System.Threading.Tasks.TaskStatus of this Task.
     //
     // Returns:
     //     The current System.Threading.Tasks.TaskStatus of this task instance.
-    //public TaskStatus Status { get; }
-
+    public TaskStatus Status
+    {
+      get
+      {
+        return default(TaskStatus);
+      }
+    }
     // Summary:
     //     Creates a continuation that executes when the target System.Threading.Tasks.Task
     //     completes.
@@ -1545,7 +1574,162 @@ return null;
       return null;
 
     }
-    
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed successfully with the
+    //     specified result.
+    //
+    // Parameters:
+    //   result:
+    //     The result to store into the completed task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The successfully completed task.
+    [Pure]
+    public static Task<TResult> FromResult<TResult>(TResult result)
+    {
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == null);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.RanToCompletion);
+
+      return default(Task<TResult>);
+    }
+#endif
+
+#if NETFRAMEWORK_4_6
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task that's completed due to cancellation with
+    //     a specified cancellation token.
+    //
+    // Parameters:
+    //   cancellationToken:
+    //     The cancellation token with which to complete the task.
+    //
+    // Returns:
+    //     The canceled task.
+    [Pure]
+    public static Task FromCanceled(CancellationToken cancellationToken)
+    {
+      Contract.Requires(cancellationToken.IsCancellationRequested);
+      Contract.Ensures(Contract.Result<Task>() != null);
+      Contract.Ensures(Contract.Result<Task>().Exception == null);
+      Contract.Ensures(Contract.Result<Task>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.Canceled);
+      Contract.EnsuresOnThrow<ArgumentOutOfRangeException>(true, "Cancellation has not been requested for cancellationToken; its IsCancellationRequested property is false.");
+
+      return default(Task);
+    }
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed due to cancellation
+    //     with a specified cancellation token.
+    //
+    // Parameters:
+    //   cancellationToken:
+    //     The cancellation token with which to complete the task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The canceled task.
+    [Pure]
+    public static Task<TResult> FromCanceled<TResult>(CancellationToken cancellationToken)
+    {
+      Contract.Requires(cancellationToken.IsCancellationRequested);
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.Canceled);
+      Contract.EnsuresOnThrow<ArgumentOutOfRangeException>(true, "Cancellation has not been requested for cancellationToken; its IsCancellationRequested property is false.");
+
+      return default(Task<TResult>);
+    }
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task that has completed with a specified exception.
+    //
+    // Parameters:
+    //   exception:
+    //     The exception with which to complete the task.
+    //
+    // Returns:
+    //     The faulted task.
+    [Pure]
+    public static Task FromException(Exception exception)
+    {
+      Contract.Requires(exception != null);
+      Contract.Ensures(Contract.Result<Task>() != null);
+      Contract.Ensures(Contract.Result<Task>().Exception == exception);
+      Contract.Ensures(!Contract.Result<Task>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task>().IsCompleted);
+      Contract.Ensures(Contract.Result<Task>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.Faulted);
+
+      return default(Task);
+    }
+    //
+    // Summary:
+    //     Creates a System.Threading.Tasks.Task`1 that's completed with a specified exception.
+    //
+    // Parameters:
+    //   exception:
+    //     The exception with which to complete the task.
+    //
+    // Type parameters:
+    //   TResult:
+    //     The type of the result returned by the task.
+    //
+    // Returns:
+    //     The faulted task.
+    [Pure]
+    public static Task<TResult> FromException<TResult>(Exception exception)
+    {
+      Contract.Requires(exception != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>() != null);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Exception == exception);
+      Contract.Ensures(!Contract.Result<Task<TResult>>().IsCanceled);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsCompleted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().IsFaulted);
+      Contract.Ensures(Contract.Result<Task<TResult>>().Status == TaskStatus.Faulted);
+
+
+      return default(Task<TResult>);
+    }
+    //
+    // Summary:
+    //     Gets a task that has already completed successfully.
+    //
+    // Returns:
+    //     The successfully completed task.
+    public static Task CompletedTask
+    {
+      [Pure]
+      get
+      {
+        Contract.Ensures(Contract.Result<Task>() != null);
+        Contract.Ensures(Contract.Result<Task>().Exception == null);
+        Contract.Ensures(!Contract.Result<Task>().IsCanceled);
+        Contract.Ensures(Contract.Result<Task>().IsCompleted);
+        Contract.Ensures(!Contract.Result<Task>().IsFaulted);
+        Contract.Ensures(Contract.Result<Task>().Status == TaskStatus.RanToCompletion);
+
+        return default(Task);
+      }
+    }
 #endif
   }
 
@@ -1790,7 +1974,7 @@ return null;
     //     The result value of this System.Threading.Tasks.Task<TResult>, which is the
     //     same type as the task's type parameter.
     //[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    //public TResult Result { get; internal set; }
+    public TResult Result { get; internal set; }
 
     // Summary:
     //     Creates a continuation that executes when the target System.Threading.Tasks.Task<TResult>

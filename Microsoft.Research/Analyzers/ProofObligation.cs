@@ -232,6 +232,11 @@ namespace Microsoft.Research.CodeAnalysis
       }
     }
 
+    public void ResetCachedOutcome()
+    {
+      this.outcome = default(ProofOutcome?);
+    }
+
 
     #endregion
 
@@ -909,6 +914,15 @@ namespace Microsoft.Research.CodeAnalysis
       return total_obligations != 0 ? ((double)validated) / total_obligations : 1.0;
     }
 
+    public void ResetCachedOutcomes()
+    {
+      foreach (var obl in this.obligations)
+      {
+        obl.ResetCachedOutcome();
+      }
+      stats = new AnalysisStatistics();
+    }
+
     public void Print()
     {
       foreach (var p in this.obligations)
@@ -989,6 +1003,14 @@ namespace Microsoft.Research.CodeAnalysis
         obl.Validate(output, inferenceManager, query);
       }
       return result;
+    }
+
+    public void ResetCachedOutcomes()
+    {
+      foreach (var obl in this.underlying)
+      {
+        obl.ResetCachedOutcomes();
+      }
     }
 
     public bool PCWithProofObligation(APC pc)

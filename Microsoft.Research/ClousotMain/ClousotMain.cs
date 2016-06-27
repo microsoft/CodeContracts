@@ -63,10 +63,6 @@ namespace Microsoft.Research.CodeAnalysis
       where Type : IEquatable<Type>
       where Method : IEquatable<Method>
     {
-
-      // We do it here becase we hope we can trigger some work of the jit 
-      args = PipesUtils.WaitForArgsIfNeeded(args);
-
       using (var binder = new TypeBinder<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>(
         args, mdDecoder, contractDecoder, assemblyCache, outputFactory, cacheAccessorFactories
         ))
@@ -2008,23 +2004,26 @@ namespace Microsoft.Research.CodeAnalysis
         out AnalysisStatistics methodStats,
         out ContractDensity methodContractDensity)
       {
+        var results = new List<IMethodResult<SymbolicValue>>(options.Analyses.Count);
+        var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
 
         // keep density stats
         methodContractDensity = ContractDensityAnalyzer.GetContractDensity(mdriver);
 
         WriteLinePhase(output, "{0}: Running the heap analysis", (phasecount++).ToString());
-        mdriver.RunHeapAndExpressionAnalyses();
+        // TODO(wuestholz): Maybe we should pass a fresh controller for the next call.
+        mdriver.RunHeapAndExpressionAnalyses(null);
 
         var inferenceManager = (ContractInferenceManager)null;
 
         try
         {
-          var results = new List<IMethodResult<SymbolicValue>>(options.Analyses.Count);
-          var obligations = new List<IProofObligations<SymbolicValue, BoxedExpression>>();
           var factQuery = new ComposedFactQuery<SymbolicValue>(mdriver.BasicFacts.IsUnreachable);
           var falseObligations = (IEnumerable<MinimalProofObligation>)null;
 
           methodStats = new AnalysisStatistics();
+
+          cachedExplicitAssertions = null;  // Invalidate the cache.
 
           phasecount = RunAdaptiveMethodAnalysis(phasecount, mdriver);
 
@@ -2032,7 +2031,12 @@ namespace Microsoft.Research.CodeAnalysis
 
           phasecount = RunFactsDiscoveryAnalyses(method, phasecount, methodFullName, cdriver, mdriver, results, obligations, factQuery);
 
+          var controller = CreateFreshDFAController("checking", methodFullName, mdriver, results, obligations);
+          controller.ReachedStart(null);
+
           phasecount = RunProofObligationsChecking(phasecount, mdriver, ref methodStats, results, obligations, out inferenceManager, out falseObligations);
+
+          controller.ReachedEnd(null, null, methodStats);
 
           phasecount = RunExtractMethodLogic(phasecount, mdriver, factQuery);
 
@@ -2245,7 +2249,7 @@ namespace Microsoft.Research.CodeAnalysis
 
           if (shouldSearchForAWitness)
           {
-            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, this.cancellationToken));              
+            var mayReturnNull = mdriver.MayReturnNull = inferenceManager.PostCondition.MayReturnNull(factQuery, new TimeOutChecker(60, this.cancellationToken));
 #if DEBUG
             if (mayReturnNull)
             {
@@ -2488,6 +2492,40 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
+      private AnalysisStatistics FailingObligations(
+          IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
+          List<IMethodResult<SymbolicValue>> results,
+          List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
+          IOutputFullResults<Method, Assembly> output)
+      {
+        var result = new AnalysisStatistics();
+
+        AssertionStatistics dummy;
+        var explicitAssertions = ExplicitAssertions(mdriver, out dummy, null);
+
+        var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
+
+        // Create the contract inference manager
+        var inferenceManager = CreateContractInferenceManager(MergeIntoAFlatList(obligations, explicitAssertions), facts, mdriver, output);
+
+        obligations.ForEach(obl => obl.ResetCachedOutcomes());
+        
+        // validate implicit obligations
+        foreach (var obl in obligations)
+        {
+          obl.Validate(output, inferenceManager, facts);
+          result.Add(obl.Statistics);
+        }
+
+        if (options.CheckAssertions)
+        {
+          var stats = AssertionFinder.ValidateAssertions(explicitAssertions, facts, inferenceManager, mdriver, output);
+          result.Add(stats);
+        }
+
+        return result;
+      }
+
       // Check the proof obligations
       private int RunProofObligationsChecking(
           int phasecount,
@@ -2503,12 +2541,14 @@ namespace Microsoft.Research.CodeAnalysis
         falseObligations = null;
 
         // Collect explicit obligations - we need them for precondition inference
-        var explicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
+        var explicitAssertions = ExplicitAssertions(mdriver, out localAssertStats, null);
 
         var facts = CreateFactQuery(mdriver.BasicFacts.IsUnreachable, results);
 
         // Create the contract inference manager
         inferenceManager = CreateContractInferenceManager(MergeIntoAFlatList(obligations, explicitAssertions), facts, mdriver, output);
+
+        obligations.ForEach(obl => obl.ResetCachedOutcomes());
 
         // validate implicit obligations
         foreach (var obl in obligations)
@@ -2539,6 +2579,21 @@ namespace Microsoft.Research.CodeAnalysis
         return phasecount;
       }
 
+      AssertionFinder.AssertionObligations<SymbolicValue> cachedExplicitAssertions;
+      AssertionStatistics cachedLocalAssertStats;
+
+      private AssertionFinder.AssertionObligations<SymbolicValue> ExplicitAssertions(IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, out AssertionStatistics localAssertStats, DFAController controller)
+      {
+        if (cachedExplicitAssertions != null)
+        {
+          localAssertStats = cachedLocalAssertStats;
+          return cachedExplicitAssertions;
+        }
+        cachedExplicitAssertions = AssertionFinder.GatherAssertions(mdriver, output, out localAssertStats);
+        cachedLocalAssertStats = localAssertStats;
+        return cachedExplicitAssertions;
+      }
+
       private int RunFactsDiscoveryAnalyses(
           Method method,
           int phasecount,
@@ -2547,7 +2602,8 @@ namespace Microsoft.Research.CodeAnalysis
           IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver,
           List<IMethodResult<SymbolicValue>> results,
           List<IProofObligations<SymbolicValue, BoxedExpression>> obligations,
-          ComposedFactQuery<SymbolicValue> factQuery)
+          ComposedFactQuery<SymbolicValue> factQuery,
+          Func<object, int> failingObligations = null)
       {
         var moveNextStartState = mdriver.MetaDataDecoder.MoveNextStartState(method);
 
@@ -2602,15 +2658,29 @@ namespace Microsoft.Research.CodeAnalysis
               if (obl != null) obligations.Add(obl);
 
               IMethodResult<SymbolicValue> result;
-              if (factory != null)
+              DFAController controller = null;
+              try
               {
-                var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory);
-                result = iteratorAnalysis.Analyze();
+                controller = CreateFreshDFAController(analysis.Name, methodFullName, mdriver, results, obligations);
+
+                if (factory != null)
+                {
+                  var iteratorAnalysis = analysis.Instantiate(methodFullName, mdriver, cachePCs, factory, controller);
+                  result = iteratorAnalysis.Analyze();
+                }
+                else
+                {
+                  result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery, controller);
+                }
               }
-              else
+              finally
               {
-                result = analysis.Analyze(methodFullName, mdriver, cachePCs, factQuery);
+                if (controller != null)
+                {
+                  TraceSuspendedAPCs(methodFullName, analysis, controller);
+                }
               }
+
               results.Add(result);
 
               factQuery.Add(result.FactQuery);
@@ -2618,12 +2688,20 @@ namespace Microsoft.Research.CodeAnalysis
               RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
             }
           }
-          catch (TimeoutExceptionFixpointComputation)
+          catch (TimeoutExceptionFixpointComputation e)
           {
             output.WriteLine("{2} Analysis timed out for method #{0} {1}. Try increase the timeout using the -timeout n switch",
               this.methodNumbers.GetMethodNumber(method), // methodNumbers can be null
               this.driver.MetaDataDecoder.FullName(method),
               analysis.Name);
+
+            var result = e.Result as IMethodResult<SymbolicValue>;
+            if (result != null)
+            {
+                results.Add(result);
+                factQuery.Add(result.FactQuery);
+                RecordMethodAnalysisForClassAnalysis(method, mdriver, cdriver, analysis, result);
+            }
 
             break; // we are done
           }
@@ -2631,6 +2709,29 @@ namespace Microsoft.Research.CodeAnalysis
           #endregion
         }
         return phasecount;
+      }
+
+      private void TraceSuspendedAPCs(string methodFullName, IMethodAnalysis analysis, DFAController controller)
+      {
+        if (options.TraceSuspended)
+        {
+          if (controller.SuspendedAPCs != null)
+          {
+            if (0 < controller.SuspendedAPCs.Count)
+            {
+              Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with the following suspended program points: {2}", analysis.Name, methodFullName, string.Join(", ", controller.SuspendedAPCs));
+            }
+            else
+            {
+              Console.WriteLine("[SUSPENDED] Finished analysis ({0}) of method '{1}' with no suspended program points", analysis.Name, methodFullName);
+            }
+          }
+        }
+      }
+
+      private DFAController CreateFreshDFAController(string analysisName, string methodName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver, List<IMethodResult<SymbolicValue>> results, List<IProofObligations<SymbolicValue, BoxedExpression>> obligations)
+      {
+        return new DFAController(analysisName, methodName, options.MaxCalls, options.MaxFieldReads, options.MaxJoins, options.MaxWidenings, options.MaxSteps, (r) => { var rs = new List<IMethodResult<SymbolicValue>>(results); var mr = r as IMethodResult<SymbolicValue>; if (r != null) { rs.Add(mr); } return FailingObligations(mdriver, rs, obligations, new IgnoreOutputFactory<Method, Assembly>().GetOutputFullResultsProvider(mdriver.Options)); }, options.PrintControllerStats, mdriver.ModifiedAtCall);
       }
 
       private int RunSyntacticAnalysis(int phasecount, string methodFullName, IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, ExternalExpression<APC, SymbolicValue>, SymbolicValue, ILogOptions> mdriver)

@@ -30,7 +30,7 @@ namespace Microsoft.Research.CodeAnalysis
       string methodName,
       IMethodDriver<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable, ILogOptions> driver,
       List<Analyzers.Enum.Options> options,
-      Predicate<APC> cachePCs
+      Predicate<APC> cachePCs, DFAController controller
     )
       where Variable : IEquatable<Variable>
       where Expression : IEquatable<Expression>
@@ -44,7 +44,7 @@ namespace Microsoft.Research.CodeAnalysis
        new TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.EnumAnalysis
          (methodName, driver, options[0], cachePCs);
 
-      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis);
+      return TypeBindings<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly, Expression, Variable>.RunTheAnalysis(methodName, driver, analysis, controller);
     }
 
     /// <summary>

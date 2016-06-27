@@ -554,6 +554,8 @@ namespace Microsoft.Research.CodeAnalysis
             return new Domain.AnalysisDecoder(this);
         }
 
+        public readonly IDictionary<CFGBlock, IFunctionalSet<ESymValue>> ModifiedAtCall = new Dictionary<CFGBlock, IFunctionalSet<ESymValue>>();
+
         /// <summary>
         /// Computes symbolic variable renamings on edges leading to join points
         /// </summary>
@@ -4748,6 +4750,7 @@ namespace Microsoft.Research.CodeAnalysis
                     Contract.Assume(args.Count <= mdDecoder.Parameters(method).Count + extraVarargs.Count + 1);
                     Contract.Assume(!mdDecoder.IsStatic(method) || args.Count == mdDecoder.Parameters(method).Count + extraVarargs.Count);
 
+                    try {
                     Type declaringType = methodDeclaringType;
 
                     if (!pc.InsideContract)
@@ -5022,6 +5025,7 @@ namespace Microsoft.Research.CodeAnalysis
                     data.AssignReturnValue(dest, mdDecoder.ReturnType(method), this.CurrentMethodDeclaringType); // void is handled by assign
 
                     return data;
+                    } finally { this.parent.ModifiedAtCall[pc.Block] = data.modifiedAtCall; }
                 }
 
                 private bool IsStructValue(Domain data, Temp source)
