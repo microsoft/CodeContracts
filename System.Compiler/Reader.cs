@@ -4264,10 +4264,12 @@ namespace System.Compiler.Metadata{
                     // If processing non-type argument or a type argument with assembly name,
                     // process the characters after the comma as an assembly name.
                     //
-                    // If the next character is whitespace, assume that it delineates the start of an assembly name so
+                    // Only continue parsing the string if the next chunk of the string is the name of a type argument.
+                    // If the next character is not a literal, it is not a type argument, so
                     // end the current identifier by going to done label.
-                    if (this.currentItr < this.typeNameString.Length && char.IsWhiteSpace(this.typeNameString[this.currentItr]))
-                    {
+                    if (this.currentItr < this.typeNameString.Length) {
+                      var next = this.typeNameString[this.currentItr];
+                      if (char.IsWhiteSpace(next) || IsTypeNameReservedChar(next))
                         goto done;
                     }
                     break;
