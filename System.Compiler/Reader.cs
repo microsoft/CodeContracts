@@ -4259,20 +4259,6 @@ namespace System.Compiler.Metadata{
             this.currentItr++;
             switch (c) {
               case ',':
-                    // A comma may separate a type name from its assembly name or a type argument from
-                    // another type argument.
-                    // If processing non-type argument or a type argument with assembly name,
-                    // process the characters after the comma as an assembly name.
-                    //
-                    // Only continue parsing the string if the next chunk of the string is the name of a type argument.
-                    // If the next character is not a literal, it is not a type argument, so
-                    // end the current identifier by going to done label.
-                    if (this.currentItr < this.typeNameString.Length) {
-                      var next = this.typeNameString[this.currentItr];
-                      if (char.IsWhiteSpace(next) || IsTypeNameReservedChar(next))
-                        goto done;
-                    }
-                    break;
               case '[':
               case ']':
               case '&':
