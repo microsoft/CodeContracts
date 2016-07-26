@@ -618,6 +618,10 @@ namespace System.Compiler{
           aref.HashValue = null;
           aref.Flags = aref.Flags & ~AssemblyFlags.PublicKey;
         }
+
+        // make sure that written flags are ECMA compatible
+        aref.Flags = aref.Flags & (AssemblyFlags.PublicKey | AssemblyFlags.Retargetable | AssemblyFlags.DisableJITcompileOptimizer | AssemblyFlags.EnableJITcompileTracking);
+
         this.assemblyRefEntries.Add(aref);
         this.assemblyRefIndex[assembly.UniqueKey] = index;
       }
