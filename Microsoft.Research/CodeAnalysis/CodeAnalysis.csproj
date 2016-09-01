@@ -215,7 +215,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Compiler\System.CompilerCC.csproj">
+    <ProjectReference Include="..\..\System.Compiler\System.Compiler.csproj">
       <Project>{D7E16B38-3893-4EEF-847F-A3BE807E9546}</Project>
       <Name>System.CompilerCC</Name>
     </ProjectReference>
