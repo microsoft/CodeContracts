@@ -3,6 +3,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <NoVbRuntimeReference>true</NoVbRuntimeReference>
+    <VBRuntime>None</VBRuntime>
+    <NoStdLib>true</NoStdLib>
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>

@@ -241,7 +241,7 @@
        Text="Building for $(CurrentTargetFramework) to $(CurrentRelativeOutputDirectory) with $(CurrentTargetDefinesVB)"/>
 
     <ResolveAssemblyReference
-       Condition="'$(NoStdLib)'!='true'"
+       Condition="'$(NoStdLib)'!='true' or '$(Language)'=='VB'"
        AllowedAssemblyExtensions=".dll"
        SearchPaths="@(MultiTargetReferencePaths->'%(FullPath)$(CurrentRelativeInputDirectory)')"
        Assemblies="mscorlib"
