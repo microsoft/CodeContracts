@@ -68,10 +68,6 @@ namespace System.Windows.Forms
                 Contract.Ensures(Contract.Result<int[]>() != null);
                 return default(int[]);
             }
-            set
-            {
-
-            }
         }
 
         // <summary>

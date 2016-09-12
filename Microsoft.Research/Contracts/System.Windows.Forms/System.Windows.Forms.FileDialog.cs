@@ -70,15 +70,22 @@ namespace System.Windows.Forms
         // </returns>
         // public bool DereferenceLinks {get; set;}
 
-        // <summary>
-        // Gets or sets a string containing the file name selected in the file dialog box.
-        // </summary>
-        // 
-        // <returns>
-        // The file name selected in the file dialog box. The default value is an empty string ("").
-        // </returns>
-        //<PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        // public string FileName {get; set;}
+        /// <summary>
+        /// Gets or sets a string containing the file name selected in the file dialog box.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The file name selected in the file dialog box. The default value is an empty string ("").
+        /// </returns>
+        ///<PermissionSet><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+        public string FileName 
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+                return default(string);  
+            }
+        }
 
         /// <summary>
         /// Gets the file names of all selected files in the dialog box.
