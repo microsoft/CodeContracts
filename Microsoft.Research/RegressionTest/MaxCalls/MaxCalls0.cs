@@ -16,9 +16,9 @@ using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.ClousotRegression;
 
-namespace CallDepth
+namespace MaxCalls
 {
-    public class CallDepth
+    public class MaxCalls
     {
         [ClousotRegressionTest]
         [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 38, MethodILOffset = 0)]

@@ -21,57 +21,61 @@ namespace MaxJoins
     public class MaxJoins
     {
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 29, MethodILOffset = 0)]
-        private void Test0(int x)
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 12, MethodILOffset = 0)]
+        private void Test0(bool b)
         {
-            string s = "non-null";
-            if (x < 0)
-            {
-                s = null;
-            }
+            string s = Foo(b);
+            Contract.Assert(s == null);
+        }
+
+        [ClousotRegressionTest]
+        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 15, MethodILOffset = 0)]
+        private void Test1(int i)
+        {
+            string s = Bar(i);
             Contract.Assert(s != null);
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.False, Message = @"assert is false", PrimaryILOffset = 35, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 63, MethodILOffset = 0)]
-        private void Test1(int x, int y)
+        [RegressionOutcome(Outcome = ProofOutcome.Top, Message = @"assert unproven", PrimaryILOffset = 15, MethodILOffset = 0)]
+        private void Test2(int i)
         {
-            string s0 = "non-null";
-            string s1 = "non-null";
-            if (x < 0)
-            {
-                s0 = null;
-            }
-            Contract.Assert(s0 != null);
-            if (y < 0)
-            {
-                s1 = null;
-            }
-            Contract.Assert(s1 != null);
+            string s = FooBar(i);
+            Contract.Assert(s != null);
         }
 
         [ClousotRegressionTest]
-        [RegressionOutcome(Outcome = ProofOutcome.Bottom, Message = @"assert unreachable", PrimaryILOffset = 46, MethodILOffset = 0)]
-        [RegressionOutcome(Outcome = ProofOutcome.True, Message = @"assert is valid", PrimaryILOffset = 60, MethodILOffset = 0)]
-        private void Test2(int x, bool b)
+        private static string Foo(bool b)
         {
-            string s = null;
-            string c = null;
-            if (x < 0)
-            {
-                s = "non-null";
+            string result = "non-null";
+            if (b) {
+                result = null;
             }
-            else
-            {
-                s = null;
-                c = "non-null";
+            return result;
+        }
+
+        [ClousotRegressionTest]
+        private static string Bar(int i)
+        {
+            string x = null;
+            if (i < 1) {
+              x = "non-null";
+            } else if (i < 3) {
+              x = Bar(i - 1);
             }
-            if (c != null)
-            {
-                Contract.Assert(b);
+            return x;
+        }
+
+        [ClousotRegressionTest]
+        private static string FooBar(int i)
+        {
+            string x = null;
+            if (i < 3) {
+              x = FooBar(i - 1);
+            } else if (i < 1) {
+              x = "non-null";
             }
-            Contract.Assert(s != null);
+            return x;
         }
     }
 }

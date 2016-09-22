@@ -1001,6 +1001,17 @@ namespace Tests
                     useBinDir: false,
                     useExe: true,
                     mustSucceed: true);
+                yield return new Options(
+                    sourceFile: @"Foxtrot\Tests\Sources\SystemCompilerReadGenericTypeAttributes.cs",
+                    foxtrotOptions: @"-assemblyMode standard",
+                    useContractReferenceAssemblies: true,
+                    compilerOptions: @"",
+                    references: new[] { @"System.Core.dll" },
+                    libPaths: new[] { @"Microsoft.Research\RegressionTest\ClousotTestHarness\bin\debug" },
+                    compilerCode: "CS",
+                    useBinDir: false,
+                    useExe: true,
+                    mustSucceed: true);
             }
         }
 

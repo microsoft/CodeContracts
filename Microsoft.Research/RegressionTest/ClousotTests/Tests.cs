@@ -63,6 +63,15 @@ namespace Tests
                     references: new string[0],
                     libPaths: new string[0],
                     compilerCode: "CS");
+                yield return new Options(
+                    sourceFile: @"Microsoft.Research\RegressionTest\MaxJoins\MaxJoins3.cs",
+                    clousotOptions: @"-nobox -nologo -nopex -stats=!! -stats controller -suggest=!! -infer autopropertiesensures -infer methodensures -warninglevel full -assemblyMode=standard -wp=true -premode combined -adaptive -show validations -nonnull -bounds:type:Intervals -arithmetic:type:Intervals,obl=div0,obl=negMin,obl=floatEq,obl=divOverflow,obl=intOverflow -trace suspended -maxJoins 0",
+                    useContractReferenceAssemblies: false,
+                    useExe: false,
+                    compilerOptions: @"/unsafe",
+                    references: new string[0],
+                    libPaths: new string[0],
+                    compilerCode: "CS");
                 #endregion
 
                 #region MaxWidenings
