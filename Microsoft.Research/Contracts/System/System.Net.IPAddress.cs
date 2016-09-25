@@ -231,7 +231,7 @@ namespace System.Net
     //   address:
     //     The byte array value of the IP address.
     //
-    //   scopeid:
+    //   scopeId:
     //     The long value of the scope identifier.
     //
     // Exceptions:
@@ -239,12 +239,12 @@ namespace System.Net
     //     address is null.
     //
     //   System.ArgumentOutOfRangeException:
-    //     scopeid < 0 or scopeid > 0x00000000FFFFFFFF
-    public IPAddress(byte[] address, long scopeid)
+    //     scopeId < 0 or scopeId > 0x00000000FFFFFFFF
+    public IPAddress(byte[] address, long scopeId)
     {
       Contract.Requires(address != null);
-      Contract.Requires(scopeid >= 0);
-      Contract.Requires(scopeid <= 0x00000000FFFFFFFF);
+      Contract.Requires(scopeId >= 0);
+      Contract.Requires(scopeId <= 0x00000000FFFFFFFF);
     }
 
     // Summary:
