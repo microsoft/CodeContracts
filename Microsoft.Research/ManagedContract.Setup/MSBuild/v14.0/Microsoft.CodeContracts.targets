@@ -262,14 +262,14 @@
     </ItemGroup>
 
     <WriteLinesToFile
-      File="$(IntermediateOutputPath)$(ProjectName)ccrewrite.rsp"
+      File="$(IntermediateOutputPath)$(AssemblyName).ccrewrite.rsp"
       Lines="@(_CodeContractsCCRewriteArgumentLines, ';')"
       Overwrite="true"
       />
 
     <Exec
        WorkingDirectory="$(IntermediateOutputPath)"
-       Command='"$(CodeContractRewriteCommand)" "@$(ProjectName)ccrewrite.rsp"'
+       Command='"$(CodeContractRewriteCommand)" "@$(AssemblyName).ccrewrite.rsp"'
        />
 
     <CallTarget Targets="CodeContractReSign"/>
@@ -353,19 +353,19 @@
     </ItemGroup>
 
     <WriteLinesToFile
-      File="$(IntermediateOutputPath)$(ProjectName)ccrefgen.rsp"
+      File="$(IntermediateOutputPath)$(AssemblyName).ccrefgen.rsp"
       Lines="@(_CodeContractsCCRefGenArgumentLines, ';')"
       Overwrite="true"
       />
 
     <Exec
        Condition="Exists('@(ContractDeclarativeAssembly)')"
-       Command='"$(CodeContractsCCRefgenCommand)" "@$(IntermediateOutputPath)$(ProjectName)ccrefgen.rsp"'
+       Command='"$(CodeContractsCCRefgenCommand)" "@$(IntermediateOutputPath)$(AssemblyName).ccrefgen.rsp"'
        />
     <ItemGroup
        Condition="Exists('@(ContractReferenceAssemblyAbsolute)')">
       <FileWrites
-         Include="@(ContractReferenceAssemblies);$(IntermediateOutputPath)$(ProjectName)ccrefgen.rsp"/>
+         Include="@(ContractReferenceAssemblies);$(IntermediateOutputPath)$(AssemblyName).ccrefgen.rsp"/>
     </ItemGroup>
 
   </Target>
@@ -591,7 +591,7 @@
   <Target
      Name="CodeContractsComputeAllLibPaths"
      DependsOnTargets="CodeContractsComputeReferencedLibPaths"
-	 >
+     >
     <Message Text="CodeContractsComputeAllLibPaths" Importance="low"/>
     <RemoveDuplicates
        Inputs="@(CodeContractsBuildLibPaths);$(CodeContractsReferenceAssemblyLibPath);$(CodeContractsLibPaths)">
@@ -639,13 +639,13 @@
     </ItemGroup>
 
     <WriteLinesToFile
-      File="$(IntermediateOutputPath)$(ProjectName)ccdocgen.rsp"
+      File="$(IntermediateOutputPath)$(AssemblyName).ccdocgen.rsp"
       Lines="@(_CodeContractsCCDocGenArgumentLines, ';')"
       Overwrite="true"
       />
 
     <Exec
-       Command='"$(CodeContractsCCdocgenCommand)" "@$(IntermediateOutputPath)$(ProjectName)ccdocgen.rsp"' 
+       Command='"$(CodeContractsCCdocgenCommand)" "@$(IntermediateOutputPath)$(AssemblyName).ccdocgen.rsp"' 
        />
   </Target>
 

@@ -76,7 +76,9 @@ namespace Microsoft.Contracts.VisualStudio
         new CheckBoxProperty("CodeContractsCacheAnalysisResults", CacheResultsCheckBox, true),
         new CheckBoxProperty("CodeContractsSkipAnalysisIfCannotConnectToCache", skipAnalysisIfCannotConnectToCache, false),
         new CheckBoxProperty("CodeContractsFailBuildOnWarnings", FailBuildOnWarningsCheckBox, false),
-        new CheckBoxProperty("CodeContractsBeingOptimisticOnExternal", BeingOptmisticOnExternalCheckBox, true)
+        new CheckBoxProperty("CodeContractsBeingOptimisticOnExternal", BeingOptmisticOnExternalCheckBox, true),
+
+        new CheckBoxProperty("CodeContractsDeferCodeAnalysis", DeferAnalysisCheckBox, false)
       };
         }
 
@@ -173,6 +175,8 @@ namespace Microsoft.Contracts.VisualStudio
             AssertsToContractsCheckBox.Enabled = enabled;
             NecessaryEnsuresCheckBox.Enabled = enabled;
             RedundantTestsCheckBox.Enabled = enabled;
+
+            DeferAnalysisCheckBox.Enabled = enabled;
 #endif
         }
 
@@ -199,8 +203,14 @@ namespace Microsoft.Contracts.VisualStudio
         private void EnableDisableBackgroundDependentUI()
         {
             // Enable/Disable dependent options
-            FailBuildOnWarningsCheckBox.Enabled = IsUnChecked(RunInBackgroundBox.CheckState) && IsChecked(EnableStaticCheckingBox.CheckState);
+            FailBuildOnWarningsCheckBox.Enabled = IsUnChecked(RunInBackgroundBox.CheckState) && IsChecked(EnableStaticCheckingBox.CheckState) && IsUnChecked(DeferAnalysisCheckBox.CheckState);
         }
+
+		private void EnableDisableDeferDependentUI()
+		{
+			RunInBackgroundBox.Enabled = IsUnChecked(DeferAnalysisCheckBox.CheckState) && IsChecked(EnableStaticCheckingBox.CheckState);
+			EnableDisableBackgroundDependentUI();
+		}
 
         private void EnableDisableCacheDependendUI()
         {
@@ -297,7 +307,8 @@ namespace Microsoft.Contracts.VisualStudio
 
             EnableDisableBaseLineUI();
 
-            EnableDisableBackgroundDependentUI();
+            EnableDisableDeferDependentUI();
+			EnableDisableBackgroundDependentUI();
 
             EnableDisableCacheDependendUI();
 
@@ -427,6 +438,8 @@ namespace Microsoft.Contracts.VisualStudio
         {
             PropertiesChanged();
             EnableDisableStaticDependentUI();
+			EnableDisableDeferDependentUI();
+			EnableDisableBackgroundDependentUI();
         }
 
         private void LibPathTextBox_TextChanged(object sender, EventArgs e)
@@ -746,6 +759,12 @@ namespace Microsoft.Contracts.VisualStudio
         private void InferEnsuresAutoPropertiesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.PropertiesChanged();
+        }
+
+        private void DeferAnalysisCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.PropertiesChanged();
+			EnableDisableDeferDependentUI();
         }
     }
 }
