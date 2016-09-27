@@ -34,6 +34,11 @@ namespace Microsoft.Research.CodeAnalysis
     /// </summary>
     public delegate void BlockInfoPrinter<Label>(Label at, string prefix, TextWriter writer);
 
+    /// <summary>
+    /// Used to find the current location of a source file's path, e.g. from PDB
+    /// </summary>
+    public delegate string SourceFileLocator(string originalSourceFilePath);
+
     #endregion
 
     #region IL visitor data types
@@ -1647,7 +1652,7 @@ namespace Microsoft.Research.CodeAnalysis
         /// </summary>
         /// <returns>false if assembly cannot be loaded.</returns>
         [Pure]
-        bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out Assembly assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractSourceText);
+        bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out Assembly assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractSourceText, SourceFileLocator sourceFileLocator);
 
         /// <summary>
         /// Returns all (and only) the top-level types in the given assembly.
@@ -3749,7 +3754,7 @@ namespace Microsoft.Research.CodeAnalysis
             throw new NotImplementedException();
         }
 
-        bool IDecodeMetaData<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>.TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out Assembly assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText)
+        bool IDecodeMetaData<Local, Parameter, Method, Field, Property, Event, Type, Attribute, Assembly>.TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out Assembly assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText, SourceFileLocator sourceFileLocator)
         {
             throw new NotImplementedException();
         }

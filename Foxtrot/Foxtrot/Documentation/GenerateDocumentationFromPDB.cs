@@ -25,18 +25,26 @@ namespace Microsoft.Contracts.Foxtrot
 {
     public class GenerateDocumentationFromPDB : Inspector
     {
-        private int tabWidth;
+        readonly Func<string, string> sourceFileLocator;
+        readonly int tabWidth;
+        readonly bool writeOutput;
+        readonly ContractNodes contracts;
         private int tabStops;
-        private bool writeOutput;
-        private ContractNodes contracts;
 
-        public GenerateDocumentationFromPDB(ContractNodes contracts) : this(contracts, 2, false)
+        public GenerateDocumentationFromPDB(ContractNodes contracts)
+          : this(contracts, null)
         {
         }
 
-        public GenerateDocumentationFromPDB(ContractNodes contracts, int tabWidth, bool writeOutput)
+        public GenerateDocumentationFromPDB(ContractNodes contracts, Func<string, string> sourceFileLocator)
+          : this(contracts, sourceFileLocator, 2, false)
+        {
+        }
+
+        public GenerateDocumentationFromPDB(ContractNodes contracts, Func<string, string> sourceFileLocator, int tabWidth, bool writeOutput)
         {
             this.contracts = contracts;
+            this.sourceFileLocator = sourceFileLocator;
             this.tabWidth = tabWidth;
             this.tabStops = 0;
             this.writeOutput = writeOutput;
@@ -798,7 +806,13 @@ namespace Microsoft.Contracts.Foxtrot
             SourceDocument result;
             if (!sourceTexts.TryGetValue(sourceName, out result))
             {
-                result = new SourceDocument(sourceName);
+                var sourceFilePath = sourceName;
+                if (sourceFileLocator != null)
+                {
+                    sourceFilePath = sourceFileLocator(sourceFilePath);
+                }
+
+                result = new SourceDocument(sourceFilePath);
                 sourceTexts.Add(sourceName, result);
             }
 

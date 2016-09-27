@@ -235,6 +235,7 @@
     <Compile Include="PriortizerOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegressionOutput.cs" />
+    <Compile Include="SourceFileFinder.cs" />
     <Compile Include="SwallowedCounterOutput.cs" />
     <Compile Include="WarningSuggestionLinkOutput.cs" />
     <Compile Include="XmlBaseLine.cs" />
