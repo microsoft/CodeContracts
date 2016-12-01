@@ -91,6 +91,7 @@ namespace System.Collections
     public static SortedList Synchronized(SortedList list)
     {
       Contract.Requires(list != null);
+      Contract.Ensures(Contract.Result<SortedList>() != null);
 
       return default(SortedList);
     }

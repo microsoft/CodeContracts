@@ -340,6 +340,7 @@ namespace System.Windows.Controls
       }
       set
       {
+        Contract.Requires(value != null);
       }
     }
 

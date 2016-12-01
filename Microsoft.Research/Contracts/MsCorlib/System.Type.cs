@@ -267,6 +267,7 @@ namespace System
     public virtual Type MakeGenericType(params Type[] typeArguments)
     {
       Contract.Requires(this.IsGenericTypeDefinition);
+      Contract.Requires(typeArguments != null);
       Contract.Requires(typeArguments.Length == this.GetGenericArguments().Length);
       Contract.Ensures(Contract.Result<Type>() != null);
 

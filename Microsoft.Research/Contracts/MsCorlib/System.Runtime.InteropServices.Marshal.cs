@@ -188,6 +188,7 @@ namespace System.Runtime.InteropServices {
     public static Delegate GetDelegateForFunctionPointer(IntPtr ptr, Type t) {
       Contract.Requires(ptr != IntPtr.Zero);
       Contract.Requires(t != null);
+      Contract.Ensures(Contract.Result<Delegate>() != null);
       return default(Delegate);
     }
     public static int GetEndComSlot(Type t) {

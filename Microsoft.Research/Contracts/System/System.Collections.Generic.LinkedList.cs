@@ -158,7 +158,7 @@ using System.Diagnostics.Contracts;
       public LinkedListNode<T> AddAfter(LinkedListNode<T> node, T value)
       {
         Contract.Requires(node != null);
-
+        Contract.Ensures(Contract.Result<LinkedListNode<T>>() != null);
         Contract.Ensures(Count == Contract.OldValue(Count) + 1);
 
         return default(LinkedListNode<T>);
@@ -213,7 +213,7 @@ using System.Diagnostics.Contracts;
       public LinkedListNode<T> AddBefore(LinkedListNode<T> node, T value)
       {
         Contract.Requires(node != null);
-
+        Contract.Ensures(Contract.Result<LinkedListNode<T>>() != null);
         Contract.Ensures(Count == Contract.OldValue(Count) + 1);
 
         return default(LinkedListNode<T>);

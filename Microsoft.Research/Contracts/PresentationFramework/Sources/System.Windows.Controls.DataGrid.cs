@@ -92,6 +92,7 @@ namespace System.Windows.Controls
 
     public static System.Collections.ObjectModel.Collection<DataGridColumn> GenerateColumns(System.ComponentModel.IItemProperties itemProperties)
     {
+      Contract.Requires(itemProperties != null);
       Contract.Ensures(Contract.Result<System.Collections.ObjectModel.Collection<System.Windows.Controls.DataGridColumn>>() != null);
 
       return default(System.Collections.ObjectModel.Collection<DataGridColumn>);

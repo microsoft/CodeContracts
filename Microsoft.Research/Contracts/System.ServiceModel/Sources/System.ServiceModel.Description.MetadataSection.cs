@@ -50,6 +50,7 @@ namespace System.ServiceModel.Description
 
     public static System.ServiceModel.Description.MetadataSection CreateFromSchema(System.Xml.Schema.XmlSchema schema)
     {
+      Contract.Requires(schema != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.MetadataSection>() != null);
 
       return default(System.ServiceModel.Description.MetadataSection);
@@ -57,6 +58,7 @@ namespace System.ServiceModel.Description
 
     public static System.ServiceModel.Description.MetadataSection CreateFromServiceDescription(System.Web.Services.Description.ServiceDescription serviceDescription)
     {
+      Contract.Requires(serviceDescription != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.MetadataSection>() != null);
 
       return default(System.ServiceModel.Description.MetadataSection);

@@ -313,6 +313,8 @@ namespace System.Globalization
     public static DateTimeFormatInfo ReadOnly(DateTimeFormatInfo dtfi)
     {
       Contract.Requires(dtfi != null);
+      Contract.Ensures(Contract.Result<DateTimeFormatInfo>() != null);
+      Contract.Ensures(Contract.Result<DateTimeFormatInfo>().IsReadOnly);
 
       return default(DateTimeFormatInfo);
     }

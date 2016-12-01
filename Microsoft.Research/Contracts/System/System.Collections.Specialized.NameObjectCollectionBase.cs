@@ -248,6 +248,7 @@ namespace System.Collections.Specialized
     [Pure]
     protected object[] BaseGetAllValues(Type type)
     {
+      Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<object[]>() != null);
       return default(object[]);
     }

@@ -124,6 +124,7 @@ namespace System.Windows
     //     by the adding class as a public static readonly field.
     public DependencyProperty AddOwner(Type ownerType)
     {
+      Contract.Requires(ownerType != null);
       Contract.Ensures(Contract.Result<DependencyProperty>() != null);
 
       return null;

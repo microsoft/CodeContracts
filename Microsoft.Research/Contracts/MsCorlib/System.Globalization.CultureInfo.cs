@@ -229,6 +229,8 @@ namespace System.Globalization
     public static CultureInfo ReadOnly(CultureInfo ci)
     {
       Contract.Requires(ci != null);
+      Contract.Ensures(Contract.Result<CultureInfo>() != null);
+      Contract.Ensures(Contract.Result<CultureInfo>().IsReadOnly);
 
       return default(CultureInfo);
     }

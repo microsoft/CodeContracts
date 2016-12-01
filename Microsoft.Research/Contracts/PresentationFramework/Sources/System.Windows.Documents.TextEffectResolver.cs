@@ -43,7 +43,9 @@ namespace System.Windows.Documents
     #region Methods and constructors
     public static TextEffectTarget[] Resolve(TextPointer startPosition, TextPointer endPosition, System.Windows.Media.TextEffect effect)
     {
+      Contract.Requires(startPosition != null);
       Contract.Requires(endPosition != null);
+      Contract.Requires(effect != null);
       Contract.Ensures(Contract.Result<System.Windows.Documents.TextEffectTarget[]>() != null);
 
       return default(TextEffectTarget[]);

@@ -80,6 +80,7 @@ namespace System.ServiceModel.Channels
 
     public static TransportSecurityBindingElement CreateCertificateOverTransportBindingElement(System.ServiceModel.MessageSecurityVersion version)
     {
+      Contract.Requires(version != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.TransportSecurityBindingElement>() != null);
 
       return default(TransportSecurityBindingElement);
@@ -94,6 +95,7 @@ namespace System.ServiceModel.Channels
 
     public static SymmetricSecurityBindingElement CreateIssuedTokenBindingElement(System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters issuedTokenParameters)
     {
+      Contract.Requires(issuedTokenParameters != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SymmetricSecurityBindingElement>() != null);
 
       return default(SymmetricSecurityBindingElement);
@@ -101,24 +103,31 @@ namespace System.ServiceModel.Channels
 
     public static SymmetricSecurityBindingElement CreateIssuedTokenForCertificateBindingElement(System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters issuedTokenParameters)
     {
+      Contract.Requires(issuedTokenParameters != null);
+      Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SymmetricSecurityBindingElement>() != null);
 
       return default(SymmetricSecurityBindingElement);
     }
 
     public static SymmetricSecurityBindingElement CreateIssuedTokenForSslBindingElement(System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters issuedTokenParameters, bool requireCancellation)
     {
+      Contract.Requires(issuedTokenParameters != null);
+      Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SymmetricSecurityBindingElement>() != null);
 
       return default(SymmetricSecurityBindingElement);
     }
 
     public static SymmetricSecurityBindingElement CreateIssuedTokenForSslBindingElement(System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters issuedTokenParameters)
     {
+      Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SymmetricSecurityBindingElement>() != null);
+      Contract.Requires(issuedTokenParameters != null);
 
       return default(SymmetricSecurityBindingElement);
     }
 
     public static TransportSecurityBindingElement CreateIssuedTokenOverTransportBindingElement(System.ServiceModel.Security.Tokens.IssuedSecurityTokenParameters issuedTokenParameters)
     {
+      Contract.Requires(issuedTokenParameters != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.TransportSecurityBindingElement>() != null);
 
       return default(TransportSecurityBindingElement);
@@ -140,6 +149,7 @@ namespace System.ServiceModel.Channels
 
     public static SecurityBindingElement CreateMutualCertificateBindingElement(System.ServiceModel.MessageSecurityVersion version)
     {
+      Contract.Requires(version != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SecurityBindingElement>() != null);
 
       return default(SecurityBindingElement);
@@ -147,6 +157,7 @@ namespace System.ServiceModel.Channels
 
     public static SecurityBindingElement CreateMutualCertificateBindingElement(System.ServiceModel.MessageSecurityVersion version, bool allowSerializedSigningTokenOnReply)
     {
+      Contract.Requires(version != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SecurityBindingElement>() != null);
 
       return default(SecurityBindingElement);
@@ -168,6 +179,7 @@ namespace System.ServiceModel.Channels
 
     public static AsymmetricSecurityBindingElement CreateMutualCertificateDuplexBindingElement(System.ServiceModel.MessageSecurityVersion version)
     {
+      Contract.Requires(version != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.AsymmetricSecurityBindingElement>() != null);
 
       return default(AsymmetricSecurityBindingElement);
@@ -175,6 +187,7 @@ namespace System.ServiceModel.Channels
 
     public static SecurityBindingElement CreateSecureConversationBindingElement(SecurityBindingElement bootstrapSecurity, bool requireCancellation)
     {
+      Contract.Requires(bootstrapSecurity != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SecurityBindingElement>() != null);
 
       return default(SecurityBindingElement);
@@ -182,6 +195,7 @@ namespace System.ServiceModel.Channels
 
     public static SecurityBindingElement CreateSecureConversationBindingElement(SecurityBindingElement bootstrapSecurity, bool requireCancellation, System.ServiceModel.Security.ChannelProtectionRequirements bootstrapProtectionRequirements)
     {
+      Contract.Requires(bootstrapSecurity != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SecurityBindingElement>() != null);
 
       return default(SecurityBindingElement);
@@ -189,6 +203,7 @@ namespace System.ServiceModel.Channels
 
     public static SecurityBindingElement CreateSecureConversationBindingElement(SecurityBindingElement bootstrapSecurity)
     {
+      Contract.Requires(bootstrapSecurity != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.SecurityBindingElement>() != null);
 
       return default(SecurityBindingElement);

@@ -1195,6 +1195,7 @@ namespace System.ComponentModel
     public static TypeDescriptionProvider GetProvider(Type type)
     {
       Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<TypeDescriptionProvider>() != null);
 
       return default(TypeDescriptionProvider);
     }

@@ -65,8 +65,9 @@ namespace System.Net
         }
         public CookieCollection GetCookies (Uri uri) {
             Contract.Requires(uri != null);
+            Contract.Ensures(Contract.Result<CookieCollection>() != null);
 
-          return default(CookieCollection);
+      return default(CookieCollection);
         }
         public void Add (Uri uri, CookieCollection cookies) {
             Contract.Requires(uri != null);

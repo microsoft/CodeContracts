@@ -50,6 +50,7 @@ namespace System.ServiceModel.Description
 
     public static System.ServiceModel.Description.ServiceDescription GetService(Type serviceType)
     {
+      Contract.Requires(serviceType != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceDescription>() != null);
 
       return default(System.ServiceModel.Description.ServiceDescription);
@@ -57,6 +58,7 @@ namespace System.ServiceModel.Description
 
     public ServiceDescription(IEnumerable<ServiceEndpoint> endpoints)
     {
+      Contract.Requires(endpoints != null);
     }
 
     public ServiceDescription()

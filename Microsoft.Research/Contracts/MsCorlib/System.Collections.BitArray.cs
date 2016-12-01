@@ -57,6 +57,7 @@ namespace System.Collections
     public BitArray Xor(BitArray value)
     {
       Contract.Requires(value != null);
+      Contract.Ensures(Contract.Result<BitArray>() != null);
 
       return default(BitArray);
     }
@@ -64,6 +65,7 @@ namespace System.Collections
     public BitArray Or(BitArray value)
     {
       Contract.Requires(value != null);
+      Contract.Ensures(Contract.Result<BitArray>() != null);
 
       return default(BitArray);
     }
@@ -71,6 +73,7 @@ namespace System.Collections
     public BitArray And(BitArray value)
     {
       Contract.Requires(value != null);
+      Contract.Ensures(Contract.Result<BitArray>() != null);
 
       return default(BitArray);
     }

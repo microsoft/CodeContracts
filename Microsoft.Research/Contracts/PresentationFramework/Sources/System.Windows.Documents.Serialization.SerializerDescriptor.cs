@@ -43,6 +43,7 @@ namespace System.Windows.Documents.Serialization
     #region Methods and constructors
     public static SerializerDescriptor CreateFromFactoryInstance(ISerializerFactory factoryInstance)
     {
+      Contract.Requires(factoryInstance != null);
       Contract.Ensures(!string.IsNullOrEmpty(factoryInstance.GetType().FullName));
       Contract.Ensures(Contract.Result<System.Windows.Documents.Serialization.SerializerDescriptor>() != null);
       Contract.Ensures(factoryInstance.GetType().Assembly != null);

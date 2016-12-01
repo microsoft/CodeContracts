@@ -463,7 +463,8 @@ namespace System.Web.UI
     {
       get
       {
-        Contract.Ensures (Contract.Result<string>() == System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName);
+        Contract.Ensures(Contract.Result<string>() != null);
+        Contract.Ensures(Contract.Result<string>() == System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName);
 
         return default(string);
       }
@@ -910,6 +911,7 @@ namespace System.Web.UI
     {
       get
       {
+        Contract.Ensures(Contract.Result<string>() != null);
         Contract.Ensures (Contract.Result<string>() == System.Threading.Thread.CurrentThread.CurrentUICulture.DisplayName);
 
         return default(string);

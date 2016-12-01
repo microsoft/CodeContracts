@@ -187,6 +187,7 @@ namespace System
     public static String Copy(String str)
     {
       Contract.Requires(str != null);
+      Contract.Ensures(Contract.Result<String>() != null);
 
       return default(String);
     }

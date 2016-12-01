@@ -437,6 +437,7 @@ namespace System.Web
     {
       get
       {
+        Contract.Ensures(Contract.Result<string>() != null);
         return default(string);
       }
       set

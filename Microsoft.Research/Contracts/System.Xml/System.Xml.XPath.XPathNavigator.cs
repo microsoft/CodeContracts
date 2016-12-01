@@ -1743,7 +1743,9 @@ namespace System.Xml.XPath
     //
     //   System.Xml.XPath.XPathException:
     //     The XPath expression is not valid.
-    public virtual XPathNodeIterator Select(XPathExpression expr) {
+    public virtual XPathNodeIterator Select(XPathExpression expr)
+    {
+      Contract.Requires(expr != null);
       Contract.Ensures(Contract.Result<XPathNodeIterator>() != null);
       return default(XPathNodeIterator);
     }

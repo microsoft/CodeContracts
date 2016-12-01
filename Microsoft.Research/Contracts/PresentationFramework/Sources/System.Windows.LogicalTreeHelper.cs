@@ -43,15 +43,19 @@ namespace System.Windows
     #region Methods and constructors
     public static void BringIntoView(DependencyObject current)
     {
+      Contract.Requires(current != null);
     }
 
     public static DependencyObject FindLogicalNode(DependencyObject logicalTreeNode, string elementName)
     {
+      Contract.Requires(logicalTreeNode != null);
+      Contract.Requires(!string.IsNullOrEmpty(elementName));
       return default(DependencyObject);
     }
 
     public static System.Collections.IEnumerable GetChildren(FrameworkContentElement current)
     {
+      Contract.Requires(current != null);
       Contract.Ensures(Contract.Result<System.Collections.IEnumerable>() != null);
 
       return default(System.Collections.IEnumerable);
@@ -59,6 +63,7 @@ namespace System.Windows
 
     public static System.Collections.IEnumerable GetChildren(DependencyObject current)
     {
+      Contract.Requires(current != null);
       Contract.Ensures(Contract.Result<System.Collections.IEnumerable>() != null);
 
       return default(System.Collections.IEnumerable);
@@ -66,6 +71,7 @@ namespace System.Windows
 
     public static System.Collections.IEnumerable GetChildren(FrameworkElement current)
     {
+      Contract.Requires(current != null);
       Contract.Ensures(Contract.Result<System.Collections.IEnumerable>() != null);
 
       return default(System.Collections.IEnumerable);
@@ -73,6 +79,7 @@ namespace System.Windows
 
     public static DependencyObject GetParent(DependencyObject current)
     {
+      Contract.Requires(current != null);
       return default(DependencyObject);
     }
     #endregion

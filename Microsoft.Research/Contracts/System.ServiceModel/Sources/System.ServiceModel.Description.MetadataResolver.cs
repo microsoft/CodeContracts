@@ -98,7 +98,9 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(IEnumerable<ContractDescription> contracts, System.ServiceModel.EndpointAddress address, MetadataExchangeClient client)
     {
+      Contract.Requires(contracts != null);
       Contract.Requires(address != null);
+      Contract.Requires(client != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
       return default(ServiceEndpointCollection);
@@ -106,6 +108,7 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(IEnumerable<ContractDescription> contracts, System.ServiceModel.EndpointAddress address)
     {
+      Contract.Requires(contracts != null);
       Contract.Requires(address != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
@@ -114,6 +117,7 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(Type contract, System.ServiceModel.EndpointAddress address)
     {
+      Contract.Requires(contract != null);
       Contract.Requires(address != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
@@ -122,6 +126,9 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(IEnumerable<ContractDescription> contracts, Uri address, MetadataExchangeClientMode mode, MetadataExchangeClient client)
     {
+      Contract.Requires(contracts != null);
+      Contract.Requires(address != null);
+      Contract.Requires(client != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
       return default(ServiceEndpointCollection);
@@ -129,6 +136,7 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(IEnumerable<ContractDescription> contracts, Uri address, MetadataExchangeClientMode mode)
     {
+      Contract.Requires(contracts != null);
       Contract.Requires(address != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
@@ -137,6 +145,7 @@ namespace System.ServiceModel.Description
 
     public static ServiceEndpointCollection Resolve(Type contract, Uri address, MetadataExchangeClientMode mode)
     {
+      Contract.Requires(contract != null);
       Contract.Requires(address != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Description.ServiceEndpointCollection>() != null);
 
