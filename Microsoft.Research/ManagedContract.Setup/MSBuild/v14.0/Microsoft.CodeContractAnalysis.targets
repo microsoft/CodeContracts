@@ -23,11 +23,11 @@
   <!--=====================================================================
         Running Static Code Analysis
     ======================================================================-->
-
+    
   <Target
     Name="CodeContractsPerformCodeAnalysis"
     Condition="'$(CodeContractsRunCodeAnalysis)' == 'true'"
-    DependsOnTargets="CodeContractsComputeCodeAnalysisDependencies;CodeContractsRunCodeAnalysis">
+    DependsOnTargets="CodeContractsComputeCodeAnalysisDependencies;CodeContractsCodeAnalysisWriteRSPFile;CodeContractsRunCodeAnalysis">
   </Target>
 
   <Target
@@ -61,7 +61,7 @@
 
   <Target
     Name="CodeContractsRunCodeAnalysis"
-    Condition="'$(CodeContractsRunCodeAnalysis)' == 'true' and '$([System.Environment]::GetEnvironmentVariable(`CodeContractsTargetProjectGuid`))' == '' and '$(BuildingProject)'=='true'"
+    Condition="'$(CodeContractsRunCodeAnalysis)' == 'true' and '$(CodeContractsDeferCodeAnalysis)' != 'true' and '$([System.Environment]::GetEnvironmentVariable(`CodeContractsTargetProjectGuid`))' == '' and '$(BuildingProject)'=='true'"
     Inputs="@(CodeContractsCodeAnalysisInput)"
     Outputs="$(CodeContractsCodeAnalysisOutput)"
     >
@@ -101,14 +101,14 @@
         <CodeContractsAnalysisWarning>medium</CodeContractsAnalysisWarning>
       </PropertyGroup>
     </When>
-	 <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='3'">
+     <When Condition="'$(CodeContractsAnalysisWarningLevel)'=='3'">
       <PropertyGroup>
         <CodeContractsAnalysisWarning>full</CodeContractsAnalysisWarning>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-	<CodeContractsAnalysisWarning>low</CodeContractsAnalysisWarning>
+    <CodeContractsAnalysisWarning>low</CodeContractsAnalysisWarning>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -129,11 +129,9 @@
   </Choose>
 
   <Target
-    Name="CodeContractsRunCodeAnalysisInternal"
+    Name="CodeContractsCodeAnalysisWriteRSPFile"
     DependsOnTargets="CodeContractsComputeAllLibPaths;EnsureContractReferenceAssemblyOfDependeeProjects;CodeContractsLoadEnvVars"
     >
-    <Message Text="Run Contract Code Analysis on project guid $(ProjectGuid)" Importance="Low"/>
-
     <PropertyGroup>
       <DeclarativeAssemblyDir>@(ContractDeclarativeAssembly->'%(RootDir)')@(ContractDeclarativeAssembly->'%(Directory)')</DeclarativeAssemblyDir>
       <DeclarativeAssemblyPath>@(ContractDeclarativeAssembly->'%(FullPath)')</DeclarativeAssemblyPath>
@@ -160,15 +158,15 @@
         Condition="'$(CodeContractsRedundantAssumptions)' == 'true'">$(CodeContractCodeAnalysisOptions) -check assumptions</CodeContractCodeAnalysisOptions>        
      <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsAssertsToContractsCheckBox)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest asserttocontracts</CodeContractCodeAnalysisOptions>        
-		<CodeContractCodeAnalysisOptions
+        <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsRedundantTests)' == 'true'">$(CodeContractCodeAnalysisOptions) -check conditionsvalidity</CodeContractCodeAnalysisOptions>        		
-	  <CodeContractCodeAnalysisOptions
-	    Condition="'$(CodeContractsMissingPublicRequiresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicRequiresAreErrors</CodeContractCodeAnalysisOptions>
-	  <CodeContractCodeAnalysisOptions
-	    Condition="'$(CodeContractsMissingPublicEnsuresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicEnsuresAreErrors</CodeContractCodeAnalysisOptions>
-	<CodeContractCodeAnalysisOptions
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsMissingPublicRequiresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicRequiresAreErrors</CodeContractCodeAnalysisOptions>
+      <CodeContractCodeAnalysisOptions
+        Condition="'$(CodeContractsMissingPublicEnsuresAsWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -missingPublicEnsuresAreErrors</CodeContractCodeAnalysisOptions>
+    <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSuggestAssumptionsForCallees)' == 'true'">$(CodeContractCodeAnalysisOptions)  -suggest calleeassumes</CodeContractCodeAnalysisOptions>
-	<CodeContractCodeAnalysisOptions
+    <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSuggestAssumptions)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest assumes</CodeContractCodeAnalysisOptions>
     <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSuggestRequires)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest requires</CodeContractCodeAnalysisOptions>
@@ -176,7 +174,7 @@
         Condition="'$(CodeContractsSuggestEnsures)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest methodensures -suggest propertyensures</CodeContractCodeAnalysisOptions>
       <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsNecessaryEnsures)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest necessaryensures</CodeContractCodeAnalysisOptions>
-		<CodeContractCodeAnalysisOptions
+        <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSuggestObjectInvariants)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest objectinvariants</CodeContractCodeAnalysisOptions>
       <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSuggestReadonly)' == 'true'">$(CodeContractCodeAnalysisOptions) -suggest readonlyfields</CodeContractCodeAnalysisOptions>
@@ -190,7 +188,7 @@
         Condition="'$(CodeContractsInferObjectInvariants)' == 'true'">$(CodeContractCodeAnalysisOptions) -infer objectinvariants</CodeContractCodeAnalysisOptions>     
       <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsCacheAnalysisResults)' == 'true'">$(CodeContractCodeAnalysisOptions) -cache</CodeContractCodeAnalysisOptions>
- 	<CodeContractCodeAnalysisOptions
+    <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsSkipAnalysisIfCannotConnectToCache)' == 'true'">$(CodeContractCodeAnalysisOptions) -forcecacheserver=true</CodeContractCodeAnalysisOptions>
      <CodeContractCodeAnalysisOptions
         Condition="'$(CodeContractsFailBuildOnWarnings)' == 'true'">$(CodeContractCodeAnalysisOptions) -failOnWarnings</CodeContractCodeAnalysisOptions>
@@ -230,10 +228,18 @@
     </ItemGroup>
 
     <WriteLinesToFile
-      File="$(DeclarativeAssemblyDir)$(ProjectName)cccheck.rsp"
+      File="$(DeclarativeAssemblyDir)$(AssemblyName).cccheck.rsp"
       Lines="@(_CodeContractsCCCheckArgumentLines, ';')"
       Overwrite="true"
       />
+      
+  </Target>
+    
+  <Target
+      Name="CodeContractsRunCodeAnalysisInternal"
+      DependsOnTargets="CodeContractsCodeAnalysisWriteRSPFile">
+      
+    <Message Text="Run Contract Code Analysis on project guid $(ProjectGuid)" Importance="Low"/>
 
     <CodeContractsAnalysis
       Verbose="false"
@@ -246,7 +252,7 @@
       KeepErrors="$(CodeContractsFailBuildOnWarnings)"
       OutputPrefix="CodeContracts: "
       Command='$(CodeContractRunCodeAnalysisCommand)'
-      CommandOptions='"@$(ProjectName)cccheck.rsp"'
+      CommandOptions='"@$(AssemblyName).cccheck.rsp"'
       />
   </Target>
 

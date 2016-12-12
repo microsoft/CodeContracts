@@ -160,7 +160,7 @@ namespace Microsoft.Research.DataStructures
             return true;
         }
 
-        // Also add '!' as synonim for '=', as cmd.exe performs fuzzy things with '='
+        // Also add '!' as synonym for '=', as cmd.exe performs fuzzy things with '='
         private static readonly char[] equalChars = new char[] { ':', '=', '!' };
         private static readonly char[] quoteChars = new char[] { '\'', '"' };
 
