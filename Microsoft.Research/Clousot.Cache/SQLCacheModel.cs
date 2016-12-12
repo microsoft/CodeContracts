@@ -796,6 +796,7 @@ namespace Microsoft.Research.CodeAnalysis.Caching
         {
             { @"11.0", @"(LocalDb)\v11.0" },
             { @"12.0", @"(LocalDb)\MSSQLLocalDB" },
+            { @"13.0", @"(LocalDb)\MSSQLLocalDB" },
         };
 
         using (var rootKey = Registry.LocalMachine.OpenSubKey(registryKeyPath))
