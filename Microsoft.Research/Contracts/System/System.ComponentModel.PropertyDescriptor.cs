@@ -178,6 +178,7 @@ namespace System.ComponentModel
     //     A new instance of the type.
     protected object CreateInstance(Type type)
     {
+      Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<object>() != null);
 
       return default(object);

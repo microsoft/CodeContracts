@@ -143,6 +143,7 @@ namespace System.Reflection {
     //     This method is not supported.
     public virtual MethodInfo MakeGenericMethod(params Type[] typeArguments)
     {
+      Contract.Requires(typeArguments != null);
       Contract.Ensures(Contract.Result<MethodInfo>() != null);
       return default(MethodInfo);
     }

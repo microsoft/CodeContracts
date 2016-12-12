@@ -42,6 +42,7 @@ namespace System.Windows.Forms
     public ToolStripItemCollection(ToolStrip owner, ToolStripItem[] value)
     {
       Contract.Requires(owner != null);
+      Contract.Requires(value != null);
     }
 
     // Summary:

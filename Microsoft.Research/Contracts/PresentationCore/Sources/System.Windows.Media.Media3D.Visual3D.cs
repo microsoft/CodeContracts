@@ -139,16 +139,19 @@ namespace System.Windows.Media.Media3D
 
     public GeneralTransform3D TransformToAncestor(Visual3D ancestor)
     {
+      Contract.Requires(ancestor != null);
       return default(GeneralTransform3D);
     }
 
     public GeneralTransform3DTo2D TransformToAncestor(System.Windows.Media.Visual ancestor)
     {
+      Contract.Requires(ancestor != null);
       return default(GeneralTransform3DTo2D);
     }
 
     public GeneralTransform3D TransformToDescendant(Visual3D descendant)
     {
+      Contract.Requires(descendant != null);
       return default(GeneralTransform3D);
     }
 

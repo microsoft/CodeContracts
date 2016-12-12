@@ -53,6 +53,7 @@ namespace System.Web.UI
 
     public System.Collections.ICollection GetSkinsForControl (Type type)
     {
+      Contract.Requires(type != null);
       Contract.Ensures (Contract.Result<System.Collections.ICollection>() != null);
 
       return default(System.Collections.ICollection);

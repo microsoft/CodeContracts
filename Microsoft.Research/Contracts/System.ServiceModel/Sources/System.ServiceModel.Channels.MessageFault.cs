@@ -43,6 +43,8 @@ namespace System.ServiceModel.Channels
     #region Methods and constructors
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, System.ServiceModel.FaultReason reason, Object detail, System.Runtime.Serialization.XmlObjectSerializer serializer, string actor, string node)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);
@@ -55,6 +57,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, string reason)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);
@@ -62,6 +66,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, System.ServiceModel.FaultReason reason)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);
@@ -69,6 +75,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, System.ServiceModel.FaultReason reason, Object detail)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);
@@ -76,6 +84,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, System.ServiceModel.FaultReason reason, Object detail, System.Runtime.Serialization.XmlObjectSerializer serializer, string actor)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);
@@ -83,6 +93,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageFault CreateFault(System.ServiceModel.FaultCode code, System.ServiceModel.FaultReason reason, Object detail, System.Runtime.Serialization.XmlObjectSerializer serializer)
     {
+      Contract.Requires(code != null);
+      Contract.Requires(reason != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageFault>() != null);
 
       return default(MessageFault);

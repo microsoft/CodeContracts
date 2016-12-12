@@ -191,13 +191,15 @@ namespace System.Windows.Media
     public static void HitTest(System.Windows.Media.Media3D.Visual3D reference, HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, System.Windows.Media.Media3D.HitTestParameters3D hitTestParameters)
     {
       Contract.Requires(reference != null);
-
+      Contract.Requires(resultCallback != null);
+      Contract.Requires(hitTestParameters != null);
     }
 
     public static void HitTest(Visual reference, HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, HitTestParameters hitTestParameters)
     {
       Contract.Requires(reference != null);
-
+      Contract.Requires(resultCallback != null);
+      Contract.Requires(hitTestParameters != null);
     }
 
     public static HitTestResult HitTest(Visual reference, System.Windows.Point point)

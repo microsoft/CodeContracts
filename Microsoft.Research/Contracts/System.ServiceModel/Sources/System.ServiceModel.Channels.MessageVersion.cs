@@ -43,6 +43,7 @@ namespace System.ServiceModel.Channels
     #region Methods and constructors
     public static MessageVersion CreateVersion(System.ServiceModel.EnvelopeVersion envelopeVersion)
     {
+      Contract.Requires(envelopeVersion != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageVersion>() != null);
 
       return default(MessageVersion);
@@ -50,6 +51,8 @@ namespace System.ServiceModel.Channels
 
     public static MessageVersion CreateVersion(System.ServiceModel.EnvelopeVersion envelopeVersion, AddressingVersion addressingVersion)
     {
+      Contract.Requires(envelopeVersion != null);
+      Contract.Requires(addressingVersion != null);
       Contract.Ensures(Contract.Result<System.ServiceModel.Channels.MessageVersion>() != null);
 
       return default(MessageVersion);

@@ -500,6 +500,7 @@ namespace System.Xml
     //     this node.  The refChild is not a child of this node.  This node is read-only.
     public virtual XmlNode InsertAfter(XmlNode newChild, XmlNode refChild)
     {
+      Contract.Requires(newChild != null);
       Contract.Requires(newChild != this);
       Contract.Requires(refChild == null || refChild.ParentNode == this);
       Contract.Ensures(Contract.Result<XmlNode>() != null);
@@ -531,6 +532,7 @@ namespace System.Xml
     //     this node.  The refChild is not a child of this node.  This node is read-only.
     public virtual XmlNode InsertBefore(XmlNode newChild, XmlNode refChild)
     {
+      Contract.Requires(newChild != null);
       Contract.Requires(newChild != this);
       Contract.Requires(refChild == null || refChild.ParentNode == this);
       Contract.Ensures(Contract.Result<XmlNode>() != null);
@@ -567,6 +569,7 @@ namespace System.Xml
     //     this node.  This node is read-only.
     public virtual XmlNode PrependChild(XmlNode newChild)
     {
+      Contract.Requires(newChild != null);
       Contract.Ensures(Contract.Result<XmlNode>() != null);
 
       return default(XmlNode);
@@ -621,6 +624,8 @@ namespace System.Xml
     //     node.
     public virtual XmlNode ReplaceChild(XmlNode newChild, XmlNode oldChild)
     {
+      Contract.Requires(newChild != null);
+      Contract.Requires(oldChild != null);
       Contract.Ensures(Contract.Result<XmlNode>() != null);
 
       return default(XmlNode);

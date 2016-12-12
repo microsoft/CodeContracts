@@ -47,10 +47,12 @@ namespace System.Windows.Markup
 
     public ParserContext(System.Xml.XmlParserContext xmlParserContext)
     {
+      Contract.Requires(xmlParserContext != null);
     }
 
     public static implicit operator System.Xml.XmlParserContext(System.Windows.Markup.ParserContext parserContext)
     {
+      Contract.Requires(parserContext != null);
       Contract.Ensures(0 <= parserContext.XmlLang.Length);
       Contract.Ensures(Contract.Result<System.Xml.XmlParserContext>() != null);
 
@@ -59,6 +61,7 @@ namespace System.Windows.Markup
 
     public static System.Xml.XmlParserContext ToXmlParserContext(System.Windows.Markup.ParserContext parserContext)
     {
+      Contract.Requires(parserContext != null);
       Contract.Ensures(Contract.Result<System.Xml.XmlParserContext>() != null);
 
       return default(System.Xml.XmlParserContext);

@@ -397,8 +397,9 @@ namespace System
     }
 
     [Pure]
-    public Uri MakeRelativeUri(Uri toUri)
+    public Uri MakeRelativeUri(Uri uri)
     {
+      Contract.Requires(uri != null);
       Contract.Ensures(Contract.Result<Uri>() != null);
       return default(Uri);
     }

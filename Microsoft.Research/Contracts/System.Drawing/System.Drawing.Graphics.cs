@@ -4074,7 +4074,7 @@ namespace System.Drawing
     ////   System.Exception:
     ////     image has an indexed pixel format or its format is undefined.
     public static Graphics FromImage(Image image) {
-      Contract.Requires<ArgumentNullException>(image != null, "image");
+      Contract.Requires(image != null);
       Contract.Requires((image.PixelFormat & PixelFormat.Indexed) == 0);
       Contract.Ensures(Contract.Result<Graphics>() != null);
       return default(Graphics);

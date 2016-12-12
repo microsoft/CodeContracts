@@ -23,6 +23,9 @@ namespace System
     [Pure]
     public static string Format(Type enumType, object value, string format)
     {
+      Contract.Requires(enumType != null);
+      Contract.Requires(value != null);
+      Contract.Requires(format != null);
       Contract.Ensures(Contract.Result<string>() != null);
       return default(string);   
     }
@@ -30,6 +33,8 @@ namespace System
     [Pure]
     public static string GetName(Type enumType, object value)
     {
+      Contract.Requires(enumType != null);
+      Contract.Requires(value != null);
       Contract.Ensures(Contract.Result<string>() != null);
       return default(string);
     }
@@ -38,6 +43,7 @@ namespace System
     [Pure]
     public static string[] GetNames(Type enumType)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<string[]>() != null);
       return default(string[]);
     }
@@ -92,6 +98,7 @@ namespace System
     [Pure]
     public static Type GetUnderlyingType(Type enumType)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<Type>() != null);
       return default(Type);
     }
@@ -121,6 +128,7 @@ namespace System
     [Pure]
     public static Array GetValues(Type enumType)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<Array>() != null);
       return default(Array);
     }
@@ -151,6 +159,7 @@ namespace System
     [Pure]
     public static object ToObject(Type enumType, byte value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -179,6 +188,7 @@ namespace System
       //
       //   System.ArgumentException:
       //     enumType is not an System.Enum.
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -208,6 +218,7 @@ namespace System
       //     enumType is not an System.Enum.-or- value is not type System.SByte, System.Int16,
       //     System.Int32, System.Int64, System.Byte, System.UInt16, System.UInt32, or
       //     System.UInt64.
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -215,6 +226,7 @@ namespace System
     [Pure]
     public static object ToObject(Type enumType, object value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -222,17 +234,21 @@ namespace System
     [Pure]
     public static object ToObject(Type enumType, sbyte value)
     {
+      Contract.Requires(enumType != null);
+      Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
     [Pure]
     public static object ToObject(Type enumType, short value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
     [Pure]
     public static object ToObject(Type enumType, uint value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -242,6 +258,7 @@ namespace System
     [Pure]
     public static object ToObject(Type enumType, ulong value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }
@@ -271,6 +288,7 @@ namespace System
     [Pure]
     public static object ToObject(Type enumType, ushort value)
     {
+      Contract.Requires(enumType != null);
       Contract.Ensures(Contract.Result<object>() != null);
       return default(object);
     }

@@ -129,26 +129,37 @@ namespace System.ServiceModel.Channels
     protected virtual new void OnWriteStartHeader(System.Xml.XmlDictionaryWriter writer, MessageVersion messageVersion)
     {
       Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
 
     public void WriteHeader(System.Xml.XmlDictionaryWriter writer, MessageVersion messageVersion)
     {
+      Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
 
     public void WriteHeader(System.Xml.XmlWriter writer, MessageVersion messageVersion)
     {
+      Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
 
     protected void WriteHeaderAttributes(System.Xml.XmlDictionaryWriter writer, MessageVersion messageVersion)
     {
+      Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
 
     public void WriteHeaderContents(System.Xml.XmlDictionaryWriter writer, MessageVersion messageVersion)
     {
+      Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
 
     public void WriteStartHeader(System.Xml.XmlDictionaryWriter writer, MessageVersion messageVersion)
     {
+      Contract.Requires(writer != null);
+      Contract.Requires(messageVersion != null);
     }
     #endregion
 

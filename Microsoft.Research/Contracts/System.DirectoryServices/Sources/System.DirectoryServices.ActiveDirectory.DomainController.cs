@@ -62,6 +62,7 @@ namespace System.DirectoryServices.ActiveDirectory
     {
       Contract.Requires(context != null);
       Contract.Requires(context.ContextType == DirectoryContextType.Domain);
+      Contract.Ensures(Contract.Result<DomainControllerCollection>() != null);
 
       return default(DomainControllerCollection);
     }
@@ -71,6 +72,7 @@ namespace System.DirectoryServices.ActiveDirectory
       Contract.Requires(context != null);
       Contract.Requires(context.ContextType == DirectoryContextType.Domain);
       Contract.Requires(siteName != null);
+      Contract.Ensures(Contract.Result<DomainControllerCollection>() != null);
       
       return default(DomainControllerCollection);
     }
@@ -80,6 +82,7 @@ namespace System.DirectoryServices.ActiveDirectory
       Contract.Requires(context != null);
       Contract.Requires(context.ContextType == DirectoryContextType.Domain);
       Contract.Requires(siteName != null);
+      Contract.Ensures(Contract.Result<DomainController>() != null);
 
       return default(System.DirectoryServices.ActiveDirectory.DomainController);
     }
@@ -88,6 +91,7 @@ namespace System.DirectoryServices.ActiveDirectory
     {
       Contract.Requires(context != null);
       Contract.Requires(context.ContextType == DirectoryContextType.Domain);
+      Contract.Ensures(Contract.Result<DomainController>() != null);
       
       return default(System.DirectoryServices.ActiveDirectory.DomainController);
     }
@@ -97,19 +101,27 @@ namespace System.DirectoryServices.ActiveDirectory
       Contract.Requires(context != null);
       Contract.Requires(context.ContextType == DirectoryContextType.Domain);
       Contract.Requires(siteName != null);
+      Contract.Ensures(Contract.Result<DomainController>() != null);
 
       return default(System.DirectoryServices.ActiveDirectory.DomainController);
     }
 
-    public static System.DirectoryServices.ActiveDirectory.DomainController FindOne(DirectoryContext context, LocatorOptions flag)
-    {
-      Contract.Requires(context != null);
-      Contract.Requires(context.ContextType == DirectoryContextType.Domain);
+        /// <summary>
+        /// Finds the one.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="flag">The flag.</param>
+        /// <returns></returns>
+        public static System.DirectoryServices.ActiveDirectory.DomainController FindOne(DirectoryContext context, LocatorOptions flag)
+        {
+            Contract.Requires(context != null);
+            Contract.Requires(context.ContextType == DirectoryContextType.Domain);
+            Contract.Ensures(Contract.Result<DomainController>() != null);
 
-      return default(System.DirectoryServices.ActiveDirectory.DomainController);
-    }
+            return default(System.DirectoryServices.ActiveDirectory.DomainController);
+        }
 
-    public override ReplicationNeighborCollection GetAllReplicationNeighbors()
+        public override ReplicationNeighborCollection GetAllReplicationNeighbors()
     {
       return default(ReplicationNeighborCollection);
     }

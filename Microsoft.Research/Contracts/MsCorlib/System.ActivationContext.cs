@@ -58,6 +58,7 @@ namespace System
 
     public static System.ActivationContext CreatePartialActivationContext (ApplicationIdentity identity)
     {
+      Contract.Requires(identity != null);
       Contract.Ensures (Contract.Result<System.ActivationContext>() != null);
 
       return default(System.ActivationContext);
@@ -65,8 +66,9 @@ namespace System
 
     public static System.ActivationContext CreatePartialActivationContext (ApplicationIdentity identity, string[] manifestPaths)
     {
+      Contract.Requires(identity != null);
+      Contract.Requires(manifestPaths != null);
       Contract.Ensures (Contract.Result<System.ActivationContext>() != null);
-      Contract.Ensures (manifestPaths.Length >= 0);
 
       return default(System.ActivationContext);
     }

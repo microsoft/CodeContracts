@@ -45,6 +45,7 @@ namespace System.ComponentModel.Composition.Hosting
     #region Methods and constructors
     public System.ComponentModel.Composition.Primitives.ComposablePart AddExport(System.ComponentModel.Composition.Primitives.Export export)
     {
+      Contract.Requires(export != null);
       Contract.Ensures(Contract.Result<System.ComponentModel.Composition.Primitives.ComposablePart>() != null);
 
       return default(System.ComponentModel.Composition.Primitives.ComposablePart);

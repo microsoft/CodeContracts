@@ -60,24 +60,28 @@ namespace System.Windows.Threading
 
     public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method)
     {
+      Contract.Requires(method != null);
       Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
       return null;
     }
 
     public DispatcherOperation BeginInvoke(Delegate method, DispatcherPriority priority, params object[] args)
     {
+      Contract.Requires(method != null);
       Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
       return null;
     }
 
     public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg)
     {
+      Contract.Requires(method != null);
       Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
       return null;
     }
 
     public DispatcherOperation BeginInvoke(DispatcherPriority priority, Delegate method, object arg, params object[] args)
     {
+      Contract.Requires(method != null);
       Contract.Ensures(Contract.Result<DispatcherOperation>() != null);
       return null;
     }

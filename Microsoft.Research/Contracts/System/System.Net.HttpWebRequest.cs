@@ -244,6 +244,7 @@ namespace System.Net {
     }
     public virtual WebResponse EndGetResponse(IAsyncResult asyncResult) {
       Contract.Requires(asyncResult != null);
+      Contract.Ensures(Contract.Result<WebResponse>() != null);
 
       return default(WebResponse);
     }
@@ -258,6 +259,7 @@ namespace System.Net {
     }
     public virtual System.IO.Stream EndGetRequestStream(IAsyncResult asyncResult) {
       Contract.Requires(asyncResult != null);
+      Contract.Ensures(Contract.Result<System.IO.Stream>() != null);
 
       return default(System.IO.Stream);
     }

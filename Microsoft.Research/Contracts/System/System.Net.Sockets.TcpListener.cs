@@ -222,6 +222,7 @@ namespace System.Net.Sockets
     //     A System.Net.Sockets.TcpClient.
     public TcpClient EndAcceptTcpClient(IAsyncResult asyncResult)
     {
+      Contract.Requires(asyncResult != null);
       Contract.Ensures(Contract.Result<TcpClient>() != null);
 
       return null;

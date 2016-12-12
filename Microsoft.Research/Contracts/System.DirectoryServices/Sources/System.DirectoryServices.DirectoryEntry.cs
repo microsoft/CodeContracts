@@ -51,6 +51,7 @@ namespace System.DirectoryServices
 
     public System.DirectoryServices.DirectoryEntry CopyTo(System.DirectoryServices.DirectoryEntry newParent)
     {
+      Contract.Requires(newParent != null);
       Contract.Ensures(Contract.Result<DirectoryEntry>() != null);
       return default(System.DirectoryServices.DirectoryEntry);
     }
@@ -58,6 +59,7 @@ namespace System.DirectoryServices
     // newname can be null
     public System.DirectoryServices.DirectoryEntry CopyTo(System.DirectoryServices.DirectoryEntry newParent, string newName)
     {
+      Contract.Requires(newParent != null);
       Contract.Ensures(Contract.Result<DirectoryEntry>() != null);
       return default(System.DirectoryServices.DirectoryEntry);
     }

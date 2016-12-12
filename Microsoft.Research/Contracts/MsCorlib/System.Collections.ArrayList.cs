@@ -60,7 +60,7 @@ namespace System.Collections
     public static ArrayList Synchronized(ArrayList list)
     {
       Contract.Requires(list != null);
-      //Contract.Ensures(result.IsSynchronized);
+      Contract.Ensures(Contract.Result<ArrayList>() != null);
 
       return default(ArrayList);
     }
@@ -138,17 +138,16 @@ namespace System.Collections
     public static ArrayList ReadOnly(ArrayList list)
     {
       Contract.Requires(list != null);
+      Contract.Ensures(Contract.Result<ArrayList>() != null);
       Contract.Ensures(Contract.Result<ArrayList>().IsReadOnly);
 
-      Contract.Ensures(Contract.Result<ArrayList>() != null);
       return default(ArrayList);
     }
     public static IList ReadOnly(IList list)
     {
       Contract.Requires(list != null);
-      Contract.Ensures(Contract.Result<IList>().IsReadOnly);
-
       Contract.Ensures(Contract.Result<IList>() != null);
+      Contract.Ensures(Contract.Result<IList>().IsReadOnly);
       return default(IList);
     }
     [Pure]
@@ -222,6 +221,7 @@ namespace System.Collections
     public static ArrayList FixedSize(ArrayList list)
     {
       Contract.Requires(list != null);
+      Contract.Ensures(Contract.Result<ArrayList>() != null);
       Contract.Ensures(Contract.Result<ArrayList>().IsFixedSize);
 
       return default(ArrayList);
@@ -229,6 +229,7 @@ namespace System.Collections
     public static IList FixedSize(IList list)
     {
       Contract.Requires(list != null);
+      Contract.Ensures(Contract.Result<ArrayList>() != null);
       Contract.Ensures(Contract.Result<IList>().IsFixedSize);
 
       return default(IList);
@@ -293,6 +294,7 @@ namespace System.Collections
     public static ArrayList Adapter(IList list)
     {
       Contract.Requires(list != null);
+      Contract.Ensures(Contract.Result<ArrayList>() != null);
 
       return default(ArrayList);
     }

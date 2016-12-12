@@ -416,6 +416,7 @@ namespace System.Xml.Schema
     public XmlSchema Reprocess(XmlSchema schema)
     {
       Contract.Requires(schema != null);
+      Contract.Ensures(Contract.Result<XmlSchema>() != null);
 
       return default(XmlSchema);
     }
