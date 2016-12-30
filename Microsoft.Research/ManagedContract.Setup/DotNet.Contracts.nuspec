@@ -12,6 +12,7 @@
     <licenseUrl>https://github.com/Microsoft/CodeContracts/blob/master/LICENSE.txt</licenseUrl>
   </metadata>
   <files>
-     <file src="**\*" />
+     <file src="**\*" target="build\" />
+	 <file src="..\..\..\..\..\..\Dotnet.Contracts.targets" target="build\" />
   </files>
 </package>

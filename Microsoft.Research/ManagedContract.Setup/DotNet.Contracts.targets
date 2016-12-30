@@ -1,0 +1,14 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <CodeContractsInstallDir>$(MSBuildThisFileDirectory)</CodeContractsInstallDir>
+  </PropertyGroup>
+
+  <!-- Use MsBuild specific targets file if availible -->
+  <Import Project="$(CodeContractsInstallDir)\MsBuild\v$(MSBuildToolsVersion)\Microsoft.CodeContracts.targets"
+   Condition="Exists('$(CodeContractsInstallDir)\MsBuild\v$(VisualStudioVersion)\Microsoft.CodeContracts.targets')" />
+  <!-- Fallback to Version 14 in hope that it is the most up to date version otherwise --> 
+   <Import Project="$(CodeContractsInstallDir)\MsBuild\v14\Microsoft.CodeContracts.targets"
+   Condition="!Exists('$(CodeContractsInstallDir)\MsBuild\v$(MSBuildToolsVersion)\Microsoft.CodeContracts.targets')" />
+  <!-- End Microsoft Code Contracts -->
+</Project>
