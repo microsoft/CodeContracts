@@ -45,34 +45,29 @@
     </When>
     <Otherwise>
       <Choose>
+        <When Condition="'$(TargetFrameworkVersion)' &lt; 'v4.0'">
+          <PropertyGroup>
+            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\v3.5</CodeContractsReferenceAssemblyLibPath>
+          </PropertyGroup>
+        </When>
         <When Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
           <PropertyGroup>
             <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.0</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>
         </When>
-        <When Condition="'$(TargetFrameworkVersion)' == 'v4.5'">
+        <When Condition="'$(TargetFrameworkVersion)'.StartsWith('v4.5')">
           <PropertyGroup>
             <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.5</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>
         </When>
-        <When Condition="'$(TargetFrameworkVersion)' == 'v4.5.1'">
-          <PropertyGroup>
-            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.5</CodeContractsReferenceAssemblyLibPath>
-          </PropertyGroup>
-        </When>
-        <When Condition="'$(TargetFrameworkVersion)' == 'v4.6'">
-          <PropertyGroup>
-            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.6</CodeContractsReferenceAssemblyLibPath>
-          </PropertyGroup>
-        </When>
-        <When Condition="'$(TargetFrameworkVersion)' == 'v4.6.1'">
+        <When Condition="'$(TargetFrameworkVersion)'.StartsWith('v4.6')">
           <PropertyGroup>
             <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.6</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>
         </When>
         <Otherwise>
           <PropertyGroup>
-            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\v3.5</CodeContractsReferenceAssemblyLibPath>
+            <CodeContractsReferenceAssemblyLibPath>$(CodeContractsInstallDir)Contracts\.NETFramework\v4.0</CodeContractsReferenceAssemblyLibPath>
           </PropertyGroup>
         </Otherwise>
       </Choose>
