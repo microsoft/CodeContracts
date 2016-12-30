@@ -221,7 +221,7 @@
     <CodeContractRewriteOptions
        Condition="'$(CodeContractsExtraRewriteOptions)' != ''"
        >$(CodeContractRewriteOptions) $(CodeContractsExtraRewriteOptions)</CodeContractRewriteOptions>
-    <CodeContractRewriteOptions>/level:$(CodeContractsRuntimeLevel) /nologo /rewrite $(CodeContractRewriteOptions) "/resolvedPaths:@(ReferencePath,';')" "/libpaths:@(CodeContractsAllLibPaths) " "$(TargetName)$(TargetExt)"</CodeContractRewriteOptions>
+    <CodeContractRewriteOptions>/level:$(CodeContractsRuntimeLevel) /nologo /rewrite $(CodeContractRewriteOptions) "/resolvedPaths:@(ReferencePath,';')" "/libpaths:@(CodeContractsAllLibPaths)" "$(TargetName)$(TargetExt)"</CodeContractRewriteOptions>
     <CodeContractRewriteCommand>$(CodeContractsInstallDir)Bin\ccrewrite.exe</CodeContractRewriteCommand>
 
     <CodeContractsRewriterOutput>$(IntermediateOutputPath)$(TargetName).rewritten</CodeContractsRewriterOutput>
@@ -343,7 +343,7 @@
      Outputs="@(ContractReferenceAssemblyAbsolute)">
 
     <PropertyGroup>
-      <_CodeContractsCCRefGenArguments>"/resolvedPaths:@(ReferencePath,';')" "/libPaths:@(CodeContractsAllLibPaths) " /pdb "/out:@(ContractReferenceAssembly)" "@(ContractDeclarativeAssembly)"</_CodeContractsCCRefGenArguments>
+      <_CodeContractsCCRefGenArguments>"/resolvedPaths:@(ReferencePath,';')" "/libPaths:@(CodeContractsAllLibPaths)" /pdb "/out:@(ContractReferenceAssembly)" "@(ContractDeclarativeAssembly)"</_CodeContractsCCRefGenArguments>
     </PropertyGroup>
 
     <ItemGroup>
@@ -629,7 +629,7 @@
      Outputs="@(DocFileItem)">
 
     <PropertyGroup>
-      <_CodeContractsCCDocGenArguments>-assembly "@(ContractReferenceAssembly)" -xmlFile "@(DocFileItem)" "-resolvedPaths:@(ReferencePath)" -libpaths "@(CodeContractsAllLibPaths) "</_CodeContractsCCDocGenArguments>
+      <_CodeContractsCCDocGenArguments>-assembly "@(ContractReferenceAssembly)" -xmlFile "@(DocFileItem)" "-resolvedPaths:@(ReferencePath)" -libpaths "@(CodeContractsAllLibPaths)"</_CodeContractsCCDocGenArguments>
     </PropertyGroup>
 
     <ItemGroup>
@@ -653,7 +653,7 @@
       Include Code Analysis target if present
     ======================================================================-->
   <PropertyGroup>
-    <CodeContractAnalysisTargets>$(CodeContractsInstallDir)MsBuild\v14.0\Microsoft.CodeContractAnalysis.targets</CodeContractAnalysisTargets>
+    <CodeContractAnalysisTargets>$(MSBuildThisFileDirectory)Microsoft.CodeContractAnalysis.targets</CodeContractAnalysisTargets>
   </PropertyGroup>
   <Import Project="$(CodeContractAnalysisTargets)" Condition="Exists('$(CodeContractAnalysisTargets)')"/>
 
