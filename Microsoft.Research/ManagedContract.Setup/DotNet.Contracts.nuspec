@@ -13,6 +13,6 @@
   </metadata>
   <files>
      <file src="**\*" target="build\" />
-	 <file src="..\..\..\..\..\..\Dotnet.Contracts.targets" target="build\" />
+     <file src="..\..\..\..\..\..\Dotnet.Contracts.targets" target="build\" />
   </files>
 </package>
