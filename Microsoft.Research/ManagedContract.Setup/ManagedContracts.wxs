@@ -1300,6 +1300,7 @@
         <ComponentRef Id='ContractsTargets40' />
         <ComponentRef Id='ContractsTargets120' />
         <ComponentRef Id='ContractsTargets140' />
+        <ComponentRef Id='ContractsTargets150' />
         <ComponentRef Id='ContractsPropertyPane' />
         <ComponentRef Id='CodeContractTools' />
         <ComponentRef Id='OutOfBandContracts35' />
