@@ -84,7 +84,7 @@
 <?define var.VS14VsixManifestCompGuid         = "{990ACB0B-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets140CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
-<?define var.ContractsTargets150CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ContractsTargets150CompGuid      = "{990ACB0E-1AAE-4fa6-A178-9BF28206012F}" ?>
 
 
   <!--=====================================================================
