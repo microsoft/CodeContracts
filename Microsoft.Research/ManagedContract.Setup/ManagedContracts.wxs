@@ -84,6 +84,7 @@
 <?define var.VS14VsixManifestCompGuid         = "{990ACB0B-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets120CompGuid      = "{990ACB09-1AAE-4fa6-A178-9BF28206012F}" ?>
 <?define var.ContractsTargets140CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
+<?define var.ContractsTargets150CompGuid      = "{990ACB0C-1AAE-4fa6-A178-9BF28206012F}" ?>
 
 
   <!--=====================================================================
@@ -1082,6 +1083,16 @@
                   <?if $(var.Feature_CCCheck) = true ?>
                     <File Id='ContractsAnalysisTargets140' Name="$(var.CodeContractsTargets2)"
                           Source="MsBuild\v14.0\$(var.CodeContractsTargets2)" Vital='yes' />
+                  <?endif?>
+                </Component>                   
+              </Directory>
+              <Directory Id='MsBuildv150' Name='v15.0'>
+                <Component Id='ContractsTargets150' Guid='$(var.ContractsTargets150CompGuid)'>
+                  <File Id='ContractsTargets150' Name="$(var.CodeContractsTargets)"
+                        Source="MsBuild\v15.0\$(var.CodeContractsTargets)" Vital='yes' />
+                  <?if $(var.Feature_CCCheck) = true ?>
+                    <File Id='ContractsAnalysisTargets150' Name="$(var.CodeContractsTargets2)"
+                          Source="MsBuild\v15.0\$(var.CodeContractsTargets2)" Vital='yes' />
                   <?endif?>
                 </Component>                   
               </Directory>
