@@ -24,6 +24,7 @@ Microsoft.Research/CCDoc/Sandcastle/Sandcastle.zip
 *.user
 *.userosscache
 *.sln.docstates
+.vs
 
 # Build results
 [Dd]ebug/
