@@ -449,17 +449,24 @@ namespace System.Windows.Forms
     ////     the mouse pointer is over the control.
     //[AmbientValue("")]
     //public virtual Cursor Cursor { get; set; }
-    ////
-    //// Summary:
-    ////     Gets the data bindings for the control.
-    ////
-    //// Returns:
-    ////     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
-    ////     objects for the control.
-    //[ParenthesizePropertyName(true)]
-    //[RefreshProperties(RefreshProperties.All)]
-    //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    //public ControlBindingsCollection DataBindings { get; }
+    //
+    // Summary:
+    //     Gets the data bindings for the control.
+    //
+    // Returns:
+    //     A System.Windows.Forms.ControlBindingsCollection that contains the System.Windows.Forms.Binding
+    //     objects for the control.
+    [ParenthesizePropertyName(true)]
+    [RefreshProperties(RefreshProperties.All)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    public virtual ControlBindingsCollection DataBindings
+	{
+		get
+		{
+				Contract.Ensures(Contract.Result<ControlBindingsCollection>() != null);
+				return default(ControlBindingsCollection);
+		}
+	}
     ////
     //// Summary:
     ////     Gets the default background color of the control.
@@ -1058,7 +1065,18 @@ namespace System.Windows.Forms
     //[Bindable(true)]
     //[Localizable(true)]
     //[DispId(-517)]
-    //public virtual string Text { get; set; }
+    public virtual string Text
+	{
+		get
+		{
+			Contract.Ensures(Contract.Result<string>() != null);
+			return default(string);
+		}
+		set
+		{
+
+		}
+	}
     ////
     //// Summary:
     ////     Gets or sets the distance, in pixels, between the top edge of the control

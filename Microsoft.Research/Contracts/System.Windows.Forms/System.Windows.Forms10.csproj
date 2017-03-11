@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -191,19 +191,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="System.Windows.Forms.BaseCollection.cs" />
+    <Compile Include="System.Windows.Forms.BindingContext.cs" />
+    <Compile Include="System.Windows.Forms.BindingsCollection.cs" />
+    <Compile Include="System.Windows.Forms.ButtonBase.cs" />
+    <Compile Include="System.Windows.Forms.ControlBindingsCollection.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewBand.cs" />
     <Compile Include="System.Windows.Forms.Application.cs" />
     <Compile Include="System.Windows.Forms.ContainterControl.cs" />
     <Compile Include="System.Windows.Forms.ComboBox.cs" />
     <Compile Include="System.Windows.Forms.Control.cs">
     </Compile>
     <Compile Include="System.Windows.Forms.ControlEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.DataGridView.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewCell.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewCellCollection.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewColumn.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewColumnCollection.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewElement.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewElementStates.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewRow.cs" />
+    <Compile Include="System.Windows.Forms.DataGridViewRowCollection.cs" />
     <Compile Include="System.Windows.Forms.DomainUpDown.cs" />
     <Compile Include="System.Windows.Forms.DragEventArgs.cs" />
     <Compile Include="System.Windows.Forms.DrawTreeNodeEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.FlatButtonAppearance.cs" />
     <Compile Include="System.Windows.Forms.Form.cs" />
     <Compile Include="System.Windows.Forms.FormCollection.cs" />
     <Compile Include="System.Windows.Forms.GiveFeedbackEventArgs.cs" />
     <Compile Include="System.Windows.Forms.HelpEventArgs.cs" />
+    <Compile Include="System.Windows.Forms.IBindableComponent.cs" />
     <Compile Include="System.Windows.Forms.ImageList.cs" />
     <Compile Include="System.Windows.Forms.InvalidateEventArgs.cs" />
     <Compile Include="System.Windows.Forms.ItemDragEventArgs.cs" />

@@ -180,7 +180,14 @@ namespace System.Data.SqlClient
     //[ResCategory("DataCategory_Data")]
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
     //[ResDescription("DbCommand_Parameters")]
-    //public SqlParameterCollection Parameters { get; }
+    public SqlParameterCollection Parameters
+	{
+		get
+		{
+				Contract.Ensures(Contract.Result<SqlParameterCollection>() != null);
+				return default(SqlParameterCollection);
+		}
+	}
     //
     // Summary:
     //     Gets or sets the System.Data.SqlClient.SqlTransaction within which the System.Data.SqlClient.SqlCommand

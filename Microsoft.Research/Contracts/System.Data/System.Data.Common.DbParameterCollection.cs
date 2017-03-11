@@ -12,17 +12,13 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Reflection;
 using System.Diagnostics.Contracts;
 
 namespace System.Data.Common
 {
   // Summary:
   //     The base class for a collection of parameters relevant to a System.Data.Common.DbCommand.
+  [ContractClass(typeof(DbParameterCollectionContract))]
   public abstract class DbParameterCollection //: MarshalByRefObject, IDataParameterCollection, IList, ICollection, IEnumerable
   {
     // Summary:
@@ -37,7 +33,7 @@ namespace System.Data.Common
     //     The number of items in the collection.
     //rowsable(false)]
     //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    //public abstract int Count { get; }
+    public abstract int Count { get; }
     //
     // Summary:
     //     Specifies whether the collection is a fixed size.
@@ -121,7 +117,17 @@ namespace System.Data.Common
     // Exceptions:
     //   System.IndexOutOfRangeException:
     //     The specified index does not exist.
-    //public DbParameter this[string parameterName] { get; set; }
+    public DbParameter this[string parameterName]
+		{
+			get
+			{
+				return default(DbParameter);
+			}
+			set
+			{
+
+			}
+		}
 
     // Summary:
     //     Adds a System.Data.Common.DbParameter item with the specified value to the
@@ -134,7 +140,7 @@ namespace System.Data.Common
     //
     // Returns:
     //     The index of the System.Data.Common.DbParameter object in the collection.
-    //public abstract int Add(object value);
+    public abstract int Add(object value);
     //
     // Summary:
     //     Adds an array of items with the specified values to the System.Data.Common.DbParameterCollection.
@@ -142,7 +148,7 @@ namespace System.Data.Common
     // Parameters:
     //   values:
     //     An array of values of type System.Data.Common.DbParameter to add to the collection.
-    //public abstract void AddRange(Array values);
+    public abstract void AddRange(Array values);
     //
     // Summary:
     //     Removes all System.Data.Common.DbParameter values from the System.Data.Common.DbParameterCollection.
@@ -305,4 +311,34 @@ namespace System.Data.Common
     //     The new System.Data.Common.DbParameter value.
     //protected abstract void SetParameter(string parameterName, DbParameter value);
   }
+
+	[ContractClassFor(typeof(DbParameterCollection))]
+	abstract class DbParameterCollectionContract : DbParameterCollection
+	{
+		private DbParameterCollectionContract()
+		{
+
+		}
+
+		public override int Add(object value)
+		{
+			Contract.Requires(value != null);
+			Contract.Ensures(Contract.Result<int>() >= 0);
+			return default(int);
+		}
+
+		public override void AddRange(Array values)
+		{
+			Contract.Requires(values != null);
+		}
+
+		public override int Count
+		{
+			get
+			{
+				Contract.Ensures(Contract.Result<int>() >= 0);
+				return default(int);
+			}
+		}
+	}
 }
