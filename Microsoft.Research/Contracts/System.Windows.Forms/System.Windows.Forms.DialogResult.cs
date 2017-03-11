@@ -1,4 +1,4 @@
-// CodeContracts
+﻿// CodeContracts
 // 
 // Copyright (c) Microsoft Corporation
 // 
@@ -12,12 +12,22 @@
 // 
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Windows.Forms
+namespace System.Windows.Forms
 {
-
+    /// <summary>
+    /// Specifies identifiers to indicate the return value of a dialog box.
+    /// </summary>
+    /// <filterpriority>2</filterpriority>
+    public enum DialogResult
+    {
+        None,
+        OK,
+        Cancel,
+        Abort,
+        Retry,
+        Ignore,
+        Yes,
+        No,
+    }
 }
+
