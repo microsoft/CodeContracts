@@ -97,8 +97,12 @@ namespace System.ComponentModel
     // Exceptions:
     //   System.NotSupportedException:
     //     The conversion cannot be performed.
-    //public object ConvertFrom(object value);
-    //
+    public object ConvertFrom(object value)
+    {
+      Contract.Ensures(Contract.Result<object>() != null);
+      return default(object);
+    }
+    
     // Summary:
     //     Converts the given object to the type of this converter, using the specified
     //     context and culture information.
