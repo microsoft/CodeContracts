@@ -1,4 +1,4 @@
-// CodeContracts
+﻿// CodeContracts
 // 
 // Copyright (c) Microsoft Corporation
 // 
@@ -13,11 +13,23 @@
 // THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics.Contracts;
 
-namespace Windows.Forms
+namespace System.Windows.Forms
 {
-
+    /// <summary>
+    /// Specifies the bounds of the control to use when defining a control's size and position.
+    /// </summary>
+    [Flags]
+    public enum BoundsSpecified
+    {
+        None = 0,
+        X = 1,
+        Y = 2,
+        Width = 4,
+        Height = 8,
+        Location = Y | X,
+        Size = Height | Width,
+        All = Size | Location,
+    }
 }
