@@ -360,6 +360,14 @@ namespace Microsoft.Research.CodeAnalysis
     [OptionDescription("Extract the source text for the contracts")]
     public bool extractSourceText = true;
 
+    [OptionDescription("Paths to source files")]
+    [DoNotHashInCache]
+    public List<string> sourcePaths = new List<string>();
+
+    [OptionDescription("Alternative paths to search for source files")]
+    [DoNotHashInCache]
+    public List<string> alternativeSourcePaths = new List<string>();
+
     [OptionDescription("Redirect the output to this output file")]
     [DoNotHashInCache]
     public string outFile;

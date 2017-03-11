@@ -2194,7 +2194,7 @@ namespace System.Compiler.Analysis
     {
         return assem.Mvid;
     }
-    public bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out AssemblyNode assem, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText)
+    public bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out AssemblyNode assem, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText, SourceFileLocator sourceFileLocator)
     {
       var attacher = this.contractAttacher;
       if (attacher == null)
@@ -2223,7 +2223,7 @@ namespace System.Compiler.Analysis
         if (extractContractText)
         {
           // extract doc first, then run checker
-          var gd = new Microsoft.Contracts.Foxtrot.GenerateDocumentationFromPDB(usedContracts);
+          var gd = new Microsoft.Contracts.Foxtrot.GenerateDocumentationFromPDB(usedContracts, AdaptSourceFileLocator(sourceFileLocator));
           gd.VisitForDoc(assem);
         }
 
@@ -2258,6 +2258,15 @@ namespace System.Compiler.Analysis
           yield return assembly.AssemblyReferences[i].Assembly;
         }
       }
+    }
+
+    private static Func<string, string> AdaptSourceFileLocator(SourceFileLocator locator)
+    {
+      if (locator == null)
+      {
+        return null;
+      }
+      return new Func<string, string>(locator);
     }
 
     #endregion

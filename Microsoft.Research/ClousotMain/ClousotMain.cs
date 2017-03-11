@@ -911,7 +911,7 @@ namespace Microsoft.Research.CodeAnalysis
         foreach (string assembly in options.Assemblies)
         {
           Assembly assem;
-          if (!this.driver.MetaDataDecoder.TryLoadAssembly(assembly, assemblyCache, this.output.EmitError, out assem, options.IsLegacyAssemblyMode, options.reference, options.extractSourceText))
+          if (!this.driver.MetaDataDecoder.TryLoadAssembly(assembly, assemblyCache, this.output.EmitError, out assem, options.IsLegacyAssemblyMode, options.reference, options.extractSourceText, GetSourceFileLocator()))
           {
             output.WriteLine("Cannot load assembly '{0}'", assembly);
             this.options.AddError();
@@ -1345,7 +1345,7 @@ namespace Microsoft.Research.CodeAnalysis
         foreach (string contractAssembly in options.ContractAssemblies)
         {
           Assembly assem;
-          if (!driver.MetaDataDecoder.TryLoadAssembly(contractAssembly, assemblyCache, null, out assem, this.options.IsLegacyAssemblyMode, this.options.reference, this.options.extractSourceText))
+          if (!driver.MetaDataDecoder.TryLoadAssembly(contractAssembly, assemblyCache, null, out assem, this.options.IsLegacyAssemblyMode, this.options.reference, this.options.extractSourceText, null))
           {
             output.WriteLine("Cannot load contract assembly '{0}'", contractAssembly);
             options.AddError();
@@ -3440,6 +3440,26 @@ namespace Microsoft.Research.CodeAnalysis
           query.TraceSequentially(entryPoint);
           return Unit.Value;
         }
+      }
+
+      private SourceFileLocator GetSourceFileLocator()
+      {
+        if (!options.extractSourceText)
+        {
+          return null;
+        }
+
+        if (options.sourcePaths == null || options.sourcePaths.Count == 0)
+        {
+          return null;
+        }
+
+        if (options.alternativeSourcePaths == null || options.alternativeSourcePaths.Count == 0)
+        {
+          return null;
+        }
+
+        return new SourceFileFinder(options.sourcePaths, options.alternativeSourcePaths).Find;
       }
     }
 

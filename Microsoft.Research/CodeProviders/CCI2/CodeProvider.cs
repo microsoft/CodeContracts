@@ -9916,7 +9916,7 @@ namespace Microsoft.Cci.Analysis
     /// <param name="unit">The unit the locations are from. (Locations don't necessarily have a link to the unit they
     /// belong to.) The unit is used to find a source location provider for that unit. (Providers are maintained
     /// in a cache in the MetadataDecoder.) If a provider cannot be found for the <paramref name="unit"/> then
-    /// an emtpy enumerable is returned.
+    /// an empty enumerable is returned.
     /// </param>
     /// <param name="operations">
     /// If a source location provider is found, then the location of the operation indexed in <paramref name="operations"/>
@@ -9929,7 +9929,7 @@ namespace Microsoft.Cci.Analysis
     /// The index of the operation from whose location the corresponding primary source locations are to be found.
     /// </param>
     /// <param name="exact">
-    /// True iff the client wants primary source locations only for the operation indexed by <paramref name="startingIndex"/>.
+    /// True if the client wants primary source locations only for the operation indexed by <paramref name="startingIndex"/>.
     /// </param>
     /// <param name="foundIndex">
     /// If <paramref name="exact"/> is false, then this will be the greatest index of the operation in <paramref name="operations"/>
@@ -9984,7 +9984,7 @@ namespace Microsoft.Cci.Analysis
     /// <summary>
     /// </summary>
     /// <returns>Must return null if assembly cannot be loaded!</returns>
-    public bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out IAssemblyReference assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText)
+    public bool TryLoadAssembly(string fileName, System.Collections.IDictionary assemblyCache, Action<System.CodeDom.Compiler.CompilerError> errorHandler, out IAssemblyReference assembly, bool legacyContractMode, List<string> referencedAssemblies, bool extractContractText, SourceFileLocator sourceFileLocator)
     {
       IUnit unit = host.PossiblyCompileFirstLoadUnitFrom(fileName, referencedAssemblies, this.RegisterSourceLocationProvider);
       if (unit is Dummy) { assembly = null; return false; }
