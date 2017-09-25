@@ -289,9 +289,10 @@
     </ItemGroup>
   </Target>
 
+  <!-- sn.exe does not exist in .NET Core, so don't run this target in .NET Core -->
   <Target
      Name="CodeContractReSign"
-     Condition="'$(DelaySign)' != 'true'"   
+     Condition="'$(DelaySign)' != 'true' and '$(UsingMicrosoftNETSdk)' != 'true'"   
      >
     <GetFrameworkSdkPath>
       <Output
