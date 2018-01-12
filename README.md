@@ -1,5 +1,5 @@
 # CodeContracts
-
+[![AppVeyor](https://img.shields.io/appveyor/ci/SergeyTeplyakov/codecontracts/master.svg?label=appveyor)](https://ci.appveyor.com/project/SergeyTeplyakov/codecontracts/branch/master) 
 [![Join the chat at https://gitter.im/Microsoft/CodeContracts](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/CodeContracts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Source code for the CodeContracts tools for .NET
