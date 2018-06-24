@@ -2167,7 +2167,7 @@ namespace Microsoft.Cci.Pdb
     internal string name;       // Length-prefixed name
   };
 
-#if flase
+#if false
   internal struct WithSym32
   {
     // internal ushort reclen;    // Record length [SYMTYPE]
