@@ -252,7 +252,7 @@ namespace Microsoft.Research.CodeAnalysis
 
       this.score = pair.Item1;
       this.justification_expanded = pair.Item2;
-      this.justification = String.Join(" ", this.justification_expanded.ToString());
+      this.justification = String.Join(" ", this.justification_expanded);
     }
 
     public string GetWarningLevel(double score, WarningScoresManager scoresManager)
